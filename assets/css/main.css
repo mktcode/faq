@@ -1,0 +1,33 @@
+@import "tailwindcss" theme(static);
+@plugin "@tailwindcss/typography";
+@import "@nuxt/ui";
+
+@theme {
+  --font-sans: 'Roboto', sans-serif;
+  --font-serif: 'Merriweather', serif;
+  --ui-radius: var(--radius-lg);
+}
+
+.button,
+button,
+[role="button"] {
+  @apply cursor-pointer disabled:cursor-not-allowed;
+}
+
+.prose ol {
+  @apply list-decimal;
+}
+
+.prose ul {
+  @apply list-disc;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}

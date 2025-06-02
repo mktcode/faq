@@ -1,0 +1,59 @@
+service: nuxt-app
+image: mktcode/nuxt-app
+servers:
+  web:
+    - <%= `bin/terraform output -raw app-1_ip` %>
+    - <%= `bin/terraform output -raw app-2_ip` %>
+registry:
+  username: mktcode
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+proxy: false
+env:
+  secret:
+    - MYSQL_ROOT_PASSWORD
+    - NUXT_PUBLIC_APP_URL
+    - NUXT_DATABASE_URL
+    - NUXT_IP_HASH_SALT
+    - NUXT_SESSION_PASSWORD
+    - NUXT_OAUTH_GOOGLE_CLIENT_ID
+    - NUXT_OAUTH_GOOGLE_CLIENT_SECRET
+    - NUXT_OAUTH_GOOGLE_REDIRECT_URL
+    - NUXT_OPENAI_API_KEY
+    - NUXT_S3_ACCESS_KEY
+    - NUXT_S3_SECRET_KEY
+    - NUXT_PUBLIC_S3_ENDPOINT
+    - NUXT_STRIPE_API_KEY
+    - NUXT_STRIPE_API_SECRET_KEY
+    - NUXT_STRIPE_WEBHOOK_SECRET
+aliases:
+  shell: app exec --interactive --reuse "sh"
+  logs: app logs -f
+  migrate: app exec --primary 'npx tsx server/migrate.ts'
+builder:
+  arch: amd64
+accessories:
+  db:
+    image: mysql:8.0
+    host: <%= `bin/terraform output -raw db_ip` %>
+    port: 3306
+    env:
+      clear:
+        MYSQL_ROOT_HOST: '%'
+      secret:
+        - MYSQL_ROOT_PASSWORD
+    files:
+      - db/init.sql:/docker-entrypoint-initdb.d/setup.sql
+    directories:
+      - data:/var/lib/mysql
+  node_exporter:
+    image: prom/node-exporter:latest
+    hosts:
+      - <%= `bin/terraform output -raw app-1_ip` %>
+      - <%= `bin/terraform output -raw app-2_ip` %>
+      - <%= `bin/terraform output -raw db_ip` %>
+      - <%= `bin/terraform output -raw mail1_ip` %>
+    port: 9100
+    cmd: "--path.rootfs=/host"
+    volumes:
+      - "/:/host:ro,rslave"
