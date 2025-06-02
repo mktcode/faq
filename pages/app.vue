@@ -51,7 +51,7 @@ function logout() {
       class="w-full"
     />
     <UButton
-      label="Ask"
+      label="Test"
       block
     />
     <div class="py-6" />
