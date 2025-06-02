@@ -60,6 +60,7 @@ export async function up(db: Kysely<any>): Promise<void> {
   await db.schema
     .createTable('qanda')
     .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
+    .addColumn('userId', 'integer', col => col.notNull())
     .addColumn('catalogId', 'integer', col => col.notNull())
     .addColumn('topic', 'text')
     .addColumn('question', 'text', col => col.notNull())

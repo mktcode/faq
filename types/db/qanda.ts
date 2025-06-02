@@ -3,11 +3,12 @@ import { z } from 'zod'
 
 export interface QandaTable {
   id: Generated<number>
+  userId: number
   catalogId: number
   topic: string
   question: string
   answer: string
-  createdAt: ColumnType<Date, undefined, undefined>
+  createdAt: ColumnType<string, undefined, undefined>
 }
 
 export type Qanda = Selectable<QandaTable>

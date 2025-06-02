@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Catalog } from '~/types/db/catalogs'
+import type { Catalog, Qanda } from '~/types/db'
 
 const { clear } = useUserSession()
 
@@ -15,6 +15,8 @@ const catalogItems = computed(() => {
   }))
 })
 
+const qanda = ref<Qanda[]>([])
+
 const showSettingsModal = ref(false)
 
 const newQuestion = ref('')
@@ -27,12 +29,41 @@ function logout() {
 }
 
 onMounted(async () => {
-  const data = await $fetch('/api/user/catalogs')
-  catalogs.value = data || []
+  const catalogsFromDb = await $fetch('/api/user/catalogs')
+  catalogs.value = catalogsFromDb || []
   if (catalogs.value.length > 0) {
     selectedCatalogId.value = catalogs.value[0].id
   }
+
+  const qandaFromDb = await $fetch('/api/user/catalogs/qanda', {
+    query: {
+      catalogId: selectedCatalogId.value,
+    },
+  })
+  qanda.value = qandaFromDb || []
 })
+
+async function addNewQandA() {
+  if (!selectedCatalogId.value || !newQuestion.value || !newAnswer.value) {
+    return
+  }
+
+  const payload = {
+    catalogId: selectedCatalogId.value,
+    question: newQuestion.value,
+    answer: newAnswer.value,
+    topic: topic.value,
+  }
+
+  await $fetch('/api/user/catalogs/qanda', {
+    method: 'POST',
+    body: payload,
+  })
+
+  newQuestion.value = ''
+  newAnswer.value = ''
+  topic.value = ''
+}
 </script>
 
 <template>
@@ -63,7 +94,7 @@ onMounted(async () => {
         New Question and Answer
       </h3>
       <UButton
-        label="Manage"
+        :label="`Manage (${qanda.length})`"
         class="ml-auto"
         size="lg"
       />
@@ -90,6 +121,7 @@ onMounted(async () => {
     <UButton
       label="Add"
       block
+      @click="addNewQandA"
     />
     <div>
       <UButton
