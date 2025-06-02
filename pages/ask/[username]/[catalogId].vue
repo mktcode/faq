@@ -1,26 +1,18 @@
 <script setup lang="ts">
-const faq = ref([
-  {
-    question: 'What is Mktcode?',
-    answer: 'Mktcode is a platform for marketing automation and customer engagement.',
+import type { Qanda } from '~/types/db'
+
+definePageMeta({
+  validate: async (route) => {
+    return (
+      typeof route.params.username === 'string' && /^\w+$/.test(route.params.username)
+      && typeof route.params.catalogId === 'string' && /^\d+$/.test(route.params.catalogId)
+    )
   },
-  {
-    question: 'How do I use Mktcode?',
-    answer: 'You can use Mktcode by signing up and integrating it with your existing systems.',
-  },
-  {
-    question: 'What features does Mktcode offer?',
-    answer: 'Mktcode offers features like email marketing, social media management, and analytics.',
-  },
-  {
-    question: 'Is Mktcode free?',
-    answer: 'Mktcode offers a free trial, after which you can choose from various pricing plans.',
-  },
-  {
-    question: 'How can I contact Mktcode support?',
-    answer: 'You can contact Mktcode support via email at support@faqapp.com or call us at 0800 123 4567.',
-  },
-])
+})
+
+const route = useRoute()
+
+const qanda = ref<Qanda[]>([])
 const question = ref('')
 const existingAnswers = ref([
   'Mktcode is a marketing automation tool.',
@@ -32,22 +24,22 @@ const existingAnswers = ref([
   <div class="flex flex-col items-center justify-center gap-2 min-h-screen max-w-lg mx-auto py-12">
     <div class="size-16 rounded-full bg-gray-200" />
     <h1 class="mb-12">
-      Ask Mktcode
+      Ask {{ route.params.username }} catalog {{ route.params.catalogId }}
     </h1>
     <p class="text-gray-600">
       Wenn Ihre Frage nicht beantwortet wird, können Sie uns gerne unter 0800 123 4567 oder per E-Mail an anfrage@meinefirma.de kontaktieren.
     </p>
     <div class="w-full flex items-center justify-center gap-2 mb-4">
       <UButton
-        icon="i-heroicons-facebook"
+        icon="i-heroicons-link"
         variant="soft"
       />
       <UButton
-        icon="i-heroicons-twitter"
+        icon="i-heroicons-globe-alt"
         variant="soft"
       />
       <UButton
-        icon="i-heroicons-linkedin"
+        icon="i-heroicons-information-circle"
         variant="soft"
       />
     </div>
@@ -92,7 +84,7 @@ const existingAnswers = ref([
     />
     <div>
       <div
-        v-for="item in faq"
+        v-for="item in qanda"
         :key="item.question"
       >
         <h3 class="text-lg font-semibold mt-4">

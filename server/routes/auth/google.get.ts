@@ -1,3 +1,16 @@
+function makeUsername(name: string): string {
+  // TODO: check for uniqueness in the database
+  return name
+    .toLowerCase()
+    .replace(/\s+/g, '')
+    .replace(/[^a-z0-9äöüß]/g, '')
+    .replace(/ä/g, 'ae')
+    .replace(/ö/g, 'oe')
+    .replace(/ü/g, 'ue')
+    .replace(/ß/g, 'ss')
+    .substring(0, 30) // Limit to 30 characters
+}
+
 export default defineOAuthGoogleEventHandler({
   config: {
     scope: [
@@ -32,7 +45,7 @@ export default defineOAuthGoogleEventHandler({
       const insertResult = await db.insertInto('users')
         .values({
           name: user.name,
-          userName: user.name,
+          userName: makeUsername(user.name),
           googleId: user.sub,
           email: user.email,
           balance: 0,

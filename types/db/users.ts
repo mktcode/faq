@@ -8,11 +8,6 @@ export interface UsersTable {
   googleId: string
   balance: number
   createdAt: ColumnType<Date, undefined, undefined>
-  hasEmailAccess: boolean
-  hasWebsiteAccess: boolean
-  hasVcardAccess: boolean
-  hasGoogleMyBusinessAccess: boolean
-  hasEInvoiceAccess: boolean
 }
 export type User = Selectable<UsersTable>
 export type NewUser = Insertable<UsersTable>

@@ -3,6 +3,8 @@ import type { Catalog, Qanda } from '~/types/db'
 
 const { clear } = useUserSession()
 
+const { data: me } = await useFetch('/api/user/me')
+
 const catalogs = ref<Catalog[]>([])
 const selectedCatalogId = ref<number | undefined>(undefined)
 const selectedCatalog = computed(() => {
@@ -82,8 +84,9 @@ async function addNewQandA() {
       />
     </div>
     <UButton
-      to="/ask/mktcode"
-      label="autofaq.com/ask/mktcode"
+      v-if="me"
+      :to="`/ask/${me.userName}/${selectedCatalogId}`"
+      :label="`autofaq.com/ask/${me.userName}/${selectedCatalogId}`"
       trailing-icon="i-heroicons-arrow-right"
       variant="soft"
       block
