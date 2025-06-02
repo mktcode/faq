@@ -21,11 +21,23 @@ const question = ref('')
     <p class="text-gray-600 mb-4">
       Wenn Ihre Frage nicht beantwortet wird, können Sie uns gerne unter 0800 123 4567 oder per E-Mail an anfrage@meinefirma.de kontaktieren.
     </p>
-    <UTextarea
-      v-model="question"
-      placeholder="Enter your question"
-      class="w-full"
-    />
+    <div class="w-full">
+      <UTextarea
+        v-model="question"
+        placeholder="Enter your question"
+        class="w-full"
+        :ui="{
+          base: 'rounded-b-none',
+        }"
+      />
+      <div class="bg-gray-100 rounded-b-lg p-2 flex items-center gap-2">
+        <UButton
+          icon="i-heroicons-microphone"
+          class="ml-auto"
+          variant="soft"
+        />
+      </div>
+    </div>
     <UButton
       to="/ask/mktcode"
       label="Ask"
