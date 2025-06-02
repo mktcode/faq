@@ -14,7 +14,7 @@ export type NewCatalog = Insertable<CatalogsTable>
 export type CatalogUpdate = Updateable<CatalogsTable>
 
 export const catalogFormSchema = z.object({
-  id: z.number().optional(),
+  id: z.number(),
   name: z.string().min(1, 'Name is required'),
   info: z.string(),
 })

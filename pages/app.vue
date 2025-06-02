@@ -5,12 +5,17 @@ const { clear } = useUserSession()
 
 const catalogs = ref<Catalog[]>([])
 const selectedCatalogId = ref<number | undefined>(undefined)
+const selectedCatalog = computed(() => {
+  return catalogs.value.find(catalog => catalog.id === selectedCatalogId.value)
+})
 const catalogItems = computed(() => {
   return catalogs.value.map(catalog => ({
     label: catalog.name,
     value: catalog.id,
   }))
 })
+
+const showSettingsModal = ref(false)
 
 const question = ref('')
 const newQuestion = ref('')
@@ -42,6 +47,8 @@ onMounted(async () => {
       />
       <UButton
         icon="i-heroicons-cog-6-tooth"
+        variant="soft"
+        @click="showSettingsModal = true"
       />
     </div>
     <UButton
@@ -100,5 +107,10 @@ onMounted(async () => {
         @click="logout"
       />
     </div>
+    <CatalogSettingsModal
+      v-if="selectedCatalog"
+      v-model:show="showSettingsModal"
+      :catalog="selectedCatalog"
+    />
   </div>
 </template>
