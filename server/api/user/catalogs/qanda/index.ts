@@ -11,8 +11,6 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
   const { catalogId } = await getValidatedQuery(event, query => querySchema.parse(query))
 
-  console.log('Fetching Q&A for user:', user.id, 'in catalog:', catalogId)
-
   return await db
     .selectFrom('qanda')
     .selectAll()
