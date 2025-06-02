@@ -17,7 +17,6 @@ const catalogItems = computed(() => {
 
 const showSettingsModal = ref(false)
 
-const question = ref('')
 const newQuestion = ref('')
 const newAnswer = ref('')
 const topic = ref('')
@@ -56,15 +55,6 @@ onMounted(async () => {
       label="autofaq.com/ask/mktcode"
       trailing-icon="i-heroicons-arrow-right"
       variant="soft"
-      block
-    />
-    <UTextarea
-      v-model="question"
-      placeholder="Enter your question"
-      class="w-full"
-    />
-    <UButton
-      label="Test"
       block
     />
     <div class="py-6" />
