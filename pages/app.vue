@@ -48,10 +48,14 @@ const newAnswer = ref('')
       block
     />
     <div class="py-6" />
-    <div class="w-full flex items-center justify-between gap-2">
+    <div class="w-full flex items-center gap-2">
       <h3 class="text-lg font-semibold mt-4">
         New Question and Answer
       </h3>
+      <UButton
+        label="Manage"
+        class="ml-auto"
+      />
       <UButton
         label="Import"
       />
@@ -67,7 +71,7 @@ const newAnswer = ref('')
       class="w-full"
     />
     <UButton
-      label="Save"
+      label="Add"
       block
     />
   </div>
