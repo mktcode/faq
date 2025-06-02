@@ -35,6 +35,9 @@ export default defineAppConfig({
           },
         },
       },
+      defaultVariants: {
+        size: 'xl',
+      },
     },
     select: {
       slots: {
@@ -47,6 +50,9 @@ export default defineAppConfig({
             item: 'px-4 py-3 text-lg',
           },
         },
+      },
+      defaultVariants: {
+        size: 'xl',
       },
     },
     textarea: {
