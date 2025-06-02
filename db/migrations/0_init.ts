@@ -53,7 +53,8 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
     .addColumn('userId', 'integer', col => col.notNull())
     .addColumn('name', 'text', col => col.notNull())
-    .addColumn('info', 'text')
+    .addColumn('info', 'text', col => col.notNull())
+    .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
     .execute()
 
   await db.schema

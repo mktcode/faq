@@ -1,0 +1,23 @@
+import type { ColumnType, Generated, Insertable, Selectable, Updateable } from 'kysely'
+import { z } from 'zod'
+
+export interface QandaTable {
+  id: Generated<number>
+  catalogId: number
+  topic: string
+  question: string
+  answer: string
+  createdAt: ColumnType<Date, undefined, undefined>
+}
+
+export type Qanda = Selectable<QandaTable>
+export type NewQanda = Insertable<QandaTable>
+export type QandaUpdate = Updateable<QandaTable>
+
+export const qandaFormSchema = z.object({
+  id: z.number().optional(),
+  catalogId: z.number().int().positive('Catalog ID must be a positive integer'),
+  topic: z.string().min(1, 'Topic is required').max(255, 'Topic must be less than 255 characters'),
+  question: z.string().min(1, 'Question is required'),
+  answer: z.string().min(1, 'Answer is required'),
+})
