@@ -45,6 +45,26 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('amount', 'decimal(10, 2)', col => col.notNull())
     .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
     .execute()
+
+  // App
+
+  await db.schema
+    .createTable('catalogs')
+    .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
+    .addColumn('userId', 'integer', col => col.notNull())
+    .addColumn('name', 'text', col => col.notNull())
+    .addColumn('info', 'text')
+    .execute()
+
+  await db.schema
+    .createTable('qanda')
+    .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
+    .addColumn('catalogId', 'integer', col => col.notNull())
+    .addColumn('topic', 'text')
+    .addColumn('question', 'text', col => col.notNull())
+    .addColumn('answer', 'text', col => col.notNull())
+    .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
+    .execute()
 }
 
 export async function down(db: Kysely<any>): Promise<void> {
@@ -52,5 +72,7 @@ export async function down(db: Kysely<any>): Promise<void> {
   await db.schema.dropTable('webauthnCredentials').execute()
   await db.schema.dropTable('payments').execute()
   await db.schema.dropTable('charges').execute()
+  await db.schema.dropTable('catalogs').execute()
+  await db.schema.dropTable('qanda').execute()
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */

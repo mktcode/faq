@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { clear } = useUserSession()
+
 const catalogs = ref([
   {
     label: 'Catalog 1',
@@ -16,6 +18,11 @@ const selectedCatalog = ref(null)
 const question = ref('')
 const newQuestion = ref('')
 const newAnswer = ref('')
+
+function logout() {
+  clear()
+  navigateTo('/')
+}
 </script>
 
 <template>
@@ -74,5 +81,11 @@ const newAnswer = ref('')
       label="Add"
       block
     />
+    <div>
+      <UButton
+        label="logout"
+        @click="logout"
+      />
+    </div>
   </div>
 </template>
