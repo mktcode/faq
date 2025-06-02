@@ -5,9 +5,6 @@ const { clear } = useUserSession()
 
 const catalogs = ref<Catalog[]>([])
 const selectedCatalogId = ref<number | undefined>(undefined)
-const selectedCatalog = computed(() => {
-  return catalogs.value.find(catalog => catalog.id === selectedCatalogId.value) || null
-})
 const catalogItems = computed(() => {
   return catalogs.value.map(catalog => ({
     label: catalog.name,
