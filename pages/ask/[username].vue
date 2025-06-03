@@ -282,5 +282,8 @@ onMounted(async () => {
       </ULink>
     </div>
     <SettingsModal v-model:show="showSettingsModal" />
+    <ClientOnly>
+      <WelcomeModal />
+    </ClientOnly>
   </div>
 </template>
