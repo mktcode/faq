@@ -61,11 +61,3 @@ Eine Datenbanktabelle mit Jobs erstellen, die von jeder App ausgewählt und ausg
 # Service Worker / PWA
 
 Für Push-Benachrichtigungen und Offline-Funktionalität einen Service Worker implementieren.
-
-# Marketing
-
-## Kooperationspartner
-
-- Jobcenter/Arbeitsagentur
-- IHK
-- Steuerberater/IT-Rechtsanwalt

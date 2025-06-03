@@ -18,17 +18,21 @@ const existingAnswers = ref([
   'Mktcode is a marketing automation tool.',
   'You can use Mktcode to automate your marketing campaigns.',
 ])
+
+onMounted(async () => {
+  const data = await $fetch(`/api/qanda`, {
+    query: {
+      catalogId: route.params.catalogId,
+    },
+  })
+
+  qanda.value = data as Qanda[]
+})
 </script>
 
 <template>
   <div class="flex flex-col items-center justify-center gap-2 min-h-screen max-w-lg mx-auto py-12">
-    <div class="size-16 rounded-full bg-gray-200" />
-    <h1 class="mb-12">
-      Ask {{ route.params.username }} catalog {{ route.params.catalogId }}
-    </h1>
-    <p class="text-gray-600">
-      Wenn Ihre Frage nicht beantwortet wird, können Sie uns gerne unter 0800 123 4567 oder per E-Mail an anfrage@meinefirma.de kontaktieren.
-    </p>
+    <div class="size-16 rounded-full bg-gray-200 mb-4" />
     <div class="w-full flex items-center justify-center gap-2 mb-4">
       <UButton
         icon="i-heroicons-link"
@@ -43,10 +47,13 @@ const existingAnswers = ref([
         variant="soft"
       />
     </div>
+    <h3 class="text-2xl font-semibold mb-4">
+      Wie können wir Ihnen helfen?
+    </h3>
     <div class="w-full">
       <UTextarea
         v-model="question"
-        placeholder="Enter your question"
+        placeholder="Ihr Anliegen oder Ihre Fragen"
         class="w-full"
         :ui="{
           base: 'rounded-b-none',
@@ -78,16 +85,20 @@ const existingAnswers = ref([
       </div>
     </div>
     <UButton
-      to="/ask/mktcode"
-      label="Ask"
+      :to="`/ask/${route.params.username}/${route.params.catalogId}`"
+      label="Individuelle Antwort erhalten"
       block
     />
-    <div>
+    <div class="flex flex-col gap-4 w-full mt-12">
+      <h3 class="text-2xl font-semibold">
+        Häufige Fragen
+      </h3>
       <div
         v-for="item in qanda"
         :key="item.question"
+        class="p-4 bg-white rounded-lg border border-gray-200"
       >
-        <h3 class="text-lg font-semibold mt-4">
+        <h3 class="text-lg font-semibold">
           {{ item.question }}
         </h3>
         <p class="text-gray-600">
@@ -96,14 +107,10 @@ const existingAnswers = ref([
       </div>
     </div>
     <div class="flex gap-2 mt-12">
-      <ULink
-        to="/ask/mktcode"
-      >
+      <ULink>
         Impressum
       </ULink>
-      <ULink
-        to="/ask/mktcode"
-      >
+      <ULink>
         Datenschutz
       </ULink>
     </div>
