@@ -29,6 +29,42 @@ const selectedTopic = ref('Marketing Automation')
 
 const showSuggestedAnswer = computed(() => question.value.length > 10)
 
+type FaqResponse = {
+  qanda: {
+    question: string
+    answer: string
+  }[]
+  contactMessage: string
+}
+const faqResponse = ref<FaqResponse>({
+  qanda: [],
+  contactMessage: '',
+})
+const isGeneratingResponse = ref(false)
+async function generateResponse() {
+  if (isGeneratingResponse.value) return
+
+  isGeneratingResponse.value = true
+
+  await new Promise(resolve => setTimeout(resolve, 1000))
+
+  faqResponse.value = {
+    qanda: [
+      {
+        question: 'Wie kann ich meine Marketingkampagne verbessern?',
+        answer: 'Das kann man so nicht pauschal beantworten. Es hängt von vielen Faktoren ab, wie z.B. der Branche, dem Produkt und der Zielgruppe.',
+      },
+      {
+        question: 'Welche Marketingkanäle sollte ich nutzen?',
+        answer: 'Das hängt von Ihrer Zielgruppe ab. Social Media, E-Mail-Marketing und Content-Marketing sind jedoch sehr effektiv.',
+      },
+    ],
+    contactMessage: 'Ich brauche Beratung zu meiner Marketingkampagne.',
+  }
+
+  isGeneratingResponse.value = false
+}
+
 onMounted(async () => {
   const data = await $fetch(`/api/qanda`, {
     query: {
@@ -126,10 +162,82 @@ onMounted(async () => {
       </div>
     </Transition>
     <UButton
-      :to="`/ask/${route.params.username}/${route.params.catalogId}`"
       label="Antwort erhalten"
       block
+      :loading="isGeneratingResponse"
+      @click="generateResponse"
     />
+    <TransitionGroup
+      name="fade"
+      tag="div"
+      class="w-full mt-6 flex flex-col gap-4"
+    >
+      <div
+        v-for="(item, index) in faqResponse.qanda"
+        :key="index"
+      >
+        <h3 class="text-lg font-semibold">
+          {{ item.question }}
+        </h3>
+        <p class="text-gray-600">
+          {{ item.answer }}
+        </p>
+      </div>
+    </TransitionGroup>
+    <div
+      v-if="faqResponse.contactMessage"
+      class="w-full mt-6"
+    >
+      <h3 class="text-lg font-semibold mb-2">
+        Kontaktformular
+      </h3>
+      <p class="text-gray-600 mb-4">
+        Wenn Sie weitere Fragen haben oder Unterstützung benötigen, können Sie uns hier kontaktieren.
+      </p>
+      <div class="flex flex-col gap-4">
+        <UFormField
+          label="Ihr Name"
+        >
+          <UInput
+            placeholder="Max Mustermann"
+            class="w-full"
+          />
+        </UFormField>
+        <UFormField
+          label="Ihre E-Mail"
+        >
+          <UInput
+            type="email"
+            placeholder="muster@beisppiel.de"
+            class="w-full"
+          />
+        </UFormField>
+        <UFormField
+          label="Ihre Telefonnummer"
+        >
+          <UInput
+            type="tel"
+            placeholder="+49 123 4567890"
+            class="w-full"
+          />
+        </UFormField>
+        <UFormField
+          label="Ihre Nachricht"
+        >
+          <UTextarea
+            placeholder="Ihre Nachricht"
+            class="w-full"
+            :value="faqResponse.contactMessage"
+          />
+        </UFormField>
+        <UButton
+          label="Senden"
+          icon="i-heroicons-paper-airplane"
+          variant="soft"
+          class="ml-auto mt-2"
+        />
+      </div>
+    </div>
     <div class="flex flex-col gap-4 w-full mt-12">
       <h3 class="text-2xl font-semibold">
         {{ showSuggestedAnswer ? 'Weitere Antworten' : 'Häufig gestellte Fragen' }}
