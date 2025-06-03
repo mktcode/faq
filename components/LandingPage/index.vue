@@ -16,37 +16,34 @@ function signOut() {
     <h2 class="text-2xl mt-4">
       Nein. Erstmal nicht.
     </h2>
-    <div class="text-lg text-gray-600 mt-12 flex gap-6">
-      <div
+    <div class="text-lg text-gray-600 mt-12 flex gap-2">
+      <template
         v-if="me"
-        class="flex flex-col items-center gap-2"
       >
-        <div class="flex gap-2">
-          <UButton
-            :to="`/ask/${me.userName}`"
-            label="App"
-            variant="soft"
-          />
-          <UButton
-            label="Abmelden"
-            variant="soft"
-            @click="signOut"
-          />
-        </div>
-      </div>
+        <UButton
+          :to="`/ask/${me.userName}`"
+          label="App"
+          variant="soft"
+        />
+        <UButton
+          label="Abmelden"
+          variant="soft"
+          @click="signOut"
+        />
+      </template>
       <template v-else>
-        <NuxtLink
+        <UButton
           to="/register"
-          class="text-blue-500 hover:underline"
+          variant="soft"
         >
           Registrieren
-        </NuxtLink>
-        <NuxtLink
+        </UButton>
+        <UButton
           to="/login"
-          class="text-blue-500 hover:underline"
+          variant="soft"
         >
           Anmelden
-        </NuxtLink>
+        </UButton>
       </template>
     </div>
   </div>
