@@ -261,14 +261,10 @@ onMounted(async () => {
           {{ item.answer }}
         </p>
       </div>
-      <div class="flex gap-2 mt-4">
+      <div class="flex items-center justify-center gap-2 mt-4">
         <UButton
-          label="Kontaktanfrage"
-          variant="soft"
-        />
-        <UButton
-          label="Termin"
-          variant="soft"
+          label="Kontakt"
+          icon="i-heroicons-envelope"
         />
       </div>
     </div>

@@ -10,17 +10,17 @@ function signOut() {
 
 <template>
   <div class="font-sans flex flex-col items-center justify-center h-screen">
-    <h1 class="text-6xl font-bold">
-      Nuxt App
+    <h1 class="text-4xl font-bold">
+      Brauchen Sie eine Website?
     </h1>
-    <div class="text-lg text-gray-600 mt-4 flex gap-6">
+    <h2 class="text-2xl mt-4">
+      Nein. Erstmal nicht.
+    </h2>
+    <div class="text-lg text-gray-600 mt-12 flex gap-6">
       <div
         v-if="me"
         class="flex flex-col items-center gap-2"
       >
-        <h2 class="text-xl font-semibold">
-          Willkommen, {{ me.name }}!
-        </h2>
         <div class="flex gap-2">
           <UButton
             :to="`/ask/${me.userName}`"
