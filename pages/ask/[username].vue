@@ -29,6 +29,17 @@ const selectedTopic = ref('Marketing Automation')
 const showSuggestedAnswer = computed(() => question.value.length > 10)
 const suggestedAnswerWasUseful = ref<boolean | undefined>(undefined)
 
+const isGeneratingNewAnswer = ref(false)
+watch(suggestedAnswerWasUseful, (newValue, oldValue) => {
+  if (newValue !== oldValue && newValue === false) {
+    isGeneratingNewAnswer.value = true
+    setTimeout(() => {
+      isGeneratingNewAnswer.value = false
+      suggestedAnswerWasUseful.value = undefined
+    }, 3000)
+  }
+})
+
 const showSettingsModal = ref(false)
 
 type FaqResponse = {
@@ -142,14 +153,27 @@ onMounted(async () => {
     <Transition name="fade">
       <div
         v-if="showSuggestedAnswer"
-        class="w-full rounded-lg flex flex-col text-gray-800 mt-4"
+        class="w-full rounded-lg flex flex-col text-gray-800 my-2 border border-gray-200 p-4"
       >
         <div class="text-sm text-sky-900/60 mb-2">
           Was ist der Sinn des Lebens?
         </div>
         {{ existingAnswers[0] }}
-        <div class="flex items-center justify-end gap-2 mt-4 text-sm text-gray-400">
-          Beantwortet das Ihre Frage?
+        <div
+          v-if="isGeneratingNewAnswer"
+          class="text-sm text-gray-400 mt-4 flex items-center justify-end"
+        >
+          Suche nach Informationen...
+          <UIcon
+            name="i-heroicons-arrow-path"
+            class="animate-spin inline-block ml-2"
+          />
+        </div>
+        <div
+          v-else
+          class="flex items-center justify-end gap-2 mt-4 text-sm text-gray-400"
+        >
+          Ist diese Antwort Hilfreich?
           <UButton
             label="Ja"
             :variant="suggestedAnswerWasUseful === true ? 'solid' : 'soft'"
@@ -165,13 +189,36 @@ onMounted(async () => {
         </div>
       </div>
     </Transition>
-    <UButton
-      v-if="question.length && (!showSuggestedAnswer || suggestedAnswerWasUseful === false)"
-      label="Antwort erhalten"
-      block
-      :loading="isGeneratingResponse"
-      @click="generateResponse"
-    />
+    <Transition name="fade">
+      <UInput
+        v-if="question.length > 5"
+        placeholder="Name"
+        class="w-full"
+      />
+    </Transition>
+    <Transition name="fade">
+      <UInput
+        v-if="question.length > 5"
+        placeholder="Telefon"
+        class="w-full"
+      />
+    </Transition>
+    <Transition name="fade">
+      <UInput
+        v-if="question.length > 5"
+        placeholder="E-Mail"
+        class="w-full"
+      />
+    </Transition>
+    <Transition name="fade">
+      <UButton
+        v-if="question.length > 5"
+        label="Anfrage senden"
+        block
+        :loading="isGeneratingResponse"
+        @click="generateResponse"
+      />
+    </Transition>
     <TransitionGroup
       name="fade"
       tag="div"
@@ -189,61 +236,7 @@ onMounted(async () => {
         </p>
       </div>
     </TransitionGroup>
-    <div
-      v-if="faqResponse.contactMessage || suggestedAnswerWasUseful === true"
-      class="w-full mt-6"
-    >
-      <h3 class="text-lg font-semibold mb-2">
-        {{ suggestedAnswerWasUseful === true ? 'Haben Sie weitere Fragen?' : 'Anfrage' }}
-      </h3>
-      <p class="text-gray-600 mb-4">
-        Wenn Sie weitere Fragen haben oder Unterstützung benötigen, können Sie uns hier kontaktieren.
-      </p>
-      <div class="flex flex-col gap-4">
-        <UFormField
-          label="Ihr Name"
-        >
-          <UInput
-            placeholder="Max Mustermann"
-            class="w-full"
-          />
-        </UFormField>
-        <UFormField
-          label="Ihre E-Mail"
-        >
-          <UInput
-            type="email"
-            placeholder="muster@beisppiel.de"
-            class="w-full"
-          />
-        </UFormField>
-        <UFormField
-          label="Ihre Telefonnummer"
-        >
-          <UInput
-            type="tel"
-            placeholder="+49 123 4567890"
-            class="w-full"
-          />
-        </UFormField>
-        <UFormField
-          label="Ihre Nachricht"
-        >
-          <UTextarea
-            placeholder="Ihre Nachricht"
-            class="w-full"
-            :value="faqResponse.contactMessage"
-          />
-        </UFormField>
-        <UButton
-          label="Senden"
-          icon="i-heroicons-paper-airplane"
-          variant="soft"
-          class="ml-auto mt-2"
-        />
-      </div>
-    </div>
-    <div class="flex flex-col gap-4 w-full mt-12">
+    <div class="flex flex-col gap-4 w-full mt-6">
       <h3 class="text-2xl font-semibold">
         {{ showSuggestedAnswer ? 'Weitere Antworten' : 'Häufig gestellte Fragen' }}
       </h3>
