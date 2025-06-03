@@ -18,6 +18,14 @@ const existingAnswers = ref([
   'Mktcode is a marketing automation tool.',
   'You can use Mktcode to automate your marketing campaigns.',
 ])
+const topics = ref([
+  'Marketing Automation',
+  'Social Media Marketing',
+  'Content Marketing',
+  'Email Marketing',
+  'SEO',
+])
+const selectedTopic = ref('Marketing Automation')
 
 const showSuggestedAnswer = computed(() => question.value.length > 10)
 
@@ -34,7 +42,12 @@ onMounted(async () => {
 
 <template>
   <div class="flex flex-col items-center justify-center gap-2 min-h-screen max-w-lg mx-auto py-12">
-    <div class="size-16 rounded-full bg-gray-200 mb-4" />
+    <div class="size-16 rounded-full bg-gray-100 mb-4 flex items-center justify-center">
+      <UIcon
+        name="i-heroicons-photo"
+        class="size-7 opacity-25"
+      />
+    </div>
     <div class="w-full flex items-center justify-center gap-2 mb-4">
       <UButton
         icon="i-heroicons-information-circle"
@@ -52,16 +65,13 @@ onMounted(async () => {
         icon="i-lucide-instagram"
         variant="soft"
       />
-      <UButton
-        icon="i-heroicons-cog-6-tooth"
-        variant="ghost"
-        color="neutral"
-        class="opacity-60"
-      />
     </div>
-    <h3 class="text-2xl font-semibold mb-4">
+    <h3 class="text-2xl font-semibold">
       Wie können wir Ihnen helfen?
     </h3>
+    <p class="text-gray-600 mb-6">
+      Hier können Sie Ihre Fragen stellen oder Anliegen schildern. Wir werden Ihnen so schnell wie möglich antworten.
+    </p>
     <div class="w-full">
       <UTextarea
         v-model="question"
@@ -117,13 +127,22 @@ onMounted(async () => {
     </Transition>
     <UButton
       :to="`/ask/${route.params.username}/${route.params.catalogId}`"
-      label="Individuelle Antwort erhalten"
+      label="Antwort erhalten"
       block
     />
     <div class="flex flex-col gap-4 w-full mt-12">
       <h3 class="text-2xl font-semibold">
         {{ showSuggestedAnswer ? 'Weitere Antworten' : 'Häufig gestellte Fragen' }}
       </h3>
+      <UButton
+        label="Frage und Antwort hinzufügen"
+        icon="i-heroicons-plus"
+        variant="soft"
+      />
+      <USelect
+        v-model="selectedTopic"
+        :items="topics"
+      />
       <div
         v-for="item in qanda"
         :key="item.question"
@@ -137,7 +156,16 @@ onMounted(async () => {
         </p>
       </div>
     </div>
-    <div class="flex gap-2 mt-12 text-sm">
+    <div class="w-full flex gap-2 mt-12 text-sm">
+      <UButton
+        class="text-gray-400 mr-auto"
+        icon="i-heroicons-cog-6-tooth"
+        variant="ghost"
+        color="neutral"
+        size="md"
+      >
+        Einstellungen
+      </UButton>
       <ULink class="text-gray-400">
         Impressum
       </ULink>
