@@ -12,7 +12,7 @@ definePageMeta({
 const route = useRoute()
 
 const qanda = ref<Qanda[]>([])
-const question = ref('Was ist der Sinn des Lebens?')
+const question = ref('')
 const existingAnswers = ref([
   'Mktcode is a marketing automation tool.',
   'You can use Mktcode to automate your marketing campaigns.',
@@ -27,6 +27,9 @@ const topics = ref([
 const selectedTopic = ref('Marketing Automation')
 
 const showSuggestedAnswer = computed(() => question.value.length > 10)
+const suggestedAnswerWasUseful = ref<boolean | undefined>(undefined)
+
+const showSettingsModal = ref(false)
 
 type FaqResponse = {
   qanda: {
@@ -77,12 +80,15 @@ onMounted(async () => {
 
 <template>
   <div class="flex flex-col items-center justify-center gap-2 min-h-screen max-w-lg mx-auto py-12">
-    <div class="size-16 rounded-full bg-gray-100 mb-4 flex items-center justify-center">
+    <div class="size-16 rounded-full bg-gray-100 flex items-center justify-center">
       <UIcon
         name="i-heroicons-photo"
         class="size-7 opacity-25"
       />
     </div>
+    <h1 class="text-lg font-bold mb-4">
+      Markus Kottländer
+    </h1>
     <div class="w-full flex items-center justify-center gap-2 mb-4">
       <UButton
         icon="i-heroicons-information-circle"
@@ -101,11 +107,8 @@ onMounted(async () => {
         variant="soft"
       />
     </div>
-    <h3 class="text-2xl font-semibold">
-      Wie können wir Ihnen helfen?
-    </h3>
-    <p class="text-gray-600 mb-6">
-      Hier können Sie Ihre Fragen stellen oder Anliegen schildern. Wir werden Ihnen so schnell wie möglich antworten.
+    <p class="text-gray-500 mb-6 text-center">
+      Willkommen auf meiner FAQ-Seite! Hier finden Sie Antworten auf häufig gestellte Fragen zu meinen Dienstleistungen und Produkten. Wenn Sie Interesse haben, können Sie mir gerne eine Nachricht senden oder einen Termin vereinbaren.
     </p>
     <div class="w-full">
       <UTextarea
@@ -139,28 +142,31 @@ onMounted(async () => {
     <Transition name="fade">
       <div
         v-if="showSuggestedAnswer"
-        class="w-full p-3 bg-sky-50 rounded-lg flex flex-col text-sky-800 border border-sky-200"
+        class="w-full rounded-lg flex flex-col text-gray-800 mt-4"
       >
         <div class="text-sm text-sky-900/60 mb-2">
           Was ist der Sinn des Lebens?
         </div>
         {{ existingAnswers[0] }}
-        <div class="flex items-center justify-end gap-2 mt-4 text-sm text-sky-600">
-          Ist diese Antwort hilfreich?
+        <div class="flex items-center justify-end gap-2 mt-4 text-sm text-gray-400">
+          Beantwortet das Ihre Frage?
           <UButton
             label="Ja"
-            variant="soft"
+            :variant="suggestedAnswerWasUseful === true ? 'solid' : 'soft'"
             size="sm"
+            @click="suggestedAnswerWasUseful = true"
           />
           <UButton
             label="Nein"
-            variant="soft"
+            :variant="suggestedAnswerWasUseful === false ? 'solid' : 'soft'"
             size="sm"
+            @click="suggestedAnswerWasUseful = false"
           />
         </div>
       </div>
     </Transition>
     <UButton
+      v-if="question.length && (!showSuggestedAnswer || suggestedAnswerWasUseful === false)"
       label="Antwort erhalten"
       block
       :loading="isGeneratingResponse"
@@ -184,11 +190,11 @@ onMounted(async () => {
       </div>
     </TransitionGroup>
     <div
-      v-if="faqResponse.contactMessage"
+      v-if="faqResponse.contactMessage || suggestedAnswerWasUseful === true"
       class="w-full mt-6"
     >
       <h3 class="text-lg font-semibold mb-2">
-        Kontaktformular
+        {{ suggestedAnswerWasUseful === true ? 'Haben Sie weitere Fragen?' : 'Anfrage' }}
       </h3>
       <p class="text-gray-600 mb-4">
         Wenn Sie weitere Fragen haben oder Unterstützung benötigen, können Sie uns hier kontaktieren.
@@ -262,6 +268,16 @@ onMounted(async () => {
           {{ item.answer }}
         </p>
       </div>
+      <div class="flex gap-2 mt-4">
+        <UButton
+          label="Kontaktanfrage"
+          variant="soft"
+        />
+        <UButton
+          label="Termin"
+          variant="soft"
+        />
+      </div>
     </div>
     <div class="w-full flex gap-2 mt-12 text-sm">
       <UButton
@@ -270,6 +286,7 @@ onMounted(async () => {
         variant="ghost"
         color="neutral"
         size="md"
+        @click="showSettingsModal = true"
       >
         Einstellungen
       </UButton>
@@ -280,5 +297,6 @@ onMounted(async () => {
         Datenschutz
       </ULink>
     </div>
+    <SettingsModal v-model:show="showSettingsModal" />
   </div>
 </template>
