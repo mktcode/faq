@@ -1,22 +1,9 @@
 <script setup lang="ts">
-import type { Catalog, Qanda } from '~/types/db'
+import type { Qanda } from '~/types/db'
 
 const { clear } = useUserSession()
 
 const { data: me } = await useFetch('/api/user/me')
-
-const catalogs = ref<Catalog[]>([])
-const selectedCatalogId = ref<number | undefined>(undefined)
-const selectedCatalog = computed(() => {
-  return catalogs.value.find(catalog => catalog.id === selectedCatalogId.value)
-})
-const catalogItems = computed(() => {
-  return catalogs.value.map(catalog => ({
-    label: catalog.name,
-    value: catalog.id,
-  }))
-})
-
 const qanda = ref<Qanda[]>([])
 
 const showSettingsModal = ref(false)
@@ -31,27 +18,16 @@ function logout() {
 }
 
 onMounted(async () => {
-  const catalogsFromDb = await $fetch('/api/user/catalogs')
-  catalogs.value = catalogsFromDb || []
-  if (catalogs.value.length > 0) {
-    selectedCatalogId.value = catalogs.value[0].id
-  }
-
-  const qandaFromDb = await $fetch('/api/user/catalogs/qanda', {
-    query: {
-      catalogId: selectedCatalogId.value,
-    },
-  })
+  const qandaFromDb = await $fetch('/api/user/qanda')
   qanda.value = qandaFromDb || []
 })
 
 async function addNewQandA() {
-  if (!selectedCatalogId.value || !newQuestion.value || !newAnswer.value) {
+  if (!newQuestion.value || !newAnswer.value) {
     return
   }
 
   const payload = {
-    catalogId: selectedCatalogId.value,
     question: newQuestion.value,
     answer: newAnswer.value,
     topic: topic.value,
@@ -71,12 +47,6 @@ async function addNewQandA() {
 <template>
   <div class="flex flex-col items-center justify-center gap-2 h-screen max-w-lg mx-auto">
     <div class="w-full flex items-center gap-2">
-      <USelect
-        v-model="selectedCatalogId"
-        :items="catalogItems"
-        placeholder="Select a catalog"
-        class="flex-1"
-      />
       <UButton
         icon="i-heroicons-cog-6-tooth"
         variant="soft"
@@ -85,8 +55,8 @@ async function addNewQandA() {
     </div>
     <UButton
       v-if="me"
-      :to="`/ask/${me.userName}/${selectedCatalogId}`"
-      :label="`autofaq.com/ask/${me.userName}/${selectedCatalogId}`"
+      :to="`/ask/${me.userName}`"
+      :label="`autofaq.com/ask/${me.userName}`"
       trailing-icon="i-heroicons-arrow-right"
       variant="soft"
       block
@@ -132,10 +102,5 @@ async function addNewQandA() {
         @click="logout"
       />
     </div>
-    <CatalogSettingsModal
-      v-if="selectedCatalog"
-      v-model:show="showSettingsModal"
-      :catalog="selectedCatalog"
-    />
   </div>
 </template>

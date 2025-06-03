@@ -1,18 +1,22 @@
 import { z } from 'zod'
 
 const querySchema = z.object({
-  catalogId: z.string(),
-}).transform(query => ({
-  catalogId: parseInt(query.catalogId, 10),
-}))
+  username: z.string(),
+})
 
 export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
-  const { catalogId } = await getValidatedQuery(event, query => querySchema.parse(query))
+  const { username } = await getValidatedQuery(event, query => querySchema.parse(query))
+
+  const user = await db
+    .selectFrom('users')
+    .selectAll()
+    .where('userName', '=', username)
+    .executeTakeFirstOrThrow()
 
   return await db
     .selectFrom('qanda')
     .selectAll()
-    .where('catalogId', '=', catalogId)
+    .where('userId', '=', user.id)
     .execute()
 })

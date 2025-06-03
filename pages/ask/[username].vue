@@ -5,7 +5,6 @@ definePageMeta({
   validate: async (route) => {
     return (
       typeof route.params.username === 'string' && /^\w+$/.test(route.params.username)
-      && typeof route.params.catalogId === 'string' && /^\d+$/.test(route.params.catalogId)
     )
   },
 })
@@ -68,7 +67,7 @@ async function generateResponse() {
 onMounted(async () => {
   const data = await $fetch(`/api/qanda`, {
     query: {
-      catalogId: route.params.catalogId,
+      username: route.params.username,
     },
   })
 
