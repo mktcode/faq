@@ -52,6 +52,12 @@ onMounted(async () => {
         icon="i-lucide-instagram"
         variant="soft"
       />
+      <UButton
+        icon="i-heroicons-cog-6-tooth"
+        variant="ghost"
+        color="neutral"
+        class="opacity-60"
+      />
     </div>
     <h3 class="text-2xl font-semibold mb-4">
       Wie können wir Ihnen helfen?
