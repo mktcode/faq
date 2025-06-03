@@ -246,6 +246,7 @@ onMounted(async () => {
         variant="soft"
       />
       <USelect
+        v-if="qanda.length > 0"
         v-model="selectedTopic"
         :items="topics"
       />
@@ -260,12 +261,6 @@ onMounted(async () => {
         <p class="text-gray-600">
           {{ item.answer }}
         </p>
-      </div>
-      <div class="flex items-center justify-center gap-2 mt-4">
-        <UButton
-          label="Kontakt"
-          icon="i-heroicons-envelope"
-        />
       </div>
     </div>
     <div class="w-full flex gap-2 mt-12 text-sm">
