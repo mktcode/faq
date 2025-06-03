@@ -1,10 +1,16 @@
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const { user } = await getUserSession(event)
   const db = await getDatabaseConnection()
 
-  return await db
+  if (!user) {
+    return null
+  }
+
+  const userInDb = await db
     .selectFrom('users')
     .selectAll()
     .where('id', '=', user.id)
-    .executeTakeFirstOrThrow()
+    .executeTakeFirst()
+
+  return userInDb || null
 })
