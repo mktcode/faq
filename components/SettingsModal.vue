@@ -17,12 +17,68 @@ const info = ref('')
   >
     <template #body>
       <div class="flex flex-col gap-4">
-        <div class="size-24 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
-          <UIcon
-            name="i-heroicons-camera"
-            class="text-gray-300"
-            size="40"
+        <UButton
+          icon="i-heroicons-photo"
+          variant="soft"
+          color="neutral"
+          block
+          class="size-20 rounded-full mx-auto"
+        />
+        <div class="flex flex-col gap-2">
+          <UButton
+            icon="i-heroicons-photo"
+            variant="soft"
+            color="neutral"
+            block
           />
+          <div class="flex items-center justify-end gap-2">
+            <div class="text-sm text-gray-500">
+              Höhe:
+            </div>
+            <UInputNumber
+              :model-value="100"
+              placeholder="Höhe"
+              size="md"
+              class="w-24"
+            />
+            <USelect
+              class="w-32"
+              size="md"
+              :model-value="'full-width'"
+              :items="[
+                { label: 'Ganze Breite', value: 'full-width' },
+                { label: 'Zentriert', value: 'centered' },
+              ]"
+            />
+          </div>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <UButton
+              icon="i-heroicons-information-circle"
+              variant="soft"
+            />
+            <UInput
+              placeholder="https://..."
+              class="flex-1"
+            />
+            <UButton
+              icon="i-heroicons-trash"
+              variant="ghost"
+              color="neutral"
+            />
+          </div>
+          <div class="flex items-center gap-2">
+            <UButton
+              icon="i-heroicons-plus"
+              variant="soft"
+            />
+            <UInput
+              placeholder="https://..."
+              class="flex-1 opacity-40"
+              disabled
+            />
+          </div>
         </div>
         <UFormField label="Name">
           <UInput

@@ -127,12 +127,22 @@ appConfig.ui.colors.primary = 'sky'
         Willkommen auf meiner FAQ-Seite! Hier finden Sie Antworten auf häufig gestellte Fragen zu meinen Dienstleistungen und Produkten. Wenn Sie Interesse haben, können Sie mir gerne eine Nachricht senden oder einen Termin vereinbaren.
       </p>
       <div class="w-full">
+        <USelect
+          v-model="selectedTopic"
+          :items="topics"
+          class="w-full"
+          size="md"
+          placeholder="Thema auswählen"
+          :ui="{
+            base: '!bg-gray-50 text-gray-400 hover:text-gray-600 rounded-b-none px-3 pt-3',
+          }"
+        />
         <UTextarea
           v-model="question"
           placeholder="Ihr Anliegen oder Ihre Fragen"
           class="w-full"
           :ui="{
-            base: 'rounded-b-none text-xl p-3',
+            base: 'rounded-b-none rounded-t-none text-xl p-3 !bg-gray-50',
           }"
         />
         <div class="bg-gray-100 rounded-b-lg p-2 flex items-center gap-2">
@@ -165,31 +175,13 @@ appConfig.ui.colors.primary = 'sky'
           </div>
           {{ existingAnswers[0] }}
           <div
-            v-if="isGeneratingNewAnswer"
-            class="text-sm text-gray-400 mt-4 flex items-center justify-end"
-          >
-            Suche nach Informationen...
-            <UIcon
-              name="i-heroicons-arrow-path"
-              class="animate-spin inline-block ml-2"
-            />
-          </div>
-          <div
-            v-else
             class="flex items-center justify-end gap-2 mt-4 text-sm text-gray-400"
           >
-            Ist diese Antwort Hilfreich?
             <UButton
-              label="Ja"
-              :variant="suggestedAnswerWasUseful === true ? 'solid' : 'soft'"
-              size="sm"
-              @click="suggestedAnswerWasUseful = true"
-            />
-            <UButton
-              label="Nein"
-              :variant="suggestedAnswerWasUseful === false ? 'solid' : 'soft'"
-              size="sm"
-              @click="suggestedAnswerWasUseful = false"
+              icon="i-heroicons-hand-thumb-up"
+              :variant="suggestedAnswerWasUseful === true ? 'solid' : 'ghost'"
+              size="md"
+              @click="suggestedAnswerWasUseful = !suggestedAnswerWasUseful"
             />
           </div>
         </div>
@@ -302,7 +294,10 @@ appConfig.ui.colors.primary = 'sky'
           </p>
         </div>
       </div>
-      <div class="text-yellow-500 text-2xl mt-12 mb-4">
+      <h3 class="text-2xl font-semibold mt-12">
+        Bewertungen
+      </h3>
+      <div class="text-yellow-500 text-2xl mb-4">
         <UIcon name="i-heroicons-star-solid" />
         <UIcon name="i-heroicons-star-solid" />
         <UIcon name="i-heroicons-star-solid" />
