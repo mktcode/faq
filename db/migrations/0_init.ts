@@ -60,7 +60,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .execute()
 
   // Add questionEmbedding vector(1536) column
-  await sql`ALTER TABLE qanda ADD COLUMN questionEmbedding vector(1536) NOT NULL`
+  await sql`ALTER TABLE qanda ADD COLUMN questionEmbedding vector(3) NOT NULL`
     .execute(db)
 }
 

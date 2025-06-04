@@ -41,6 +41,7 @@ watch(suggestedAnswerWasUseful, (newValue, oldValue) => {
 })
 
 const showSettingsModal = ref(false)
+const showNewQandaModal = ref(false)
 
 type FaqResponse = {
   qanda: {
@@ -275,6 +276,7 @@ appConfig.ui.colors.primary = 'sky'
           label="Frage und Antwort hinzufügen"
           icon="i-heroicons-plus"
           variant="soft"
+          @click="showNewQandaModal = true"
         />
         <USelect
           v-if="qanda.length > 0"
@@ -329,6 +331,7 @@ appConfig.ui.colors.primary = 'sky'
         </ULink>
       </div>
       <SettingsModal v-model:show="showSettingsModal" />
+      <NewQandaModal v-model:show="showNewQandaModal" />
       <ClientOnly>
         <WelcomeModal />
       </ClientOnly>

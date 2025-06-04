@@ -1,3 +1,4 @@
+import { sql } from 'kysely'
 import { qandaFormSchema } from '~/types/db/qanda'
 
 export default defineEventHandler(async (event) => {
@@ -18,15 +19,8 @@ export default defineEventHandler(async (event) => {
       .execute()
   }
   else {
-    await db
-      .insertInto('qanda')
-      .values({
-        userId: user.id,
-        question,
-        answer,
-        topic,
-      })
-      .execute()
+    await sql`INSERT INTO qanda (userId, question, questionEmbedding, answer, topic) VALUES (${user.id}, ${question}, VEC_FromText('[0.3, 0.5, 0.2]'), ${answer}, ${topic})`
+      .execute(db)
   }
 
   return { success: true }
