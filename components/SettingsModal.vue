@@ -41,25 +41,74 @@ const info = ref('')
             class="w-full"
           />
         </UFormField>
+        <UFormField
+          label="E-Mail"
+          description="Diese E-Mail wird für Benachrichtigungen und Anfragen verwendet."
+        >
+          <UInput
+            placeholder="Ihre E-Mail-Adresse"
+            class="w-full"
+          />
+        </UFormField>
+        <UFormField
+          label="Telefon"
+          description="Diese Nummer wird für Anfragen verwendet."
+        >
+          <UInput
+            placeholder="Ihre Telefonnummer"
+            class="w-full"
+          />
+        </UFormField>
+        <UFormField
+          label="Bevorzugter Kontaktweg"
+          description="Sollen Interessenten Sie per E-Mail oder lieber per Telefon kontaktieren?"
+        >
+          <USelect
+            class="w-full"
+            :items="[
+              { label: 'E-Mail', value: 'email' },
+              { label: 'Telefon', value: 'phone' },
+            ]"
+          />
+        </UFormField>
         <div class="flex gap-2">
           <ColorPicker />
-          <FontPicker />
+          <UFormField
+            label="Stil"
+            class="flex-1"
+          >
+            <USelect
+              class="w-full"
+              :items="[
+                { label: 'Rund', value: 'round' },
+                { label: 'Eckig', value: 'square' },
+              ]"
+            />
+          </UFormField>
         </div>
-        <div>
+        <FontPicker />
+        <UFormField
+          label="Google Bewertungen"
+          description="Verbinde dich mit Google und wähle Bewertungen aus, die unter deinem FAQ stehen sollen."
+        >
           <USwitch
-            label="Google Bewertungen anzeigen"
-            description="Verbinde dich mit Google und wähle Bewertungen aus, die unter deinem FAQ stehen sollen."
+            label="Sterne anzeigen"
+            class="mt-3"
+          />
+          <USwitch
+            label="Bewertungen anzeigen"
+            class="mt-3"
           />
           <div
             v-if="user?.googleId"
-            class="flex items-center gap-2 text-sm text-gray-500 ml-10 mt-2"
+            class="flex items-center gap-2 text-sm text-gray-500 mt-2"
           >
             <USelect
               :items="[{ label: 'Ich war sehr zufrieden mit der Beratung', value: 'google-review-1' }]"
               class="w-full"
             />
           </div>
-        </div>
+        </UFormField>
       </div>
     </template>
   </UModal>
