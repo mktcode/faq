@@ -87,216 +87,256 @@ onMounted(async () => {
 
   qanda.value = data as Qanda[]
 })
+
+const appConfig = useAppConfig()
+const font = 'roboto'
+appConfig.ui.colors.primary = 'sky'
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center gap-2 min-h-screen max-w-lg mx-auto py-12">
-    <div class="size-16 rounded-full bg-gray-100 flex items-center justify-center">
-      <UIcon
-        name="i-heroicons-photo"
-        class="size-7 opacity-25"
-      />
-    </div>
-    <h1 class="text-lg font-bold mb-4">
-      Markus Kottländer
-    </h1>
-    <div class="w-full flex items-center justify-center gap-2 mb-4">
-      <UButton
-        icon="i-heroicons-information-circle"
-        variant="soft"
-      />
-      <UButton
-        icon="i-heroicons-calendar-days"
-        variant="soft"
-      />
-      <UButton
-        icon="i-heroicons-shopping-cart"
-        variant="soft"
-      />
-      <UButton
-        icon="i-lucide-instagram"
-        variant="soft"
-      />
-    </div>
-    <p class="text-gray-500 mb-6 text-center">
-      Willkommen auf meiner FAQ-Seite! Hier finden Sie Antworten auf häufig gestellte Fragen zu meinen Dienstleistungen und Produkten. Wenn Sie Interesse haben, können Sie mir gerne eine Nachricht senden oder einen Termin vereinbaren.
-    </p>
-    <div class="w-full">
-      <UTextarea
-        v-model="question"
-        placeholder="Ihr Anliegen oder Ihre Fragen"
-        class="w-full"
-        :ui="{
-          base: 'rounded-b-none text-xl p-3',
-        }"
-      />
-      <div class="bg-gray-100 rounded-b-lg p-2 flex items-center gap-2">
-        <Transition name="fade">
-          <div v-if="question">
-            <UButton
-              icon="i-heroicons-x-mark"
-              label="leeren"
-              class="mr-auto opacity-60 hover:opacity-100"
-              variant="ghost"
-              color="neutral"
-              @click="question = ''"
-            />
-          </div>
-        </Transition>
+  <FontWrapper :font="font">
+    <div class="flex flex-col items-center justify-center gap-2 min-h-screen max-w-lg mx-auto py-12">
+      <div class="size-16 rounded-full bg-gray-100 flex items-center justify-center">
+        <UIcon
+          name="i-heroicons-photo"
+          class="size-7 opacity-25"
+        />
+      </div>
+      <h1 class="text-lg font-bold mb-4">
+        Markus Kottländer
+      </h1>
+      <div class="w-full flex items-center justify-center gap-2 mb-4">
         <UButton
-          icon="i-heroicons-microphone"
-          class="ml-auto"
+          icon="i-heroicons-information-circle"
+          variant="soft"
+        />
+        <UButton
+          icon="i-heroicons-calendar-days"
+          variant="soft"
+        />
+        <UButton
+          icon="i-heroicons-shopping-cart"
+          variant="soft"
+        />
+        <UButton
+          icon="i-lucide-instagram"
           variant="soft"
         />
       </div>
-    </div>
-    <Transition name="fade">
-      <div
-        v-if="showSuggestedAnswer"
-        class="w-full rounded-lg flex flex-col text-gray-800 my-2 border border-gray-200 p-4"
-      >
-        <div class="text-sm text-sky-900/60 mb-2">
-          Was ist der Sinn des Lebens?
+      <p class="text-gray-500 mb-6 text-center">
+        Willkommen auf meiner FAQ-Seite! Hier finden Sie Antworten auf häufig gestellte Fragen zu meinen Dienstleistungen und Produkten. Wenn Sie Interesse haben, können Sie mir gerne eine Nachricht senden oder einen Termin vereinbaren.
+      </p>
+      <div class="w-full">
+        <UTextarea
+          v-model="question"
+          placeholder="Ihr Anliegen oder Ihre Fragen"
+          class="w-full"
+          :ui="{
+            base: 'rounded-b-none text-xl p-3',
+          }"
+        />
+        <div class="bg-gray-100 rounded-b-lg p-2 flex items-center gap-2">
+          <Transition name="fade">
+            <div v-if="question">
+              <UButton
+                icon="i-heroicons-x-mark"
+                label="leeren"
+                class="mr-auto opacity-60 hover:opacity-100"
+                variant="ghost"
+                color="neutral"
+                @click="question = ''"
+              />
+            </div>
+          </Transition>
+          <UButton
+            icon="i-heroicons-microphone"
+            class="ml-auto"
+            variant="soft"
+          />
         </div>
-        {{ existingAnswers[0] }}
+      </div>
+      <Transition name="fade">
         <div
-          v-if="isGeneratingNewAnswer"
-          class="text-sm text-gray-400 mt-4 flex items-center justify-end"
+          v-if="showSuggestedAnswer"
+          class="w-full rounded-lg flex flex-col text-gray-800 my-2 border border-gray-200 p-4"
         >
-          Suche nach Informationen...
+          <div class="text-sm text-sky-900/60 mb-2">
+            Was ist der Sinn des Lebens?
+          </div>
+          {{ existingAnswers[0] }}
+          <div
+            v-if="isGeneratingNewAnswer"
+            class="text-sm text-gray-400 mt-4 flex items-center justify-end"
+          >
+            Suche nach Informationen...
+            <UIcon
+              name="i-heroicons-arrow-path"
+              class="animate-spin inline-block ml-2"
+            />
+          </div>
+          <div
+            v-else
+            class="flex items-center justify-end gap-2 mt-4 text-sm text-gray-400"
+          >
+            Ist diese Antwort Hilfreich?
+            <UButton
+              label="Ja"
+              :variant="suggestedAnswerWasUseful === true ? 'solid' : 'soft'"
+              size="sm"
+              @click="suggestedAnswerWasUseful = true"
+            />
+            <UButton
+              label="Nein"
+              :variant="suggestedAnswerWasUseful === false ? 'solid' : 'soft'"
+              size="sm"
+              @click="suggestedAnswerWasUseful = false"
+            />
+          </div>
+        </div>
+      </Transition>
+      <Transition name="fade">
+        <UInput
+          v-if="question.length > 5"
+          placeholder="Name"
+          class="w-full"
+        />
+      </Transition>
+      <Transition name="fade">
+        <UInput
+          v-if="question.length > 5"
+          placeholder="Telefon"
+          class="w-full"
+        />
+      </Transition>
+      <Transition name="fade">
+        <UInput
+          v-if="question.length > 5"
+          placeholder="E-Mail"
+          class="w-full"
+        />
+      </Transition>
+      <Transition name="fade">
+        <UButton
+          v-if="question.length > 5"
+          label="Anfrage senden"
+          block
+          :loading="isGeneratingResponse"
+          @click="generateResponse"
+        />
+      </Transition>
+      <TransitionGroup
+        name="fade"
+        tag="div"
+        class="w-full mt-6 flex flex-col gap-4"
+      >
+        <div
+          v-for="(item, index) in faqResponse.qanda"
+          :key="index"
+        >
+          <h3 class="text-lg font-semibold">
+            {{ item.question }}
+          </h3>
+          <p class="text-gray-600">
+            {{ item.answer }}
+          </p>
+        </div>
+      </TransitionGroup>
+      <div class="flex flex-col gap-4 w-full mt-6">
+        <h3 class="text-2xl font-semibold">
+          {{ showSuggestedAnswer ? 'Weitere Antworten' : 'Häufig gestellte Fragen' }}
+        </h3>
+        <h4 class="text-sky-500 text-sm bg-sky-100 p-3 rounded-lg flex items-center gap-2">
           <UIcon
-            name="i-heroicons-arrow-path"
-            class="animate-spin inline-block ml-2"
+            name="i-heroicons-light-bulb"
+            size="24"
           />
-        </div>
+          Es wurden neue Antworten aus Ihren Dokumenten erzeugt, die Sie übernehmen oder bearbeiten können.
+        </h4>
         <div
-          v-else
-          class="flex items-center justify-end gap-2 mt-4 text-sm text-gray-400"
+          class="w-full rounded-lg flex flex-col text-gray-800 my-2 border border-gray-200 p-4"
         >
-          Ist diese Antwort Hilfreich?
-          <UButton
-            label="Ja"
-            :variant="suggestedAnswerWasUseful === true ? 'solid' : 'soft'"
-            size="sm"
-            @click="suggestedAnswerWasUseful = true"
-          />
-          <UButton
-            label="Nein"
-            :variant="suggestedAnswerWasUseful === false ? 'solid' : 'soft'"
-            size="sm"
-            @click="suggestedAnswerWasUseful = false"
-          />
+          <div class="text-sm text-sky-900/60 mb-2">
+            Was ist der Sinn des Lebens?
+          </div>
+          {{ existingAnswers[0] }}
+          <div
+            class="flex items-center justify-end gap-2 mt-4 text-sm text-gray-400"
+          >
+            <UButton
+              label="Übernehmen"
+              icon="i-heroicons-check"
+              variant="soft"
+            />
+            <UButton
+              label="Bearbeiten"
+              icon="i-heroicons-pencil-square"
+              variant="soft"
+            />
+            <UButton
+              label="Verwerfen"
+              icon="i-heroicons-x-mark"
+              variant="soft"
+            />
+          </div>
+        </div>
+        <UButton
+          label="Frage und Antwort hinzufügen"
+          icon="i-heroicons-plus"
+          variant="soft"
+        />
+        <USelect
+          v-if="qanda.length > 0"
+          v-model="selectedTopic"
+          :items="topics"
+        />
+        <div
+          v-for="item in qanda"
+          :key="item.question"
+          class="p-4 bg-white rounded-lg border border-gray-200"
+        >
+          <h3 class="text-lg font-semibold">
+            {{ item.question }}
+          </h3>
+          <p class="text-gray-600">
+            {{ item.answer }}
+          </p>
         </div>
       </div>
-    </Transition>
-    <Transition name="fade">
-      <UInput
-        v-if="question.length > 5"
-        placeholder="Name"
-        class="w-full"
-      />
-    </Transition>
-    <Transition name="fade">
-      <UInput
-        v-if="question.length > 5"
-        placeholder="Telefon"
-        class="w-full"
-      />
-    </Transition>
-    <Transition name="fade">
-      <UInput
-        v-if="question.length > 5"
-        placeholder="E-Mail"
-        class="w-full"
-      />
-    </Transition>
-    <Transition name="fade">
-      <UButton
-        v-if="question.length > 5"
-        label="Anfrage senden"
-        block
-        :loading="isGeneratingResponse"
-        @click="generateResponse"
-      />
-    </Transition>
-    <TransitionGroup
-      name="fade"
-      tag="div"
-      class="w-full mt-6 flex flex-col gap-4"
-    >
-      <div
-        v-for="(item, index) in faqResponse.qanda"
-        :key="index"
-      >
-        <h3 class="text-lg font-semibold">
-          {{ item.question }}
-        </h3>
-        <p class="text-gray-600">
-          {{ item.answer }}
-        </p>
+      <div class="text-yellow-500 text-2xl mt-12 mb-4">
+        <UIcon name="i-heroicons-star-solid" />
+        <UIcon name="i-heroicons-star-solid" />
+        <UIcon name="i-heroicons-star-solid" />
+        <UIcon name="i-heroicons-star-solid" />
+        <UIcon
+          name="i-heroicons-star-solid"
+          class="opacity-30"
+        />
       </div>
-    </TransitionGroup>
-    <div class="flex flex-col gap-4 w-full mt-6">
-      <h3 class="text-2xl font-semibold">
-        {{ showSuggestedAnswer ? 'Weitere Antworten' : 'Häufig gestellte Fragen' }}
-      </h3>
-      <UButton
-        label="Frage und Antwort hinzufügen"
-        icon="i-heroicons-plus"
-        variant="soft"
-      />
-      <USelect
-        v-if="qanda.length > 0"
-        v-model="selectedTopic"
-        :items="topics"
-      />
-      <div
-        v-for="item in qanda"
-        :key="item.question"
-        class="p-4 bg-white rounded-lg border border-gray-200"
-      >
-        <h3 class="text-lg font-semibold">
-          {{ item.question }}
-        </h3>
-        <p class="text-gray-600">
-          {{ item.answer }}
-        </p>
+      <div class="italic text-gray-500 text-sm mb-4">
+        "AutoFAQ ist ein großartiges Tool, um meine Kundenanfragen zu verwalten. Es spart mir viel Zeit und hilft mir, professionell zu wirken." - Markus Kottländer
       </div>
+      <div class="w-full flex gap-2 mt-12 text-sm">
+        <UButton
+          class="text-gray-400 mr-auto"
+          icon="i-heroicons-cog-6-tooth"
+          variant="ghost"
+          color="neutral"
+          size="md"
+          @click="showSettingsModal = true"
+        >
+          Einstellungen
+        </UButton>
+        <ULink class="text-gray-400">
+          Impressum
+        </ULink>
+        <ULink class="text-gray-400">
+          Datenschutz
+        </ULink>
+      </div>
+      <SettingsModal v-model:show="showSettingsModal" />
+      <ClientOnly>
+        <WelcomeModal />
+      </ClientOnly>
     </div>
-    <div class="text-yellow-500 text-2xl mt-12 mb-4">
-      <UIcon name="i-heroicons-star-solid" />
-      <UIcon name="i-heroicons-star-solid" />
-      <UIcon name="i-heroicons-star-solid" />
-      <UIcon name="i-heroicons-star-solid" />
-      <UIcon
-        name="i-heroicons-star-solid"
-        class="opacity-30"
-      />
-    </div>
-    <div class="italic text-gray-500 text-sm mb-4">
-      "AutoFAQ ist ein großartiges Tool, um meine Kundenanfragen zu verwalten. Es spart mir viel Zeit und hilft mir, professionell zu wirken." - Markus Kottländer
-    </div>
-    <div class="w-full flex gap-2 mt-12 text-sm">
-      <UButton
-        class="text-gray-400 mr-auto"
-        icon="i-heroicons-cog-6-tooth"
-        variant="ghost"
-        color="neutral"
-        size="md"
-        @click="showSettingsModal = true"
-      >
-        Einstellungen
-      </UButton>
-      <ULink class="text-gray-400">
-        Impressum
-      </ULink>
-      <ULink class="text-gray-400">
-        Datenschutz
-      </ULink>
-    </div>
-    <SettingsModal v-model:show="showSettingsModal" />
-    <ClientOnly>
-      <WelcomeModal />
-    </ClientOnly>
-  </div>
+  </FontWrapper>
 </template>

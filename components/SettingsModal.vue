@@ -15,6 +15,13 @@ const info = ref('')
   >
     <template #body>
       <div class="flex flex-col gap-4">
+        <div class="size-24 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
+          <UIcon
+            name="i-heroicons-camera"
+            class="text-gray-300"
+            size="40"
+          />
+        </div>
         <UFormField label="Name">
           <UInput
             v-model="name"
@@ -23,8 +30,8 @@ const info = ref('')
           />
         </UFormField>
         <UFormField
-          label="Information"
-          description="This information will be displayed on your profile page."
+          label="Willkommenstext"
+          description="Dieser Text wird auf deiner Profilseite angezeigt."
         >
           <UTextarea
             v-model="info"
@@ -32,9 +39,13 @@ const info = ref('')
             class="w-full"
           />
         </UFormField>
-        <UButton
-          label="Update"
-          class="w-full"
+        <div class="flex gap-2">
+          <ColorPicker />
+          <FontPicker />
+        </div>
+        <USwitch
+          label="Google Bewertungen anzeigen"
+          description="Verbinde dich mit Google und wähle Bewertungen aus, die unter deinem FAQ stehen sollen."
         />
       </div>
     </template>
