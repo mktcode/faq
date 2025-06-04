@@ -19,7 +19,14 @@ export default defineEventHandler(async (event) => {
       .execute()
   }
   else {
-    await sql`INSERT INTO qanda (userId, question, questionEmbedding, answer, topic) VALUES (${user.id}, ${question}, VEC_FromText('[0.3, 0.5, 0.2]'), ${answer}, ${topic})`
+    const openai = createOpenAIClient()
+    const embedding = await openai.embeddings.create({
+      model: 'text-embedding-3-small',
+      input: 'Your text string goes here',
+      encoding_format: 'float',
+    })
+
+    await sql`INSERT INTO qanda (userId, question, questionEmbedding, answer, topic) VALUES (${user.id}, ${question}, VEC_FromText(${JSON.stringify(embedding.data[0].embedding)}), ${answer}, ${topic})`
       .execute(db)
   }
 
