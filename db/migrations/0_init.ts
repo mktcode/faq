@@ -49,24 +49,19 @@ export async function up(db: Kysely<any>): Promise<void> {
   // App
 
   await db.schema
-    .createTable('catalogs')
-    .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
-    .addColumn('userId', 'integer', col => col.notNull())
-    .addColumn('name', 'text', col => col.notNull())
-    .addColumn('info', 'text', col => col.notNull())
-    .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
-    .execute()
-
-  await db.schema
     .createTable('qanda')
     .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
     .addColumn('userId', 'integer', col => col.notNull())
-    .addColumn('catalogId', 'integer', col => col.notNull())
     .addColumn('topic', 'text')
     .addColumn('question', 'text', col => col.notNull())
+    // .addColumn('questionEmbedding', 'vector(1536)', col => col.notNull())
     .addColumn('answer', 'text', col => col.notNull())
     .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
     .execute()
+
+  // Add questionEmbedding vector(1536) column
+  await sql`ALTER TABLE qanda ADD COLUMN questionEmbedding vector(1536) NOT NULL`
+    .execute(db)
 }
 
 export async function down(db: Kysely<any>): Promise<void> {
