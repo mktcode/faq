@@ -34,7 +34,6 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     databaseUrl: process.env.DATABASE_URL,
-    ipHashSalt: process.env.IP_HASH_SALT,
     openaiApiKey: process.env.OPENAI_API_KEY,
     s3AccessKey: process.env.S3_ACCESS_KEY,
     s3SecretKey: process.env.S3_SECRET_KEY,
@@ -52,8 +51,6 @@ export default defineNuxtConfig({
     },
     public: {
       s3Endpoint: process.env.S3_ENDPOINT,
-      appUrl: process.env.APP_URL || 'http://localhost:3000',
-      appIp: process.env.APP_IP,
       stripeApiKey: process.env.STRIPE_API_KEY,
     },
   },
