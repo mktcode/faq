@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { user } = useUserSession()
+
 const showModal = defineModel('show', {
   default: true,
   type: Boolean,
@@ -43,10 +45,21 @@ const info = ref('')
           <ColorPicker />
           <FontPicker />
         </div>
-        <USwitch
-          label="Google Bewertungen anzeigen"
-          description="Verbinde dich mit Google und wähle Bewertungen aus, die unter deinem FAQ stehen sollen."
-        />
+        <div>
+          <USwitch
+            label="Google Bewertungen anzeigen"
+            description="Verbinde dich mit Google und wähle Bewertungen aus, die unter deinem FAQ stehen sollen."
+          />
+          <div
+            v-if="user?.googleId"
+            class="flex items-center gap-2 text-sm text-gray-500 ml-10 mt-2"
+          >
+            <USelect
+              :items="[{ label: 'Ich war sehr zufrieden mit der Beratung', value: 'google-review-1' }]"
+              class="w-full"
+            />
+          </div>
+        </div>
       </div>
     </template>
   </UModal>

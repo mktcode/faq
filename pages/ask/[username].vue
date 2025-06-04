@@ -250,7 +250,7 @@ appConfig.ui.colors.primary = 'sky'
             name="i-heroicons-light-bulb"
             size="24"
           />
-          Es wurden neue Antworten aus Ihren Dokumenten erzeugt, die Sie übernehmen oder bearbeiten können.
+          Es wurden neue Antworten aus Ihren Dokumenten erzeugt, die Besucher hilfreich fanden. Prüfen und übernehmen Sie diese in Ihr FAQ.
         </h4>
         <div
           class="w-full rounded-lg flex flex-col text-gray-800 my-2 border border-gray-200 p-4"
