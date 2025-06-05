@@ -18,7 +18,10 @@ const showModal = useLocalStorage<boolean>('welcome', true)
           Du kannst hier Informationen zu deinem Unternehmen und Antworten auf häufige Fragen angeben, die dann auf deiner Profilseite angezeigt werden.
         </p>
         <p class="text-center text-gray-600">
-          Weitere Fragen beantwortet AutoFAQ automatisch aus den von dir hochgeladenen Dokumenten und bereitet Anfragen so vor, dass du keine Frage zweimal beantworten musst.
+          Weitere Fragen von Interessenten beantwortet AutoFAQ automatisch aus Dokumenten, die du hochladen kannst, und bereitet Anfragen so vor, dass du keine Frage zweimal beantworten musst.
+        </p>
+        <p class="text-center text-gray-600">
+          Zeige deine Google Bewertungen und verlinke ein Buchungstool oder deinen Kleinanzeigen-Shop.
         </p>
         <UButton
           label="Loslegen"
