@@ -17,13 +17,6 @@ const existingAnswers = ref([
   'Mktcode is a marketing automation tool.',
   'You can use Mktcode to automate your marketing campaigns.',
 ])
-const topics = ref([
-  'Marketing Automation',
-  'Social Media Marketing',
-  'Content Marketing',
-  'Email Marketing',
-  'SEO',
-])
 const selectedTopic = ref('Marketing Automation')
 
 const showSuggestedAnswer = computed(() => question.value.length > 10)
@@ -134,22 +127,12 @@ appConfig.ui.colors.primary = 'sky'
         {{ currentSettings?.description || 'Stellen Sie Ihre Fragen und erhalten Sie Antworten.' }}
       </p>
       <div class="w-full">
-        <USelect
-          v-model="selectedTopic"
-          :items="topics"
-          class="w-full"
-          size="md"
-          placeholder="Thema auswählen"
-          :ui="{
-            base: '!bg-gray-50 text-gray-400 hover:text-gray-600 rounded-b-none px-3 pt-3',
-          }"
-        />
         <UTextarea
           v-model="question"
           placeholder="Ihr Anliegen oder Ihre Fragen"
           class="w-full"
           :ui="{
-            base: 'rounded-b-none rounded-t-none text-xl p-3 !bg-gray-50',
+            base: 'rounded-b-none text-xl p-3 !bg-gray-50',
           }"
         />
         <div class="bg-gray-100 rounded-b-lg p-2 flex items-center gap-2">
@@ -249,11 +232,6 @@ appConfig.ui.colors.primary = 'sky'
           icon="i-heroicons-plus"
           variant="soft"
           @click="showNewQandaModal = true"
-        />
-        <USelect
-          v-if="qanda.length > 0"
-          v-model="selectedTopic"
-          :items="topics"
         />
         <div
           v-for="item in qanda"
