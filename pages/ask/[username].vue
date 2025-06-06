@@ -251,33 +251,6 @@ appConfig.ui.colors.primary = 'sky'
           />
           Es wurden neue Antworten aus Ihren Dokumenten erzeugt, die Besucher hilfreich fanden. Prüfen und übernehmen Sie diese in Ihr FAQ.
         </h4>
-        <div
-          class="w-full rounded-lg flex flex-col text-gray-800 my-2 border border-gray-200 p-4"
-        >
-          <div class="text-sm text-sky-900/60 mb-2">
-            Was ist der Sinn des Lebens?
-          </div>
-          {{ existingAnswers[0] }}
-          <div
-            class="flex items-center justify-end gap-2 mt-4 text-sm text-gray-400"
-          >
-            <UButton
-              label="Übernehmen"
-              icon="i-heroicons-check"
-              variant="soft"
-            />
-            <UButton
-              label="Bearbeiten"
-              icon="i-heroicons-pencil-square"
-              variant="soft"
-            />
-            <UButton
-              label="Verwerfen"
-              icon="i-heroicons-x-mark"
-              variant="soft"
-            />
-          </div>
-        </div>
         <UButton
           label="Frage und Antwort hinzufügen"
           icon="i-heroicons-plus"
@@ -302,22 +275,7 @@ appConfig.ui.colors.primary = 'sky'
           </p>
         </div>
       </div>
-      <h3 class="text-2xl font-semibold mt-12">
-        Bewertungen
-      </h3>
-      <div class="text-yellow-500 text-2xl mb-4">
-        <UIcon name="i-heroicons-star-solid" />
-        <UIcon name="i-heroicons-star-solid" />
-        <UIcon name="i-heroicons-star-solid" />
-        <UIcon name="i-heroicons-star-solid" />
-        <UIcon
-          name="i-heroicons-star-solid"
-          class="opacity-30"
-        />
-      </div>
-      <div class="italic text-gray-500 text-sm mb-4">
-        "AutoFAQ ist ein großartiges Tool, um meine Kundenanfragen zu verwalten. Es spart mir viel Zeit und hilft mir, professionell zu wirken." - Markus Kottländer
-      </div>
+      <GoogleReviews v-if="currentSettings?.showGoogleReviews" />
       <div class="w-full flex gap-2 mt-12 text-sm">
         <UButton
           class="text-gray-400 mr-auto"
@@ -336,7 +294,10 @@ appConfig.ui.colors.primary = 'sky'
           Datenschutz
         </ULink>
       </div>
-      <SettingsModal v-model:show="showSettingsModal" @update="refreshSettings" />
+      <SettingsModal
+        v-model:show="showSettingsModal"
+        @update="refreshSettings"
+      />
       <NewQandaModal v-model:show="showNewQandaModal" />
       <ClientOnly>
         <WelcomeModal />

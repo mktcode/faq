@@ -14,6 +14,7 @@ const { data: currentSettings } = await useFetch(`/api/user/settings`)
 const form = ref({
   title: currentSettings.value?.title || '',
   description: currentSettings.value?.description || '',
+  showGoogleReviews: currentSettings.value?.showGoogleReviews || false,
 })
 
 async function saveSettings() {
@@ -168,22 +169,10 @@ async function saveSettings() {
           description="Verbinde dich mit Google und wähle Bewertungen aus, die unter deinem FAQ stehen sollen."
         >
           <USwitch
-            label="Sterne anzeigen"
+            v-model="form.showGoogleReviews"
+            label="Sterne und Bewertungen anzeigen"
             class="mt-3"
           />
-          <USwitch
-            label="Bewertungen anzeigen"
-            class="mt-3"
-          />
-          <div
-            v-if="user?.googleId"
-            class="flex items-center gap-2 text-sm text-gray-500 mt-2"
-          >
-            <USelect
-              :items="[{ label: 'Ich war sehr zufrieden mit der Beratung', value: 'google-review-1' }]"
-              class="w-full"
-            />
-          </div>
         </UFormField>
         <UButton
           variant="solid"
