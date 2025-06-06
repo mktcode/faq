@@ -59,6 +59,12 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
     .execute()
 
+  await db.schema
+    .createTable('settings')
+    .addColumn('userId', 'integer', col => col.primaryKey().notNull())
+    .addColumn('settings', 'json', col => col.notNull().defaultTo('{}'))
+    .execute()
+
   // Add questionEmbedding vector(1536) column
   await sql`ALTER TABLE qanda ADD COLUMN questionEmbedding vector(1536) NOT NULL`
     .execute(db)
@@ -69,7 +75,7 @@ export async function down(db: Kysely<any>): Promise<void> {
   await db.schema.dropTable('webauthnCredentials').execute()
   await db.schema.dropTable('payments').execute()
   await db.schema.dropTable('charges').execute()
-  await db.schema.dropTable('catalogs').execute()
   await db.schema.dropTable('qanda').execute()
+  await db.schema.dropTable('settings').execute()
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */

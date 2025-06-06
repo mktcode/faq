@@ -3,12 +3,14 @@ import type { WebauthnCredentialsTable } from './webauthnCredentials'
 import type { PaymentsTable } from './payments'
 import type { ChargesTable } from './charges'
 import type { QandaTable } from './qanda'
+import type { SettingsTable } from './settings'
 
 export * from './users'
 export * from './webauthnCredentials'
 export * from './payments'
 export * from './charges'
 export * from './qanda'
+export * from './settings'
 
 export interface Database {
   users: UsersTable
@@ -16,4 +18,5 @@ export interface Database {
   payments: PaymentsTable
   charges: ChargesTable
   qanda: QandaTable
+  settings: SettingsTable
 }

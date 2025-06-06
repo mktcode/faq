@@ -43,6 +43,12 @@ watch(suggestedAnswerWasUseful, (newValue, oldValue) => {
 const showSettingsModal = ref(false)
 const showNewQandaModal = ref(false)
 
+const { data: currentSettings, refresh: refreshSettings } = await useFetch(`/api/settings`, {
+  query: {
+    username: route.params.username,
+  },
+})
+
 type FaqResponse = {
   qanda: {
     question: string
@@ -104,7 +110,7 @@ appConfig.ui.colors.primary = 'sky'
         />
       </div>
       <h1 class="text-lg font-bold mb-4">
-        Markus Kottländer
+        {{ currentSettings?.title || route.params.username }}
       </h1>
       <div class="w-full flex items-center justify-center gap-2 mb-4">
         <UButton
@@ -125,7 +131,7 @@ appConfig.ui.colors.primary = 'sky'
         />
       </div>
       <p class="text-gray-500 mb-6 text-center">
-        Willkommen auf meiner FAQ-Seite! Hier finden Sie Antworten auf häufig gestellte Fragen zu meinen Dienstleistungen und Produkten. Wenn Sie Interesse haben, können Sie mir gerne eine Nachricht senden oder einen Termin vereinbaren.
+        {{ currentSettings?.description || 'Stellen Sie Ihre Fragen und erhalten Sie Antworten.' }}
       </p>
       <div class="w-full">
         <USelect
@@ -330,7 +336,7 @@ appConfig.ui.colors.primary = 'sky'
           Datenschutz
         </ULink>
       </div>
-      <SettingsModal v-model:show="showSettingsModal" />
+      <SettingsModal v-model:show="showSettingsModal" @update="refreshSettings" />
       <NewQandaModal v-model:show="showNewQandaModal" />
       <ClientOnly>
         <WelcomeModal />

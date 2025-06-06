@@ -1,13 +1,33 @@
 <script setup lang="ts">
 const { user } = useUserSession()
+const toast = useToast()
 
 const showModal = defineModel('show', {
   default: true,
   type: Boolean,
 })
 
-const name = ref('')
-const info = ref('')
+const emit = defineEmits(['update'])
+
+const { data: currentSettings } = await useFetch(`/api/user/settings`)
+
+const form = ref({
+  title: currentSettings.value?.title || '',
+  description: currentSettings.value?.description || '',
+})
+
+async function saveSettings() {
+  await $fetch('/api/user/settings', {
+    method: 'POST',
+    body: form.value,
+  })
+  toast.add({
+    title: 'Einstellungen gespeichert',
+    description: 'Deine Einstellungen wurden erfolgreich gespeichert.',
+    color: 'success',
+  })
+  emit('update')
+}
 </script>
 
 <template>
@@ -80,10 +100,10 @@ const info = ref('')
             />
           </div>
         </div>
-        <UFormField label="Name">
+        <UFormField label="Titel">
           <UInput
-            v-model="name"
-            placeholder="Enter name"
+            v-model="form.title"
+            placeholder="Gib den Titel deines Unternehmens ein"
             class="w-full"
           />
         </UFormField>
@@ -92,8 +112,8 @@ const info = ref('')
           description="Dieser Text wird auf deiner Profilseite angezeigt."
         >
           <UTextarea
-            v-model="info"
-            placeholder="Enter business information"
+            v-model="form.description"
+            placeholder="Gib hier eine kurze Beschreibung deines Unternehmens ein"
             class="w-full"
           />
         </UFormField>
@@ -165,6 +185,14 @@ const info = ref('')
             />
           </div>
         </UFormField>
+        <UButton
+          variant="solid"
+          color="primary"
+          class="mt-4"
+          @click="saveSettings"
+        >
+          Einstellungen speichern
+        </UButton>
       </div>
     </template>
   </UModal>
