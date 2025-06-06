@@ -59,15 +59,27 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
     .execute()
 
+  // Add questionEmbedding vector(1536) column
+  await sql`ALTER TABLE qanda ADD COLUMN questionEmbedding vector(1536) NOT NULL`
+    .execute(db)
+
   await db.schema
     .createTable('settings')
     .addColumn('userId', 'integer', col => col.primaryKey().notNull())
     .addColumn('settings', 'json', col => col.notNull().defaultTo('{}'))
     .execute()
 
-  // Add questionEmbedding vector(1536) column
-  await sql`ALTER TABLE qanda ADD COLUMN questionEmbedding vector(1536) NOT NULL`
-    .execute(db)
+  await db.schema
+    .createTable('requests')
+    .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
+    .addColumn('userId', 'integer', col => col.notNull())
+    .addColumn('name', 'text', col => col.notNull())
+    .addColumn('email', 'text')
+    .addColumn('phone', 'text')
+    .addColumn('message', 'text', col => col.notNull())
+    .addColumn('status', 'varchar(20)', col => col.notNull().defaultTo('pending'))
+    .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
+    .execute()
 }
 
 export async function down(db: Kysely<any>): Promise<void> {
@@ -77,5 +89,6 @@ export async function down(db: Kysely<any>): Promise<void> {
   await db.schema.dropTable('charges').execute()
   await db.schema.dropTable('qanda').execute()
   await db.schema.dropTable('settings').execute()
+  await db.schema.dropTable('requests').execute()
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
