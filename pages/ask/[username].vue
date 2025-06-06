@@ -260,9 +260,21 @@ appConfig.ui.colors.primary = 'sky'
           :key="item.question"
           class="p-4 bg-white rounded-lg border border-gray-200"
         >
-          <h3 class="text-lg font-semibold">
-            {{ item.question }}
-          </h3>
+          <div class="flex items-start justify-between">
+            <h3 class="text-lg font-semibold">
+              {{ item.question }}
+            </h3>
+            <div class="flex items-center justify-end gap-2">
+              <UButton
+                icon="i-heroicons-pencil-square"
+                variant="ghost"
+              />
+              <UButton
+                icon="i-heroicons-trash"
+                variant="ghost"
+              />
+            </div>
+          </div>
           <p class="text-gray-600">
             {{ item.answer }}
           </p>
