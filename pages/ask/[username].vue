@@ -95,7 +95,7 @@ appConfig.ui.colors.primary = 'sky'
 
 <template>
   <FontWrapper :font="font">
-    <div class="flex flex-col items-center justify-center gap-2 min-h-screen max-w-lg mx-auto py-12">
+    <div class="flex flex-col items-center justify-center gap-2 min-h-screen max-w-lg mx-auto py-12 bg-white/75 backdrop-blur-2xl px-6 shadow-2xl">
       <div class="size-16 rounded-full bg-gray-100 flex items-center justify-center">
         <UIcon
           name="i-heroicons-photo"
