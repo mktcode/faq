@@ -269,7 +269,7 @@ appConfig.ui.colors.primary = 'sky'
         </div>
       </div>
       <GoogleReviews v-if="currentSettings?.showGoogleReviews" />
-      <CustomerRequestList />
+      <!-- <CustomerRequestList /> -->
       <div class="w-full flex gap-2 mt-12 text-sm">
         <UButton
           class="text-gray-400 mr-auto"
