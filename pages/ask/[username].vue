@@ -244,13 +244,6 @@ appConfig.ui.colors.primary = 'sky'
         <h3 class="text-2xl font-semibold">
           {{ showSuggestedAnswer ? 'Weitere Antworten' : 'Häufig gestellte Fragen' }}
         </h3>
-        <h4 class="text-sky-500 text-sm bg-sky-100 p-3 rounded-lg flex items-center gap-2">
-          <UIcon
-            name="i-heroicons-light-bulb"
-            size="24"
-          />
-          Es wurden neue Antworten aus Ihren Dokumenten erzeugt, die Besucher hilfreich fanden. Prüfen und übernehmen Sie diese in Ihr FAQ.
-        </h4>
         <UButton
           label="Frage und Antwort hinzufügen"
           icon="i-heroicons-plus"
