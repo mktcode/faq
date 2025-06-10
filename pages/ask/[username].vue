@@ -58,6 +58,7 @@ const faqResponse = ref<FaqResponse>({
   contactMessage: '',
 })
 const isSavingRequest = ref(false)
+const savedRequestSuccess = ref(false)
 async function saveRequest() {
   if (isSavingRequest.value) return
 
@@ -75,6 +76,11 @@ async function saveRequest() {
   })
 
   isSavingRequest.value = false
+  savedRequestSuccess.value = true
+  question.value = ''
+  name.value = ''
+  phone.value = ''
+  email.value = ''
 }
 
 onMounted(async () => {
@@ -155,6 +161,18 @@ appConfig.ui.colors.primary = 'sky'
         </div>
       </div>
       <Transition name="fade">
+        <UAlert
+          v-if="savedRequestSuccess"
+          class="mt-2"
+          color="success"
+          variant="soft"
+          icon="i-heroicons-check-circle"
+          title="Anfrage gesendet"
+          description="Ihre Anfrage wurde erfolgreich gesendet. Wir werden uns so schnell wie möglich bei Ihnen melden."
+          @close="savedRequestSuccess = false"
+        />
+      </Transition>
+      <Transition name="fade">
         <div
           v-if="showSuggestedAnswer"
           class="w-full rounded-lg flex flex-col text-gray-800 my-2 border border-gray-200 p-4"
@@ -204,6 +222,7 @@ appConfig.ui.colors.primary = 'sky'
           v-if="question.length > 5"
           label="Anfrage senden"
           block
+          :disabled="isSavingRequest || !name || (!phone && !email)"
           :loading="isSavingRequest"
           @click="saveRequest"
         />
