@@ -16,10 +16,10 @@ export type CustomerRequest = Selectable<CustomerRequestsTable>
 export type NewCustomerRequest = Insertable<CustomerRequestsTable>
 export type CustomerRequestUpdate = Updateable<CustomerRequestsTable>
 
-export const requestFormSchema = z.object({
+export const customerRequestFormSchema = z.object({
+  username: z.string().min(1, 'Username is required'),
   name: z.string().min(1, 'Name is required'),
   email: z.string().email('Invalid email address').optional(),
   phone: z.string().optional(),
   message: z.string().min(1, 'Message is required'),
-  status: z.enum(['pending', 'in_progress', 'completed', 'cancelled']).default('pending'),
 })

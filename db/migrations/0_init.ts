@@ -70,7 +70,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .execute()
 
   await db.schema
-    .createTable('requests')
+    .createTable('customerRequests')
     .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
     .addColumn('userId', 'integer', col => col.notNull())
     .addColumn('name', 'text', col => col.notNull())
@@ -89,6 +89,6 @@ export async function down(db: Kysely<any>): Promise<void> {
   await db.schema.dropTable('charges').execute()
   await db.schema.dropTable('qanda').execute()
   await db.schema.dropTable('settings').execute()
-  await db.schema.dropTable('requests').execute()
+  await db.schema.dropTable('customerRequests').execute()
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */

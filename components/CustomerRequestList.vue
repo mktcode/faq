@@ -1,22 +1,5 @@
 <script setup lang="ts">
-import type { CustomerRequest } from '~/types/db'
-
-const requests = ref<CustomerRequest[]>([{
-  id: 1,
-  userId: 1,
-  name: 'Max Mustermann',
-  email: 'max@beispiel.de',
-  phone: '+49123456789',
-  message: 'Ich habe eine Frage zu meinem Konto.',
-  status: 'pending',
-  createdAt: new Date('2023-10-01T12:00:00Z'),
-}])
-
-const topics = ref<string[]>([
-  'Kontoanfrage',
-  'Technische Unterstützung',
-  'Allgemeine Fragen',
-])
+const { data: customerRequests } = await useFetch('/api/user/customerRequests')
 </script>
 
 <template>
@@ -34,17 +17,10 @@ const topics = ref<string[]>([
         variant="soft"
         size="md"
       />
-      <UButton
-        v-for="topic in topics"
-        :key="topic"
-        :label="topic"
-        variant="soft"
-        size="md"
-      />
     </div>
     <div class="flex flex-col gap-2">
       <div
-        v-for="request in requests"
+        v-for="request in customerRequests"
         :key="request.id"
         class="p-4 border border-gray-200 rounded-lg"
       >

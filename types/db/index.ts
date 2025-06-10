@@ -4,7 +4,7 @@ import type { PaymentsTable } from './payments'
 import type { ChargesTable } from './charges'
 import type { QandaTable } from './qanda'
 import type { SettingsTable } from './settings'
-import type { CustomerRequestsTable } from './requests'
+import type { CustomerRequestsTable } from './customerRequests'
 
 export * from './users'
 export * from './webauthnCredentials'
@@ -12,7 +12,7 @@ export * from './payments'
 export * from './charges'
 export * from './qanda'
 export * from './settings'
-export * from './requests'
+export * from './customerRequests'
 
 export interface Database {
   users: UsersTable

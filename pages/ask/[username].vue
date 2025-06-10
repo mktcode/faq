@@ -12,12 +12,16 @@ definePageMeta({
 const route = useRoute()
 
 const qanda = ref<Qanda[]>([])
+
 const question = ref('')
+const name = ref('')
+const phone = ref('')
+const email = ref('')
+
 const existingAnswers = ref([
   'Mktcode is a marketing automation tool.',
   'You can use Mktcode to automate your marketing campaigns.',
 ])
-const selectedTopic = ref('Marketing Automation')
 
 const showSuggestedAnswer = computed(() => question.value.length > 10)
 const suggestedAnswerWasUseful = ref<boolean | undefined>(undefined)
@@ -53,29 +57,24 @@ const faqResponse = ref<FaqResponse>({
   qanda: [],
   contactMessage: '',
 })
-const isGeneratingResponse = ref(false)
-async function generateResponse() {
-  if (isGeneratingResponse.value) return
+const isSavingRequest = ref(false)
+async function saveRequest() {
+  if (isSavingRequest.value) return
 
-  isGeneratingResponse.value = true
+  isSavingRequest.value = true
 
-  await new Promise(resolve => setTimeout(resolve, 1000))
+  await $fetch('/api/customerRequests', {
+    method: 'POST',
+    body: {
+      username: route.params.username,
+      message: question.value,
+      name: name.value,
+      phone: phone.value,
+      email: email.value,
+    },
+  })
 
-  faqResponse.value = {
-    qanda: [
-      {
-        question: 'Wie kann ich meine Marketingkampagne verbessern?',
-        answer: 'Das kann man so nicht pauschal beantworten. Es hängt von vielen Faktoren ab, wie z.B. der Branche, dem Produkt und der Zielgruppe.',
-      },
-      {
-        question: 'Welche Marketingkanäle sollte ich nutzen?',
-        answer: 'Das hängt von Ihrer Zielgruppe ab. Social Media, E-Mail-Marketing und Content-Marketing sind jedoch sehr effektiv.',
-      },
-    ],
-    contactMessage: 'Ich brauche Beratung zu meiner Marketingkampagne.',
-  }
-
-  isGeneratingResponse.value = false
+  isSavingRequest.value = false
 }
 
 onMounted(async () => {
@@ -179,6 +178,7 @@ appConfig.ui.colors.primary = 'sky'
       <Transition name="fade">
         <UInput
           v-if="question.length > 5"
+          v-model="name"
           placeholder="Name"
           class="w-full"
         />
@@ -186,6 +186,7 @@ appConfig.ui.colors.primary = 'sky'
       <Transition name="fade">
         <UInput
           v-if="question.length > 5"
+          v-model="phone"
           placeholder="Telefon"
           class="w-full"
         />
@@ -193,6 +194,7 @@ appConfig.ui.colors.primary = 'sky'
       <Transition name="fade">
         <UInput
           v-if="question.length > 5"
+          v-model="email"
           placeholder="E-Mail"
           class="w-full"
         />
@@ -202,8 +204,8 @@ appConfig.ui.colors.primary = 'sky'
           v-if="question.length > 5"
           label="Anfrage senden"
           block
-          :loading="isGeneratingResponse"
-          @click="generateResponse"
+          :loading="isSavingRequest"
+          @click="saveRequest"
         />
       </Transition>
       <TransitionGroup
@@ -259,7 +261,7 @@ appConfig.ui.colors.primary = 'sky'
         </div>
       </div>
       <GoogleReviews v-if="currentSettings?.showGoogleReviews" />
-      <!-- <CustomerRequestList /> -->
+      <CustomerRequestList />
       <div class="w-full flex gap-2 mt-12 text-sm">
         <UButton
           class="text-gray-400 mr-auto"
