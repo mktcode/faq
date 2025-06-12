@@ -1,7 +1,8 @@
+import { sql } from 'kysely'
 import { customerRequestFormSchema } from '~/types/db'
 
 export default defineEventHandler(async (event) => {
-  const { username, name, email, phone, message } = await readValidatedBody(event, body => customerRequestFormSchema.parse(body))
+  const { username, name, email, phone, message, embedding } = await readValidatedBody(event, body => customerRequestFormSchema.parse(body))
   const db = await getDatabaseConnection()
 
   const user = await db.selectFrom('users')
@@ -9,14 +10,8 @@ export default defineEventHandler(async (event) => {
     .where('userName', '=', username)
     .executeTakeFirstOrThrow()
 
-  await db.insertInto('customerRequests').values({
-    userId: user.id,
-    name,
-    email: email || null,
-    phone: phone || null,
-    message,
-    status: 'pending',
-  }).execute()
+  await sql`INSERT INTO customerRequests (userId, name, email, phone, message, embedding, status) VALUES (${user.id}, ${name}, ${email}, ${phone}, ${message}, VEC_FromText(${JSON.stringify(embedding)}), 'pending')`
+    .execute(db)
 
   return { success: true }
 })

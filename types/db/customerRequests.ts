@@ -8,6 +8,7 @@ export interface CustomerRequestsTable {
   email: string | null
   phone: string | null
   message: string
+  embedding: number[]
   status: 'pending' | 'in_progress' | 'completed' | 'cancelled'
   createdAt: Generated<Date>
 }
@@ -22,4 +23,5 @@ export const customerRequestFormSchema = z.object({
   email: z.string().email('Invalid email address').optional(),
   phone: z.string().optional(),
   message: z.string().min(1, 'Message is required'),
+  embedding: z.array(z.number())
 })

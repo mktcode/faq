@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { watchDebounced } from '@vueuse/core'
+import type { SimilarQuestion } from '~/server/api/customerRequests/similarQuestions.post'
 import type { Qanda } from '~/types/db'
 
 definePageMeta({
@@ -13,29 +15,28 @@ const route = useRoute()
 
 const qanda = ref<Qanda[]>([])
 
-const question = ref('')
+const message = ref('')
+const messageEmbedding = ref<number[]>([])
 const name = ref('')
 const phone = ref('')
 const email = ref('')
 
-const existingAnswers = ref([
-  'Mktcode is a marketing automation tool.',
-  'You can use Mktcode to automate your marketing campaigns.',
-])
-
-const showSuggestedAnswer = computed(() => question.value.length > 10)
+const similarQuestions = ref<SimilarQuestion[]>([])
 const suggestedAnswerWasUseful = ref<boolean | undefined>(undefined)
 
-const isGeneratingNewAnswer = ref(false)
-watch(suggestedAnswerWasUseful, (newValue, oldValue) => {
-  if (newValue !== oldValue && newValue === false) {
-    isGeneratingNewAnswer.value = true
-    setTimeout(() => {
-      isGeneratingNewAnswer.value = false
-      suggestedAnswerWasUseful.value = undefined
-    }, 3000)
+watchDebounced(messageEmbedding, async () => {
+  if (messageEmbedding.value.length > 0) {
+    const response = await $fetch('/api/customerRequests/similarQuestions', {
+      method: 'POST',
+      body: {
+        username: route.params.username,
+        embedding: messageEmbedding.value,
+      },
+    })
+
+    similarQuestions.value = response
   }
-})
+}, { debounce: 500 })
 
 const showSettingsModal = ref(false)
 const showNewQandaModal = ref(false)
@@ -68,7 +69,8 @@ async function saveRequest() {
     method: 'POST',
     body: {
       username: route.params.username,
-      message: question.value,
+      message: message.value,
+      embedding: messageEmbedding.value,
       name: name.value,
       phone: phone.value,
       email: email.value,
@@ -77,11 +79,27 @@ async function saveRequest() {
 
   isSavingRequest.value = false
   savedRequestSuccess.value = true
-  question.value = ''
+  message.value = ''
   name.value = ''
   phone.value = ''
   email.value = ''
 }
+
+async function getEmbedding() {
+  const embedding = await $fetch('/api/customerRequests/embedding', {
+    query: {
+      message: message.value
+    }
+  })
+
+  messageEmbedding.value = embedding
+}
+
+watchDebounced(message, () => {
+  if (message.value.length > 25) {
+    getEmbedding()
+  }
+}, { debounce: 500 })
 
 onMounted(async () => {
   const data = await $fetch(`/api/qanda`, {
@@ -133,7 +151,7 @@ appConfig.ui.colors.primary = 'sky'
       </p>
       <div class="w-full">
         <UTextarea
-          v-model="question"
+          v-model="message"
           placeholder="Ihr Anliegen oder Ihre Fragen"
           class="w-full"
           :ui="{
@@ -142,14 +160,14 @@ appConfig.ui.colors.primary = 'sky'
         />
         <div class="bg-gray-100 rounded-b-lg p-2 flex items-center gap-2">
           <Transition name="fade">
-            <div v-if="question">
+            <div v-if="message">
               <UButton
                 icon="i-heroicons-x-mark"
                 label="leeren"
                 class="mr-auto opacity-60 hover:opacity-100"
                 variant="ghost"
                 color="neutral"
-                @click="question = ''"
+                @click="message = ''"
               />
             </div>
           </Transition>
@@ -174,13 +192,13 @@ appConfig.ui.colors.primary = 'sky'
       </Transition>
       <Transition name="fade">
         <div
-          v-if="showSuggestedAnswer"
+          v-if="similarQuestions.length > 0"
           class="w-full rounded-lg flex flex-col text-gray-800 my-2 border border-gray-200 p-4"
         >
           <div class="text-sm text-sky-900/60 mb-2">
-            Was ist der Sinn des Lebens?
+            {{ similarQuestions[0].question }}
           </div>
-          {{ existingAnswers[0] }}
+          {{ similarQuestions[0].answer }}
           <div
             class="flex items-center justify-end gap-2 mt-4 text-sm text-gray-400"
           >
@@ -195,7 +213,7 @@ appConfig.ui.colors.primary = 'sky'
       </Transition>
       <Transition name="fade">
         <UInput
-          v-if="question.length > 5"
+          v-if="message.length > 5"
           v-model="name"
           placeholder="Name"
           class="w-full"
@@ -203,7 +221,7 @@ appConfig.ui.colors.primary = 'sky'
       </Transition>
       <Transition name="fade">
         <UInput
-          v-if="question.length > 5"
+          v-if="message.length > 5"
           v-model="phone"
           placeholder="Telefon"
           class="w-full"
@@ -211,7 +229,7 @@ appConfig.ui.colors.primary = 'sky'
       </Transition>
       <Transition name="fade">
         <UInput
-          v-if="question.length > 5"
+          v-if="message.length > 5"
           v-model="email"
           placeholder="E-Mail"
           class="w-full"
@@ -219,7 +237,7 @@ appConfig.ui.colors.primary = 'sky'
       </Transition>
       <Transition name="fade">
         <UButton
-          v-if="question.length > 5"
+          v-if="message.length > 5"
           label="Anfrage senden"
           block
           :disabled="isSavingRequest || !name || (!phone && !email)"
@@ -246,7 +264,7 @@ appConfig.ui.colors.primary = 'sky'
       </TransitionGroup>
       <div class="flex flex-col gap-4 w-full mt-6">
         <h3 class="text-2xl font-semibold">
-          {{ showSuggestedAnswer ? 'Weitere Antworten' : 'Häufig gestellte Fragen' }}
+          Häufig gestellte Fragen
         </h3>
         <UButton
           label="Frage und Antwort hinzufügen"
