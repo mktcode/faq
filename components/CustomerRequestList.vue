@@ -19,37 +19,11 @@ const { data: customerRequests } = await useFetch('/api/user/customerRequests')
       />
     </div>
     <div class="flex flex-col gap-2">
-      <div
+      <CustomerRequestListItem
         v-for="request in customerRequests"
         :key="request.id"
-        class="p-4 border border-gray-200 rounded-lg"
-      >
-        <h4 class="font-semibold">
-          {{ request.name }}
-          <span class="text-gray-400 text-sm ml-2">
-            Am {{ new Date(request.createdAt).toLocaleDateString() }}
-          </span>
-        </h4>
-        <div class="text-gray-600 my-2">
-          {{ request.message }}
-        </div>
-        <div class="text-gray-400">
-          <p>{{ request.email }}</p>
-          <p>{{ request.phone }}</p>
-        </div>
-        <div class="mt-4 flex gap-2 justify-end">
-          <UButton
-            label="Antwort aus FAQ"
-            icon="i-heroicons-chat-bubble-left-right"
-            size="lg"
-          />
-          <UButton
-            label="Antworten"
-            icon="i-heroicons-chat-bubble-left-right"
-            size="lg"
-          />
-        </div>
-      </div>
+        :customer-request="request"
+      />
     </div>
   </div>
 </template>
