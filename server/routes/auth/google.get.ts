@@ -71,6 +71,15 @@ export default defineOAuthGoogleEventHandler({
           token: tokens.access_token,
         },
       })
+
+      await db.insertInto('settings')
+        .values({
+          userId: newUserId,
+          settings: JSON.stringify({
+            title: user.name,
+          }),
+        })
+        .execute()
     }
 
     return sendRedirect(event, '/')
