@@ -42,6 +42,7 @@ async function generateReply() {
         v-model="replyMessage"
         placeholder="Ihre Antwort hier eingeben..."
         class="w-full"
+        :rows="6"
       />
       <div class="mt-2 flex gap-2 justify-between">
         <UButton
