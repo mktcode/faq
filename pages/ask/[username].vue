@@ -16,6 +16,7 @@ const route = useRoute()
 const qanda = ref<Qanda[]>([])
 
 const message = ref('')
+const messageLongEnough = computed(() => message.value.trim().length >= 5)
 const messageEmbedding = ref<number[]>([])
 const name = ref('')
 const phone = ref('')
@@ -72,8 +73,8 @@ async function saveRequest() {
       message: message.value,
       embedding: messageEmbedding.value,
       name: name.value,
-      phone: phone.value,
-      email: email.value,
+      phone: phone.value || undefined,
+      email: email.value || undefined,
     },
   })
 
@@ -86,6 +87,10 @@ async function saveRequest() {
 }
 
 async function getEmbedding() {
+  if (!messageLongEnough.value) {
+    return
+  }
+
   const embedding = await $fetch('/api/customerRequests/embedding', {
     query: {
       message: message.value,
@@ -95,11 +100,7 @@ async function getEmbedding() {
   messageEmbedding.value = embedding
 }
 
-watchDebounced(message, () => {
-  if (message.value.length > 25) {
-    getEmbedding()
-  }
-}, { debounce: 2000 })
+watchDebounced(message, getEmbedding, { debounce: 2000 })
 
 onMounted(async () => {
   const data = await $fetch(`/api/qanda`, {
@@ -221,7 +222,7 @@ appConfig.ui.colors.primary = 'sky'
       </Transition>
       <Transition name="fade">
         <UInput
-          v-if="message.length > 5"
+          v-if="messageLongEnough"
           v-model="phone"
           placeholder="Telefon"
           class="w-full"
@@ -229,7 +230,7 @@ appConfig.ui.colors.primary = 'sky'
       </Transition>
       <Transition name="fade">
         <UInput
-          v-if="message.length > 5"
+          v-if="messageLongEnough"
           v-model="email"
           placeholder="E-Mail"
           class="w-full"
@@ -237,10 +238,10 @@ appConfig.ui.colors.primary = 'sky'
       </Transition>
       <Transition name="fade">
         <UButton
-          v-if="message.length > 5"
+          v-if="messageLongEnough"
           label="Anfrage senden"
           block
-          :disabled="isSavingRequest || !name || (!phone && !email)"
+          :disabled="isSavingRequest || !name || (!phone && !email) || messageEmbedding.length === 0"
           :loading="isSavingRequest"
           @click="saveRequest"
         />
