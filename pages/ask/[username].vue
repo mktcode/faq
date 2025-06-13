@@ -88,8 +88,8 @@ async function saveRequest() {
 async function getEmbedding() {
   const embedding = await $fetch('/api/customerRequests/embedding', {
     query: {
-      message: message.value
-    }
+      message: message.value,
+    },
   })
 
   messageEmbedding.value = embedding
@@ -99,7 +99,7 @@ watchDebounced(message, () => {
   if (message.value.length > 25) {
     getEmbedding()
   }
-}, { debounce: 500 })
+}, { debounce: 2000 })
 
 onMounted(async () => {
   const data = await $fetch(`/api/qanda`, {
