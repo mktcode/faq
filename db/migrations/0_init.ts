@@ -80,7 +80,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('status', 'varchar(20)', col => col.notNull().defaultTo('pending'))
     .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
     .execute()
-  
+
   // Add embedding vector(1536) column
   await sql`ALTER TABLE customerRequests ADD COLUMN embedding vector(1536) NOT NULL`
     .execute(db)
