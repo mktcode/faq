@@ -3,7 +3,7 @@ import { qandaFormSchema } from '~/types/db/qanda'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
-  const { id, answer, question, topic } = await readValidatedBody(event, body => qandaFormSchema.parse(body))
+  const { id, answer, question } = await readValidatedBody(event, body => qandaFormSchema.parse(body))
   const db = await getDatabaseConnection()
 
   if (id) {
@@ -12,7 +12,6 @@ export default defineEventHandler(async (event) => {
       .set({
         question,
         answer,
-        topic,
       })
       .where('id', '=', id)
       .where('userId', '=', user.id)
@@ -26,7 +25,7 @@ export default defineEventHandler(async (event) => {
       encoding_format: 'float',
     })
 
-    await sql`INSERT INTO qanda (userId, question, questionEmbedding, answer, topic) VALUES (${user.id}, ${question}, VEC_FromText(${JSON.stringify(embedding.data[0].embedding)}), ${answer}, ${topic})`
+    await sql`INSERT INTO qanda (userId, question, questionEmbedding, answer) VALUES (${user.id}, ${question}, VEC_FromText(${JSON.stringify(embedding.data[0].embedding)}), ${answer})`
       .execute(db)
   }
 

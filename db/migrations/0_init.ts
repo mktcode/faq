@@ -52,7 +52,6 @@ export async function up(db: Kysely<any>): Promise<void> {
     .createTable('qanda')
     .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
     .addColumn('userId', 'integer', col => col.notNull())
-    .addColumn('topic', 'text')
     .addColumn('question', 'text', col => col.notNull())
     // .addColumn('questionEmbedding', 'vector(1536)', col => col.notNull())
     .addColumn('answer', 'text', col => col.notNull())

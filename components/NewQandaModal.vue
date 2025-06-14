@@ -4,7 +4,6 @@ const showModal = defineModel('show', {
   type: Boolean,
 })
 
-const topic = ref('')
 const question = ref('')
 const answer = ref('')
 
@@ -15,7 +14,6 @@ async function saveQanda() {
   await $fetch('/api/user/qanda', {
     method: 'POST',
     body: {
-      topic: topic.value,
       question: question.value,
       answer: answer.value,
     },
@@ -32,16 +30,6 @@ async function saveQanda() {
   >
     <template #body>
       <div class="flex flex-col gap-4">
-        <UFormField
-          label="Themen"
-          description="Geben Sie ein oder mehrere Themen ein."
-        >
-          <UInput
-            v-model="topic"
-            placeholder="z.B. Bestellungen, Rücksendungen, Produkte, etc."
-            class="w-full"
-          />
-        </UFormField>
         <UFormField
           label="Frage"
           description="Geben Sie eine typische Frage Ihrer Zielgruppe ein."
@@ -67,7 +55,7 @@ async function saveQanda() {
           variant="solid"
           block
           :loading="isSaving"
-          :disabled="!topic || !question || !answer"
+          :disabled="!question || !answer"
           @click="saveQanda"
         >
           Frage hinzufügen
