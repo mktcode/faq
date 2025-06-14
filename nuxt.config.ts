@@ -35,6 +35,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     databaseUrl: process.env.DATABASE_URL,
     openaiApiKey: process.env.OPENAI_API_KEY,
+    mailhost: process.env.MAIL_HOST,
+    mailuser: process.env.MAIL_USER,
+    mailpass: process.env.MAIL_PASS,
+    mailfrom: process.env.MAIL_FROM,
     s3AccessKey: process.env.S3_ACCESS_KEY,
     s3SecretKey: process.env.S3_SECRET_KEY,
     stripeApiSecretKey: process.env.STRIPE_API_SECRET_KEY,

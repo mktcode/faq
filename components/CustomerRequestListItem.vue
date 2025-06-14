@@ -4,8 +4,8 @@ import type { CustomerRequest } from '~/types/db'
 const { customerRequest } = defineProps<{ customerRequest: CustomerRequest }>()
 
 const replyMessage = ref('')
-
 const isGeneratingReply = ref(false)
+const isSendingReply = ref(false)
 
 async function generateReply() {
   isGeneratingReply.value = true
@@ -19,6 +19,22 @@ async function generateReply() {
   replyMessage.value = response
 
   isGeneratingReply.value = false
+}
+
+async function sendReply() {
+  if (!replyMessage.value.trim()) return
+
+  isSendingReply.value = true
+
+  await $fetch('/api/user/customerRequests/sendReply', {
+    method: 'POST',
+    body: {
+      customerRequestId: customerRequest.id,
+      replyMessage: replyMessage.value,
+    },
+  })
+
+  isSendingReply.value = false
 }
 </script>
 
@@ -111,8 +127,10 @@ async function generateReply() {
         <UButton
           v-if="customerRequest.email"
           label="Antwort per E-Mail senden"
-          :disabled="!replyMessage.trim() || isGeneratingReply"
           icon="i-heroicons-envelope"
+          :disabled="!replyMessage.trim() || isGeneratingReply || isSendingReply"
+          :loading="isSendingReply"
+          @click="sendReply"
         />
       </div>
     </div>
