@@ -39,16 +39,31 @@ appConfig.ui.colors.primary = 'sky'
 
 <template>
   <FontWrapper :font="font">
-    <div class="flex flex-col items-center justify-center gap-2 min-h-screen max-w-lg mx-auto py-12 px-6">
+    <!-- Fullscreen header with Lorem Picsum image -->
+    <div class="relative w-full h-[40vh] mb-8">
+      <img 
+        src="https://picsum.photos/1920/1080" 
+        alt="Header image" 
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-white">
+        <h1 class="text-3xl font-bold mb-2">
+          {{ currentSettings?.title || route.params.username }}
+        </h1>
+        <p class="text-lg text-center max-w-md px-4">
+          {{ currentSettings?.description || 'Stellen Sie Ihre Fragen und erhalten Sie Antworten.' }}
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-6 px-6">
       <div class="size-16 rounded-full bg-gray-100 flex items-center justify-center">
         <UIcon
           name="i-heroicons-photo"
           class="size-7 opacity-25"
         />
       </div>
-      <h1 class="text-lg font-bold mb-4">
-        {{ currentSettings?.title || route.params.username }}
-      </h1>
+      <!-- Removing duplicated title and description since they're now in the header -->
       <div class="w-full flex items-center justify-center gap-2 mb-4">
         <UButton
           icon="i-heroicons-information-circle"
@@ -67,9 +82,6 @@ appConfig.ui.colors.primary = 'sky'
           variant="soft"
         />
       </div>
-      <p class="text-gray-500 mb-6 text-center">
-        {{ currentSettings?.description || 'Stellen Sie Ihre Fragen und erhalten Sie Antworten.' }}
-      </p>
 
       <AskForm :username="username" />
 
