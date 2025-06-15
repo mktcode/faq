@@ -75,13 +75,21 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('name', 'text', col => col.notNull())
     .addColumn('email', 'text')
     .addColumn('phone', 'text')
-    .addColumn('message', 'text', col => col.notNull())
     .addColumn('status', 'varchar(20)', col => col.notNull().defaultTo('pending'))
     .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
     .execute()
-
+  
+  await db.schema
+    .createTable('messages')
+    .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
+    .addColumn('customerRequestId', 'integer', col => col.notNull())
+    .addColumn('body', 'text', col => col.notNull())
+    .addColumn('isCustomer', 'boolean', col => col.notNull().defaultTo(true))
+    .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
+    .execute()
+  
   // Add embedding vector(1536) column
-  await sql`ALTER TABLE customerRequests ADD COLUMN embedding vector(1536) NOT NULL`
+  await sql`ALTER TABLE messages ADD COLUMN embedding vector(1536)`
     .execute(db)
 }
 
@@ -93,5 +101,6 @@ export async function down(db: Kysely<any>): Promise<void> {
   await db.schema.dropTable('qanda').execute()
   await db.schema.dropTable('settings').execute()
   await db.schema.dropTable('customerRequests').execute()
+  await db.schema.dropTable('messages').execute()
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */

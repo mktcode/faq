@@ -12,21 +12,25 @@ export default defineEventHandler(async (event) => {
 
   const customerRequest = await db
     .selectFrom('customerRequests')
-    .select(['email'])
+    .select(['id', 'email'])
     .where('userId', '=', user.id)
     .where('id', '=', customerRequestId)
     .executeTakeFirstOrThrow()
+  
+  await db.insertInto('messages')
+    .values({
+      customerRequestId: customerRequest.id,
+      body: replyMessage,
+      isCustomer: false,
+      embedding: null,
+    })
+  .execute()
 
-  if (!customerRequest.email) {
-    throw createError({
-      statusCode: 400,
-      message: 'Diese Kundenanfrage hat keine E-Mail-Adresse.',
+  if (customerRequest.email) {
+    await sendEmail({
+      to: customerRequest.email,
+      subject: `${user.userName}: Antwort auf Ihre Anfrage`,
+      body: replyMessage,
     })
   }
-
-  sendEmail({
-    to: customerRequest.email,
-    subject: `${user.userName}: Antwort auf Ihre Anfrage`,
-    body: replyMessage,
-  })
 })

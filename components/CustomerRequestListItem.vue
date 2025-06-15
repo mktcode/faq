@@ -3,6 +3,12 @@ import type { CustomerRequest } from '~/types/db'
 
 const { customerRequest } = defineProps<{ customerRequest: CustomerRequest }>()
 
+const { data: messages } = await useFetch('/api/user/customerRequests/messages', {
+  query: {
+    customerRequestId: customerRequest.id,
+  },
+})
+
 const replyMessage = ref('')
 const isGeneratingReply = ref(false)
 const isSendingReply = ref(false)
@@ -21,12 +27,12 @@ async function generateReply() {
   isGeneratingReply.value = false
 }
 
-async function sendReply() {
+async function reply() {
   if (!replyMessage.value.trim()) return
 
   isSendingReply.value = true
 
-  await $fetch('/api/user/customerRequests/sendReply', {
+  await $fetch('/api/user/customerRequests/reply', {
     method: 'POST',
     body: {
       customerRequestId: customerRequest.id,
@@ -47,8 +53,17 @@ async function sendReply() {
           Am {{ new Date(customerRequest.createdAt).toLocaleDateString() }}
         </span>
       </h4>
-      <div class="text-gray-600 my-2">
-        {{ customerRequest.message }}
+      <div class="text-gray-600 my-2" v-for="message in messages">
+        <div class="flex items-center gap-2">
+          <UIcon
+            :name="message.isCustomer ? 'i-heroicons-user' : 'i-heroicons-chat-bubble-left'"
+            class="inline-block"
+          />
+          <span class="text-sm">{{ message.body }}</span>
+          <span class="text-xs text-gray-400 ml-auto">
+            {{ new Date(message.createdAt).toLocaleTimeString() }}
+          </span>
+        </div>
       </div>
     </div>
     <div class="text-gray-400 border-t border-gray-200 p-4 flex flex-col gap-2">
@@ -125,12 +140,11 @@ async function sendReply() {
           variant="soft"
         />
         <UButton
-          v-if="customerRequest.email"
-          label="Antwort per E-Mail senden"
+          label="Antwort senden"
           icon="i-heroicons-envelope"
           :disabled="!replyMessage.trim() || isGeneratingReply || isSendingReply"
           :loading="isSendingReply"
-          @click="sendReply"
+          @click="reply"
         />
       </div>
     </div>

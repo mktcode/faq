@@ -13,10 +13,17 @@ export default defineEventHandler(async (event) => {
 
   const customerRequest = await db
     .selectFrom('customerRequests')
-    .select(['message'])
+    .select(['id'])
     .where('userId', '=', user.id)
     .where('id', '=', customerRequestId)
     .executeTakeFirstOrThrow()
+  
+  const messages = await db
+    .selectFrom('messages')
+    .select(['body', 'isCustomer'])
+    .where('customerRequestId', '=', customerRequest.id)
+    .orderBy('createdAt', 'asc')
+    .execute()
 
   const qanda = await db
     .selectFrom('qanda')
@@ -29,15 +36,21 @@ export default defineEventHandler(async (event) => {
   const response = await openai.responses.create({
     store: false,
     model: 'gpt-4.1-mini',
-    instructions: 'Schreibe eine Antwort auf die Anfrage des Kunden basierend auf dem bereitgestellten FAQ.',
+    instructions: messages.length === 1
+      ? 'Schreibe eine Antwort auf die Anfrage des Kunden basierend auf dem bereitgestellten FAQ.'
+      : 'Schreibe eine Antwort auf die Anfrage des Kunden basierend auf dem bereitgestellten FAQ und dem bisherigen Gesprächsverlauf.',
     input: [
       {
         role: 'developer',
-        content: qanda.map(item => `Frage: ${item.question}\nAntwort: ${item.answer}`).join('\n\n'),
+        content: 'FAQ:\n\n' + qanda.map(item => `Frage: ${item.question}\nAntwort: ${item.answer}`).join('\n\n'),
       },
       {
         role: 'user',
-        content: 'Frage des Kunden: ' + customerRequest.message,
+        content: messages.map(msg =>
+          msg.isCustomer
+            ? `Kunde: ${msg.body}`
+            : `Antwort: ${msg.body}`
+        ).join('\n'),
       },
       {
         role: 'developer',
