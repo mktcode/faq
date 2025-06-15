@@ -67,7 +67,10 @@ appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
           variant="soft"
         />
       </div>
-      <p class="text-gray-500 mb-6 text-center">
+
+      <AskGallery />
+
+      <p class="text-gray-500 mb-6 text-center mt-12">
         {{ currentSettings?.description || 'Stellen Sie Ihre Fragen und erhalten Sie Antworten.' }}
       </p>
 
