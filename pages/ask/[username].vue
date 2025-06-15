@@ -33,8 +33,8 @@ onMounted(async () => {
 })
 
 const appConfig = useAppConfig()
-const font = 'roboto'
-appConfig.ui.colors.primary = 'sky'
+const font = computed(() => currentSettings.value?.font || 'roboto')
+appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
 </script>
 
 <template>

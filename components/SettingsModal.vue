@@ -15,6 +15,8 @@ const form = ref({
   title: currentSettings.value?.title || '',
   description: currentSettings.value?.description || '',
   showGoogleReviews: currentSettings.value?.showGoogleReviews || false,
+  color: currentSettings.value?.color || 'sky',
+  font: currentSettings.value?.font || 'roboto',
 })
 
 async function saveSettings() {
@@ -149,7 +151,7 @@ async function saveSettings() {
           />
         </UFormField>
         <div class="flex gap-2">
-          <ColorPicker />
+          <ColorPicker v-model:color="form.color" />
           <UFormField
             label="Stil"
             class="flex-1"
@@ -163,7 +165,7 @@ async function saveSettings() {
             />
           </UFormField>
         </div>
-        <FontPicker />
+        <FontPicker v-model:font="form.font" />
         <UFormField
           label="Google Bewertungen"
           description="Verbinde dich mit Google und wähle Bewertungen aus, die unter deinem FAQ stehen sollen."
