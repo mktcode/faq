@@ -79,15 +79,24 @@ watchDebounced(messageEmbedding, getSimilarQuestions, { debounce: 500 })
     </h3>
 
     <p class="text-gray-500 mb-6 mt-3">
-      Stellen Sie Ihre Fragen und erhalten Sie Antworten.
+      Stellen Sie Ihre Fragen und erhalten Sie Antworten, per Mail, per Push-Nachricht, telefonisch oder direkt hier im FAQ.
     </p>
+
+    <div class="flex text-2xl items-center gap-1 mb-6">
+      <UIcon
+        name="i-heroicons-phone"
+      />
+      <span class="text-gray-500 ml-2">
+        0123 4567890
+      </span>
+    </div>
 
     <UTextarea
       v-model="message"
       placeholder="Ihr Anliegen oder Ihre Fragen"
       class="w-full"
       :ui="{
-        base: 'rounded-b-none text-xl p-3 !bg-gray-50',
+        base: 'rounded-b-none text-xl p-3 !bg-gray-50 !border !border-b-0 !border-gray-200',
       }"
     />
     <div class="bg-gray-100 rounded-b-lg p-2 flex items-center gap-2">
