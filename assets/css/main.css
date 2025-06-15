@@ -16,7 +16,7 @@
   --font-lora: 'Lora', serif;
   --font-playfair-display: 'Playfair Display', serif;
 
-  --ui-radius: var(--radius-lg);
+  --ui-radius: 0.25rem;
 }
 
 .button,
