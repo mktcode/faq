@@ -74,6 +74,14 @@ watchDebounced(messageEmbedding, getSimilarQuestions, { debounce: 500 })
 
 <template>
   <div class="w-full">
+    <h3 class="text-2xl font-semibold">
+      Anfrage
+    </h3>
+
+    <p class="text-gray-500 mb-6 mt-3">
+      Stellen Sie Ihre Fragen und erhalten Sie Antworten.
+    </p>
+
     <UTextarea
       v-model="message"
       placeholder="Ihr Anliegen oder Ihre Fragen"

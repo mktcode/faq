@@ -68,13 +68,17 @@ appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
         />
       </div>
 
-      <AskGallery />
+      <div class="my-6 w-full">
+        <AskGallery />
+      </div>
 
-      <p class="text-gray-500 mb-6 text-center mt-12">
-        {{ currentSettings?.description || 'Stellen Sie Ihre Fragen und erhalten Sie Antworten.' }}
-      </p>
+      <div class="my-6 w-full">
+        <AskText />
+      </div>
 
-      <AskForm :username="username" />
+      <div class="my-6 w-full">
+        <AskForm :username="username" />
+      </div>
 
       <div class="flex flex-col gap-4 w-full mt-6">
         <h3 class="text-2xl font-semibold">
