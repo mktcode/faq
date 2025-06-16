@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { watchDebounced } from '@vueuse/core';
-import type { SimilarQuestion } from '~/server/api/customerRequests/similarQuestions.post';
+import { watchDebounced } from '@vueuse/core'
+import type { SimilarQuestion } from '~/server/api/customerRequests/similarQuestions.post'
 
 const { username } = defineProps<{ username: string }>()
 

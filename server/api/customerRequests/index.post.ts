@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     .select(['id'])
     .where('userName', '=', username)
     .executeTakeFirstOrThrow()
-  
+
   const insertResult = await db.insertInto('customerRequests')
     .values({
       userId: user.id,

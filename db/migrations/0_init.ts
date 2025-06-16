@@ -78,7 +78,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('status', 'varchar(20)', col => col.notNull().defaultTo('pending'))
     .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
     .execute()
-  
+
   await db.schema
     .createTable('messages')
     .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
@@ -87,7 +87,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('isCustomer', 'boolean', col => col.notNull().defaultTo(true))
     .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
     .execute()
-  
+
   // Add embedding vector(1536) column
   await sql`ALTER TABLE messages ADD COLUMN embedding vector(1536)`
     .execute(db)

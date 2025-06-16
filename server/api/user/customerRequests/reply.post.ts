@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
     .where('userId', '=', user.id)
     .where('id', '=', customerRequestId)
     .executeTakeFirstOrThrow()
-  
+
   await db.insertInto('messages')
     .values({
       customerRequestId: customerRequest.id,
@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
       isCustomer: false,
       embedding: null,
     })
-  .execute()
+    .execute()
 
   if (customerRequest.email) {
     await sendEmail({

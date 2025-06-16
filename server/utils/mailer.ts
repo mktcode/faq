@@ -5,9 +5,9 @@ export async function sendEmail({
   subject,
   body,
 }: {
-  to: string,
-  subject: string,
-  body: string,
+  to: string
+  subject: string
+  body: string
 }) {
   const { mailhost, mailuser, mailpass, mailfrom } = useRuntimeConfig()
 

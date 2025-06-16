@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     .where('userId', '=', user.id)
     .where('id', '=', customerRequestId)
     .executeTakeFirstOrThrow()
-  
+
   const messages = await db
     .selectFrom('messages')
     .select(['body', 'isCustomer'])
@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
         content: messages.map(msg =>
           msg.isCustomer
             ? `Kunde: ${msg.body}`
-            : `Antwort: ${msg.body}`
+            : `Antwort: ${msg.body}`,
         ).join('\n'),
       },
       {
