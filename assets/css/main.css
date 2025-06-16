@@ -42,3 +42,7 @@ button,
 .fade-leave-to {
   opacity: 0;
 }
+
+mark {
+  @apply bg-primary-200 text-primary-900 py-px px-1;
+}

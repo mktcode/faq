@@ -39,7 +39,19 @@ appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
 
 <template>
   <FontWrapper :font="font">
-    <div class="flex flex-col items-center justify-center gap-2 min-h-screen max-w-lg mx-auto py-12 px-6">
+    <div class="flex items-center justify-between p-4">
+      <UButton
+        class="text-gray-400 ml-auto"
+        icon="i-heroicons-cog-6-tooth"
+        variant="ghost"
+        color="neutral"
+        size="md"
+        @click="showSettingsModal = true"
+      >
+        Einstellungen
+      </UButton>
+    </div>
+    <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
       <div class="size-16 rounded-full bg-gray-100 flex items-center justify-center">
         <UIcon
           name="i-heroicons-photo"
@@ -120,17 +132,7 @@ appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
       </div>
       <GoogleReviews v-if="currentSettings?.showGoogleReviews" />
       <CustomerRequestList />
-      <div class="w-full flex gap-2 mt-12 text-sm">
-        <UButton
-          class="text-gray-400 mr-auto"
-          icon="i-heroicons-cog-6-tooth"
-          variant="ghost"
-          color="neutral"
-          size="md"
-          @click="showSettingsModal = true"
-        >
-          Einstellungen
-        </UButton>
+      <div class="w-full flex items-center justify-center gap-2 mt-12 text-sm">
         <ULink class="text-gray-400">
           Impressum
         </ULink>

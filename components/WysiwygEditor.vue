@@ -73,30 +73,6 @@ function click(editor: Editor) {
         </svg>
       </WysiwygEditorButton>
       <WysiwygEditorButton
-        :is-active="editor.isActive('heading', { level: 1 })"
-        @click="click(editor).toggleHeading({ level: 1 }).run()"
-      >
-        H1
-      </WysiwygEditorButton>
-      <WysiwygEditorButton
-        :is-active="editor.isActive('heading', { level: 2 })"
-        @click="click(editor).toggleHeading({ level: 2 }).run()"
-      >
-        H2
-      </WysiwygEditorButton>
-      <WysiwygEditorButton
-        :is-active="editor.isActive('heading', { level: 3 })"
-        @click="click(editor).toggleHeading({ level: 3 }).run()"
-      >
-        H3
-      </WysiwygEditorButton>
-      <WysiwygEditorButton
-        :is-active="editor.isActive('paragraph')"
-        @click="click(editor).setParagraph().run()"
-      >
-        Paragraph
-      </WysiwygEditorButton>
-      <WysiwygEditorButton
         :is-active="editor.isActive('bulletList')"
         @click="click(editor).toggleBulletList().run()"
       >
@@ -195,63 +171,6 @@ function click(editor: Editor) {
         @click="click(editor).toggleHighlight().run()"
       >
         Highlight
-      </WysiwygEditorButton>
-      <WysiwygEditorButton
-        :is-active="editor.isActive({ textAlign: 'left' })"
-        @click="click(editor).setTextAlign('left').run()"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="size-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
-          />
-        </svg>
-      </WysiwygEditorButton>
-      <WysiwygEditorButton
-        :is-active="editor.isActive({ textAlign: 'center' })"
-        @click="click(editor).setTextAlign('center').run()"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="size-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-          />
-        </svg>
-      </WysiwygEditorButton>
-      <WysiwygEditorButton
-        :is-active="editor.isActive({ textAlign: 'right' })"
-        @click="click(editor).setTextAlign('right').run()"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="size-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25"
-          />
-        </svg>
       </WysiwygEditorButton>
     </div>
     <div class="mt-2">

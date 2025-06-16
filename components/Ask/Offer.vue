@@ -18,6 +18,8 @@ const items = offers.map(offer => ({
       v-slot="{ item }"
       dots
       arrows
+      :prev="{ variant: 'ghost' }"
+      :next="{ variant: 'ghost' }"
       :autoplay="{ delay: 10000 }"
       :items="items"
       class="w-full"
