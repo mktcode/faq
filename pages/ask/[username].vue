@@ -12,7 +12,6 @@ definePageMeta({
 const route = useRoute()
 const username = computed(() => Array.isArray(route.params.username) ? route.params.username[0] : route.params.username)
 
-const qanda = ref<Qanda[]>([])
 const showSettingsModal = ref(false)
 const showNewQandaModal = ref(false)
 
@@ -22,14 +21,10 @@ const { data: currentSettings, refresh: refreshSettings } = await useFetch(`/api
   },
 })
 
-onMounted(async () => {
-  const data = await $fetch(`/api/qanda`, {
-    query: {
-      username: route.params.username,
-    },
-  })
-
-  qanda.value = data as Qanda[]
+const { data: qanda } = await useFetch<Qanda[]>(`/api/qanda`, {
+  query: {
+    username: route.params.username,
+  },
 })
 
 const appConfig = useAppConfig()
