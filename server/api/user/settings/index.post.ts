@@ -1,4 +1,15 @@
+import type { SettingsForm } from '~/types/db'
 import { settingsFormSchema } from '~/types/db'
+
+function mergeSettings(
+  existingSettings: SettingsForm,
+  newSettings: SettingsForm,
+) {
+  return {
+    ...existingSettings,
+    ...newSettings,
+  }
+}
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
@@ -12,10 +23,15 @@ export default defineEventHandler(async (event) => {
     .executeTakeFirst()
 
   if (existingSettings) {
+    const newSettings = mergeSettings(
+      JSON.parse(existingSettings.settings),
+      settings,
+    )
+
     await db
       .updateTable('settings')
       .set({
-        settings: JSON.stringify(settings),
+        settings: JSON.stringify(newSettings),
       })
       .where('userId', '=', user.id)
       .execute()

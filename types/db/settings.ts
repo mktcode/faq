@@ -19,4 +19,24 @@ export const settingsFormSchema = z.object({
   font: z.string().optional().nullable(),
   color: z.string().optional().nullable(),
   showGoogleReviews: z.boolean().optional().nullable(),
+  offers: z
+    .array(
+      z.object({
+        title: z.string(),
+        description: z.string(),
+      }),
+    )
+    .optional().nullable(),
+  gallery: z
+    .array(
+      z.object({
+        url: z.string(),
+        description: z.string().optional().nullable(),
+        title: z.string().optional().nullable(),
+      }),
+    )
+    .optional().nullable(),
+  privacy: z.string().optional().nullable(),
 })
+
+export type SettingsForm = z.infer<typeof settingsFormSchema>

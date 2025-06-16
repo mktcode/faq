@@ -53,7 +53,11 @@ async function reply() {
           Am {{ new Date(customerRequest.createdAt).toLocaleDateString() }}
         </span>
       </h4>
-      <div class="text-gray-600 my-2" v-for="message in messages">
+      <div
+        v-for="message in messages"
+        :key="message.id"
+        class="text-gray-600 my-2"
+      >
         <div class="flex items-center gap-2">
           <UIcon
             :name="message.isCustomer ? 'i-heroicons-user' : 'i-heroicons-chat-bubble-left'"

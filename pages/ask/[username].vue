@@ -72,8 +72,11 @@ appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
         <AskGallery />
       </div>
 
-      <div class="my-6 w-full">
-        <AskText />
+      <div
+        v-if="currentSettings?.offers?.length"
+        class="my-6 w-full"
+      >
+        <AskOffer :offers="currentSettings.offers" />
       </div>
 
       <div class="my-6 w-full">
