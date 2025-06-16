@@ -6,8 +6,7 @@ const emit = defineEmits(['update'])
 const { data: currentSettings } = await useFetch(`/api/user/settings`)
 
 const form = ref({
-  color: currentSettings.value?.color || 'sky',
-  font: currentSettings.value?.font || 'roboto',
+  links: currentSettings.value?.links || [],
 })
 
 async function saveSettings() {
@@ -26,29 +25,34 @@ async function saveSettings() {
 
 <template>
   <div class="flex flex-col gap-4 p-6">
-    <UButton
-      icon="i-heroicons-photo"
-      variant="soft"
-      color="neutral"
-      block
-      class="size-20 rounded-full mx-auto"
-    />
-    <div class="flex gap-2">
-      <ColorPicker v-model:color="form.color" />
-      <UFormField
-        label="Stil"
-        class="flex-1"
-      >
-        <USelect
-          class="w-full"
-          :items="[
-            { label: 'Rund', value: 'round' },
-            { label: 'Eckig', value: 'square' },
-          ]"
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center gap-2">
+        <UButton
+          icon="i-heroicons-information-circle"
+          variant="soft"
         />
-      </UFormField>
+        <UInput
+          placeholder="https://..."
+          class="flex-1"
+        />
+        <UButton
+          icon="i-heroicons-trash"
+          variant="ghost"
+          color="neutral"
+        />
+      </div>
+      <div class="flex items-center gap-2">
+        <UButton
+          icon="i-heroicons-plus"
+          variant="soft"
+        />
+        <UInput
+          placeholder="https://..."
+          class="flex-1 opacity-40"
+          disabled
+        />
+      </div>
     </div>
-    <FontPicker v-model:font="form.font" />
     <UButton
       variant="solid"
       color="primary"

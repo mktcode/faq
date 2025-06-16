@@ -37,6 +37,14 @@ export const settingsFormSchema = z.object({
     )
     .optional().nullable(),
   privacy: z.string().optional().nullable(),
+  links: z
+    .array(
+      z.object({
+        title: z.string(),
+        url: z.string().url(),
+      }),
+    )
+    .optional().nullable(),
 })
 
 export type SettingsForm = z.infer<typeof settingsFormSchema>

@@ -26,6 +26,11 @@ const items = [
     slot: 'gallery',
   },
   {
+    label: 'Externe Verlinkungen',
+    icon: 'i-heroicons-link',
+    slot: 'links',
+  },
+  {
     label: 'Google Bewertungen',
     icon: 'i-heroicons-star',
     slot: 'google',
@@ -65,6 +70,9 @@ const items = [
         </template>
         <template #offer>
           <SettingsModalOffer />
+        </template>
+        <template #links>
+          <SettingsModalLinks />
         </template>
         <template #google>
           <SettingsModalGoogle />
