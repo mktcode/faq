@@ -31,6 +31,16 @@ const items = [
     slot: 'links',
   },
   {
+    label: 'Downloads',
+    icon: 'i-heroicons-arrow-down-tray',
+    slot: 'downloads',
+  },
+  {
+    label: 'Häufige Fragen',
+    icon: 'i-heroicons-question-mark-circle',
+    slot: 'faq',
+  },
+  {
     label: 'Google Bewertungen',
     icon: 'i-heroicons-star',
     slot: 'google',
