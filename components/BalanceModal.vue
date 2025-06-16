@@ -4,7 +4,7 @@ const showModal = defineModel('show', {
   type: Boolean,
 })
 
-const { data: me, refresh: refreshUser } = await useFetch('/api/user/me')
+const { me, refreshMe } = useMe()
 
 const showTopupManualModal = ref(false)
 const showTopupOnlineModal = ref(false)
@@ -13,7 +13,7 @@ const isUpdatingUserBalance = ref(false)
 async function updateUserBalance() {
   isUpdatingUserBalance.value = true
   await $fetch('/api/user/updateBalance', { method: 'POST' })
-  await refreshUser()
+  await refreshMe()
   isUpdatingUserBalance.value = false
 }
 

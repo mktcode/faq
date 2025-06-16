@@ -9,6 +9,8 @@ definePageMeta({
   },
 })
 
+const { me } = useMe()
+
 const route = useRoute()
 const username = computed(() => Array.isArray(route.params.username) ? route.params.username[0] : route.params.username)
 
@@ -34,7 +36,19 @@ appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
 
 <template>
   <FontWrapper :font="font">
-    <div class="flex items-center justify-between p-4">
+    <div
+      v-if="me"
+      class="flex items-center justify-between p-4"
+    >
+      <UButton
+        label="kotti.autofaq.de"
+        class="text-gray-400"
+        icon="i-heroicons-document-duplicate"
+        variant="ghost"
+        color="neutral"
+        size="md"
+      />
+
       <UButton
         class="text-gray-400 ml-auto"
         icon="i-heroicons-cog-6-tooth"
@@ -95,6 +109,7 @@ appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
           Häufig gestellte Fragen
         </h3>
         <UButton
+          v-if="me"
           label="Frage und Antwort hinzufügen"
           icon="i-heroicons-plus"
           variant="soft"
@@ -126,7 +141,7 @@ appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
         </div>
       </div>
       <GoogleReviews v-if="currentSettings?.showGoogleReviews" />
-      <CustomerRequestList />
+      <CustomerRequestList v-if="me" />
       <div class="w-full flex items-center justify-center gap-2 mt-12 text-sm">
         <ULink class="text-gray-400">
           Impressum

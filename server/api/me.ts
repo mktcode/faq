@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
 
   if (!user) {
-    return null
+    return { data: null }
   }
 
   const userInDb = await db
@@ -12,5 +12,5 @@ export default defineEventHandler(async (event) => {
     .where('id', '=', user.id)
     .executeTakeFirst()
 
-  return userInDb || null
+  return { data: userInDb || null }
 })

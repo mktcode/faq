@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { clear } = useUserSession()
-const { data: me, refresh: refreshMe } = await useFetch('/api/user/me')
+const { me, refreshMe } = useMe()
 
 function signOut() {
   clear()
