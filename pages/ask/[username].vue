@@ -41,7 +41,7 @@ appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
       class="flex items-center justify-between p-4"
     >
       <UButton
-        label="kotti.autofaq.de"
+        label="kotti.gewerbeprofil.de"
         class="text-gray-400"
         icon="i-heroicons-document-duplicate"
         variant="ghost"
