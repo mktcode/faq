@@ -26,34 +26,6 @@ async function saveSettings() {
 
 <template>
   <div class="flex flex-col gap-4 p-6">
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2">
-        <UButton
-          icon="i-heroicons-information-circle"
-          variant="soft"
-        />
-        <UInput
-          placeholder="https://..."
-          class="flex-1"
-        />
-        <UButton
-          icon="i-heroicons-trash"
-          variant="ghost"
-          color="neutral"
-        />
-      </div>
-      <div class="flex items-center gap-2">
-        <UButton
-          icon="i-heroicons-plus"
-          variant="soft"
-        />
-        <UInput
-          placeholder="https://..."
-          class="flex-1 opacity-40"
-          disabled
-        />
-      </div>
-    </div>
     <UFormField label="Titel">
       <UInput
         v-model="form.title"
