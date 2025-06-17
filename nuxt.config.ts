@@ -1,11 +1,5 @@
 export default defineNuxtConfig({
-  modules: [
-    'nuxt-auth-utils',
-    'nuxt-authorization',
-    '@nuxt/ui',
-    '@nuxt/eslint',
-    '@nuxt/test-utils/module',
-  ],
+  modules: ['nuxt-auth-utils', 'nuxt-authorization', '@nuxt/ui', '@nuxt/eslint', '@nuxt/test-utils/module', '@nuxt/image'],
   devtools: { enabled: false },
   app: {
     head: {
