@@ -10,6 +10,12 @@ const images = [
 ]
 
 const showModal = ref(false)
+
+const loadedImages = ref<Record<number, boolean>>({})
+
+const handleImageLoaded = (index: number) => {
+  loadedImages.value[index] = true
+}
 </script>
 
 <template>
@@ -20,7 +26,9 @@ const showModal = ref(false)
     >
       <img
         :src="images[0]"
-        class="object-cover w-full hover:scale-110 transition-transform duration-500"
+        class="object-cover w-full hover:scale-110 transition-all duration-500 opacity-0"
+        :class="{ 'opacity-100': loadedImages[0] }"
+        @load="handleImageLoaded(0)"
       >
     </div>
     <div class="grid grid-cols-2 lg:grid-cols-3 gap-2">
@@ -32,7 +40,9 @@ const showModal = ref(false)
       >
         <img
           :src="src"
-          class="object-cover w-full h-full hover:scale-110 transition-transform duration-500"
+          class="object-cover w-full h-full hover:scale-110 transition-all duration-500 opacity-0"
+          :class="{ 'opacity-100': loadedImages[index + 1] }"
+          @load="handleImageLoaded(index + 1)"
         >
       </div>
     </div>
