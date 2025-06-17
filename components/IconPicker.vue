@@ -2,40 +2,30 @@
 import type { SelectMenuItem } from '@nuxt/ui'
 
 const icon = defineModel('icon', {
-  default: 'i-lucide-information-circle',
+  default: 'i-lucide-instagram',
   type: String,
 })
 
 const items = ref([
   {
-    label: 'Backlog',
-    value: 'backlog',
-    icon: 'i-lucide-circle-help',
+    label: 'Instagram',
+    value: 'i-lucide-instagram',
+    icon: 'i-lucide-instagram',
   },
   {
-    label: 'Todo',
-    value: 'todo',
-    icon: 'i-lucide-circle-plus',
-  },
-  {
-    label: 'In Progress',
-    value: 'in_progress',
-    icon: 'i-lucide-circle-arrow-up',
-  },
-  {
-    label: 'Done',
-    value: 'done',
-    icon: 'i-lucide-circle-check',
+    label: 'Shop',
+    value: 'i-lucide-shopping-cart',
+    icon: 'i-lucide-shopping-cart',
   },
 ] satisfies SelectMenuItem[])
 
-const value = ref(items.value[0])
+const value = ref(icon.value ? items.value.find(item => item.value === icon.value) : items.value[0])
 
 watch(value, (newValue) => {
   if (newValue) {
     icon.value = newValue.icon
   }
-})
+}, { immediate: true })
 </script>
 
 <template>

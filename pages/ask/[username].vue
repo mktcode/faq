@@ -70,25 +70,10 @@ appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
       <h1 class="text-lg font-bold mb-4">
         {{ currentSettings?.title || route.params.username }}
       </h1>
-      <div class="w-full flex items-center justify-center gap-2 mb-4">
-        <UButton
-          icon="i-heroicons-information-circle"
-          variant="soft"
-        />
-        <UButton
-          icon="i-heroicons-calendar-days"
-          variant="soft"
-        />
-        <UButton
-          icon="i-heroicons-shopping-cart"
-          variant="soft"
-        />
-        <UButton
-          icon="i-lucide-instagram"
-          variant="soft"
-        />
-      </div>
-
+      <AskLinks
+        v-if="currentSettings?.links?.length"
+        :links="currentSettings.links"
+      />
       <div class="my-6 w-full">
         <AskGallery />
       </div>
