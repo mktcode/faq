@@ -1,49 +1,53 @@
 <script setup lang="ts">
 const images = [
-  `https://picsum.photos/seed/1/1920/1080`,
-  `https://picsum.photos/seed/2/1080/1920`,
-  `https://picsum.photos/seed/3/800/600`,
-  `https://picsum.photos/seed/4/1000/1000`,
-  `https://picsum.photos/seed/5/600/800`,
-  `https://picsum.photos/seed/6/800/400`,
-  `https://picsum.photos/seed/7/400/600`,
+  `https://picsum.photos/1920/1080`,
+  `https://picsum.photos/1080/1920`,
+  `https://picsum.photos/800/600`,
+  `https://picsum.photos/1000/1000`,
+  `https://picsum.photos/600/800`,
+  `https://picsum.photos/800/400`,
+  `https://picsum.photos/400/600`,
 ]
 
 const showModal = ref(false)
 
-const loadedImages = ref<Record<number, boolean>>({})
+const showImages = ref<number[]>([])
 
-const handleImageLoaded = (index: number) => {
-  loadedImages.value[index] = true
-}
+onMounted(() => {
+  for (let i = 0; i < images.length; i++) {
+    setTimeout(() => {
+      showImages.value.push(i)
+    }, i * 100)
+  }
+})
 </script>
 
 <template>
   <div class="flex flex-col gap-2">
     <div
-      class="rounded-xl overflow-hidden w-full aspect-video flex items-center justify-center cursor-pointer"
+      class="rounded-xl overflow-hidden w-full aspect-video flex items-center justify-center cursor-pointer bg-gray-100"
       @click="showModal = true"
     >
-      <img
+      <NuxtImg
         :src="images[0]"
         class="object-cover w-full hover:scale-110 transition-all duration-500 opacity-0"
-        :class="{ 'opacity-100': loadedImages[0] }"
-        @load="handleImageLoaded(0)"
-      >
+        :class="{ 'opacity-100': showImages.includes(0) }"
+        preload
+      />
     </div>
     <div class="grid grid-cols-2 lg:grid-cols-3 gap-2">
       <div
         v-for="(src, index) in images.slice(1, 7)"
         :key="index"
-        class="rounded-xl overflow-hidden w-full aspect-square flex items-center justify-center cursor-pointer"
+        class="rounded-xl overflow-hidden w-full aspect-square flex items-center justify-center cursor-pointer bg-gray-100"
         @click="showModal = true"
       >
-        <img
+        <NuxtImg
           :src="src"
           class="object-cover w-full h-full hover:scale-110 transition-all duration-500 opacity-0"
-          :class="{ 'opacity-100': loadedImages[index + 1] }"
-          @load="handleImageLoaded(index + 1)"
-        >
+          :class="{ 'opacity-100': showImages.includes(index + 1) }"
+          preload
+        />
       </div>
     </div>
   </div>
