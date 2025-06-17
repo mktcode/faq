@@ -79,7 +79,7 @@ function signOut() {
 
       <p>
         Auf dem Weg zur eigenen Website bieten wir Ihnen einen sinnvollen und unkomplizierten Zwischenschritt, bei dem Sie auch erst mal eine Weile stehen bleiben können.
-        Wenn später dann eine vollwertige Website mit eigenem Design und allem drum und dran entstehen soll, dann sind Sie bereits bestens vorbereitet.
+        Und wenn dann später eine vollwertige Website mit eigenem Design und allem drum und dran entstehen soll, dann sind Sie mit unserem Gewerbeprofil bereits bestens vorbereitet.
       </p>
 
       <p>
