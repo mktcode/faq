@@ -42,6 +42,7 @@ export const settingsFormSchema = z.object({
       z.object({
         title: z.string(),
         url: z.string().url(),
+        icon: z.string(),
       }),
     )
     .optional().nullable(),
