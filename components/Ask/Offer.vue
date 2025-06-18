@@ -18,17 +18,21 @@ const items = offers.map(offer => ({
       v-slot="{ item }"
       dots
       arrows
+      auto-height
       :prev="{ variant: 'ghost' }"
       :next="{ variant: 'ghost' }"
-      :autoplay="{ delay: 10000 }"
+      :autoplay="{ delay: 20000 }"
       :items="items"
       class="w-full"
+      :ui="{
+        container: 'transition-[height] duration-500 ease-in-out',
+      }"
     >
       <h2 class="text-2xl font-semibold mb-4">
         {{ item.title }}
       </h2>
       <div
-        class="mb-4"
+        class="mb-4 prose"
         v-html="item.description"
       />
     </UCarousel>
