@@ -6,6 +6,14 @@ export default defineAppConfig({
       website: 'sky',
     },
     button: {
+      variants: {
+        size: {
+          xxl: {
+            base: 'px-5 py-3 text-xl',
+            icon: 'w-6 h-6',
+          },
+        },
+      },
       defaultVariants: {
         size: 'xl',
       },
