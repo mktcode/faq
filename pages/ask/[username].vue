@@ -32,6 +32,8 @@ const { data: qanda } = await useFetch<Qanda[]>(`/api/qanda`, {
 const appConfig = useAppConfig()
 const font = computed(() => currentSettings.value?.font || 'roboto')
 appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
+
+const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
 </script>
 
 <template>
@@ -61,7 +63,19 @@ appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
       </UButton>
     </div>
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
-      <div class="size-16 rounded-full bg-gray-100 flex items-center justify-center">
+      <div
+        v-if="logo"
+      >
+        <NuxtImg
+          :src="logo"
+          alt="Logo"
+          class="w-16 mb-4"
+        />
+      </div>
+      <div
+        v-else
+        class="size-16 rounded-full bg-gray-100 flex items-center justify-center"
+      >
         <UIcon
           name="i-heroicons-photo"
           class="size-7 opacity-25"
