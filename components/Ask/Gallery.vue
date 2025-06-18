@@ -1,12 +1,12 @@
 <script setup lang="ts">
 const images = [
-  `https://picsum.photos/1920/1080`,
-  `https://picsum.photos/1080/1920`,
-  `https://picsum.photos/800/600`,
-  `https://picsum.photos/1000/1000`,
-  `https://picsum.photos/600/800`,
-  `https://picsum.photos/800/400`,
-  `https://picsum.photos/400/600`,
+  `https://nbg1.your-objectstorage.com/mktcms/1/emma_herbst_logo.webp`,
+  `https://nbg1.your-objectstorage.com/mktcms/1/1_1.webp`,
+  `https://nbg1.your-objectstorage.com/mktcms/1/2_1.webp`,
+  `https://nbg1.your-objectstorage.com/mktcms/1/3_1.webp`,
+  `https://nbg1.your-objectstorage.com/mktcms/1/4_1.webp`,
+  `https://nbg1.your-objectstorage.com/mktcms/1/2_3.webp`,
+  `https://nbg1.your-objectstorage.com/mktcms/1/3_2.webp`,
 ]
 
 const showModal = ref(false)
@@ -25,7 +25,8 @@ onMounted(() => {
 <template>
   <div class="flex flex-col gap-2">
     <div
-      class="rounded-xl overflow-hidden w-full aspect-video flex items-center justify-center cursor-pointer bg-gray-100"
+      class="rounded-xl overflow-hidden w-full aspect-video flex items-center justify-center cursor-pointer"
+      :class="{ 'bg-gray-100': !showImages.includes(0) }"
       @click="showModal = true"
     >
       <NuxtImg
@@ -35,11 +36,14 @@ onMounted(() => {
         preload
       />
     </div>
-    <div class="grid grid-cols-2 lg:grid-cols-3 gap-2">
+    <div
+      class="grid grid-cols-2 lg:grid-cols-3 gap-2"
+    >
       <div
         v-for="(src, index) in images.slice(1, 7)"
         :key="index"
-        class="rounded-xl overflow-hidden w-full aspect-square flex items-center justify-center cursor-pointer bg-gray-100"
+        class="rounded-xl overflow-hidden w-full aspect-square flex items-center justify-center cursor-pointer"
+        :class="{ 'bg-gray-100': !showImages.includes(index + 1) }"
         @click="showModal = true"
       >
         <NuxtImg

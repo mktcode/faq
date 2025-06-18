@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import DropZone from '../DropZone.vue'
+
 const toast = useToast()
 
 const emit = defineEmits(['update'])
@@ -25,6 +27,9 @@ async function saveSettings() {
 
 <template>
   <div class="flex flex-col gap-4 p-6">
+    <DropZone />
+    <FilesGrid />
+    <FileExplorer />
     <UButton
       variant="solid"
       color="primary"

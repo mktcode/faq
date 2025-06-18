@@ -10,6 +10,8 @@ export default defineEventHandler(async (event) => {
     return { success: false, message: 'No files found' }
   }
 
+  const { s3BucketName } = useRuntimeConfig()
+
   const s3 = createS3Client()
 
   for (const file of files) {
@@ -45,8 +47,10 @@ export default defineEventHandler(async (event) => {
       // replace current extension in filepath with webp
       const webpFilePath = filePath.replace(/\.[^/.]+$/, '.webp')
 
+      console.log(s3BucketName, webpFilePath, fileName)
+
       const command = new PutObjectCommand({
-        Bucket: 'mktcms',
+        Bucket: s3BucketName,
         Key: webpFilePath,
         Body: Buffer.from(await image.toFormat('webp').toBuffer()),
         ContentType: 'image/webp',
@@ -58,7 +62,7 @@ export default defineEventHandler(async (event) => {
     }
     else {
       const command = new PutObjectCommand({
-        Bucket: 'mktcms',
+        Bucket: s3BucketName,
         Key: filePath,
         Body: file.data,
         ContentType: file.type,

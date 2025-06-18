@@ -35,6 +35,7 @@ export default defineNuxtConfig({
     mailfrom: process.env.MAIL_FROM,
     s3AccessKey: process.env.S3_ACCESS_KEY,
     s3SecretKey: process.env.S3_SECRET_KEY,
+    s3BucketName: process.env.S3_BUCKET_NAME,
     stripeApiSecretKey: process.env.STRIPE_API_SECRET_KEY,
     stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
     oauth: {

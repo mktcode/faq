@@ -1,7 +1,5 @@
 <script setup lang="ts">
-defineProps<{
-  files: UploadedFile[]
-}>()
+const { data: files } = await useFetch<UploadedFile[]>(`/api/files`)
 
 const toast = useToast()
 
