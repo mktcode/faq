@@ -123,7 +123,10 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
             <h3 class="text-lg font-semibold">
               {{ item.question }}
             </h3>
-            <div class="flex items-center justify-end gap-2">
+            <div
+              v-if="me"
+              class="flex items-center justify-end gap-2"
+            >
               <UButton
                 icon="i-heroicons-pencil-square"
                 variant="ghost"
