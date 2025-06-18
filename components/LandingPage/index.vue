@@ -43,7 +43,7 @@ function signOut() {
           <UButton
             to="/register"
           >
-            Profil erstellen
+            Nein, erstmal nicht.
           </UButton>
           <UButton
             to="/login"
@@ -56,12 +56,8 @@ function signOut() {
     </div>
 
     <section class="mt-24 p-6 shadow-sky-50 flex flex-col">
-      <p class="mt-6 text-gray-500 text-xl">
-        Viele fühlen sich verpflichtet, sofort „irgendwas“ online zu bringen.
-        Hauptsache, man hat eine Website. Gehört ja heute dazu.
-      </p>
       <p class="mt-4 text-gray-500 text-xl">
-        Bevor Sie aber zu viel (oder zu wenig) Geld für eine Website ausgeben,
+        Bevor Sie zu viel (oder zu wenig) Geld für eine Website ausgeben,
         probieren Sie unser kostenloses Gewerbeprofil. Damit sind Sie sofort online und konzentrieren Sie sich erstmal auf Ihre Inhalte und die Kommunikation mit Ihren Kunden.
       </p>
       <p class="mt-4 text-gray-500 text-xl">
@@ -93,7 +89,7 @@ function signOut() {
       <a
         href="/ask/markuskottlaender"
         target="_blank"
-        class="block w-full aspect-square rounded-lg"
+        class="block w-full aspect-square rounded-full"
         :class="{ 'bg-sky-50': !item }"
       >
         <NuxtImg
@@ -107,6 +103,7 @@ function signOut() {
     <UButton
       to="/register"
       size="xxl"
+      class="mt-12"
     >
       Mein Profil erstellen
     </UButton>
@@ -152,14 +149,21 @@ function signOut() {
     <section class="p-6 shadow-sky-50 flex flex-col">
       <p class="mt-6 text-gray-500 text-xl">
         Klar! Wir können Sie dazu beraten und auch die Umsetzung übernehmen.
-        Wir würden Sie aber bitten, sich vorher ein paar Gedanken zu machen.
-        Auf die Frage „Was kostet eine Website?“ gibt es keine Antwort und es gilt der Grundsatz: Die Form folgt der Funktion.
+        Es gilt der Grundsatz: Die Form folgt der Funktion.
         D.h. wir müssen uns zunächst ohnehin über Ihre Inhalte und Ziele unterhalten, bevor wir über das Design und die Technik sprechen können.
       </p>
       <p class="mt-4 text-gray-500 text-xl">
-        Und dabei hilft Ihnen und uns ein Gewerbeprofil sehr weiter. Sie müssen es auch nicht veröffentlichen.
+        Und dabei hilft Ihnen und uns ein Gewerbeprofil ebenfalls. Sie müssen es auch nicht veröffentlichen.
         Durch den begrenzten Spielraum hilft es Ihnen aber, Gedanken zu sortieren und Inhalte zu priorisieren und wir bekommen ein klareres Bild von Ihrem Bedarf.
       </p>
     </section>
+
+    <UButton
+      to="/register"
+      size="xxl"
+      class="mt-12"
+    >
+      Vorbereitung starten
+    </UButton>
   </div>
 </template>
