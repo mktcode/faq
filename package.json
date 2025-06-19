@@ -9,7 +9,6 @@
     "dev": "nuxt dev --host --dotenv .env.local",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "deploy:uberspace": "rsync -avz -e 'ssh -i ~/.ssh/your/nuxt-app' .output/ nuxt-app@somehost.uberspace.de:/home/nuxt-app/nuxt-app && ssh -i ~/.ssh/your/nuxt-app nuxt-app@somehost.uberspace.de 'supervisorctl restart nuxt-app'",
     "deploy:kamal": "echo 'Set up your env and run `kamal deploy`.'",
     "bd": "npm run build && npm run deploy",
     "migrate": "npx tsx db/migrate.ts",
