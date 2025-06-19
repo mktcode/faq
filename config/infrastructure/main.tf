@@ -19,7 +19,7 @@ provider "hcloud" {
   token = var.hcloud_token
 }
 
-# Firewalls for App, DB, Monitoring and Mailcow
+# Firewalls for App, DB, Monitoring
 
 resource "hcloud_firewall" "app" {
   name = "app"
@@ -115,91 +115,12 @@ resource "hcloud_firewall" "monitor" {
   }
 }
 
-resource "hcloud_firewall" "mail" {
-  name = "mail"
-  rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "22"
-    source_ips = [
-      "0.0.0.0/0",
-      "::/0"
-    ]
-  }
-  rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "25"
-    source_ips = ["0.0.0.0/0", "::/0"]
-  }
-  rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "80"
-    source_ips = ["0.0.0.0/0", "::/0"]
-  }
-  rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "443"
-    source_ips = ["0.0.0.0/0", "::/0"]
-  }
-  rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "587"
-    source_ips = ["0.0.0.0/0", "::/0"]
-  }
-  rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "993"
-    source_ips = ["0.0.0.0/0", "::/0"]
-  }
-  rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "995"
-    source_ips = ["0.0.0.0/0", "::/0"]
-  }
-  rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "4190"
-    source_ips = ["0.0.0.0/0", "::/0"]
-  }
-  rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "465"
-    source_ips = ["0.0.0.0/0", "::/0"]
-  }
-  rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "110"
-    source_ips = ["0.0.0.0/0", "::/0"]
-  }
-  rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "143"
-    source_ips = ["0.0.0.0/0", "::/0"]
-  }
-  rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "9100"
-    source_ips = [hcloud_server.monitor.ipv4_address]
-  }
-}
-
-# Servers for App, DB, Monitoring and Mailcow
+# Servers for App, DB, Monitoring
 
 resource "hcloud_server" "app-1" {
   name = "app-1"
   image = "ubuntu-24.04"
-  server_type = "cx22"
+  server_type = "cax11"
   public_net {
     ipv4_enabled = true
     ipv6_enabled = true
@@ -215,7 +136,7 @@ resource "hcloud_server" "app-1" {
 resource "hcloud_server" "app-2" {
   name = "app-2"
   image = "ubuntu-24.04"
-  server_type = "cx22"
+  server_type = "cax11"
   public_net {
     ipv4_enabled = true
     ipv6_enabled = true
@@ -231,7 +152,7 @@ resource "hcloud_server" "app-2" {
 resource "hcloud_server" "db" {
   name = "db"
   image = "ubuntu-24.04"
-  server_type = "cx22"
+  server_type = "cax11"
   public_net {
     ipv4_enabled = true
     ipv6_enabled = true
@@ -259,29 +180,6 @@ resource "hcloud_server" "monitor" {
   firewall_ids = [ hcloud_firewall.monitor.id ]
 }
 
-resource "hcloud_server" "mail1" {
-  name = "mail1"
-  image = "ubuntu-24.04"
-  server_type = "cax21"
-  public_net {
-    ipv4_enabled = true
-    ipv6_enabled = true
-  }
-  location = "nbg1"
-  ssh_keys = [
-    data.hcloud_ssh_key.default.id
-  ]
-  user_data = file("${path.module}/mail.cloud-init.yml")
-  firewall_ids = [ hcloud_firewall.mail.id ]
-}
-
-# Reverse DNS for mail server
-resource "hcloud_rdns" "mail1_rdns" {
-  server_id  = hcloud_server.mail1.id
-  ip_address = hcloud_server.mail1.ipv4_address
-  dns_ptr    = "mail1.solihost.de"
-}
-
 # Load Balancer for App
 
 resource "hcloud_load_balancer" "app" {
@@ -304,7 +202,7 @@ resource "hcloud_load_balancer_target" "app-2" {
 
 resource "hcloud_managed_certificate" "app" {
   name = "app"
-  domain_names = ["solihost.de", "*.solihost.de"]
+  domain_names = ["gewerbeprofil.de", "*.gewerbeprofil.de"]
 }
 
 resource "hcloud_load_balancer_service" "app-health" {
@@ -350,8 +248,4 @@ output "monitor_ip" {
 
 output "app_lb_ip" {
   value = hcloud_load_balancer.app.ipv4
-}
-
-output "mail1_ip" {
-  value = hcloud_server.mail1.ipv4_address
 }
