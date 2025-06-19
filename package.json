@@ -13,6 +13,8 @@
     "kamal:logs": "kamal logs",
     "kamal:remove": "kamal remove",
     "kamal:setup": "kamal setup",
+    "kamal:sh": "kamal shell",
+    "kamal:migrate": "kamal migrate",
     "bd": "npm run build && npm run deploy",
     "migrate": "npx tsx db/migrate.ts",
     "migrate:down": "npx tsx db/down.ts",
