@@ -29,7 +29,9 @@ aliases:
   logs: app logs -f
   migrate: app exec --primary 'npx tsx server/migrate.ts'
 builder:
-  arch: amd64
+  arch:
+    - amd64
+    - arm64
 accessories:
   db:
     image: mysql:8.0
