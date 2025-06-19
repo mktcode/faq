@@ -58,7 +58,7 @@ function signOut() {
     <section class="mt-24 p-6 shadow-sky-50 flex flex-col">
       <p class="mt-4 text-gray-500 text-xl">
         Bevor Sie zu viel (oder zu wenig) Geld für eine Website ausgeben,
-        probieren Sie unser kostenloses Gewerbeprofil. Damit sind Sie sofort online und konzentrieren Sie sich erstmal auf Ihre Inhalte und die Kommunikation mit Ihren Kunden.
+        probieren Sie unser kostenloses Gewerbeprofil aus. Damit sind Sie sofort online und konzentrieren sich auf Ihre Inhalte und die Kommunikation mit Ihren Kunden.
       </p>
       <p class="mt-4 text-gray-500 text-xl">
         Eine individuelle, ästhetisch und inhaltlich professionell gestaltete Website ist dann der nächste Schritt und mit Ihrem Gewerbeprofil sind Sie bereits bestens vorbereitet.
@@ -67,8 +67,8 @@ function signOut() {
     </section>
 
     <UCarousel
-      loop
       v-slot="{ item }"
+      loop
       :auto-scroll="{
         stopOnFocusIn: false,
         stopOnInteraction: false,
