@@ -10,6 +10,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "prod:deploy": "kamal deploy",
+    "prod:redeploy": "kamal redeploy",
     "prod:logs": "kamal logs",
     "prod:remove": "kamal remove",
     "prod:setup": "kamal setup",
