@@ -1,5 +1,5 @@
-service: nuxt-app
-image: mktcode/nuxt-app
+service: gewerbeprofil
+image: mktcode/gewerbeprofil
 servers:
   web:
     - <%= `bin/terraform output -raw app-1_ip` %>
