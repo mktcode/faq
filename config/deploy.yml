@@ -34,7 +34,7 @@ builder:
     - arm64
 accessories:
   db:
-    image: mysql:8.0
+    image: mysql:9.0
     host: <%= `bin/terraform output -raw db_ip` %>
     port: 3306
     env:
