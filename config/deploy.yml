@@ -28,7 +28,7 @@ aliases:
   shell: app exec --interactive --reuse "sh"
   logs: app logs -f
   migrate: app exec --primary 'npx tsx server/migrate.ts'
-  db: kamal accessory exec db --interactive --reuse "sh"
+  db: accessory exec db --interactive --reuse "sh"
 builder:
   arch:
     - amd64

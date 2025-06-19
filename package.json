@@ -16,6 +16,7 @@
     "prod:setup": "kamal setup",
     "prod:sh": "kamal shell",
     "prod:migrate": "kamal migrate",
+    "prod:db": "kamal db",
     "bd": "npm run build && npm run deploy",
     "migrate": "npx tsx db/migrate.ts",
     "migrate:down": "npx tsx db/down.ts",
