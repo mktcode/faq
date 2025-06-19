@@ -71,7 +71,7 @@ resource "hcloud_firewall" "db" {
     port      = "3306"
     source_ips = [
       hcloud_server.app-1.ipv4_address,
-      hcloud_server.app-2.ipv4_address
+      # hcloud_server.app-2.ipv4_address
     ]
   }
   rule {
@@ -133,21 +133,21 @@ resource "hcloud_server" "app-1" {
   firewall_ids = [ hcloud_firewall.app.id ]
 }
 
-resource "hcloud_server" "app-2" {
-  name = "app-2"
-  image = "ubuntu-24.04"
-  server_type = "cax11"
-  public_net {
-    ipv4_enabled = true
-    ipv6_enabled = true
-  }
-  location = "nbg1"
-  ssh_keys = [
-    data.hcloud_ssh_key.default.id
-  ]
-  user_data = file("${path.module}/app.cloud-init.yml")
-  firewall_ids = [ hcloud_firewall.app.id ]
-}
+# resource "hcloud_server" "app-2" {
+#   name = "app-2"
+#   image = "ubuntu-24.04"
+#   server_type = "cax11"
+#   public_net {
+#     ipv4_enabled = true
+#     ipv6_enabled = true
+#   }
+#   location = "nbg1"
+#   ssh_keys = [
+#     data.hcloud_ssh_key.default.id
+#   ]
+#   user_data = file("${path.module}/app.cloud-init.yml")
+#   firewall_ids = [ hcloud_firewall.app.id ]
+# }
 
 resource "hcloud_server" "db" {
   name = "db"
@@ -194,11 +194,11 @@ resource "hcloud_load_balancer_target" "app-1" {
   server_id        = hcloud_server.app-1.id
 }
 
-resource "hcloud_load_balancer_target" "app-2" {
-  type             = "server"
-  load_balancer_id = hcloud_load_balancer.app.id
-  server_id        = hcloud_server.app-2.id
-}
+# resource "hcloud_load_balancer_target" "app-2" {
+#   type             = "server"
+#   load_balancer_id = hcloud_load_balancer.app.id
+#   server_id        = hcloud_server.app-2.id
+# }
 
 resource "hcloud_managed_certificate" "app" {
   name = "app"
@@ -234,9 +234,9 @@ output "app-1_ip" {
   value = hcloud_server.app-1.ipv4_address
 }
 
-output "app-2_ip" {
-  value = hcloud_server.app-2.ipv4_address
-}
+# output "app-2_ip" {
+#   value = hcloud_server.app-2.ipv4_address
+# }
 
 output "db_ip" {
   value = hcloud_server.db.ipv4_address
