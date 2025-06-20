@@ -57,7 +57,7 @@ function signOut() {
       </div>
     </div>
 
-    <section class="mt-24 p-6 shadow-sky-50 flex flex-col">
+    <section class="mt-24 shadow-sky-50 flex flex-col">
       <p class="mt-4 text-gray-500 text-xl">
         Bevor Sie zu viel (oder zu wenig) Geld für eine Website ausgeben,
         probieren Sie unser kostenloses Gewerbeprofil aus. Damit sind Sie sofort online und konzentrieren sich auf Ihre Inhalte und die Kommunikation mit Ihren Kunden.
@@ -110,11 +110,11 @@ function signOut() {
       Mein Profil erstellen
     </UButton>
 
-    <h2 class="w-full px-6 text-3xl font-bold mt-32">
+    <h2 class="w-full text-3xl font-bold mt-32">
       Was wollen Ihre Kunden wissen?
     </h2>
 
-    <section class="p-6 shadow-sky-50 flex flex-col">
+    <section class="shadow-sky-50 flex flex-col">
       <p class="mt-6 text-gray-500 text-xl">
         Eine Liste mit häufig gestellten Fragen (FAQ) zu erstellen, ist nicht nur für Ihre Kunden hilfreich,
         sondern auch für Sie selbst. Zusammen mit dem Anfrageformular stellt das FAQ die Kernfunktion Ihres Gewerbeprofils dar.
@@ -127,11 +127,11 @@ function signOut() {
       </p>
     </section>
 
-    <h2 class="w-full px-6 text-3xl font-bold mt-32">
+    <h2 class="w-full text-3xl font-bold mt-32">
       Was ist mit Domain und E-Mail?
     </h2>
 
-    <section class="p-6 shadow-sky-50 flex flex-col">
+    <section class="shadow-sky-50 flex flex-col">
       <p class="mt-6 text-gray-500 text-xl">
         Das ist so eine Sache. Technisch gesehen brauchen Sie keine eigene Domain und nichtmal eine E-Mail-Adresse.
         Ihr Gewerbeprofil ist sofort unter <i>ihr-name.gewerbeprofil.de</i> erreichbar und Sie können Anfragen direkt in der App empfangen und beantworten.
@@ -144,11 +144,11 @@ function signOut() {
       </p>
     </section>
 
-    <h2 class="w-full px-6 text-3xl font-bold mt-32">
+    <h2 class="w-full text-3xl font-bold mt-32">
       Ich will aber eine Website!
     </h2>
 
-    <section class="p-6 shadow-sky-50 flex flex-col">
+    <section class="shadow-sky-50 flex flex-col">
       <p class="mt-6 text-gray-500 text-xl">
         Klar! Wir können Sie dazu beraten und auch die Umsetzung übernehmen.
         Es gilt der Grundsatz: Die Form folgt der Funktion.
