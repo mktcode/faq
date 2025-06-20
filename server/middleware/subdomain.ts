@@ -1,12 +1,12 @@
 export default defineEventHandler(({ req, context }) => {
-  const { public: { host } } = useRuntimeConfig()
+  const { public: { appHost } } = useRuntimeConfig()
 
-  console.log('Host:', req.headers.host, host)
-  const hasSubdomain = !(req.headers.host || host).startsWith(host)
+  console.log('Host:', req.headers.host, appHost)
+  const hasSubdomain = !(req.headers.host || appHost).startsWith(appHost)
   console.log('Has subdomain:', hasSubdomain)
 
   if (hasSubdomain) {
-    const subdomain = (req.headers.host || host).split('.')[0]
+    const subdomain = (req.headers.host || appHost).split('.')[0]
     context.subdomain = subdomain
   }
 })

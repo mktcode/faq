@@ -51,7 +51,7 @@ export default defineNuxtConfig({
     public: {
       s3Endpoint: process.env.S3_ENDPOINT,
       stripeApiKey: process.env.STRIPE_API_KEY,
-      host: process.env.HOST || 'localhost:3000',
+      appHost: process.env.APP_HOST || 'localhost:3000',
     },
   },
 
