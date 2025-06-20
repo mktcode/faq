@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import backgroundUrl from '~/assets/img/lp-bg.png'
 
+const { public: { host } } = useRuntimeConfig()
 const { clear } = useUserSession()
 const { me, refreshMe } = await useMe()
 
@@ -29,7 +30,8 @@ function signOut() {
           v-if="me"
         >
           <UButton
-            :to="`/ask/${me.userName}`"
+            :to="`https://${me.userName}.${host}`"
+            target="_blank"
             label="Mein Gewerbeprofil"
             variant="soft"
           />
@@ -87,7 +89,7 @@ function signOut() {
       :ui="{ item: 'basis-1/4' }"
     >
       <a
-        href="/ask/markuskottlaender"
+        :href="`https://markuskottlaender.${host}`"
         target="_blank"
         class="block w-full aspect-square rounded-full"
         :class="{ 'bg-sky-50': !item }"

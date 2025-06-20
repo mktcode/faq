@@ -1,5 +1,5 @@
 export default defineEventHandler(({ req, context }) => {
-  const { host } = useRuntimeConfig()
+  const { public: { host } } = useRuntimeConfig()
 
   const hasSubdomain = !(req.headers.host || host).startsWith(host)
 

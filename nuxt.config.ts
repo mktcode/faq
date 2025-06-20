@@ -28,7 +28,6 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     databaseUrl: process.env.DATABASE_URL,
-    host: process.env.HOST || 'localhost:3000',
     openaiApiKey: process.env.OPENAI_API_KEY,
     mailhost: process.env.MAIL_HOST,
     mailuser: process.env.MAIL_USER,
@@ -52,6 +51,7 @@ export default defineNuxtConfig({
     public: {
       s3Endpoint: process.env.S3_ENDPOINT,
       stripeApiKey: process.env.STRIPE_API_KEY,
+      host: process.env.HOST || 'localhost:3000',
     },
   },
 
