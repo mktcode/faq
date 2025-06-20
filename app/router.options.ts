@@ -8,7 +8,6 @@ export default <RouterOptions>{
       subdomain.value = ssrContext.event.context.subdomain
     }
 
-    console.log('Subdomain:', subdomain.value)
     if (subdomain.value) {
       return [{
         name: 'userroute',
