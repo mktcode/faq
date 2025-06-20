@@ -43,7 +43,7 @@ function signOut() {
         </template>
         <template v-else>
           <UButton
-            to="/register"
+            to="/register/1"
           >
             Nein, erstmal nicht.
           </UButton>
@@ -103,7 +103,7 @@ function signOut() {
     </UCarousel>
 
     <UButton
-      to="/register"
+      to="/register/2"
       size="xxl"
       class="mt-12"
     >
@@ -161,7 +161,7 @@ function signOut() {
     </section>
 
     <UButton
-      to="/register"
+      to="/register/3"
       size="xxl"
       class="mt-12"
     >
