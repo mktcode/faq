@@ -64,3 +64,6 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# Ignore the .localcert directory, which is used by the local development server
+.localcert

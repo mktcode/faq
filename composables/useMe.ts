@@ -1,7 +1,7 @@
-export default function useMe() {
+export default async function useMe() {
   const route = useRoute()
 
-  const { data: me, refresh } = useFetch('/api/me', {
+  const { data: me, refresh } = await useFetch('/api/me', {
     transform: data => data.data,
   })
 

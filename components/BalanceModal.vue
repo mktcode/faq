@@ -4,7 +4,7 @@ const showModal = defineModel('show', {
   type: Boolean,
 })
 
-const { me, refreshMe } = useMe()
+const { me, refreshMe } = await useMe()
 
 const showTopupManualModal = ref(false)
 const showTopupOnlineModal = ref(false)

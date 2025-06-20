@@ -28,6 +28,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     databaseUrl: process.env.DATABASE_URL,
+    host: process.env.HOST || 'localhost:3000',
     openaiApiKey: process.env.OPENAI_API_KEY,
     mailhost: process.env.MAIL_HOST,
     mailuser: process.env.MAIL_USER,
@@ -69,6 +70,13 @@ export default defineNuxtConfig({
       },
     },
   },
+  devServer: {
+    host: 'gewerbeprofil.local',
+    https: {
+      key: '.localcert/gewerbeprofil.local+1-key.pem',
+      cert: '.localcert/gewerbeprofil.local+1.pem',
+    },
+  },
   compatibilityDate: '2024-11-01',
   nitro: {
     experimental: {
@@ -79,6 +87,12 @@ export default defineNuxtConfig({
       '43 2,14 * * *': [
         'charge',
       ],
+    },
+  },
+  vite: {
+    server: {
+      allowedHosts: true,
+      hmr: { host: 'gewerbeprofil.local' },
     },
   },
   auth: {

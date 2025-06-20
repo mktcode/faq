@@ -2,7 +2,7 @@
 import backgroundUrl from '~/assets/img/lp-bg.png'
 
 const { clear } = useUserSession()
-const { me, refreshMe } = useMe()
+const { me, refreshMe } = await useMe()
 
 function signOut() {
   clear()
