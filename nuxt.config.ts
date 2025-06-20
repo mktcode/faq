@@ -47,6 +47,10 @@ export default defineNuxtConfig({
     },
     session: {
       password: process.env.SESSION_PASSWORD || '',
+      cookie: {
+        domain: process.env.APP_HOST || 'localhost',
+        sameSite: 'lax',
+      },
     },
     public: {
       s3Endpoint: process.env.S3_ENDPOINT,
