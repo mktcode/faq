@@ -48,8 +48,8 @@ export default defineNuxtConfig({
     session: {
       password: process.env.SESSION_PASSWORD || '',
       cookie: {
-        domain: process.env.APP_HOST || 'localhost',
-        sameSite: 'lax',
+        domain: process.env.NODE_ENV === 'production' ? 'gewerbeprofil.de' : 'gewerbeprofil.local',
+        sameSite: 'strict',
       },
     },
     public: {
