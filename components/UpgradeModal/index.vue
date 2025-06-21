@@ -21,6 +21,7 @@ const showModal = defineModel('show', {
         <UButton
           icon="i-heroicons-x-mark"
           variant="ghost"
+          class="opacity-50 hover:opacity-100"
           @click="showModal = false"
         />
       </div>

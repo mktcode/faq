@@ -40,6 +40,17 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
     >
       <UButton
         class="text-gray-400"
+        icon="i-heroicons-cog-6-tooth"
+        variant="ghost"
+        color="neutral"
+        size="md"
+        @click="showSettingsModal = true"
+      >
+        Einstellungen
+      </UButton>
+
+      <UButton
+        class="text-gray-400 md:mr-auto"
         icon="i-heroicons-rocket-launch"
         variant="ghost"
         color="neutral"
@@ -49,16 +60,6 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
         Nächster Schritt
       </UButton>
 
-      <UButton
-        class="text-gray-400 md:mr-auto"
-        icon="i-heroicons-cog-6-tooth"
-        variant="ghost"
-        color="neutral"
-        size="md"
-        @click="showSettingsModal = true"
-      >
-        Einstellungen
-      </UButton>
       <UButton
         :label="`${me.userName}.${appHost}`"
         class="text-gray-400"
