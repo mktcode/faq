@@ -17,7 +17,7 @@ const showModal = defineModel('show', {
       <h2 class="text-2xl font-semibold mb-4">
         Lernen wir uns kennen.
       </h2>
-      <p class="text-gray-500 mb-4">
+      <p class="text-gray-500 mb-8">
         Ab hier wird es sehr individuell. Wir würden Sie gerne persönlich beraten und Ihnen ein individuelles Angebot erstellen.
         Klicken Sie auf "Angebot anfordern", um uns zu benachrichtigen.
         Wir sichten dann Ihr Profil und melden uns bei Ihnen, um alle Details zu besprechen.
