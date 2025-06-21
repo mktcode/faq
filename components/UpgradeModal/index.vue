@@ -14,9 +14,16 @@ const showModal = defineModel('show', {
     }"
   >
     <template #body>
-      <h2 class="text-2xl font-semibold mb-4">
-        Lernen wir uns kennen.
-      </h2>
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-2xl font-semibold">
+          Lernen wir uns kennen.
+        </h2>
+        <UButton
+          icon="i-heroicons-x-mark"
+          variant="ghost"
+          @click="showModal = false"
+        />
+      </div>
       <p class="text-gray-500 mb-8">
         Ab hier wird es sehr individuell. Wir würden Sie gerne persönlich beraten und Ihnen ein individuelles Angebot erstellen.
         Klicken Sie auf "Angebot anfordern", um uns zu benachrichtigen.
