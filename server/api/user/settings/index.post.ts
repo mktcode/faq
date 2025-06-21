@@ -2,9 +2,13 @@ import type { SettingsForm } from '~/types/db'
 import { settingsFormSchema } from '~/types/db'
 
 function mergeSettings(
-  existingSettings: SettingsForm,
+  existingSettings: SettingsForm | string,
   newSettings: SettingsForm,
 ) {
+  if (typeof existingSettings === 'string') {
+    existingSettings = JSON.parse(existingSettings) as SettingsForm
+  }
+
   return {
     ...existingSettings,
     ...newSettings,
@@ -24,7 +28,7 @@ export default defineEventHandler(async (event) => {
 
   if (existingSettings) {
     const newSettings = mergeSettings(
-      JSON.parse(existingSettings.settings),
+      existingSettings.settings,
       settings,
     )
 
