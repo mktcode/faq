@@ -5,8 +5,8 @@ const { public: { appHost } } = useRuntimeConfig()
 const { clear } = useUserSession()
 const { me, refreshMe } = await useMe()
 
-function signOut() {
-  clear()
+async function signOut() {
+  await clear()
   refreshMe()
 }
 </script>
