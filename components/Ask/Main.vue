@@ -9,8 +9,8 @@ const { username } = defineProps<{
 const { public: { appHost } } = useRuntimeConfig()
 
 const { me } = await useMe()
-
 const myLastUsername = useLocalStorage('myLastUsername', () => me.value?.userName || null)
+const onOwnProfile = computed(() => username === myLastUsername.value)
 
 const showSettingsModal = ref(false)
 const showUpgradeModal = ref(false)
@@ -38,10 +38,32 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
 <template>
   <FontWrapper :font="font">
     <div
-      v-if="me"
       class="flex flex-col md:flex-row md:items-center md:justify-between p-4"
     >
       <UButton
+        v-if="me && !onOwnProfile"
+        :to="`https://${me.userName}.${appHost}`"
+        label="Eigenes Profil"
+        class="text-gray-400"
+        icon="i-heroicons-user-circle"
+        variant="ghost"
+        color="neutral"
+        size="md"
+      />
+
+      <UButton
+        v-if="!me && onOwnProfile"
+        :to="`https://${appHost}/login`"
+        label="Anmelden"
+        class="text-gray-400"
+        icon="i-heroicons-arrow-right-on-rectangle"
+        variant="ghost"
+        color="neutral"
+        size="md"
+      />
+
+      <UButton
+        v-if="me && onOwnProfile"
         class="text-gray-400"
         icon="i-heroicons-cog-6-tooth"
         variant="ghost"
@@ -53,6 +75,7 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
       </UButton>
 
       <UButton
+        v-if="me && onOwnProfile"
         class="text-gray-400 md:mr-auto"
         icon="i-heroicons-rocket-launch"
         variant="ghost"
@@ -63,28 +86,54 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
         Nächster Schritt
       </UButton>
 
-      <UButton
-        :label="`${me.userName}.${appHost}`"
-        class="text-gray-400"
-        icon="i-heroicons-document-duplicate"
-        variant="ghost"
-        color="neutral"
-        size="md"
-      />
-    </div>
-    <div
-      v-else-if="myLastUsername === username"
-      class="flex flex-col md:flex-row md:items-center md:justify-between p-4"
-    >
-      <UButton
-        :to="`https://${appHost}/login`"
-        label="Anmelden"
-        class="text-gray-400"
-        icon="i-heroicons-arrow-right-on-rectangle"
-        variant="ghost"
-        color="neutral"
-        size="md"
-      />
+      <UPopover>
+        <UButton
+          label="Link Teilen"
+          class="text-gray-400 ml-auto"
+          icon="i-heroicons-share"
+          variant="ghost"
+          color="neutral"
+          size="md"
+        />
+
+        <template #content>
+          <div class="m-4 inline-flex flex-col gap-4 max-w-xl">
+            <div class="text-gray-500">
+              {{ `${username}.${appHost}` }}
+            </div>
+            <div class="flex flex-col gap-2">
+              <UButton
+                target="_blank"
+                label="Link kopieren"
+                icon="i-heroicons-link"
+                variant="soft"
+              />
+              <UButton
+                label="Auf Facebook teilen"
+                icon="i-lucide-facebook"
+                variant="soft"
+              />
+              <UButton
+                label="Auf Instagram teilen"
+                icon="i-lucide-instagram"
+                variant="soft"
+              />
+              <UButton
+                label="per E-Mail teilen"
+                icon="i-heroicons-envelope"
+                variant="soft"
+              />
+              <UButton
+                label="Auf WhatsApp teilen"
+                icon="i-ic-baseline-whatsapp"
+                variant="soft"
+                target="_blank"
+                :to="`https://wa.me/?text=${encodeURIComponent(`Schau dir mein Gewerbeprofil an: https://${myLastUsername}.${appHost}`)}`"
+              />
+            </div>
+          </div>
+        </template>
+      </UPopover>
     </div>
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
       <div
