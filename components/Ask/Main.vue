@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useLocalStorage } from '@vueuse/core'
 import type { Qanda } from '~/types/db'
 
 const { username } = defineProps<{
@@ -8,6 +9,8 @@ const { username } = defineProps<{
 const { public: { appHost } } = useRuntimeConfig()
 
 const { me } = await useMe()
+
+const myLastUsername = useLocalStorage('myLastUsername', () => me.value?.userName || null)
 
 const showSettingsModal = ref(false)
 const showUpgradeModal = ref(false)
@@ -64,6 +67,20 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
         :label="`${me.userName}.${appHost}`"
         class="text-gray-400"
         icon="i-heroicons-document-duplicate"
+        variant="ghost"
+        color="neutral"
+        size="md"
+      />
+    </div>
+    <div
+      v-else-if="myLastUsername === username"
+      class="flex flex-col md:flex-row md:items-center md:justify-between p-4"
+    >
+      <UButton
+        :to="`https://${appHost}/login`"
+        label="Anmelden"
+        class="text-gray-400"
+        icon="i-heroicons-arrow-right-on-rectangle"
         variant="ghost"
         color="neutral"
         size="md"
