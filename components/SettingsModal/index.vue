@@ -11,7 +11,7 @@ const items = [
     slot: 'general',
   },
   {
-    label: 'Design',
+    label: 'Stil',
     icon: 'i-heroicons-paint-brush',
     slot: 'design',
   },

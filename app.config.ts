@@ -67,6 +67,16 @@ export default defineAppConfig({
       slots: {
         base: '!bg-gray-100 !ring-0 focus:!bg-gray-50 resize-none',
       },
+      variants: {
+        size: {
+          xxl: {
+            base: 'px-4 py-3 text-lg',
+          },
+        },
+      },
+      defaultVariants: {
+        size: 'xl',
+      },
     },
   },
 })

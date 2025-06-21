@@ -10,7 +10,7 @@ const { public: { appHost } } = useRuntimeConfig()
 const { me } = await useMe()
 
 const showSettingsModal = ref(false)
-const showPremiumWebsiteModal = ref(false)
+const showUpgradeModal = ref(false)
 const showNewQandaModal = ref(false)
 
 const { data: currentSettings, refresh: refreshSettings } = await useFetch(`/api/settings`, {
@@ -48,12 +48,13 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
       />
 
       <UButton
-        label="Premium Website"
-        class="ml-auto"
-        icon="i-heroicons-star"
+        label="Nächster Schritt"
+        class="ml-auto text-gray-400"
+        icon="i-heroicons-rocket-launch"
         variant="ghost"
+        color="neutral"
         size="md"
-        @click="showPremiumWebsiteModal = true"
+        @click="showUpgradeModal = true"
       />
 
       <UButton
@@ -162,9 +163,9 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
         v-model:show="showSettingsModal"
         @update="refreshSettings"
       />
-      <PremiumWebsiteModal
+      <UpgradeModal
         v-if="me && currentSettings"
-        v-model:show="showPremiumWebsiteModal"
+        v-model:show="showUpgradeModal"
         :current-settings="currentSettings"
       />
       <NewQandaModal
