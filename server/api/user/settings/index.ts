@@ -10,5 +10,9 @@ export default defineEventHandler(async (event) => {
     .where('userId', '=', user.id)
     .executeTakeFirstOrThrow()
 
-  return settingsFormSchema.parse(JSON.parse(settings.settings))
+  return settingsFormSchema.parse(
+    typeof settings.settings === 'string'
+      ? JSON.parse(settings.settings)
+      : settings.settings,
+  )
 })
