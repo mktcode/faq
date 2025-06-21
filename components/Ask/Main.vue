@@ -36,20 +36,11 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
   <FontWrapper :font="font">
     <div
       v-if="me"
-      class="flex items-center justify-between p-4"
+      class="flex flex-col md:flex-row md:items-center md:justify-between p-4"
     >
       <UButton
-        :label="`${me.userName}.${appHost}`"
-        class="text-gray-400"
-        icon="i-heroicons-document-duplicate"
-        variant="ghost"
-        color="neutral"
-        size="md"
-      />
-
-      <UButton
         label="Nächster Schritt"
-        class="ml-auto text-gray-400"
+        class="text-gray-400"
         icon="i-heroicons-rocket-launch"
         variant="ghost"
         color="neutral"
@@ -58,7 +49,7 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
       />
 
       <UButton
-        class="text-gray-400"
+        class="text-gray-400 md:mr-auto"
         icon="i-heroicons-cog-6-tooth"
         variant="ghost"
         color="neutral"
@@ -67,6 +58,14 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
       >
         Einstellungen
       </UButton>
+      <UButton
+        :label="`${me.userName}.${appHost}`"
+        class="text-gray-400"
+        icon="i-heroicons-document-duplicate"
+        variant="ghost"
+        color="neutral"
+        size="md"
+      />
     </div>
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
       <div
