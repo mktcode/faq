@@ -39,14 +39,15 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
       class="flex flex-col md:flex-row md:items-center md:justify-between p-4"
     >
       <UButton
-        label="Nächster Schritt"
         class="text-gray-400"
         icon="i-heroicons-rocket-launch"
         variant="ghost"
         color="neutral"
         size="md"
         @click="showUpgradeModal = true"
-      />
+      >
+        Nächster Schritt
+      </UButton>
 
       <UButton
         class="text-gray-400 md:mr-auto"
