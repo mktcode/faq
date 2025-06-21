@@ -5,9 +5,12 @@ const { username } = defineProps<{
   username: string
 }>()
 
+const { public: { appHost } } = useRuntimeConfig()
+
 const { me } = await useMe()
 
 const showSettingsModal = ref(false)
+const showPremiumWebsiteModal = ref(false)
 const showNewQandaModal = ref(false)
 
 const { data: currentSettings, refresh: refreshSettings } = await useFetch(`/api/settings`, {
@@ -36,7 +39,7 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
       class="flex items-center justify-between p-4"
     >
       <UButton
-        label="kotti.gewerbeprofil.de"
+        :label="`${me.userName}.${appHost}`"
         class="text-gray-400"
         icon="i-heroicons-document-duplicate"
         variant="ghost"
@@ -45,7 +48,16 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
       />
 
       <UButton
-        class="text-gray-400 ml-auto"
+        label="Premium Website"
+        class="ml-auto"
+        icon="i-heroicons-star"
+        variant="ghost"
+        size="md"
+        @click="showPremiumWebsiteModal = true"
+      />
+
+      <UButton
+        class="text-gray-400"
         icon="i-heroicons-cog-6-tooth"
         variant="ghost"
         color="neutral"
@@ -146,10 +158,19 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
         </ULink>
       </div>
       <SettingsModal
+        v-if="me"
         v-model:show="showSettingsModal"
         @update="refreshSettings"
       />
-      <NewQandaModal v-model:show="showNewQandaModal" />
+      <PremiumWebsiteModal
+        v-if="me && currentSettings"
+        v-model:show="showPremiumWebsiteModal"
+        :current-settings="currentSettings"
+      />
+      <NewQandaModal
+        v-if="me"
+        v-model:show="showNewQandaModal"
+      />
       <ClientOnly>
         <WelcomeModal />
       </ClientOnly>
