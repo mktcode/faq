@@ -161,8 +161,11 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
         v-if="currentSettings?.links?.length"
         :links="currentSettings.links"
       />
-      <div class="my-6 w-full">
-        <AskGallery />
+      <div
+        v-if="currentSettings?.gallery?.length"
+        class="my-6 w-full"
+      >
+        <AskGallery :images="currentSettings?.gallery" />
       </div>
 
       <div
