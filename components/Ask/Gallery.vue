@@ -1,13 +1,11 @@
 <script setup lang="ts">
-const images = [
-  `https://nbg1.your-objectstorage.com/mktcms/1/emma_herbst_logo.webp`,
-  `https://nbg1.your-objectstorage.com/mktcms/1/1_1.webp`,
-  `https://nbg1.your-objectstorage.com/mktcms/1/2_1.webp`,
-  `https://nbg1.your-objectstorage.com/mktcms/1/3_1.webp`,
-  `https://nbg1.your-objectstorage.com/mktcms/1/4_1.webp`,
-  `https://nbg1.your-objectstorage.com/mktcms/1/2_3.webp`,
-  `https://nbg1.your-objectstorage.com/mktcms/1/3_2.webp`,
-]
+const { images } = defineProps<{
+  images: {
+    url: string
+    description?: string | null
+    title?: string | null
+  }[]
+}>()
 
 const showModal = ref(false)
 
@@ -30,7 +28,7 @@ onMounted(() => {
       @click="showModal = true"
     >
       <NuxtImg
-        :src="images[0]"
+        :src="images[0].url"
         class="object-cover w-full hover:scale-110 transition-all duration-500 opacity-0"
         :class="{ 'opacity-100': showImages.includes(0) }"
         preload
@@ -40,14 +38,14 @@ onMounted(() => {
       class="grid grid-cols-2 lg:grid-cols-3 gap-2"
     >
       <div
-        v-for="(src, index) in images.slice(1, 7)"
+        v-for="(image, index) in images.slice(1, 7)"
         :key="index"
         class="rounded-xl overflow-hidden w-full aspect-square flex items-center justify-center cursor-pointer"
         :class="{ 'bg-gray-100': !showImages.includes(index + 1) }"
         @click="showModal = true"
       >
         <NuxtImg
-          :src="src"
+          :src="image.url"
           class="object-cover w-full h-full hover:scale-110 transition-all duration-500 opacity-0"
           :class="{ 'opacity-100': showImages.includes(index + 1) }"
           preload
@@ -74,7 +72,7 @@ onMounted(() => {
           }"
         >
           <img
-            :src="item"
+            :src="item.url"
             class="rounded-xl max-w-full max-h-full"
           >
         </UCarousel>
