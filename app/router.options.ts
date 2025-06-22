@@ -16,6 +16,20 @@ export default <RouterOptions>{
         props: {
           username: subdomain.value,
         },
+      }, {
+        name: 'userroute-imprint',
+        path: '/impressum',
+        component: () => import('~/components/Ask/Imprint.vue'),
+        props: {
+          username: subdomain.value,
+        },
+      }, {
+        name: 'userroute-privacy',
+        path: '/datenschutz',
+        component: () => import('~/components/Ask/Privacy.vue'),
+        props: {
+          username: subdomain.value,
+        },
       }]
     }
   },
