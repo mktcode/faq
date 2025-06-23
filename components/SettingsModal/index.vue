@@ -11,6 +11,11 @@ const items = [
     slot: 'general',
   },
   {
+    label: 'Unternehmen',
+    icon: 'i-heroicons-building-office-2',
+    slot: 'company',
+  },
+  {
     label: 'Stil',
     icon: 'i-heroicons-paint-brush',
     slot: 'design',
@@ -66,6 +71,9 @@ const items = [
       >
         <template #general>
           <SettingsModalGeneral />
+        </template>
+        <template #company>
+          <SettingsModalCompany />
         </template>
         <template #design>
           <SettingsModalDesign />

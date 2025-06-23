@@ -12,6 +12,15 @@ export type NewSettings = Insertable<SettingsTable>
 export type SettingsUpdate = Updateable<SettingsTable>
 
 export const settingsFormSchema = z.object({
+  company: z.object({
+    name: z.string().optional().nullable(),
+    street: z.string().optional().nullable(),
+    zip: z.string().optional().nullable(),
+    city: z.string().optional().nullable(),
+    phone: z.string().optional().nullable(),
+    email: z.string().optional().nullable(),
+    taxId: z.string().optional().nullable(),
+  }).optional().nullable(),
   logo: z.string().optional().nullable(),
   image: z.string().optional().nullable(),
   title: z.string().optional().nullable(),
