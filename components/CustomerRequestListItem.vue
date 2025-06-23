@@ -42,10 +42,19 @@ async function reply() {
 
   isSendingReply.value = false
 }
+
+const designRounded = useState('designRounded')
 </script>
 
 <template>
-  <div class="border border-gray-200 rounded-lg">
+  <div
+    class="border border-gray-200"
+    :class="{
+      'rounded-xl': designRounded === 'xl',
+      'rounded-md': designRounded === 'md',
+      'rounded-none': designRounded === 'none',
+    }"
+  >
     <div class="p-4">
       <h4 class="font-semibold">
         {{ customerRequest.name }}

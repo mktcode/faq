@@ -70,6 +70,8 @@ async function getSimilarQuestions() {
 
 watchDebounced(message, getEmbedding, { debounce: 2000 })
 watchDebounced(messageEmbedding, getSimilarQuestions, { debounce: 500 })
+
+const designRounded = useState('designRounded')
 </script>
 
 <template>
@@ -99,7 +101,14 @@ watchDebounced(messageEmbedding, getSimilarQuestions, { debounce: 500 })
         base: 'rounded-b-none text-xl p-3 !bg-gray-50 !border !border-b-0 !border-gray-200',
       }"
     />
-    <div class="bg-gray-100 rounded-b-lg p-2 flex items-center gap-2">
+    <div
+      class="bg-gray-100 p-2 flex items-center gap-2"
+      :class="{
+        'rounded-b-none': designRounded === 'none',
+        'rounded-b-md': designRounded === 'md',
+        'rounded-b-xl': designRounded === 'xl',
+      }"
+    >
       <Transition name="fade">
         <div v-if="message">
           <UButton
@@ -134,7 +143,12 @@ watchDebounced(messageEmbedding, getSimilarQuestions, { debounce: 500 })
   <Transition name="fade">
     <div
       v-if="similarQuestions.length > 0"
-      class="w-full rounded-lg flex flex-col text-gray-800 my-2 border border-gray-200 p-4"
+      class="w-full flex flex-col text-gray-800 my-2 border border-gray-200 p-4"
+      :class="{
+        'rounded-t-none': designRounded === 'none',
+        'rounded-t-md': designRounded === 'md',
+        'rounded-t-xl': designRounded === 'xl',
+      }"
     >
       <div class="text-sm text-sky-900/60 mb-2">
         {{ similarQuestions[0].question }}
@@ -152,38 +166,40 @@ watchDebounced(messageEmbedding, getSimilarQuestions, { debounce: 500 })
       </div>
     </div>
   </Transition>
-  <Transition name="fade">
-    <UInput
-      v-if="message.length > 5"
-      v-model="name"
-      placeholder="Name"
-      class="w-full"
-    />
-  </Transition>
-  <Transition name="fade">
-    <UInput
-      v-if="messageLongEnough"
-      v-model="phone"
-      placeholder="Telefon"
-      class="w-full"
-    />
-  </Transition>
-  <Transition name="fade">
-    <UInput
-      v-if="messageLongEnough"
-      v-model="email"
-      placeholder="E-Mail"
-      class="w-full"
-    />
-  </Transition>
-  <Transition name="fade">
-    <UButton
-      v-if="messageLongEnough"
-      label="Anfrage senden"
-      block
-      :disabled="isSavingRequest || !name || (!phone && !email) || messageEmbedding.length === 0"
-      :loading="isSavingRequest"
-      @click="saveRequest"
-    />
-  </Transition>
+  <div class="flex flex-col gap-2">
+    <Transition name="fade">
+      <UInput
+        v-if="message.length > 5"
+        v-model="name"
+        placeholder="Name"
+        class="w-full"
+      />
+    </Transition>
+    <Transition name="fade">
+      <UInput
+        v-if="messageLongEnough"
+        v-model="phone"
+        placeholder="Telefon"
+        class="w-full"
+      />
+    </Transition>
+    <Transition name="fade">
+      <UInput
+        v-if="messageLongEnough"
+        v-model="email"
+        placeholder="E-Mail"
+        class="w-full"
+      />
+    </Transition>
+    <Transition name="fade">
+      <UButton
+        v-if="messageLongEnough"
+        label="Anfrage senden"
+        block
+        :disabled="isSavingRequest || !name || (!phone && !email) || messageEmbedding.length === 0"
+        :loading="isSavingRequest"
+        @click="saveRequest"
+      />
+    </Transition>
+  </div>
 </template>
