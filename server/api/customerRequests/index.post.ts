@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
 
   const user = await db.selectFrom('users')
-    .select(['id'])
+    .select(['id', 'email'])
     .where('userName', '=', username)
     .executeTakeFirstOrThrow()
 
@@ -33,6 +33,14 @@ export default defineEventHandler(async (event) => {
 
   await sql`INSERT INTO messages (customerRequestId, body, embedding, isCustomer) VALUES (${customerRequestId}, ${message}, VEC_FromText(${JSON.stringify(embedding)}), true)`
     .execute(db)
+  
+  if (user.email) {
+    await sendEmail({
+      to: user.email,
+      subject: `Neue Anfrage über Ihr Gewerbeprofil`,
+      body: `Sie haben eine neue Anfrage von ${name} erhalten.\n\nNachricht: ${message}\n\nBitte loggen Sie sich in Ihr Profil ein, um darauf zu antworten.`,
+    })
+  }
 
   return { success: true }
 })
