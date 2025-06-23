@@ -7,6 +7,19 @@ import StarterKit from '@tiptap/starter-kit'
 
 const model = defineModel<string | null>()
 
+const designRounded = useState('designRounded')
+const roundedClass = computed(() => {
+  if (designRounded.value === 'none') {
+    return 'rounded-none'
+  } else if (designRounded.value === 'md') {
+    return 'rounded-md'
+  } else if (designRounded.value === 'xl') {
+    return 'rounded-xl'
+  }
+
+  return 'rounded-md'
+})
+
 const editor = useEditor({
   extensions: [
     StarterKit,
@@ -17,7 +30,7 @@ const editor = useEditor({
   ],
   editorProps: {
     attributes: {
-      class: 'rounded-lg p-3 prose prose-sm focus:outline-none max-w-full focus:ring-2 focus:ring-sky-500',
+      class: `${roundedClass.value} p-3 bg-gray-100 border-0 prose-sm focus:outline-none max-w-full focus:ring-2 focus:ring-sky-500`,
     },
   },
   content: model.value || '<p>Beschreibung. 🎉</p>',
@@ -33,7 +46,7 @@ function click(editor: Editor) {
 
 <template>
   <div v-if="editor">
-    <div class="rounded-lg border border-gray-300 p-1 flex gap-1">
+    <div class="p-1 flex gap-1">
       <WysiwygEditorButton
         :is-active="editor.can().undo()"
         @click="click(editor).undo().run()"
@@ -173,15 +186,12 @@ function click(editor: Editor) {
         Highlight
       </WysiwygEditorButton>
     </div>
-    <div class="mt-2">
-      <EditorContent :editor="editor" />
-    </div>
+    <EditorContent :editor="editor" />
   </div>
 </template>
 
 <style>
 .tiptap {
-  border: 1px solid #e2e8f0;
   p {
     margin: 0;
   }

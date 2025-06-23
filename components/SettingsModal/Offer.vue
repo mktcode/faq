@@ -25,32 +25,31 @@ async function saveSettings() {
 
 <template>
   <div class="flex flex-col gap-4 p-6">
+    <p class="text-gray-400">
+      Füge hier Texte zu deinen Angeboten und Dienstleistungen hinzu. Halte dich kurz und prägnant, damit deine Kunden schnell verstehen, was du anbietest.
+    </p>
     <div
       v-for="(offer, index) in form.offers"
       :key="index"
-      class="flex flex-col gap-4"
+      class="flex flex-col gap-4 border-b border-gray-200 pb-4"
     >
-      <UButton
-        icon="i-heroicons-trash"
-        variant="soft"
-        color="error"
-        class="self-end"
-        @click="form.offers.splice(index, 1)"
-      />
-      <UFormField
-        label="Titel"
-        description="Der Titel deines Angebots"
-      >
-        <UInput
-          v-model="offer.title"
-          placeholder="Website erstellen"
-          class="w-full"
+      <div class="flex items-center gap-4">
+        <UFormField label="Titel" class="flex-1">
+          <UInput
+            v-model="offer.title"
+            placeholder="Website erstellen"
+            class="w-full"
+          />
+        </UFormField>
+        <UButton
+          icon="i-heroicons-trash"
+          variant="soft"
+          color="error"
+          class="self-end"
+          @click="form.offers.splice(index, 1)"
         />
-      </UFormField>
-      <UFormField
-        label="Beschreibung"
-        description="Beschreibe dein Angebot"
-      >
+      </div>
+      <UFormField label="Beschreibung">
         <WysiwygEditor
           v-model="offer.description"
           placeholder="Hier kannst du deinen Willkommenstext eingeben..."
@@ -60,7 +59,6 @@ async function saveSettings() {
     <UButton
       icon="i-heroicons-plus"
       variant="soft"
-      color="neutral"
       class="w-full"
       @click="form.offers.push({ title: '', description: '' })"
     >
@@ -69,7 +67,6 @@ async function saveSettings() {
     <UButton
       variant="solid"
       color="primary"
-      class="mt-4"
       @click="saveSettings"
     >
       Einstellungen speichern

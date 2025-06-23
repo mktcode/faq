@@ -10,8 +10,8 @@ defineProps<{
 
 <template>
   <button
-    class="px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-100"
-    :class="{ 'font-bold bg-blue-500 text-white': isActive }"
+    class="px-2 py-1 rounded-lg cursor-pointer hover:bg-primary-100 text-primary-950"
+    :class="{ 'font-bold bg-primary-500 hover:bg-primary-600 text-white': isActive }"
     @click.prevent="$emit('click')"
   >
     <slot />
