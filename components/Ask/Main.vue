@@ -35,6 +35,7 @@ appConfig.ui.button.defaultVariants.rounded = currentSettings.value?.rounded || 
 appConfig.ui.input.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
 appConfig.ui.select.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
 appConfig.ui.textarea.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
+const designRounded = useState('designRounded', () => currentSettings.value?.rounded || 'md')
 
 const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
 </script>
@@ -197,6 +198,11 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
         <UCard
           v-for="item in qanda"
           :key="item.question"
+          :class="{
+            'rounded-none': designRounded === 'none',
+            'rounded-md': designRounded === 'md',
+            'rounded-xl': designRounded === 'xl',
+          }"
         >
           <div class="flex items-start justify-between">
             <h3 class="text-lg font-semibold">

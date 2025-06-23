@@ -18,13 +18,20 @@ onMounted(() => {
     }, i * 100)
   }
 })
+
+const designRounded = useState('designRounded')
 </script>
 
 <template>
   <div class="flex flex-col gap-2">
     <div
-      class="rounded-xl overflow-hidden w-full aspect-video flex items-center justify-center cursor-pointer"
-      :class="{ 'bg-gray-100': !showImages.includes(0) }"
+      class="overflow-hidden w-full aspect-video flex items-center justify-center cursor-pointer"
+      :class="{
+        'bg-gray-100': !showImages.includes(0),
+        'rounded-xl': designRounded === 'xl',
+        'rounded-md': designRounded === 'md',
+        'rounded-none': designRounded === 'none',
+      }"
       @click="showModal = true"
     >
       <NuxtImg
@@ -40,8 +47,13 @@ onMounted(() => {
       <div
         v-for="(image, index) in images.slice(1, 7)"
         :key="index"
-        class="rounded-xl overflow-hidden w-full aspect-square flex items-center justify-center cursor-pointer"
-        :class="{ 'bg-gray-100': !showImages.includes(index + 1) }"
+        class="overflow-hidden w-full aspect-square flex items-center justify-center cursor-pointer"
+        :class="{
+          'bg-gray-100': !showImages.includes(index + 1),
+          'rounded-xl': designRounded === 'xl',
+          'rounded-md': designRounded === 'md',
+          'rounded-none': designRounded === 'none',
+        }"
         @click="showModal = true"
       >
         <NuxtImg
