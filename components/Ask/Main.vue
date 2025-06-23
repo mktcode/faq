@@ -32,6 +32,9 @@ const appConfig = useAppConfig()
 const font = computed(() => currentSettings.value?.font || 'roboto')
 appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
 appConfig.ui.button.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
+appConfig.ui.input.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
+appConfig.ui.select.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
+appConfig.ui.textarea.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
 
 const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
 </script>
@@ -191,10 +194,9 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
           variant="soft"
           @click="showNewQandaModal = true"
         />
-        <div
+        <UCard
           v-for="item in qanda"
           :key="item.question"
-          class="p-4 bg-white rounded-lg border border-gray-200"
         >
           <div class="flex items-start justify-between">
             <h3 class="text-lg font-semibold">
@@ -217,7 +219,7 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
           <p class="text-gray-600">
             {{ item.answer }}
           </p>
-        </div>
+        </UCard>
       </div>
       <CustomerRequestList v-if="me" />
       <div class="w-full flex items-center justify-center gap-2 mt-12 text-sm">

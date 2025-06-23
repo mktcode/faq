@@ -1,3 +1,15 @@
+const variantsRounded = {
+  none: {
+    base: 'rounded-none',
+  },
+  md: {
+    base: 'rounded-md',
+  },
+  xl: {
+    base: 'rounded-xl',
+  },
+}
+
 export default defineAppConfig({
   ui: {
     colors: {
@@ -13,21 +25,11 @@ export default defineAppConfig({
             icon: 'w-6 h-6',
           },
         },
-        rounded: {
-          none: {
-            base: 'rounded-none',
-          },
-          md: {
-            base: 'rounded-md',
-          },
-          xl: {
-            base: 'rounded-xl',
-          },
-        },
+        rounded: variantsRounded,
       },
       defaultVariants: {
         size: 'xl',
-        rounded: 'none',
+        rounded: 'md',
       },
     },
     navigationMenu: {
@@ -54,9 +56,11 @@ export default defineAppConfig({
             base: 'px-4 py-3 text-lg',
           },
         },
+        rounded: variantsRounded,
       },
       defaultVariants: {
         size: 'xl',
+        rounded: 'md',
       },
     },
     select: {
@@ -70,9 +74,11 @@ export default defineAppConfig({
             item: 'px-4 py-3 text-lg',
           },
         },
+        rounded: variantsRounded,
       },
       defaultVariants: {
         size: 'xl',
+        rounded: 'md',
       },
     },
     textarea: {
@@ -85,9 +91,11 @@ export default defineAppConfig({
             base: 'px-4 py-3 text-lg',
           },
         },
+        rounded: variantsRounded,
       },
       defaultVariants: {
         size: 'xl',
+        rounded: 'md',
       },
     },
   },
