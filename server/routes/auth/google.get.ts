@@ -77,6 +77,7 @@ export default defineOAuthGoogleEventHandler({
           userId: newUserId,
           settings: JSON.stringify({
             title: user.name,
+            rounded: 'md',
           }),
         })
         .execute()

@@ -18,6 +18,7 @@ export const settingsFormSchema = z.object({
   description: z.string().optional().nullable(),
   font: z.string().optional().nullable(),
   color: z.string().optional().nullable(),
+  rounded: z.string().optional().nullable(),
   showGoogleReviews: z.boolean().optional().nullable(),
   offers: z
     .array(

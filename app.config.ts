@@ -13,9 +13,21 @@ export default defineAppConfig({
             icon: 'w-6 h-6',
           },
         },
+        rounded: {
+          none: {
+            base: 'rounded-none',
+          },
+          md: {
+            base: 'rounded-md',
+          },
+          xl: {
+            base: 'rounded-xl',
+          },
+        },
       },
       defaultVariants: {
         size: 'xl',
+        rounded: 'none',
       },
     },
     navigationMenu: {

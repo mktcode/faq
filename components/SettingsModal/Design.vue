@@ -8,6 +8,7 @@ const { data: currentSettings } = await useFetch(`/api/user/settings`)
 const form = ref({
   color: currentSettings.value?.color || 'sky',
   font: currentSettings.value?.font || 'roboto',
+  rounded: currentSettings.value?.rounded || 'md',
 })
 
 async function saveSettings() {
@@ -40,10 +41,12 @@ async function saveSettings() {
         class="flex-1"
       >
         <USelect
+          v-model="form.rounded"
           class="w-full"
           :items="[
-            { label: 'Rund', value: 'round' },
-            { label: 'Eckig', value: 'square' },
+            { label: 'Eckig', value: 'none' },
+            { label: 'Rund', value: 'md' },
+            { label: 'Sehr rund', value: 'xl' },
           ]"
         />
       </UFormField>

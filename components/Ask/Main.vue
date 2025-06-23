@@ -31,6 +31,7 @@ const { data: qanda } = await useFetch<Qanda[]>(`/api/qanda`, {
 const appConfig = useAppConfig()
 const font = computed(() => currentSettings.value?.font || 'roboto')
 appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
+appConfig.ui.button.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
 
 const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
 </script>
