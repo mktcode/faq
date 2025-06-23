@@ -1,16 +1,9 @@
 <script setup lang="ts">
-import { useLocalStorage } from '@vueuse/core'
-import type { Qanda } from '~/types/db'
-
 const { username } = defineProps<{
   username: string
 }>()
 
 const { public: { appHost } } = useRuntimeConfig()
-
-const { me } = await useMe()
-const myLastUsername = useLocalStorage('myLastUsername', () => me.value?.userName || null)
-const onOwnProfile = computed(() => username === myLastUsername.value)
 
 const { data: currentSettings } = await useFetch(`/api/settings`, {
   query: {
@@ -73,7 +66,6 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
                 icon="i-ic-baseline-whatsapp"
                 variant="soft"
                 target="_blank"
-                :to="`https://wa.me/?text=${encodeURIComponent(`Schau dir mein Gewerbeprofil an: https://${myLastUsername}.${appHost}`)}`"
               />
             </div>
           </div>
@@ -103,13 +95,28 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
         {{ currentSettings?.title || username }}
       </h1>
 
-      <div class="text-gray-500 prose">
-        <h1>
+      <div class="text-gray-500 prose-xl">
+        <h1 class="mb-0 text-center">
           Impressum
         </h1>
 
-        <p>
+        <p class="mt-2 text-gray-400 text-center">
           Angaben gemäß § 5 TMG:
+        </p>
+
+        <h2>
+          Inhaltlich verantwortlich gemäß § 55 Abs. 2 RStV:
+        </h2>
+
+        <p>
+          {{ currentSettings?.company?.name || 'Dein Unternehmensname' }}<br>
+          {{ currentSettings?.company?.street || 'Deine Straße und Hausnummer' }}<br>
+          {{ currentSettings?.company?.zip || 'Deine Postleitzahl' }} {{ currentSettings?.company?.city || 'Deine Stadt' }}<br>
+          <br>
+          Telefon: {{ currentSettings?.company?.phone || 'Deine Telefonnummer' }}<br>
+          E-Mail: <a :href="`mailto:${currentSettings?.company?.email || 'kontakt@beispiel.de'}`">
+            {{ currentSettings?.company?.email || 'kontakt@beispiel.de' }}
+          </a>
         </p>
       </div>
       
