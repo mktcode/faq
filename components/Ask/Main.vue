@@ -218,7 +218,6 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
           </p>
         </div>
       </div>
-      <GoogleReviews v-if="currentSettings?.showGoogleReviews" />
       <CustomerRequestList v-if="me" />
       <div class="w-full flex items-center justify-center gap-2 mt-12 text-sm">
         <ULink

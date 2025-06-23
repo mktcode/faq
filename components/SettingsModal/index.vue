@@ -41,11 +41,6 @@ const items = [
     slot: 'faq',
   },
   {
-    label: 'Google Bewertungen',
-    icon: 'i-heroicons-star',
-    slot: 'google',
-  },
-  {
     label: 'Datenschutz',
     icon: 'i-heroicons-shield-check',
     slot: 'privacy',
@@ -83,9 +78,6 @@ const items = [
         </template>
         <template #links>
           <SettingsModalLinks />
-        </template>
-        <template #google>
-          <SettingsModalGoogle />
         </template>
         <template #privacy>
           <SettingsModalPrivacy />
