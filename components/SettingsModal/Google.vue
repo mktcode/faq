@@ -40,7 +40,10 @@ async function saveSettings() {
       />
     </UFormField>
     <div v-if="form.showGoogleReviews">
-      <div v-if="!me?.googleId" class="text-red-600">
+      <div
+        v-if="!me?.googleId"
+        class="text-red-600"
+      >
         Du hast noch kein Google-Konto verbunden. Bitte verbinde dein Konto, um
         Google Bewertungen anzuzeigen.
 
@@ -57,7 +60,10 @@ async function saveSettings() {
           folgende Bewertungen verfügbar:
         </p>
         <ul class="list-disc pl-5 mt-2">
-          <li v-for="(review, index) in reviews" :key="index">
+          <li
+            v-for="(review, index) in reviews"
+            :key="index"
+          >
             {{ review }}
           </li>
         </ul>

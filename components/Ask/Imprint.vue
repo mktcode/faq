@@ -11,7 +11,6 @@ const { data: currentSettings } = await useFetch(`/api/settings`, {
   },
 })
 
-
 const appConfig = useAppConfig()
 const font = computed(() => currentSettings.value?.font || 'roboto')
 appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
@@ -119,7 +118,7 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
           </a>
         </p>
       </div>
-      
+
       <div class="w-full flex items-center justify-center gap-2 mt-12 text-sm">
         <ULink
           to="/"

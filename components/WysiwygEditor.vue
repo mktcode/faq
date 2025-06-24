@@ -11,9 +11,11 @@ const designRounded = useState('designRounded')
 const roundedClass = computed(() => {
   if (designRounded.value === 'none') {
     return 'rounded-none'
-  } else if (designRounded.value === 'md') {
+  }
+  else if (designRounded.value === 'md') {
     return 'rounded-md'
-  } else if (designRounded.value === 'xl') {
+  }
+  else if (designRounded.value === 'xl') {
     return 'rounded-xl'
   }
 

@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
 
   await sql`INSERT INTO messages (customerRequestId, body, embedding, isCustomer) VALUES (${customerRequestId}, ${message}, VEC_FromText(${JSON.stringify(embedding)}), true)`
     .execute(db)
-  
+
   if (user.email) {
     await sendEmail({
       to: user.email,

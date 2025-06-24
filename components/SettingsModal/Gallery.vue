@@ -126,7 +126,10 @@ const onDrop = async (e: DragEvent) => {
         :key="index"
         class="flex items-center justify-center w-full gap-2"
       >
-        <img :src="image.url" class="w-32 object-cover aspect-square rounded-lg" />
+        <img
+          :src="image.url"
+          class="w-32 object-cover aspect-square rounded-lg"
+        >
         <div class="flex flex-col gap-2 w-full">
           <UInput
             v-model="image.title"

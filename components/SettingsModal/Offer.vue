@@ -34,7 +34,10 @@ async function saveSettings() {
       class="flex flex-col gap-4 border-b border-gray-200 pb-4"
     >
       <div class="flex items-center gap-4">
-        <UFormField label="Titel" class="flex-1">
+        <UFormField
+          label="Titel"
+          class="flex-1"
+        >
           <UInput
             v-model="offer.title"
             placeholder="Website erstellen"

@@ -55,13 +55,19 @@ async function saveSettings() {
       />
     </UFormField>
     <div class="flex flex-col sm:flex-row gap-4">
-      <UFormField label="PLZ" class="w-32">
+      <UFormField
+        label="PLZ"
+        class="w-32"
+      >
         <UInput
           v-model="form.company.zip"
           placeholder="Postleitzahl"
         />
       </UFormField>
-      <UFormField label="Stadt" class="flex-1">
+      <UFormField
+        label="Stadt"
+        class="flex-1"
+      >
         <UInput
           v-model="form.company.city"
           placeholder="Gib die Stadt ein"
