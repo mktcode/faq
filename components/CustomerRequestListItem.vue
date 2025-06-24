@@ -55,7 +55,7 @@ const designRounded = useState('designRounded')
       'rounded-none': designRounded === 'none',
     }"
   >
-    <div class="p-4 pb-0">
+    <div class="p-4">
       <h4 class="font-semibold">
         {{ customerRequest.name }}
         <span class="text-gray-400 text-sm ml-2">
@@ -146,13 +146,6 @@ const designRounded = useState('designRounded')
           :loading="isGeneratingReply"
           :disabled="isGeneratingReply"
           @click="generateReply"
-        />
-        <UButton
-          v-if="replyMessage.trim()"
-          label="Antwort in FAQ integreren"
-          :disabled="!replyMessage.trim() || isGeneratingReply"
-          icon="i-heroicons-sparkles"
-          variant="soft"
         />
         <UButton
           label="Antwort senden"

@@ -87,6 +87,9 @@ const items = [
         <template #links>
           <SettingsModalLinks />
         </template>
+        <template #faq>
+          <SettingsModalFAQ />
+        </template>
         <template #privacy>
           <SettingsModalPrivacy />
         </template>
