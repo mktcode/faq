@@ -19,9 +19,12 @@ export default defineEventHandler(async (event) => {
     .where('userName', '=', username)
     .executeTakeFirstOrThrow()
 
+  const uuid = crypto.randomUUID()
+
   const insertResult = await db.insertInto('customerRequests')
     .values({
       userId: user.id,
+      uuid,
       name,
       email: email || null,
       phone: phone || null,

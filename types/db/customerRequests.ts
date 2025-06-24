@@ -3,6 +3,7 @@ import type { ColumnType, Generated, Insertable, Selectable, Updateable } from '
 export interface CustomerRequestsTable {
   id: Generated<number>
   userId: number
+  uuid: string
   name: string
   email: string | null
   phone: string | null

@@ -72,6 +72,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .createTable('customerRequests')
     .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
     .addColumn('userId', 'integer', col => col.notNull())
+    .addColumn('uuid', 'varchar(36)', col => col.notNull().unique())
     .addColumn('name', 'text', col => col.notNull())
     .addColumn('email', 'text')
     .addColumn('phone', 'text')
