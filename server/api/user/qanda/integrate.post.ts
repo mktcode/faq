@@ -21,14 +21,6 @@ export default defineEventHandler(async (event) => {
 
   const openai = createOpenAIClient()
 
-  const outputSchema = z.object({
-    updates: z.array(z.object({
-      qandaId: z.number().optional().nullable(),
-      question: z.string(),
-      answer: z.string(),
-    })),
-  })
-
   const response = await openai.responses.parse({
     store: false,
     model: 'gpt-4.1-mini',
@@ -52,11 +44,59 @@ export default defineEventHandler(async (event) => {
       },
     ],
     text: {
-      format: zodTextFormat(outputSchema, 'faqUpdates'),
+      format: {
+        type: 'json_schema',
+        name: 'updates',
+        schema: {
+          type: 'object',
+          properties: {
+            updates: {
+              type: 'array',
+              description: 'Eine Liste von Änderungen, die am FAQ vorgenommen werden sollen.',
+              items: {
+                type: 'object',
+                properties: {
+                  id: {
+                    type: ['number', 'null'],
+                    description: 'Die ID des FAQ-Eintrags, der aktualisiert werden soll. Wenn dieser Eintrag neu ist, kann dieses Feld weggelassen werden.',
+                  },
+                  question: {
+                    type: 'string',
+                    description: 'Die aktualisierte Frage für den FAQ-Eintrag.',
+                  },
+                  answer: {
+                    type: 'string',
+                    description: 'Die aktualisierte Antwort für den FAQ-Eintrag.',
+                  },
+                },
+                required: ['id', 'question', 'answer'],
+                additionalProperties: false,
+              },
+              additionalProperties: false,
+            },
+          },
+          required: ['updates'],
+          additionalProperties: false,
+        },
+      },
     },
   })
 
-  console.log('Response from OpenAI:', response.output_parsed)
+  const updatesSchema = z.object({
+    updates: z.array(
+      z.object({
+        id: z.union([z.number(), z.null()]),
+        question: z.string(),
+        answer: z.string(),
+      }),
+    ),
+  })
+  const { updates } = updatesSchema.parse(response.output_parsed)
 
-  return response.output_parsed
+  return updates.map(update => {
+    return {
+      ...update,
+      original: qanda.find(item => item.id === update.id) || null,
+    }
+  })
 })
