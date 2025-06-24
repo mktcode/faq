@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
 
   const customerRequest = await db
     .selectFrom('customerRequests')
-    .select(['id', 'email'])
+    .select(['id', 'email', 'status'])
     .where('userId', '=', user.id)
     .where('id', '=', customerRequestId)
     .executeTakeFirstOrThrow()
@@ -25,6 +25,13 @@ export default defineEventHandler(async (event) => {
       embedding: null,
     })
     .execute()
+
+  if (customerRequest.status === 'pending') {
+    await db.updateTable('customerRequests')
+      .set({ status: 'in_progress' })
+      .where('id', '=', customerRequest.id)
+      .execute()
+  }
 
   if (customerRequest.email) {
     await sendEmail({

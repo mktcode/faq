@@ -227,7 +227,7 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
           </p>
         </UCard>
       </div>
-      <CustomerRequestList v-if="me" />
+
       <div class="w-full flex items-center justify-center gap-2 mt-12 text-sm">
         <ULink
           to="/impressum"
@@ -242,23 +242,28 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
           Datenschutz
         </ULink>
       </div>
-      <SettingsModal
-        v-if="me"
-        v-model:show="showSettingsModal"
-        @update="refreshSettings"
-      />
-      <UpgradeModal
-        v-if="me && currentSettings"
-        v-model:show="showUpgradeModal"
-        :current-settings="currentSettings"
-      />
-      <NewQandaModal
-        v-if="me"
-        v-model:show="showNewQandaModal"
-      />
-      <ClientOnly>
-        <WelcomeModal />
-      </ClientOnly>
     </div>
+
+    <div class="w-full mt-6 py-24 border-t border-gray-200">
+      <CustomerRequestList v-if="me" />
+    </div>
+
+    <SettingsModal
+      v-if="me"
+      v-model:show="showSettingsModal"
+      @update="refreshSettings"
+    />
+    <UpgradeModal
+      v-if="me && currentSettings"
+      v-model:show="showUpgradeModal"
+      :current-settings="currentSettings"
+    />
+    <NewQandaModal
+      v-if="me"
+      v-model:show="showNewQandaModal"
+    />
+    <ClientOnly>
+      <WelcomeModal />
+    </ClientOnly>
   </FontWrapper>
 </template>

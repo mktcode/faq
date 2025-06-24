@@ -55,7 +55,7 @@ const designRounded = useState('designRounded')
       'rounded-none': designRounded === 'none',
     }"
   >
-    <div class="p-4">
+    <div class="p-4 pb-0">
       <h4 class="font-semibold">
         {{ customerRequest.name }}
         <span class="text-gray-400 text-sm ml-2">
@@ -65,17 +65,19 @@ const designRounded = useState('designRounded')
       <div
         v-for="message in messages"
         :key="message.id"
-        class="text-gray-600 my-2"
+        class="text-gray-600 my-2 flex gap-2 py-2"
       >
-        <div class="flex items-center gap-2">
-          <UIcon
-            :name="message.isCustomer ? 'i-heroicons-user' : 'i-heroicons-chat-bubble-left'"
-            class="inline-block"
-          />
-          <span class="text-sm">{{ message.body }}</span>
-          <span class="text-xs text-gray-400 ml-auto">
+        <UIcon
+          :name="message.isCustomer ? 'i-heroicons-user' : 'i-heroicons-chat-bubble-left'"
+          class="inline-block size-6 shrink-0"
+        />
+        <div class="flex flex-col gap-1">
+          <span class="text-gray-400">
             {{ new Date(message.createdAt).toLocaleTimeString() }}
           </span>
+          <div class="text-sm">
+            {{ message.body }}
+          </div>
         </div>
       </div>
     </div>
