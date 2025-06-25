@@ -48,7 +48,7 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
 </script>
 
 <template>
-  <FontWrapper :font="font">
+  <FontWrapper :font="font" class="relative">
     <div
       class="flex flex-row md:items-center md:justify-between p-4 absolute z-10 w-full gap-2"
     >
@@ -57,10 +57,9 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
           v-if="me && !onOwnProfile"
           :to="`https://${me.userName}.${appHost}`"
           label="Eigenes Profil"
-          class="text-gray-400"
           icon="i-heroicons-user-circle"
-          variant="ghost"
           color="neutral"
+          variant="soft"
           size="md"
         />
 
@@ -68,9 +67,8 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
           v-if="!me && onOwnProfile"
           :to="`https://${appHost}/login`"
           label="Anmelden"
-          class="text-gray-400"
           icon="i-heroicons-arrow-right-on-rectangle"
-          variant="ghost"
+          variant="soft"
           color="neutral"
           size="md"
         />
@@ -147,13 +145,13 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
     </div>
     <div
       :style="{ backgroundImage: currentSettings?.headerImage ? `url(${currentSettings.headerImage})` : 'none' }"
-      class="w-full bg-cover bg-center relative"
+      class="w-full bg-cover bg-center relative z-0"
     >
       <div
         v-if="currentSettings?.headerImage"
         class="absolute inset-0 bg-black opacity-70 z-0"
       />
-      <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6 relative z-10">
+      <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-24 px-6 relative z-10">
         <div
           v-if="logo"
         >
