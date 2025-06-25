@@ -188,13 +188,6 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
         <h3 class="text-2xl font-semibold">
           Häufig gestellte Fragen
         </h3>
-        <UButton
-          v-if="me"
-          label="Frage und Antwort hinzufügen"
-          icon="i-heroicons-plus"
-          variant="soft"
-          @click="showNewQandaModal = true"
-        />
         <UCard
           v-for="item in qanda"
           :key="item.question"
@@ -208,19 +201,6 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
             <h3 class="text-lg font-semibold">
               {{ item.question }}
             </h3>
-            <div
-              v-if="me"
-              class="flex items-center justify-end gap-2"
-            >
-              <UButton
-                icon="i-heroicons-pencil-square"
-                variant="ghost"
-              />
-              <UButton
-                icon="i-heroicons-trash"
-                variant="ghost"
-              />
-            </div>
           </div>
           <p class="text-gray-600">
             {{ item.answer }}

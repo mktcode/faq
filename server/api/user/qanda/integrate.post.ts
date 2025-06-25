@@ -93,7 +93,7 @@ export default defineEventHandler(async (event) => {
   })
   const { updates } = updatesSchema.parse(response.output_parsed)
 
-  return updates.map(update => {
+  return updates.map((update) => {
     return {
       ...update,
       original: qanda.find(item => item.id === update.id) || null,

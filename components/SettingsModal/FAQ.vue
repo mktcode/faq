@@ -46,8 +46,13 @@ async function integrate() {
       >
         {{ suggestion.original.question }}
       </h3>
-      <p class="text-sm text-gray-600">{{ suggestion.answer }}</p>
-      <p v-if="suggestion.original" class="text-sm text-gray-500 line-through">
+      <p class="text-sm text-gray-600">
+        {{ suggestion.answer }}
+      </p>
+      <p
+        v-if="suggestion.original"
+        class="text-sm text-gray-500 line-through"
+      >
         {{ suggestion.original.answer }}
       </p>
       <div class="flex gap-2 mt-2">
@@ -73,9 +78,9 @@ async function integrate() {
       icon="i-heroicons-magnifying-glass"
       variant="soft"
       block
-      @click="integrate"
       :disabled="isIntegrating"
       :loading="isIntegrating"
+      @click="integrate"
     />
   </div>
 </template>
