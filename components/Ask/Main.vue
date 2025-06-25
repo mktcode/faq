@@ -50,51 +50,53 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
 <template>
   <FontWrapper :font="font">
     <div
-      class="flex flex-col md:flex-row md:items-center md:justify-between p-4 absolute z-10 w-full gap-2"
+      class="flex flex-row md:items-center md:justify-between p-4 absolute z-10 w-full gap-2"
     >
-      <UButton
-        v-if="me && !onOwnProfile"
-        :to="`https://${me.userName}.${appHost}`"
-        label="Eigenes Profil"
-        class="text-gray-400"
-        icon="i-heroicons-user-circle"
-        variant="ghost"
-        color="neutral"
-        size="md"
-      />
+      <div class="flex flex-col md:flex-row gap-2">
+        <UButton
+          v-if="me && !onOwnProfile"
+          :to="`https://${me.userName}.${appHost}`"
+          label="Eigenes Profil"
+          class="text-gray-400"
+          icon="i-heroicons-user-circle"
+          variant="ghost"
+          color="neutral"
+          size="md"
+        />
 
-      <UButton
-        v-if="!me && onOwnProfile"
-        :to="`https://${appHost}/login`"
-        label="Anmelden"
-        class="text-gray-400"
-        icon="i-heroicons-arrow-right-on-rectangle"
-        variant="ghost"
-        color="neutral"
-        size="md"
-      />
+        <UButton
+          v-if="!me && onOwnProfile"
+          :to="`https://${appHost}/login`"
+          label="Anmelden"
+          class="text-gray-400"
+          icon="i-heroicons-arrow-right-on-rectangle"
+          variant="ghost"
+          color="neutral"
+          size="md"
+        />
 
-      <UButton
-        v-if="me && onOwnProfile"
-        label="Einstellungen"
-        icon="i-heroicons-cog-6-tooth"
-        color="neutral"
-        variant="soft"
-        size="md"
-        @click="showSettingsModal = true"
-      />
+        <UButton
+          v-if="me && onOwnProfile"
+          label="Einstellungen"
+          icon="i-heroicons-cog-6-tooth"
+          color="neutral"
+          variant="soft"
+          size="md"
+          @click="showSettingsModal = true"
+        />
 
-      <UButton
-        v-if="me && onOwnProfile"
-        label="Nächster Schritt"
-        icon="i-heroicons-rocket-launch"
-        color="neutral"
-        variant="soft"
-        size="md"
-        @click="showUpgradeModal = true"
-      />
+        <UButton
+          v-if="me && onOwnProfile"
+          label="Nächster Schritt"
+          icon="i-heroicons-rocket-launch"
+          color="neutral"
+          variant="soft"
+          size="md"
+          @click="showUpgradeModal = true"
+        />
+      </div>
 
-      <UPopover>
+      <UPopover class="mb-auto">
         <UButton
           label="Link Teilen"
           class="ml-auto"
@@ -238,7 +240,10 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
           }"
         >
           <template #body="{ item }">
-            <div class="prose" v-html="item.content" />
+            <div
+              class="prose"
+              v-html="item.content"
+            />
           </template>
         </UAccordion>
       </div>
