@@ -41,7 +41,8 @@ appConfig.ui.button.defaultVariants.rounded = currentSettings.value?.rounded || 
 appConfig.ui.input.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
 appConfig.ui.select.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
 appConfig.ui.textarea.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
-const designRounded = useState('designRounded', () => currentSettings.value?.rounded || 'md')
+
+useState('designRounded', () => currentSettings.value?.rounded || 'md')
 
 const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
 </script>
@@ -184,6 +185,25 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
         class="my-6 w-full"
       >
         <AskOffer :offers="currentSettings.offers" />
+      </div>
+
+      <div
+        v-if="true || currentSettings?.downloads?.length"
+        class="my-6 w-full"
+      >
+        <AskDownloads
+          :downloads="[{
+            title: 'Speisekarte',
+            description: 'Hier finden Sie unsere aktuelle Speisekarte zum Download.',
+            url: '/downloads',
+            type: 'pdf',
+          }, {
+            title: 'Bilder',
+            description: 'Hier finden Sie eine Auswahl unserer Bilder.',
+            url: '/downloads',
+            type: 'image',
+          }]"
+        />
       </div>
 
       <div class="my-6 w-full">
