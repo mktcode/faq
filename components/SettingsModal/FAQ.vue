@@ -128,10 +128,9 @@ async function saveQanda() {
           label="Antwort"
           description="Geben Sie eine möglichst genaue und umfassende Antwort auf diese Frage ein."
         >
-          <UTextarea
+          <WysiwygEditor
             v-model="newAnswer"
             placeholder="Vue ist ein progressives JavaScript-Framework, während React eine JavaScript-Bibliothek ist..."
-            class="w-full"
           />
         </UFormField>
         <UButton
