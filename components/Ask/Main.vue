@@ -50,7 +50,7 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
 <template>
   <FontWrapper :font="font">
     <div
-      class="flex flex-col md:flex-row md:items-center md:justify-between p-4"
+      class="flex flex-col md:flex-row md:items-center md:justify-between p-4 absolute z-10 w-full gap-2"
     >
       <UButton
         v-if="me && !onOwnProfile"
@@ -76,34 +76,30 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
 
       <UButton
         v-if="me && onOwnProfile"
-        class="text-gray-400"
+        label="Einstellungen"
         icon="i-heroicons-cog-6-tooth"
-        variant="ghost"
         color="neutral"
+        variant="soft"
         size="md"
         @click="showSettingsModal = true"
-      >
-        Einstellungen
-      </UButton>
+      />
 
       <UButton
         v-if="me && onOwnProfile"
-        class="text-gray-400 md:mr-auto"
+        label="Nächster Schritt"
         icon="i-heroicons-rocket-launch"
-        variant="ghost"
         color="neutral"
+        variant="soft"
         size="md"
         @click="showUpgradeModal = true"
-      >
-        Nächster Schritt
-      </UButton>
+      />
 
       <UPopover>
         <UButton
           label="Link Teilen"
-          class="text-gray-400 ml-auto"
+          class="ml-auto"
           icon="i-heroicons-share"
-          variant="ghost"
+          variant="soft"
           color="neutral"
           size="md"
         />
@@ -147,38 +143,60 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
         </template>
       </UPopover>
     </div>
-    <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
+    <div
+      :style="{ backgroundImage: currentSettings?.headerImage ? `url(${currentSettings.headerImage})` : 'none' }"
+      class="w-full bg-cover bg-center relative"
+    >
       <div
-        v-if="logo"
-      >
-        <NuxtImg
-          :src="logo"
-          alt="Logo"
-          class="w-16 mb-4"
-        />
-      </div>
-      <div
-        v-else
-        class="size-16 rounded-full bg-gray-100 flex items-center justify-center"
-      >
-        <UIcon
-          name="i-heroicons-photo"
-          class="size-7 opacity-25"
-        />
-      </div>
-      <h1 class="text-lg font-bold mb-4">
-        {{ currentSettings?.title || username }}
-      </h1>
-      <p
-        v-if="currentSettings?.description"
-        class="text-gray-500 text-center mb-4"
-      >
-        {{ currentSettings?.description }}
-      </p>
-      <AskLinks
-        v-if="currentSettings?.links?.length"
-        :links="currentSettings.links"
+        v-if="currentSettings?.headerImage"
+        class="absolute inset-0 bg-black opacity-70 z-0"
       />
+      <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6 relative z-10">
+        <div
+          v-if="logo"
+        >
+          <NuxtImg
+            :src="logo"
+            alt="Logo"
+            class="w-16 mb-4"
+          />
+        </div>
+        <div
+          v-else
+          class="size-16 rounded-full bg-gray-100 flex items-center justify-center"
+        >
+          <UIcon
+            name="i-heroicons-photo"
+            class="size-7 opacity-25"
+          />
+        </div>
+        <h1
+          class="text-2xl font-bold mb-4"
+          :class="{
+            'text-gray-900': !currentSettings?.headerImage,
+            'text-white': currentSettings?.headerImage,
+          }"
+        >
+          {{ currentSettings?.title || username }}
+        </h1>
+        <p
+          v-if="currentSettings?.description"
+          class="text-center text-lg mb-4"
+          :class="{
+            'text-gray-500': !currentSettings?.headerImage,
+            'text-white': currentSettings?.headerImage,
+          }"
+        >
+          {{ currentSettings?.description }}
+        </p>
+        <AskLinks
+          v-if="currentSettings?.links?.length"
+          :links="currentSettings.links"
+          :has-header-image="!!currentSettings?.headerImage"
+        />
+      </div>
+    </div>
+    <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
       <div
         v-if="currentSettings?.gallery?.length"
         class="my-6 w-full"
