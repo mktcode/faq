@@ -143,7 +143,7 @@ const designRounded = useState('designRounded')
   <Transition name="fade">
     <div
       v-if="similarQuestions.length > 0 && messageLongEnough"
-      class="w-full flex flex-col text-gray-800 my-2 border border-gray-200 p-4"
+      class="w-full flex flex-col text-gray-800 mt-2 border border-gray-200 p-4"
       :class="{
         'rounded-none': designRounded === 'none',
         'rounded-md': designRounded === 'md',
@@ -153,10 +153,10 @@ const designRounded = useState('designRounded')
       <div class="text-sm text-sky-900/60 mb-2">
         {{ similarQuestions[0].question }}
       </div>
-      {{ similarQuestions[0].answer }}
+      <div v-html="similarQuestions[0].answer" />
     </div>
   </Transition>
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-2 mt-2">
     <Transition name="fade">
       <UInput
         v-if="messageLongEnough"

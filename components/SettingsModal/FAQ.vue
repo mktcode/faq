@@ -113,7 +113,10 @@ async function saveQanda() {
       />
     </div>
     <Transition name="fade">
-      <div v-if="showNewForm" class="flex flex-col gap-4 p-4 border border-gray-200 rounded-lg">
+      <div
+        v-if="showNewForm"
+        class="flex flex-col gap-4 p-4 border border-gray-200 rounded-lg"
+      >
         <UFormField
           label="Frage"
           description="Geben Sie eine typische Frage Ihrer Zielgruppe ein."

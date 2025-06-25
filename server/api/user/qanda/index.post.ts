@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
     const openai = createOpenAIClient()
     const embedding = await openai.embeddings.create({
       model: 'text-embedding-3-small',
-      input: 'Your text string goes here',
+      input: question,
       encoding_format: 'float',
     })
 

@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     .where('userName', '=', username)
     .executeTakeFirstOrThrow()
 
-  const similarQuestions = await sql<SimilarQuestion>`SELECT id, question, answer, VEC_DISTANCE_EUCLIDEAN(questionEmbedding, Vec_FromText(${JSON.stringify(embedding)})) as distance FROM qanda WHERE userId = ${user.id} ORDER BY distance DESC LIMIT 10;`
+  const similarQuestions = await sql<SimilarQuestion>`SELECT id, question, answer, VEC_DISTANCE_EUCLIDEAN(questionEmbedding, Vec_FromText(${JSON.stringify(embedding)})) as distance FROM qanda WHERE userId = ${user.id} ORDER BY distance ASC LIMIT 10;`
     .execute(db)
 
   return similarQuestions.rows
