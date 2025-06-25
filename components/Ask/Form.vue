@@ -142,34 +142,24 @@ const designRounded = useState('designRounded')
   </Transition>
   <Transition name="fade">
     <div
-      v-if="similarQuestions.length > 0"
+      v-if="similarQuestions.length > 0 && messageLongEnough"
       class="w-full flex flex-col text-gray-800 my-2 border border-gray-200 p-4"
       :class="{
-        'rounded-t-none': designRounded === 'none',
-        'rounded-t-md': designRounded === 'md',
-        'rounded-t-xl': designRounded === 'xl',
+        'rounded-none': designRounded === 'none',
+        'rounded-md': designRounded === 'md',
+        'rounded-xl': designRounded === 'xl',
       }"
     >
       <div class="text-sm text-sky-900/60 mb-2">
         {{ similarQuestions[0].question }}
       </div>
       {{ similarQuestions[0].answer }}
-      <div
-        class="flex items-center justify-end gap-2 mt-4 text-sm text-gray-400"
-      >
-        <UButton
-          icon="i-heroicons-hand-thumb-up"
-          :variant="suggestedAnswerWasUseful === true ? 'solid' : 'ghost'"
-          size="md"
-          @click="suggestedAnswerWasUseful = !suggestedAnswerWasUseful"
-        />
-      </div>
     </div>
   </Transition>
   <div class="flex flex-col gap-2">
     <Transition name="fade">
       <UInput
-        v-if="message.length > 5"
+        v-if="messageLongEnough"
         v-model="name"
         placeholder="Name"
         class="w-full"

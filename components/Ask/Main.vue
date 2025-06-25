@@ -27,6 +27,13 @@ const { data: qanda } = await useFetch<Qanda[]>(`/api/qanda`, {
   },
 })
 
+const qandaAccordionItems = computed(() => {
+  return qanda.value?.map(item => ({
+    label: item.question,
+    content: item.answer,
+  })) || []
+})
+
 const appConfig = useAppConfig()
 const font = computed(() => currentSettings.value?.font || 'roboto')
 appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
@@ -187,24 +194,13 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
         <h3 class="text-2xl font-semibold">
           Häufig gestellte Fragen
         </h3>
-        <UCard
-          v-for="item in qanda"
-          :key="item.question"
-          :class="{
-            'rounded-none': designRounded === 'none',
-            'rounded-md': designRounded === 'md',
-            'rounded-xl': designRounded === 'xl',
+        <UAccordion
+          :items="qandaAccordionItems"
+          :ui="{
+            label: 'text-lg',
+            body: 'text-lg text-gray-500',
           }"
-        >
-          <div class="flex items-start justify-between">
-            <h3 class="text-lg font-semibold">
-              {{ item.question }}
-            </h3>
-          </div>
-          <p class="text-gray-600">
-            {{ item.answer }}
-          </p>
-        </UCard>
+        />
       </div>
 
       <div class="w-full flex items-center justify-center gap-2 mt-12 text-sm">
