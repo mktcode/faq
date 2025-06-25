@@ -14,7 +14,6 @@ const onOwnProfile = computed(() => username === myLastUsername.value)
 
 const showSettingsModal = ref(false)
 const showUpgradeModal = ref(false)
-const showNewQandaModal = ref(false)
 
 const { data: currentSettings, refresh: refreshSettings } = await useFetch(`/api/settings`, {
   query: {
@@ -237,10 +236,6 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
       v-if="me && currentSettings"
       v-model:show="showUpgradeModal"
       :current-settings="currentSettings"
-    />
-    <NewQandaModal
-      v-if="me"
-      v-model:show="showNewQandaModal"
     />
     <ClientOnly>
       <WelcomeModal />
