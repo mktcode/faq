@@ -1,8 +1,5 @@
 <script setup lang="ts">
-const showModal = defineModel('show', {
-  default: true,
-  type: Boolean,
-})
+const showModal = useState('showUpgradeModal', () => false)
 </script>
 
 <template>
