@@ -169,6 +169,12 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
       <h1 class="text-lg font-bold mb-4">
         {{ currentSettings?.title || username }}
       </h1>
+      <p
+        v-if="currentSettings?.description"
+        class="text-gray-500 text-center mb-4"
+      >
+        {{ currentSettings?.description }}
+      </p>
       <AskLinks
         v-if="currentSettings?.links?.length"
         :links="currentSettings.links"
@@ -188,26 +194,18 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
       </div>
 
       <div
-        v-if="true || currentSettings?.downloads?.length"
+        v-if="currentSettings?.downloads?.length"
         class="my-6 w-full"
       >
-        <AskDownloads
-          :downloads="[{
-            title: 'Speisekarte',
-            description: 'Hier finden Sie unsere aktuelle Speisekarte zum Download.',
-            url: '/downloads',
-            type: 'pdf',
-          }, {
-            title: 'Bilder',
-            description: 'Hier finden Sie eine Auswahl unserer Bilder.',
-            url: '/downloads',
-            type: 'image',
-          }]"
-        />
+        <AskDownloads :downloads="currentSettings?.downloads || []" />
       </div>
 
       <div class="my-6 w-full">
-        <AskForm :username="username" />
+        <AskForm
+          :username="username"
+          :preferred-contact-method="currentSettings?.preferredContactMethod || 'none'"
+          :contact-phone="currentSettings?.company?.phone || ''"
+        />
       </div>
 
       <div class="flex flex-col gap-4 w-full mt-6">
@@ -220,7 +218,11 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
             label: 'text-lg',
             body: 'text-lg text-gray-500',
           }"
-        />
+        >
+          <template #body="{ item }">
+            <div class="prose" v-html="item.content" />
+          </template>
+        </UAccordion>
       </div>
 
       <div class="w-full flex items-center justify-center gap-2 mt-12 text-sm">

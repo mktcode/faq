@@ -25,6 +25,7 @@ export const settingsFormSchema = z.object({
   image: z.string().optional().nullable(),
   title: z.string().optional().nullable(),
   description: z.string().optional().nullable(),
+  preferredContactMethod: z.enum(['email', 'phone', 'none']).optional().nullable(),
   font: z.string().optional().nullable(),
   color: z.string().optional().nullable(),
   rounded: z.string().optional().nullable(),

@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
 
     const fileName = file.filename || Math.random().toString(36).substring(7)
     const sanitizedFilename = fileName.replace(/[^a-z0-9.]/gi, '_')
-    const filePath = `${user.id}/${sanitizedFilename}`
+    const filePath = `${user.id}/gallery/${sanitizedFilename}`
 
     const image = sharp(file.data)
     const metadata = await image.metadata()

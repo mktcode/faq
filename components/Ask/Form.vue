@@ -2,7 +2,11 @@
 import { watchDebounced } from '@vueuse/core'
 import type { SimilarQuestion } from '~/server/api/customerRequests/similarQuestions.post'
 
-const { username } = defineProps<{ username: string }>()
+const { username, preferredContactMethod, contactPhone } = defineProps<{
+  username: string
+  preferredContactMethod: 'email' | 'phone' | 'none'
+  contactPhone: string
+}>()
 
 const message = ref('')
 const messageLongEnough = computed(() => message.value.trim().length >= 5)
@@ -13,7 +17,6 @@ const email = ref('')
 const isSavingRequest = ref(false)
 const savedRequestSuccess = ref(false)
 const similarQuestions = ref<SimilarQuestion[]>([])
-const suggestedAnswerWasUseful = ref<boolean | undefined>(undefined)
 
 async function saveRequest() {
   if (isSavingRequest.value) return
@@ -80,17 +83,23 @@ const designRounded = useState('designRounded')
       Anfrage
     </h3>
 
-    <p class="text-gray-500 mb-6 mt-3">
+    <p class="text-gray-500 mb-8 mt-3">
       Stellen Sie Ihre Fragen und erhalten Sie Antworten, per Mail, per Push-Nachricht, telefonisch oder direkt hier im FAQ.
     </p>
 
-    <div class="flex text-2xl items-center gap-1 mb-6">
-      <UIcon
-        name="i-heroicons-phone"
-      />
-      <span class="text-gray-500 ml-2">
-        0123 4567890
-      </span>
+    <div
+      v-if="contactPhone && (preferredContactMethod === 'phone' || preferredContactMethod === 'none')"
+    >
+      <div
+        class="flex text-2xl items-center justify-center gap-1 mb-8"
+      >
+        <UIcon
+          name="i-heroicons-phone"
+        />
+        <span class="text-gray-500 ml-2">
+          {{ contactPhone }}
+        </span>
+      </div>
     </div>
 
     <UTextarea
@@ -191,5 +200,19 @@ const designRounded = useState('designRounded')
         @click="saveRequest"
       />
     </Transition>
+    <div
+      v-if="contactPhone && (preferredContactMethod === 'email')"
+    >
+      <div
+        class="flex text-2xl items-center justify-center gap-1 mt-8"
+      >
+        <UIcon
+          name="i-heroicons-phone"
+        />
+        <span class="text-gray-500 ml-2">
+          {{ contactPhone }}
+        </span>
+      </div>
+    </div>
   </div>
 </template>

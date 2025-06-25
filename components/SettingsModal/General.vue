@@ -8,6 +8,7 @@ const { data: currentSettings } = await useFetch(`/api/user/settings`)
 const form = ref({
   title: currentSettings.value?.title || '',
   description: currentSettings.value?.description || '',
+  preferredContactMethod: currentSettings.value?.preferredContactMethod || 'none',
 })
 
 async function saveSettings() {
@@ -44,32 +45,16 @@ async function saveSettings() {
       />
     </UFormField>
     <UFormField
-      label="E-Mail"
-      description="Diese E-Mail wird für Benachrichtigungen und Anfragen verwendet."
-    >
-      <UInput
-        placeholder="Ihre E-Mail-Adresse"
-        class="w-full"
-      />
-    </UFormField>
-    <UFormField
-      label="Telefon"
-      description="Diese Nummer wird für Anfragen verwendet."
-    >
-      <UInput
-        placeholder="Ihre Telefonnummer"
-        class="w-full"
-      />
-    </UFormField>
-    <UFormField
       label="Bevorzugter Kontaktweg"
       description="Sollen Interessenten Sie per E-Mail oder lieber per Telefon kontaktieren?"
     >
       <USelect
+        v-model="form.preferredContactMethod"
         class="w-full"
         :items="[
           { label: 'E-Mail', value: 'email' },
           { label: 'Telefon', value: 'phone' },
+          { label: 'Beides', value: 'none' },
         ]"
       />
     </UFormField>
