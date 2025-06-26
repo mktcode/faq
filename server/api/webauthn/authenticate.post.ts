@@ -3,11 +3,13 @@ export default defineWebAuthnAuthenticateEventHandler({
   async allowCredentials(event, userName) {
     const db = await getDatabaseConnection()
 
+    const username = makeUsername(userName)
+
     // Find user by email
     const user = await db
       .selectFrom('users')
       .selectAll()
-      .where('email', '=', userName)
+      .where('userName', '=', username)
       .executeTakeFirst()
 
     // If no user is found, the authentication cannot be completed
@@ -92,7 +94,9 @@ export default defineWebAuthnAuthenticateEventHandler({
         'webauthnCredentials.userId',
         'users.id',
         'users.name',
+        'users.userName',
         'users.email',
+        'users.googleId',
       ])
       .where('webauthnCredentials.credentialId', '=', credential.id)
       .executeTakeFirst()
@@ -112,12 +116,10 @@ export default defineWebAuthnAuthenticateEventHandler({
       user: {
         id: userCredential.id,
         name: userCredential.name,
-        userName: userCredential.name,
+        userName: userCredential.userName,
         email: userCredential.email,
-        googleId: '',
-        picture: '',
+        googleId: userCredential.googleId,
       },
-      loggedInAt: Date.now(),
     })
   },
 })

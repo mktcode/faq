@@ -1,16 +1,3 @@
-function makeUsername(name: string): string {
-  // TODO: check for uniqueness in the database
-  return name
-    .toLowerCase()
-    .replace(/\s+/g, '')
-    .replace(/[^a-z0-9äöüß]/g, '')
-    .replace(/ä/g, 'ae')
-    .replace(/ö/g, 'oe')
-    .replace(/ü/g, 'ue')
-    .replace(/ß/g, 'ss')
-    .substring(0, 30) // Limit to 30 characters
-}
-
 export default defineOAuthGoogleEventHandler({
   config: {
     scope: [
@@ -43,44 +30,24 @@ export default defineOAuthGoogleEventHandler({
       })
     }
     else {
-      const insertResult = await db.insertInto('users')
-        .values({
-          name: user.name,
-          userName: makeUsername(user.name),
-          googleId: user.sub,
-          email: user.email,
-          balance: 0,
-        })
-        .executeTakeFirstOrThrow()
-
-      if (!insertResult.insertId) {
-        throw new Error('Failed to insert user')
-      }
-
-      const newUserId = Number(insertResult.insertId.toString())
+      const newUser = await createUser({
+        name: user.name,
+        userName: user.name,
+        googleId: user.sub,
+      })
 
       await setUserSession(event, {
         user: {
           ...user,
-          id: newUserId,
-          email: user.email,
-          userName: makeUsername(user.name),
+          id: newUser.id,
+          email: newUser.email,
+          userName: newUser.userName,
           googleId: user.sub,
         },
         secure: {
           token: tokens.access_token,
         },
       })
-
-      await db.insertInto('settings')
-        .values({
-          userId: newUserId,
-          settings: JSON.stringify({
-            title: user.name,
-            rounded: 'md',
-          }),
-        })
-        .execute()
     }
 
     return sendRedirect(event, '/')

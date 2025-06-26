@@ -5,7 +5,7 @@ export interface UsersTable {
   name: string
   userName: string
   email: string | null
-  googleId: string
+  googleId: string | null
   balance: number
   createdAt: ColumnType<Date, undefined, undefined>
 }
