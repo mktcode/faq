@@ -164,7 +164,7 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
     </div>
 
     <div class="w-full mt-6 py-24 border-t border-gray-200">
-      <CustomerRequestList v-if="me" />
+      <CustomerRequests v-if="me" />
     </div>
 
     <SettingsModal
