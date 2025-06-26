@@ -3,6 +3,11 @@ const showModal = useState('showSettingsModal', () => false)
 
 const items = [
   {
+    label: 'Domain',
+    icon: 'i-heroicons-globe-alt',
+    slot: 'domain',
+  },
+  {
     label: 'Allgemein',
     icon: 'i-heroicons-cog-6-tooth',
     slot: 'general',
@@ -13,9 +18,9 @@ const items = [
     slot: 'company',
   },
   {
-    label: 'Stil',
-    icon: 'i-heroicons-paint-brush',
-    slot: 'design',
+    label: 'Anfragen',
+    icon: 'i-heroicons-envelope',
+    slot: 'customerRequests',
   },
   {
     label: 'Mein Angebot',
@@ -41,6 +46,11 @@ const items = [
     label: 'Häufige Fragen',
     icon: 'i-heroicons-question-mark-circle',
     slot: 'faq',
+  },
+  {
+    label: 'Stil',
+    icon: 'i-heroicons-paint-brush',
+    slot: 'design',
   },
   {
     label: 'Datenschutz',
