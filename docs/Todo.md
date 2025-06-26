@@ -5,9 +5,10 @@
 - Headergestaltung optimieren mit Bild (Overlay, Schriftgröße, Varianten).
 - Settings Modal optimieren (Gallery, etc.)
 - "Nächster Schritt" eindampfen
-- E-Mail-Templates
+- E-Mail-Templates (html emails)
 - dezentere Toasts
 - Fix Upload bug in Settings: mehrere Dropzones überschreiben sich
+- HTML für v-html desinfizieren
 
 # Next
 
