@@ -16,8 +16,8 @@ const items = offers.map(offer => ({
   <div>
     <UCarousel
       v-slot="{ item }"
-      dots
-      arrows
+      :dots="items.length > 1"
+      :arrows="items.length > 1"
       auto-height
       :prev="{ variant: 'ghost' }"
       :next="{ variant: 'ghost' }"

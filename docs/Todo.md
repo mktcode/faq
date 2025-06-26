@@ -1,6 +1,6 @@
 # Beta Release
 
-- Pfeile und Punkte im Angebots-Karussell entfernen, wenn nur ein Angebot vorhanden ist.
+- Fullscreen Gallery optimieren (Pfeile, Punkte, Mobil)
 - Validierungshinweise in Anfrageformular verbessern.
 - Headergestaltung optimieren mit Bild (Overlay, Schriftgröße, Varianten).
 - Settings Modal optimieren (Gallery, etc.)
