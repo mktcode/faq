@@ -15,6 +15,8 @@ const audioContext = ref<AudioContext | null>(null)
 const analyser = ref<AnalyserNode | null>(null)
 const animationFrame = ref<number | null>(null)
 const volumeLevel = ref(0)
+const volumeHistory = ref<number[]>([])
+const maxBars = 40
 
 function analyzeAudioLevel() {
   if (!analyser.value) return
@@ -30,6 +32,12 @@ function analyzeAudioLevel() {
   const average = sum / bufferLength
   volumeLevel.value = Math.min(100, (average / 255) * 100)
 
+  // Add current volume to history and maintain a rolling window
+  volumeHistory.value.push(volumeLevel.value)
+  if (volumeHistory.value.length > maxBars) {
+    volumeHistory.value.shift()
+  }
+
   if (isRecordingAudio.value) {
     animationFrame.value = requestAnimationFrame(analyzeAudioLevel)
   }
@@ -41,6 +49,7 @@ function stopVolumeAnalysis() {
     animationFrame.value = null
   }
   volumeLevel.value = 0
+  volumeHistory.value = []
 
   if (audioContext.value && audioContext.value.state !== 'closed') {
     audioContext.value.close()
@@ -113,19 +122,27 @@ function stopRecordingAudio() {
   <div class="flex items-center justify-between gap-2">
     <div
       id="wave"
-      class="flex items-center justify-center"
+      class="flex items-center justify-center h-12 min-w-0 flex-1"
     >
       <div
         v-if="isRecordingAudio"
-        class="flex items-center gap-1 h-full"
+        class="flex items-end gap-0.5 h-full overflow-hidden"
       >
         <div
-          v-for="bar in 20"
-          :key="bar"
-          class="w-1 bg-gray-300 rounded-full transition-all duration-100"
+          v-for="(level, index) in volumeHistory"
+          :key="index"
+          class="w-1 bg-primary-400 rounded-full transition-all duration-75 min-h-[2px]"
           :style="{
-            height: `${Math.max(2, (volumeLevel / 100) * 48 * Math.random() * 0.8 + volumeLevel / 100 * 48 * 0.2)}px`,
+            height: `${Math.max(2, (level / 100) * 100)}%`,
+            opacity: 1 - (index / volumeHistory.length) * 0.3,
           }"
+        />
+        <!-- Fill remaining space with empty bars to maintain consistent width -->
+        <div
+          v-for="emptyIndex in Math.max(0, maxBars - volumeHistory.length)"
+          :key="`empty-${emptyIndex}`"
+          class="w-1 bg-gray-200 rounded-full min-h-[2px]"
+          style="height: 2px; opacity: 0.3"
         />
       </div>
     </div>
