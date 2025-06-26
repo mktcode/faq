@@ -130,10 +130,10 @@ const designRounded = useState('designRounded')
           />
         </div>
       </Transition>
-      <UButton
-        icon="i-heroicons-microphone"
+      <AskRecordAudio
         class="ml-auto"
-        variant="soft"
+        :disabled="false"
+        @text="(text) => { message = text }"
       />
     </div>
   </div>
