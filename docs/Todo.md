@@ -6,6 +6,8 @@
 - Settings Modal optimieren (Gallery, etc.)
 - "Nächster Schritt" eindampfen
 - E-Mail-Templates
+- dezentere Toasts
+- Fix Upload bug in Settings: mehrere Dropzones überschreiben sich
 
 # Next
 

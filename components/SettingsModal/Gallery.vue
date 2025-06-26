@@ -86,6 +86,11 @@ const onDrop = async (e: DragEvent) => {
     uploadFile(e.dataTransfer.files)
   }
 }
+
+const deleteItem = (index: number) => {
+  form.value.gallery.splice(index, 1)
+  saveSettings()
+}
 </script>
 
 <template>
@@ -131,11 +136,20 @@ const onDrop = async (e: DragEvent) => {
           class="w-32 object-cover aspect-square rounded-lg"
         >
         <div class="flex flex-col gap-2 w-full">
-          <UInput
-            v-model="image.title"
-            placeholder="Bildtitel"
-            @blur="saveSettings"
-          />
+          <div class="flex gap-2">
+            <UInput
+              v-model="image.title"
+              placeholder="Bildtitel"
+              class="flex-1"
+              @blur="saveSettings"
+            />
+            <UButton
+              icon="i-heroicons-trash"
+              variant="soft"
+              color="error"
+              @click="deleteItem(index)"
+            />
+          </div>
           <UTextarea
             v-model="image.description"
             placeholder="Bildbeschreibung"
