@@ -1,4 +1,4 @@
-# Klein
+# Beta Release
 
 - Pfeile und Punkte im Angebots-Karussell entfernen, wenn nur ein Angebot vorhanden ist.
 - Validierungshinweise in Anfrageformular verbessern.
@@ -6,10 +6,11 @@
 - Settings Modal optimieren (Gallery, etc.)
 - "Nächster Schritt" eindampfen
 - E-Mail-Templates
+
+# Next
+
 - Premium-Features definieren
 - Paywall-Integration
-
-# Groß
 
 ## Datenbank und Typen
 
