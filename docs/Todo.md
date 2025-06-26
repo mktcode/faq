@@ -1,18 +1,24 @@
-# Datenbank und Typen
+# Klein
 
-Sicherstellen, dass das Datenbank-Schema, die Typen und die Formular-Validierungen korrekt sind.  
-Transaktionen und Konsistenz gewährleisten.  
+- Pfeile und Punkte im Angebots-Karussell entfernen, wenn nur ein Angebot vorhanden ist.
+- Validierungshinweise in Anfrageformular verbessern.
+- Headergestaltung optimieren mit Bild (Overlay, Schriftgröße, Varianten).
+- Settings Modal optimieren (Gallery, etc.)
+- "Nächster Schritt" eindampfen
+- E-Mail-Templates
+- Premium-Features definieren
+- Paywall-Integration
+
+# Groß
+
+## Datenbank und Typen
+
+Sicherstellen, dass das Datenbank-Schema, die Typen und die Formular-Validierungen korrekt sind.
+Transaktionen und Konsistenz gewährleisten.
 IDs auf UUIDs umstellen.  
 Foreign Keys und Constraints setzen.
 
-# Skalierung
-
-Datenbank aufsplitten:
-- Payments
-- Website, Domain, Email
-- Buchhaltung
-
-# Fehlerbehandlung
+## Fehlerbehandlung
 
 Sicherstellen, welche Fehler an das Frontend weitergeleitet werden.
 
@@ -21,21 +27,21 @@ Sicherstellen, welche Fehler an das Frontend weitergeleitet werden.
 Sicherstellen, dass Dateien optimiert sind und nicht zu groß werden.  
 Gegebenenfalls Beschränkungen hinsichtlich Anzahl und Kapazität in Betracht ziehen.
 
-# Authentifizierung
+## Authentifizierung
 
 Sicherstellen, dass Authentifizierung und Autorisierung für alle Datensätze korrekt implementiert sind.
 
-# Sicherheit
+## Sicherheit
 
 Implementieren von HTML-Sanitization für v-html Direktiven um XSS-Angriffe zu verhindern.  
 Besonders wichtig für Email-Inhalte, die in v-html gerendert werden.
 
-# Datenschutz
+## Datenschutz
 
 Mich als Datenschutzbeauftragten bei der zuständigen Datenschutzbehörde anmelden.  
 Domains: Handles, E-Mails an Hetzner.
 
-# Qualitätssicherung (QA)
+## Qualitätssicherung (QA)
 
 Auflistung aller Features nach Priorität sortieren.  
 Einen Testplan erstellen.  
@@ -46,13 +52,9 @@ Alle Inhalte von markus-kottlaender.de auf solihost.de umstellen.
 
 Cloudflare? Fail2ban?
 
-# Künstliche Intelligenz (KI)
+## Künstliche Intelligenz (KI)
 
 OpenAI über Azure in Deutschland/Europa hosten.
-
-# E-Mail
-
-Mailserver-API-Zugriff nur von App-Servern aus erlauben.
 
 # Job Runner
 
