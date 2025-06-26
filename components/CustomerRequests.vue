@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const status = ref<'pending' | 'in_progress'>('pending')
+
+const { data: customerRequests } = await useFetch(() => `/api/user/customerRequests?status=${status.value}`)
 </script>
 
 <template>
@@ -21,6 +23,21 @@ const status = ref<'pending' | 'in_progress'>('pending')
         @click="status = 'in_progress'"
       />
     </div>
-    <CustomerRequestList :status="status" />
+    <div
+      v-if="customerRequests?.length"
+      class="flex flex-col gap-2"
+    >
+      <CustomerRequestListItem
+        v-for="request in customerRequests"
+        :key="request.id"
+        :customer-request="request"
+      />
+    </div>
+    <div
+      v-else
+      class="flex flex-col gap-4"
+    >
+      Keine Anfragen gefunden.
+    </div>
   </div>
 </template>
