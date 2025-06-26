@@ -40,7 +40,10 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
 </script>
 
 <template>
-  <FontWrapper :font="font" class="relative">
+  <FontWrapper
+    :font="font"
+    class="relative"
+  >
     <AskNav
       :username="username"
     />
