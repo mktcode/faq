@@ -9,7 +9,7 @@ const items = [
   },
   {
     label: 'Allgemein',
-    icon: 'i-heroicons-cog-6-tooth',
+    icon: 'i-heroicons-paint-brush',
     slot: 'general',
   },
   {
@@ -48,11 +48,6 @@ const items = [
     slot: 'faq',
   },
   {
-    label: 'Stil',
-    icon: 'i-heroicons-paint-brush',
-    slot: 'design',
-  },
-  {
     label: 'Datenschutz',
     icon: 'i-heroicons-shield-check',
     slot: 'privacy',
@@ -81,9 +76,6 @@ const items = [
         </template>
         <template #company>
           <SettingsModalCompany />
-        </template>
-        <template #design>
-          <SettingsModalDesign />
         </template>
         <template #gallery>
           <SettingsModalGallery />
