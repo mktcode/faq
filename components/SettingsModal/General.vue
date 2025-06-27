@@ -3,6 +3,8 @@ const toast = useToast()
 
 const { data: currentSettings } = await useFetch(`/api/user/settings`)
 
+const showUpgradeModal = useState('showUpgradeModal', () => false)
+
 const form = ref({
   title: currentSettings.value?.title || '',
   description: currentSettings.value?.description || '',
@@ -318,6 +320,7 @@ const clickLogoInput = () => {
       variant="soft"
       color="primary"
       icon="i-heroicons-sparkles"
+      @click="showUpgradeModal = true"
     />
     <UButton
       variant="solid"
@@ -326,5 +329,6 @@ const clickLogoInput = () => {
     >
       Einstellungen speichern
     </UButton>
+    <UpgradeModal />
   </div>
 </template>

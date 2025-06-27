@@ -12,7 +12,6 @@ const myLastUsername = useLocalStorage('myLastUsername', () => me.value?.userNam
 const onOwnProfile = computed(() => username === myLastUsername.value)
 
 const showSettingsModal = useState('showSettingsModal', () => false)
-const showUpgradeModal = useState('showUpgradeModal', () => false)
 </script>
 
 <template>
@@ -48,16 +47,6 @@ const showUpgradeModal = useState('showUpgradeModal', () => false)
         variant="soft"
         size="md"
         @click="showSettingsModal = true"
-      />
-
-      <UButton
-        v-if="me && onOwnProfile"
-        label="Nächster Schritt"
-        icon="i-heroicons-rocket-launch"
-        color="neutral"
-        variant="soft"
-        size="md"
-        @click="showUpgradeModal = true"
       />
     </div>
 

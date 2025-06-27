@@ -4,7 +4,6 @@
 - Validierungshinweise in Anfrageformular verbessern.
 - Headergestaltung optimieren mit Bild (Overlay, Schriftgröße, Varianten).
 - Settings Modal optimieren (Gallery, etc.)
-- "Nächster Schritt" eindampfen
 - E-Mail-Templates (html emails) und Text über Anfrageformular
 - dezentere Toasts
 - Fix Upload bug in Settings: mehrere Dropzones überschreiben sich

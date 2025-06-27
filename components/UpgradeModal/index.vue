@@ -13,7 +13,7 @@ const showModal = useState('showUpgradeModal', () => false)
     <template #body>
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-2xl font-semibold">
-          Lernen wir uns kennen.
+          Ihr Firmendesign
         </h2>
         <UButton
           icon="i-heroicons-x-mark"
@@ -23,12 +23,10 @@ const showModal = useState('showUpgradeModal', () => false)
         />
       </div>
       <p class="text-gray-500 mb-8">
-        Ab hier wird es sehr individuell. Wir würden Sie gerne persönlich beraten und Ihnen ein individuelles Angebot erstellen.
-        Klicken Sie auf "Angebot anfordern", um uns zu benachrichtigen.
-        Wir sichten dann Ihr Profil und melden uns bei Ihnen, um alle Details zu besprechen.
-        Bitte stellen Sie sicher, dass Ihr Profil eine aktuelle Telefonnummer oder E-Mail-Adresse enthält, damit wir Sie erreichen können.
+        Mit einem individuellen Premium-Design steht Ihr Gewerbeprofil einer richtigen Website in nichts nach.
+        Wir besprechen Ihre Farben, Schriftarten und zusätzliche Inhalte und gestalten  ein Webdesign, das zu Ihrem Unternehmen passt.
       </p>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+      <div class="flex flex-col gap-2">
         <div class="border border-gray-300 bg-green-50/10 rounded-lg p-4 w-full flex flex-col">
           <h3 class="text-lg font-semibold mb-4">
             Domain und E-Mail
@@ -45,42 +43,9 @@ const showModal = useState('showUpgradeModal', () => false)
             />
           </div>
         </div>
-        <div class="border border-gray-300 bg-green-50/10 rounded-lg p-4 w-full flex flex-col">
+        <div class="border border-gray-300 bg-green-50/10 rounded-lg p-4">
           <h3 class="text-lg font-semibold mb-4">
-            Individuelles Design
-          </h3>
-          <p class="text-gray-500">
-            Inhaltlich reicht ein Gewerbeprofil Ihnen, aber Sie wünschen sich eine individuellere Darstellung, zugeschnitten auf Ihr Unternehmen?
-          </p>
-          <div class="pt-4 mt-auto flex items-center justify-between">
-            <div class="text-gray-700 text-xl font-semibold">
-              500 € einmalig
-            </div>
-            <UButton
-              label="Angebot anfordern"
-            />
-          </div>
-        </div>
-        <div class="border border-gray-300 bg-green-50/10 rounded-lg p-4 md:col-span-2">
-          <h3 class="text-lg font-semibold mb-4">
-            Profi-Website
-          </h3>
-          <p class="text-gray-500">
-            Ein Gewerbeprofil reicht nicht. Sie brauchen ein individuelles Design, verschiedene Unterseiten, Formulare, Buchungskalender oder Warenkorb und Online-Zahlung, inkl. Domain und E-Mail-Postfächer?
-          </p>
-          <div class="pt-4 mt-auto flex items-center justify-between">
-            <div class="text-gray-700 text-xl font-semibold">
-              ab 2000 € einmalig<br>
-              und 20 € pro Monat
-            </div>
-            <UButton
-              label="Angebot anfordern"
-            />
-          </div>
-        </div>
-        <div class="border border-gray-300 bg-green-50/10 rounded-lg p-4 md:col-span-2">
-          <h3 class="text-lg font-semibold mb-4">
-            Etwas anderes?
+            Haben Sie noch einen Wunsch?
           </h3>
           <p class="text-gray-500">
             Sie haben spezielle Wünsche oder benötigen eine individuelle Lösung, die hier nicht aufgeführt ist?
