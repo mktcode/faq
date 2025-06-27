@@ -107,7 +107,7 @@ const onDrop = async (e: DragEvent) => {
         </p>
       </div>
       <input
-        id="dropzone-file-2"
+        id="download-dropzone"
         ref="fileInput"
         type="file"
         class="hidden"
@@ -116,7 +116,7 @@ const onDrop = async (e: DragEvent) => {
         @change="handleInputChange"
       >
       <label
-        for="dropzone-file-2"
+        for="download-dropzone"
         class="w-full h-full absolute top-0 left-0 cursor-pointer"
       />
     </div>

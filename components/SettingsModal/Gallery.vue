@@ -112,7 +112,7 @@ const deleteItem = (index: number) => {
         </p>
       </div>
       <input
-        id="dropzone-file"
+        id="image-dropzone"
         ref="fileInput"
         type="file"
         class="hidden"
@@ -121,7 +121,7 @@ const deleteItem = (index: number) => {
         @change="handleInputChange"
       >
       <label
-        for="dropzone-file"
+        for="image-dropzone"
         class="w-full h-full absolute top-0 left-0 cursor-pointer"
       />
     </div>

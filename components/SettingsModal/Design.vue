@@ -141,7 +141,7 @@ const clickFileInput = () => {
         </div>
       </div>
       <input
-        id="dropzone-file"
+        id="header-image-dropzone"
         ref="fileInput"
         type="file"
         class="hidden"
@@ -151,7 +151,7 @@ const clickFileInput = () => {
       >
       <label
         v-if="!form.headerImage"
-        for="dropzone-file"
+        for="header-image-dropzone"
         class="w-full h-full absolute top-0 left-0 cursor-pointer z-20"
       />
     </div>
