@@ -142,8 +142,38 @@ export const availableColors = ref([
   },
 ])
 
-export function getColorClass(colorValue: string | undefined): string {
+export function getColorClass(colorValue: string | undefined, type: string = 'bg'): string {
   if (!colorValue) return ''
+
+  if (type === 'text') {
+    switch (colorValue) {
+      case 'white': return 'text-white'
+      case 'black': return 'text-black'
+      case 'red': return 'text-red-500'
+      case 'orange': return 'text-orange-500'
+      case 'amber': return 'text-amber-500'
+      case 'yellow': return 'text-yellow-500'
+      case 'lime': return 'text-lime-500'
+      case 'green': return 'text-green-500'
+      case 'emerald': return 'text-emerald-500'
+      case 'teal': return 'text-teal-500'
+      case 'cyan': return 'text-cyan-500'
+      case 'sky': return 'text-sky-500'
+      case 'blue': return 'text-blue-500'
+      case 'indigo': return 'text-indigo-500'
+      case 'violet': return 'text-violet-500'
+      case 'purple': return 'text-purple-500'
+      case 'fuchsia': return 'text-fuchsia-500'
+      case 'pink': return 'text-pink-500'
+      case 'rose': return 'text-rose-500'
+      case 'slate': return 'text-slate-500'
+      case 'gray': return 'text-gray-500'
+      case 'zinc': return 'text-zinc-500'
+      case 'neutral': return 'text-neutral-500'
+      case 'stone': return 'text-stone-500'
+      default: return ''
+    }
+  }
 
   switch (colorValue) {
     case 'white': return 'bg-white'

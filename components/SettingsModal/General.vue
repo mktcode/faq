@@ -134,6 +134,12 @@ const clickLogoInput = () => {
           size="xl"
         />
       </UFormField>
+      <div>
+        <ColorPicker
+          v-model:color="form.headerTitleColor"
+          label="Farbe"
+        />
+      </div>
     </div>
     <div class="flex gap-2">
       <UFormField
@@ -155,10 +161,16 @@ const clickLogoInput = () => {
           size="xl"
         />
       </UFormField>
+      <div>
+        <ColorPicker
+          v-model:color="form.headerDescriptionColor"
+          label="Farbe"
+        />
+      </div>
     </div>
     <div class="p-1 border border-gray-200 rounded-lg flex flex-col gap-2">
       <div
-        class="@container group relative flex flex-col items-center justify-center w-full rounded-lg cursor-pointer transition-all overflow-hidden hover:bg-gray-50"
+        class="@container group relative flex flex-col items-center justify-center w-full rounded-lg cursor-pointer transition-all overflow-hidden hover:bg-gray-100"
       >
         <img
           v-if="form.headerImage"
@@ -173,10 +185,14 @@ const clickLogoInput = () => {
           @click.stop="clickHeaderImageInput"
         />
         <div class="flex flex-col items-center justify-center pt-5 p-4 z-10 pointer-events-none">
+          <UIcon
+            name="i-heroicons-camera"
+            class="size-8 text-black/10 absolute top-3 left-3 pointer-events-none"
+          />
           <img
             v-if="form.logo"
             :src="form.logo"
-            class="w-full max-w-[32cqw] pointer-events-auto hover:scale-105 transition-transform duration-300"
+            class="w-full max-w-[32cqw] pointer-events-auto hover:scale-105 transition-transform duration-600"
             @click.stop="clickLogoInput"
           >
           <UButton
@@ -185,9 +201,9 @@ const clickLogoInput = () => {
             variant="solid"
             color="neutral"
             block
-            class="group/logo size-20 rounded-full mx-auto hover:bg-white hover:text-gray-400 transition-all duration-300 pointer-events-auto"
+            class="group/logo size-20 rounded-full mx-auto bg-black/30 hover:bg-black hover:text-gray-400 transition-all duration-600 pointer-events-auto"
             :ui="{
-              leadingIcon: 'group-hover/logo:scale-125 transition-transform duration-300',
+              leadingIcon: 'group-hover/logo:scale-125 transition-transform duration-800',
             }"
             @click.stop="clickLogoInput"
           />
@@ -195,13 +211,15 @@ const clickLogoInput = () => {
             <h1
               v-if="form.title"
               class="text-lg font-semibold mt-2"
+              :class="getColorClass(form.headerTitleColor, 'text')"
               :style="{ 'font-size': form.headerTitleFontSize + 'cqw' }"
             >
               {{ form.title }}
             </h1>
             <p
               v-if="form.description"
-              class="text-sm text-gray-500 mt-1"
+              class="text-sm mt-1"
+              :class="getColorClass(form.headerDescriptionColor, 'text')"
               :style="{ 'font-size': form.headerDescriptionFontSize + 'cqw' }"
             >
               {{ form.description }}

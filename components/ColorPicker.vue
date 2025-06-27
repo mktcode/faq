@@ -18,6 +18,9 @@ const color = defineModel('color', {
       v-model="color"
       class="w-full"
       :items="availableColors"
+      :ui="{
+        content: 'w-44',
+      }"
     >
       <template #leading="{ modelValue }">
         <div
