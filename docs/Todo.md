@@ -9,6 +9,9 @@
 - dezentere Toasts
 - Fix Upload bug in Settings: mehrere Dropzones überschreiben sich
 - HTML für v-html desinfizieren
+- Benutzername Eingabe beim Registrieren/Anmelden validieren
+- Einstellung: Veröffentlichen
+- Nach Registrierung/Anmeldung: Redirect auf Profilseite
 
 # Next
 
