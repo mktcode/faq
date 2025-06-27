@@ -2,9 +2,8 @@
 import { watchDebounced } from '@vueuse/core'
 import type { SimilarQuestion } from '~/server/api/customerRequests/similarQuestions.post'
 
-const { username, preferredContactMethod, contactPhone } = defineProps<{
+const { username, contactPhone } = defineProps<{
   username: string
-  preferredContactMethod: 'email' | 'phone' | 'none'
   contactPhone: string
 }>()
 
@@ -88,18 +87,14 @@ const designRounded = useState('designRounded')
     </p>
 
     <div
-      v-if="contactPhone && (preferredContactMethod === 'phone' || preferredContactMethod === 'none')"
+      class="flex text-2xl items-center justify-center gap-1 mb-8"
     >
-      <div
-        class="flex text-2xl items-center justify-center gap-1 mb-8"
-      >
-        <UIcon
-          name="i-heroicons-phone"
-        />
-        <span class="text-gray-500 ml-2">
-          {{ contactPhone }}
-        </span>
-      </div>
+      <UIcon
+        name="i-heroicons-phone"
+      />
+      <span class="text-gray-500 ml-2">
+        {{ contactPhone }}
+      </span>
     </div>
 
     <UTextarea
@@ -200,19 +195,5 @@ const designRounded = useState('designRounded')
         @click="saveRequest"
       />
     </Transition>
-    <div
-      v-if="contactPhone && (preferredContactMethod === 'email')"
-    >
-      <div
-        class="flex text-2xl items-center justify-center gap-1 mt-8"
-      >
-        <UIcon
-          name="i-heroicons-phone"
-        />
-        <span class="text-gray-500 ml-2">
-          {{ contactPhone }}
-        </span>
-      </div>
-    </div>
   </div>
 </template>

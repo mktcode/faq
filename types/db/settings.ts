@@ -25,11 +25,18 @@ export const settingsFormSchema = z.object({
   image: z.string().optional().nullable(),
   title: z.string().optional().nullable(),
   description: z.string().optional().nullable(),
-  preferredContactMethod: z.enum(['email', 'phone', 'none']).optional().nullable(),
   font: z.string().optional().nullable(),
   color: z.string().optional().nullable(),
   rounded: z.string().optional().nullable(),
   headerImage: z.string().optional().nullable(),
+  headerImageOverlay: z.object({
+    color: z.string(),
+    opacity: z.number().min(0).max(100),
+  }).optional().nullable(),
+  headerTitleFontSize: z.number().optional().nullable(),
+  headerTitleColor: z.string().optional().nullable(),
+  headerDescriptionFontSize: z.number().optional().nullable(),
+  headerDescriptionColor: z.string().optional().nullable(),
   showGoogleReviews: z.boolean().optional().nullable(),
   downloads: z.array(
     z.object({

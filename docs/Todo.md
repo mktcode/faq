@@ -12,6 +12,7 @@
 - Benutzername Eingabe beim Registrieren/Anmelden validieren
 - Einstellung: Veröffentlichen
 - Nach Registrierung/Anmeldung: Redirect auf Profilseite
+- Einstellungen: JSON aufräumen/strukturieren
 
 # Next
 

@@ -33,13 +33,6 @@ async function saveSettings() {
 
 <template>
   <div class="flex flex-col gap-4 p-6">
-    <UButton
-      icon="i-heroicons-photo"
-      variant="soft"
-      color="neutral"
-      block
-      class="size-20 rounded-full mx-auto"
-    />
     <UFormField label="Name deines Unternehmens">
       <UInput
         v-model="form.company.name"

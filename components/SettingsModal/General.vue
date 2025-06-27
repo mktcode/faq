@@ -6,11 +6,19 @@ const { data: currentSettings } = await useFetch(`/api/user/settings`)
 const form = ref({
   title: currentSettings.value?.title || '',
   description: currentSettings.value?.description || '',
-  preferredContactMethod: currentSettings.value?.preferredContactMethod || 'none',
   headerImage: currentSettings.value?.headerImage || '',
+  headerImageOverlay: currentSettings.value?.headerImageOverlay || {
+    color: 'black',
+    opacity: 50,
+  },
+  headerTitleFontSize: currentSettings.value?.headerTitleFontSize || 5,
+  headerTitleColor: currentSettings.value?.headerTitleColor || 'white',
+  headerDescriptionFontSize: currentSettings.value?.headerDescriptionFontSize || 3,
+  headerDescriptionColor: currentSettings.value?.headerDescriptionColor || 'white',
   color: currentSettings.value?.color || 'sky',
   font: currentSettings.value?.font || 'roboto',
   rounded: currentSettings.value?.rounded || 'md',
+  logo: currentSettings.value?.logo || '',
 })
 
 async function saveSettings() {
@@ -93,70 +101,146 @@ const clickFileInput = () => {
 
 <template>
   <div class="flex flex-col gap-4 p-6">
-    <div
-      class="group h-36 relative flex flex-col items-center justify-center w-full rounded-lg cursor-pointer transition-all overflow-hidden hover:bg-gray-50"
-      :class="{
-        'border-2 border-dashed': !form.headerImage,
-        'border-primary-500 bg-gray-50': isDragging,
-        'border-gray-300': !isDragging,
-
-      }"
-      @dragenter="onDragEnter"
-      @dragleave="onDragLeave"
-      @dragover="onDragOver"
-      @drop="onDrop"
-    >
-      <img
-        v-if="form.headerImage"
-        :src="form.headerImage"
-        alt="Header Image"
-        class="absolute w-full h-full object-cover z-0 opacity-80 group-hover:opacity-100 transition-opacity"
+    <div class="flex gap-2">
+      <UFormField
+        label="Titel"
+        class="flex-1 w-full"
       >
-      <div class="flex flex-col items-center justify-center pt-5 p-4 z-10">
-        <UIcon
-          :class="`mb-2 size-12 text-gray-200`"
-          name="i-heroicons-plus"
+        <UInput
+          v-model="form.title"
+          placeholder="Gib den Titel deines Unternehmens ein"
+          class="w-full"
         />
-        <p
-          class="mb-1 text-xs"
-          :class="{ 'text-white': form.headerImage, 'text-gray-500': !form.headerImage }"
-        >
-          <span class="font-semibold">Klicken</span> oder Bilder hierhin ziehen (JPG, PNG, GIF, max. 5 MB)
-        </p>
-        <div
-          v-if="form.headerImage"
-          class="flex gap-2 mt-2"
-        >
-          <UButton
-            label="Bild ändern"
-            size="sm"
-            @click="clickFileInput"
-          />
-          <UButton
-            icon="i-heroicons-trash"
-            color="error"
-            size="sm"
-            @click="form.headerImage = ''"
-          />
-        </div>
-      </div>
-      <input
-        id="header-image-dropzone"
-        ref="fileInput"
-        type="file"
-        class="hidden"
-        capture
-        multiple
-        @change="handleInputChange"
+      </UFormField>
+      <UFormField
+        label="Schriftgröße"
+        class="w-32"
       >
-      <label
-        v-if="!form.headerImage"
-        for="header-image-dropzone"
-        class="w-full h-full absolute top-0 left-0 cursor-pointer z-20"
-      />
+        <UInputNumber
+          v-model="form.headerTitleFontSize"
+          size="xl"
+        />
+      </UFormField>
     </div>
     <div class="flex gap-2">
-      <ColorPicker v-model:color="form.color" />
+      <UFormField
+        label="Willkommen / Slogan"
+        class="flex-1 w-full"
+      >
+        <UInput
+          v-model="form.description"
+          placeholder="Gib eine kurze Beschreibung deines Unternehmens ein"
+          class="w-full"
+        />
+      </UFormField>
+      <UFormField
+        label="Schriftgröße"
+        class="w-32"
+      >
+        <UInputNumber
+          v-model="form.headerDescriptionFontSize"
+          size="xl"
+        />
+      </UFormField>
+    </div>
+    <div class="p-1 border border-gray-200 rounded-lg flex flex-col gap-2">
+      <div
+        class="@container group relative flex flex-col items-center justify-center w-full rounded-lg cursor-pointer transition-all overflow-hidden hover:bg-gray-50"
+        :class="{
+          'border-2 border-dashed': !form.headerImage,
+          'border-primary-500 bg-gray-50': isDragging,
+          'border-gray-300': !isDragging,
+        }"
+        @dragenter="onDragEnter"
+        @dragleave="onDragLeave"
+        @dragover="onDragOver"
+        @drop="onDrop"
+      >
+        <img
+          v-if="form.headerImage"
+          :src="form.headerImage"
+          alt="Header Image"
+          class="absolute w-full h-full object-cover z-0"
+        >
+        <div
+          v-if="form.headerImage"
+          class="absolute inset-0 z-10"
+          :class="getColorClass(form.headerImageOverlay.color)"
+          :style="{ opacity: form.headerImageOverlay.opacity / 100 }"
+        />
+        <div class="flex flex-col items-center justify-center pt-5 p-4 z-10">
+          <UButton
+            icon="i-heroicons-photo"
+            variant="soft"
+            color="neutral"
+            block
+            class="size-16 rounded-full mx-auto"
+          />
+          <h1
+            v-if="form.title"
+            class="text-lg font-semibold mt-2"
+            :style="{ 'font-size': form.headerTitleFontSize + 'cqw' }"
+          >
+            {{ form.title }}
+          </h1>
+          <p
+            v-if="form.description"
+            class="text-sm text-center text-gray-500 mt-1"
+            :style="{ 'font-size': form.headerDescriptionFontSize + 'cqw' }"
+          >
+            {{ form.description }}
+          </p>
+          <div
+            v-if="form.headerImage"
+            class="flex gap-2 mt-2"
+          >
+            <UButton
+              label="Bild ändern"
+              size="sm"
+              @click="clickFileInput"
+            />
+            <UButton
+              icon="i-heroicons-trash"
+              color="error"
+              size="sm"
+              @click="form.headerImage = ''"
+            />
+          </div>
+        </div>
+        <input
+          id="header-image-dropzone"
+          ref="fileInput"
+          type="file"
+          class="hidden"
+          capture
+          multiple
+          @change="handleInputChange"
+        >
+        <label
+          v-if="!form.headerImage"
+          for="header-image-dropzone"
+          class="w-full h-full absolute top-0 left-0 cursor-pointer z-20"
+        />
+      </div>
+      <div
+        v-if="form.headerImage"
+        class="flex gap-2"
+      >
+        <ColorPicker
+          v-model:color="form.headerImageOverlay.color"
+          :label="undefined"
+        />
+        <USlider
+          v-model="form.headerImageOverlay.opacity"
+          class="flex-1"
+        />
+      </div>
+    </div>
+    <div class="flex gap-2">
+      <ColorPicker
+        v-model:color="form.color"
+        label="Primäre Farbe"
+      />
       <UFormField
         label="Stil"
         class="flex-1"
@@ -179,41 +263,9 @@ const clickFileInput = () => {
       color="primary"
       icon="i-heroicons-sparkles"
     />
-    <UFormField label="Titel">
-      <UInput
-        v-model="form.title"
-        placeholder="Gib den Titel deines Unternehmens ein"
-        class="w-full"
-      />
-    </UFormField>
-    <UFormField
-      label="Willkommenstext"
-      description="Dieser Text wird auf deiner Profilseite angezeigt."
-    >
-      <UTextarea
-        v-model="form.description"
-        placeholder="Gib hier eine kurze Beschreibung deines Unternehmens ein"
-        class="w-full"
-      />
-    </UFormField>
-    <UFormField
-      label="Bevorzugter Kontaktweg"
-      description="Sollen Interessenten Sie per E-Mail oder lieber per Telefon kontaktieren?"
-    >
-      <USelect
-        v-model="form.preferredContactMethod"
-        class="w-full"
-        :items="[
-          { label: 'E-Mail', value: 'email' },
-          { label: 'Telefon', value: 'phone' },
-          { label: 'Beides', value: 'none' },
-        ]"
-      />
-    </UFormField>
     <UButton
       variant="solid"
       color="primary"
-      class="mt-4"
       @click="saveSettings"
     >
       Einstellungen speichern

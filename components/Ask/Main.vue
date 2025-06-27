@@ -125,7 +125,6 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
       <div class="my-6 w-full">
         <AskForm
           :username="username"
-          :preferred-contact-method="currentSettings?.preferredContactMethod || 'none'"
           :contact-phone="currentSettings?.company?.phone || ''"
         />
       </div>

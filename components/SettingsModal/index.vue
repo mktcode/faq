@@ -3,11 +3,6 @@ const showModal = useState('showSettingsModal', () => false)
 
 const items = [
   {
-    label: 'Domain',
-    icon: 'i-heroicons-globe-alt',
-    slot: 'domain',
-  },
-  {
     label: 'Allgemein',
     icon: 'i-heroicons-paint-brush',
     slot: 'general',
@@ -46,6 +41,11 @@ const items = [
     label: 'Häufige Fragen',
     icon: 'i-heroicons-question-mark-circle',
     slot: 'faq',
+  },
+  {
+    label: 'Domain',
+    icon: 'i-heroicons-globe-alt',
+    slot: 'domain',
   },
   {
     label: 'Datenschutz',
