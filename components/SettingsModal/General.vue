@@ -207,7 +207,10 @@ const clickLogoInput = () => {
             }"
             @click.stop="clickLogoInput"
           />
-          <FontWrapper :font="form.font" class="text-center">
+          <FontWrapper
+            :font="form.font"
+            class="text-center"
+          >
             <h1
               v-if="form.title"
               class="text-lg font-semibold mt-2 leading-none"
