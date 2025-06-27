@@ -78,9 +78,13 @@ const designRounded = useState('designRounded')
 
 <template>
   <div class="w-full">
-    <h3 class="text-2xl font-semibold">
+    <a
+      id="anfrage"
+      href="#anfrage"
+      class="text-2xl font-semibold cursor-pointer relative before:content-['#'] before:absolute before:-left-6 before:text-gray-200 before:opacity-0 before:transition-opacity hover:before:opacity-100"
+    >
       Anfrage
-    </h3>
+    </a>
 
     <p class="text-gray-500 mb-8 mt-3">
       Stellen Sie Ihre Fragen und erhalten Sie Antworten, per Mail, per Push-Nachricht, telefonisch oder direkt hier im FAQ.
