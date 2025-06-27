@@ -138,6 +138,7 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
           :ui="{
             label: 'text-lg',
             body: 'text-lg text-gray-500',
+            trailingIcon: 'text-primary-500',
           }"
         >
           <template #body="{ item }">
