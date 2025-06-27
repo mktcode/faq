@@ -174,9 +174,14 @@ const clickFileInput = () => {
     </div>
     <FontPicker v-model:font="form.font" />
     <UButton
+      label="Individuelles Design"
+      variant="soft"
+      color="primary"
+      icon="i-heroicons-sparkles"
+    />
+    <UButton
       variant="solid"
       color="primary"
-      class="mt-4"
       @click="saveSettings"
     >
       Einstellungen speichern
