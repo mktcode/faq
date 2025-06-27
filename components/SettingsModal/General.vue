@@ -8,7 +8,7 @@ const form = ref({
   description: currentSettings.value?.description || '',
   headerImage: currentSettings.value?.headerImage || '',
   headerImageOverlay: currentSettings.value?.headerImageOverlay || {
-    color: 'black',
+    color: 'white',
     opacity: 50,
   },
   headerTitleFontSize: currentSettings.value?.headerTitleFontSize || 5,
@@ -33,10 +33,10 @@ async function saveSettings() {
   })
 }
 
-const fileInput = ref<HTMLInputElement | null>(null)
-const isDragging = ref(false)
+const headerImageInput = ref<HTMLInputElement | null>(null)
+const logoInput = ref<HTMLInputElement | null>(null)
 
-const uploadFile = async (files: FileList | null) => {
+const uploadHeaderImage = async (files: FileList | null) => {
   if (!files || files.length === 0) return
 
   const formData = new FormData()
@@ -56,8 +56,8 @@ const uploadFile = async (files: FileList | null) => {
     await saveSettings()
 
     // Clear the input to allow selecting the same file again
-    if (fileInput.value) {
-      fileInput.value.value = ''
+    if (headerImageInput.value) {
+      headerImageInput.value.value = ''
     }
   }
   catch (error) {
@@ -65,36 +65,49 @@ const uploadFile = async (files: FileList | null) => {
   }
 }
 
-const handleInputChange = () => {
-  uploadFile(fileInput.value?.files || null)
-}
+const uploadLogo = async (file: File | null) => {
+  if (!file) return
 
-const onDragEnter = (e: DragEvent) => {
-  e.preventDefault()
-  isDragging.value = true
-}
+  const formData = new FormData()
+  formData.append('files', file)
 
-const onDragLeave = (e: DragEvent) => {
-  e.preventDefault()
-  isDragging.value = false
-}
+  try {
+    const { imageUrl } = await $fetch('/api/user/upload/logo', {
+      method: 'POST',
+      body: formData,
+    })
 
-const onDragOver = (e: DragEvent) => {
-  e.preventDefault()
-}
+    const randomSuffix = Math.random().toString(36).substring(2, 15)
+    form.value.logo = imageUrl ? `${imageUrl}?${randomSuffix}` : ''
 
-const onDrop = async (e: DragEvent) => {
-  e.preventDefault()
-  isDragging.value = false
+    await saveSettings()
 
-  if (e.dataTransfer?.files) {
-    uploadFile(e.dataTransfer.files)
+    if (logoInput.value) {
+      logoInput.value.value = ''
+    }
+  }
+  catch (error) {
+    console.error('Error uploading files:', error)
   }
 }
 
-const clickFileInput = () => {
-  if (fileInput.value) {
-    fileInput.value.click()
+const handleHeaderImageInputChange = () => {
+  uploadHeaderImage(headerImageInput.value?.files || null)
+}
+
+const handleLogoInputChange = () => {
+  uploadLogo(logoInput.value?.files ? logoInput.value.files[0] : null)
+}
+
+const clickHeaderImageInput = () => {
+  if (headerImageInput.value) {
+    headerImageInput.value.click()
+  }
+}
+
+const clickLogoInput = () => {
+  if (logoInput.value) {
+    logoInput.value.click()
   }
 }
 </script>
@@ -146,95 +159,104 @@ const clickFileInput = () => {
     <div class="p-1 border border-gray-200 rounded-lg flex flex-col gap-2">
       <div
         class="@container group relative flex flex-col items-center justify-center w-full rounded-lg cursor-pointer transition-all overflow-hidden hover:bg-gray-50"
-        :class="{
-          'border-2 border-dashed': !form.headerImage,
-          'border-primary-500 bg-gray-50': isDragging,
-          'border-gray-300': !isDragging,
-        }"
-        @dragenter="onDragEnter"
-        @dragleave="onDragLeave"
-        @dragover="onDragOver"
-        @drop="onDrop"
       >
         <img
           v-if="form.headerImage"
           :src="form.headerImage"
           alt="Header Image"
-          class="absolute w-full h-full object-cover z-0"
+          class="absolute w-full h-full object-cover z-0 group-hover:scale-105 transition-transform duration-300"
         >
         <div
-          v-if="form.headerImage"
           class="absolute inset-0 z-10"
           :class="getColorClass(form.headerImageOverlay.color)"
           :style="{ opacity: form.headerImageOverlay.opacity / 100 }"
+          @click.stop="clickHeaderImageInput"
         />
-        <div class="flex flex-col items-center justify-center pt-5 p-4 z-10">
+        <div class="flex flex-col items-center justify-center pt-5 p-4 z-10 pointer-events-none">
+          <img
+            v-if="form.logo"
+            :src="form.logo"
+            class="w-full max-w-[32cqw] pointer-events-auto hover:scale-105 transition-transform duration-300"
+            @click.stop="clickLogoInput"
+          >
           <UButton
-            icon="i-heroicons-photo"
-            variant="soft"
+            v-else
+            icon="i-heroicons-camera"
+            variant="solid"
             color="neutral"
             block
-            class="size-16 rounded-full mx-auto"
+            class="group/logo size-20 rounded-full mx-auto hover:bg-white hover:text-gray-400 transition-all duration-300 pointer-events-auto"
+            :ui="{
+              leadingIcon: 'group-hover/logo:scale-125 transition-transform duration-300',
+            }"
+            @click.stop="clickLogoInput"
           />
-          <h1
-            v-if="form.title"
-            class="text-lg font-semibold mt-2"
-            :style="{ 'font-size': form.headerTitleFontSize + 'cqw' }"
-          >
-            {{ form.title }}
-          </h1>
-          <p
-            v-if="form.description"
-            class="text-sm text-center text-gray-500 mt-1"
-            :style="{ 'font-size': form.headerDescriptionFontSize + 'cqw' }"
-          >
-            {{ form.description }}
-          </p>
-          <div
-            v-if="form.headerImage"
-            class="flex gap-2 mt-2"
-          >
-            <UButton
-              label="Bild ändern"
-              size="sm"
-              @click="clickFileInput"
-            />
-            <UButton
-              icon="i-heroicons-trash"
-              color="error"
-              size="sm"
-              @click="form.headerImage = ''"
-            />
-          </div>
+          <FontWrapper :font="form.font" class="text-center">
+            <h1
+              v-if="form.title"
+              class="text-lg font-semibold mt-2"
+              :style="{ 'font-size': form.headerTitleFontSize + 'cqw' }"
+            >
+              {{ form.title }}
+            </h1>
+            <p
+              v-if="form.description"
+              class="text-sm text-gray-500 mt-1"
+              :style="{ 'font-size': form.headerDescriptionFontSize + 'cqw' }"
+            >
+              {{ form.description }}
+            </p>
+          </FontWrapper>
         </div>
         <input
-          id="header-image-dropzone"
-          ref="fileInput"
+          ref="headerImageInput"
           type="file"
           class="hidden"
           capture
           multiple
-          @change="handleInputChange"
+          @change="handleHeaderImageInputChange"
         >
-        <label
-          v-if="!form.headerImage"
-          for="header-image-dropzone"
-          class="w-full h-full absolute top-0 left-0 cursor-pointer z-20"
-        />
+        <input
+          ref="logoInput"
+          type="file"
+          class="hidden"
+          capture
+          @change="handleLogoInputChange"
+        >
       </div>
       <div
-        v-if="form.headerImage"
-        class="flex gap-2"
+        v-if="form.headerImage || form.logo"
+        class="flex items-center justify-end gap-2"
       >
-        <ColorPicker
-          v-model:color="form.headerImageOverlay.color"
-          :label="undefined"
+        <UButton
+          v-if="form.logo"
+          label="Logo entfernen"
+          icon="i-heroicons-trash"
+          variant="ghost"
+          color="error"
+          size="sm"
+          @click="form.logo = ''"
         />
-        <USlider
-          v-model="form.headerImageOverlay.opacity"
-          class="flex-1"
+        <UButton
+          v-if="form.headerImage"
+          label="Bild entfernen"
+          icon="i-heroicons-trash"
+          variant="ghost"
+          color="error"
+          size="sm"
+          @click="form.headerImage = ''"
         />
       </div>
+    </div>
+    <div class="flex gap-2">
+      <ColorPicker
+        v-model:color="form.headerImageOverlay.color"
+        :label="undefined"
+      />
+      <USlider
+        v-model="form.headerImageOverlay.opacity"
+        class="flex-1"
+      />
     </div>
     <div class="flex gap-2">
       <ColorPicker
