@@ -77,7 +77,10 @@ useState('designRounded', () => currentSettings.value?.rounded || 'md')
         />
       </div>
 
-      <div class="flex flex-col gap-4 w-full mt-6">
+      <div
+        v-if="qandaAccordionItems.length"
+        class="flex flex-col gap-4 w-full mt-6"
+      >
         <h3 class="text-2xl font-semibold">
           Häufig gestellte Fragen
         </h3>

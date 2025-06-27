@@ -91,6 +91,7 @@ const designRounded = useState('designRounded')
     </p>
 
     <div
+      v-if="contactPhone"
       class="flex text-2xl items-center justify-center gap-1 mb-8"
     >
       <UIcon

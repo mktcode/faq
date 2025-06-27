@@ -13,6 +13,7 @@
 - Einstellung: Veröffentlichen
 - Nach Registrierung/Anmeldung: Redirect auf Profilseite
 - Einstellungen: JSON aufräumen/strukturieren
+- Icons in IconPicker (externe Links, etc.) ergänzen
 
 # Next
 
