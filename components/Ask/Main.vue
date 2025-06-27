@@ -45,47 +45,9 @@ useState('designRounded', () => currentSettings.value?.rounded || 'md')
     <AskNav
       :username="username"
     />
-    <div
-      :style="{ backgroundImage: currentSettings?.headerImage ? `url(${currentSettings.headerImage})` : 'none' }"
-      class="w-full bg-cover bg-center relative z-0"
-    >
-      <div
-        class="absolute inset-0 z-0"
-        :class="getColorClass(currentSettings?.headerImageOverlay?.color, 'bg')"
-        :style="{ opacity: (currentSettings?.headerImageOverlay?.opacity || 100) / 100 }"
-      />
-      <div class="@container flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-24 px-6 relative z-10">
-        <div
-          v-if="currentSettings?.logo"
-        >
-          <NuxtImg
-            :src="currentSettings.logo"
-            alt="Logo"
-            class="w-32 mb-4"
-          />
-        </div>
-        <h1
-          class="text-center font-bold mb-4"
-          :class="getColorClass(currentSettings?.headerTitleColor || 'white', 'text')"
-          :style="{ 'font-size': currentSettings?.headerTitleFontSize + 'cqw' }"
-        >
-          {{ currentSettings?.title || username }}
-        </h1>
-        <p
-          v-if="currentSettings?.description"
-          class="text-center mb-4"
-          :class="getColorClass(currentSettings?.headerDescriptionColor || 'white', 'text')"
-          :style="{ 'font-size': currentSettings?.headerDescriptionFontSize + 'cqw' }"
-        >
-          {{ currentSettings?.description }}
-        </p>
-        <AskLinks
-          v-if="currentSettings?.links?.length"
-          :links="currentSettings.links"
-          :has-header-image="!!currentSettings?.headerImage"
-        />
-      </div>
-    </div>
+    <AskHeader
+      :current-settings="currentSettings"
+    />
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
       <div
         v-if="currentSettings?.gallery?.length"
@@ -96,7 +58,7 @@ useState('designRounded', () => currentSettings.value?.rounded || 'md')
 
       <div
         v-if="currentSettings?.offers?.length"
-        class="my-6 w-full"
+        class="my-24 w-full"
       >
         <AskOffer :offers="currentSettings.offers" />
       </div>

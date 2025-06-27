@@ -5,7 +5,6 @@ defineProps<{
     url: string
     icon: string
   }[]
-  hasHeaderImage: boolean
 }>()
 </script>
 
@@ -18,7 +17,7 @@ defineProps<{
       :icon="link.icon"
       :href="link.url"
       target="_blank"
-      :variant="hasHeaderImage ? 'solid' : 'soft'"
+      variant="soft"
     />
   </div>
 </template>

@@ -210,7 +210,7 @@ const clickLogoInput = () => {
           <FontWrapper :font="form.font" class="text-center">
             <h1
               v-if="form.title"
-              class="text-lg font-semibold mt-2"
+              class="text-lg font-semibold mt-2 leading-none"
               :class="getColorClass(form.headerTitleColor, 'text')"
               :style="{ 'font-size': form.headerTitleFontSize + 'cqw' }"
             >

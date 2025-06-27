@@ -28,7 +28,7 @@ const items = offers.map(offer => ({
         container: 'transition-[height] duration-500 ease-in-out',
       }"
     >
-      <h2 class="text-2xl font-semibold mb-4">
+      <h2 class="text-3xl font-semibold mb-4">
         {{ item.title }}
       </h2>
       <div
