@@ -35,8 +35,6 @@ appConfig.ui.select.defaultVariants.rounded = currentSettings.value?.rounded || 
 appConfig.ui.textarea.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
 
 useState('designRounded', () => currentSettings.value?.rounded || 'md')
-
-const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
 </script>
 
 <template>
@@ -52,44 +50,32 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
       class="w-full bg-cover bg-center relative z-0"
     >
       <div
-        v-if="currentSettings?.headerImage"
-        class="absolute inset-0 bg-black opacity-70 z-0"
+        class="absolute inset-0 z-0"
+        :class="getColorClass(currentSettings?.headerImageOverlay?.color, 'bg')"
+        :style="{ opacity: (currentSettings?.headerImageOverlay?.opacity || 100) / 100 }"
       />
-      <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-24 px-6 relative z-10">
+      <div class="@container flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-24 px-6 relative z-10">
         <div
-          v-if="logo"
+          v-if="currentSettings?.logo"
         >
           <NuxtImg
-            :src="logo"
+            :src="currentSettings.logo"
             alt="Logo"
-            class="w-16 mb-4"
-          />
-        </div>
-        <div
-          v-else
-          class="size-16 rounded-full bg-gray-100 flex items-center justify-center"
-        >
-          <UIcon
-            name="i-heroicons-photo"
-            class="size-7 opacity-25"
+            class="w-32 mb-4"
           />
         </div>
         <h1
-          class="text-2xl font-bold mb-4"
-          :class="{
-            'text-gray-900': !currentSettings?.headerImage,
-            'text-white': currentSettings?.headerImage,
-          }"
+          class="text-center font-bold mb-4"
+          :class="getColorClass(currentSettings?.headerTitleColor || 'white', 'text')"
+          :style="{ 'font-size': currentSettings?.headerTitleFontSize + 'cqw' }"
         >
           {{ currentSettings?.title || username }}
         </h1>
         <p
           v-if="currentSettings?.description"
-          class="text-center text-lg mb-4"
-          :class="{
-            'text-gray-500': !currentSettings?.headerImage,
-            'text-white': currentSettings?.headerImage,
-          }"
+          class="text-center mb-4"
+          :class="getColorClass(currentSettings?.headerDescriptionColor || 'white', 'text')"
+          :style="{ 'font-size': currentSettings?.headerDescriptionFontSize + 'cqw' }"
         >
           {{ currentSettings?.description }}
         </p>

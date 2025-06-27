@@ -127,14 +127,14 @@ const clickLogoInput = () => {
       </UFormField>
       <UFormField
         label="Schriftgröße"
-        class="w-32"
+        class="w-28"
       >
         <UInputNumber
           v-model="form.headerTitleFontSize"
           size="xl"
         />
       </UFormField>
-      <div>
+      <div class="w-28">
         <ColorPicker
           v-model:color="form.headerTitleColor"
           label="Farbe"
@@ -154,14 +154,14 @@ const clickLogoInput = () => {
       </UFormField>
       <UFormField
         label="Schriftgröße"
-        class="w-32"
+        class="w-28"
       >
         <UInputNumber
           v-model="form.headerDescriptionFontSize"
           size="xl"
         />
       </UFormField>
-      <div>
+      <div class="w-28">
         <ColorPicker
           v-model:color="form.headerDescriptionColor"
           label="Farbe"
@@ -184,7 +184,7 @@ const clickLogoInput = () => {
           :style="{ opacity: form.headerImageOverlay.opacity / 100 }"
           @click.stop="clickHeaderImageInput"
         />
-        <div class="flex flex-col items-center justify-center pt-5 p-4 z-10 pointer-events-none">
+        <div class="flex flex-col items-center justify-center pt-5 p-6 z-10 pointer-events-none">
           <UIcon
             name="i-heroicons-camera"
             class="size-8 text-black/10 absolute top-3 left-3 pointer-events-none"
@@ -224,6 +224,19 @@ const clickLogoInput = () => {
             >
               {{ form.description }}
             </p>
+            <div
+              v-if="currentSettings?.links && currentSettings?.links.length"
+              class="mt-4 flex flex-wrap items-center justify-center gap-2"
+            >
+              <UButton
+                v-for="link in currentSettings.links"
+                :key="link.url"
+                :label="link.title"
+                :href="link.url"
+                size="sm"
+                :class="getColorClass(form.color, 'bg')"
+              />
+            </div>
           </FontWrapper>
         </div>
         <input
