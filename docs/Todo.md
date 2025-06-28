@@ -53,8 +53,8 @@ Domains: Handles, E-Mails an Hetzner.
 
 Auflistung aller Features nach Priorität sortieren.  
 Einen Testplan erstellen.  
-Ein eigenes Postfach für den Domain-Robot einrichten (domains@solihost.de).  
-Alle Inhalte von markus-kottlaender.de auf solihost.de umstellen.
+Ein eigenes Postfach für den Domain-Robot einrichten (domains@gewerbeprofil.de).  
+Alle Inhalte von markus-kottlaender.de auf gewerbeprofil.de umstellen.
 
 ## DDOS Protection
 

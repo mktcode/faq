@@ -30,10 +30,10 @@ export default defineEventHandler(async (event) => {
 
   if (stripeEvent.type === 'payment_intent.succeeded') {
     const paymentIntent = stripeEvent.data.object
-    if (!paymentIntent.metadata.solihostUserId) {
+    if (!paymentIntent.metadata.userId) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Bad Request: Missing solihostUserId in metadata',
+        statusMessage: 'Bad Request: Missing userId in metadata',
       })
     }
 
@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
       .where('transactionId', '=', paymentIntent.client_secret)
       .execute()
 
-    await updateUserBalance(Number(paymentIntent.metadata.solihostUserId))
+    await updateUserBalance(Number(paymentIntent.metadata.userId))
   }
 
   return {

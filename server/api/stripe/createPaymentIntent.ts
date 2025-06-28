@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
       enabled: true,
     },
     metadata: {
-      solihostUserId: user.id,
+      userId: user.id,
     },
   })
 

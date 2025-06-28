@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   app: {
     head: {
-      title: 'Solihost',
+      title: 'Ihr Gewerbeprofil',
       meta: [
         { name: 'robots', content: 'noindex, nofollow' },
         { charset: 'utf-8' },
