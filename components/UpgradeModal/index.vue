@@ -13,7 +13,7 @@ const showModal = useState('showUpgradeModal', () => false)
     <template #body>
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-2xl font-semibold">
-          Ihr Firmendesign
+          Der nächste Schritt
         </h2>
         <UButton
           icon="i-heroicons-x-mark"
@@ -23,11 +23,11 @@ const showModal = useState('showUpgradeModal', () => false)
         />
       </div>
       <p class="text-gray-500 mb-4">
-        Mit einem individuellen Premium-Design steht Ihr Gewerbeprofil einer richtigen Website in nichts nach.
+        Mit einem Premium-Design wird Ihr Gewerbeprofil zur individuellen Website.
         Wir besprechen Ihre Farben, Schriftarten und zusätzliche Inhalte und gestalten ein Design, das auf Ihr Unternehmen zugeschnitten ist.
       </p>
-      <p class="text-gray-500 mb-8">
-        Senden Sie uns eine unverbindliche Anfrage und Sie erhalten innerhalb von 7 Tagen einen Designvorschlag von uns.
+      <p class="text-gray-900 font-bold text-3xl mb-8">
+        ab 500 €
       </p>
       <h3 class="text-lg font-semibold mb-4">
         Haben Sie schon eine konkrete Vorstellung?
