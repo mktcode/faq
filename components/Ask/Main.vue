@@ -50,17 +50,17 @@ useState('designRounded', () => currentSettings.value?.rounded || 'md')
     />
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
       <div
-        v-if="currentSettings?.gallery?.length"
-        class="my-6 w-full"
-      >
-        <AskGallery :images="currentSettings?.gallery" />
-      </div>
-
-      <div
         v-if="currentSettings?.offers?.length"
         class="my-24 w-full"
       >
         <AskOffer :offers="currentSettings.offers" />
+      </div>
+
+      <div
+        v-if="currentSettings?.gallery?.length"
+        class="my-6 w-full"
+      >
+        <AskGallery :images="currentSettings?.gallery" />
       </div>
 
       <div

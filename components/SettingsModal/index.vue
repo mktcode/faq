@@ -43,11 +43,6 @@ const items = [
     slot: 'faq',
   },
   {
-    label: 'Domain',
-    icon: 'i-heroicons-globe-alt',
-    slot: 'domain',
-  },
-  {
     label: 'Datenschutz',
     icon: 'i-heroicons-shield-check',
     slot: 'privacy',
