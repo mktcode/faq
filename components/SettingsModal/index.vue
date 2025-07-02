@@ -52,6 +52,11 @@ const items = [
     icon: 'i-heroicons-shield-check',
     slot: 'privacy',
   },
+  {
+    label: 'Gewerbeprofil Plus',
+    icon: 'i-heroicons-rocket-launch',
+    slot: 'subscription',
+  },
 ]
 </script>
 
@@ -94,6 +99,9 @@ const items = [
         </template>
         <template #privacy>
           <SettingsModalPrivacy />
+        </template>
+        <template #subscription>
+          <SettingsModalSubscription />
         </template>
       </UAccordion>
     </template>
