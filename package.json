@@ -13,7 +13,7 @@
     "migrate": "npx tsx db/migrate.ts",
     "migrate:down": "npx tsx db/down.ts",
     "test": "vitest",
-    "stripe:listen": "stripe listen --forward-to localhost:3000/api/stripe/webhooks",
+    "stripe:listen": "stripe listen --forward-to https://gewerbeprofil.local:3000/api/stripe/webhooks",
     "stripe:trigger": "stripe trigger payment_intent.succeeded"
   },
   "dependencies": {
