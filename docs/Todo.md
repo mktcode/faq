@@ -6,7 +6,6 @@
 - Settings Modal optimieren (Gallery, etc.)
 - E-Mail-Templates (html emails) und Text über Anfrageformular
 - dezentere Toasts
-- Fix Upload bug in Settings: mehrere Dropzones überschreiben sich
 - HTML für v-html desinfizieren
 - Benutzername Eingabe beim Registrieren/Anmelden validieren
 - Einstellung: Veröffentlichen
