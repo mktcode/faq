@@ -7,9 +7,17 @@ const { fetch: fetchUserSession } = useUserSession()
 
 const userName = ref('')
 
+const isDevMode = process.env.NODE_ENV === 'development'
+
 async function signIn() {
-  await authenticate(userName.value)
-  await fetchUserSession()
+  if (isDevMode) {
+    await $fetch('/api/devlogin', { method: 'POST' })
+    await fetchUserSession()
+  }
+  else {
+    await authenticate(userName.value)
+    await fetchUserSession()
+  }
   navigateTo('/')
 }
 </script>
