@@ -1,16 +1,11 @@
 <script setup lang="ts">
-const { register, authenticate } = useWebAuthn({
+const { authenticate } = useWebAuthn({
   registerEndpoint: '/api/webauthn/register',
   authenticateEndpoint: '/api/webauthn/authenticate',
 })
 const { fetch: fetchUserSession } = useUserSession()
 
 const userName = ref('')
-async function signUp() {
-  await register({ userName: userName.value })
-  await fetchUserSession()
-  navigateTo('/')
-}
 
 async function signIn() {
   await authenticate(userName.value)
