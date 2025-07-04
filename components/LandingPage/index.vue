@@ -110,62 +110,19 @@ async function signOut() {
       Mein Profil erstellen
     </UButton>
 
-    <h2 class="w-full text-3xl font-bold mt-32">
-      Was wollen Ihre Kunden wissen?
-    </h2>
-
-    <section class="shadow-sky-50 flex flex-col">
-      <p class="mt-6 text-gray-500 text-xl">
-        Eine Liste mit häufig gestellten Fragen (FAQ) zu erstellen, ist nicht nur für Ihre Kunden hilfreich,
-        sondern auch für Sie selbst. Zusammen mit dem Anfrageformular stellt das FAQ die Kernfunktion Ihres Gewerbeprofils dar.
-      </p>
-
-      <p class="mt-4 text-gray-500 text-xl">
-        Das Anfrageformular zeigt Ihren Besuchern relevante Antworten aus Ihrem FAQ direkt beim Ausfüllen an.
-        Beantworten Sie eine eingehende Anfrage, wird automatisch erkannt, ob Ihr FAQ überarbeitet werden kann.
-        Die angezeigten Vorschläge müssen Sie dann nur noch bestätigen oder anpassen.
-      </p>
-    </section>
-
-    <h2 class="w-full text-3xl font-bold mt-32">
-      Was ist mit Domain und E-Mail?
-    </h2>
-
-    <section class="shadow-sky-50 flex flex-col">
-      <p class="mt-6 text-gray-500 text-xl">
-        Das ist so eine Sache. Technisch gesehen brauchen Sie keine eigene Domain und nichtmal eine E-Mail-Adresse.
-        Ihr Gewerbeprofil ist sofort unter <i>ihr-name.gewerbeprofil.de</i> erreichbar und Sie können Anfragen direkt in der App empfangen und beantworten.
-      </p>
-      <p class="mt-4 text-gray-500 text-xl">
-        Für den Anfang und auch ein bisschen darüber hinaus reicht das. Eine eigene Domain und eine professionelle E-Mail-Adresse wirken aber natürlich nochmal etwas besser.
-      </p>
-      <p class="mt-4 text-gray-500 text-xl">
-        Eine Domain können Sie für 1 € mtl. direkt in der App registrieren und für Ihr Gewerbeprofil und später für Ihre Website und E-Mail-Adressen verwenden.
-      </p>
-    </section>
-
-    <h2 class="w-full text-3xl font-bold mt-32">
-      Ich will aber eine Website!
-    </h2>
-
-    <section class="shadow-sky-50 flex flex-col">
-      <p class="mt-6 text-gray-500 text-xl">
-        Klar! Wir können Sie dazu beraten und auch die Umsetzung übernehmen.
-        Es gilt der Grundsatz: Die Form folgt der Funktion.
-        D.h. wir müssen uns zunächst ohnehin über Ihre Inhalte und Ziele unterhalten, bevor wir über das Design und die Technik sprechen können.
-      </p>
-      <p class="mt-4 text-gray-500 text-xl">
-        Und dabei hilft Ihnen und uns ein Gewerbeprofil ebenfalls. Sie müssen es auch nicht veröffentlichen.
-        Durch den begrenzten Spielraum hilft es Ihnen aber, Gedanken zu sortieren und Inhalte zu priorisieren und wir bekommen ein klareres Bild von Ihrem Bedarf.
-      </p>
-    </section>
-
-    <UButton
-      to="/register/3"
-      size="xxl"
-      class="mt-12"
-    >
-      Vorbereitung starten
-    </UButton>
+    <div class="flex gap-6 mt-24 text-center text-sm text-gray-400">
+      <NuxtLink
+        to="https://markus-kottlaender.de/impressum"
+        target="_blank"
+      >
+        Impressum
+      </NuxtLink>
+      <NuxtLink
+        to="https://markus-kottlaender.de/datenschutz"
+        target="_blank"
+      >
+        Datenschutz
+      </NuxtLink>
+    </div>
   </div>
 </template>
