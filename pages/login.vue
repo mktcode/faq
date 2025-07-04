@@ -58,28 +58,8 @@ async function signIn() {
             </div>
           </div>
 
-          <a
-            href="/auth/google"
-            class="border border-gray-300 rounded-xl p-4 text-xl font-medium text-gray-700 hover:bg-gray-50 flex items-center justify-center gap-4"
-          >
-            <img
-              src="~/assets/img/google.svg"
-              class="size-8"
-            >
-            Mit Google anmelden
-          </a>
-
-          <div class="relative">
-            <div class="absolute inset-0 flex items-center">
-              <div class="w-full border-t border-gray-200" />
-            </div>
-            <div class="relative flex justify-center text-sm">
-              <span class="bg-white px-2 text-gray-500">oder</span>
-            </div>
-          </div>
-
           <UButton
-            to="/register"
+            to="/register/2"
             label="Neuen Zugang erstellen"
             size="xl"
             block
