@@ -3,6 +3,10 @@ const toast = useToast()
 
 const { data: currentSettings } = await useFetch(`/api/user/settings`)
 
+const { me } = await useMe()
+
+const isPublished = ref(me.value?.published || false)
+
 const showUpgradeModal = useState('showUpgradeModal', () => false)
 
 const form = ref({
@@ -33,6 +37,25 @@ async function saveSettings() {
     description: 'Deine Einstellungen wurden erfolgreich gespeichert.',
     color: 'success',
   })
+}
+
+async function togglePublished() {
+  const { published } = await $fetch('/api/user/togglePublished', { method: 'POST' })
+
+  if (published) {
+    toast.add({
+      title: 'Profil veröffentlicht',
+      description: `Dein Profil ist jetzt öffentlich zugänglich.`,
+      color: 'success',
+    })
+  }
+  else {
+    toast.add({
+      title: 'Profil nicht mehr veröffentlicht',
+      description: `Dein Profil ist jetzt privat.`,
+      color: 'warning',
+    })
+  }
 }
 
 const headerImageInput = ref<HTMLInputElement | null>(null)
@@ -116,6 +139,13 @@ const clickLogoInput = () => {
 
 <template>
   <div class="flex flex-col gap-4 p-6">
+    <USwitch
+      v-model="isPublished"
+      label="Veröffentlicht"
+      :description="isPublished ? 'Dein Profil ist öffentlich zugänglich.' : 'Dein Profil ist privat.'"
+      class="mb-4"
+      @update:model-value="togglePublished"
+    />
     <div class="flex gap-2">
       <UFormField
         label="Titel"
