@@ -1,7 +1,6 @@
 import Stripe from 'stripe'
 
 export default defineEventHandler(async (event) => {
-  const db = await getDatabaseConnection()
   const { stripeApiSecretKey, stripeWebhookSecret } = useRuntimeConfig()
 
   const stripeSignature = getHeader(event, 'stripe-signature')
@@ -36,16 +35,6 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'Bad Request: Missing userId in metadata',
       })
     }
-
-    await db.updateTable('payments')
-      .set({
-        status: 'succeeded',
-        transactionId: paymentIntent.client_secret,
-      })
-      .where('transactionId', '=', paymentIntent.client_secret)
-      .execute()
-
-    await updateUserBalance(Number(paymentIntent.metadata.userId))
   }
 
   return {

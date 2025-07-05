@@ -6,7 +6,8 @@ export interface UsersTable {
   userName: string
   email: string | null
   googleId: string | null
-  balance: number
+  published: boolean
+  domain: string
   createdAt: ColumnType<Date, undefined, undefined>
 }
 export type User = Selectable<UsersTable>

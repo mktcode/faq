@@ -28,7 +28,7 @@ export async function createUser({
       name,
       userName: makeUsername(userName),
       googleId,
-      balance: 0,
+      published: false,
     })
     .executeTakeFirstOrThrow()
 
