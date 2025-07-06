@@ -9,24 +9,25 @@ export default <RouterOptions>{
     }
 
     if (username.value) {
+      const design = ssrContext?.event.context.design || 'default'
       return [{
         name: 'userroute',
         path: '/',
-        component: () => import('~/components/Ask/Main.vue'),
+        component: () => import(`~/components/profile/${design}/Main.vue`),
         props: {
           username: username.value,
         },
       }, {
         name: 'userroute-imprint',
         path: '/impressum',
-        component: () => import('~/components/Ask/Imprint.vue'),
+        component: () => import(`~/components/profile/${design}/Imprint.vue`),
         props: {
           username: username.value,
         },
       }, {
         name: 'userroute-privacy',
         path: '/datenschutz',
-        component: () => import('~/components/Ask/Privacy.vue'),
+        component: () => import(`~/components/profile/${design}/Privacy.vue`),
         props: {
           username: username.value,
         },

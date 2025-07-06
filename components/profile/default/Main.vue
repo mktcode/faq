@@ -42,10 +42,10 @@ useState('designRounded', () => currentSettings.value?.rounded || 'md')
     :font="font"
     class="relative"
   >
-    <AskNav
+    <ProfileDefaultNav
       :username="username"
     />
-    <AskHeader
+    <ProfileDefaultHeader
       :current-settings="currentSettings"
     />
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
@@ -53,25 +53,25 @@ useState('designRounded', () => currentSettings.value?.rounded || 'md')
         v-if="currentSettings?.offers?.length"
         class="my-24 w-full"
       >
-        <AskOffer :offers="currentSettings.offers" />
+        <ProfileDefaultOffer :offers="currentSettings.offers" />
       </div>
 
       <div
         v-if="currentSettings?.gallery?.length"
         class="my-6 w-full"
       >
-        <AskGallery :images="currentSettings?.gallery" />
+        <ProfileDefaultGallery :images="currentSettings?.gallery" />
       </div>
 
       <div
         v-if="currentSettings?.downloads?.length"
         class="my-6 w-full"
       >
-        <AskDownloads :downloads="currentSettings?.downloads || []" />
+        <ProfileDefaultDownloads :downloads="currentSettings?.downloads || []" />
       </div>
 
       <div class="my-6 w-full">
-        <AskForm
+        <ProfileDefaultForm
           :username="username"
           :contact-phone="currentSettings?.company?.phone || ''"
         />

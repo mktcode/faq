@@ -130,7 +130,7 @@ const designRounded = useState('designRounded')
           />
         </div>
       </Transition>
-      <AskRecordAudio
+      <ProfileDefaultRecordAudio
         class="ml-auto"
         :disabled="false"
         @text="(text) => { message = text }"

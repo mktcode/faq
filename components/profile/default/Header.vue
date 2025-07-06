@@ -41,7 +41,7 @@ const { currentSettings } = defineProps<{
       >
         {{ currentSettings?.description }}
       </p>
-      <AskLinks
+      <ProfileDefaultLinks
         v-if="currentSettings?.links?.length"
         :links="currentSettings.links"
       />

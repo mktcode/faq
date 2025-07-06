@@ -1,7 +1,3 @@
-/**
- * username is null if
- * - not on own profile and published is false
- */
 export default defineEventHandler(async (event) => {
   const { public: { appHost } } = useRuntimeConfig()
 
@@ -29,6 +25,7 @@ export default defineEventHandler(async (event) => {
 
     if (targetUser && (targetUser.published || loggedInUser?.userName === targetUser.userName)) {
       event.context.username = targetUser.userName
+      event.context.design = 'default'
     }
   }
 
@@ -42,6 +39,7 @@ export default defineEventHandler(async (event) => {
 
     if (targetUser && (targetUser.published || loggedInUser?.userName === username)) {
       event.context.username = username
+      event.context.design = 'default'
     }
   }
 })
