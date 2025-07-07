@@ -1,17 +1,17 @@
 # Beta Release
 
+- Nach Registrierung/Anmeldung: Redirect auf Profilseite
+- Icons in IconPicker (externe Links, etc.) ergänzen
+- HTML für v-html desinfizieren
 - Fullscreen Gallery optimieren (Pfeile, Punkte, Mobil)
 - Validierungshinweise in Anfrageformular verbessern.
-- Headergestaltung optimieren mit Bild (Overlay, Schriftgröße, Varianten).
-- Settings Modal optimieren (Gallery, etc.)
-- E-Mail-Templates (html emails) und Text über Anfrageformular
 - dezentere Toasts
-- HTML für v-html desinfizieren
+- Settings Modal optimieren (Gallery, etc.)
 - Benutzername Eingabe beim Registrieren/Anmelden validieren
-- Nach Registrierung/Anmeldung: Redirect auf Profilseite
+- E-Mail-Templates (html emails) und Text über Anfrageformular
 - Einstellungen: JSON aufräumen/strukturieren
-- Icons in IconPicker (externe Links, etc.) ergänzen
 - Subdomains zu nicht existierenden Benutzernamen müssen 404 zurückgeben
+- Headergestaltung optimieren mit Bild (Overlay, Schriftgröße, Varianten).
 
 # Next
 
