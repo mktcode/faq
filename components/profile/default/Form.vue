@@ -133,7 +133,7 @@ const designRounded = useState('designRounded')
         </div>
       </Transition>
       <ProfileDefaultRecordAudio
-        v-if="!me?.isSubscribed"
+        v-if="me?.isSubscribed"
         class="ml-auto"
         :disabled="false"
         @text="(text) => { message = text }"
