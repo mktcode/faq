@@ -12,6 +12,7 @@
 - Nach Registrierung/Anmeldung: Redirect auf Profilseite
 - Einstellungen: JSON aufräumen/strukturieren
 - Icons in IconPicker (externe Links, etc.) ergänzen
+- Subdomains zu nicht existierenden Benutzernamen müssen 404 zurückgeben
 
 # Next
 
