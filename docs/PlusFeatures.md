@@ -1,0 +1,7 @@
+- Spracheingabe (für Anfragen und Antworten)
+- Anwortvorschläge (aus FAQ)
+- FAQ überarbeiten (aus Anfragen und Antworten)
+- Domain und E-Mail
+- Video-Element
+- zusätzliche Inhalte
+- Premium Design für 350 €
