@@ -31,7 +31,6 @@ async function signOut() {
         >
           <UButton
             :to="`https://${me.userName}.${appHost}`"
-            target="_blank"
             label="Mein Gewerbeprofil"
             variant="soft"
           />
