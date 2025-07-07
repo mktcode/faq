@@ -37,6 +37,7 @@ Gegebenenfalls Beschränkungen hinsichtlich Anzahl und Kapazität in Betracht zi
 ## Authentifizierung
 
 Sicherstellen, dass Authentifizierung und Autorisierung für alle Datensätze korrekt implementiert sind.
+Plus-Features im Backend absichern.
 
 ## Sicherheit
 
