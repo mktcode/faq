@@ -8,6 +8,8 @@ registry:
   password:
     - KAMAL_REGISTRY_PASSWORD
 proxy: false
+keys_only: true
+keys: ["~/.ssh/hetzner"]
 env:
   secret:
     - MYSQL_ROOT_PASSWORD
