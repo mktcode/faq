@@ -6,9 +6,8 @@
 
     <section class="shadow-sky-50 flex flex-col">
       <p class="text-gray-500 text-xl">
-        Wähle einen Benutzernamen.
-        Ein Passwort brauchst du nicht.
-        Für den Zugang zu deinem Gewerbeprofil wird ein Schlüssel auf deinem Gerät gespeichert oder in deinem Passwort-Manager, falls du einen nutzt.
+        Sie brauchen nur einen Benutzernamen.
+        Für den Zugang zu Ihrem Gewerbeprofil wird ein Schlüssel auf Ihrem Gerät gespeichert oder in Ihrem Passwort-Manager, falls Sie einen nutzen.
       </p>
     </section>
 
