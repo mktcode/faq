@@ -3,6 +3,8 @@ import type { CustomerRequest } from '~/types/db'
 
 const { customerRequest } = defineProps<{ customerRequest: CustomerRequest }>()
 
+const { me } = await useMe()
+
 const { data: messages } = await useFetch('/api/user/customerRequests/messages', {
   query: {
     customerRequestId: customerRequest.id,
@@ -139,7 +141,7 @@ const designRounded = useState('designRounded')
       />
       <div class="flex flex-col gap-2 p-4">
         <UButton
-          v-if="!replyMessage.trim()"
+          v-if="!replyMessage.trim() && me?.isSubscribed"
           label="Antwort vorschlagen"
           icon="i-heroicons-sparkles"
           variant="soft"

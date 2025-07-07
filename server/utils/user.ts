@@ -81,3 +81,25 @@ export async function getMe(event: H3Event) {
     isSubscribed,
   }
 }
+
+export async function requireSubscription(event: H3Event) {
+  const user = await getMe(event)
+
+  if (!user) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Unauthorized',
+      message: 'You must be logged in to access this resource.',
+    })
+  }
+
+  if (!user.isSubscribed) {
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Forbidden',
+      message: 'You must have an active subscription to access this resource.',
+    })
+  }
+
+  return user
+}

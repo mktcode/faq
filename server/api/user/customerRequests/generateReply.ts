@@ -7,7 +7,7 @@ const querySchema = z.object({
 }))
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const user = await requireSubscription(event)
   const db = await getDatabaseConnection()
   const { customerRequestId } = await getValidatedQuery(event, query => querySchema.parse(query))
 

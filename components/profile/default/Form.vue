@@ -7,6 +7,8 @@ const { username, contactPhone } = defineProps<{
   contactPhone: string
 }>()
 
+const { me } = await useMe()
+
 const message = ref('')
 const messageLongEnough = computed(() => message.value.trim().length >= 5)
 const messageEmbedding = ref<number[]>([])
@@ -131,6 +133,7 @@ const designRounded = useState('designRounded')
         </div>
       </Transition>
       <ProfileDefaultRecordAudio
+        v-if="!me?.isSubscribed"
         class="ml-auto"
         :disabled="false"
         @text="(text) => { message = text }"

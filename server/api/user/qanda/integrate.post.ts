@@ -1,8 +1,7 @@
 import z from 'zod'
-import { zodTextFormat } from 'openai/helpers/zod'
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const user = await requireSubscription(event)
   const db = await getDatabaseConnection()
 
   const qanda = await db
