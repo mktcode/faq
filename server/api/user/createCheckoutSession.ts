@@ -3,7 +3,7 @@ import Stripe from 'stripe'
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
   const db = await getDatabaseConnection()
-  const { stripeApiSecretKey, public: { appHost } } = useRuntimeConfig()
+  const { stripeApiSecretKey, stripePriceId, public: { appHost } } = useRuntimeConfig()
 
   const userInDb = await db
     .selectFrom('users')
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
     success_url: `https://${userInDb.userName}.${appHost}?subscriptionSuccess=1`,
     line_items: [
       {
-        price: 'price_1Ri8oZCxuwKUITGBTgjOnmSj', // TODO: make env var
+        price: stripePriceId,
         quantity: 1,
       },
     ],

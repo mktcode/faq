@@ -38,6 +38,7 @@ export default defineNuxtConfig({
     s3BucketName: process.env.S3_BUCKET_NAME,
     stripeApiSecretKey: process.env.STRIPE_API_SECRET_KEY,
     stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+    stripePriceId: process.env.STRIPE_PRICE_ID,
     oauth: {
       google: {
         clientId: process.env.OAUTH_GOOGLE_CLIENT_ID,
@@ -55,6 +56,7 @@ export default defineNuxtConfig({
     public: {
       s3Endpoint: process.env.S3_ENDPOINT,
       stripeApiKey: process.env.STRIPE_API_KEY,
+      stripePortalUrl: process.env.STRIPE_PORTAL_URL,
       appHost: process.env.APP_HOST || 'localhost:3000',
     },
   },

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { stripePortalUrl } = useRuntimeConfig().public
 const { me } = await useMe()
 const emailToVerify = ref(me.value?.email || '')
 const isUpdatingEmail = ref(false)
@@ -23,9 +24,8 @@ async function updateEmail() {
       <p class="text-gray-600">
         Sie sind bereits für das Plus-Abonnement angemeldet. Vielen Dank für Ihre Unterstützung!
       </p>
-      <!-- TODO: make portal link an env var -->
       <UButton
-        to="https://billing.stripe.com/p/login/test_bJecN434N8DH3Pp9qu9oc01"
+        :to="stripePortalUrl"
         label="Abonnement verwalten"
         icon="i-heroicons-pencil-square"
         class="w-full"
