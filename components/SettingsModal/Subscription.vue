@@ -24,6 +24,11 @@ async function updateEmail() {
       <p class="text-gray-600">
         Sie sind bereits für das Plus-Abonnement angemeldet. Vielen Dank für Ihre Unterstützung!
       </p>
+      <p class="text-gray-600">
+        Um Ihr Abonnement zu verwalten, werden Sie zu unserem Zahlungsdienstleister Stripe weitergeleitet.
+        Geben Sie dort Ihre E-Mail-Adresse ({{ me.email }}) ein, um einen Zugangscode zu erhalten.
+        Aus Sicherheitsgründen ist dieser Code nur einmalig gültig.
+      </p>
       <UButton
         :to="stripePortalUrl"
         label="Abonnement verwalten"
