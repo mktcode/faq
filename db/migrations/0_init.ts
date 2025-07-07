@@ -12,7 +12,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('emailConfirmationToken', 'varchar(36)')
     .addColumn('googleId', 'text')
     .addColumn('published', 'boolean', col => col.notNull().defaultTo(false))
-    .addColumn('domain', 'text', col => col.unique())
+    .addColumn('domain', 'varchar(100)', col => col.unique())
     .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
     .execute()
 
