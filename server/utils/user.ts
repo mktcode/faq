@@ -74,8 +74,6 @@ export async function getMe(event: H3Event) {
     .where('id', '=', user.id)
     .executeTakeFirstOrThrow()
 
-  console.log('User in DB:', userInDb)
-
   const isSubscribed = userInDb.lastPaidAt ? new Date(userInDb.lastPaidAt) > new Date(Date.now() - 31 * 24 * 60 * 60 * 1000) : false
 
   return {
