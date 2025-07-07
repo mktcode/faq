@@ -3,6 +3,7 @@ import type { Qanda } from '~/types/db'
 
 const route = useRoute()
 const emailVerified = !!route.query.emailVerified
+const subscriptionSuccess = !!route.query.subscriptionSuccess
 
 const { username } = defineProps<{
   username: string
@@ -54,6 +55,9 @@ useState('designRounded', () => currentSettings.value?.rounded || 'md')
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
       <EmailVerifiedModal
         v-if="emailVerified"
+      />
+      <SubscriptionSuccessModal
+        v-if="subscriptionSuccess"
       />
       <div
         v-if="currentSettings?.offers?.length"

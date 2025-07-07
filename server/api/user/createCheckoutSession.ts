@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
 
   const session = await stripe.checkout.sessions.create({
     customer: userInDb.stripeCustomerId,
-    success_url: `https://${userInDb.userName}.${appHost}?paymentSuccess=1`,
+    success_url: `https://${userInDb.userName}.${appHost}?subscriptionSuccess=1`,
     line_items: [
       {
         price: 'price_1Ri8oZCxuwKUITGBTgjOnmSj', // TODO: make env var
