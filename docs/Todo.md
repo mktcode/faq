@@ -13,11 +13,6 @@
 - Subdomains zu nicht existierenden Benutzernamen müssen 404 zurückgeben
 - Headergestaltung optimieren mit Bild (Overlay, Schriftgröße, Varianten).
 
-# Next
-
-- Premium-Features definieren
-- Paywall-Integration
-
 ## Datenbank und Typen
 
 Sicherstellen, dass das Datenbank-Schema, die Typen und die Formular-Validierungen korrekt sind.
