@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { Qanda } from '~/types/db'
 
+const route = useRoute()
+const emailVerified = !!route.query.emailVerified
+
 const { username } = defineProps<{
   username: string
 }>()
@@ -49,6 +52,9 @@ useState('designRounded', () => currentSettings.value?.rounded || 'md')
       :current-settings="currentSettings"
     />
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
+      <EmailVerifiedModal
+        v-if="emailVerified"
+      />
       <div
         v-if="currentSettings?.offers?.length"
         class="my-24 w-full"

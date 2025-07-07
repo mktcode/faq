@@ -5,9 +5,11 @@ export interface UsersTable {
   name: string
   userName: string
   email: string | null
+  emailConfirmationToken: string | null
   googleId: string | null
   published: boolean
-  domain: string
+  domain: string | null
+  stripeCustomerId: string | null
   createdAt: ColumnType<Date, undefined, undefined>
 }
 export type User = Selectable<UsersTable>

@@ -29,6 +29,7 @@ export async function createUser({
       userName: makeUsername(userName),
       googleId,
       published: false,
+      domain: null,
     })
     .executeTakeFirstOrThrow()
 
