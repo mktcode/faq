@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const { me } = await useMe()
 const emailToVerify = ref(me.value?.email || '')
-const isSubscribed = useState('isSubscribed', () => false)
 const isUpdatingEmail = ref(false)
 const showEmailVerificationHint = ref(false)
 
@@ -20,15 +19,15 @@ async function updateEmail() {
 
 <template>
   <div class="flex flex-col gap-4 p-6">
-    <template v-if="isSubscribed">
+    <template v-if="me?.isSubscribed">
       <p class="text-gray-600">
         Sie sind bereits für das Plus-Abonnement angemeldet. Vielen Dank für Ihre Unterstützung!
       </p>
       <!-- TODO: make portal link an env var -->
       <UButton
         to="https://billing.stripe.com/p/login/test_bJecN434N8DH3Pp9qu9oc01"
-        label="Abonnement kündigen"
-        icon="i-heroicons-x-mark"
+        label="Abonnement verwalten"
+        icon="i-heroicons-pencil-square"
         class="w-full"
       />
     </template>
