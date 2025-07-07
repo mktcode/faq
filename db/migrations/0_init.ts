@@ -13,6 +13,8 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('googleId', 'text')
     .addColumn('published', 'boolean', col => col.notNull().defaultTo(false))
     .addColumn('domain', 'varchar(100)', col => col.unique())
+    .addColumn('stripeCustomerId', 'varchar(255)', col => col.unique())
+    .addColumn('lastPaidAt', 'timestamp')
     .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
     .execute()
 
@@ -54,8 +56,6 @@ export async function up(db: Kysely<any>): Promise<void> {
     .createTable('customerRequests')
     .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
     .addColumn('userId', 'integer', col => col.notNull())
-    .addColumn('stripeCustomerId', 'varchar(255)', col => col.unique())
-    .addColumn('lastPaidAt', 'timestamp')
     .addColumn('uuid', 'varchar(36)', col => col.notNull().unique())
     .addColumn('name', 'text', col => col.notNull())
     .addColumn('email', 'text')
