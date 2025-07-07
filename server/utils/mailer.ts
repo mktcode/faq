@@ -9,30 +9,30 @@ export async function sendEmail({
   subject: string
   body: string
 }) {
-  const { mailhost, mailuser, mailpass, mailfrom } = useRuntimeConfig()
+  const { mailHost, mailUser, mailPass, mailFrom } = useRuntimeConfig()
 
   console.log('Sending email:', {
     to,
     subject,
     body,
-    mailhost,
-    mailuser,
-    mailpass,
-    mailfrom,
+    mailHost,
+    mailUser,
+    mailPass,
+    mailFrom,
   })
 
   const transport = nodemailer.createTransport({
-    host: mailhost,
+    host: mailHost,
     port: 587,
     secure: false,
     auth: {
-      user: mailuser,
-      pass: mailpass,
+      user: mailUser,
+      pass: mailPass,
     },
   })
 
   const mailOptions: SendMailOptions = {
-    from: mailfrom,
+    from: mailFrom,
     to,
     subject,
     text: body,
