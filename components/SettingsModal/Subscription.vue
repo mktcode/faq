@@ -24,8 +24,9 @@ async function updateEmail() {
       <p class="text-gray-600">
         Sie sind bereits für das Plus-Abonnement angemeldet. Vielen Dank für Ihre Unterstützung!
       </p>
+      <!-- TODO: make portal link an env var -->
       <UButton
-        to="https://billing.stripe.com/p/login/test_8x228qeNv9HLeu33269oc00"
+        to="https://billing.stripe.com/p/login/test_bJecN434N8DH3Pp9qu9oc01"
         label="Abonnement kündigen"
         icon="i-heroicons-x-mark"
         class="w-full"

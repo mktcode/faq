@@ -10,6 +10,7 @@ export interface UsersTable {
   published: boolean
   domain: string | null
   stripeCustomerId: string | null
+  lastPaidAt: ColumnType<Date | null, Date | null, Date | null>
   createdAt: ColumnType<Date, undefined, undefined>
 }
 export type User = Selectable<UsersTable>

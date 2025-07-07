@@ -27,14 +27,18 @@ export default defineEventHandler(async (event) => {
     stripeWebhookSecret,
   )
 
-  if (stripeEvent.type === 'payment_intent.succeeded') {
-    const paymentIntent = stripeEvent.data.object
-    if (!paymentIntent.metadata.userId) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: 'Bad Request: Missing userId in metadata',
+  if (stripeEvent.type === 'invoice.paid') {
+    const paidInvoice = stripeEvent.data.object
+    const customerId = paidInvoice.customer as string
+
+    const db = await getDatabaseConnection()
+    await db
+      .updateTable('users')
+      .set({
+        lastPaidAt: new Date(),
       })
-    }
+      .where('stripeCustomerId', '=', customerId)
+      .execute()
   }
 
   return {

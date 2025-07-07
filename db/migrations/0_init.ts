@@ -55,6 +55,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
     .addColumn('userId', 'integer', col => col.notNull())
     .addColumn('stripeCustomerId', 'varchar(255)', col => col.unique())
+    .addColumn('lastPaidAt', 'timestamp')
     .addColumn('uuid', 'varchar(36)', col => col.notNull().unique())
     .addColumn('name', 'text', col => col.notNull())
     .addColumn('email', 'text')
