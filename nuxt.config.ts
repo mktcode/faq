@@ -82,17 +82,6 @@ export default defineNuxtConfig({
     },
   },
   compatibilityDate: '2024-11-01',
-  nitro: {
-    experimental: {
-      tasks: true,
-    },
-    scheduledTasks: {
-      // At minute 43 past hour 2 and 14.
-      '43 2,14 * * *': [
-        'charge',
-      ],
-    },
-  },
   vite: {
     server: {
       allowedHosts: true,
