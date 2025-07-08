@@ -10,6 +10,8 @@
 - E-Mail-Templates (html emails) und Text über Anfrageformular
 - Einstellungen: JSON aufräumen/strukturieren
 - Headergestaltung optimieren mit Bild (Overlay, Schriftgröße, Varianten).
+- Einstellung: per Du oder per Sie (in Textvorlagen, etc.)
+- FAQ-Embeddings nur für Premium-Nutzer
 
 ## Datenbank und Typen
 
