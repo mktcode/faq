@@ -1,5 +1,6 @@
 # Beta Release
 
+- Profilansicht nach Aktualisierung von Einstellungen live updaten (erfordert aktuell refresh).
 - Feedback Funktion implementieren (evtl. nur als Hinweis: Feddback bitte an kontakt@...)
 - API Endpoints Origin schützen (nur von erlaubten Userdomains/Subdomains).
 - Premium-Features richtig implementieren (es wird aktuell geprüft ob man eingeloggt ist und Premium hat und nicht ob das aufgerufene Profil Premium ist).
