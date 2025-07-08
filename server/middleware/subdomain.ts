@@ -52,9 +52,11 @@ function checkSubscriptionStatus(lastPaidAt: Date | null): boolean {
 }
 
 function setProfileContext(event: H3Event, targetUser: TargetUser): void {
-  event.context.profile = targetUser.userName
-  event.context.isSubscribed = checkSubscriptionStatus(targetUser.lastPaidAt)
-  event.context.design = 'default'
+  event.context.profile = {
+    username: targetUser.userName,
+    isSubscribed: checkSubscriptionStatus(targetUser.lastPaidAt),
+    design: 'default',
+  }
 }
 
 function extractUsernameFromSubdomain(currentHost: string): string {
