@@ -28,8 +28,7 @@ export default defineEventHandler(async (event) => {
       event.context.design = 'default'
     }
   }
-
-  if (isSubdomain) {
+  else if (isSubdomain) {
     const username = currentHost.split('.')[0]
 
     const targetUser = await db.selectFrom('users')
@@ -37,9 +36,22 @@ export default defineEventHandler(async (event) => {
       .where('userName', '=', username)
       .executeTakeFirst()
 
-    if (targetUser && (targetUser.published || loggedInUser?.userName === username)) {
+    if (!targetUser) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Profil nicht gefunden.',
+      })
+    }
+
+    if (targetUser.published || loggedInUser?.userName === username) {
       event.context.username = username
       event.context.design = 'default'
+    }
+    else {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Profil nicht gefunden.',
+      })
     }
   }
 })
