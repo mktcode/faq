@@ -11,21 +11,22 @@ const showModal = useLocalStorage<boolean>('welcome', true)
   >
     <template #body>
       <div class="flex flex-col gap-4">
-        <h1 class="text-2xl font-bold text-center">
-          Willkommen bei AutoFAQ
+        <h1 class="text-2xl font-bold">
+          Willkommen auf Ihrem Gewerbeprofil
         </h1>
-        <p class="text-center text-gray-600">
-          Du kannst hier Informationen zu deinem Unternehmen und Antworten auf häufige Fragen angeben, die dann auf deiner Profilseite angezeigt werden.
+        <p class="text-gray-600">
+          Wie Sie gleich sehen, ist es hier noch ziemlich leer. Ein Textfeld für Anfragen und Links zu Impressum und Datenschutzerklärung. Das war&apos;s.
         </p>
-        <p class="text-center text-gray-600">
-          Weitere Fragen von Interessenten beantwortet AutoFAQ automatisch aus Dokumenten, die du hochladen kannst, und bereitet Anfragen so vor, dass du keine Frage zweimal beantworten musst.
+        <p class="text-gray-600">
+          Anfragen können Sie direkt hier in der App beantworten. Hinterlegen Sie eine E-Mail-Adresse, um über neue Anfragen benachrichtigt zu werden.
         </p>
-        <p class="text-center text-gray-600">
-          Zeige deine Google Bewertungen und verlinke ein Buchungstool oder deinen Kleinanzeigen-Shop.
+        <p class="text-gray-600">
+          In den Einstellungen (oben links) machen Sie am besten gleich ein paar Angaben zu Ihrem Unternehmen, laden ein Logo hoch und schreiben einen kurzen Willkommensgruß für Besucher.
+          Beschreiben Sie Ihr Angebot und verfassen Sie Antworten auf häufig gestellte Fragen. Laden Sie Bilder hoch und wählen Sie Farben und Schriftart aus, um Ihr Profil individueller zu gestalten.
         </p>
         <UButton
-          label="Loslegen"
-          class="mx-auto"
+          label="Schließen"
+          class="mx-auto mt-4"
           @click="showModal = false"
         />
       </div>
