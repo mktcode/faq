@@ -9,7 +9,6 @@
 - Benutzername Eingabe beim Registrieren/Anmelden validieren
 - E-Mail-Templates (html emails) und Text über Anfrageformular
 - Einstellungen: JSON aufräumen/strukturieren
-- Subdomains zu nicht existierenden Benutzernamen müssen 404 zurückgeben
 - Headergestaltung optimieren mit Bild (Overlay, Schriftgröße, Varianten).
 
 ## Datenbank und Typen
