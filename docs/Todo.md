@@ -1,6 +1,5 @@
 # Beta Release
 
-- Nach Registrierung/Anmeldung: Redirect auf Profilseite
 - Icons in IconPicker (externe Links, etc.) ergänzen
 - HTML für v-html desinfizieren
 - Fullscreen Gallery optimieren (Pfeile, Punkte, Mobil)
