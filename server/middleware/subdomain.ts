@@ -9,6 +9,7 @@ interface HostType {
 interface TargetUser {
   userName: string
   published: boolean
+  lastPaidAt: Date | null
 }
 
 interface SessionUser {
@@ -40,8 +41,19 @@ function determineHostType(currentHost: string, appHost: string): HostType {
   }
 }
 
-function setUserContext(event: H3Event, username: string): void {
-  event.context.username = username
+function checkSubscriptionStatus(lastPaidAt: Date | null): boolean {
+  if (!lastPaidAt) {
+    return false
+  }
+
+  const now = new Date()
+  const thirtyOneDaysAgo = new Date(now.getTime() - (31 * 24 * 60 * 60 * 1000))
+  return lastPaidAt >= thirtyOneDaysAgo
+}
+
+function setProfileContext(event: H3Event, targetUser: TargetUser): void {
+  event.context.profile = targetUser.userName
+  event.context.isSubscribed = checkSubscriptionStatus(targetUser.lastPaidAt)
   event.context.design = 'default'
 }
 
@@ -57,12 +69,12 @@ async function handleCustomDomain(domain: string, loggedInUser: SessionUser | un
   const db = await getDatabaseConnection()
 
   const targetUser = await db.selectFrom('users')
-    .select(['userName', 'published'])
+    .select(['userName', 'published', 'lastPaidAt'])
     .where('domain', '=', domain)
     .executeTakeFirst()
 
   if (targetUser && isUserAuthorizedToView(targetUser, loggedInUser)) {
-    setUserContext(event, targetUser.userName)
+    setProfileContext(event, targetUser)
   }
 }
 
@@ -71,7 +83,7 @@ async function handleSubdomain(currentHost: string, loggedInUser: SessionUser | 
   const username = extractUsernameFromSubdomain(currentHost)
 
   const targetUser = await db.selectFrom('users')
-    .select(['userName', 'published'])
+    .select(['userName', 'published', 'lastPaidAt'])
     .where('userName', '=', username)
     .executeTakeFirst()
 
@@ -83,7 +95,7 @@ async function handleSubdomain(currentHost: string, loggedInUser: SessionUser | 
   }
 
   if (isUserAuthorizedToView(targetUser, loggedInUser)) {
-    setUserContext(event, username)
+    setProfileContext(event, targetUser)
   }
   else {
     throw createError({
