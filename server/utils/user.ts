@@ -60,6 +60,14 @@ export async function createUser({
   return newUser
 }
 
+export function checkSubscribed(lastPaidAt: Date | string | null): boolean {
+  if (!lastPaidAt) {
+    return false
+  }
+  const lastPaidDate = new Date(lastPaidAt)
+  return lastPaidDate > new Date(Date.now() - 31 * 24 * 60 * 60 * 1000)
+}
+
 export async function getMe(event: H3Event) {
   const { user } = await getUserSession(event)
   const db = await getDatabaseConnection()
@@ -74,7 +82,7 @@ export async function getMe(event: H3Event) {
     .where('id', '=', user.id)
     .executeTakeFirstOrThrow()
 
-  const isSubscribed = userInDb.lastPaidAt ? new Date(userInDb.lastPaidAt) > new Date(Date.now() - 31 * 24 * 60 * 60 * 1000) : false
+  const isSubscribed = checkSubscribed(userInDb.lastPaidAt)
 
   return {
     ...userInDb,
