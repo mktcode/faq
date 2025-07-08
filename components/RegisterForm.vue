@@ -1,13 +1,14 @@
 <script setup lang="ts">
 const { register } = useWebAuthn({ registerEndpoint: '/api/webauthn/register' })
 const { fetch: fetchUserSession } = useUserSession()
+const { appHost } = useRuntimeConfig().public
 
 const userName = ref('')
 
 async function signUp() {
   await register({ userName: userName.value })
   await fetchUserSession()
-  navigateTo('/')
+  navigateTo(`https://${userName.value}.${appHost}`, { external: true })
 }
 </script>
 

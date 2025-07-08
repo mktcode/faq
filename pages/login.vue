@@ -4,6 +4,7 @@ const { authenticate } = useWebAuthn({
   authenticateEndpoint: '/api/webauthn/authenticate',
 })
 const { fetch: fetchUserSession } = useUserSession()
+const { appHost } = useRuntimeConfig().public
 
 const userName = ref('')
 
@@ -18,7 +19,7 @@ async function signIn() {
     await authenticate(userName.value)
     await fetchUserSession()
   }
-  navigateTo('/')
+  navigateTo(`https://${userName.value}.${appHost}`, { external: true })
 }
 </script>
 
