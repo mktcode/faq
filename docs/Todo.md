@@ -1,5 +1,8 @@
 # Beta Release
 
+- Feedback Funktion implementieren (evtl. nur als Hinweis: Feddback bitte an kontakt@...)
+- API Endpoints Origin schützen (nur von erlaubten Userdomains/Subdomains).
+- Premium-Features richtig implementieren (es wird aktuell geprüft ob man eingeloggt ist und Premium hat und nicht ob das aufgerufene Profil Premium ist).
 - Icons in IconPicker (externe Links, etc.) ergänzen
 - HTML für v-html desinfizieren
 - Fullscreen Gallery optimieren (Pfeile, Punkte, Mobil)
