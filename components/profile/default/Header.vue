@@ -28,16 +28,16 @@ const { currentSettings } = defineProps<{
       </div>
       <h1
         class="text-center font-bold mb-4 leading-none"
-        :class="getColorClass(currentSettings?.headerTitleColor || 'white', 'text')"
-        :style="{ 'font-size': currentSettings?.headerTitleFontSize + 'cqw' }"
+        :class="getColorClass(currentSettings?.headerTitleColor || 'black', 'text')"
+        :style="{ 'font-size': (currentSettings?.headerTitleFontSize || '10') + 'cqw' }"
       >
         {{ currentSettings?.title }}
       </h1>
       <p
         v-if="currentSettings?.description"
         class="text-center mb-4"
-        :class="getColorClass(currentSettings?.headerDescriptionColor || 'white', 'text')"
-        :style="{ 'font-size': currentSettings?.headerDescriptionFontSize + 'cqw' }"
+        :class="getColorClass(currentSettings?.headerDescriptionColor || 'black', 'text')"
+        :style="{ 'font-size': (currentSettings?.headerDescriptionFontSize || '6') + 'cqw' }"
       >
         {{ currentSettings?.description }}
       </p>

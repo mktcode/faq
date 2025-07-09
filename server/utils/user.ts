@@ -31,8 +31,6 @@ export async function createUser({
       domain: null,
       settings: JSON.stringify({
         title: name,
-        description: 'Willkommen auf meinem Gewerbeprofil!',
-        rounded: 'md',
       }),
     })
     .executeTakeFirstOrThrow()
