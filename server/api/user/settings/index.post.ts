@@ -21,34 +21,23 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
 
   const existingSettings = await db
-    .selectFrom('settings')
-    .selectAll()
-    .where('userId', '=', user.id)
-    .executeTakeFirst()
+    .selectFrom('users')
+    .select(['settings'])
+    .where('id', '=', user.id)
+    .executeTakeFirstOrThrow()
 
-  if (existingSettings) {
-    const newSettings = mergeSettings(
-      existingSettings.settings,
-      settings,
-    )
+  const newSettings = mergeSettings(
+    existingSettings.settings,
+    settings,
+  )
 
-    await db
-      .updateTable('settings')
-      .set({
-        settings: JSON.stringify(newSettings),
-      })
-      .where('userId', '=', user.id)
-      .execute()
-  }
-  else {
-    await db
-      .insertInto('settings')
-      .values({
-        userId: user.id,
-        settings: JSON.stringify(settings),
-      })
-      .execute()
-  }
+  await db
+    .updateTable('users')
+    .set({
+      settings: JSON.stringify(newSettings),
+    })
+    .where('id', '=', user.id)
+    .execute()
 
   return { success: true }
 })

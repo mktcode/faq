@@ -5,9 +5,9 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
 
   const settings = await db
-    .selectFrom('settings')
-    .selectAll()
-    .where('userId', '=', user.id)
+    .selectFrom('users')
+    .select(['settings'])
+    .where('id', '=', user.id)
     .executeTakeFirstOrThrow()
 
   return settingsFormSchema.parse(

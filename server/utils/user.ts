@@ -32,6 +32,11 @@ export async function createUser({
       googleId,
       published: false,
       domain: null,
+      settings: JSON.stringify({
+        title: name,
+        description: 'Willkommen auf meinem Gewerbeprofil!',
+        rounded: 'md',
+      }),
     })
     .executeTakeFirstOrThrow()
 
@@ -40,16 +45,6 @@ export async function createUser({
   }
 
   const newUserId = Number(insertResult.insertId.toString())
-
-  await db.insertInto('settings')
-    .values({
-      userId: newUserId,
-      settings: JSON.stringify({
-        title: name,
-        rounded: 'md',
-      }),
-    })
-    .execute()
 
   const newUser = await db
     .selectFrom('users')
