@@ -38,6 +38,17 @@ export default defineWebAuthnRegisterEventHandler({
         name: user.userName,
         userName: user.userName,
       })
+
+      await setUserSession(event, {
+        user: {
+          id: newUser.id,
+          name: newUser.name,
+          userName: username,
+          email: newUser.email,
+          picture: '',
+        },
+      })
+
       await db
         .insertInto('webauthnCredentials')
         .values({
