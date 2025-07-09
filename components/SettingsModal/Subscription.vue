@@ -69,9 +69,19 @@ async function updateEmail() {
         </div>
       </template>
       <template v-else>
-        <p class="text-gray-600">
+        <p class="text-gray-400">
+          Mit einem Plus-Abonnement erhalten Sie Zugriff auf erweiterte Funktionen und und machen Ihr Gewerbeprofil mit unserer Hilfe zur professionellen Website.
+        </p>
+        <ul class="list-disc list-inside text-gray-400">
+          <li>Domain und E-Mail-Adresse inkl.</li>
+          <li>Mehr Speicherplatz für Bilder und Downloads</li>
+          <li>KI-Assisstent für Anfragen und FAQ</li>
+          <li>Upgrade auf individuelle Premium-Website ab einmalig 500 €</li>
+        </ul>
+        <p class="text-gray-400">
           Bitte geben Sie Ihre E-Mail-Adresse an, um ein Plus-Abonnement abzuschließen.
           Sie bekommen eine E-Mail mit einem Bestätigungslink, um Ihre E-Mail-Adresse zu verifizieren.
+          Danach können Sie über unseren Zahlungsdienstleister Stripe ein Abonnement abschließen, monatlich kündbar.
         </p>
         <UInput
           v-model="emailToVerify"

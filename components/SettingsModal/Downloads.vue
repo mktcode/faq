@@ -90,6 +90,10 @@ const onDrop = async (e: DragEvent) => {
 
 <template>
   <div class="flex flex-col gap-4 p-6">
+    <p class="text-gray-400">
+      Laden Sie hier Dateien hoch, die Sie Besuchern zum Herunterladen anbieten wollen,
+      z.B. Preislisten, Fragebögen, Zertifikate oder Ihre AGB.
+    </p>
     <div
       :class="`relative flex flex-col items-center justify-center w-full h-auto border-2 ${isDragging ? 'border-primary-500' : 'border-gray-300'} border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100`"
       @dragenter="onDragEnter"

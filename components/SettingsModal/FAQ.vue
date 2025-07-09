@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { data: qanda, refresh: refreshQanda } = await useFetch('/api/user/qanda')
+const { me } = await useMe()
 
 const suggestions = ref<{
   id: number | null
@@ -103,6 +104,7 @@ async function saveQanda() {
         @click="showNewForm = !showNewForm"
       />
       <UButton
+        v-if="me?.isSubscribed"
         label="Korrespondenz prüfen"
         icon="i-heroicons-magnifying-glass"
         variant="soft"

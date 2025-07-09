@@ -13,14 +13,14 @@ const items = [
     slot: 'company',
   },
   {
-    label: 'Anfragen',
-    icon: 'i-heroicons-envelope',
-    slot: 'customerRequests',
-  },
-  {
     label: 'Mein Angebot',
     icon: 'i-heroicons-megaphone',
     slot: 'offer',
+  },
+  {
+    label: 'Häufige Fragen',
+    icon: 'i-heroicons-question-mark-circle',
+    slot: 'faq',
   },
   {
     label: 'Gallerie',
@@ -36,11 +36,6 @@ const items = [
     label: 'Downloads',
     icon: 'i-heroicons-arrow-down-tray',
     slot: 'downloads',
-  },
-  {
-    label: 'Häufige Fragen',
-    icon: 'i-heroicons-question-mark-circle',
-    slot: 'faq',
   },
   {
     label: 'Datenschutz',
