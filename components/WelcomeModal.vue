@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { useLocalStorage } from '@vueuse/core'
 
-const showModal = useLocalStorage<boolean>('welcome', true)
+const showModalLocal = useLocalStorage<boolean>('welcome', true)
+const showModal = ref(false)
+
+setTimeout(() => {
+  showModal.value = showModalLocal.value
+}, 1000)
 </script>
 
 <template>
@@ -15,7 +20,7 @@ const showModal = useLocalStorage<boolean>('welcome', true)
           Willkommen auf Ihrem Gewerbeprofil
         </h1>
         <p class="text-gray-600">
-          Wie Sie gleich sehen, ist es hier noch ziemlich leer. Ein Textfeld für Anfragen und Links zu Impressum und Datenschutzerklärung. Das war&apos;s.
+          Wie Sie sehen, ist es hier noch ziemlich leer. Ein Textfeld für Anfragen und Links zu Impressum und Datenschutzerklärung. Das war&apos;s.
         </p>
         <p class="text-gray-600">
           Anfragen können Sie direkt hier in der App beantworten. Hinterlegen Sie eine E-Mail-Adresse, um über neue Anfragen benachrichtigt zu werden.
