@@ -33,17 +33,17 @@ async function saveSettings() {
 
 <template>
   <div class="flex flex-col gap-4 p-6">
-    <UFormField label="Name deines Unternehmens">
+    <UFormField label="Name Ihres Unternehmens">
       <UInput
         v-model="form.company.name"
-        placeholder="Gib den Titel deines Unternehmens ein"
+        placeholder="Geben Sie den Titel Ihres Unternehmens ein"
         class="w-full"
       />
     </UFormField>
     <UFormField label="Straße und Hausnummer">
       <UInput
         v-model="form.company.street"
-        placeholder="Gib die Straße und Hausnummer ein"
+        placeholder="Geben Sie die Straße und Hausnummer ein"
         class="w-full"
       />
     </UFormField>
@@ -63,7 +63,7 @@ async function saveSettings() {
       >
         <UInput
           v-model="form.company.city"
-          placeholder="Gib die Stadt ein"
+          placeholder="Geben Sie die Stadt ein"
           class="w-full"
         />
       </UFormField>
@@ -71,7 +71,7 @@ async function saveSettings() {
     <UFormField label="Telefonnummer">
       <UInput
         v-model="form.company.phone"
-        placeholder="Gib die Telefonnummer ein"
+        placeholder="Geben Sie die Telefonnummer ein"
         class="w-full"
       />
     </UFormField>
@@ -79,7 +79,7 @@ async function saveSettings() {
       <UInput
         v-model="form.company.email"
         type="email"
-        placeholder="Gib die E-Mail-Adresse ein"
+        placeholder="Geben Sie die E-Mail-Adresse ein"
         class="w-full"
       />
     </UFormField>
@@ -89,7 +89,7 @@ async function saveSettings() {
     >
       <UInput
         v-model="form.company.taxId"
-        placeholder="Gib die Steuernummer ein"
+        placeholder="Geben Sie Ihre Steuernummer ein"
         class="w-full"
       />
     </UFormField>
