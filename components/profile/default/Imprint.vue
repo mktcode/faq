@@ -3,8 +3,6 @@ const { username } = defineProps<{
   username: string
 }>()
 
-const { public: { appHost } } = useRuntimeConfig()
-
 const { data: currentSettings } = await useFetch(`/api/settings`, {
   query: {
     username,
@@ -20,57 +18,6 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
 
 <template>
   <FontWrapper :font="font">
-    <div
-      class="flex flex-col md:flex-row md:items-center md:justify-between p-4"
-    >
-      <UPopover>
-        <UButton
-          label="Link Teilen"
-          class="text-gray-400 ml-auto"
-          icon="i-heroicons-share"
-          variant="ghost"
-          color="neutral"
-          size="md"
-        />
-
-        <template #content>
-          <div class="m-4 inline-flex flex-col gap-4 max-w-xl">
-            <div class="text-gray-500">
-              {{ `${username}.${appHost}` }}
-            </div>
-            <div class="flex flex-col gap-2">
-              <UButton
-                target="_blank"
-                label="Link kopieren"
-                icon="i-heroicons-link"
-                variant="soft"
-              />
-              <UButton
-                label="Auf Facebook teilen"
-                icon="i-lucide-facebook"
-                variant="soft"
-              />
-              <UButton
-                label="Auf Instagram teilen"
-                icon="i-lucide-instagram"
-                variant="soft"
-              />
-              <UButton
-                label="per E-Mail teilen"
-                icon="i-heroicons-envelope"
-                variant="soft"
-              />
-              <UButton
-                label="Auf WhatsApp teilen"
-                icon="i-ic-baseline-whatsapp"
-                variant="soft"
-                target="_blank"
-              />
-            </div>
-          </div>
-        </template>
-      </UPopover>
-    </div>
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
       <div
         v-if="logo"
