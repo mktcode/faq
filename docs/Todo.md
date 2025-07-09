@@ -1,5 +1,6 @@
 # Beta Release
 
+- 404 Seite mit Anmeldung und Registrierung. (Wenn man die App zum Startbildschirm hinzufügt, ist man ausgeloggt und wenn das Profil nicht veröffentlich ist, kommt 404)
 - Anmeldung und Registrierung richtig durchtesten.
 - Profilansicht nach Aktualisierung von Einstellungen live updaten (erfordert aktuell refresh).
 - Feedback Funktion implementieren (evtl. nur als Hinweis: Feddback bitte an kontakt@...)
