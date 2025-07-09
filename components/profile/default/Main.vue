@@ -135,10 +135,6 @@ useState('designRounded', () => currentSettings.value?.rounded || 'md')
       v-if="me"
       @update="refreshSettings"
     />
-    <UpgradeModal
-      v-if="me && currentSettings"
-      :current-settings="currentSettings"
-    />
     <ClientOnly>
       <WelcomeModal />
     </ClientOnly>

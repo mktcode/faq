@@ -1,13 +1,13 @@
 <script setup lang="ts">
 const toast = useToast()
 
+defineEmits(['switchToSubscription'])
+
 const { data: currentSettings } = await useFetch(`/api/user/settings`)
 
 const { me } = await useMe()
 
 const isPublished = ref(me.value?.published || false)
-
-const showUpgradeModal = useState('showUpgradeModal', () => false)
 
 const form = ref({
   title: currentSettings.value?.title || '',
@@ -350,7 +350,7 @@ const clickLogoInput = () => {
       variant="soft"
       color="primary"
       icon="i-heroicons-sparkles"
-      @click="showUpgradeModal = true"
+      @click="$emit('switchToSubscription')"
     />
     <UButton
       variant="solid"
@@ -359,6 +359,5 @@ const clickLogoInput = () => {
     >
       Einstellungen speichern
     </UButton>
-    <UpgradeModal />
   </div>
 </template>

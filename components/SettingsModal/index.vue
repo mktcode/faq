@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import type { AccordionItem } from '@nuxt/ui'
+
 const showModal = useState('showSettingsModal', () => false)
 
-const items = [
+const items: AccordionItem[] = [
   {
     label: 'Allgemein',
     icon: 'i-heroicons-paint-brush',
@@ -48,6 +50,12 @@ const items = [
     slot: 'subscription',
   },
 ]
+
+const active = ref<string | undefined>(undefined)
+
+function switchToSubscription() {
+  active.value = '8'
+}
 </script>
 
 <template>
@@ -60,6 +68,7 @@ const items = [
   >
     <template #body>
       <UAccordion
+        v-model="active"
         :items="items"
         :unmount-on-hide="false"
         :ui="{
@@ -67,7 +76,7 @@ const items = [
         }"
       >
         <template #general>
-          <SettingsModalGeneral />
+          <SettingsModalGeneral @switch-to-subscription="switchToSubscription" />
         </template>
         <template #company>
           <SettingsModalCompany />
