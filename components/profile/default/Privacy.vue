@@ -1,14 +1,7 @@
 <script setup lang="ts">
-import { useLocalStorage } from '@vueuse/core'
-
 const { username } = defineProps<{
   username: string
 }>()
-
-const { public: { appHost } } = useRuntimeConfig()
-
-const { me } = await useMe()
-const myLastUsername = useLocalStorage('myLastUsername', () => me.value?.userName || null)
 
 const { data: currentSettings } = await useFetch(`/api/settings`, {
   query: {
@@ -25,58 +18,6 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
 
 <template>
   <FontWrapper :font="font">
-    <div
-      class="flex flex-col md:flex-row md:items-center md:justify-between p-4"
-    >
-      <UPopover>
-        <UButton
-          label="Link Teilen"
-          class="text-gray-400 ml-auto"
-          icon="i-heroicons-share"
-          variant="ghost"
-          color="neutral"
-          size="md"
-        />
-
-        <template #content>
-          <div class="m-4 inline-flex flex-col gap-4 max-w-xl">
-            <div class="text-gray-500">
-              {{ `${username}.${appHost}` }}
-            </div>
-            <div class="flex flex-col gap-2">
-              <UButton
-                target="_blank"
-                label="Link kopieren"
-                icon="i-heroicons-link"
-                variant="soft"
-              />
-              <UButton
-                label="Auf Facebook teilen"
-                icon="i-lucide-facebook"
-                variant="soft"
-              />
-              <UButton
-                label="Auf Instagram teilen"
-                icon="i-lucide-instagram"
-                variant="soft"
-              />
-              <UButton
-                label="per E-Mail teilen"
-                icon="i-heroicons-envelope"
-                variant="soft"
-              />
-              <UButton
-                label="Auf WhatsApp teilen"
-                icon="i-ic-baseline-whatsapp"
-                variant="soft"
-                target="_blank"
-                :to="`https://wa.me/?text=${encodeURIComponent(`Schau dir mein Gewerbeprofil an: https://${myLastUsername}.${appHost}`)}`"
-              />
-            </div>
-          </div>
-        </template>
-      </UPopover>
-    </div>
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
       <div
         v-if="logo"
@@ -110,11 +51,11 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
         <p>
           Verantwortlicher für die Datenverarbeitung ist:
           <br>
-          <strong>Markus Kappes</strong>
+          <strong>Markus Kottländer</strong>
           <br>
-          <strong>Adresse:</strong> Am Schloßpark 1, 41564 Kaarst, Deutschland
+          <strong>Adresse:</strong> Gertrudenstraße 23a, 49074 Osnabrück
           <br>
-          <strong>E-Mail:</strong> <a href="mailto:info@kappes.de">info@kappes.de</a>
+          <strong>E-Mail:</strong> <a href="mailto:kontakt@markus-kottlaender.de">kontakt@markus-kottlaender.de</a>
         </p>
 
         <h2>Arten der verarbeiteten Daten</h2>
