@@ -18,7 +18,6 @@ export type User = Selectable<UsersTable>
 export type NewUser = Insertable<UsersTable>
 export type UserUpdate = Updateable<UsersTable>
 
-
 export const settingsFormSchema = z.object({
   company: z.object({
     name: z.string().optional().nullable(),
