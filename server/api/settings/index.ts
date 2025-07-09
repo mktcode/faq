@@ -11,19 +11,13 @@ export default defineEventHandler(async (event) => {
 
   const user = await db
     .selectFrom('users')
-    .selectAll()
+    .select(['settings'])
     .where('userName', '=', username)
     .executeTakeFirstOrThrow()
 
-  const settings = await db
-    .selectFrom('settings')
-    .selectAll()
-    .where('userId', '=', user.id)
-    .executeTakeFirstOrThrow()
-
   return settingsFormSchema.parse(
-    typeof settings.settings === 'string'
-      ? JSON.parse(settings.settings)
-      : settings.settings,
+    typeof user.settings === 'string'
+      ? JSON.parse(user.settings)
+      : user.settings,
   )
 })

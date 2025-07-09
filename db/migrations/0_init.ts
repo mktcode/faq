@@ -15,6 +15,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('domain', 'varchar(100)', col => col.unique())
     .addColumn('stripeCustomerId', 'varchar(255)', col => col.unique())
     .addColumn('lastPaidAt', 'timestamp')
+    .addColumn('settings', 'json', col => col.notNull())
     .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
     .execute()
 
@@ -45,12 +46,6 @@ export async function up(db: Kysely<any>): Promise<void> {
   // Add questionEmbedding vector(1536) column
   await sql`ALTER TABLE qanda ADD COLUMN questionEmbedding vector(1536) NOT NULL`
     .execute(db)
-
-  await db.schema
-    .createTable('settings')
-    .addColumn('userId', 'integer', col => col.primaryKey().notNull())
-    .addColumn('settings', 'json', col => col.notNull())
-    .execute()
 
   await db.schema
     .createTable('customerRequests')
@@ -84,7 +79,6 @@ export async function down(db: Kysely<any>): Promise<void> {
   await db.schema.dropTable('payments').execute()
   await db.schema.dropTable('charges').execute()
   await db.schema.dropTable('qanda').execute()
-  await db.schema.dropTable('settings').execute()
   await db.schema.dropTable('customerRequests').execute()
   await db.schema.dropTable('messages').execute()
 }
