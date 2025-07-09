@@ -1,6 +1,5 @@
 # Beta Release
 
-- Google Auth entfernen
 - Profilansicht nach Aktualisierung von Einstellungen live updaten (erfordert aktuell refresh).
 - Feedback Funktion implementieren (evtl. nur als Hinweis: Feddback bitte an kontakt@...)
 - API Endpoints Origin schützen (nur von erlaubten Userdomains/Subdomains).

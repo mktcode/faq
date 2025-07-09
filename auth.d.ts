@@ -4,7 +4,6 @@ declare module '#auth-utils' {
     name: string
     userName: string
     email: string | null
-    googleId: string
     picture: string
   }
 

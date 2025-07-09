@@ -29,7 +29,6 @@ export default defineWebAuthnRegisterEventHandler({
           name: existingUser.name,
           userName: username,
           email: existingUser.email,
-          googleId: existingUser.googleId,
           picture: '',
         },
       })

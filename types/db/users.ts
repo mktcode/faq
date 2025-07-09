@@ -7,7 +7,6 @@ export interface UsersTable {
   userName: string
   email: string | null
   emailConfirmationToken: string | null
-  googleId: string | null
   published: boolean
   domain: string | null
   stripeCustomerId: string | null
@@ -46,7 +45,6 @@ export const settingsFormSchema = z.object({
   headerTitleColor: z.string().optional().nullable(),
   headerDescriptionFontSize: z.number().optional().nullable(),
   headerDescriptionColor: z.string().optional().nullable(),
-  showGoogleReviews: z.boolean().optional().nullable(),
   downloads: z.array(
     z.object({
       title: z.string(),

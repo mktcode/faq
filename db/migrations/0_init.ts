@@ -10,7 +10,6 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('userName', 'varchar(50)', col => col.notNull().unique())
     .addColumn('email', 'text')
     .addColumn('emailConfirmationToken', 'varchar(36)')
-    .addColumn('googleId', 'text')
     .addColumn('published', 'boolean', col => col.notNull().defaultTo(false))
     .addColumn('domain', 'varchar(100)', col => col.unique())
     .addColumn('stripeCustomerId', 'varchar(255)', col => col.unique())

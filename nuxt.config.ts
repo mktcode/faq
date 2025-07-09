@@ -39,13 +39,6 @@ export default defineNuxtConfig({
     stripeApiSecretKey: process.env.STRIPE_API_SECRET_KEY,
     stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
     stripePriceId: process.env.STRIPE_PRICE_ID,
-    oauth: {
-      google: {
-        clientId: process.env.OAUTH_GOOGLE_CLIENT_ID,
-        clientSecret: process.env.OAUTH_GOOGLE_CLIENT_SECRET,
-        redirectURL: process.env.OAUTH_GOOGLE_REDIRECT_URL,
-      },
-    },
     session: {
       password: process.env.SESSION_PASSWORD || '',
       cookie: {
@@ -62,16 +55,16 @@ export default defineNuxtConfig({
   },
 
   // From stripe docs:
-  // connect-src, https://api.stripe.com, https://maps.googleapis.com
+  // connect-src, https://api.stripe.com
   // frame-src, https://*.js.stripe.com, https://js.stripe.com, https://hooks.stripe.com
-  // script-src, https://*.js.stripe.com, https://js.stripe.com, https://maps.googleapis.com
+  // script-src, https://*.js.stripe.com, https://js.stripe.com
   routeRules: {
     '/**': {
       headers: {
         'Content-Security-Policy': [
-          'connect-src \'self\' https://api.stripe.com https://maps.googleapis.com',
+          'connect-src \'self\' https://api.stripe.com',
           'frame-src \'self\' https://*.js.stripe.com https://js.stripe.com https://hooks.stripe.com',
-          'script-src \'self\' \'unsafe-inline\' https://*.js.stripe.com https://js.stripe.com https://maps.googleapis.com',
+          'script-src \'self\' \'unsafe-inline\' https://*.js.stripe.com https://js.stripe.com',
         ].join('; '),
       },
     },

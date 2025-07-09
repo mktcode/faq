@@ -16,11 +16,9 @@ export function makeUsername(name: string): string {
 export async function createUser({
   name,
   userName,
-  googleId = null,
 }: {
   name: string
   userName: string
-  googleId?: string | null
 }) {
   const db = await getDatabaseConnection()
 
@@ -29,7 +27,6 @@ export async function createUser({
     .values({
       name,
       userName: makeUsername(userName),
-      googleId,
       published: false,
       domain: null,
       settings: JSON.stringify({
