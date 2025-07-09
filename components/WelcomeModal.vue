@@ -7,6 +7,11 @@ const showModal = ref(false)
 setTimeout(() => {
   showModal.value = showModalLocal.value
 }, 1000)
+
+function close() {
+  showModal.value = false
+  showModalLocal.value = false
+}
 </script>
 
 <template>
@@ -32,7 +37,7 @@ setTimeout(() => {
         <UButton
           label="Schließen"
           class="mx-auto mt-4"
-          @click="showModal = false"
+          @click="close"
         />
       </div>
     </template>
