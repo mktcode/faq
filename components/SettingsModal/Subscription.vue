@@ -39,7 +39,7 @@ async function updateEmail() {
     <template v-else>
       <template v-if="me?.email && !me?.emailConfirmationToken">
         <p class="text-gray-600">
-          Mit einem Plus-Abonnement erhalten Sie Zugriff auf erweiterte Funktionen und und machen Ihr Gewerbeprofil mit unserer Hilfe zur professionellen Website.
+          Mit einem Plus-Abonnement erhalten Sie Zugriff auf erweiterte Funktionen und machen Ihr Gewerbeprofil mit unserer Hilfe zur professionellen Website.
         </p>
         <ul class="list-disc list-inside text-gray-600 mb-6">
           <li>Domain und E-Mail-Adresse inkl.</li>
@@ -70,7 +70,7 @@ async function updateEmail() {
       </template>
       <template v-else>
         <p class="text-gray-400">
-          Mit einem Plus-Abonnement erhalten Sie Zugriff auf erweiterte Funktionen und und machen Ihr Gewerbeprofil mit unserer Hilfe zur professionellen Website.
+          Mit einem Plus-Abonnement erhalten Sie Zugriff auf erweiterte Funktionen und machen Ihr Gewerbeprofil mit unserer Hilfe zur professionellen Website.
         </p>
         <ul class="list-disc list-inside text-gray-400">
           <li>Domain und E-Mail-Adresse inkl.</li>
