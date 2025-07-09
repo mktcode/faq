@@ -76,7 +76,7 @@ async function updateEmail() {
           <li>Domain und E-Mail-Adresse inkl.</li>
           <li>Mehr Speicherplatz für Bilder und Downloads</li>
           <li>KI-Assisstent für Anfragen und FAQ</li>
-          <li>Individuelle Gestaltung verfügbar</li>
+          <li>Individuelle Gestaltung verfügbar (ab einmalig 500 €)</li>
         </ul>
         <p class="text-gray-400">
           Bitte geben Sie Ihre E-Mail-Adresse an, um ein Plus-Abonnement abzuschließen.
