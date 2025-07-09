@@ -5,6 +5,10 @@ const { appHost } = useRuntimeConfig().public
 
 const userName = ref('')
 
+function sanitizeUserName(name: string) {
+  userName.value = name.toLowerCase().replace(/[^a-z]/g, '')
+}
+
 async function signUp() {
   await register({ userName: userName.value })
   await fetchUserSession()
@@ -17,18 +21,24 @@ async function signUp() {
     class="w-full max-w-xl flex flex-col gap-4"
     @submit.prevent="signUp"
   >
-    <div class="flex">
-      <UInput
-        v-model="userName"
-        placeholder="Benutzername"
-        size="xxl"
-        class="w-full"
-        :ui="{
-          base: 'rounded-r-none',
-        }"
-      />
-      <div class="text-gray-500 border border-gray-100 rounded-lg rounded-l-none border-l-0 flex items-center justify-center px-4">
-        .gewerbeprofil.de
+    <div>
+      <div class="flex">
+        <UInput
+          :value="userName"
+          placeholder="Benutzername"
+          size="xxl"
+          class="w-full"
+          :ui="{
+            base: 'rounded-r-none',
+          }"
+          @input="sanitizeUserName($event.target.value)"
+        />
+        <div class="text-gray-500 border border-gray-100 rounded-lg rounded-l-none border-l-0 flex items-center justify-center px-4">
+          .gewerbeprofil.de
+        </div>
+      </div>
+      <div class="text-gray-400 text-sm mt-2">
+        Es sind ausschließlich Kleinbuchstaben erlaubt.
       </div>
     </div>
     <div class="flex gap-2">
