@@ -2,7 +2,9 @@ service: gewerbeprofil
 image: mktcode/gewerbeprofil
 servers:
   web:
-    - <%= `bin/terraform output -raw app-1_ip` %>
+    hosts:
+      - <%= `bin/terraform output -raw app-1_ip` %>
+    proxy: false
 registry:
   username: mktcode
   password:
@@ -38,7 +40,7 @@ aliases:
   db: accessory exec db --interactive --reuse "sh"
 builder:
   arch:
-    - amd64
+    # - amd64
     - arm64
 accessories:
   db:
