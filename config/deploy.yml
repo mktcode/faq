@@ -9,7 +9,6 @@ registry:
   username: mktcode
   password:
     - KAMAL_REGISTRY_PASSWORD
-proxy: false
 ssh:
   keys_only: true
   keys: ["~/.ssh/hetzner"]
