@@ -12,10 +12,6 @@ interface TargetUser {
   lastPaidAt: Date | null
 }
 
-interface SessionUser {
-  userName: string
-}
-
 function validateHostHeader(event: H3Event): string {
   const host = event.node.req.headers.host
 
@@ -51,10 +47,14 @@ function checkSubscriptionStatus(lastPaidAt: Date | null): boolean {
   return lastPaidAt >= thirtyOneDaysAgo
 }
 
-function setProfileContext(event: H3Event, targetUser: TargetUser): void {
+async function setProfileContext(event: H3Event, targetUser: TargetUser | undefined): Promise<void> {
+  const { user: loggedInUser } = await getUserSession(event)
+
   event.context.profile = {
-    username: targetUser.userName,
-    isSubscribed: checkSubscriptionStatus(targetUser.lastPaidAt),
+    username: targetUser?.userName || null,
+    isSubscribed: targetUser ? checkSubscriptionStatus(targetUser.lastPaidAt) : false,
+    isOwned: loggedInUser ? loggedInUser.userName === targetUser?.userName : false,
+    isPublic: targetUser ? targetUser.published : false,
     design: 'default',
   }
 }
@@ -63,11 +63,7 @@ function extractUsernameFromSubdomain(currentHost: string): string {
   return currentHost.split('.')[0]
 }
 
-function isUserAuthorizedToView(targetUser: TargetUser, loggedInUser: SessionUser | undefined): boolean {
-  return targetUser.published || loggedInUser?.userName === targetUser.userName
-}
-
-async function handleCustomDomain(domain: string, loggedInUser: SessionUser | undefined, event: H3Event): Promise<void> {
+async function handleCustomDomain(event: H3Event, domain: string): Promise<void> {
   const db = await getDatabaseConnection()
 
   const targetUser = await db.selectFrom('users')
@@ -75,12 +71,10 @@ async function handleCustomDomain(domain: string, loggedInUser: SessionUser | un
     .where('domain', '=', domain)
     .executeTakeFirst()
 
-  if (targetUser && isUserAuthorizedToView(targetUser, loggedInUser)) {
-    setProfileContext(event, targetUser)
-  }
+  setProfileContext(event, targetUser)
 }
 
-async function handleSubdomain(currentHost: string, loggedInUser: SessionUser | undefined, event: H3Event): Promise<void> {
+async function handleSubdomain(event: H3Event, currentHost: string): Promise<void> {
   const db = await getDatabaseConnection()
   const username = extractUsernameFromSubdomain(currentHost)
 
@@ -89,22 +83,7 @@ async function handleSubdomain(currentHost: string, loggedInUser: SessionUser | 
     .where('userName', '=', username)
     .executeTakeFirst()
 
-  if (!targetUser) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: 'Profil nicht gefunden.',
-    })
-  }
-
-  if (isUserAuthorizedToView(targetUser, loggedInUser)) {
-    setProfileContext(event, targetUser)
-  }
-  else {
-    throw createError({
-      statusCode: 404,
-      statusMessage: 'Profil nicht gefunden.',
-    })
-  }
+  setProfileContext(event, targetUser)
 }
 
 export default defineEventHandler(async (event) => {
@@ -116,12 +95,10 @@ export default defineEventHandler(async (event) => {
     return
   }
 
-  const { user: loggedInUser } = await getUserSession(event)
-
   if (isCustomDomain) {
-    await handleCustomDomain(currentHost, loggedInUser, event)
+    await handleCustomDomain(event, currentHost)
   }
   else if (isSubdomain) {
-    await handleSubdomain(currentHost, loggedInUser, event)
+    await handleSubdomain(event, currentHost)
   }
 })
