@@ -63,7 +63,7 @@ async function signIn() {
           </div>
 
           <UButton
-            to="/register/2"
+            to="/register"
             label="Neuen Zugang erstellen"
             size="xl"
             block
