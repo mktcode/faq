@@ -9,7 +9,6 @@
     "dev": "nuxt dev --host --dotenv .env.local",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "bd": "npm run build && npm run deploy",
     "migrate": "npx tsx db/migrate.ts",
     "migrate:down": "npx tsx db/down.ts",
     "test": "vitest",
