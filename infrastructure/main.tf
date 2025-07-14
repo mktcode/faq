@@ -134,6 +134,7 @@ resource "hcloud_load_balancer_service" "app-health" {
     port     = 80
     interval = 30
     timeout  = 5
+    retries = 5
 
     http {
       path         = "/up"
