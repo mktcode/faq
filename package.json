@@ -6,6 +6,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "build": "nuxt build",
+    "deploy": "rsync -avz -e 'ssh -i ~/.ssh/uberspace-mktcode' .output/ mktcode@alnilam.uberspace.de:/home/mktcode/projects/gewerbeprofil.de && ssh -i ~/.ssh/uberspace-mktcode mktcode@alnilam.uberspace.de 'supervisorctl restart gewerbeprofil.de'",
     "dev": "nuxt dev --host --dotenv .env.local",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
