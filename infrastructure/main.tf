@@ -44,14 +44,6 @@ resource "hcloud_firewall" "app" {
     port      = "443"
     source_ips = [hcloud_load_balancer.app.ipv4]
   }
-  rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "9100"
-    source_ips = [
-      hcloud_server.monitor.ipv4_address
-    ]
-  }
 }
 
 resource "hcloud_firewall" "db" {
@@ -71,15 +63,6 @@ resource "hcloud_firewall" "db" {
     port      = "3306"
     source_ips = [
       hcloud_server.app-1.ipv4_address,
-      # hcloud_server.app-2.ipv4_address
-    ]
-  }
-  rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "9100"
-    source_ips = [
-      hcloud_server.monitor.ipv4_address
     ]
   }
 }
