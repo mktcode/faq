@@ -7,22 +7,21 @@
 - Hydration Issues beheben
 - 404 Seite mit Anmeldung und Registrierung. (Wenn man die App zum Startbildschirm hinzufügt, ist man ausgeloggt und wenn das Profil nicht veröffentlich ist, kommt 404)
 - Anmeldung und Registrierung richtig durchtesten.
-- Profilansicht nach Aktualisierung von Einstellungen live updaten (erfordert aktuell refresh).
 - Feedback Funktion implementieren (evtl. nur als Hinweis: Feddback bitte an kontakt@...)
 - API Endpoints Origin schützen (nur von erlaubten Userdomains/Subdomains).
 - Premium-Features richtig implementieren (es wird aktuell geprüft ob man eingeloggt ist und Premium hat und nicht ob das aufgerufene Profil Premium ist).
-- Icons in IconPicker (externe Links, etc.) ergänzen
 - HTML für v-html desinfizieren
 - Fullscreen Gallery optimieren (Pfeile, Punkte, Mobil)
 - Validierungshinweise in Anfrageformular verbessern.
-- dezentere Toasts
 - Settings Modal optimieren (Gallery, etc.)
 - Benutzername Eingabe beim Registrieren/Anmelden validieren
 - E-Mail-Templates (html emails) und Text über Anfrageformular
-- Einstellungen: JSON aufräumen/strukturieren
-- Headergestaltung optimieren mit Bild (Overlay, Schriftgröße, Varianten).
+
+# Später
+
+- Dezentere Toasts
 - Einstellung: per Du oder per Sie (in Textvorlagen, etc.)
-- FAQ-Embeddings nur für Premium-Nutzer
+- Einstellungen: JSON aufräumen/strukturieren
 
 ## Datenbank und Typen
 
