@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
 
     const user = await db
       .selectFrom('users')
-      .select(['id', 'userName', 'email'])
+      .select(['id', 'name', 'userName', 'email'])
       .where('emailConfirmationToken', '=', confirmationToken)
       .executeTakeFirst()
 
@@ -31,6 +31,16 @@ export default defineEventHandler(async (event) => {
         })
         .where('id', '=', user.id)
         .execute()
+      
+      await setUserSession(event, {
+        user: {
+          id: user.id,
+          name: user.name,
+          userName: user.userName,
+          email: user.email,
+          picture: '',
+        },
+      })
 
       return sendRedirect(event, `https://${user.userName}.${appHost}?emailVerified=1`, 302)
     }
