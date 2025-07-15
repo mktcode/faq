@@ -45,7 +45,7 @@ async function saveRequest() {
 }
 
 async function getEmbedding() {
-  if (!messageLongEnough.value) {
+  if (!messageLongEnough.value || !isSubscribed.value) {
     return
   }
 
