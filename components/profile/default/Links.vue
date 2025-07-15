@@ -14,7 +14,7 @@ defineProps<{
       v-for="(link, index) in links"
       :key="index"
       :label="link.title"
-      :icon="link.icon"
+      :icon="link.icon === 'none' ? undefined : link.icon"
       :href="link.url"
       target="_blank"
       variant="soft"

@@ -2,11 +2,16 @@
 import type { SelectMenuItem } from '@nuxt/ui'
 
 const icon = defineModel('icon', {
-  default: 'i-lucide-instagram',
+  default: 'none',
   type: String,
 })
 
+// TODO: Add more icons
 const items = ref([
+  {
+    label: 'Kein Symbol',
+    value: 'none',
+  },
   {
     label: 'Instagram',
     value: 'i-lucide-instagram',
@@ -108,7 +113,7 @@ const value = ref(icon.value ? items.value.find(item => item.value === icon.valu
 
 watch(value, (newValue) => {
   if (newValue) {
-    icon.value = newValue.icon
+    icon.value = newValue.icon || 'none'
   }
 }, { immediate: true })
 </script>
@@ -120,9 +125,9 @@ watch(value, (newValue) => {
     :icon="value?.icon"
     variant="soft"
     :ui="{
-      base: 'bg-primary-200/50 text-primary-900 w-fit pr-0 hover:bg-primary-100 focus:bg-primary-100 aspect-square',
+      base: 'bg-primary-200/50 text-primary-900 w-fit pr-0 hover:bg-primary-100 focus:bg-primary-100 aspect-square size-10',
       content: 'w-fit',
-      leadingIcon: 'text-primary-600',
+      leadingIcon: 'text-primary-600 size-5',
     }"
   >
     <template #default>
@@ -132,7 +137,10 @@ watch(value, (newValue) => {
       <span />
     </template>
     <template #item-leading="{ item }">
-      <div class="bg-primary-200/50 text-primary-600 hover:bg-primary-100 focus:bg-primary-100 aspect-square flex items-center justify-center p-2 rounded-lg">
+      <div
+        v-if="item.icon"
+        class="bg-primary-200/50 text-primary-600 hover:bg-primary-100 focus:bg-primary-100 aspect-square flex items-center justify-center p-2 rounded-lg"
+      >
         <UIcon
           :name="item.icon"
           class="size-5"
