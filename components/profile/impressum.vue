@@ -13,7 +13,9 @@ const appConfig = useAppConfig()
 const font = computed(() => currentSettings.value?.font || 'roboto')
 appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
 
-const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
+const logo = computed(() => {
+  return currentSettings.value?.logo || null
+})
 </script>
 
 <template>
@@ -28,31 +30,23 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
           class="w-16 mb-4"
         />
       </div>
-      <div
-        v-else
-        class="size-16 rounded-full bg-gray-100 flex items-center justify-center"
-      >
-        <UIcon
-          name="i-heroicons-photo"
-          class="size-7 opacity-25"
-        />
-      </div>
+      
       <h1 class="text-lg font-bold mb-4">
         {{ currentSettings?.title || username }}
       </h1>
 
-      <div class="text-gray-500 prose-xl">
+      <div class="prose-xl">
         <h1 class="mb-0 text-center">
           Impressum
         </h1>
 
-        <p class="mt-2 text-gray-400 text-center">
-          Angaben gemäß § 5 TMG:
+        <p class="mt-2 text-center">
+          Angaben gemäß § 5 DDG:
         </p>
 
-        <h2>
-          Inhaltlich verantwortlich gemäß § 55 Abs. 2 RStV:
-        </h2>
+        <p class="mt-2">  
+          Inhaltlich verantwortlich:
+        </p>
 
         <p>
           {{ currentSettings?.company?.name || 'Dein Unternehmensname' }}<br>
@@ -63,6 +57,13 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
           E-Mail: <a :href="`mailto:${currentSettings?.company?.email || 'kontakt@beispiel.de'}`">
             {{ currentSettings?.company?.email || 'kontakt@beispiel.de' }}
           </a>
+        </p>
+
+        <p class="mt-2" v-if="currentSettings?.company?.taxId">
+          Umsatzsteuer-ID: {{ currentSettings?.company?.taxId }}
+        </p>
+        <p v-else class="mt-2">
+          Nach § 19 UStG wird keine Umsatzsteuer berechnet.
         </p>
       </div>
 

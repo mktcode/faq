@@ -13,7 +13,9 @@ const appConfig = useAppConfig()
 const font = computed(() => currentSettings.value?.font || 'roboto')
 appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
 
-const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
+const logo = computed(() => {
+  return currentSettings.value?.logo || null
+})
 </script>
 
 <template>
@@ -28,20 +30,11 @@ const logo = 'https://nbg1.your-objectstorage.com/mktcms/1/icon.webp'
           class="w-16 mb-4"
         />
       </div>
-      <div
-        v-else
-        class="size-16 rounded-full bg-gray-100 flex items-center justify-center"
-      >
-        <UIcon
-          name="i-heroicons-photo"
-          class="size-7 opacity-25"
-        />
-      </div>
       <h1 class="text-lg font-bold mb-4">
         {{ currentSettings?.title || username }}
       </h1>
 
-      <div class="text-gray-500 prose">
+      <div class="prose">
         <h1>Datenschutzerklärung</h1>
         <p>
           Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und Zwecke der Verarbeitung von personenbezogenen Daten (nachfolgend kurz „Daten“) innerhalb unseres Onlineangebotes auf. Die verwendeten Begrifflichkeiten, wie z.B. „Verarbeitung“ oder „Verantwortlicher“, beziehen sich auf die Definitionen im Art. 4 der Datenschutz-Grundverordnung (DSGVO).
