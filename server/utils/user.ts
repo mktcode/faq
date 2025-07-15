@@ -1,4 +1,5 @@
 import type { H3Event } from 'h3'
+import { SettingsForm } from '~/types/db'
 
 export function makeUsername(name: string): string {
   // TODO: check for uniqueness in the database
@@ -22,6 +23,14 @@ export async function createUser({
 }) {
   const db = await getDatabaseConnection()
 
+  const settings: SettingsForm = {
+    title: name,
+    headerTitleColor: 'black',
+    headerTitleFontSize: 10,
+    headerDescriptionColor: 'black',
+    headerDescriptionFontSize: 6,
+  }
+
   const insertResult = await db
     .insertInto('users')
     .values({
@@ -29,9 +38,7 @@ export async function createUser({
       userName: makeUsername(userName),
       published: false,
       domain: null,
-      settings: JSON.stringify({
-        title: name,
-      }),
+      settings: JSON.stringify(settings),
     })
     .executeTakeFirstOrThrow()
 
