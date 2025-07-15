@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const toast = useToast()
 
-defineEmits(['switchToSubscription'])
+const emit = defineEmits(['update', 'switchToSubscription'])
 
 const { data: currentSettings } = await useFetch(`/api/user/settings`)
 
@@ -37,6 +37,7 @@ async function saveSettings() {
     description: 'Deine Einstellungen wurden erfolgreich gespeichert.',
     color: 'success',
   })
+  emit('update')
 }
 
 async function togglePublished() {
@@ -317,12 +318,17 @@ const clickLogoInput = () => {
     <div class="flex gap-2">
       <ColorPicker
         v-model:color="form.headerImageOverlay.color"
-        :label="undefined"
+        label="Hintergrund"
       />
-      <USlider
-        v-model="form.headerImageOverlay.opacity"
+      <UFormField
+        label="Deckkraft"
         class="flex-1"
-      />
+      >
+        <USlider
+          v-model="form.headerImageOverlay.opacity"
+          class="flex-1 mt-4"
+        />
+      </UFormField>
     </div>
     <div class="flex gap-2">
       <ColorPicker

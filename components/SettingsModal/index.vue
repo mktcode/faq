@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { AccordionItem } from '@nuxt/ui'
 
+defineEmits(['update'])
+
 const showModal = useState('showSettingsModal', () => false)
 
 const items: AccordionItem[] = [
@@ -76,7 +78,10 @@ function switchToSubscription() {
         }"
       >
         <template #general>
-          <SettingsModalGeneral @switch-to-subscription="switchToSubscription" />
+          <SettingsModalGeneral
+            @update="$emit('update')"
+            @switch-to-subscription="switchToSubscription"
+          />
         </template>
         <template #company>
           <SettingsModalCompany />
