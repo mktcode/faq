@@ -1,5 +1,8 @@
 # Beta Release
 
+- Profil live aktualisieren wenn Einstellungen geändert werden.
+- Alle Einstellungen sofort übernehmen, ohne Klick auf "Speichern".
+- Hydration Issues beheben
 - 404 Seite mit Anmeldung und Registrierung. (Wenn man die App zum Startbildschirm hinzufügt, ist man ausgeloggt und wenn das Profil nicht veröffentlich ist, kommt 404)
 - Anmeldung und Registrierung richtig durchtesten.
 - Profilansicht nach Aktualisierung von Einstellungen live updaten (erfordert aktuell refresh).
