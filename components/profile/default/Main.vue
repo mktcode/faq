@@ -50,6 +50,7 @@ useState('designRounded', () => currentSettings.value?.rounded || 'md')
       :username="username"
     />
     <ProfileDefaultHeader
+      :username="username"
       :current-settings="currentSettings"
     />
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">

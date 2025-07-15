@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { SettingsForm } from '~/types/db'
 
-const { currentSettings } = defineProps<{
+const { username, currentSettings } = defineProps<{
+  username: string
   currentSettings?: SettingsForm | null
 }>()
 </script>
@@ -44,6 +45,7 @@ const { currentSettings } = defineProps<{
       <ProfileDefaultLinks
         v-if="currentSettings?.links?.length"
         :links="currentSettings.links"
+        :username="username"
       />
     </div>
   </div>
