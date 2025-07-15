@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const { stripePortalUrl } = useRuntimeConfig().public
 const { me } = await useMe()
+const { isStartingCheckout, startCheckoutSession } = useCheckoutSession()
+
 const emailToVerify = ref(me.value?.email || '')
 const isUpdatingEmail = ref(false)
 const showEmailVerificationHint = ref(false)
@@ -64,6 +66,8 @@ async function updateEmail() {
               :ui="{
                 trailingIcon: 'ml-auto',
               }"
+              :loading="isStartingCheckout"
+              @click="startCheckoutSession"
             />
           </div>
         </div>

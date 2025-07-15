@@ -1,24 +1,6 @@
 <script setup lang="ts">
 const isOpen = ref(true)
-const isStartingCheckout = ref(false)
-
-async function startCheckoutSession() {
-  if (isStartingCheckout.value) return
-  isStartingCheckout.value = true
-
-  const { url } = await $fetch('/api/user/createCheckoutSession', {
-    method: 'POST',
-  })
-
-  isStartingCheckout.value = false
-
-  if (url) {
-    await navigateTo(url, { external: true })
-  }
-  else {
-    console.error('Checkout session URL not found')
-  }
-}
+const { isStartingCheckout, startCheckoutSession } = useCheckoutSession()
 </script>
 
 <template>
