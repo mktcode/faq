@@ -13,9 +13,94 @@ const items = ref([
     icon: 'i-lucide-instagram',
   },
   {
+    label: 'Facebook',
+    value: 'i-lucide-facebook',
+    icon: 'i-lucide-facebook',
+  },
+  {
+    label: 'Twitter',
+    value: 'i-lucide-twitter',
+    icon: 'i-lucide-twitter',
+  },
+  {
+    label: 'LinkedIn',
+    value: 'i-lucide-linkedin',
+    icon: 'i-lucide-linkedin',
+  },
+  {
+    label: 'GitHub',
+    value: 'i-lucide-github',
+    icon: 'i-lucide-github',
+  },
+  {
+    label: 'YouTube',
+    value: 'i-lucide-youtube',
+    icon: 'i-lucide-youtube',
+  },
+  {
+    label: 'TikTok',
+    value: 'i-fa-brands-tiktok',
+    icon: 'i-fa-brands-tiktok',
+  },
+  {
+    label: 'Pinterest',
+    value: 'i-fa-brands-pinterest',
+    icon: 'i-fa-brands-pinterest',
+  },
+  {
+    label: 'Kleinanzeigen',
+    value: 'i-simple-icons-kleinanzeigen',
+    icon: 'i-simple-icons-kleinanzeigen',
+  },
+  {
+    label: 'Ebay',
+    value: 'i-fa-brands-ebay',
+    icon: 'i-fa-brands-ebay',
+  },
+  {
+    label: 'Etsy',
+    value: 'i-fa-brands-etsy',
+    icon: 'i-fa-brands-etsy',
+  },
+  {
+    label: 'Avocado',
+    value: 'i-icon-park-solid-avocado',
+    icon: 'i-icon-park-solid-avocado',
+  },
+  {
+    label: 'Google',
+    value: 'i-fa-brands-google',
+    icon: 'i-fa-brands-google',
+  },
+  {
+    label: 'Discord',
+    value: 'i-fa-brands-discord',
+    icon: 'i-fa-brands-discord',
+  },
+  {
+    label: 'Bluesky',
+    value: 'i-simple-icons-bluesky',
+    icon: 'i-simple-icons-bluesky',
+  },
+  {
+    label: 'Mastodon',
+    value: 'i-fa-brands-mastodon',
+    icon: 'i-fa-brands-mastodon',
+  },
+  {
     label: 'Shop',
     value: 'i-lucide-shopping-cart',
     icon: 'i-lucide-shopping-cart',
+  },
+  {
+    label: 'Website',
+    value: 'i-lucide-globe',
+    icon: 'i-lucide-globe',
+  },
+  {
+    label: 'Link',
+    value: 'i-lucide-link',
+    icon: 'i-lucide-link',
   },
 ] satisfies SelectMenuItem[])
 
