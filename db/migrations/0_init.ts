@@ -37,13 +37,12 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
     .addColumn('userId', 'integer', col => col.notNull())
     .addColumn('question', 'text', col => col.notNull())
-    // .addColumn('questionEmbedding', 'vector(1536)', col => col.notNull())
     .addColumn('answer', 'text', col => col.notNull())
     .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
     .execute()
 
-  // Add questionEmbedding vector(1536) column
-  await sql`ALTER TABLE qanda ADD COLUMN questionEmbedding vector(1536) NOT NULL`
+  // Add embedding vector(1536) column
+  await sql`ALTER TABLE qanda ADD COLUMN embedding vector(1536)`
     .execute(db)
 
   await db.schema
