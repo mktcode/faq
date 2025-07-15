@@ -52,6 +52,7 @@ async function getEmbedding() {
   const embedding = await $fetch('/api/customerRequests/embedding', {
     query: {
       message: message.value,
+      username,
     },
   })
 

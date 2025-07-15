@@ -57,6 +57,7 @@ export async function createUser({
   return newUser
 }
 
+// TODO: Should be checked on database level
 export function checkSubscribed(lastPaidAt: Date | string | null): boolean {
   if (!lastPaidAt) {
     return false
@@ -107,4 +108,23 @@ export async function requireSubscription(event: H3Event) {
   }
 
   return user
+}
+
+export async function requireProfileSubscription(username: string) {
+  const db = await getDatabaseConnection()
+  const user = await db
+    .selectFrom('users')
+    .select(['lastPaidAt'])
+    .where('userName', '=', username)
+    .executeTakeFirst()
+
+  const isSubscribed = checkSubscribed(user?.lastPaidAt || null) || false
+
+  if (!isSubscribed) {
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Forbidden',
+      message: 'The profile is not subscribed.',
+    })
+  }
 }
