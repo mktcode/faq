@@ -1,5 +1,7 @@
 # Beta Release
 
+- Ladeanmiation beim Hochladen von Bildern (Header, Logo, Galerie)
+- Bilder beim Löschen wirklich aus Bucket entfernen (Header, Logo, Gallerie)
 - Profil live aktualisieren wenn Einstellungen geändert werden.
 - Alle Einstellungen sofort übernehmen, ohne Klick auf "Speichern".
 - Hydration Issues beheben
