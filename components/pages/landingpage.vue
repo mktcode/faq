@@ -42,7 +42,7 @@ async function signOut() {
         </template>
         <template v-else>
           <UButton
-            to="/register/1"
+            to="/register"
           >
             Nein, erstmal nicht.
           </UButton>
