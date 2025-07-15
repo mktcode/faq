@@ -16,7 +16,7 @@ const { username, isOwned, isPublic, design, path } = useProfile()
           v-else-if="path === '/datenschutz'"
           :username="username"
         />
-        <template v-if="path === '/'">
+        <template v-else-if="path === '/'">
           <ProfileDefaultMain
             v-if="design === 'default'"
             :username="username"
