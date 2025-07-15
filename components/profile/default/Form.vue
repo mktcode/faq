@@ -56,6 +56,8 @@ async function getEmbedding() {
   })
 
   messageEmbedding.value = embedding
+
+  await getSimilarQuestions()
 }
 
 async function getSimilarQuestions() {
@@ -73,7 +75,6 @@ async function getSimilarQuestions() {
 }
 
 watchDebounced(message, getEmbedding, { debounce: 2000 })
-watchDebounced(messageEmbedding, getSimilarQuestions, { debounce: 500 })
 
 const designRounded = useState('designRounded')
 </script>
