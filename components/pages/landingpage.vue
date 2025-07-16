@@ -37,10 +37,21 @@ async function signOut() {
         </UButton>
       </template>
     </div>
-    <div class="flex flex-col items-center justify-center max-w-3xl mx-auto py-24 md:py-32 px-4">
+    <div class="flex flex-col items-center justify-center max-w-3xl mx-auto pb-24 md:pb-32 px-4">
       <div
         class="text-center flex flex-col items-center max-w-2xl mx-auto"
       >
+        <div class="text-sky-500 text-2xl font-bold flex items-center gap-4 mb-24 leading-none">
+          <img
+            src="~/assets/img/logo.png"
+            alt="Logo"
+            class="w-14"
+          />
+          <div class="text-left">
+            Gewerbe<br>
+            profil.de
+          </div>
+        </div>
         <h2 class="text-2xl">
           Wagen Sie gerade den Schritt in die Selbstständigkeit und überlegen, ob Sie eine Website brauchen?
         </h2>
@@ -79,12 +90,16 @@ async function signOut() {
           <span class="text-sky-500 text-4xl mr-2">✔</span>
           <span><strong class="text-gray-900">Aktive Kundengewinnung: Social Media und Anzeigenportale</strong> <br>
             Kleinanzeigen.de, nebenan.de, Instagram, Facebook oder TikTok – Es gibt viele kostenlose Plattformen, auf denen Sie aktiv werben und Kunden gewinnen können.
+            Nutzen Sie diese Kanäle.
           </span>
         </li>
         <li class="flex items-start">
           <span class="text-sky-500 text-4xl mr-2">✔</span>
-          <span><strong class="text-gray-900">Social Proof: Erste Kundenmeinungen oder Referenzen?</strong> <br>
-          Bewertungen zählen mehr als ein schickes Design.</span>
+          <span><strong class="text-gray-900">Social Proof: Erste Kundenmeinungen oder Referenzen</strong> <br>
+          Bewertungen zählen mehr als ein schickes Design.
+          Fragen Sie Ihre ersten Kunden, ob sie bereit sind, eine kurze Bewertung zu schreiben.
+          Antworten Sie auf Bewertungen, auch wenn sie kritisch sind.
+        </span>
         </li>
       </ul>
   
