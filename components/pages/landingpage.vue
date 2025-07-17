@@ -97,14 +97,15 @@ async function signOut() {
           <span class="text-sky-500 text-4xl mr-2">✔</span>
           <span><strong class="text-gray-900">Social Proof: Bewertungen zählen mehr als ein schickes Design.</strong> <br>
           Bitten Sie Kunden, Ihr <a class="text-sky-500" href="https://support.google.com/business/answer/3474122?hl=de" target="_blank">Unternehmen auf Google zu bewerten</a> oder Ihnen auf Facebook und Co. zu folgen oder auf "Gefällt mir" zu klicken.
-          Interagieren Sie mit Ihren Kunden, beantworten Sie Fragen und Kommentare und klären Sie kritische Bewertungen.
+          Interagieren Sie mit Ihren Kunden, beantworten Sie Fragen und Kommentare und klären Sie kritische Rezensionen.
+          Egal wie professionell Sie am Ende aufgestellt sind - "Mundpropaganda" und Empfehlungen bleiben wichtig.
         </span>
         </li>
         <li class="flex items-start">
           <span class="text-sky-500 text-4xl mr-2">✔</span>
           <span><strong class="text-gray-900">Bilder sagen mehr als tausend Worte.</strong> <br>
           Heutige Smartphones machen erstaunlich gute Fotos und können diese auch gleich bearbeiten und optimieren.
-          Achten Sie ein wenig auf gute Beleuchtung und ein gut sichtbares Motiv und sparen Sie sich den teuren Fotografen, erstmal zumindest.
+          Achten Sie ein wenig auf gute Beleuchtung und gut sichtbare Motive und sparen Sie sich den teuren Fotografen, erstmal zumindest.
           Es spricht auch nichts gegen ein Video, wenn Sie sich damit wohlfühlen. Zeigen Sie sich und Ihre Arbeit!
         </span>
         </li>
@@ -117,9 +118,8 @@ async function signOut() {
       </p>
 
       <p class="mt-10 text-gray-500 text-xl">
-        Haben Sie diese Punkte abgehakt, können Sie sich um eine Website kümmern,... wenn Sie dann überhaupt noch eine brauchen.
-        Bevor Sie zu viel (oder zu wenig) Geld für eine Website ausgeben,
-        probieren Sie unser kostenloses Gewerbeprofil aus. Damit sind Sie sofort online und konzentrieren sich auf Ihre Inhalte und die Kommunikation mit Ihren Kunden.
+        Das wäre bei uns dann das namensgebende <strong>Gewerbeprofil</strong> - eine einfache aber technisch und optisch einwandfreie Website,
+        die Sie selbst schnell eingerichtet haben, ohne dabei etwas falsch machen zu können.
       </p>
   
       <UButton
