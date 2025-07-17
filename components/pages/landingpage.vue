@@ -68,7 +68,7 @@ async function signOut() {
         </p>
       </section>
   
-      <ul class="mt-10 flex flex-col gap-4 text-gray-500 text-lg">
+      <ul class="mt-24 flex flex-col gap-4 text-gray-500 text-lg">
         <li class="flex items-start">
           <span class="text-sky-500 text-4xl mr-2">✔</span>
           <span>
@@ -111,7 +111,7 @@ async function signOut() {
         </li>
       </ul>
   
-      <p class="mt-10 text-gray-500 text-xl">
+      <p class="mt-24 text-gray-500 text-xl">
         Das alles kriegen Sie ganz alleine hin oder mit ein bisschen Hilfe aus dem Familien- und Freundeskreis.
         Wir können Ihnen dabei natürlich auch helfen, müssten dann aber einen üblichen Stundensatz (ab 50 €) dafür nehmen.
         Kommen Sie auf uns zurück, wenn Sie alleine nicht mehr weiterkommen bzw. wenn Sie bereit sind, den nächsten Schritt zu gehen.
@@ -119,7 +119,7 @@ async function signOut() {
 
       <p class="mt-10 text-gray-500 text-xl">
         Das wäre bei uns dann das namensgebende <strong>Gewerbeprofil</strong> - eine einfache aber technisch und optisch einwandfreie Website,
-        die Sie selbst schnell eingerichtet haben, ohne dabei etwas falsch machen zu können.
+        die Sie schnell eingerichtet haben, ohne dabei etwas falsch machen zu können.
       </p>
   
       <UButton
