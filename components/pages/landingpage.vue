@@ -56,7 +56,7 @@ async function signOut() {
           Wagen Sie gerade den Schritt in die Selbstständigkeit und überlegen, ob Sie eine Website brauchen?
         </h2>
         <h1 class="text-5xl font-bold mt-8 leading-tight">
-          Nicht unbedingt. Werden Sie erstmal sichtbar!
+          Nicht sofort. Werden Sie erstmal sichtbar!
         </h1>
       </div>
   
@@ -90,19 +90,32 @@ async function signOut() {
           <span class="text-sky-500 text-4xl mr-2">✔</span>
           <span><strong class="text-gray-900">Aktive Kundengewinnung: Social Media und Anzeigenportale</strong> <br>
             Kleinanzeigen.de, nebenan.de, Instagram, Facebook oder TikTok – Es gibt viele kostenlose Plattformen, auf denen Sie aktiv werben und Kunden gewinnen können.
-            Nutzen Sie diese Kanäle.
+            Nutzen Sie diese Kanäle und kommen Sie mit Ihrer Zielgruppe in Kontakt.
           </span>
         </li>
         <li class="flex items-start">
           <span class="text-sky-500 text-4xl mr-2">✔</span>
-          <span><strong class="text-gray-900">Social Proof: Erste Kundenmeinungen oder Referenzen</strong> <br>
-          Bewertungen zählen mehr als ein schickes Design.
-          Fragen Sie Ihre ersten Kunden, ob sie bereit sind, eine kurze Bewertung zu schreiben.
-          Antworten Sie auf Bewertungen, auch wenn sie kritisch sind.
+          <span><strong class="text-gray-900">Social Proof: Bewertungen zählen mehr als ein schickes Design.</strong> <br>
+          Bitten Sie Kunden, Ihr <a class="text-sky-500" href="https://support.google.com/business/answer/3474122?hl=de" target="_blank">Unternehmen auf Google zu bewerten</a> oder Ihnen auf Facebook und Co. zu folgen oder auf "Gefällt mir" zu klicken.
+          Interagieren Sie mit Ihren Kunden, beantworten Sie Fragen und Kommentare und klären Sie kritische Bewertungen.
+        </span>
+        </li>
+        <li class="flex items-start">
+          <span class="text-sky-500 text-4xl mr-2">✔</span>
+          <span><strong class="text-gray-900">Bilder sagen mehr als tausend Worte.</strong> <br>
+          Heutige Smartphones machen erstaunlich gute Fotos und können diese auch gleich bearbeiten und optimieren.
+          Achten Sie ein wenig auf gute Beleuchtung und ein gut sichtbares Motiv und sparen Sie sich den teuren Fotografen, erstmal zumindest.
+          Es spricht auch nichts gegen ein Video, wenn Sie sich damit wohlfühlen. Zeigen Sie sich und Ihre Arbeit!
         </span>
         </li>
       </ul>
   
+      <p class="mt-10 text-gray-500 text-xl">
+        Das alles kriegen Sie ganz alleine hin oder mit ein bisschen Hilfe aus dem Familien- und Freundeskreis.
+        Wir können Ihnen dabei natürlich auch helfen, müssten dann aber einen üblichen Stundensatz (ab 50 €) dafür nehmen.
+        Kommen Sie auf uns zurück, wenn Sie alleine nicht mehr weiterkommen bzw. wenn Sie bereit sind, den nächsten Schritt zu gehen.
+      </p>
+
       <p class="mt-10 text-gray-500 text-xl">
         Haben Sie diese Punkte abgehakt, können Sie sich um eine Website kümmern,... wenn Sie dann überhaupt noch eine brauchen.
         Bevor Sie zu viel (oder zu wenig) Geld für eine Website ausgeben,
