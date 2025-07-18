@@ -41,7 +41,7 @@ async function signOut() {
       <div
         class="text-center flex flex-col items-center max-w-2xl mx-auto"
       >
-        <div class="text-sky-500 text-2xl font-bold flex items-center gap-4 mb-24 leading-none">
+        <div class="text-sky-500 text-2xl font-bold flex items-start gap-4 mb-24 leading-none">
           <img
             src="~/assets/img/logo.png"
             alt="Logo"
@@ -49,7 +49,8 @@ async function signOut() {
           />
           <div class="text-left">
             Gewerbe<br>
-            profil.de
+            profil.de<br>
+            <span class="text-gray-400 text-sm font-light float-right">beta</span>
           </div>
         </div>
         <h2 class="text-2xl">
