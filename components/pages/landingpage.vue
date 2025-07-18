@@ -219,9 +219,17 @@ async function signOut() {
         </li>
       </ul>
 
+      <h2 class="text-3xl font-bold mt-24">
+        Dürfen wir Ihnen ein Angebot machen?
+      </h2>
+
       <p class="mt-10 text-gray-500 text-xl">
-        Das wäre bei uns dann das namensgebende <strong>Gewerbeprofil</strong> - eine einfache aber technisch, optisch und rechtlich einwandfreie Website,
+        Das wäre dann das namensgebende <strong>Gewerbeprofil</strong> - eine einfache aber technisch, optisch und rechtlich einwandfreie Website,
         die Sie schnell eingerichtet haben, ohne dabei etwas falsch machen zu können.
+      </p>
+
+      <p class="mt-10 text-gray-500 text-xl">
+        ...
       </p>
   
       <UButton
