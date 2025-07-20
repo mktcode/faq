@@ -88,7 +88,7 @@ async function signOut() {
             <strong class="text-gray-900">Klarheit: Ist Ihr Angebot in einem Satz erklärbar? Wer (genau!) ist Ihre Zielgruppe?</strong><br>
             Wenn Sie nicht klar sagen können, was Sie wem bringen – wird’s auch kein anderer verstehen.
             Kostenlose KI-Tools wie <a class="text-sky-500" href="https://chat.openai.com/" target="_blank">ChatGPT</a> oder <a class="text-sky-500" href="https://gemini.google.com" target="_blank">Google Gemini</a> können Ihnen helfen,
-            Klarheit zu gewinnen und professionelle Texte zu schreiben, z.B. für Kleinanzeigen oder Social Media Posts. Auch bei rechtlichen und steuerlichen Fragen können Sie diese Tools eine gute Orientierung geben.
+            Klarheit zu gewinnen und professionelle Texte zu schreiben, z.B. für Kleinanzeigen oder Social Media Posts. Auch bei rechtlichen und steuerlichen Fragen können diese Tools eine gute erste Orientierung geben.
           </span>
         </li>
         <li class="flex items-start">
@@ -140,8 +140,14 @@ async function signOut() {
       </p>
 
       <p class="mt-10 text-gray-500 text-xl">
-        Das ist eine völlig legitime Möglichkeit. Profis werden natürlich erkennen, dass Sie keinen Webdesigner engagiert haben. Ihren Kunden wird das aber kaum auffallen.
-        Trotzdem gibt es ein paar Punkte, die Sie beachten sollten, damit es nicht unprofessionell wirkt oder rechtliche Probleme gibt.
+        All diese Anbieter werden in naher Zukunft auch eine vollständig KI-basierte Erstellung von Websites anbieten oder tun es bereits.
+        Das heißt, Sie unterhalten sich mit Ihrem Computer oder Smartphone, wie mit einem Agenturmitarbeiter und der Rest geht von alleine.
+        Ganz da sind wir noch nicht, aber es ist nur eine Frage der Zeit. Fragen Sie doch mal <a href="https://chat.openai.com/" target="_blank" class="text-sky-500">ChatGPT</a> oder <a href="https://claude.ai/" target="_blank" class="text-sky-500">Claude</a>, ob es Ihnen eine Website erstellen kann.
+        Sie werden erstaunt sein.
+      </p>
+
+      <p class="mt-10 text-gray-500 text-xl">
+        Egal welchen Weg sie wählen, es gibt Aspekte einer Website, die nicht sofort ins Auge fallen und gerne vernachlässigt werden.
       </p>
 
       <ul class="mt-10 flex flex-col gap-4 text-gray-500 text-lg">
@@ -149,23 +155,11 @@ async function signOut() {
           <span class="text-sky-500 text-4xl mr-2">✔</span>
           <span>
             <strong class="text-gray-900">Der erste Eindruck: Suchmaschinen und soziale Medien</strong><br>
-            Suchen Sie Ihrer Website bei Google. Welche Überschrift und Beschreibung wird dort angezeigt?
+            Welche Überschrift und Beschreibung wird bei Google und Co. angezeigt?
             Auch Messenger-Dienste wie WhatsApp oder soziale Medien zeigen eine Vorschau, wenn Sie einen Link zu Ihrer Website teilen.
             Achten Sie darauf, dass nicht einfach irgendein zufälliges Bild und ein Platzhaltertext angezeigt wird.
             Ihre Website hat auch ein kleines Icon, das sog. Favicon, das z.B. in Suchergebnissen und Lesezeichen angezeigt wird.
-            Bei unzähligen Seiten ist das immernoch das Logo von WordPress und Co., weil vergessen wurde, es zu ändern.
-          </span>
-        </li>
-        <li class="flex items-start">
-          <span class="text-sky-500 text-4xl mr-2">✔</span>
-          <span>
-            <strong class="text-gray-900">Cookie Einwilligung: Brauchen Sie NICHT!</strong><br>
-            Zerstören Sie sich nicht selbst Ihre Website, indem Sie eine Cookie-Einwilligung einbauen oder einbauen lassen.
-            Das nervt die Besucher und sorgt für längere Ladezeiten und frühzeitige Absprünge potenzieller Kunden.
-            Sie brauchen keine Cookie-Einwilligung, wenn Sie keine Cookies verwenden, die personenbezogene Daten speichern.
-            Und die verwenden Sie nicht, solange Sie keine Analyse-Tools wie Google Analytics nutzen, die für Ihre Zwecke völlig überdimensioniert sind.
-            Diese Tools brauchen Sie nur, wenn Sie die Umsätze durch Ihre Website bis auf den letzten Klick genau optimieren wollen.
-            Lassen Sie sich nichts aufschwatzen, was Sie nicht brauchen und sogar schadet.
+            Bei unzähligen Seiten ist das immernoch das Logo von WordPress und Co., weil vergessen wurde, es auszutauschen.
           </span>
         </li>
         <li class="flex items-start">
@@ -189,6 +183,18 @@ async function signOut() {
             Vor allem nicht, wenn Sie genau das von anderen abhebt.
             Ein kurzer "Über Mich" Abschnitt kann auch auf mehreren Seiten auftauchen, wenn es für den Lese- und Entscheidungsfluss sinnvoll ist.
             Vermeiden Sie es nur, eine Unterseite nach der anderen zu erstellen, weil Ihnen dieses oder jenes noch einfällt.
+          </span>
+        </li>
+        <li class="flex items-start">
+          <span class="text-sky-500 text-4xl mr-2">✔</span>
+          <span>
+            <strong class="text-gray-900">Cookie Einwilligung: Brauchen Sie NICHT!</strong><br>
+            Zerstören Sie sich nicht selbst Ihre Website, indem Sie eine Cookie-Einwilligung einbauen oder einbauen lassen.
+            Das nervt die Besucher und sorgt für längere Ladezeiten und frühzeitige Absprünge potenzieller Kunden.
+            Sie brauchen keine Cookie-Einwilligung, wenn Sie keine Cookies verwenden, die personenbezogene Daten speichern.
+            Und die verwenden Sie nicht, solange Sie keine Analyse-Tools wie Google Analytics nutzen, die für Ihre Zwecke völlig überdimensioniert sind.
+            Diese Tools brauchen Sie nur, wenn Sie die Umsätze durch Ihre Website bis auf den letzten Klick genau optimieren wollen.
+            Lassen Sie sich nichts aufschwatzen, was Sie nicht brauchen und sogar schadet.
           </span>
         </li>
         <li class="flex items-start">
@@ -224,12 +230,12 @@ async function signOut() {
       </h2>
 
       <p class="mt-10 text-gray-500 text-xl">
-        Das wäre dann das namensgebende <strong>Gewerbeprofil</strong> - eine einfache aber technisch, optisch und rechtlich einwandfreie Website,
+        Unser <strong>Gewerbeprofil</strong> ist eine einfache aber technisch, optisch und rechtlich einwandfreie Website,
         die Sie schnell eingerichtet haben, ohne dabei etwas falsch machen zu können.
       </p>
 
       <p class="mt-10 text-gray-500 text-xl">
-        ...
+        
       </p>
   
       <UButton

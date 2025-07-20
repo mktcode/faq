@@ -38,7 +38,7 @@ async function signUp() {
         </div>
       </div>
       <div class="text-gray-400 text-sm mt-2">
-        Es sind ausschließlich Kleinbuchstaben erlaubt. Eine eigene Domain (wie meinefirma.de) können Sie später hinzubuchen.
+        Es sind ausschließlich Kleinbuchstaben erlaubt.
       </div>
     </div>
     <div class="flex gap-2">
