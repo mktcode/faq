@@ -19,19 +19,21 @@ async function signOut() {
       >
         <UButton
           :to="`https://${me.userName}.${appHost}`"
-          label="Mein Gewerbeprofil"
-          variant="soft"
+          label="Mein Profil"
+          icon="i-heroicons-identification"
+          variant="ghost"
         />
         <UButton
           label="Abmelden"
-          variant="soft"
+          icon="i-heroicons-power"
+          variant="ghost"
           @click="signOut"
         />
       </template>
       <template v-else>
         <UButton
           to="/login"
-          variant="soft"
+          variant="ghost"
         >
           Anmelden
         </UButton>
@@ -42,10 +44,9 @@ async function signOut() {
         class="text-center flex flex-col items-center max-w-2xl mx-auto"
       >
         <div class="text-sky-500 text-2xl font-bold flex items-start gap-4 mb-24 leading-none">
-          <img
-            src="~/assets/img/logo.png"
-            alt="Logo"
-            class="w-14"
+          <UIcon
+            name="i-heroicons-identification"
+            class="size-16 -mt-2"
           />
           <div class="text-left">
             Gewerbe<br>
@@ -56,20 +57,12 @@ async function signOut() {
         <h2 class="text-2xl">
           Wagen Sie gerade den Schritt in die Selbstständigkeit und überlegen, ob Sie eine Website brauchen?
         </h2>
-        <h1 class="text-5xl font-bold mt-8 leading-tight">
+        <h1 class="text-5xl font-bold mt-24 leading-tight">
           Nicht sofort. Werden Sie erstmal sichtbar!
         </h1>
-
-        <UButton
-          label="Ich will aber jetzt!"
-          to="/register"
-          size="xxl"
-          class="mt-12"
-          variant="soft"
-        />
       </div>
   
-      <section class="mt-24 shadow-sky-50 flex flex-col">
+      <section class="mt-12 shadow-sky-50 flex flex-col">
         <p class="mt-4 text-gray-500 text-xl">
           Und das geht auch ohne großes Budget und sogar kostenlos kommen Sie schon sehr weit.
           Wir wollen verhindern, dass Ihr Unternehmergeist durch hohe Kosten und überdimensionierte Lösungen ausgebremst wird.
@@ -231,7 +224,7 @@ async function signOut() {
 
       <p class="mt-10 text-gray-500 text-xl">
         Unser <strong>Gewerbeprofil</strong> ist eine einfache aber technisch, optisch und rechtlich einwandfreie Website,
-        die Sie schnell eingerichtet haben, ohne dabei etwas falsch machen zu können.
+        die Sie schnell eingerichtet haben, ohne dabei technisch etwas falsch machen zu können.
       </p>
 
       <p class="mt-10 text-gray-500 text-xl">
