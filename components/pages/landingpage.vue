@@ -79,9 +79,10 @@ async function signOut() {
           <span class="text-sky-500 text-4xl mr-2">✔</span>
           <span>
             <strong class="text-gray-900">Klarheit: Ist Ihr Angebot in einem Satz erklärbar? Wer (genau!) ist Ihre Zielgruppe?</strong><br>
-            Wenn Sie nicht klar sagen können, was Sie wem bringen – wird’s auch kein anderer verstehen.
+            Beim heutigen Konsumverhalten hilft es, wenn Sie in Überschriftenlänge oder maximal zwei bis drei kurzen Sätzen erklären können, was Sie anbieten und für wen.
             Kostenlose KI-Tools wie <a class="text-sky-500" href="https://chat.openai.com/" target="_blank">ChatGPT</a> oder <a class="text-sky-500" href="https://gemini.google.com" target="_blank">Google Gemini</a> können Ihnen helfen,
             Klarheit zu gewinnen und professionelle Texte zu schreiben, z.B. für Kleinanzeigen oder Social Media Posts. Auch bei rechtlichen und steuerlichen Fragen können diese Tools eine gute erste Orientierung geben.
+            Lesen Sie unsere <a class="text-sky-500" href="/" target="_blank">Prompt-Anleitung</a> für gute Ergebnisse.
           </span>
         </li>
         <li class="flex items-start">
@@ -110,14 +111,14 @@ async function signOut() {
         <li class="flex items-start">
           <span class="text-sky-500 text-4xl mr-2">✔</span>
           <span><strong class="text-gray-900">Bilder sagen mehr als tausend Worte.</strong> <br>
-          Heutige Smartphones machen erstaunlich gute Fotos und können diese auch gleich bearbeiten und optimieren.
+          Heutige Smartphones machen gute Fotos und können diese auch gleich bearbeiten und optimieren.
           Achten Sie ein wenig auf gute Beleuchtung und gut sichtbare Motive und sparen Sie sich den teuren Fotografen, erstmal zumindest.
           Es spricht auch nichts gegen ein Video, wenn Sie sich damit wohlfühlen. Zeigen Sie sich und Ihre Arbeit!
         </span>
         </li>
       </ul>
   
-      <p class="mt-24 text-gray-500 text-xl">
+      <p class="mt-10 text-gray-500 text-xl">
         Das alles kriegen Sie ganz alleine hin oder mit ein bisschen Hilfe aus dem Familien- und Freundeskreis.
         Kommen Sie auf uns zurück, wenn Sie alleine nicht mehr weiterkommen bzw. wenn Sie bereit sind, den nächsten Schritt zu gehen.
       </p>
@@ -140,7 +141,7 @@ async function signOut() {
       </p>
 
       <p class="mt-10 text-gray-500 text-xl">
-        Egal welchen Weg sie wählen, es gibt Aspekte einer Website, die nicht sofort ins Auge fallen und gerne vernachlässigt werden.
+        Aber egal welchen Weg sie wählen, es gibt Aspekte einer Website, die nicht sofort ins Auge fallen und gerne vernachlässigt werden.
       </p>
 
       <ul class="mt-10 flex flex-col gap-4 text-gray-500 text-lg">
@@ -161,7 +162,7 @@ async function signOut() {
             <strong class="text-gray-900">Mobiloptimierung: Ein guter Eindruck auf allen Geräten</strong><br>
             Egal wie und wo Sie Ihre Website erstellen, Ihnen wird versprochen werden, dass sie auf allen Geräten gut aussieht.
             Prüfen Sie das! Der Klassiker sind überdimensionierte Schriftgrößen und unglücklich platzierte Elemente, die das Layout sprengen.
-            Das Ergebnis von Baukastensystemen (und leider auch von Agenturen) erfordert oft noch einiges an Detailarbeit, damit es wirklich gut aussieht.
+            Das Ergebnis von Baukastensystemen erfordert oft noch einiges an Detailarbeit, damit es wirklich gut aussieht.
             Schauen Sie sich Ihre Website mindestens auf dem Smartphone und einem Desktop-Bildschirm an.
             Und auch wenn das Internet mal etwas langsamer ist, sollte Ihre Website mehr oder weniger sofort sichtbar sein.
           </span>
@@ -171,7 +172,7 @@ async function signOut() {
           <span>
             <strong class="text-gray-900">Weniger ist mehr: Funktionierende Landingpage statt zig Unterseiten</strong><br>
             Konzentrieren Sie sich auf klare und prägnante Angebotsseiten (sog. Landingpage), die alle wichtigen Informationen enthalten,
-            die potentielle Kunden benötigen um eine Entscheidung zu treffen.
+            die potentielle Kunden benötigen, um eine Entscheidung zu treffen.
             Das heißt nicht, dass Sie sämtliche Persönlichkeit weglassen sollen.
             Vor allem nicht, wenn Sie genau das von anderen abhebt.
             Ein kurzer "Über Mich" Abschnitt kann auch auf mehreren Seiten auftauchen, wenn es für den Lese- und Entscheidungsfluss sinnvoll ist.
@@ -187,7 +188,7 @@ async function signOut() {
             Sie brauchen keine Cookie-Einwilligung, wenn Sie keine Cookies verwenden, die personenbezogene Daten speichern.
             Und die verwenden Sie nicht, solange Sie keine Analyse-Tools wie Google Analytics nutzen, die für Ihre Zwecke völlig überdimensioniert sind.
             Diese Tools brauchen Sie nur, wenn Sie die Umsätze durch Ihre Website bis auf den letzten Klick genau optimieren wollen.
-            Lassen Sie sich nichts aufschwatzen, was Sie nicht brauchen und sogar schadet.
+            Es reicht auch erstmal ein einfacher Aufrufzähler.
           </span>
         </li>
         <li class="flex items-start">
@@ -217,6 +218,10 @@ async function signOut() {
           </span>
         </li>
       </ul>
+
+      <p class="mt-10 text-gray-500 text-xl">
+        Diese Liste ist nicht vollständig. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      </p>
 
       <h2 class="text-3xl font-bold mt-24">
         Dürfen wir Ihnen ein Angebot machen?
