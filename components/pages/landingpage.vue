@@ -228,7 +228,20 @@ async function signOut() {
       </p>
 
       <p class="mt-10 text-gray-500 text-xl">
-        
+        Die Struktur ist weitestgehend vorgegeben und optische Anpassungsmöglichkeiten sind begrenzt.
+        Aber Sie sind online, mit einer Website, die mehr ist und noch werden kann, als ein Social Media Profil.
+        Sie ist Ihr zentraler Anlaufpunkt im Internet, auf dem Sie mit Bild und Text Ihr Unternehmen vorstellen und Anfragen entgegennehmen und auf Ihre weiteren Profile auf anderen Plattformen verweisen können.
+      </p>
+
+      <p class="mt-10 text-gray-500 text-xl">
+        Von diesem Punkt aus können Sie Ihre Website dann weiter ausbauen - mit unserer Expertise und Unterstützung.
+        Die "Basisausstattung" ist <strong>kostenlos</strong>. Ihr Profil wird unter einer Subdomain erreichbar sein, z.B. musterfirma.gewerbeprofil.de und sie nutzen weiterhin Ihre vorhandene @gmail.com E-Mail-Adresse.
+      </p>
+
+      <p class="mt-10 text-gray-500 text-xl">
+        Für <strong>15 €</strong> im Monat können Sie Ihre eigene Domain einrichten, z.B. musterfirma.de und bekommen eine E-Mail-Adresse unter dieser Domain, z.B. info@musterfirma.de.
+        Außerdem eröffnet uns dieser Beitrag die Möglichkeit, Ihre Website mit Ihnen weiter auszubauen, mit individuellen Designanpassungen, mehr Inhalt und zusätzlichen Funktionen, wie einem Buchungskalender, Bezahlfunktion und Rechnungsvorlagen oder Anfragen per Sprachnachricht.
+        Und ja, auch die KI-Steuerung ist bereits in Arbeit, muss aber wirklich noch etwas reifen.
       </p>
   
       <UButton
