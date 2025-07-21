@@ -245,7 +245,7 @@ async function signOut() {
 
       <p class="mt-10 text-gray-500 text-xl">
         Für <strong>15 €</strong> im Monat können Sie Ihre eigene Domain einrichten, z.B. musterfirma.de und bekommen eine E-Mail-Adresse unter dieser Domain, z.B. info@musterfirma.de.
-        Außerdem eröffnet uns dieser Beitrag die Möglichkeit, Ihre Website mit Ihnen weiter auszubauen, mit individuellen Designanpassungen, mehr Inhalt und zusätzlichen Funktionen, wie einem Buchungskalender, Bezahlfunktion und Rechnungsvorlagen oder Anfragen per Sprachnachricht.
+        Außerdem eröffnet uns dieser Beitrag die Möglichkeit, Ihre Website mit Ihnen weiter auszubauen, mit individuellen Designanpassungen, mehr Inhalt und zusätzlichen Funktionen, wie einem Buchungskalender, Bezahlfunktion oder Anfragen per Sprachnachricht.
         Und ja, auch die KI-Steuerung ist bereits in Arbeit, muss aber wirklich noch etwas reifen.
       </p>
   
