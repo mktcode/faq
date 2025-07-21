@@ -17,6 +17,16 @@ const { data: currentSettings, refresh: refreshSettings } = await useFetch(`/api
   },
 })
 
+useHead({
+  title: currentSettings.value?.title || 'Mein Gewerbeprofil',
+  meta: [
+    {
+      name: 'description',
+      content: currentSettings.value?.description || 'Mein Unternehmen auf einem Blick',
+    },
+  ],
+})
+
 const { data: qanda } = await useFetch<Qanda[]>(`/api/qanda`, {
   query: {
     username,
@@ -38,7 +48,7 @@ appConfig.ui.input.defaultVariants.rounded = currentSettings.value?.rounded || '
 appConfig.ui.select.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
 appConfig.ui.textarea.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
 
-useState('designRounded', () => currentSettings.value?.rounded || 'md')
+const designRounded = useState('designRounded', () => currentSettings.value?.rounded || 'md')
 </script>
 
 <template>
@@ -98,8 +108,12 @@ useState('designRounded', () => currentSettings.value?.rounded || 'md')
         <UAccordion
           :items="qandaAccordionItems"
           :ui="{
-            label: 'text-lg',
-            body: 'text-lg text-gray-500',
+            root: 'w-full flex flex-col gap-2',
+            header: `bg-primary-50 px-4 !py-0 hover:bg-primary-100 rounded-${designRounded}`,
+            trigger: 'py-2',
+            label: 'text-lg text-primary-950',
+            body: 'text-lg text-gray-500 pt-2',
+            item: '!border-0',
             trailingIcon: 'text-primary-500',
           }"
         >
