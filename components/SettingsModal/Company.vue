@@ -14,7 +14,9 @@ const form = ref({
     phone: '',
     email: '',
     taxId: '',
+    isSmallBusiness: false,
   },
+  privacy: currentSettings.value?.privacy || '',
 })
 
 async function saveSettings() {
@@ -84,15 +86,40 @@ async function saveSettings() {
       />
     </UFormField>
     <UFormField
-      label="Umsatzsteuer-ID"
-      description="Gibst du keine an, wird im Impressum auf die Kleinunternehmerregelung hingewiesen."
+      label="Rechtsform"
     >
-      <UInput
-        v-model="form.company.taxId"
-        placeholder="Geben Sie Ihre Steuernummer ein"
+      <USelect
+        :items="[
+          { label: 'Freiberufler', value: 'freiberufler' },
+          { label: 'Einzelunternehmer', value: 'einzelunternehmer' },
+        ]"
+        placeholder="Wähle deine Rechtsform"
         class="w-full"
       />
     </UFormField>
+    <UFormField
+      label="Kleinunternehmerregelung"
+      description="Wenn du die Kleinunternehmerregelung in Anspruch nimmst, musst du keine Umsatzsteuer ausweisen."
+    >
+      <USwitch
+        v-model="form.company.isSmallBusiness"
+        label="Ich bin Kleinunternehmer"
+        class="w-full"
+      />
+    </UFormField>
+    <Transition name="fade">
+      <UFormField
+        v-if="!form.company.isSmallBusiness"
+        label="Umsatzsteuer-ID oder Wirtschafts-ID"
+        description="Gib hier nicht deine persönliche Steuernummer (123/456/78901) an!"
+      >
+        <UInput
+          v-model="form.company.taxId"
+          placeholder="DE123456789"
+          class="w-full"
+        />
+      </UFormField>
+    </Transition>
     <UButton
       variant="solid"
       color="primary"

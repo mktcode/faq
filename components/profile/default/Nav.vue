@@ -12,6 +12,7 @@ const myLastUsername = useLocalStorage('myLastUsername', () => me.value?.userNam
 const onOwnProfile = computed(() => username === myLastUsername.value)
 
 const showSettingsModal = useState('showSettingsModal', () => false)
+const showDesignModal = useState('showDesignModal', () => false)
 </script>
 
 <template>
@@ -42,6 +43,14 @@ const showSettingsModal = useState('showSettingsModal', () => false)
         icon="i-heroicons-cog-6-tooth"
         size="md"
         @click="showSettingsModal = true"
+      />
+
+      <UButton
+        v-if="me && onOwnProfile"
+        label="Design"
+        icon="i-heroicons-paint-brush"
+        size="md"
+        @click="showDesignModal = true"
       />
     </div>
   </div>

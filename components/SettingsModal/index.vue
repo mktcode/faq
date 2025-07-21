@@ -3,21 +3,39 @@ import type { AccordionItem } from '@nuxt/ui'
 
 defineEmits(['update'])
 
+const toast = useToast()
 const showModal = useState('showSettingsModal', () => false)
+const { me } = await useMe()
+
+const isPublished = ref(me.value?.published || false)
+
+async function togglePublished() {
+  const { published } = await $fetch('/api/user/togglePublished', { method: 'POST' })
+
+  if (published) {
+    toast.add({
+      title: 'Profil veröffentlicht',
+      description: `Dein Profil ist jetzt öffentlich zugänglich.`,
+      color: 'success',
+    })
+  }
+  else {
+    toast.add({
+      title: 'Profil nicht mehr veröffentlicht',
+      description: `Dein Profil ist jetzt privat.`,
+      color: 'warning',
+    })
+  }
+}
 
 const items: AccordionItem[] = [
   {
-    label: 'Allgemein',
-    icon: 'i-heroicons-paint-brush',
-    slot: 'general',
-  },
-  {
-    label: 'Unternehmen',
+    label: 'Anschrift und Rechtliches',
     icon: 'i-heroicons-building-office-2',
     slot: 'company',
   },
   {
-    label: 'Mein Angebot',
+    label: 'Angebot',
     icon: 'i-heroicons-megaphone',
     slot: 'offer',
   },
@@ -42,22 +60,11 @@ const items: AccordionItem[] = [
     slot: 'downloads',
   },
   {
-    label: 'Datenschutz',
-    icon: 'i-heroicons-shield-check',
-    slot: 'privacy',
-  },
-  {
     label: 'Gewerbeprofil Plus',
     icon: 'i-heroicons-rocket-launch',
     slot: 'subscription',
   },
 ]
-
-const active = ref<string | undefined>(undefined)
-
-function switchToSubscription() {
-  active.value = '8'
-}
 </script>
 
 <template>
@@ -69,20 +76,21 @@ function switchToSubscription() {
     }"
   >
     <template #body>
+      <div class="p-4 border-b border-gray-200">
+        <USwitch
+          v-model="isPublished"
+          label="Veröffentlicht"
+          :description="isPublished ? 'Dein Profil ist öffentlich zugänglich.' : 'Dein Profil ist privat.'"
+          @update:model-value="togglePublished"
+        />
+      </div>
       <UAccordion
-        v-model="active"
         :items="items"
         :unmount-on-hide="false"
         :ui="{
           header: 'px-4 hover:bg-gray-50',
         }"
       >
-        <template #general>
-          <SettingsModalGeneral
-            @update="$emit('update')"
-            @switch-to-subscription="switchToSubscription"
-          />
-        </template>
         <template #company>
           <SettingsModalCompany />
         </template>
@@ -100,9 +108,6 @@ function switchToSubscription() {
         </template>
         <template #faq>
           <SettingsModalFAQ />
-        </template>
-        <template #privacy>
-          <SettingsModalPrivacy />
         </template>
         <template #subscription>
           <SettingsModalSubscription />

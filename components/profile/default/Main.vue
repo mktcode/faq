@@ -136,6 +136,10 @@ useState('designRounded', () => currentSettings.value?.rounded || 'md')
       v-if="me"
       @update="refreshSettings"
     />
+    <DesignModal
+      v-if="me"
+      @update="refreshSettings"
+    />
     <ClientOnly>
       <WelcomeModal />
     </ClientOnly>

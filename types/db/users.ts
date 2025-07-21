@@ -27,6 +27,7 @@ export const settingsFormSchema = z.object({
     phone: z.string().optional().nullable(),
     email: z.string().optional().nullable(),
     taxId: z.string().optional().nullable(),
+    isSmallBusiness: z.boolean().optional(),
   }).optional().nullable(),
   logo: z.string().optional().nullable(),
   image: z.string().optional().nullable(),
