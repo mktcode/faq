@@ -55,7 +55,7 @@ async function signOut() {
           </div>
         </div>
         <h2 class="text-2xl">
-          Wagen Sie gerade den Schritt in die Selbstständigkeit und überlegen, ob Sie eine Website brauchen?
+          Wagen Sie gerade als Freiberufler oder Einzelunternehmer den Schritt in die Selbstständigkeit und überlegen, ob Sie eine Website brauchen?
         </h2>
         <h1 class="text-5xl font-bold mt-24 leading-tight">
           Nicht sofort. Werden Sie erstmal sichtbar!
