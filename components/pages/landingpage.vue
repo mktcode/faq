@@ -56,19 +56,9 @@ async function signOut() {
         </div>
         <h2 class="text-2xl">
           Wagen Sie gerade als Freiberufler oder Einzelunternehmer den Schritt in die Selbstständigkeit und überlegen, ob Sie eine Website brauchen?
-        </h2>
-        <h1 class="text-5xl font-bold mt-24 leading-tight">
           Nicht sofort. Werden Sie erstmal sichtbar!
-        </h1>
+        </h2>
       </div>
-  
-      <section class="mt-12 shadow-sky-50 flex flex-col">
-        <p class="mt-4 text-gray-500 text-xl">
-          Und das geht auch ohne großes Budget und sogar kostenlos kommen Sie schon sehr weit.
-          Wir wollen verhindern, dass Ihr Unternehmergeist durch hohe Kosten und überdimensionierte Lösungen ausgebremst wird.
-          Eins nach dem anderen, Schritt für Schritt.
-        </p>
-      </section>
 
       <h2 class="text-3xl font-bold mt-24">
         Schritt 1: Sichtbar werden
@@ -119,8 +109,9 @@ async function signOut() {
       </ul>
   
       <p class="mt-10 text-gray-500 text-xl">
-        Das alles kriegen Sie ganz alleine hin oder mit ein bisschen Hilfe aus dem Familien- und Freundeskreis.
-        Kommen Sie auf uns zurück, wenn Sie alleine nicht mehr weiterkommen bzw. wenn Sie bereit sind, den nächsten Schritt zu gehen.
+        Das alles ist kostenlos und wenn Sie sich selbst nicht so sicher am Computer und im Internet fühlen, ist das mit ein bisschen Hilfe aus dem Familien- und Freundeskreis machbar.
+        Kommen Sie gerne auf uns zurück, wenn Sie nicht mehr weiterkommen bzw. wenn Sie bereit sind, den nächsten Schritt zu gehen.
+        Denn ohne diese Vorbereitung bringt Ihnen auch die beste Website nicht viel.
       </p>
 
       <h2 class="text-3xl font-bold mt-24">
