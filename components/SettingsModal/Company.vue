@@ -35,6 +35,16 @@ async function saveSettings() {
 
 <template>
   <div class="flex flex-col gap-4 p-6">
+    <DismissableAlert
+      title="Wichtige Information"
+      storageKey="company-info-dismissed"
+    >
+      Viele Anforderungen gelten erst aber einer bestimmten Mitarbeiterzahl.
+      Wir gehen davon aus, dass Sie in unsere Zielgruppe fallen und sich noch am Anfang Ihrer Selbstständigkeit befinden.
+      Wenn Sie bereits mehr als 10 Mitarbeiter haben, ist ein Gewerbeprofil nicht das Richtige für Sie.
+      <a href="https://markus-kottlaender.de" target="_blank" class="underline">Kontaktieren Sie uns</a> für eine individuelle Lösung.
+    </DismissableAlert>
+
     <UFormField label="Name Ihres Unternehmens">
       <UInput
         v-model="form.company.name"

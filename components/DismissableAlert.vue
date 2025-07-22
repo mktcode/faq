@@ -2,7 +2,7 @@
 import { useLocalStorage } from '@vueuse/core'
 
 const props = defineProps<{
-  title: string
+  title?: string
   storageKey: string
 }>()
 
