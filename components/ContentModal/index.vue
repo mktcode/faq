@@ -13,7 +13,7 @@ const showModal = useState('showContentModal', () => false)
     }"
   >
     <template #body>
-      <TestAcc />
+      <ContentModalAccordion />
     </template>
   </UModal>
 </template>
