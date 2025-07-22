@@ -159,6 +159,17 @@ async function signOut() {
         <li class="flex items-start">
           <span class="text-sky-500 text-4xl mr-2">✔</span>
           <span>
+            <strong class="text-gray-900">Künstliche Intelligenz: Haben Sie keine Angst davor!</strong><br>
+            KI wird zunehmend in Suchmaschinen eingesetzt, um Inhalte zu analysieren und das best mögliche Ergebnis zu liefern.
+            Nutzer fragen auch immer häufiger direkt ChatGPT und Co. nach Empfehlungen für Produkte und Dienstleistungen.
+            Die KI durchforstet dann das Internet und liefert einen maßgeschneiderten Vorschlag.
+            Damit Ihre Website dabei berücksichtigt werden kann, sind einige technische Details zu beachten.
+            Es macht also Sinn, die eigene Website daraufhin zu optimieren oder zumindest die grundlegende Zugänglichkeit für KI-Tools zu gewährleisten.
+          </span>
+        </li>
+        <li class="flex items-start">
+          <span class="text-sky-500 text-4xl mr-2">✔</span>
+          <span>
             <strong class="text-gray-900">Mobiloptimierung: Ein guter Eindruck auf allen Geräten</strong><br>
             Egal wie und wo Sie Ihre Website erstellen, Ihnen wird versprochen werden, dass sie auf allen Geräten gut aussieht.
             Prüfen Sie das! Der Klassiker sind überdimensionierte Schriftgrößen und unglücklich platzierte Elemente, die das Layout sprengen.
