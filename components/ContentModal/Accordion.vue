@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { AccordionItem } from '@nuxt/ui'
-import { useSortable } from '@vueuse/integrations/useSortable'
+import { useSortable, moveArrayElement } from '@vueuse/integrations/useSortable'
 
 const items = shallowRef<AccordionItem[]>([
   {
@@ -34,7 +34,15 @@ const accordion = useTemplateRef<HTMLElement>('accordion')
 const active = ref<string | undefined>(undefined)
 
 useSortable(accordion, items, {
-  animation: 150
+  animation: 150,
+  onUpdate: (e: { oldIndex: number; newIndex: number }) => {
+    moveArrayElement(items.value, e.oldIndex, e.newIndex, e)
+    // nextTick required here as moveArrayElement is executed in a microtask
+    // so we need to wait until the next tick until that is finished.
+    nextTick(() => {
+      console.log('onUpdate', e)
+    })
+  }
 })
 </script>
 
