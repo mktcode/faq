@@ -80,7 +80,7 @@ const items: AccordionItem[] = [
         <USwitch
           v-model="isPublished"
           label="Veröffentlicht"
-          :description="isPublished ? 'Dein Profil ist öffentlich zugänglich.' : 'Dein Profil ist privat.'"
+          :description="isPublished ? 'Dein Profil ist öffentlich zugänglich.' : 'Nur du kannst dein Profil sehen, wenn du angemeldet bist.'"
           @update:model-value="togglePublished"
         />
       </div>

@@ -26,7 +26,8 @@ async function saveSettings() {
 <template>
   <div class="flex flex-col gap-4 p-6">
     <p class="text-gray-400">
-      Füge hier Texte zu deinen Angeboten und Dienstleistungen hinzu. Halte dich kurz und prägnant, damit deine Kunden schnell verstehen, was du anbietest.
+      Fügen Sie hier Texte zu Ihren Angeboten und Dienstleistungen hinzu. Halten Sie sich kurz und prägnant, damit Ihre Kunden schnell verstehen, was Sie anbieten.
+      Was unterscheidet Sie von anderen? Welche Vorteile hat der Kunde, kurz- wie langfristig?
     </p>
     <div
       v-for="(offer, index) in form.offers"
