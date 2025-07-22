@@ -51,19 +51,19 @@ const items: AccordionItem[] = [
         }"
       >
         <template #gallery>
-          <SettingsModalGallery />
+          <ContentModalGallery />
         </template>
         <template #offer>
-          <SettingsModalOffer />
+          <ContentModalOffer />
         </template>
         <template #links>
-          <SettingsModalLinks />
+          <ContentModalLinks />
         </template>
         <template #downloads>
-          <SettingsModalDownloads />
+          <ContentModalDownloads />
         </template>
         <template #faq>
-          <SettingsModalFAQ />
+          <ContentModalFAQ />
         </template>
       </UAccordion>
     </template>
