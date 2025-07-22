@@ -154,6 +154,10 @@ const designRounded = useState('designRounded', () => currentSettings.value?.rou
       v-if="me"
       @update="refreshSettings"
     />
+    <ContentModal
+      v-if="me"
+      @update="refreshSettings"
+    />
     <ClientOnly>
       <WelcomeModal />
     </ClientOnly>

@@ -35,29 +35,9 @@ const items: AccordionItem[] = [
     slot: 'company',
   },
   {
-    label: 'Angebot',
-    icon: 'i-heroicons-megaphone',
-    slot: 'offer',
-  },
-  {
-    label: 'Häufige Fragen',
-    icon: 'i-heroicons-question-mark-circle',
-    slot: 'faq',
-  },
-  {
-    label: 'Gallerie',
-    icon: 'i-heroicons-photo',
-    slot: 'gallery',
-  },
-  {
-    label: 'Externe Verlinkungen',
-    icon: 'i-heroicons-link',
-    slot: 'links',
-  },
-  {
-    label: 'Downloads',
-    icon: 'i-heroicons-arrow-down-tray',
-    slot: 'downloads',
+    label: 'Domain und E-Mail',
+    icon: 'i-heroicons-globe-alt',
+    slot: 'domain',
   },
   {
     label: 'Gewerbeprofil Plus',
@@ -93,21 +73,6 @@ const items: AccordionItem[] = [
       >
         <template #company>
           <SettingsModalCompany />
-        </template>
-        <template #gallery>
-          <SettingsModalGallery />
-        </template>
-        <template #offer>
-          <SettingsModalOffer />
-        </template>
-        <template #links>
-          <SettingsModalLinks />
-        </template>
-        <template #downloads>
-          <SettingsModalDownloads />
-        </template>
-        <template #faq>
-          <SettingsModalFAQ />
         </template>
         <template #subscription>
           <SettingsModalSubscription />

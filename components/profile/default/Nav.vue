@@ -13,6 +13,7 @@ const onOwnProfile = computed(() => username === myLastUsername.value)
 
 const showSettingsModal = useState('showSettingsModal', () => false)
 const showDesignModal = useState('showDesignModal', () => false)
+const showContentModal = useState('showContentModal', () => false)
 </script>
 
 <template>
@@ -51,6 +52,14 @@ const showDesignModal = useState('showDesignModal', () => false)
         icon="i-heroicons-paint-brush"
         size="md"
         @click="showDesignModal = true"
+      />
+
+      <UButton
+        v-if="me && onOwnProfile"
+        label="Inhalt"
+        icon="i-heroicons-document-text"
+        size="md"
+        @click="showContentModal = true"
       />
     </div>
   </div>
