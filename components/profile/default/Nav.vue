@@ -18,9 +18,9 @@ const showContentModal = useState('showContentModal', () => false)
 
 <template>
   <div
-    class="flex flex-row md:items-center md:justify-between p-4 absolute z-10 w-full gap-2"
+    class="flex flex-row md:items-center md:justify-between p-4 fixed top-0 z-10 w-full gap-2"
   >
-    <div class="flex flex-col md:flex-row gap-2">
+    <div class="flex flex-col md:flex-row gap-1">
       <UButton
         v-if="me && !onOwnProfile"
         :to="`https://${me.userName}.${appHost}`"
@@ -40,7 +40,6 @@ const showContentModal = useState('showContentModal', () => false)
 
       <UButton
         v-if="me && onOwnProfile"
-        label="Einstellungen"
         icon="i-heroicons-cog-6-tooth"
         size="md"
         @click="showSettingsModal = true"
@@ -48,7 +47,6 @@ const showContentModal = useState('showContentModal', () => false)
 
       <UButton
         v-if="me && onOwnProfile"
-        label="Design"
         icon="i-heroicons-paint-brush"
         size="md"
         @click="showDesignModal = true"
@@ -56,8 +54,7 @@ const showContentModal = useState('showContentModal', () => false)
 
       <UButton
         v-if="me && onOwnProfile"
-        label="Inhalt"
-        icon="i-heroicons-document-text"
+        icon="i-lucide-letter-text"
         size="md"
         @click="showContentModal = true"
       />

@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import { useLocalStorage } from '@vueuse/core'
 
-const props = defineProps<{
-  title?: string
-  storageKey: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    title?: string
+    icon?: string
+    storageKey: string
+  }>(),
+  {
+    icon: 'i-heroicons-information-circle',
+  }
+)
 
 const showAlert = useLocalStorage(props.storageKey, true)
 </script>
@@ -16,7 +22,7 @@ const showAlert = useLocalStorage(props.storageKey, true)
       variant="solid"
       color="primary"
       :title="title"
-      icon="i-heroicons-information-circle"
+      :icon="icon"
       :ui="{ icon: 'size-11', title: 'text-xl' }"
       :close="{ class: 'text-white/75 hover:text-white' }"
       @update:open="showAlert = $event"
