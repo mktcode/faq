@@ -141,18 +141,19 @@ watch(acc2active, (newVal) => {
       <UAccordion
         v-model="acc1active"
         :items="acc1items"
+        :unmount-on-hide="false"
         :ui="{
           root: 'flex flex-col gap-3',
           trigger: 'px-4 hover:bg-gray-50',
-          label: 'text-gray-900 text-lg font-bold',
+          label: 'text-gray-900 text-base sm:text-lg font-bold',
           leadingIcon: 'text-sky-500 size-8',
-          content: 'text-gray-500 text-lg pt-4 p-4',
+          content: 'text-gray-500 text-base sm:text-lg pt-4 p-4',
           item: 'border last:border border-gray-200 rounded-lg',
         }"
       >
         <template #leading="{ index }">
           <span
-            class="text-sky-500 text-4xl mr-2"
+            class="text-sky-500 text-3xl sm:text-4xl"
             :class="{
               'opacity-30 grayscale': !acc1ItemsOpened.includes(index.toString()),
             }"
@@ -208,25 +209,26 @@ watch(acc2active, (newVal) => {
         Sie werden erstaunt sein.
       </p>
 
-      <p class="my-10 text-gray-500 text-xl">
+      <p class="my-10 text-gray-500 text-lg sm:text-xl">
         Aber egal welchen Weg sie wählen, es gibt Aspekte einer Website, die nicht sofort ins Auge fallen und gerne vernachlässigt werden.
       </p>
 
       <UAccordion
         v-model="acc2active"
         :items="acc2items"
+        :unmount-on-hide="false"
         :ui="{
           root: 'flex flex-col gap-3',
           trigger: 'px-4 hover:bg-gray-50',
           label: 'text-gray-900 text-lg font-bold',
           leadingIcon: 'text-sky-500 size-8',
-          content: 'text-gray-500 text-lg pt-4 p-4',
+          content: 'text-gray-500 text-base sm:text-lg pt-4 p-4',
           item: 'border last:border border-gray-200 rounded-lg',
         }"
       >
         <template #leading="{ index }">
           <span
-            class="text-sky-500 text-4xl mr-2"
+            class="text-sky-500 text-3xl sm:text-4xl"
             :class="{
               'opacity-30 grayscale': !acc2ItemsOpened.includes(index.toString()),
             }"
@@ -290,7 +292,9 @@ watch(acc2active, (newVal) => {
       </UAccordion>
 
       <p class="mt-10 text-gray-500 text-lg sm:text-xl">
-        Diese Liste ist nicht vollständig. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Diese Liste ist nicht vollständig und es muss ja auch nicht immer alles sofort perfekt sein (abgesehen von den rechtlichen Anforderungen).
+        Wir hoffen aber Ihnen ein bisschen Orientierung gegeben zu haben. Sie müssen nicht direkt einen vierstelligen Betrag für eine Agentur ausgeben, um online Kunden zu gewinnen.
+        Fangen Sie klein an und wachsen Sie mit der Zeit.
       </p>
 
       <h2 class="text-2xl sm:text-3xl font-bold mt-24">
@@ -299,33 +303,28 @@ watch(acc2active, (newVal) => {
 
       <p class="mt-10 text-gray-500 text-lg sm:text-xl">
         Unser <strong class="text-gray-700">Gewerbeprofil</strong> ist eine einfache aber technisch, optisch und rechtlich einwandfreie Website,
-        die Sie schnell eingerichtet haben, ohne dabei technisch etwas falsch machen zu können.
+        die Sie schnell eingerichtet haben, ohne dabei etwas falsch machen zu können.
       </p>
 
       <p class="mt-10 text-gray-500 text-lg sm:text-xl">
-        Die Struktur ist weitestgehend vorgegeben und optische Anpassungsmöglichkeiten sind begrenzt.
-        Aber Sie sind online, mit einer Website, die mehr ist und noch werden kann, als ein Social Media Profil.
-        Sie ist Ihr zentraler Anlaufpunkt im Internet, auf dem Sie mit Bild und Text Ihr Unternehmen vorstellen und Anfragen entgegennehmen und auf Ihre weiteren Profile auf anderen Plattformen verweisen können.
-      </p>
-
-      <p class="mt-10 text-gray-500 text-lg sm:text-xl">
-        Von diesem Punkt aus können Sie Ihre Website dann weiter ausbauen - mit unserer Expertise und Unterstützung.
+        Die Struktur ist weitestgehend vorgegeben und optische Anpassungsmöglichkeiten sind begrenzt. Manchmal ist weniger aber wirklich mehr.
+        Sie sind sofort mit einer Website online, die mit Ihnen mitwachsen kann und als Ihr zentraler Anlaufpunkt im Internet dient.
         Die "Basisausstattung" ist <strong class="text-gray-700">kostenlos</strong>. Ihr Profil wird unter einer Subdomain erreichbar sein, z.B. musterfirma.gewerbeprofil.de und sie nutzen weiterhin Ihre vorhandene @gmail.com E-Mail-Adresse.
       </p>
 
       <p class="mt-10 text-gray-500 text-lg sm:text-xl">
-        Für <strong class="text-gray-700">15 €</strong> im Monat können Sie Ihre eigene Domain einrichten, z.B. musterfirma.de und bekommen eine E-Mail-Adresse unter dieser Domain, z.B. info@musterfirma.de.
+        Für <strong class="text-gray-700">15 €</strong> im Monat können Sie Ihre eigene Domain und beliebig viele E-Mail-Adressen einrichten.
         Außerdem eröffnet uns dieser Beitrag die Möglichkeit, Ihre Website mit Ihnen weiter auszubauen, mit individuellen Designanpassungen, mehr Inhalt und zusätzlichen Funktionen, wie einem Buchungskalender, Bezahlfunktion oder Anfragen per Sprachnachricht.
         Und ja, auch die KI-Steuerung ist bereits in Arbeit, muss aber wirklich noch etwas reifen.
       </p>
   
       <UButton
+        label="Kostenloses Profil erstellen"
         to="/register"
         size="xxl"
-        class="mt-12"
-      >
-        Mein Profil erstellen
-      </UButton>
+        class="mt-12 gap-2"
+        trailingIcon="i-heroicons-arrow-right"
+      />
     </div>
 
     <div class="flex gap-6 py-24 justify-center text-sm text-gray-400">
