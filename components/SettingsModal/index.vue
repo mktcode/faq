@@ -45,6 +45,8 @@ const items: AccordionItem[] = [
     slot: 'subscription',
   },
 ]
+
+const active = ref<string | undefined>(undefined)
 </script>
 
 <template>
@@ -65,6 +67,7 @@ const items: AccordionItem[] = [
         />
       </div>
       <UAccordion
+        v-model="active"
         :items="items"
         :unmount-on-hide="false"
         :ui="{
@@ -73,6 +76,9 @@ const items: AccordionItem[] = [
       >
         <template #company>
           <SettingsModalCompany />
+        </template>
+        <template #domain>
+          <SettingsModalDomain @go-to-subscription="active = '2'" />
         </template>
         <template #subscription>
           <SettingsModalSubscription />
