@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Qanda } from '~/types/db'
-
 const route = useRoute()
 const emailVerified = !!route.query.emailVerified
 const subscriptionSuccess = !!route.query.subscriptionSuccess
@@ -27,19 +25,6 @@ useHead({
   ],
 })
 
-const { data: qanda } = await useFetch<Qanda[]>(`/api/qanda`, {
-  query: {
-    username,
-  },
-})
-
-const qandaAccordionItems = computed(() => {
-  return qanda.value?.map(item => ({
-    label: item.question,
-    content: item.answer,
-  })) || []
-})
-
 const appConfig = useAppConfig()
 const font = computed(() => currentSettings.value?.font || 'roboto')
 appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
@@ -47,8 +32,6 @@ appConfig.ui.button.defaultVariants.rounded = currentSettings.value?.rounded || 
 appConfig.ui.input.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
 appConfig.ui.select.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
 appConfig.ui.textarea.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
-
-const designRounded = useState('designRounded', () => currentSettings.value?.rounded || 'md')
 </script>
 
 <template>
@@ -68,46 +51,12 @@ const designRounded = useState('designRounded', () => currentSettings.value?.rou
       class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6"
     >
       <ProfileDefaultComponentViewer
-        v-for="index in [0, 1, 2]"
+        v-for="index in [0, 1, 2, 3, 4]"
+        :username="username"
         :settings="currentSettings"
         :slot-index="index"
         :key="index"
       />
-
-      <div class="my-6 w-full">
-        <ProfileDefaultForm
-          :username="username"
-          :contact-phone="currentSettings?.company?.phone || ''"
-        />
-      </div>
-
-      <div
-        v-if="qandaAccordionItems.length"
-        class="flex flex-col gap-4 w-full mt-6"
-      >
-        <h3 class="text-2xl font-semibold">
-          Häufig gestellte Fragen
-        </h3>
-        <UAccordion
-          :items="qandaAccordionItems"
-          :ui="{
-            root: 'w-full flex flex-col gap-2',
-            header: `bg-primary-50 px-4 !py-0 hover:bg-primary-100 rounded-${designRounded}`,
-            trigger: 'py-2',
-            label: 'text-lg text-primary-950',
-            body: 'text-lg text-gray-500 pt-2',
-            item: '!border-0',
-            trailingIcon: 'text-primary-500',
-          }"
-        >
-          <template #body="{ item }">
-            <div
-              class="prose"
-              v-html="item.content"
-            />
-          </template>
-        </UAccordion>
-      </div>
 
       <ProfileDefaultFooter />
     </div>

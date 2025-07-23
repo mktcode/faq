@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { ComponentKey, SettingsForm } from '~/types/db'
 
-const { settings, slotIndex } = defineProps<{
+const { username, settings, slotIndex } = defineProps<{
+  username: string
   settings: SettingsForm
   slotIndex: number
 }>()
@@ -28,6 +29,17 @@ function isComponentDisplayed(component: ComponentKey, index: number): boolean {
     <ProfileDefaultDownloads
       v-if="settings?.downloads?.length && isComponentDisplayed('downloads', slotIndex)"
       :downloads="settings?.downloads || []"
+    />
+
+    <ProfileDefaultForm
+      v-if="isComponentDisplayed('form', slotIndex)"
+      :username="username"
+      :contact-phone="settings.company?.phone || ''"
+    />
+
+    <ProfileDefaultFAQ
+      v-if="isComponentDisplayed('faq', slotIndex)"
+      :username="username"
     />
   </div>
 </template>

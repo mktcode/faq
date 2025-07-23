@@ -33,6 +33,11 @@ export default defineEventHandler(async (event) => {
       icon: 'i-heroicons-question-mark-circle',
       slot: 'faq',
     },
+    form: {
+      label: 'Kontaktformular',
+      icon: 'i-heroicons-envelope',
+      slot: 'form',
+    },
     gallery: {
       label: 'Gallerie',
       icon: 'i-heroicons-photo',
@@ -46,6 +51,6 @@ export default defineEventHandler(async (event) => {
   }
 
   return orderedComponentKeys.map((component) => {
-    return availableComponents[component] || null
-  })
+    return availableComponents[component] || undefined
+  }).filter(Boolean)
 })

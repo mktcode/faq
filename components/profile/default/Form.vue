@@ -81,7 +81,7 @@ const designRounded = useState('designRounded')
 </script>
 
 <template>
-  <div class="w-full">
+  <div class="my-6 w-full">
     <a
       id="anfrage"
       href="#anfrage"

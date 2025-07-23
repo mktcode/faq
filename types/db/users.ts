@@ -18,7 +18,7 @@ export type User = Selectable<UsersTable>
 export type NewUser = Insertable<UsersTable>
 export type UserUpdate = Updateable<UsersTable>
 
-export const componentKeys = ['offer', 'gallery', 'downloads', 'faq'] as const
+export const componentKeys = ['offer', 'gallery', 'downloads', 'form', 'faq'] as const
 export type ComponentKey = (typeof componentKeys)[number]
 export const settingsFormSchema = z.object({
   company: z.object({
