@@ -52,11 +52,19 @@ const active = ref<string | undefined>(undefined)
 <template>
   <UModal
     v-model:open="showModal"
-    :close="false"
     :ui="{
       body: '!p-0',
     }"
   >
+    <template #title>
+      <h3 class="text-lg font-semibold flex items-center gap-2">
+        <UIcon
+          name="i-heroicons-cog-6-tooth"
+          class="inline-block size-6 opacity-50"
+        />
+        Einstellungen
+      </h3>
+    </template>
     <template #body>
       <div class="p-4 border-b border-gray-200">
         <USwitch

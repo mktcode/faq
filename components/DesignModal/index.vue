@@ -121,17 +121,14 @@ function switchToSubscription() {
 </script>
 
 <template>
-  <UModal
-    v-model:open="showModal"
-    icon="i-heroicons-paint-brush"
-  >
+  <UModal v-model:open="showModal" >
     <template #title>
       <h3 class="text-lg font-semibold flex items-center gap-2">
         <UIcon
           name="i-heroicons-paint-brush"
           class="inline-block size-6 opacity-50"
         />
-        Design Einstellungen
+        Design
       </h3>
     </template>
     <template #body>
