@@ -1,4 +1,4 @@
-import { settingsFormSchema } from '~/types/db'
+import { settingsFormSchema, componentKeys } from '~/types/db'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
@@ -15,6 +15,12 @@ export default defineEventHandler(async (event) => {
     : userSettings.settings
   
   const validatedSettings = settingsFormSchema.parse(settings)
+  const setComponentKeys = validatedSettings.displayedComponents || componentKeys
+
+  const orderedComponentKeys = [
+    ...setComponentKeys,
+    ...componentKeys.filter((key) => !setComponentKeys.includes(key)),
+  ]
 
   const availableComponents = {
     offer: {
@@ -32,11 +38,6 @@ export default defineEventHandler(async (event) => {
       icon: 'i-heroicons-photo',
       slot: 'gallery',
     },
-    links: {
-      label: 'Externe Verlinkungen',
-      icon: 'i-heroicons-link',
-      slot: 'links',
-    },
     downloads: {
       label: 'Downloads',
       icon: 'i-heroicons-arrow-down-tray',
@@ -44,7 +45,7 @@ export default defineEventHandler(async (event) => {
     },
   }
 
-  return validatedSettings.displayedComponents?.map((component) => {
+  return orderedComponentKeys.map((component) => {
     return availableComponents[component] || null
-  }) || []
+  })
 })

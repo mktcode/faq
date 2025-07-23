@@ -18,6 +18,8 @@ export type User = Selectable<UsersTable>
 export type NewUser = Insertable<UsersTable>
 export type UserUpdate = Updateable<UsersTable>
 
+export const componentKeys = ['offer', 'gallery', 'downloads', 'faq'] as const
+export type ComponentKey = (typeof componentKeys)[number]
 export const settingsFormSchema = z.object({
   company: z.object({
     name: z.string().optional().nullable(),
@@ -80,7 +82,7 @@ export const settingsFormSchema = z.object({
       }),
     )
     .optional().nullable(),
-  displayedComponents: z.array(z.enum(['offer', 'faq', 'gallery', 'links', 'downloads'])).optional(),
+  displayedComponents: z.array(z.enum(componentKeys)).optional(),
 })
 
 export type SettingsForm = z.infer<typeof settingsFormSchema>
