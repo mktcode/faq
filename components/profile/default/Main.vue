@@ -63,10 +63,13 @@ const designRounded = useState('designRounded', () => currentSettings.value?.rou
       :username="username"
       :current-settings="currentSettings"
     />
-    <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
+    <div
+      v-if="currentSettings"
+      class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6"
+    >
       <ProfileDefaultComponentViewer
         v-for="index in [0, 1]"
-        :username="username"
+        :settings="currentSettings"
         :slot-index="index"
         :key="index"
       />

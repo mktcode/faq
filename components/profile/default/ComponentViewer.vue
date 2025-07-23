@@ -1,20 +1,14 @@
 <script setup lang="ts">
-import type { ComponentKey } from '~/types/db'
+import type { ComponentKey, SettingsForm } from '~/types/db'
 
-const { username, slotIndex } = defineProps<{
-  username: string
+const { settings, slotIndex } = defineProps<{
+  settings: SettingsForm
   slotIndex: number
 }>()
 
-const { data: currentSettings } = await useFetch(`/api/settings`, {
-  query: {
-    username,
-  },
-})
-
 function isComponentDisplayed(component: ComponentKey, index: number): boolean {
-  const isVisible = currentSettings.value?.displayedComponents?.includes(component) || false
-  const correctIndex = currentSettings.value?.displayedComponents?.indexOf(component) === index
+  const isVisible = settings.displayedComponents?.includes(component) || false
+  const correctIndex = settings.displayedComponents?.indexOf(component) === index
   return isVisible && correctIndex
 }
 </script>
@@ -22,13 +16,13 @@ function isComponentDisplayed(component: ComponentKey, index: number): boolean {
 <template>
   <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
     <ProfileDefaultOffer
-      v-if="currentSettings?.offers?.length && isComponentDisplayed('offer', slotIndex)"
-      :offers="currentSettings.offers"
+      v-if="settings.offers?.length && isComponentDisplayed('offer', slotIndex)"
+      :offers="settings.offers"
     />
 
     <ProfileDefaultGallery
-      v-if="currentSettings?.gallery?.length && isComponentDisplayed('gallery', slotIndex)"
-      :images="currentSettings?.gallery"
+      v-if="settings.gallery?.length && isComponentDisplayed('gallery', slotIndex)"
+      :images="settings.gallery"
     />
   </div>
 </template>

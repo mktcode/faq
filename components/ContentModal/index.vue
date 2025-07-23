@@ -38,7 +38,7 @@ const showModal = useState('showContentModal', () => false)
           class="inline-block size-4 text-white align-top"
         />
       </DismissableAlert>
-      <ContentModalAccordion />
+      <ContentModalAccordion @update="$emit('update')" />
     </template>
   </UModal>
 </template>

@@ -2,6 +2,10 @@
 import type { AccordionItem } from '@nuxt/ui'
 import { useSortable, moveArrayElement } from '@vueuse/integrations/useSortable'
 
+const emit = defineEmits(['update'])
+
+const toast = useToast()
+
 const { data: displayedComponents } = await useFetch('/api/user/settings/displayedComponents')
 
 const items = shallowRef<AccordionItem[]>(displayedComponents.value || [])
@@ -14,8 +18,16 @@ useSortable(accordion, items, {
     moveArrayElement(items, e.oldIndex, e.newIndex, e)
     // nextTick required here as moveArrayElement is executed in a microtask
     // so we need to wait until the next tick until that is finished.
-    nextTick(() => {
-      console.log('onUpdate', e.oldIndex, e.newIndex)
+    nextTick(async () => {
+      await $fetch('/api/user/settings/displayedComponents', {
+        method: 'POST',
+        body: items.value.map(item => item.slot),
+      })
+      toast.add({
+        title: 'Reihenfolge aktualisiert',
+        color: 'success',
+      })
+      emit('update')
     })
   }
 })
