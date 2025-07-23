@@ -13,7 +13,7 @@ const items = offers.map(offer => ({
 </script>
 
 <template>
-  <div>
+  <div class="my-24 w-full">
     <UCarousel
       v-slot="{ item }"
       :dots="items.length > 1"

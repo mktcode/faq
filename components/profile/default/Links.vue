@@ -9,6 +9,7 @@ defineProps<{
 }>()
 
 const { public: { appHost } } = useRuntimeConfig()
+const showModal = useState('showLinksModal', () => false)
 </script>
 
 <template>
@@ -66,5 +67,10 @@ const { public: { appHost } } = useRuntimeConfig()
         </div>
       </template>
     </UPopover>
+
+    <UButton
+      icon="i-lucide-ellipsis"
+      @click="showModal = true"
+    />
   </div>
 </template>

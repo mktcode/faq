@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Qanda } from '~/types/db'
+import type { ComponentKey, Qanda } from '~/types/db'
 
 const route = useRoute()
 const emailVerified = !!route.query.emailVerified
@@ -49,6 +49,12 @@ appConfig.ui.select.defaultVariants.rounded = currentSettings.value?.rounded || 
 appConfig.ui.textarea.defaultVariants.rounded = currentSettings.value?.rounded || 'md'
 
 const designRounded = useState('designRounded', () => currentSettings.value?.rounded || 'md')
+
+function isComponentDisplayed(component: ComponentKey, index: number): boolean {
+  const isVisible = currentSettings.value?.displayedComponents?.includes(component) || false
+  const correctIndex = currentSettings.value?.displayedComponents?.indexOf(component) === index
+  return isVisible && correctIndex
+}
 </script>
 
 <template>
@@ -64,25 +70,15 @@ const designRounded = useState('designRounded', () => currentSettings.value?.rou
       :current-settings="currentSettings"
     />
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
-      <EmailVerifiedModal
-        v-if="emailVerified"
+      <ProfileDefaultOffer
+        v-if="currentSettings?.offers?.length && isComponentDisplayed('offer', 0)"
+        :offers="currentSettings.offers"
       />
-      <SubscriptionSuccessModal
-        v-if="subscriptionSuccess"
-      />
-      <div
-        v-if="currentSettings?.offers?.length"
-        class="my-24 w-full"
-      >
-        <ProfileDefaultOffer :offers="currentSettings.offers" />
-      </div>
 
-      <div
-        v-if="currentSettings?.gallery?.length"
-        class="my-6 w-full"
-      >
-        <ProfileDefaultGallery :images="currentSettings?.gallery" />
-      </div>
+      <ProfileDefaultGallery
+        v-if="currentSettings?.gallery?.length && isComponentDisplayed('gallery', 0)"
+        :images="currentSettings?.gallery"
+      />
 
       <div
         v-if="currentSettings?.downloads?.length"
@@ -146,6 +142,12 @@ const designRounded = useState('designRounded', () => currentSettings.value?.rou
       <CustomerRequests v-if="me" />
     </div>
 
+    <EmailVerifiedModal
+      v-if="emailVerified"
+    />
+    <SubscriptionSuccessModal
+      v-if="subscriptionSuccess"
+    />
     <SettingsModal
       v-if="me"
       @update="refreshSettings"
@@ -155,6 +157,10 @@ const designRounded = useState('designRounded', () => currentSettings.value?.rou
       @update="refreshSettings"
     />
     <ContentModal
+      v-if="me"
+      @update="refreshSettings"
+    />
+    <LinksModal
       v-if="me"
       @update="refreshSettings"
     />

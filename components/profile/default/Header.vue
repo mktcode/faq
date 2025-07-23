@@ -43,8 +43,7 @@ const { username, currentSettings } = defineProps<{
         {{ currentSettings?.description }}
       </p>
       <ProfileDefaultLinks
-        v-if="currentSettings?.links?.length"
-        :links="currentSettings.links"
+        :links="currentSettings?.links || []"
         :username="username"
       />
     </div>
