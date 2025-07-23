@@ -29,6 +29,7 @@ export async function createUser({
     headerTitleFontSize: 10,
     headerDescriptionColor: 'black',
     headerDescriptionFontSize: 6,
+    displayedComponents: ['offer', 'gallery'],
   }
 
   const insertResult = await db

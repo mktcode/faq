@@ -80,6 +80,7 @@ export const settingsFormSchema = z.object({
       }),
     )
     .optional().nullable(),
+  displayedComponents: z.array(z.enum(['offer', 'faq', 'gallery', 'links', 'downloads'])).optional(),
 })
 
 export type SettingsForm = z.infer<typeof settingsFormSchema>
