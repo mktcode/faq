@@ -39,10 +39,10 @@ async function saveSettings() {
       title="Wichtige Information"
       storageKey="company-info-dismissed"
     >
+      Wir gehen davon aus, dass Sie am Anfang Ihrer Selbstständigkeit stehen.
       Viele Anforderungen gelten erst aber einer bestimmten Mitarbeiterzahl.
-      Wir gehen davon aus, dass Sie in unsere Zielgruppe fallen und sich noch am Anfang Ihrer Selbstständigkeit befinden.
       Wenn Sie bereits mehr als 10 Mitarbeiter haben, ist ein Gewerbeprofil nicht das Richtige für Sie.
-      <a href="https://markus-kottlaender.de" target="_blank" class="underline">Kontaktieren Sie uns</a> für eine individuelle Lösung.
+      <a href="https://markus-kottlaender.de" target="_blank" class="underline">Kontaktieren Sie uns</a> für eine individuelle Beratung.
     </DismissableAlert>
 
     <UFormField label="Name Ihres Unternehmens">
