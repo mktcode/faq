@@ -68,6 +68,9 @@ useSortable(accordion, items, {
     <template #offer>
       <ContentModalOffer />
     </template>
+    <template #form>
+      <ContentModalForm />
+    </template>
     <template #downloads>
       <ContentModalDownloads />
     </template>

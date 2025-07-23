@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
 import type { SimilarQuestion } from '~/server/api/customerRequests/similarQuestions.post'
+import type { SettingsForm } from '~/types/db';
 
-const { username, contactPhone } = defineProps<{
+const { form, username, contactPhone } = defineProps<{
+  form: SettingsForm['form']
   username: string
   contactPhone: string
 }>()
@@ -87,11 +89,11 @@ const designRounded = useState('designRounded')
       href="#anfrage"
       class="block pt-12 text-2xl font-semibold cursor-pointer relative before:content-['#'] before:absolute before:-left-6 before:text-gray-200 before:opacity-0 before:transition-opacity hover:before:opacity-100"
     >
-      Anfrage
+      {{ form?.title || 'Anfrage' }}
     </a>
 
     <p class="text-gray-500 mb-8 mt-3">
-      Stellen Sie Ihre Fragen und erhalten Sie Antworten, per Mail, per Push-Nachricht, telefonisch oder direkt hier im FAQ.
+      {{ form?.description || 'Beschreiben Sie Ihr Anliegen. Wir melden uns zeitnah bei Ihnen.' }}
     </p>
 
     <div

@@ -35,6 +35,7 @@ function isComponentDisplayed(component: ComponentKey, index: number): boolean {
       v-if="isComponentDisplayed('form', slotIndex)"
       :username="username"
       :contact-phone="settings.company?.phone || ''"
+      :form="settings.form"
     />
 
     <ProfileDefaultFAQ
