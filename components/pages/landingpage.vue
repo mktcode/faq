@@ -95,7 +95,8 @@ async function signOut() {
           <span><strong class="text-gray-900">Social Proof: Bewertungen zählen mehr als ein schickes Design.</strong> <br>
           Bitten Sie Kunden, Ihr <a class="text-sky-500" href="https://support.google.com/business/answer/3474122?hl=de" target="_blank">Unternehmen auf Google zu bewerten</a> oder Ihnen auf Facebook und Co. zu folgen oder auf "Gefällt mir" zu klicken.
           Interagieren Sie mit Ihren Kunden, beantworten Sie Fragen und Kommentare und klären Sie kritische Rezensionen.
-          Egal wie professionell Sie am Ende aufgestellt sind - "Mundpropaganda" und Empfehlungen bleiben wichtig.
+          Sowohl für Ihre Kunden als auch für Google und Co. ist es außerdem relevant, von wo aus auf Ihre Website verlinkt wird.
+          Fragen Sie Kooperationspartner, ob Sie auf deren Websites oder Social Media Profilen verlinkt werden können.
         </span>
         </li>
         <li class="flex items-start">
