@@ -87,7 +87,7 @@ watch(acc2active, (newVal) => {
   <div
     class="font-poppins"
   >
-    <div class="flex gap-2 p-4 justify-end">
+    <div class="flex gap-2 p-4 justify-center sm:justify-end">
       <template
         v-if="me"
       >
@@ -113,14 +113,14 @@ watch(acc2active, (newVal) => {
         </UButton>
       </template>
     </div>
-    <div class="flex flex-col items-center justify-center max-w-3xl mx-auto pb-24 md:pb-32 px-4">
+    <div class="flex flex-col items-center justify-center max-w-3xl mx-auto pt-16 sm:pt-24 pb-24 sm:pb-32 px-4">
       <div
         class="text-center flex flex-col items-center max-w-2xl mx-auto"
       >
-        <div class="text-sky-500 text-2xl font-bold flex items-start gap-4 mb-24 leading-none">
+        <div class="text-sky-500 text-2xl sm:text-4xl font-bold flex items-start gap-4 mb-16 sm:mb-24 leading-none">
           <UIcon
             name="i-heroicons-identification"
-            class="size-16 -mt-2"
+            class="size-16 sm:size-24 -mt-2"
           />
           <div class="text-left">
             Gewerbe<br>
@@ -128,13 +128,13 @@ watch(acc2active, (newVal) => {
             <span class="text-gray-400 text-sm font-light float-right">beta</span>
           </div>
         </div>
-        <h2 class="text-2xl">
+        <h2 class="text-xl sm:text-2xl">
           Wagen Sie gerade als Freiberufler oder Einzelunternehmer den Schritt in die Selbstständigkeit und überlegen, ob Sie eine Website brauchen?
           Nicht sofort. Werden Sie erstmal sichtbar!
         </h2>
       </div>
 
-      <h2 class="text-3xl font-bold mt-24 mb-10">
+      <h2 class="text-2xl sm:text-3xl font-bold mt-24 mb-10">
         Schritt 1: Sichtbar werden
       </h2>
 
@@ -185,7 +185,7 @@ watch(acc2active, (newVal) => {
         </template>
       </UAccordion>
   
-      <p class="mt-10 text-gray-500 text-xl">
+      <p class="mt-10 text-gray-500 text-lg sm:text-xl">
         Das alles ist kostenlos und wenn Sie sich selbst nicht so sicher am Computer und im Internet fühlen, ist das mit ein bisschen Hilfe aus dem Familien- und Freundeskreis machbar.
         Kommen Sie gerne auf uns zurück, wenn Sie nicht mehr weiterkommen bzw. wenn Sie bereit sind, den nächsten Schritt zu gehen.
         Denn ohne diese Vorbereitung bringt Ihnen auch die beste Website nicht viel.
@@ -195,13 +195,13 @@ watch(acc2active, (newVal) => {
         Schritt 2: Herausstechen
       </h2>
 
-      <p class="mt-10 text-gray-500 text-xl">
+      <p class="mt-10 text-gray-500 text-lg sm:text-xl">
         Das geht mit einer eigenen Website sehr gut und auch hier gibt es zahlreiche Möglichkeiten, die nicht viel kosten müssen.
         Mit Baukastensystemen wie <a href="https://www.wix.com" target="_blank" class="text-sky-500">Wix</a>, <a href="https://www.jimdo.com" target="_blank" class="text-sky-500">Jimdo</a>, <a href="https://www.squarespace.com" target="_blank" class="text-sky-500">Squarespace</a> oder <a href="https://www.wordpress.com" target="_blank" class="text-sky-500">WordPress</a> können Sie aus vorhandenen Vorlagen eine Website erstellen.
         Da Sie an Google ohnehin nicht vorbeikommen, bietet sich auch <a href="https://sites.google.com" target="_blank" class="text-sky-500">Google Sites</a> an, das Sie kostenlos nutzen können.
       </p>
 
-      <p class="mt-10 text-gray-500 text-xl">
+      <p class="mt-10 text-gray-500 text-lg sm:text-xl">
         All diese Anbieter werden in naher Zukunft auch eine vollständig KI-basierte Erstellung von Websites anbieten oder tun es bereits.
         Das heißt, Sie unterhalten sich mit Ihrem Computer oder Smartphone, wie mit einem Agenturmitarbeiter und der Rest geht von alleine.
         Ganz da sind wir noch nicht, aber es ist nur eine Frage der Zeit. Fragen Sie doch mal <a href="https://chat.openai.com/" target="_blank" class="text-sky-500">ChatGPT</a> oder <a href="https://claude.ai/" target="_blank" class="text-sky-500">Claude</a>, ob es Ihnen eine Website erstellen kann.
@@ -289,32 +289,32 @@ watch(acc2active, (newVal) => {
         </template>
       </UAccordion>
 
-      <p class="mt-10 text-gray-500 text-xl">
+      <p class="mt-10 text-gray-500 text-lg sm:text-xl">
         Diese Liste ist nicht vollständig. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       </p>
 
-      <h2 class="text-3xl font-bold mt-24">
+      <h2 class="text-2xl sm:text-3xl font-bold mt-24">
         Dürfen wir Ihnen ein Angebot machen?
       </h2>
 
-      <p class="mt-10 text-gray-500 text-xl">
-        Unser <strong>Gewerbeprofil</strong> ist eine einfache aber technisch, optisch und rechtlich einwandfreie Website,
+      <p class="mt-10 text-gray-500 text-lg sm:text-xl">
+        Unser <strong class="text-gray-700">Gewerbeprofil</strong> ist eine einfache aber technisch, optisch und rechtlich einwandfreie Website,
         die Sie schnell eingerichtet haben, ohne dabei technisch etwas falsch machen zu können.
       </p>
 
-      <p class="mt-10 text-gray-500 text-xl">
+      <p class="mt-10 text-gray-500 text-lg sm:text-xl">
         Die Struktur ist weitestgehend vorgegeben und optische Anpassungsmöglichkeiten sind begrenzt.
         Aber Sie sind online, mit einer Website, die mehr ist und noch werden kann, als ein Social Media Profil.
         Sie ist Ihr zentraler Anlaufpunkt im Internet, auf dem Sie mit Bild und Text Ihr Unternehmen vorstellen und Anfragen entgegennehmen und auf Ihre weiteren Profile auf anderen Plattformen verweisen können.
       </p>
 
-      <p class="mt-10 text-gray-500 text-xl">
+      <p class="mt-10 text-gray-500 text-lg sm:text-xl">
         Von diesem Punkt aus können Sie Ihre Website dann weiter ausbauen - mit unserer Expertise und Unterstützung.
-        Die "Basisausstattung" ist <strong>kostenlos</strong>. Ihr Profil wird unter einer Subdomain erreichbar sein, z.B. musterfirma.gewerbeprofil.de und sie nutzen weiterhin Ihre vorhandene @gmail.com E-Mail-Adresse.
+        Die "Basisausstattung" ist <strong class="text-gray-700">kostenlos</strong>. Ihr Profil wird unter einer Subdomain erreichbar sein, z.B. musterfirma.gewerbeprofil.de und sie nutzen weiterhin Ihre vorhandene @gmail.com E-Mail-Adresse.
       </p>
 
-      <p class="mt-10 text-gray-500 text-xl">
-        Für <strong>15 €</strong> im Monat können Sie Ihre eigene Domain einrichten, z.B. musterfirma.de und bekommen eine E-Mail-Adresse unter dieser Domain, z.B. info@musterfirma.de.
+      <p class="mt-10 text-gray-500 text-lg sm:text-xl">
+        Für <strong class="text-gray-700">15 €</strong> im Monat können Sie Ihre eigene Domain einrichten, z.B. musterfirma.de und bekommen eine E-Mail-Adresse unter dieser Domain, z.B. info@musterfirma.de.
         Außerdem eröffnet uns dieser Beitrag die Möglichkeit, Ihre Website mit Ihnen weiter auszubauen, mit individuellen Designanpassungen, mehr Inhalt und zusätzlichen Funktionen, wie einem Buchungskalender, Bezahlfunktion oder Anfragen per Sprachnachricht.
         Und ja, auch die KI-Steuerung ist bereits in Arbeit, muss aber wirklich noch etwas reifen.
       </p>
@@ -328,7 +328,7 @@ watch(acc2active, (newVal) => {
       </UButton>
     </div>
 
-    <div class="flex gap-6 mt-24 text-center text-sm text-gray-400">
+    <div class="flex gap-6 py-24 justify-center text-sm text-gray-400">
       <NuxtLink
         to="https://markus-kottlaender.de/impressum"
         target="_blank"
