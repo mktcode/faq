@@ -68,18 +68,11 @@ const designRounded = useState('designRounded', () => currentSettings.value?.rou
       class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6"
     >
       <ProfileDefaultComponentViewer
-        v-for="index in [0, 1]"
+        v-for="index in [0, 1, 2]"
         :settings="currentSettings"
         :slot-index="index"
         :key="index"
       />
-
-      <div
-        v-if="currentSettings?.downloads?.length"
-        class="my-6 w-full"
-      >
-        <ProfileDefaultDownloads :downloads="currentSettings?.downloads || []" />
-      </div>
 
       <div class="my-6 w-full">
         <ProfileDefaultForm

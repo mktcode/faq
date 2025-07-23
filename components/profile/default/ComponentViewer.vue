@@ -14,7 +14,7 @@ function isComponentDisplayed(component: ComponentKey, index: number): boolean {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
+  <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 w-full">
     <ProfileDefaultOffer
       v-if="settings.offers?.length && isComponentDisplayed('offer', slotIndex)"
       :offers="settings.offers"
@@ -23,6 +23,11 @@ function isComponentDisplayed(component: ComponentKey, index: number): boolean {
     <ProfileDefaultGallery
       v-if="settings.gallery?.length && isComponentDisplayed('gallery', slotIndex)"
       :images="settings.gallery"
+    />
+
+    <ProfileDefaultDownloads
+      v-if="settings?.downloads?.length && isComponentDisplayed('downloads', slotIndex)"
+      :downloads="settings?.downloads || []"
     />
   </div>
 </template>
