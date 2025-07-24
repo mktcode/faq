@@ -117,16 +117,15 @@ watch(acc2active, (newVal) => {
       <div
         class="text-center flex flex-col items-center max-w-2xl mx-auto"
       >
-        <div class="text-sky-500 text-2xl sm:text-4xl font-bold flex items-start gap-4 mb-16 sm:mb-24 leading-none">
-          <UIcon
-            name="i-heroicons-identification"
-            class="size-16 sm:size-24 -mt-2"
-          />
-          <div class="text-left">
-            Gewerbe<br>
-            profil.de<br>
-            <span class="text-gray-400 text-sm font-light float-right">beta</span>
+        <div class="text-sky-950 text-3xl sm:text-5xl font-bold flex flex-col gap-1 mb-16 sm:mb-24">
+          <div>
+            Solihost
           </div>
+          <div class="relative -mr-6">
+            <div class="absolute rounded-l-full bg-gradient-to-r from-sky-600 via-sky-600 via-90% to-transparent h-4 w-full rotate-1 -left-1 opacity-50" />
+            <div class="absolute rounded-l-full bg-gradient-to-r from-sky-600 via-sky-600 via-90% to-transparent h-4 w-full -rotate-3 left-1 opacity-80" />
+          </div>
+          <div class="text-gray-400 text-sm font-light ml-auto mt-4">beta</div>
         </div>
         <h2 class="text-xl sm:text-2xl">
           Wagen Sie gerade als Freiberufler oder Einzelunternehmer den Schritt in die Selbstständigkeit und überlegen, ob Sie eine Website brauchen?
