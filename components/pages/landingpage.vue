@@ -87,53 +87,89 @@ watch(acc2active, (newVal) => {
   <div
     class="font-poppins"
   >
-    <div class="flex gap-2 p-4 justify-center sm:justify-end">
-      <template
-        v-if="me"
+    <!-- Fullscreen Video Header -->
+    <div class="relative w-full h-screen overflow-hidden">
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        class="absolute top-0 left-0 w-full h-full object-cover"
       >
-        <UButton
-          :to="`https://${me.userName}.${appHost}`"
-          label="Mein Profil"
-          icon="i-heroicons-identification"
-          variant="ghost"
-        />
-        <UButton
-          label="Abmelden"
-          icon="i-heroicons-power"
-          variant="ghost"
-          @click="signOut"
-        />
-      </template>
-      <template v-else>
-        <UButton
-          to="/login"
-          variant="ghost"
+        <source
+          src="/header.mp4"
+          type="video/mp4"
         >
-          Anmelden
-        </UButton>
-      </template>
-    </div>
-    <div class="flex flex-col items-center justify-center max-w-3xl mx-auto pt-16 sm:pt-24 pb-24 sm:pb-32 px-4">
-      <div
-        class="text-center flex flex-col items-center max-w-2xl mx-auto"
-      >
-        <div class="text-sky-950 text-3xl sm:text-5xl font-bold flex flex-col gap-1 mb-16 sm:mb-24">
-          <div>
-            Solihost
-          </div>
-          <div class="relative -mr-6">
-            <div class="absolute rounded-l-full bg-gradient-to-r from-sky-600 via-sky-600 via-90% to-transparent h-4 w-full rotate-1 -left-1 opacity-50" />
-            <div class="absolute rounded-l-full bg-gradient-to-r from-sky-600 via-sky-600 via-90% to-transparent h-4 w-full -rotate-3 left-1 opacity-80" />
-          </div>
-          <div class="text-gray-400 text-sm font-light ml-auto mt-4">beta</div>
-        </div>
-        <h2 class="text-xl sm:text-2xl">
-          Wagen Sie gerade als Freiberufler oder Einzelunternehmer den Schritt in die Selbstständigkeit und überlegen, ob Sie eine Website brauchen?
-          Nicht sofort. Werden Sie erstmal sichtbar!
-        </h2>
-      </div>
+        Your browser does not support the video tag.
+      </video>
 
-      <h2 class="text-2xl sm:text-3xl font-bold mt-24 mb-10">
+      <!-- Video Overlay with Navigation -->
+      <!-- Video Overlay with Navigation -->
+      <div class="absolute top-0 left-0 w-full h-full bg-black/50">
+        <div class="flex gap-2 p-4 justify-center sm:justify-end">
+          <template
+            v-if="me"
+          >
+            <UButton
+              :to="`https://${me.userName}.${appHost}`"
+              label="Mein Profil"
+              icon="i-heroicons-identification"
+              variant="ghost"
+              class="text-white hover:bg-white/20 backdrop-blur-sm"
+            />
+            <UButton
+              label="Abmelden"
+              icon="i-heroicons-power"
+              variant="ghost"
+              class="text-white hover:bg-white/20 backdrop-blur-sm"
+              @click="signOut"
+            />
+          </template>
+          <template v-else>
+            <UButton
+              to="/login"
+              variant="ghost"
+              class="text-white hover:bg-white/20 backdrop-blur-sm"
+            >
+              Anmelden
+            </UButton>
+          </template>
+        </div>
+
+        <!-- Centered Content on Video -->
+        <div class="flex flex-col items-center justify-center h-full text-center text-white px-4">
+          <div class="max-w-4xl mx-auto">
+            <div class="text-4xl sm:text-6xl lg:text-7xl font-bold flex flex-col gap-2 mb-8 drop-shadow-lg">
+              <div>
+                Solihost
+              </div>
+              <div class="relative -mr-6">
+                <div class="absolute rounded-l-full bg-gradient-to-r from-sky-400 via-sky-400 via-90% to-transparent h-6 w-full rotate-1 -left-1 opacity-50" />
+                <div class="absolute rounded-l-full bg-gradient-to-r from-sky-400 via-sky-400 via-90% to-transparent h-6 w-full -rotate-3 left-1 opacity-80" />
+              </div>
+              <div class="text-gray-200 text-sm font-light ml-auto mt-4">
+                beta
+              </div>
+            </div>
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-medium mb-8 drop-shadow-md">
+              Wagen Sie gerade als Freiberufler oder Einzelunternehmer den Schritt in die Selbstständigkeit und überlegen, ob Sie eine Website brauchen?
+              <br><strong>Nicht sofort. Werden Sie erstmal sichtbar!</strong>
+            </h2>
+            <UButton
+              label="Kostenloses Profil erstellen"
+              to="/register"
+              size="xl"
+              class="gap-2 bg-white text-sky-600 hover:bg-gray-100 font-semibold shadow-lg"
+              trailing-icon="i-heroicons-arrow-right"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex flex-col items-center justify-center max-w-3xl mx-auto pt-16 sm:pt-24 pb-24 sm:pb-32 px-4">
+      <h2 class="text-2xl sm:text-3xl font-bold mt-0 mb-10">
         Schritt 1: Sichtbar werden
       </h2>
 
@@ -160,20 +196,44 @@ watch(acc2active, (newVal) => {
         </template>
         <template #slot1>
           Beim heutigen Konsumverhalten hilft es, wenn Sie in Überschriftenlänge oder maximal zwei bis drei kurzen Sätzen erklären können, was Sie anbieten und für wen.
-          Kostenlose KI-Tools wie <a class="text-sky-500" href="https://chat.openai.com/" target="_blank">ChatGPT</a> oder <a class="text-sky-500" href="https://gemini.google.com" target="_blank">Google Gemini</a> können Ihnen helfen,
+          Kostenlose KI-Tools wie <a
+            class="text-sky-500"
+            href="https://chat.openai.com/"
+            target="_blank"
+          >ChatGPT</a> oder <a
+            class="text-sky-500"
+            href="https://gemini.google.com"
+            target="_blank"
+          >Google Gemini</a> können Ihnen helfen,
           Klarheit zu gewinnen und professionelle Texte zu schreiben, z.B. für Kleinanzeigen oder Social Media Posts. Auch bei rechtlichen und steuerlichen Fragen können diese Tools eine gute erste Orientierung geben.
-          Lesen Sie unsere <a class="text-sky-500" href="/" target="_blank">Prompt-Anleitung</a> für gute Ergebnisse.
+          Lesen Sie unsere <a
+            class="text-sky-500"
+            href="/"
+            target="_blank"
+          >Prompt-Anleitung</a> für gute Ergebnisse.
         </template>
         <template #slot2>
           Werden Sie gefunden. Das ist ebenfalls kostenlos und wesentlich wichtiger als eine Website, die ansonsten ohnehin kaum jemand findet, gerade am Anfang.
-          Legen Sie sich ein <a class="text-sky-500" href="https://accounts.google.com/signup" target="_blank">Google-Konto</a> an (falls Sie noch keins haben) und schauen Sie sich eine der zahlreichen <a class="text-sky-500" href="https://www.youtube.com/results?search_query=google+unternehmensprofil+erstellen" target="_blank">Anleitungen auf YouTube</a> an.
+          Legen Sie sich ein <a
+            class="text-sky-500"
+            href="https://accounts.google.com/signup"
+            target="_blank"
+          >Google-Konto</a> an (falls Sie noch keins haben) und schauen Sie sich eine der zahlreichen <a
+            class="text-sky-500"
+            href="https://www.youtube.com/results?search_query=google+unternehmensprofil+erstellen"
+            target="_blank"
+          >Anleitungen auf YouTube</a> an.
         </template>
         <template #slot3>
           Kleinanzeigen.de, nebenan.de, Instagram, Facebook oder TikTok – Es gibt viele kostenlose Plattformen, auf denen Sie aktiv werben und Kunden gewinnen können.
           Nutzen Sie diese Kanäle und kommen Sie mit Ihrer Zielgruppe in Kontakt.
         </template>
         <template #slot4>
-          Bitten Sie Kunden, Ihr <a class="text-sky-500" href="https://support.google.com/business/answer/3474122?hl=de" target="_blank">Unternehmen auf Google zu bewerten</a> oder Ihnen auf Facebook und Co. zu folgen oder auf "Gefällt mir" zu klicken.
+          Bitten Sie Kunden, Ihr <a
+            class="text-sky-500"
+            href="https://support.google.com/business/answer/3474122?hl=de"
+            target="_blank"
+          >Unternehmen auf Google zu bewerten</a> oder Ihnen auf Facebook und Co. zu folgen oder auf "Gefällt mir" zu klicken.
           Interagieren Sie mit Ihren Kunden, beantworten Sie Fragen und Kommentare und klären Sie kritische Rezensionen.
           Sowohl für Ihre Kunden als auch für Google und Co. ist es außerdem relevant, von wo aus auf Ihre Website verlinkt wird.
           Fragen Sie Kooperationspartner, ob Sie auf deren Websites oder Social Media Profilen verlinkt werden können.
@@ -184,7 +244,7 @@ watch(acc2active, (newVal) => {
           Es spricht auch nichts gegen ein Video, wenn Sie sich damit wohlfühlen. Zeigen Sie sich und Ihre Arbeit!
         </template>
       </UAccordion>
-  
+
       <p class="mt-10 text-gray-500 text-lg sm:text-xl">
         Das alles ist kostenlos und wenn Sie sich selbst nicht so sicher am Computer und im Internet fühlen, ist das mit ein bisschen Hilfe aus dem Familien- und Freundeskreis machbar.
         Kommen Sie gerne auf uns zurück, wenn Sie nicht mehr weiterkommen bzw. wenn Sie bereit sind, den nächsten Schritt zu gehen.
@@ -197,14 +257,42 @@ watch(acc2active, (newVal) => {
 
       <p class="mt-10 text-gray-500 text-lg sm:text-xl">
         Das geht mit einer eigenen Website sehr gut und auch hier gibt es zahlreiche Möglichkeiten, die nicht viel kosten müssen.
-        Mit Baukastensystemen wie <a href="https://www.wix.com" target="_blank" class="text-sky-500">Wix</a>, <a href="https://www.jimdo.com" target="_blank" class="text-sky-500">Jimdo</a>, <a href="https://www.squarespace.com" target="_blank" class="text-sky-500">Squarespace</a> oder <a href="https://www.wordpress.com" target="_blank" class="text-sky-500">WordPress</a> können Sie aus vorhandenen Vorlagen eine Website erstellen.
-        Da Sie an Google ohnehin nicht vorbeikommen, bietet sich auch <a href="https://sites.google.com" target="_blank" class="text-sky-500">Google Sites</a> an, das Sie kostenlos nutzen können.
+        Mit Baukastensystemen wie <a
+          href="https://www.wix.com"
+          target="_blank"
+          class="text-sky-500"
+        >Wix</a>, <a
+          href="https://www.jimdo.com"
+          target="_blank"
+          class="text-sky-500"
+        >Jimdo</a>, <a
+          href="https://www.squarespace.com"
+          target="_blank"
+          class="text-sky-500"
+        >Squarespace</a> oder <a
+          href="https://www.wordpress.com"
+          target="_blank"
+          class="text-sky-500"
+        >WordPress</a> können Sie aus vorhandenen Vorlagen eine Website erstellen.
+        Da Sie an Google ohnehin nicht vorbeikommen, bietet sich auch <a
+          href="https://sites.google.com"
+          target="_blank"
+          class="text-sky-500"
+        >Google Sites</a> an, das Sie kostenlos nutzen können.
       </p>
 
       <p class="mt-10 text-gray-500 text-lg sm:text-xl">
         All diese Anbieter werden in naher Zukunft auch eine vollständig KI-basierte Erstellung von Websites anbieten oder tun es bereits.
         Das heißt, Sie unterhalten sich mit Ihrem Computer oder Smartphone, wie mit einem Agenturmitarbeiter und der Rest geht von alleine.
-        Ganz da sind wir noch nicht, aber es ist nur eine Frage der Zeit. Fragen Sie doch mal <a href="https://chat.openai.com/" target="_blank" class="text-sky-500">ChatGPT</a> oder <a href="https://claude.ai/" target="_blank" class="text-sky-500">Claude</a>, ob es Ihnen eine Website erstellen kann.
+        Ganz da sind wir noch nicht, aber es ist nur eine Frage der Zeit. Fragen Sie doch mal <a
+          href="https://chat.openai.com/"
+          target="_blank"
+          class="text-sky-500"
+        >ChatGPT</a> oder <a
+          href="https://claude.ai/"
+          target="_blank"
+          class="text-sky-500"
+        >Claude</a>, ob es Ihnen eine Website erstellen kann.
         Sie werden erstaunt sein.
       </p>
 
@@ -282,11 +370,19 @@ watch(acc2active, (newVal) => {
         </template>
         <template #slot7>
           Da Sie gewerblich tätig sind, ist ein Impressum Pflicht und auch um eine Datenschutzerklärung kommen Sie nicht herum.
-          Für beides gibt es online <a class="text-sky-500" href="https://www.e-recht24.de/impressum-generator.html" target="_blank">Generatoren</a>, die Ihnen helfen, diese Inhalte zu erstellen.
+          Für beides gibt es online <a
+            class="text-sky-500"
+            href="https://www.e-recht24.de/impressum-generator.html"
+            target="_blank"
+          >Generatoren</a>, die Ihnen helfen, diese Inhalte zu erstellen.
           Leider liegt der Teufel hier im Detail. So muss z.B. die Datenschutzerklärung aktualisiert werden, wenn Sie bestimmte Inhalte auf Ihrer Website einbinden.
           Sogar die verwendete Schriftart kann Auswirkungen haben, wenn Sie technisch nicht korrekt implementiert ist.
           Viele nutzen daher vorgefertigte Lösungen, die dann haufenweise Paragraphen enthalten, die sie gar nicht betreffen und dazu führen, dass es wirklich niemand mehr liest, außer den Abmahnanwälten.
-          Dabei sollte eine Datenschutzerklärung eigentlich einen Zweck erfüllen: Vertrauen schaffen. Lesen Sie doch mal <a class="text-sky-500" href="/datenschutz" target="_blank">unsere</a>.
+          Dabei sollte eine Datenschutzerklärung eigentlich einen Zweck erfüllen: Vertrauen schaffen. Lesen Sie doch mal <a
+            class="text-sky-500"
+            href="/datenschutz"
+            target="_blank"
+          >unsere</a>.
         </template>
       </UAccordion>
 
@@ -316,13 +412,13 @@ watch(acc2active, (newVal) => {
         Außerdem eröffnet uns dieser Beitrag die Möglichkeit, Ihre Website mit Ihnen weiter auszubauen, mit individuellen Designanpassungen, mehr Inhalt und zusätzlichen Funktionen, wie einem Buchungskalender, Bezahlfunktion oder Anfragen per Sprachnachricht.
         Und ja, auch die KI-Steuerung ist bereits in Arbeit, muss aber wirklich noch etwas reifen.
       </p>
-  
+
       <UButton
         label="Kostenloses Profil erstellen"
         to="/register"
         size="xxl"
         class="mt-12 gap-2"
-        trailingIcon="i-heroicons-arrow-right"
+        trailing-icon="i-heroicons-arrow-right"
       />
     </div>
 
