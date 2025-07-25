@@ -104,7 +104,6 @@ watch(acc2active, (newVal) => {
       </video>
 
       <!-- Video Overlay with Navigation -->
-      <!-- Video Overlay with Navigation -->
       <div class="absolute top-0 left-0 w-full h-full bg-black/50">
         <div class="flex gap-2 p-4 justify-center sm:justify-end">
           <template
