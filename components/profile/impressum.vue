@@ -30,7 +30,7 @@ const logo = computed(() => {
           class="w-16 mb-4"
         />
       </div>
-      
+
       <h1 class="text-lg font-bold mb-4">
         {{ currentSettings?.title || username }}
       </h1>
@@ -44,7 +44,7 @@ const logo = computed(() => {
           Angaben gemäß § 5 DDG:
         </p>
 
-        <p class="mt-2">  
+        <p class="mt-2">
           Inhaltlich verantwortlich:
         </p>
 
@@ -59,10 +59,16 @@ const logo = computed(() => {
           </a>
         </p>
 
-        <p class="mt-2" v-if="currentSettings?.company?.taxId">
+        <p
+          v-if="currentSettings?.company?.taxId"
+          class="mt-2"
+        >
           Umsatzsteuer-ID: {{ currentSettings?.company?.taxId }}
         </p>
-        <p v-else class="mt-2">
+        <p
+          v-else
+          class="mt-2"
+        >
           Nach § 19 UStG wird keine Umsatzsteuer berechnet.
         </p>
       </div>

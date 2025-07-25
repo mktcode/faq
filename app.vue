@@ -33,7 +33,9 @@ const { username, isOwned, isPublic, design, path } = useProfile()
     <PagesImpressum v-else-if="path === '/impressum'" />
     <PagesDatenschutz v-else-if="path === '/datenschutz'" />
     <PagesLandingpage v-else-if="path === '/'" />
-    <template v-else-if="path === '/up'">Up!</template>
+    <template v-else-if="path === '/up'">
+      Up!
+    </template>
     <Pages404 v-else />
   </UApp>
 </template>

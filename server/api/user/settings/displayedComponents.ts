@@ -9,17 +9,17 @@ export default defineEventHandler(async (event) => {
     .select(['settings'])
     .where('id', '=', user.id)
     .executeTakeFirstOrThrow()
-  
+
   const settings = typeof userSettings.settings === 'string'
     ? JSON.parse(userSettings.settings)
     : userSettings.settings
-  
+
   const validatedSettings = settingsFormSchema.parse(settings)
   const setComponentKeys = validatedSettings.displayedComponents || componentKeys
 
   const orderedComponentKeys = [
     ...setComponentKeys,
-    ...componentKeys.filter((key) => !setComponentKeys.includes(key)),
+    ...componentKeys.filter(key => !setComponentKeys.includes(key)),
   ]
 
   const availableComponents = {

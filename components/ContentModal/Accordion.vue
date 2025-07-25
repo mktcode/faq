@@ -14,7 +14,7 @@ const active = ref<string | undefined>(undefined)
 
 useSortable(accordion, items, {
   animation: 150,
-  onUpdate: (e: { oldIndex: number; newIndex: number }) => {
+  onUpdate: (e: { oldIndex: number, newIndex: number }) => {
     moveArrayElement(items, e.oldIndex, e.newIndex, e)
     // nextTick required here as moveArrayElement is executed in a microtask
     // so we need to wait until the next tick until that is finished.
@@ -29,14 +29,14 @@ useSortable(accordion, items, {
       })
       emit('update')
     })
-  }
+  },
 })
 </script>
 
 <template>
   <UAccordion
-    v-model="active"
     ref="accordion"
+    v-model="active"
     :items="items"
     :unmount-on-hide="false"
     :ui="{
@@ -79,4 +79,3 @@ useSortable(accordion, items, {
     </template>
   </UAccordion>
 </template>
-

@@ -9,7 +9,7 @@ const props = withDefaults(
   }>(),
   {
     icon: 'i-heroicons-information-circle',
-  }
+  },
 )
 
 const showAlert = useLocalStorage(props.storageKey, true)

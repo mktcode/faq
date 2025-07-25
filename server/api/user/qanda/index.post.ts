@@ -29,11 +29,11 @@ export default defineEventHandler(async (event) => {
         answer,
       })
       .executeTakeFirstOrThrow()
-    
+
     if (!insertResult.insertId) {
       throw new Error('Failed to insert user')
     }
-    
+
     id = Number(insertResult.insertId)
   }
 
@@ -47,7 +47,8 @@ export default defineEventHandler(async (event) => {
 
     await sql`UPDATE qanda SET embedding = VEC_FromText(${JSON.stringify(embedding.data[0].embedding)}) WHERE id = ${id} AND userId = ${user.id}`
       .execute(db)
-  } else {
+  }
+  else {
     await db.updateTable('qanda')
       .set({
         embedding: null,

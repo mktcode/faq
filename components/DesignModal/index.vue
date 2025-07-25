@@ -121,7 +121,7 @@ function switchToSubscription() {
 </script>
 
 <template>
-  <UModal v-model:open="showModal" >
+  <UModal v-model:open="showModal">
     <template #title>
       <h3 class="text-lg font-semibold flex items-center gap-2">
         <UIcon

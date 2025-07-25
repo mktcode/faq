@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
 import type { SimilarQuestion } from '~/server/api/customerRequests/similarQuestions.post'
-import type { SettingsForm } from '~/types/db';
+import type { SettingsForm } from '~/types/db'
 
 const { form, username, contactPhone } = defineProps<{
   form: SettingsForm['form']

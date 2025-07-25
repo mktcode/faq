@@ -13,11 +13,11 @@ export default defineEventHandler(async (event) => {
     .select(['settings'])
     .where('id', '=', user.id)
     .executeTakeFirstOrThrow()
-  
+
   const settings = typeof userSettings.settings === 'string'
     ? JSON.parse(userSettings.settings)
     : userSettings.settings
-  
+
   settings.displayedComponents = displayedComponents || []
 
   const updatedSettings = settingsFormSchema.parse(settings)

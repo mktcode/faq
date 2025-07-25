@@ -24,7 +24,7 @@ const showModal = useState('showContentModal', () => false)
       <DismissableAlert
         title="Sichtbarkeit und Reihenfolge"
         icon="i-heroicons-light-bulb"
-        storageKey="content-info-dismissed"
+        storage-key="content-info-dismissed"
         class="rounded-none"
       >
         Ihr Gewerbeprofil besteht aus den unten aufgeführten Inhalten. Klicken und Ziehen sie einen Eintrag, um die Reihenfolge zu ändern

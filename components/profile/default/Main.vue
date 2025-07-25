@@ -52,10 +52,10 @@ appConfig.ui.textarea.defaultVariants.rounded = currentSettings.value?.rounded |
     >
       <ProfileDefaultComponentViewer
         v-for="index in [0, 1, 2, 3, 4]"
+        :key="index"
         :username="username"
         :settings="currentSettings"
         :slot-index="index"
-        :key="index"
       />
 
       <ProfileDefaultFooter />
