@@ -34,9 +34,30 @@ export default defineWebAuthnRegisterEventHandler({
       })
     }
     else {
+      const font = 'montserrat'
+      const color = 'black'
       const newUser = await createUser({
         name: user.userName,
         userName: user.userName,
+        settings: {
+          font,
+          color,
+          title: 'Herzlich Willkommen',
+          description: 'Auf unserer Website von Solihost.de',
+          headerTitleColor: 'black',
+          headerTitleFontSize: 10,
+          headerDescriptionColor: 'black',
+          headerDescriptionFontSize: 6,
+          headerImageOverlay: {
+            color: 'black',
+            opacity: 4,
+          },
+          displayedComponents: ['offer', 'gallery', 'form', 'faq', 'downloads'],
+          form: {
+            title: 'Anfrage',
+            description: 'Wir freuen uns auf Ihre Nachricht!',
+          },
+        }
       })
 
       await setUserSession(event, {

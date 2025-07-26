@@ -61,34 +61,21 @@ appConfig.ui.textarea.defaultVariants.rounded = currentSettings.value?.rounded |
       <ProfileDefaultFooter />
     </div>
 
-    <div class="w-full mt-6 py-24 border-t border-gray-200">
-      <CustomerRequests v-if="me" />
-    </div>
-
     <EmailVerifiedModal
       v-if="emailVerified"
     />
     <SubscriptionSuccessModal
       v-if="subscriptionSuccess"
     />
-    <SettingsModal
-      v-if="me"
-      @update="refreshSettings"
-    />
-    <DesignModal
-      v-if="me"
-      @update="refreshSettings"
-    />
-    <ContentModal
-      v-if="me"
-      @update="refreshSettings"
-    />
-    <LinksModal
-      v-if="me"
-      @update="refreshSettings"
-    />
-    <ClientOnly>
-      <WelcomeModal />
-    </ClientOnly>
+    <template v-if="me">
+      <SettingsModal @update="refreshSettings" />
+      <DesignModal @update="refreshSettings" />
+      <ContentModal @update="refreshSettings" />
+      <LinksModal @update="refreshSettings" />
+      <MailModal @update="refreshSettings" />
+      <ClientOnly>
+        <WelcomeModal />
+      </ClientOnly>
+    </template>
   </FontWrapper>
 </template>

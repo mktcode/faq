@@ -1,5 +1,6 @@
 <script setup lang="ts">
 withDefaults(defineProps<{
+  label?: string
   title?: string
   subtitle?: string
 }>(), {
@@ -15,7 +16,7 @@ const font = defineModel('font', {
 
 <template>
   <UFormField
-    label="Schriftart"
+    :label="label"
     name="font"
     class="flex-1"
   >

@@ -1,5 +1,6 @@
 import type { H3Event } from 'h3'
 import type { SettingsForm } from '~/types/db'
+import { availableFonts } from '~/utils/customization'
 
 export function makeUsername(name: string): string {
   // TODO: check for uniqueness in the database
@@ -17,24 +18,13 @@ export function makeUsername(name: string): string {
 export async function createUser({
   name,
   userName,
+  settings,
 }: {
   name: string
   userName: string
+  settings: SettingsForm
 }) {
   const db = await getDatabaseConnection()
-
-  const settings: SettingsForm = {
-    title: name,
-    headerTitleColor: 'black',
-    headerTitleFontSize: 10,
-    headerDescriptionColor: 'black',
-    headerDescriptionFontSize: 6,
-    displayedComponents: ['offer', 'gallery', 'form', 'faq', 'downloads'],
-    form: {
-      title: 'Anfrage',
-      description: 'Wir freuen uns auf Ihre Nachricht!',
-    },
-  }
 
   const insertResult = await db
     .insertInto('users')

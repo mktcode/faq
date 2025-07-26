@@ -5,10 +5,7 @@ const { data: customerRequests } = await useFetch(() => `/api/user/customerReque
 </script>
 
 <template>
-  <div class="w-full max-w-lg px-6 mx-auto">
-    <h3 class="text-2xl font-bold mb-4">
-      Anfragen
-    </h3>
+  <div class="w-full max-w-lg mx-auto">
     <div class="flex gap-2 mb-6 flex-wrap">
       <UButton
         label="Neu"

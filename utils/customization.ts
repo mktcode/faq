@@ -43,6 +43,8 @@ export const availableFonts = ref<SelectItem[]>([
   },
 ])
 
+export type AvailableFont = typeof availableFonts.value[number]
+
 export const availableColors = ref([
   {
     label: 'Schwarz',
@@ -141,6 +143,8 @@ export const availableColors = ref([
     value: 'stone',
   },
 ])
+
+export type AvailableColor = typeof availableColors.value[number]
 
 export function getColorClass(colorValue: string | undefined, type: string = 'bg'): string {
   if (!colorValue) return ''

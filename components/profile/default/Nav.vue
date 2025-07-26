@@ -14,6 +14,7 @@ const onOwnProfile = computed(() => username === myLastUsername.value)
 const showSettingsModal = useState('showSettingsModal', () => false)
 const showDesignModal = useState('showDesignModal', () => false)
 const showContentModal = useState('showContentModal', () => false)
+const showMailModal = useState('showMailModal', () => false)
 </script>
 
 <template>
@@ -57,6 +58,13 @@ const showContentModal = useState('showContentModal', () => false)
         icon="i-lucide-letter-text"
         size="md"
         @click="showContentModal = true"
+      />
+
+      <UButton
+        v-if="me && onOwnProfile"
+        icon="i-heroicons-envelope"
+        size="md"
+        @click="showMailModal = true"
       />
     </div>
   </div>
