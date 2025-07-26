@@ -17,7 +17,7 @@ const { isStartingCheckout, startCheckoutSession } = useCheckoutSession()
           Deine E-Mail-Adresse wurde erfolgreich verifiziert. Vielen Dank!
         </p>
         <p class="text-center text-gray-600">
-          Du kannst nun Gewerbeprofil Plus abonnieren, um Zugriff auf erweiterte Funktionen zu erhalten.
+          Du kannst nun ein Abonnement abschließen, um Zugriff auf erweiterte Funktionen zu erhalten.
         </p>
         <UButton
           label="Plus abonnieren"
