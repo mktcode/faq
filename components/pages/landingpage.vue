@@ -188,6 +188,16 @@ watch(acc2active, (newVal) => {
       <p class="text-gray-500 text-lg sm:text-xl mb-6">
         Unsere Standard-Website ist für Sie kostenlos. Sie können Ihre eigene Domain verknüpfen und Anfragen an Ihre vorhandene E-Mail-Adresse erhalten.
         Im Abonnement für 15 € mtl. (zzgl. MwSt.) erhalten Sie zusätzliche Funktionen (z.B. ein einfacher Shop oder Buchungskalender) und individuellere Gestaltungsmöglichkeiten.
+        <NuxtLink
+          to="#standard-website"
+          class="text-sky-500 inline-flex items-center"
+        >
+          Mehr erfahren
+          <UIcon
+            name="i-heroicons-arrow-down"
+            class="inline-block ml-1 size-4"
+          />
+        </NuxtLink>
       </p>
       <p class="text-gray-500 text-lg sm:text-xl mb-6">
         Bevor Sie jedoch mit dem Aufbau einer Website beginnen, sollten Sie sich mit ein paar Grundlagen und weiteren kostenlosen Möglichkeiten vertraut machen, um Ihr Angebot online sichtbar zu machen.
@@ -297,16 +307,15 @@ watch(acc2active, (newVal) => {
           href="https://www.squarespace.com"
           target="_blank"
           class="text-sky-500"
-        >Squarespace</a> oder <a
+        >Squarespace</a>, <a
           href="https://www.wordpress.com"
           target="_blank"
           class="text-sky-500"
-        >WordPress</a> können Sie aus vorhandenen Vorlagen eine Website erstellen.
-        Da Sie an Google ohnehin nicht vorbeikommen, bietet sich auch <a
+        >WordPress</a> oder <a
           href="https://sites.google.com"
           target="_blank"
           class="text-sky-500"
-        >Google Sites</a> an, das Sie kostenlos nutzen können.
+        >Google Sites</a> können Sie aus vorhandenen Vorlagen eine Website erstellen.
       </p>
 
       <p class="mt-10 text-gray-500 text-lg sm:text-xl">
@@ -379,22 +388,22 @@ watch(acc2active, (newVal) => {
           Vermeiden Sie es nur, eine Unterseite nach der anderen zu erstellen, weil Ihnen dieses oder jenes noch einfällt.
         </template>
         <template #slot5>
-          Ruinieren Sie sich nicht selbst Ihre Website, indem Sie eine Cookie-Einwilligung einbauen oder einbauen lassen.
+          Ruinieren Sie sich nicht selbst mit einer Cookie-Einwilligung Ihre Website.
           Das nervt die Besucher und sorgt für längere Ladezeiten und frühzeitige Absprünge potenzieller Kunden.
           Sie brauchen keine Cookie-Einwilligung, wenn Sie keine Cookies verwenden, die personenbezogene Daten speichern.
-          Und die verwenden Sie nicht, solange Sie keine Analyse-Tools wie Google Analytics nutzen, die für Ihre Zwecke völlig überdimensioniert sind.
-          Diese Tools brauchen Sie nur, wenn Sie die Umsätze durch Ihre Website bis auf den letzten Klick genau optimieren wollen.
-          Es reicht auch erstmal ein einfacher Aufrufzähler.
+          Und das tun Sie nicht, solange Sie keine Analyse-Tools wie Google Analytics nutzen, die für Ihre Zwecke völlig überdimensioniert sind.
+          Diese Tools brauchen Sie nur, wenn Sie die Umsätze durch Ihre Website perfekt optimieren wollen.
+          Es reicht auch erstmal ein anonymisierter Aufrufzähler, am besten je nach Quelle, damit Sie sehen, von wo Ihre Besucher kommen. 
         </template>
         <template #slot6>
-          Eine Website braucht eine Domain, also das, was Sie in die Adresszeile des Browsers eingeben, z.B. gewerbeprofil.de.
-          Unter einer solchen Domain können dann auch E-Mail-Adressen eingerichtet werden, z.B. info@gewerbeprofil.de.
-          Das wirkt professioneller als @gmail.com oder @web.de. Wenn Sie die allerdings bereits auf 500 Visitenkarten gedruckt haben, dann ist das auch völlig okay.
-          Zumal eine E-Mail-Adresse unter eigener Domain dann definitiv mit Kosten verbunden ist.
-          Für eine Domain mit .de am Ende sollten Sie nicht mehr als 10 Euro pro Jahr bezahlen.
-          Für die dazugehörige E-Mail-Adresse kommen dann nochmal ca. 0,50 bis 2 oder 3 Euro pro Monat dazu, je nach Anbieter und Speicherplatz.
-          Letztlich wollen wir an dieser Stelle nur betonen: Entscheidend für Ihren Erfolg ist beides nicht.
-          Konzentrieren Sie sich erstmal auf Ihre Inhalte.
+          Eine Website braucht eine Domain, also das, was Sie in die Adresszeile des Browsers eingeben, z.B. meinefirma.de.
+          Dann können auch E-Mail-Adressen wie info@meinefirma.de eingerichtet werden.
+          Das wirkt professioneller als maxmusterman1988@gmail.com oder @gmx.de.
+          Wenn Sie die allerdings bereits auf 500 Visitenkarten gedruckt haben, dann ist das auch völlig in Ordnung.
+          Entscheidend ist Ihre Arbeit, nicht Ihre E-Mail-Adresse.
+          Sie brauchen sich jedenfalls nicht tagelang Gedanken über die perfekte Premium-Domain zu machen.
+          Es reicht eine "normale" .de Domain für maximal 1 € im Monat.
+          Eine Domain gibt man ohnehin selten manuell ein, sondern klickt auf eine Anzeige, ein Social Media Profil oder findet sie über Google.
         </template>
         <template #slot7>
           Da Sie gewerblich tätig sind, ist ein Impressum Pflicht und auch um eine Datenschutzerklärung kommen Sie nicht herum.
@@ -402,8 +411,10 @@ watch(acc2active, (newVal) => {
             class="text-sky-500"
             href="https://www.e-recht24.de/impressum-generator.html"
             target="_blank"
-          >Generatoren</a>, die Ihnen helfen, diese Inhalte zu erstellen.
-          Leider liegt der Teufel hier im Detail. So muss z.B. die Datenschutzerklärung aktualisiert werden, wenn Sie bestimmte Inhalte auf Ihrer Website einbinden.
+          >Generatoren</a>.
+          Leider liegt der Teufel hier im Detail - Wer hätte das gedacht?
+          Sie können nicht einfach ein YouTube-Video auf Ihrer Website anzeigen, ohne den Besucher um Erlaubnis zu bitten.
+          Haben Sie ein Kontaktformular? Was passiert mit den Daten, die dort eingegeben werden?
           Sogar die verwendete Schriftart kann Auswirkungen haben, wenn Sie technisch nicht korrekt implementiert ist.
           Viele nutzen daher vorgefertigte Lösungen, die dann haufenweise Paragraphen enthalten, die sie gar nicht betreffen und dazu führen, dass es wirklich niemand mehr liest, außer den Abmahnanwälten.
           Dabei sollte eine Datenschutzerklärung eigentlich einen Zweck erfüllen: Vertrauen schaffen. Lesen Sie doch mal <a
@@ -416,38 +427,82 @@ watch(acc2active, (newVal) => {
 
       <p class="mt-10 text-gray-500 text-lg sm:text-xl">
         Diese Liste ist nicht vollständig und es muss ja auch nicht immer alles sofort perfekt sein (abgesehen von den rechtlichen Anforderungen).
-        Wir hoffen aber Ihnen ein bisschen Orientierung gegeben zu haben. Sie müssen nicht direkt einen vierstelligen Betrag für eine Agentur ausgeben, um online Kunden zu gewinnen.
+        Wir hoffen, aber Ihnen ein bisschen Orientierung gegeben zu haben.
+        Sie müssen nicht direkt einen vierstelligen Betrag für eine Agentur ausgeben, um online Kunden zu gewinnen.
         Fangen Sie klein an und wachsen Sie mit der Zeit.
       </p>
 
-      <h2 class="text-2xl sm:text-3xl font-bold mt-24">
-        Dürfen wir Ihnen ein Angebot machen?
-      </h2>
-
-      <p class="mt-10 text-gray-500 text-lg sm:text-xl">
-        Unser <strong class="text-gray-700">Gewerbeprofil</strong> ist eine einfache aber technisch, optisch und rechtlich einwandfreie Website,
-        die Sie schnell eingerichtet haben, ohne dabei etwas falsch machen zu können.
+      <p class="mt-10 text-gray-500 text-lg sm:text-xl" id="standard-website">
+        Unsere Standard-Website deckt das Wesentlichste auf unkomplizierte Weise ab und Sie bekommen ein Gefühl dafür, was Sie wirklich brauchen und was nicht.
+        Was auch immer das dann ist, im Abonnement ist es vermutlich bereits enthalten.
       </p>
 
-      <p class="mt-10 text-gray-500 text-lg sm:text-xl">
-        Die Struktur ist weitestgehend vorgegeben und optische Anpassungsmöglichkeiten sind begrenzt. Manchmal ist weniger aber wirklich mehr.
-        Sie sind sofort mit einer Website online, die mit Ihnen mitwachsen kann und als Ihr zentraler Anlaufpunkt im Internet dient.
-        Die "Basisausstattung" ist <strong class="text-gray-700">kostenlos</strong>. Ihr Profil wird unter einer Subdomain erreichbar sein, z.B. musterfirma.gewerbeprofil.de und sie nutzen weiterhin Ihre vorhandene @gmail.com E-Mail-Adresse.
-      </p>
+      <ul class="list-none text-gray-500 mt-10 border border-gray-200 rounded-lg p-6 flex flex-col gap-2 w-full *:flex *:items-center *:gap-2">
+        <li class="text-lg sm:text-xl font-bold text-gray-900">
+          Vorteile Ihrer kostenlosen Website:
+        </li>
+        <li>
+          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
+          Technisch sauber und visuell ansprechend
+        </li>
+        <li>
+          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
+          Automatisch korrektes Impressum und passgenaue, lesbare Datenschutzerklärung, basierend auf genutzten Funktionen
+        </li>
+        <li>
+          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
+          Keine unnötigen Cookies und keine Cookie-Einwilligung
+        </li>
+        <li>
+          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
+          Definitiv optimiert für Suchmaschinen, KI und Mobilgeräte
+        </li>
+        <li>
+          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
+          Nutzbar mit und ohne vorhandene Domain und E-Mail-Adresse
+        </li>
+        <li>
+          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
+          Alle Links an einem Ort - Social Media, Anzeigenportale, externe Buchungskalender und Shops, etc.
+        </li>
+        <li class="text-lg sm:text-xl font-bold text-gray-900 mt-6">
+          Im Abonnement für 15 € mtl. (zzgl. MwSt.):
+        </li>
+        <li>
+          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
+          Individuelle Gestaltungsmöglichkeiten
+        </li>
+        <li>
+          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
+          Integrierter Buchungskalender und einfache Shop-Funktion
+        </li>
+        <li>
+          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
+          Intelligentes FAQ - Antworten Sie schneller und erhalten Sie konkretere Anfragen
+        </li>
+        <li>
+          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
+          Mehr Speicherplatz für Bilder, Videos und andere Dateien
+        </li>
+        <li>
+          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
+          .de-Domain und E-Mail-Adresse inklusive
+        </li>
+        <li>
+          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
+          monatlich kündbar
+        </li>
+      </ul>
 
-      <p class="mt-10 text-gray-500 text-lg sm:text-xl">
-        Für <strong class="text-gray-700">15 €</strong> im Monat können Sie Ihre eigene Domain und beliebig viele E-Mail-Adressen einrichten.
-        Außerdem eröffnet uns dieser Beitrag die Möglichkeit, Ihre Website mit Ihnen weiter auszubauen, mit individuellen Designanpassungen, mehr Inhalt und zusätzlichen Funktionen, wie einem Buchungskalender, Bezahlfunktion oder Anfragen per Sprachnachricht.
-        Und ja, auch die KI-Steuerung ist bereits in Arbeit, muss aber wirklich noch etwas reifen.
-      </p>
-
-      <UButton
-        label="Kostenloses Profil erstellen"
-        to="/register"
-        size="xxl"
-        class="mt-12 gap-2"
-        trailing-icon="i-heroicons-arrow-right"
-      />
+      <div class="text-white">
+        <UButton
+          label="Website erstellen"
+          to="/register"
+          size="xxl"
+          class="mt-12 gap-2"
+          trailing-icon="i-heroicons-arrow-right"
+        />
+      </div>
     </div>
 
     <div class="flex gap-6 py-24 justify-center text-sm text-gray-400">
