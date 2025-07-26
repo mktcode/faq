@@ -139,36 +139,41 @@ watch(acc2active, (newVal) => {
         <!-- Centered Content on Video -->
         <div class="flex flex-col items-center justify-center h-full text-center text-white px-4">
           <div class="max-w-5xl mx-auto">
-            <div class="text-4xl sm:text-6xl lg:text-7xl font-bold flex flex-col gap-2 mb-20 drop-shadow-lg max-w-fit mx-auto">
-              <div>
-                Solihost
-              </div>
-              <div class="relative -mr-6">
-                <div class="absolute rounded-l-md bg-gradient-to-r from-sky-600 via-sky-400 via-90% to-transparent h-4 w-full rotate-1 -left-1 opacity-50" />
-                <div class="absolute rounded-l-md bg-gradient-to-r from-sky-600 via-sky-400 via-90% to-transparent h-4 w-full -rotate-3 left-1 opacity-80" />
-              </div>
-              <div class="text-gray-200/70 text-sm font-light ml-auto mt-4">
+            <div class="px-20 sm:px-0">
+              <SolihostLogo
+                class="mb-12 sm:mb-20 max-w-sm"
                 beta
-              </div>
+              />
             </div>
-            <h2 class="text-xl sm:text-2xl lg:text-3xl font-medium mb-12 drop-shadow-md leading-snug">
+            <h2 class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium mb-12 drop-shadow-md leading-snug">
               Wagen Sie gerade als Freiberufler oder Einzelunternehmer den Schritt in die Selbstständigkeit und überlegen, wie viel Geld Sie in Online-Marketing und eine eigene Website investieren sollten?
-              <br><br><strong>Wir beraten Sie gerne!<br>Aber fangen Sie doch schonmal an.</strong>
+              <strong>Wir beraten Sie gerne und helfen bei jedem Schritt!</strong>
             </h2>
             <div class="flex flex-col gap-10 justify-center items-center">
               <UButton
                 label="Kostenlose Website erstellen"
                 to="/register"
                 size="xxl"
-                class="gap-2 bg-gradient-to-r from-sky-500 via-30% via-sky-400 to-sky-600 !text-shadow-xs text-shadow-sky-950/40 shadow-lg hover:shadow-sky-950/50 hover:scale-x-[102%] hover:scale-y-[101%] transition-all duration-300"
+                class="hidden sm:flex gap-2 bg-gradient-to-r from-sky-500 via-30% via-sky-400 to-sky-600 !text-shadow-xs text-shadow-sky-950/40 shadow-lg hover:shadow-sky-950/50 hover:scale-x-[102%] hover:scale-y-[101%] transition-all duration-300"
+                trailing-icon="i-heroicons-arrow-right"
+                :ui="{ trailingIcon: 'opacity-50' }"
+              />
+              <UButton
+                label="Kostenlose Website erstellen"
+                to="/register"
+                size="xl"
+                class="sm:hidden gap-2 bg-gradient-to-r from-sky-500 via-30% via-sky-400 to-sky-600 !text-shadow-xs text-shadow-sky-950/40 shadow-lg hover:shadow-sky-950/50 hover:scale-x-[102%] hover:scale-y-[101%] transition-all duration-300"
                 trailing-icon="i-heroicons-arrow-right"
                 :ui="{ trailingIcon: 'opacity-50' }"
               />
               <div>
+                <div>
+                  Beratung und <NuxtLink to="/fernwartung" class="underline">Fernwartung</NuxtLink>:
+                </div>
                 <div class="text-white text-3xl font-bold">
                   0176 70 86 46 27
                 </div>
-                <div class="text-sm text-gray-300">
+                <div class="text-sm text-white/50">
                   Mo. - Fr. 10:00 - 18:00 Uhr
                 </div>
               </div>
@@ -180,7 +185,18 @@ watch(acc2active, (newVal) => {
 
     <!-- Main Content -->
     <div class="flex flex-col items-center justify-center max-w-3xl mx-auto pt-16 sm:pt-24 pb-24 sm:pb-32 px-4" id="main-content">
-      <h2 class="text-2xl sm:text-3xl font-bold mt-0 mb-10">
+      <p class="text-gray-500 text-lg sm:text-xl mb-6">
+        Unsere Standard-Website ist für Sie kostenlos. Sie können Ihre eigene Domain verknüpfen und Anfragen an Ihre vorhandene E-Mail-Adresse erhalten.
+        Im Abonnement für 15 € mtl. (zzgl. MwSt.) erhalten Sie zusätzliche Funktionen (z.B. ein einfacher Shop oder Buchungskalender) und individuellere Gestaltungsmöglichkeiten.
+      </p>
+      <p class="text-gray-500 text-lg sm:text-xl mb-6">
+        Bevor Sie jedoch mit dem Aufbau einer Website beginnen, sollten Sie sich mit ein paar Grundlagen und weiteren kostenlosen Möglichkeiten vertraut machen, um Ihr Angebot online sichtbar zu machen.
+      </p>
+      <p class="text-gray-500 text-lg sm:text-xl">
+        Nehmen Sie sich etwas Zeit, um durch die folgenden Punkte zu stöbern und einen Überblick zu bekommen.
+      </p>
+
+      <h2 class="text-2xl sm:text-3xl font-bold mt-24 mb-10">
         Schritt 1: Sichtbar werden
       </h2>
 
@@ -206,7 +222,8 @@ watch(acc2active, (newVal) => {
           >✔</span>
         </template>
         <template #slot1>
-          Beim heutigen Konsumverhalten hilft es, wenn Sie in Überschriftenlänge oder maximal zwei bis drei kurzen Sätzen erklären können, was Sie anbieten und für wen.
+          Beim heutigen Konsumverhalten hilft es, wenn Sie in Überschriftenlänge oder maximal zwei bis drei kurzen Sätzen erklären können, was Sie anbieten, für wen und welche Vorteile Kunden bei Ihnen haben.
+          Je präziser Ihre Zielgruppe definiert ist, desto gezielter können Sie diese ansprechen.
           Kostenlose KI-Tools wie <a
             class="text-sky-500"
             href="https://chat.openai.com/"
