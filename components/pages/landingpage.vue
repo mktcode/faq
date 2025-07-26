@@ -129,6 +129,7 @@ watch(acc2active, (newVal) => {
               to="/login"
               variant="ghost"
               class="text-white hover:bg-white/20 backdrop-blur-sm"
+              trailing-icon="i-heroicons-arrow-right-on-rectangle"
             >
               Anmelden
             </UButton>
