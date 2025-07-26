@@ -137,37 +137,47 @@ watch(acc2active, (newVal) => {
 
         <!-- Centered Content on Video -->
         <div class="flex flex-col items-center justify-center h-full text-center text-white px-4">
-          <div class="max-w-4xl mx-auto">
-            <div class="text-4xl sm:text-6xl lg:text-7xl font-bold flex flex-col gap-2 mb-8 drop-shadow-lg">
+          <div class="max-w-5xl mx-auto">
+            <div class="text-4xl sm:text-6xl lg:text-7xl font-bold flex flex-col gap-2 mb-20 drop-shadow-lg max-w-fit mx-auto">
               <div>
                 Solihost
               </div>
               <div class="relative -mr-6">
-                <div class="absolute rounded-l-full bg-gradient-to-r from-sky-400 via-sky-400 via-90% to-transparent h-6 w-full rotate-1 -left-1 opacity-50" />
-                <div class="absolute rounded-l-full bg-gradient-to-r from-sky-400 via-sky-400 via-90% to-transparent h-6 w-full -rotate-3 left-1 opacity-80" />
+                <div class="absolute rounded-l-md bg-gradient-to-r from-sky-600 via-sky-400 via-90% to-transparent h-4 w-full rotate-1 -left-1 opacity-50" />
+                <div class="absolute rounded-l-md bg-gradient-to-r from-sky-600 via-sky-400 via-90% to-transparent h-4 w-full -rotate-3 left-1 opacity-80" />
               </div>
-              <div class="text-gray-200 text-sm font-light ml-auto mt-4">
+              <div class="text-gray-200/70 text-sm font-light ml-auto mt-4">
                 beta
               </div>
             </div>
-            <h2 class="text-xl sm:text-2xl lg:text-3xl font-medium mb-8 drop-shadow-md">
-              Wagen Sie gerade als Freiberufler oder Einzelunternehmer den Schritt in die Selbstständigkeit und überlegen, ob Sie eine Website brauchen?
-              <br><strong>Nicht sofort. Werden Sie erstmal sichtbar!</strong>
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-medium mb-12 drop-shadow-md leading-snug">
+              Wagen Sie gerade als Freiberufler oder Einzelunternehmer den Schritt in die Selbstständigkeit und überlegen, wie viel Geld Sie in eine eigene Website oder einen neuen Laptop investieren sollten oder welche Buchhaltungssoftware am meisten Sinn macht?
+              <br><br><strong>Wir beraten Sie gerne!<br>Aber fangen Sie doch schonmal an.</strong>
             </h2>
-            <UButton
-              label="Kostenloses Profil erstellen"
-              to="/register"
-              size="xl"
-              class="gap-2 bg-white text-sky-600 hover:bg-gray-100 font-semibold shadow-lg"
-              trailing-icon="i-heroicons-arrow-right"
-            />
+            <div class="flex flex-col gap-10 justify-center items-center">
+              <UButton
+                label="Kostenlose Website erstellen"
+                to="/register"
+                size="xxl"
+                class="gap-2 bg-gradient-to-r from-sky-500 via-30% via-sky-400 to-sky-600 hover:shadow-lg hover:scale-x-[102%] hover:scale-y-[101%] transition-all duration-300"
+                trailing-icon="i-heroicons-arrow-right"
+              />
+              <div>
+                <div class="text-gray-300 mb-1">
+                  Kostenlose Beratung:
+                </div>
+                <div class="text-white text-3xl font-bold">
+                  0176 70 86 46 27
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Main Content -->
-    <div class="flex flex-col items-center justify-center max-w-3xl mx-auto pt-16 sm:pt-24 pb-24 sm:pb-32 px-4">
+    <div class="flex flex-col items-center justify-center max-w-3xl mx-auto pt-16 sm:pt-24 pb-24 sm:pb-32 px-4" id="main-content">
       <h2 class="text-2xl sm:text-3xl font-bold mt-0 mb-10">
         Schritt 1: Sichtbar werden
       </h2>
