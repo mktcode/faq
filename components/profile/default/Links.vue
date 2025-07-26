@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import type { SettingsForm } from '~/types/db';
+
 defineProps<{
   username: string
-  links: {
-    title: string
-    url: string
-    icon: string
-  }[]
+  settings?: SettingsForm | null
 }>()
+
+const { me } = await useMe()
+const { isOwned } = useProfile()
 
 const { public: { appHost } } = useRuntimeConfig()
 const showModal = useState('showLinksModal', () => false)
@@ -14,14 +15,16 @@ const showModal = useState('showLinksModal', () => false)
 
 <template>
   <div class="w-full flex items-center justify-center gap-2 mb-4">
-    <UButton
-      v-for="(link, index) in links"
-      :key="index"
-      :label="link.title"
-      :icon="link.icon === 'none' ? undefined : link.icon"
-      :href="link.url"
-      target="_blank"
-    />
+    <template v-if="settings?.links && settings.links.length > 0">
+      <UButton
+        v-for="(link, index) in settings.links"
+        :key="index"
+        :label="link.title"
+        :icon="link.icon === 'none' ? undefined : link.icon"
+        :href="link.url"
+        target="_blank"
+      />
+    </template>
 
     <UPopover class="mb-auto">
       <UButton
@@ -31,16 +34,29 @@ const showModal = useState('showLinksModal', () => false)
 
       <template #content>
         <div class="m-4 inline-flex flex-col gap-4 max-w-xl">
-          <div class="text-gray-500">
-            {{ `${username}.${appHost}` }}
-          </div>
-          <div class="flex flex-col gap-2">
+          <template v-if="me && !me.published && isOwned">
+            <UAlert class="max-w-sm">
+              <template #description>
+                Dein Profil ist noch nicht veröffentlicht. Das kannst du in den Einstellungen
+                <UIcon
+                  name="i-heroicons-cog-6-tooth"
+                  class="inline-block size-5 align-middle"
+                />
+                ändern.
+              </template>
+            </UAlert>
+          </template>
+          <div class="text-gray-500 text-xl border border-gray-200 rounded-lg p-2 pl-4 flex items-center justify-between">
+            <span>
+              {{ `${username}.${appHost}` }}
+            </span>
             <UButton
-              target="_blank"
-              label="Link kopieren"
-              icon="i-heroicons-link"
+              class="ml-2"
+              icon="i-heroicons-clipboard"
               variant="soft"
             />
+          </div>
+          <div class="flex flex-col gap-2">
             <UButton
               label="Auf Facebook teilen"
               icon="i-lucide-facebook"

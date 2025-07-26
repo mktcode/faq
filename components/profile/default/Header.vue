@@ -43,7 +43,7 @@ const { username, currentSettings } = defineProps<{
         {{ currentSettings?.description }}
       </p>
       <ProfileDefaultLinks
-        :links="currentSettings?.links || []"
+        :settings="currentSettings"
         :username="username"
       />
     </div>
