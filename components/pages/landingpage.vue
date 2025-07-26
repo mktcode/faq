@@ -151,7 +151,7 @@ watch(acc2active, (newVal) => {
               </div>
             </div>
             <h2 class="text-xl sm:text-2xl lg:text-3xl font-medium mb-12 drop-shadow-md leading-snug">
-              Wagen Sie gerade als Freiberufler oder Einzelunternehmer den Schritt in die Selbstständigkeit und überlegen, wie viel Geld Sie in eine eigene Website oder einen neuen Laptop investieren sollten oder welche Buchhaltungssoftware am meisten Sinn macht?
+              Wagen Sie gerade als Freiberufler oder Einzelunternehmer den Schritt in die Selbstständigkeit und überlegen, wie viel Geld Sie in Online-Marketing und eine eigene Website investieren sollten?
               <br><br><strong>Wir beraten Sie gerne!<br>Aber fangen Sie doch schonmal an.</strong>
             </h2>
             <div class="flex flex-col gap-10 justify-center items-center">
@@ -164,11 +164,11 @@ watch(acc2active, (newVal) => {
                 :ui="{ trailingIcon: 'opacity-50' }"
               />
               <div>
-                <div class="text-gray-300 mb-1">
-                  Kostenlose Beratung:
-                </div>
                 <div class="text-white text-3xl font-bold">
                   0176 70 86 46 27
+                </div>
+                <div class="text-sm text-gray-300">
+                  Mo. - Fr. 10:00 - 18:00 Uhr
                 </div>
               </div>
             </div>
