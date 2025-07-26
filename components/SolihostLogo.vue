@@ -1,9 +1,7 @@
 <script setup lang="ts">
-const { beta } = withDefaults(defineProps<{
+const { beta = false } = defineProps<{
   beta?: boolean
-}>(), {
-  beta: false
-})
+}>();
 </script>
 <template>
   <div class="@container flex flex-col gap-[0.2cqw] mx-auto w-full">

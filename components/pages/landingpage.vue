@@ -56,7 +56,7 @@ const acc2items = ref<AccordionItem[]>([
     slot: 'slot3',
   },
   {
-    label: 'Weniger ist mehr: Funktionierende Landingpage statt zig Unterseiten',
+    label: 'Weniger ist mehr: Klare Angebote statt zu vieler Unterseiten',
     slot: 'slot4',
   },
   {
@@ -187,7 +187,7 @@ watch(acc2active, (newVal) => {
     <div class="flex flex-col items-center justify-center max-w-3xl mx-auto pt-16 sm:pt-24 pb-24 sm:pb-32 px-4" id="main-content">
       <p class="text-gray-500 text-lg sm:text-xl mb-6">
         Unsere Standard-Website ist für Sie kostenlos. Sie können Ihre eigene Domain verknüpfen und Anfragen an Ihre vorhandene E-Mail-Adresse erhalten.
-        Im Abonnement für 15 € mtl. (zzgl. MwSt.) erhalten Sie zusätzliche Funktionen (z.B. ein einfacher Shop oder Buchungskalender) und individuellere Gestaltungsmöglichkeiten.
+        Im Abonnement für 15 € mtl. (zzgl. MwSt.) erhalten Sie zusätzliche Funktionen und individuellere Gestaltungsmöglichkeiten.
         <NuxtLink
           to="#standard-website"
           class="text-sky-500 inline-flex items-center"
@@ -360,10 +360,11 @@ watch(acc2active, (newVal) => {
         </template>
         <template #slot1>
           Welche Überschrift und Beschreibung wird bei Google und Co. angezeigt?
-          Auch Messenger-Dienste wie WhatsApp oder soziale Medien zeigen eine Vorschau, wenn Sie einen Link zu Ihrer Website teilen.
+          Auch Messenger-Dienste wie WhatsApp oder soziale Medien zeigen eine Vorschau, wenn Sie Ihre Website teilen.
           Achten Sie darauf, dass nicht einfach irgendein zufälliges Bild und ein Platzhaltertext angezeigt wird.
-          Ihre Website hat auch ein kleines Icon, das sog. Favicon, das z.B. in Suchergebnissen und Lesezeichen angezeigt wird.
-          Bei unzähligen Seiten ist das immernoch das Logo von WordPress und Co., weil vergessen wurde, es auszutauschen.
+          Eine Website hat auch immer ein kleines Icon, das in Suchergebnissen und Lesezeichen angezeigt wird.
+          Bei vielen Seiten ist das immernoch das Logo von WordPress und Co., weil vergessen wurde, es auszutauschen.
+          Auch Fehlerseiten, z.B. der berühmte 404-Fehler, sollten in Ihrem Branding erscheinen.
         </template>
         <template #slot2>
           KI wird zunehmend in Suchmaschinen eingesetzt, um Inhalte zu analysieren und das best mögliche Ergebnis zu liefern.
@@ -375,8 +376,8 @@ watch(acc2active, (newVal) => {
         <template #slot3>
           Egal wie und wo Sie Ihre Website erstellen, Ihnen wird versprochen werden, dass sie auf allen Geräten gut aussieht.
           Prüfen Sie das! Der Klassiker sind überdimensionierte Schriftgrößen und unglücklich platzierte Elemente, die das Layout sprengen.
-          Das Ergebnis von Baukastensystemen erfordert oft noch einiges an Detailarbeit, damit es wirklich gut aussieht.
-          Schauen Sie sich Ihre Website mindestens auf dem Smartphone und einem Desktop-Bildschirm an.
+          Das Ergebnis von Baukastensystemen erfordert oft noch einiges an Detailarbeit.
+          Prüfen Sie Ihre Website mindestens auf dem Smartphone und einem großen Bildschirm.
           Und auch wenn das Internet mal etwas langsamer ist, sollte Ihre Website mehr oder weniger sofort sichtbar sein.
         </template>
         <template #slot4>
@@ -403,7 +404,7 @@ watch(acc2active, (newVal) => {
           Entscheidend ist Ihre Arbeit, nicht Ihre E-Mail-Adresse.
           Sie brauchen sich jedenfalls nicht tagelang Gedanken über die perfekte Premium-Domain zu machen.
           Es reicht eine "normale" .de Domain für maximal 1 € im Monat.
-          Eine Domain gibt man ohnehin selten manuell ein, sondern klickt auf eine Anzeige, ein Social Media Profil oder findet sie über Google.
+          Eine Domain gibt man ohnehin selten manuell ein, sondern klickt auf eine Anzeige, ein Social Media Profil oder ein Suchergebniss.
         </template>
         <template #slot7>
           Da Sie gewerblich tätig sind, ist ein Impressum Pflicht und auch um eine Datenschutzerklärung kommen Sie nicht herum.
@@ -412,7 +413,7 @@ watch(acc2active, (newVal) => {
             href="https://www.e-recht24.de/impressum-generator.html"
             target="_blank"
           >Generatoren</a>.
-          Leider liegt der Teufel hier im Detail - Wer hätte das gedacht?
+          Leider liegt der Teufel hier im Detail - wer hätte das gedacht?
           Sie können nicht einfach ein YouTube-Video auf Ihrer Website anzeigen, ohne den Besucher um Erlaubnis zu bitten.
           Haben Sie ein Kontaktformular? Was passiert mit den Daten, die dort eingegeben werden?
           Sogar die verwendete Schriftart kann Auswirkungen haben, wenn Sie technisch nicht korrekt implementiert ist.
@@ -427,14 +428,14 @@ watch(acc2active, (newVal) => {
 
       <p class="mt-10 text-gray-500 text-lg sm:text-xl">
         Diese Liste ist nicht vollständig und es muss ja auch nicht immer alles sofort perfekt sein (abgesehen von den rechtlichen Anforderungen).
-        Wir hoffen, aber Ihnen ein bisschen Orientierung gegeben zu haben.
+        Wir hoffen, aber Ihnen ein bisschen Orientierung geben zu können.
         Sie müssen nicht direkt einen vierstelligen Betrag für eine Agentur ausgeben, um online Kunden zu gewinnen.
         Fangen Sie klein an und wachsen Sie mit der Zeit.
       </p>
 
       <p class="mt-10 text-gray-500 text-lg sm:text-xl" id="standard-website">
-        Unsere Standard-Website deckt das Wesentlichste auf unkomplizierte Weise ab und Sie bekommen ein Gefühl dafür, was Sie wirklich brauchen und was nicht.
-        Was auch immer das dann ist, im Abonnement ist es vermutlich bereits enthalten.
+        Unsere Standard-Website deckt das Wichtigste auf unkomplizierte Weise ab und Sie bekommen ein Gefühl dafür, was Sie wirklich brauchen und was nicht.
+        Was auch immer das dann ist, im Abonnement ist es vermutlich bereits enthalten - auf jeden Fall möglich.
       </p>
 
       <ul class="list-none text-gray-500 mt-10 border border-gray-200 rounded-lg p-6 flex flex-col gap-2 w-full *:flex *:items-center *:gap-2">
@@ -451,7 +452,7 @@ watch(acc2active, (newVal) => {
         </li>
         <li>
           <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
-          Keine unnötigen Cookies und keine Cookie-Einwilligung
+          Keine unnötigen Cookies und intransparenten Einwilligungen
         </li>
         <li>
           <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
@@ -470,7 +471,7 @@ watch(acc2active, (newVal) => {
         </li>
         <li>
           <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
-          Individuelle Gestaltungsmöglichkeiten
+          Komplett freie Gestaltungsmöglichkeiten
         </li>
         <li>
           <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
@@ -490,7 +491,7 @@ watch(acc2active, (newVal) => {
         </li>
         <li>
           <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
-          monatlich kündbar
+          Monatlich kündbar, per Klick in der App
         </li>
       </ul>
 
