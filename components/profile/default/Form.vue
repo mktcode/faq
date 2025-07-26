@@ -202,7 +202,7 @@ const designRounded = useState('designRounded')
         v-if="messageLongEnough"
         label="Anfrage senden"
         block
-        :disabled="isSavingRequest || !name || (!phone && !email) || messageEmbedding.length === 0"
+        :disabled="isSavingRequest || !name || (!phone && !email) || (messageEmbedding.length === 0 && isSubscribed)"
         :loading="isSavingRequest"
         @click="saveRequest"
       />
