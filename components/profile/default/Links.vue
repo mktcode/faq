@@ -77,7 +77,7 @@ const showModal = useState('showLinksModal', () => false)
               icon="i-ic-baseline-whatsapp"
               variant="soft"
               target="_blank"
-              :to="`https://wa.me/?text=${encodeURIComponent(`Schau dir mein Gewerbeprofil an: https://${username}.${appHost}`)}`"
+              :to="`https://wa.me/?text=${encodeURIComponent(`Meine Website: https://${username}.${appHost}`)}`"
             />
           </div>
         </div>

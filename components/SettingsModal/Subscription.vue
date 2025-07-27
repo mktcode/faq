@@ -24,7 +24,7 @@ async function updateEmail() {
   <div class="flex flex-col gap-4 p-6">
     <template v-if="me?.isSubscribed">
       <p class="text-gray-600">
-        Sie sind bereits für das Plus-Abonnement angemeldet. Vielen Dank für Ihre Unterstützung!
+        Sie sind bereits für das Abonnement angemeldet. Vielen Dank für Ihre Unterstützung!
       </p>
       <p class="text-gray-600">
         Um Ihr Abonnement zu verwalten, werden Sie zu unserem Zahlungsdienstleister Stripe weitergeleitet.
@@ -41,7 +41,7 @@ async function updateEmail() {
     <template v-else>
       <template v-if="me?.email && !me?.emailConfirmationToken">
         <p class="text-gray-600">
-          Mit einem Plus-Abonnement erhalten Sie Zugriff auf erweiterte Funktionen und machen Ihr Gewerbeprofil mit unserer Hilfe zur professionellen Website.
+          Mit einem Abonnement erhalten Sie Zugriff auf erweiterte Funktionen und individuellere Gestaltungsmöglichkeiten.
         </p>
         <ul class="list-disc list-inside text-gray-600 mb-6">
           <li>Domain und E-Mail-Adresse inkl.</li>
@@ -74,7 +74,7 @@ async function updateEmail() {
       </template>
       <template v-else>
         <p class="text-gray-400">
-          Mit einem Plus-Abonnement erhalten Sie Zugriff auf erweiterte Funktionen und machen Ihr Gewerbeprofil mit unserer Hilfe zur professionellen Website.
+          Mit einem Abonnement erhalten Sie Zugriff auf erweiterte Funktionen und individuellere Gestaltungsmöglichkeiten.
         </p>
         <ul class="list-disc list-inside text-gray-400">
           <li>Domain und E-Mail-Adresse inkl.</li>

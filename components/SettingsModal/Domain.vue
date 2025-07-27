@@ -12,11 +12,11 @@ const emit = defineEmits(['goToSubscription'])
     </template>
     <template v-else>
       <p class="text-gray-400">
-        Ihr Profil ist aktuell unter <strong>{{ me?.userName }}.gewerbeprofil.de</strong> erreichbar.
-        Um eine eigene Domain zu nutzen und ein E-Mail-Postfach zu erstellen, benötigen Sie <strong>Gewerbeprofil Plus</strong> für <strong>15 € im Monat</strong>.
+        Ihre Website ist aktuell unter <strong>{{ me?.userName }}.solihost.de</strong> erreichbar.
+        Um eine eigene Domain zu registrieren und ein E-Mail-Postfach zu erstellen, benötigen Sie ein <strong>Abonnement</strong> für <strong>15 € im Monat</strong>.
       </p>
       <p class="text-gray-400">
-        Außerdem erhalten Sie mit Gewerbeprofil Plus:
+        Außerdem erhalten Sie mit dem Abonnement:
       </p>
       <ul class="list-disc list-inside text-gray-400">
         <li>Mehr Speicherplatz für Bilder und Downloads</li>

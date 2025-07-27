@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
   if (user.email) {
     await sendEmail({
       to: user.email,
-      subject: `Neue Anfrage über Ihr Gewerbeprofil`,
+      subject: `Neue Anfrage über Ihre Website`,
       body: `Sie haben eine neue Anfrage von ${name} erhalten.\n\nNachricht: ${message}\n\nBitte loggen Sie sich in Ihr Profil ein, um darauf zu antworten.`,
     })
   }

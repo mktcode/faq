@@ -16,7 +16,7 @@ const { data: currentSettings, refresh: refreshSettings } = await useFetch(`/api
 })
 
 useHead({
-  title: currentSettings.value?.title || 'Mein Gewerbeprofil',
+  title: currentSettings.value?.title || 'Meine Website',
   meta: [
     {
       name: 'description',

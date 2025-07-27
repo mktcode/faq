@@ -22,7 +22,7 @@ function close() {
     <template #body>
       <div class="flex flex-col gap-4">
         <h1 class="text-2xl font-bold">
-          Willkommen auf Ihrem Gewerbeprofil
+          Willkommen auf Ihrer Website!
         </h1>
         <p class="text-gray-600">
           Wie Sie sehen, ist es hier noch ziemlich leer. Ein Textfeld für Anfragen und Links zu Impressum und Datenschutzerklärung. Das war&apos;s.

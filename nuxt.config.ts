@@ -44,7 +44,7 @@ export default defineNuxtConfig({
     session: {
       password: process.env.SESSION_PASSWORD || '',
       cookie: {
-        domain: process.env.NODE_ENV === 'production' ? 'gewerbeprofil.de' : 'gewerbeprofil.local',
+        domain: process.env.NODE_ENV === 'production' ? 'solihost.de' : 'solihost.local',
         sameSite: 'strict',
       },
     },
@@ -72,17 +72,17 @@ export default defineNuxtConfig({
     },
   },
   devServer: {
-    host: 'gewerbeprofil.local',
+    host: 'solihost.local',
     https: {
-      key: '.localcert/gewerbeprofil.local+1-key.pem',
-      cert: '.localcert/gewerbeprofil.local+1.pem',
+      key: '.localcert/solihost.local+1-key.pem',
+      cert: '.localcert/solihost.local+1.pem',
     },
   },
   compatibilityDate: '2024-11-01',
   vite: {
     server: {
       allowedHosts: true,
-      hmr: { host: 'gewerbeprofil.local' },
+      hmr: { host: 'solihost.local' },
     },
   },
   auth: {

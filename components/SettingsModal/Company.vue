@@ -16,7 +16,6 @@ const form = ref({
     taxId: '',
     isSmallBusiness: false,
   },
-  privacy: currentSettings.value?.privacy || '',
 })
 
 async function saveSettings() {
@@ -41,12 +40,12 @@ async function saveSettings() {
     >
       Wir gehen davon aus, dass Sie am Anfang Ihrer Selbstständigkeit stehen.
       Viele Anforderungen gelten erst aber einer bestimmten Mitarbeiterzahl.
-      Wenn Sie bereits mehr als 10 Mitarbeiter haben, ist ein Gewerbeprofil nicht das Richtige für Sie.
+      Wenn Sie bereits mehr als 10 Mitarbeiter haben,
       <a
         href="https://markus-kottlaender.de"
         target="_blank"
         class="underline"
-      >Kontaktieren Sie uns</a> für eine individuelle Beratung.
+      >kontaktieren Sie uns</a> für eine individuelle Beratung.
     </DismissableAlert>
 
     <UFormField label="Name Ihres Unternehmens">

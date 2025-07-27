@@ -40,7 +40,7 @@ const items: AccordionItem[] = [
     slot: 'domain',
   },
   {
-    label: 'Gewerbeprofil Plus',
+    label: 'Abonnement',
     icon: 'i-heroicons-rocket-launch',
     slot: 'subscription',
   },

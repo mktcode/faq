@@ -1,5 +1,5 @@
-service: gewerbeprofil
-image: mktcode/gewerbeprofil
+service: solihost
+image: mktcode/solihost
 servers:
   web:
     - <%= `bin/terraform output -raw app-1_ip` %>

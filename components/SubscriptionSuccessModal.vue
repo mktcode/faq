@@ -26,10 +26,10 @@ watch(isOpen, (newValue) => {
     <template #body>
       <div class="flex flex-col gap-4">
         <h1 class="text-2xl font-bold text-center">
-          Gewerbeprofil Plus freigeschaltet!
+          Abonnement freigeschaltet!
         </h1>
         <p class="text-center text-gray-600">
-          Sie haben nun Zugriff auf alle erweiterten Funktionen von Gewerbeprofil Plus.
+          Sie haben nun Zugriff auf alle erweiterten Funktionen.
         </p>
         <UButton
           label="Alles klar!"

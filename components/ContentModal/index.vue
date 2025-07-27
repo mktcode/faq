@@ -27,7 +27,7 @@ const showModal = useState('showContentModal', () => false)
         storage-key="content-info-dismissed"
         class="rounded-none"
       >
-        Ihr Gewerbeprofil besteht aus den unten aufgeführten Inhalten. Klicken und Ziehen sie einen Eintrag, um die Reihenfolge zu ändern
+        Ihre Website besteht aus den unten aufgeführten Inhalten. Klicken und Ziehen sie einen Eintrag, um die Reihenfolge zu ändern
         <UIcon
           name="i-heroicons-arrows-up-down"
           class="inline-block size-4 text-white align-top"
