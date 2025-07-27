@@ -15,6 +15,13 @@ function sanitizeUserName(name: string) {
 async function signUp() {
   await register({ userName: userName.value })
   await fetchUserSession()
+  await $fetch('/api/user/settings', {
+    method: 'POST',
+    body: {
+      font: font.value,
+      color: color.value,
+    },
+  })
   navigateTo(`https://${userName.value}.${appHost}`, { external: true })
 }
 </script>
