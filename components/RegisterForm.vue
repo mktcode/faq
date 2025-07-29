@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { componentDetails } from '~/types/db'
+
 const { register } = useWebAuthn({ registerEndpoint: '/api/webauthn/register' })
 const { fetch: fetchUserSession } = useUserSession()
 const { appHost } = useRuntimeConfig().public
@@ -7,6 +9,11 @@ const userName = ref('')
 const font = ref<AvailableFont>(availableFonts.value[0])
 const color = ref<AvailableColor>(availableColors.value[0])
 const about = ref('')
+const displayedComponents = ref<{ [key: string]: boolean }>(
+  Object.fromEntries(
+    componentDetails.map(component => [component.key, true])
+  )
+)
 
 function sanitizeUserName(name: string) {
   userName.value = name.toLowerCase().replace(/[^a-z]/g, '')
@@ -20,6 +27,8 @@ async function signUp() {
     body: {
       font: font.value,
       color: color.value,
+      about: about.value,
+      displayedComponents: Object.keys(displayedComponents.value).filter(key => displayedComponents.value[key]),
     },
   })
   navigateTo(`https://${userName.value}.${appHost}`, { external: true })
@@ -50,6 +59,43 @@ async function signUp() {
         class="w-full max-w-lg mx-auto"
       />
     </div>
+    <UFormField
+      label="Welche Komponenten möchten Sie nutzen?"
+      class="flex-1"
+    >
+      <div class="flex flex-col gap-2">
+        <UCard
+          v-for="(componentDetail, index) in componentDetails"
+          :variant="displayedComponents[componentDetail.key] ? 'outline' : 'soft'"
+          :key="index"
+          :ui="{
+            header: '!p-3',
+            body: '!p-3',
+            footer: '!p-3'
+          }"
+        >
+          <h3 class="font-semibold flex gap-2 justify-between">
+            <span
+              class="flex items-center gap-2 text-base"
+              :class="{ 'text-gray-500': !displayedComponents[componentDetail.key] }"
+            >
+              <UIcon
+                :name="componentDetail.icon"
+                class="inline-block size-5"
+              />
+              {{ componentDetail.title }}
+            </span>
+            <USwitch
+              v-model="displayedComponents[componentDetail.key]"
+              class="ml-2"
+            />
+          </h3>
+          <p class="text-gray-500 mt-1">
+            {{ componentDetail.description }}
+          </p>
+        </UCard>
+      </div>
+    </UFormField>
     <div>
       <UFormField
         label="Benutzername"

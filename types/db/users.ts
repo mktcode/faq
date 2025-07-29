@@ -18,6 +18,38 @@ export type User = Selectable<UsersTable>
 export type NewUser = Insertable<UsersTable>
 export type UserUpdate = Updateable<UsersTable>
 
+export const componentDetails = [
+  {
+    key: 'offer',
+    title: 'Angebote',
+    description: 'Hier können Sie Ihre Angebote mit Bild und Text präsentieren.',
+    icon: 'i-heroicons-megaphone',
+  },
+  {
+    key: 'gallery',
+    title: 'Galerie',
+    description: 'Hier können Sie Bilder und Videos hochladen, um Ihre Produkte oder Dienstleistungen zu präsentieren.',
+    icon: 'i-heroicons-photo',
+  },
+  {
+    key: 'form',
+    title: 'Kontaktformular',
+    description: 'Hier können Sie ein Kontaktformular einfügen, damit Interessenten Sie direkt kontaktieren können.',
+    icon: 'i-heroicons-envelope',
+  },
+  {
+    key: 'faq',
+    title: 'Häufig gestellte Fragen',
+    description: 'Hier können Sie häufig gestellte Fragen beantworten, um Ihren Kunden zu helfen.',
+    icon: 'i-heroicons-question-mark-circle',
+  },
+  {
+    key: 'downloads',
+    title: 'Downloads',
+    description: 'Hier können Sie Dateien zum Download anbieten, z.B. Broschüren oder Preislisten.',
+    icon: 'i-heroicons-arrow-down-tray',
+  },
+] as const
 export const componentKeys = ['offer', 'gallery', 'downloads', 'form', 'faq'] as const
 export type ComponentKey = (typeof componentKeys)[number]
 export const settingsFormSchema = z.object({

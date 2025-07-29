@@ -22,6 +22,7 @@ export default defineEventHandler(async (event) => {
     ...componentKeys.filter(key => !setComponentKeys.includes(key)),
   ]
 
+  // TODO: unify with componentDetails in types/db/users.ts
   const availableComponents = {
     offer: {
       label: 'Angebot',
