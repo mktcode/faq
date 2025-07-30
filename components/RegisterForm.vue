@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { watchDebounced } from '@vueuse/core'
 import { componentDetails } from '~/types/db'
 
 const { register } = useWebAuthn({ registerEndpoint: '/api/webauthn/register' })
@@ -6,6 +7,8 @@ const { fetch: fetchUserSession } = useUserSession()
 const { appHost } = useRuntimeConfig().public
 
 const userName = ref('')
+const userNameAvailable = ref(true)
+const checkingUserNameAvailability = ref(false)
 const font = ref<AvailableFont>(availableFonts.value[0])
 const color = ref<AvailableColor>(availableColors.value[0])
 const about = ref('')
@@ -33,6 +36,21 @@ async function signUp() {
   })
   navigateTo(`https://${userName.value}.${appHost}`, { external: true })
 }
+
+async function checkUserNameAvailability() {
+  if (checkingUserNameAvailability.value) return
+  checkingUserNameAvailability.value = true
+  if (userName.value.length < 3) {
+    userNameAvailable.value = true
+    checkingUserNameAvailability.value = false
+    return
+  }
+  const result = await $fetch(`/api/checkUsername?userName=${userName.value}`)
+  userNameAvailable.value = !result.exists
+  checkingUserNameAvailability.value = false
+}
+
+watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
 </script>
 
 <template>
@@ -99,7 +117,11 @@ async function signUp() {
     <div>
       <UFormField
         label="Benutzername"
+        :error="userNameAvailable ? '' : 'Dieser Benutzername ist bereits vergeben.'"
         class="flex-1"
+        :ui="{
+          error: 'text-sky-800 bg-sky-50 border-sky-200 px-4 py-2 rounded-lg',
+        }"
       >
         <div class="flex">
           <UInput
@@ -133,6 +155,7 @@ async function signUp() {
         }"
       />
       <UButton
+        :disabled="!userNameAvailable || userName.length < 3"
         type="submit"
         class="ml-auto"
         label="Zugang erstellen"
