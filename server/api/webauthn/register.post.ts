@@ -55,6 +55,9 @@ export default defineWebAuthnRegisterEventHandler({
             title: 'Anfrage',
             description: 'Wir freuen uns auf Ihre Nachricht!',
           },
+          company: {
+            isSmallBusiness: true,
+          }
         }
       })
 
