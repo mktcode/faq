@@ -3,7 +3,12 @@ const showModal = useState('showMailModal', () => false)
 </script>
 
 <template>
-  <UModal v-model:open="showModal">
+  <UModal
+    v-model:open="showModal"
+    :ui="{
+      body: '!p-0',
+    }"
+  >
     <template #title>
       <h3 class="text-lg font-semibold flex items-center gap-2">
         <UIcon

@@ -5,8 +5,17 @@ const { data: customerRequests } = await useFetch(() => `/api/user/customerReque
 </script>
 
 <template>
-  <div class="w-full max-w-lg mx-auto">
-    <div class="flex gap-2 mb-6 flex-wrap">
+  <div class="w-full">
+    <DismissableAlert
+      title="Anfragen"
+      storage-key="customer-requests-info-dismissed"
+      class="rounded-none"
+    >
+      Hier finden Sie alle Anfragen, die Sie über Ihre Website von Kunden erhalten.
+      Wurde eine E-Mail-Adresse hinterlassen, können Sie direkt antworten.
+      In den Einstellungen können Sie festlegen, ob Sie bei neuen Anfragen eine E-Mail-Benachrichtigung erhalten möchten.
+    </DismissableAlert>
+    <div class="flex gap-2 flex-wrap p-4">
       <UButton
         label="Neu"
         size="md"
@@ -32,7 +41,7 @@ const { data: customerRequests } = await useFetch(() => `/api/user/customerReque
     </div>
     <div
       v-else
-      class="flex flex-col gap-4"
+      class="flex flex-col gap-4 items-center justify-center p-8 text-gray-500"
     >
       Keine Anfragen gefunden.
     </div>

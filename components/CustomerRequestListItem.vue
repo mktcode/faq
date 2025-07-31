@@ -44,18 +44,11 @@ async function reply() {
 
   isSendingReply.value = false
 }
-
-const designRounded = useState('designRounded')
 </script>
 
 <template>
   <div
-    class="border border-gray-200"
-    :class="{
-      'rounded-xl': designRounded === 'xl',
-      'rounded-md': designRounded === 'md',
-      'rounded-none': designRounded === 'none',
-    }"
+    class="border-t border-gray-200"
   >
     <div class="p-4">
       <h4 class="font-semibold">
