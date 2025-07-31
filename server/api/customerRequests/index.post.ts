@@ -1,5 +1,6 @@
 import { sql } from 'kysely'
 import { z } from 'zod'
+import { SettingsForm } from '~/types/db'
 
 const inputSchema = z.object({
   username: z.string().min(1, 'Username is required'),
@@ -7,7 +8,7 @@ const inputSchema = z.object({
   email: z.string().email('Invalid email address').optional(),
   phone: z.string().optional(),
   message: z.string().min(1, 'Message is required'),
-  embedding: z.array(z.number()).nullable(),
+  embedding: z.array(z.number()).length(1536).nullable(),
 })
 
 export default defineEventHandler(async (event) => {
@@ -15,9 +16,11 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
 
   const user = await db.selectFrom('users')
-    .select(['id', 'email'])
+    .select(['id', 'email', 'settings'])
     .where('userName', '=', username)
     .executeTakeFirstOrThrow()
+
+  const settings: SettingsForm = typeof user.settings === 'string' ? JSON.parse(user.settings) : user.settings
 
   const uuid = crypto.randomUUID()
 
@@ -32,16 +35,35 @@ export default defineEventHandler(async (event) => {
     })
     .executeTakeFirstOrThrow()
 
-  const customerRequestId = insertResult.insertId
+  const customerRequestId = insertResult.insertId ? Number(insertResult.insertId) : null
 
-  await sql`INSERT INTO messages (customerRequestId, body, embedding, isCustomer) VALUES (${customerRequestId}, ${message}, VEC_FromText(${JSON.stringify(embedding)}), true)`
-    .execute(db)
+  if (!customerRequestId) {
+    throw createError({ statusCode: 500, message: 'Failed to create customer request' })
+  }
 
-  if (user.email) {
+  console.log(embedding)
+
+  if (embedding) {
+    await sql`INSERT INTO messages (customerRequestId, body, embedding, isCustomer) VALUES (${customerRequestId}, ${message}, VEC_FromText(${JSON.stringify(embedding)}), true)`
+      .execute(db)
+  } else {
+    await db.insertInto('messages')
+      .values({
+        customerRequestId,
+        body: message,
+        isCustomer: true,
+      })
+      .execute()
+  }
+
+  const toEmail = settings?.company?.email || user.email
+
+  if (toEmail) {
     await sendEmail({
-      to: user.email,
+      to: toEmail,
       subject: `Neue Anfrage über Ihre Website`,
-      body: `Sie haben eine neue Anfrage von ${name} erhalten.\n\nNachricht: ${message}\n\nBitte loggen Sie sich in Ihr Profil ein, um darauf zu antworten.`,
+      body: `Sie haben eine neue Anfrage von ${name} erhalten.\n\nNachricht: ${message}\n\n`,
+      replyTo: email || undefined,
     })
   }
 

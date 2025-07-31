@@ -13,7 +13,7 @@ const { isSubscribed } = await useProfile()
 
 const message = ref('')
 const messageLongEnough = computed(() => message.value.trim().length >= 5)
-const messageEmbedding = ref<number[]>([])
+const messageEmbedding = ref<number[] | null>(null)
 const name = ref('')
 const phone = ref('')
 const email = ref('')
@@ -64,7 +64,7 @@ async function getEmbedding() {
 }
 
 async function getSimilarQuestions() {
-  if (messageEmbedding.value.length > 0) {
+  if (messageEmbedding.value && messageEmbedding.value.length > 0) {
     const response = await $fetch('/api/qanda/similarQuestions', {
       method: 'POST',
       body: {
@@ -80,6 +80,13 @@ async function getSimilarQuestions() {
 watchDebounced(message, getEmbedding, { debounce: 2000 })
 
 const designRounded = useState('designRounded')
+
+const disabled = computed(() => {
+  return isSavingRequest.value
+    || !name.value
+    || (!phone.value && !email.value)
+    || (isSubscribed.value && !messageEmbedding.value)
+})
 </script>
 
 <template>
@@ -152,7 +159,7 @@ const designRounded = useState('designRounded')
       variant="soft"
       icon="i-heroicons-check-circle"
       title="Anfrage gesendet"
-      description="Ihre Anfrage wurde erfolgreich gesendet. Wir werden uns so schnell wie möglich bei Ihnen melden."
+      :description="form?.successMessage || 'Vielen Dank für Ihre Anfrage. Wir melden uns zeitnah bei Ihnen.'"
       @close="savedRequestSuccess = false"
     />
   </Transition>
@@ -202,7 +209,7 @@ const designRounded = useState('designRounded')
         v-if="messageLongEnough"
         label="Anfrage senden"
         block
-        :disabled="isSavingRequest || !name || (!phone && !email) || (messageEmbedding.length === 0 && isSubscribed)"
+        :disabled="disabled"
         :loading="isSavingRequest"
         @click="saveRequest"
       />

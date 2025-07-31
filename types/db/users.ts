@@ -107,6 +107,7 @@ export const settingsFormSchema = z.object({
   form: z.object({
     title: z.string().optional().nullable(),
     description: z.string().optional().nullable(),
+    successMessage: z.string().optional().nullable(),
   }).optional().nullable(),
   links: z
     .array(

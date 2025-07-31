@@ -4,22 +4,14 @@ export async function sendEmail({
   to,
   subject,
   body,
+  replyTo = undefined,
 }: {
   to: string
   subject: string
   body: string
+  replyTo?: string
 }) {
   const { mailHost, mailUser, mailPass, mailFrom } = useRuntimeConfig()
-
-  console.log('Sending email:', {
-    to,
-    subject,
-    body,
-    mailHost,
-    mailUser,
-    mailPass,
-    mailFrom,
-  })
 
   const transport = nodemailer.createTransport({
     host: mailHost,
@@ -36,6 +28,10 @@ export async function sendEmail({
     to,
     subject,
     text: body,
+  }
+
+  if (replyTo) {
+    mailOptions.replyTo = replyTo
   }
 
   return await transport.sendMail(mailOptions)

@@ -9,6 +9,7 @@ const form = ref({
   form: currentSettings.value?.form || {
     title: '',
     description: '',
+    successMessage: '',
   },
 })
 
@@ -39,6 +40,16 @@ async function saveSettings() {
       <UInput
         v-model="form.form.description"
         placeholder="Geben Sie eine Beschreibung für das Formular ein"
+        class="w-full"
+      />
+    </UFormField>
+    <UFormField
+      label="Erfolgsnachricht"
+      description="Diese Nachricht wird angezeigt, wenn das Formular erfolgreich übermittelt wurde."
+    >
+      <UInput
+        v-model="form.form.successMessage"
+        placeholder="z.B. Vielen Dank für Ihre Anfrage. Wir melden uns zeitnah bei Ihnen."
         class="w-full"
       />
     </UFormField>
