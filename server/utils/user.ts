@@ -1,6 +1,5 @@
 import type { H3Event } from 'h3'
 import type { SettingsForm } from '~/types/db'
-import { availableFonts } from '~/utils/customization'
 
 export function makeUsername(name: string): string {
   // TODO: check for uniqueness in the database
