@@ -25,14 +25,19 @@ function close() {
           Willkommen auf Ihrer Website!
         </h1>
         <p class="text-gray-600">
-          Wie Sie sehen, ist es hier noch ziemlich leer. Ein Textfeld für Anfragen und Links zu Impressum und Datenschutzerklärung. Das war&apos;s.
+          Aktuell ist Ihre Website nur für Sie sichtbar. Oben links finden Sie das
+          <UIcon
+            name="i-heroicons-bars-3"
+            class="text-primary-500"
+          /> Menü, über das Sie Ihre Website verwalten und Anfragen beantworten können.
         </p>
         <p class="text-gray-600">
-          Anfragen können Sie direkt hier in der App beantworten. Hinterlegen Sie eine E-Mail-Adresse, um über neue Anfragen benachrichtigt zu werden.
-        </p>
-        <p class="text-gray-600">
-          In den Einstellungen (oben links) machen Sie am besten gleich ein paar Angaben zu Ihrem Unternehmen, laden ein Logo hoch und schreiben einen kurzen Willkommensgruß für Besucher.
-          Beschreiben Sie Ihr Angebot und verfassen Sie Antworten auf häufig gestellte Fragen. Laden Sie Bilder hoch und wählen Sie Farben und Schriftart aus, um Ihr Profil individueller zu gestalten.
+          Für Fragen oder Feedback schreiben Sie uns gerne eine E-Mail an <a href="mailto:support@beispiel.de" class="italic">support@solihost.de</a> oder schauen Sie in den Einstellungen unter
+          <UIcon
+            name="i-heroicons-envelope"
+            class="text-primary-500"
+          />
+          Anfragen. Dort können Sie auch direkt auf unsere Willkommensnachricht antworten.
         </p>
         <UButton
           label="Schließen"

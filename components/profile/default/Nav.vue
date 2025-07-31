@@ -30,7 +30,6 @@ const showMailModal = useState('showMailModal', () => false)
           label="Eigenes Profil"
           icon="i-heroicons-user-circle"
           variant="ghost"
-          size="md"
           class="w-full"
         />
 
@@ -39,54 +38,55 @@ const showMailModal = useState('showMailModal', () => false)
           :to="`https://${appHost}/login`"
           label="Anmelden"
           icon="i-heroicons-arrow-right-on-rectangle"
-          size="md"
           class="w-full"
         />
 
-        <div class="relative">
-          <UButton
-            v-if="me && isOwned"
-            label="Einstellungen"
-            icon="i-heroicons-cog-6-tooth"
-            size="md"
-            class="w-full"
-            @click="showSettingsModal = true"
-          />
-          <div
-            v-if="showLegalDataWarning"
-            class="bg-red-500 text-white absolute -right-1 -top-1 rounded-full text-sm flex items-center justify-center size-4"
-          >
-            <UIcon
-              name="i-humbleicons-exclamation"
-              class="size-3"
+        <template v-if="me && isOwned">
+          <div class="relative">
+            <UButton
+              label="Einstellungen"
+              icon="i-heroicons-cog-6-tooth"
+              class="w-full"
+              @click="showSettingsModal = true"
             />
+            <div
+              v-if="showLegalDataWarning"
+              class="bg-red-500 text-white absolute -right-1 -top-1 rounded-full text-sm flex items-center justify-center size-4"
+            >
+              <UIcon
+                name="i-humbleicons-exclamation"
+                class="size-3"
+              />
+            </div>
           </div>
-        </div>
+  
+          <UButton
+            label="Design anpassen"
+            icon="i-heroicons-paint-brush"
+            @click="showDesignModal = true"
+          />
+  
+          <UButton
+            label="Inhalt und Funktion"
+            icon="i-lucide-letter-text"
+            @click="showContentModal = true"
+          />
+  
+          <UButton
+            label="Anfragen"
+            icon="i-heroicons-envelope"
+            class="w-full"
+            @click="showMailModal = true"
+          />
 
-        <UButton
-          v-if="me && isOwned"
-          label="Design anpassen"
-          icon="i-heroicons-paint-brush"
-          size="md"
-          @click="showDesignModal = true"
-        />
-
-        <UButton
-          v-if="me && isOwned"
-          label="Inhalt und Funktion"
-          icon="i-lucide-letter-text"
-          size="md"
-          @click="showContentModal = true"
-        />
-
-        <UButton
-          v-if="me && isOwned"
-          label="Anfragen"
-          icon="i-heroicons-envelope"
-          size="md"
-          class="w-full"
-          @click="showMailModal = true"
-        />
+          <UButton
+            label="Hilfe"
+            icon="i-heroicons-question-mark-circle"
+            class="w-full flex"
+            variant="soft"
+            @click="showMailModal = true"
+          />
+        </template>
       </div>
     </template>
   </UPopover>
