@@ -11,7 +11,6 @@ const userNameAvailable = ref(true)
 const checkingUserNameAvailability = ref(false)
 const font = ref<AvailableFont>(availableFonts.value[0])
 const color = ref<AvailableColor>(availableColors.value[0])
-const about = ref('')
 const displayedComponents = ref<{ [key: string]: boolean }>(
   Object.fromEntries(
     componentDetails.map(component => [component.key, true])
@@ -30,7 +29,6 @@ async function signUp() {
     body: {
       font: font.value,
       color: color.value,
-      about: about.value,
       displayedComponents: Object.keys(displayedComponents.value).filter(key => displayedComponents.value[key]),
     },
   })
@@ -58,13 +56,6 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
     class="w-full max-w-xl flex flex-col gap-4"
     @submit.prevent="signUp"
   >
-    <UFormField label="Was machen Sie? Was macht Sie aus?">
-      <UTextarea
-        v-model="about"
-        placeholder="z.B. Maßschneiderin, ausschließlich nachhaltige Stoffe"
-        class="w-full"
-      />
-    </UFormField>
     <div class="flex gap-4">
       <ColorPicker
         v-model="color"

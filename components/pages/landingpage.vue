@@ -154,15 +154,7 @@ watch(acc2active, (newVal) => {
                 label="Kostenlose Website erstellen"
                 to="/register"
                 size="xxl"
-                class="hidden sm:flex gap-2 bg-gradient-to-r from-sky-500 via-30% via-sky-400 to-sky-600 !text-shadow-xs text-shadow-sky-950/40 shadow-lg hover:shadow-sky-950/50 hover:scale-x-[102%] hover:scale-y-[101%] transition-all duration-300"
-                trailing-icon="i-heroicons-arrow-right"
-                :ui="{ trailingIcon: 'opacity-50' }"
-              />
-              <UButton
-                label="Kostenlose Website erstellen"
-                to="/register"
-                size="xl"
-                class="sm:hidden gap-2 bg-gradient-to-r from-sky-500 via-30% via-sky-400 to-sky-600 !text-shadow-xs text-shadow-sky-950/40 shadow-lg hover:shadow-sky-950/50 hover:scale-x-[102%] hover:scale-y-[101%] transition-all duration-300"
+                class="gap-2 bg-gradient-to-r from-sky-500 via-30% via-sky-400 to-sky-600 !text-shadow-xs text-shadow-sky-950/40 shadow-lg hover:shadow-sky-950/50 hover:scale-x-[102%] hover:scale-y-[101%] transition-all duration-300 text-base sm:text-lg"
                 trailing-icon="i-heroicons-arrow-right"
                 :ui="{ trailingIcon: 'opacity-50' }"
               />
