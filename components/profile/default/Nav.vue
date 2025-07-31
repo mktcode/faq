@@ -1,15 +1,8 @@
 <script setup lang="ts">
-import { useLocalStorage } from '@vueuse/core'
-
-const { username } = defineProps<{
-  username: string
-}>()
-
 const { public: { appHost } } = useRuntimeConfig()
+const { isOwned } = useProfile()
 
 const { me } = await useMe()
-const myLastUsername = useLocalStorage('myLastUsername', () => me.value?.userName || null)
-const onOwnProfile = computed(() => username === myLastUsername.value)
 
 const showSettingsModal = useState('showSettingsModal', () => false)
 const showDesignModal = useState('showDesignModal', () => false)
@@ -23,7 +16,7 @@ const showMailModal = useState('showMailModal', () => false)
   >
     <div class="flex flex-col md:flex-row gap-1">
       <UButton
-        v-if="me && !onOwnProfile"
+        v-if="me && !isOwned"
         :to="`https://${me.userName}.${appHost}`"
         label="Eigenes Profil"
         icon="i-heroicons-user-circle"
@@ -32,7 +25,7 @@ const showMailModal = useState('showMailModal', () => false)
       />
 
       <UButton
-        v-if="!me && onOwnProfile"
+        v-if="!me && isOwned"
         :to="`https://${appHost}/login`"
         label="Anmelden"
         icon="i-heroicons-arrow-right-on-rectangle"
@@ -40,28 +33,28 @@ const showMailModal = useState('showMailModal', () => false)
       />
 
       <UButton
-        v-if="me && onOwnProfile"
+        v-if="me && isOwned"
         icon="i-heroicons-cog-6-tooth"
         size="md"
         @click="showSettingsModal = true"
       />
 
       <UButton
-        v-if="me && onOwnProfile"
+        v-if="me && isOwned"
         icon="i-heroicons-paint-brush"
         size="md"
         @click="showDesignModal = true"
       />
 
       <UButton
-        v-if="me && onOwnProfile"
+        v-if="me && isOwned"
         icon="i-lucide-letter-text"
         size="md"
         @click="showContentModal = true"
       />
 
       <UButton
-        v-if="me && onOwnProfile"
+        v-if="me && isOwned"
         icon="i-heroicons-envelope"
         size="md"
         @click="showMailModal = true"
