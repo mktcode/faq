@@ -6,8 +6,9 @@ import TextAlign from '@tiptap/extension-text-align'
 import StarterKit from '@tiptap/starter-kit'
 
 const model = defineModel<string | null>()
+const { settings } = await useProfile()
+const designRounded = ref(settings.value?.rounded || 'md')
 
-const designRounded = useState('designRounded')
 const roundedClass = computed(() => {
   if (designRounded.value === 'none') {
     return 'rounded-none'

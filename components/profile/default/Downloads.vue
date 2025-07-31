@@ -8,7 +8,9 @@ const { downloads } = defineProps<{
   }[]
 }>()
 
-const designRounded = useState('designRounded')
+const { settings } = await useProfile()
+
+const designRounded = ref(settings.value?.rounded || 'md')
 </script>
 
 <template>

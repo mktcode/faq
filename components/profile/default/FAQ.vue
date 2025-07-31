@@ -23,8 +23,6 @@ const qandaAccordionItems = computed(() => {
     content: item.answer,
   })) || []
 })
-
-const designRounded = useState('designRounded', () => currentSettings.value?.rounded || 'md')
 </script>
 
 <template>
@@ -39,7 +37,7 @@ const designRounded = useState('designRounded', () => currentSettings.value?.rou
       :items="qandaAccordionItems"
       :ui="{
         root: 'w-full flex flex-col gap-2',
-        header: `bg-primary-50 px-4 !py-0 hover:bg-primary-100 rounded-${designRounded}`,
+        header: `bg-primary-50 px-4 !py-0 hover:bg-primary-100 rounded-${currentSettings?.rounded || 'md'}`,
         trigger: 'py-2',
         label: 'text-lg text-primary-950',
         body: 'text-lg text-gray-500 pt-2',

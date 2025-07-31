@@ -9,7 +9,7 @@ const { form, username, contactPhone } = defineProps<{
   contactPhone: string
 }>()
 
-const { isSubscribed } = await useProfile()
+const { isSubscribed, settings } = await useProfile()
 
 const message = ref('')
 const messageLongEnough = computed(() => message.value.trim().length >= 5)
@@ -79,7 +79,7 @@ async function getSimilarQuestions() {
 
 watchDebounced(message, getEmbedding, { debounce: 2000 })
 
-const designRounded = useState('designRounded')
+const designRounded = ref(settings.value?.rounded || 'md')
 
 const disabled = computed(() => {
   return isSavingRequest.value
