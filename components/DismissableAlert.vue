@@ -3,11 +3,13 @@ import { useLocalStorage } from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
+    variant?: 'solid' | 'soft'
     title?: string
     icon?: string
     storageKey: string
   }>(),
   {
+    variant: 'solid',
     icon: 'i-heroicons-information-circle',
   },
 )
@@ -19,7 +21,7 @@ const showAlert = useLocalStorage(props.storageKey, true)
   <Transition name="fade">
     <UAlert
       v-if="showAlert"
-      variant="solid"
+      :variant="variant"
       color="primary"
       :title="title"
       :icon="icon"
