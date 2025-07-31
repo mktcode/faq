@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { public: { appHost } } = useRuntimeConfig()
-const { isOwned } = useProfile()
+const { isOwned } = await useProfile()
 
 const { me } = await useMe()
 

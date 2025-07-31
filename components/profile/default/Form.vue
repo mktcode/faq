@@ -9,7 +9,7 @@ const { form, username, contactPhone } = defineProps<{
   contactPhone: string
 }>()
 
-const { isSubscribed } = useProfile()
+const { isSubscribed } = await useProfile()
 
 const message = ref('')
 const messageLongEnough = computed(() => message.value.trim().length >= 5)

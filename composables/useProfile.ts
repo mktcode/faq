@@ -1,4 +1,4 @@
-export const useProfile = () => {
+export const useProfile = async () => {
   const { ssrContext } = useNuxtApp()
   const path = useRoute().path
 
@@ -16,6 +16,12 @@ export const useProfile = () => {
     design.value = ssrContext.event.context.profile.design
   }
 
+  const { data: settings, refresh: refreshSettings } = await useFetch(`/api/settings`, {
+    query: {
+      username,
+    },
+  })
+
   return {
     username,
     isSubscribed,
@@ -23,5 +29,7 @@ export const useProfile = () => {
     isPublic,
     design,
     path,
+    settings,
+    refreshSettings,
   }
 }

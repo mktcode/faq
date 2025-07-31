@@ -7,7 +7,7 @@ defineProps<{
 }>()
 
 const { me } = await useMe()
-const { isOwned } = useProfile()
+const { isOwned } = await useProfile()
 
 const { public: { appHost } } = useRuntimeConfig()
 const showModal = useState('showLinksModal', () => false)

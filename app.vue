@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { de } from '@nuxt/ui/locale'
 
-const { username, isOwned, isPublic, design, path } = useProfile()
+const { username, isOwned, isPublic, design, path } = await useProfile()
 </script>
 
 <template>
