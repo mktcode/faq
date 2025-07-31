@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
-import type { SimilarQuestion } from '~/server/api/customerRequests/similarQuestions.post'
+import type { SimilarQuestion } from '~/server/api/qanda/similarQuestions.post'
 import type { SettingsForm } from '~/types/db'
 
 const { form, username, contactPhone } = defineProps<{
@@ -51,7 +51,7 @@ async function getEmbedding() {
     return
   }
 
-  const embedding = await $fetch('/api/customerRequests/embedding', {
+  const embedding = await $fetch('/api/qanda/embedding', {
     query: {
       message: message.value,
       username,
@@ -65,7 +65,7 @@ async function getEmbedding() {
 
 async function getSimilarQuestions() {
   if (messageEmbedding.value.length > 0) {
-    const response = await $fetch('/api/customerRequests/similarQuestions', {
+    const response = await $fetch('/api/qanda/similarQuestions', {
       method: 'POST',
       body: {
         username,
@@ -172,7 +172,7 @@ const designRounded = useState('designRounded')
       <div v-html="similarQuestions[0].answer" />
     </div>
   </Transition>
-  <div class="flex flex-col gap-2 mt-2">
+  <div class="flex flex-col gap-2 mt-2 w-full">
     <Transition name="fade">
       <UInput
         v-if="messageLongEnough"

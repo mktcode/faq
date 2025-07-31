@@ -7,7 +7,6 @@ const { me } = await useMe()
 const showSettingsModal = useState('showSettingsModal', () => false)
 const showDesignModal = useState('showDesignModal', () => false)
 const showContentModal = useState('showContentModal', () => false)
-const showMailModal = useState('showMailModal', () => false)
 </script>
 
 <template>
@@ -71,20 +70,12 @@ const showMailModal = useState('showMailModal', () => false)
             icon="i-lucide-letter-text"
             @click="showContentModal = true"
           />
-  
-          <UButton
-            label="Anfragen"
-            icon="i-heroicons-envelope"
-            class="w-full"
-            @click="showMailModal = true"
-          />
 
           <UButton
             label="Hilfe"
             icon="i-heroicons-question-mark-circle"
             class="w-full flex"
             variant="soft"
-            @click="showMailModal = true"
           />
         </template>
       </div>
