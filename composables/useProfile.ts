@@ -22,6 +22,8 @@ export const useProfile = async () => {
     },
   })
 
+  const showLegalDataWarning = computed(() => isOwned && (!settings.value?.company?.name || !settings.value?.company?.city || !settings.value?.company?.street || !settings.value?.company?.zip || !settings.value?.company?.email))
+
   return {
     username,
     isSubscribed,
@@ -31,5 +33,6 @@ export const useProfile = async () => {
     path,
     settings,
     refreshSettings,
+    showLegalDataWarning,
   }
 }

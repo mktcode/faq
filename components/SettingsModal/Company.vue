@@ -1,12 +1,10 @@
 <script setup lang="ts">
 const toast = useToast()
 
-const emit = defineEmits(['update'])
-
-const { data: currentSettings } = await useFetch(`/api/user/settings`)
+const { settings, refreshSettings } = await useProfile()
 
 const form = ref({
-  company: currentSettings.value?.company || {
+  company: settings.value?.company || {
     name: '',
     street: '',
     zip: '',
@@ -14,7 +12,7 @@ const form = ref({
     phone: '',
     email: '',
     taxId: '',
-    isSmallBusiness: false,
+    isSmallBusiness: true,
   },
 })
 
@@ -28,7 +26,7 @@ async function saveSettings() {
     description: 'Deine Einstellungen wurden erfolgreich gespeichert.',
     color: 'success',
   })
-  emit('update')
+  refreshSettings()
 }
 </script>
 
@@ -112,7 +110,7 @@ async function saveSettings() {
     </UFormField>
     <UFormField
       label="Kleinunternehmerregelung"
-      description="Wenn du die Kleinunternehmerregelung in Anspruch nimmst, musst du keine Umsatzsteuer ausweisen."
+      description="Wenn Sie die Kleinunternehmerregelung nutzen, müssen Sie keine Umsatzsteuer ausweisen. Im Impressum steht dann ein entsprechender Hinweis."
     >
       <USwitch
         v-model="form.company.isSmallBusiness"
@@ -124,7 +122,7 @@ async function saveSettings() {
       <UFormField
         v-if="!form.company.isSmallBusiness"
         label="Umsatzsteuer-ID oder Wirtschafts-ID"
-        description="Gib hier nicht deine persönliche Steuernummer (123/456/78901) an!"
+        description="Geben Sie hier nicht Ihre persönliche Steuernummer (123/456/78901) an."
       >
         <UInput
           v-model="form.company.taxId"

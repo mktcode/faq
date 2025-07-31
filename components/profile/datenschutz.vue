@@ -34,13 +34,15 @@ const logo = computed(() => {
         {{ currentSettings?.title || username }}
       </h1>
 
-      <div class="prose">
-        <h1>Datenschutzerklärung</h1>
+      <div class="prose-xl">
+        <h1 class="text-center">
+          Impressum
+        </h1>
         <p>
           Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und Zwecke der Verarbeitung von personenbezogenen Daten (nachfolgend kurz „Daten“) innerhalb unseres Onlineangebotes auf. Die verwendeten Begrifflichkeiten, wie z.B. „Verarbeitung“ oder „Verantwortlicher“, beziehen sich auf die Definitionen im Art. 4 der Datenschutz-Grundverordnung (DSGVO).
         </p>
 
-        <h2>Verantwortlicher</h2>
+        <h3>Verantwortlicher</h3>
         <p>
           Verantwortlicher für die Datenverarbeitung ist:
           <br>
@@ -51,8 +53,8 @@ const logo = computed(() => {
           <strong>E-Mail:</strong> <a href="mailto:kontakt@markus-kottlaender.de">kontakt@markus-kottlaender.de</a>
         </p>
 
-        <h2>Arten der verarbeiteten Daten</h2>
-        <ul>
+        <h3>Arten der verarbeiteten Daten</h3>
+        <ul class="list-disc">
           <li>Bestandsdaten (z.B. Namen, Adressen)</li>
           <li>Kontaktdaten (z.B. E-Mail-Adressen, Telefonnummern)</li>
           <li>Inhaltsdaten (z.B. Texteingaben, Fotografien)</li>

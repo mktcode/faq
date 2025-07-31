@@ -36,25 +36,17 @@ const logo = computed(() => {
       </h1>
 
       <div class="prose-xl">
-        <h1 class="mb-0 text-center">
+        <h1 class="text-center">
           Impressum
         </h1>
 
-        <p class="mt-2 text-center">
-          Angaben gemäß § 5 DDG:
-        </p>
-
-        <p class="mt-2">
-          Inhaltlich verantwortlich:
-        </p>
-
         <p>
-          {{ currentSettings?.company?.name || 'Dein Unternehmensname' }}<br>
+          <strong>{{ currentSettings?.company?.name || 'Dein Unternehmensname' }}</strong><br>
           {{ currentSettings?.company?.street || 'Deine Straße und Hausnummer' }}<br>
           {{ currentSettings?.company?.zip || 'Deine Postleitzahl' }} {{ currentSettings?.company?.city || 'Deine Stadt' }}<br>
           <br>
-          Telefon: {{ currentSettings?.company?.phone || 'Deine Telefonnummer' }}<br>
-          E-Mail: <a :href="`mailto:${currentSettings?.company?.email || 'kontakt@beispiel.de'}`">
+          <strong>Telefon:</strong> {{ currentSettings?.company?.phone || 'Deine Telefonnummer' }}<br>
+          <strong>E-Mail:</strong> <a :href="`mailto:${currentSettings?.company?.email || 'kontakt@beispiel.de'}`">
             {{ currentSettings?.company?.email || 'kontakt@beispiel.de' }}
           </a>
         </p>
@@ -67,7 +59,7 @@ const logo = computed(() => {
         </p>
         <p
           v-else
-          class="mt-2"
+          class="text-gray-500 text-sm"
         >
           Nach § 19 UStG wird keine Umsatzsteuer berechnet.
         </p>

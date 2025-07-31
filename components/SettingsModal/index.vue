@@ -6,6 +6,7 @@ defineEmits(['update'])
 const toast = useToast()
 const showModal = useState('showSettingsModal', () => false)
 const { me } = await useMe()
+const { showLegalDataWarning } = await useProfile()
 
 const isPublished = ref(me.value?.published || false)
 
@@ -69,9 +70,18 @@ const active = ref<string | undefined>(undefined)
       <div class="p-4 border-b border-gray-200">
         <USwitch
           v-model="isPublished"
+          :disabled="showLegalDataWarning"
           label="Veröffentlicht"
-          :description="isPublished ? 'Dein Profil ist öffentlich zugänglich.' : 'Nur du kannst dein Profil sehen, wenn du angemeldet bist.'"
+          :description="isPublished ? 'Ihre Website ist öffentlich zugänglich.' : 'Nur Sie können Ihr Profil sehen, wenn Sie angemeldet sind.'"
           @update:model-value="togglePublished"
+        />
+        <UAlert
+          v-if="showLegalDataWarning"
+          variant="soft"
+          title="Rechtliche Angaben fehlen"
+          description="Bevor Sie Ihr Profil veröffentlichen können, müssen Sie unter Anschrift und Rechtliches Ihre Unternehmensdaten angeben, damit diese im Impressum und in der Datenschutzerklärung aufgeführt werden."
+          icon="i-heroicons-exclamation-triangle"
+          class="mt-2"
         />
       </div>
       <UAccordion
