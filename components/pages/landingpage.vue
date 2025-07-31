@@ -152,7 +152,7 @@ watch(acc2active, (newVal) => {
             <div class="flex flex-col gap-10 justify-center items-center">
               <UButton
                 label="Kostenlose Website erstellen"
-                to="/register"
+                :to="me ? `https://${me.userName}.${appHost}` : '/register'"
                 size="xxl"
                 class="gap-2 bg-gradient-to-r from-sky-500 via-30% via-sky-400 to-sky-600 !text-shadow-xs text-shadow-sky-950/40 shadow-lg hover:shadow-sky-950/50 hover:scale-x-[102%] hover:scale-y-[101%] transition-all duration-300 text-base sm:text-lg"
                 trailing-icon="i-heroicons-arrow-right"
