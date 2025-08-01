@@ -2,6 +2,17 @@
 const { settings } = await useProfile()
 const designRounded = ref(settings.value?.rounded || 'md')
 const showModal = ref(false)
+const carousel = useTemplateRef('carousel')
+const carouselIndex = ref(0)
+
+function openModal(index: number) {
+  carouselIndex.value = index
+  showModal.value = true
+}
+
+function scrollTo() {
+  carousel.value?.emblaApi?.scrollTo(carouselIndex.value)
+}
 </script>
 
 <template>
@@ -20,7 +31,7 @@ const showModal = ref(false)
           'rounded-none': designRounded === 'none',
           'col-span-3 aspect-video': index === 0,
         }"
-        @click="showModal = true"
+        @click="openModal(index)"
       >
         <NuxtImg
           :src="image.url"
@@ -37,6 +48,7 @@ const showModal = ref(false)
     </div>
     <UModal
       v-model:open="showModal"
+      @after:enter="scrollTo"
       fullscreen
       :ui="{
         body: 'mbody overflow-hidden',
