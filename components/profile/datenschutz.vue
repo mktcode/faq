@@ -1,20 +1,12 @@
 <script setup lang="ts">
-const { username } = defineProps<{
-  username: string
-}>()
-
-const { data: currentSettings } = await useFetch(`/api/settings`, {
-  query: {
-    username,
-  },
-})
+const { username, settings } = await useProfile()
 
 const appConfig = useAppConfig()
-const font = computed(() => currentSettings.value?.font || 'roboto')
-appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
+const font = computed(() => settings.value?.font || 'roboto')
+appConfig.ui.colors.primary = settings.value?.color || 'sky'
 
 const logo = computed(() => {
-  return currentSettings.value?.logo || null
+  return settings.value?.logo || null
 })
 </script>
 
@@ -31,7 +23,7 @@ const logo = computed(() => {
         />
       </div>
       <h1 class="text-lg font-bold mb-4">
-        {{ currentSettings?.title || username }}
+        {{ settings?.title || username }}
       </h1>
 
       <div class="prose-xl">

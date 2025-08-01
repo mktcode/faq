@@ -1,20 +1,12 @@
 <script setup lang="ts">
-const { username } = defineProps<{
-  username: string
-}>()
-
-const { data: currentSettings } = await useFetch(`/api/settings`, {
-  query: {
-    username,
-  },
-})
+const { username, settings } = await useProfile()
 
 const appConfig = useAppConfig()
-const font = computed(() => currentSettings.value?.font || 'roboto')
-appConfig.ui.colors.primary = currentSettings.value?.color || 'sky'
+const font = computed(() => settings.value?.font || 'roboto')
+appConfig.ui.colors.primary = settings.value?.color || 'sky'
 
 const logo = computed(() => {
-  return currentSettings.value?.logo || null
+  return settings.value?.logo || null
 })
 </script>
 
@@ -32,7 +24,7 @@ const logo = computed(() => {
       </div>
 
       <h1 class="text-lg font-bold mb-4">
-        {{ currentSettings?.title || username }}
+        {{ settings?.title || username }}
       </h1>
 
       <div class="prose-xl">
@@ -41,21 +33,21 @@ const logo = computed(() => {
         </h1>
 
         <p>
-          <strong>{{ currentSettings?.company?.name || 'Dein Unternehmensname' }}</strong><br>
-          {{ currentSettings?.company?.street || 'Deine Straße und Hausnummer' }}<br>
-          {{ currentSettings?.company?.zip || 'Deine Postleitzahl' }} {{ currentSettings?.company?.city || 'Deine Stadt' }}<br>
+          <strong>{{ settings?.company?.name || 'Dein Unternehmensname' }}</strong><br>
+          {{ settings?.company?.street || 'Deine Straße und Hausnummer' }}<br>
+          {{ settings?.company?.zip || 'Deine Postleitzahl' }} {{ settings?.company?.city || 'Deine Stadt' }}<br>
           <br>
-          <strong>Telefon:</strong> {{ currentSettings?.company?.phone || 'Deine Telefonnummer' }}<br>
-          <strong>E-Mail:</strong> <a :href="`mailto:${currentSettings?.company?.email || 'kontakt@beispiel.de'}`">
-            {{ currentSettings?.company?.email || 'kontakt@beispiel.de' }}
+          <strong>Telefon:</strong> {{ settings?.company?.phone || 'Deine Telefonnummer' }}<br>
+          <strong>E-Mail:</strong> <a :href="`mailto:${settings?.company?.email || 'kontakt@beispiel.de'}`">
+            {{ settings?.company?.email || 'kontakt@beispiel.de' }}
           </a>
         </p>
 
         <p
-          v-if="currentSettings?.company?.taxId"
+          v-if="settings?.company?.taxId"
           class="mt-2"
         >
-          Umsatzsteuer-ID: {{ currentSettings?.company?.taxId }}
+          Umsatzsteuer-ID: {{ settings?.company?.taxId }}
         </p>
         <p
           v-else

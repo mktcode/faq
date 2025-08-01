@@ -3,13 +3,9 @@ const route = useRoute()
 const emailVerified = !!route.query.emailVerified
 const subscriptionSuccess = !!route.query.subscriptionSuccess
 
-const { username } = defineProps<{
-  username: string
-}>()
-
 const { me } = await useMe()
 
-const { settings, refreshSettings } = await useProfile()
+const { username, settings, refreshSettings } = await useProfile()
 
 useHead({
   title: settings.value?.title || 'Meine Website',
