@@ -47,7 +47,7 @@ appConfig.ui.textarea.defaultVariants.rounded = settings.value?.rounded || 'md'
       class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6"
     >
       <ProfileDefaultComponentViewer
-        v-for="index in [0, 1, 2, 3, 4]"
+        v-for="index in Array.from({ length: settings?.displayedComponents?.length || 0 }, (_, i) => i)"
         :key="index"
         :slot-index="index"
       />
