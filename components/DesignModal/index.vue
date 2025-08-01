@@ -338,13 +338,6 @@ function switchToSubscription() {
         </div>
         <FontPicker v-model:font="form.font" />
         <UButton
-          label="Individuelles Design"
-          variant="soft"
-          color="primary"
-          icon="i-heroicons-sparkles"
-          @click="switchToSubscription"
-        />
-        <UButton
           variant="solid"
           color="primary"
           @click="saveSettings"
