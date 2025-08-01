@@ -9,9 +9,7 @@ const showModal = ref(false)
     v-if="settings?.gallery?.length"
     class="my-6 w-full"
   >
-    <div
-      class="grid grid-cols-2 lg:grid-cols-3 gap-2"
-    >
+    <div class="grid grid-cols-2 lg:grid-cols-3 gap-2">
       <div
         v-for="(image, index) in settings.gallery"
         :key="index"
@@ -34,34 +32,68 @@ const showModal = ref(false)
     <UModal
       v-model:open="showModal"
       fullscreen
+      :ui="{
+        body: 'mbody overflow-hidden',
+      }"
     >
       <template #body>
-        <div class="h-full w-full pb-12 px-12">
-          <UCarousel
-            v-slot="{ item }"
-            class-names
-            arrows
-            dots
-            :items="settings.gallery"
-            :ui="{
-              root: 'h-full [&_>_div:first-child]:h-full',
-              container: 'h-full',
-              item: 'h-full flex items-center justify-center',
-            }"
-          >
+        <UCarousel
+          ref="carousel"
+          v-slot="{ item }"
+          :items="settings.gallery"
+          :ui="{
+            root: 'h-full',
+            viewport: 'h-full',
+            container: 'h-full',
+            item: 'h-full flex flex-col items-center justify-center',
+          }"
+        >
+          <div class="flex-1 w-full relative">
+            <div class="inset-0 absolute flex items-center justify-center">
+              <img
+                :src="item.url"
+                class="rounded-xl w-fit h-full object-contain"
+              >
+            </div>
+          </div>
+          <div class="shrink p-4 max-w-3xl">
+            <h3
+              v-if="item.title"
+              class="text-lg font-semibold"
+            >
+              {{ item.title }}
+            </h3>
+            <p
+              v-if="item.description"
+              class="text-sm"
+            >
+              {{ item.description }}
+            </p>
+          </div>
+          <!-- <div class="grow">
             <img
               :src="item.url"
-              class="rounded-xl max-w-full max-h-full"
+              class="rounded-xl h-full"
             >
-            <div
-              v-if="item.title || item.description"
-              class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4 rounded-b-xl"
+          </div>
+          <div
+            v-if="item.title || item.description"
+            class="p-4 flex flex-col gap-1 grow"
+          >
+            <h3
+              v-if="item.title"
+              class="text-lg font-semibold"
             >
-              <h3 class="text-lg font-semibold">{{ item.title }}</h3>
-              <p class="text-sm">{{ item.description }}</p>
-            </div>
-          </UCarousel>
-        </div>
+              {{ item.title }}
+            </h3>
+            <p
+              v-if="item.description"
+              class="text-sm"
+            >
+              {{ item.description }}
+            </p>
+          </div> -->
+        </UCarousel>
       </template>
     </UModal>
   </div>
