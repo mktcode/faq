@@ -49,8 +49,6 @@ appConfig.ui.textarea.defaultVariants.rounded = settings.value?.rounded || 'md'
       <ProfileDefaultComponentViewer
         v-for="index in [0, 1, 2, 3, 4]"
         :key="index"
-        :username="username"
-        :settings="settings"
         :slot-index="index"
       />
 
