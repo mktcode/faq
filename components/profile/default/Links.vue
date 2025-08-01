@@ -1,13 +1,6 @@
 <script setup lang="ts">
-import type { SettingsForm } from '~/types/db';
-
-defineProps<{
-  username: string
-  settings?: SettingsForm | null
-}>()
-
 const { me } = await useMe()
-const { isOwned } = await useProfile()
+const { username, isOwned, settings } = await useProfile()
 
 const { public: { appHost } } = useRuntimeConfig()
 const showModal = useState('showLinksModal', () => false)
@@ -26,7 +19,10 @@ const showModal = useState('showLinksModal', () => false)
       />
     </template>
 
-    <UPopover class="mb-auto">
+    <UPopover
+      v-if="settings?.showShareButton"
+      class="mb-auto"
+    >
       <UButton
         label="Teilen"
         icon="i-heroicons-share"

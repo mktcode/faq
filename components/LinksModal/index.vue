@@ -1,13 +1,12 @@
 <script setup lang="ts">
-const emit = defineEmits(['update'])
-
 const toast = useToast()
 const showModal = useState('showLinksModal', () => false)
 
-const { data: currentSettings } = await useFetch(`/api/user/settings`)
+const { settings, refreshSettings } = await useProfile()
 
 const form = ref({
-  links: currentSettings.value?.links || [],
+  links: settings.value?.links || [],
+  showShareButton: settings.value?.showShareButton || true,
 })
 
 async function saveSettings() {
@@ -20,7 +19,7 @@ async function saveSettings() {
     description: 'Deine Einstellungen wurden erfolgreich gespeichert.',
     color: 'success',
   })
-  emit('update')
+  refreshSettings()
 }
 </script>
 
@@ -32,6 +31,7 @@ async function saveSettings() {
     <template #body>
       <div class="flex flex-col gap-4">
         <USwitch
+          v-model="form.showShareButton"
           label="Teilen-Button anzeigen"
         />
         <div

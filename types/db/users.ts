@@ -118,6 +118,7 @@ export const settingsFormSchema = z.object({
       }),
     )
     .optional().nullable(),
+  showShareButton: z.boolean().optional().default(true),
   displayedComponents: z.array(z.enum(componentKeys)).optional(),
 })
 

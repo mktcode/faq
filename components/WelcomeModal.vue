@@ -29,15 +29,10 @@ function close() {
           <UIcon
             name="i-heroicons-bars-3"
             class="text-primary-500"
-          /> Menü, über das Sie Ihre Website verwalten und Anfragen beantworten können.
+          /> Menü, über das Sie Ihre Website verwalten können.
         </p>
         <p class="text-gray-600">
-          Für Fragen oder Feedback schreiben Sie uns gerne eine E-Mail an <a href="mailto:support@beispiel.de" class="italic">support@solihost.de</a> oder schauen Sie in den Einstellungen unter
-          <UIcon
-            name="i-heroicons-envelope"
-            class="text-primary-500"
-          />
-          Anfragen. Dort können Sie auch direkt auf unsere Willkommensnachricht antworten.
+          Für Fragen oder Feedback schreiben Sie uns gerne eine E-Mail an <a href="mailto:support@beispiel.de" class="italic">support@solihost.de</a>.
         </p>
         <UButton
           label="Schließen"
