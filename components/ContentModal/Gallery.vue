@@ -72,10 +72,9 @@ const onDrop = async (e: DragEvent) => {
   }
 }
 
-const deleteItem = (index: number) => {
+const deleteItem = async (index: number) => {
   form.value.gallery.splice(index, 1)
-  // TODO: Delete from bucket
-  saveSettings(form.value)
+  await saveSettings(form.value)
 }
 </script>
 
@@ -116,35 +115,37 @@ const deleteItem = (index: number) => {
       v-model="uploadProgress"
     />
     <div class="flex flex-col gap-2">
-      <div
-        v-for="(image, index) in form.gallery"
-        :key="index"
-        class="flex items-center justify-center w-full gap-2"
-      >
-        <img
-          :src="image.url"
-          class="w-32 object-cover aspect-square rounded-lg"
+      <TransitionGroup name="fade" mode="out-in">
+        <div
+          v-for="(image, index) in form.gallery"
+          :key="index"
+          class="flex items-center justify-center w-full gap-2"
         >
-        <div class="flex flex-col gap-2 w-full">
-          <div class="flex gap-2">
-            <UInput
-              v-model="image.title"
-              placeholder="Bildtitel"
-              class="flex-1"
-            />
-            <UButton
-              icon="i-heroicons-trash"
-              variant="soft"
-              color="error"
-              @click="deleteItem(index)"
+          <img
+            :src="image.url"
+            class="w-32 object-cover aspect-square rounded-lg"
+          >
+          <div class="flex flex-col gap-2 w-full">
+            <div class="flex gap-2">
+              <UInput
+                v-model="image.title"
+                placeholder="Bildtitel"
+                class="flex-1"
+              />
+              <UButton
+                icon="i-heroicons-trash"
+                variant="soft"
+                color="error"
+                @click="deleteItem(index)"
+              />
+            </div>
+            <UTextarea
+              v-model="image.description"
+              placeholder="Bildbeschreibung"
             />
           </div>
-          <UTextarea
-            v-model="image.description"
-            placeholder="Bildbeschreibung"
-          />
         </div>
-      </div>
+      </TransitionGroup>
     </div>
     <UButton
       label="Einstellungen speichern"
