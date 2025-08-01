@@ -47,7 +47,12 @@ function checkSubscriptionStatus(lastPaidAt: Date | null): boolean {
   return lastPaidAt >= thirtyOneDaysAgo
 }
 
-async function setProfileContext(event: H3Event, targetUser: TargetUser | undefined): Promise<void> {
+async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUser | undefined): Promise<void> {
+  if (!targetUser) {
+    const { public: { appHost } } = useRuntimeConfig()
+    sendRedirect(event, `https://${appHost}`, 307)
+  }
+
   const { user: loggedInUser } = await getUserSession(event)
 
   event.context.profile = {
@@ -71,7 +76,7 @@ async function handleCustomDomain(event: H3Event, domain: string): Promise<void>
     .where('domain', '=', domain)
     .executeTakeFirst()
 
-  setProfileContext(event, targetUser)
+  setProfileContextOrRedirect(event, targetUser)
 }
 
 async function handleSubdomain(event: H3Event, currentHost: string): Promise<void> {
@@ -83,7 +88,7 @@ async function handleSubdomain(event: H3Event, currentHost: string): Promise<voi
     .where('userName', '=', username)
     .executeTakeFirst()
 
-  setProfileContext(event, targetUser)
+  setProfileContextOrRedirect(event, targetUser)
 }
 
 export default defineEventHandler(async (event) => {
