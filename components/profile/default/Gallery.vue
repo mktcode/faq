@@ -9,42 +9,26 @@ const showModal = ref(false)
     v-if="settings?.gallery?.length"
     class="my-6 w-full"
   >
-    <div class="flex flex-col gap-2">
+    <div
+      class="grid grid-cols-2 lg:grid-cols-3 gap-2"
+    >
       <div
-        class="overflow-hidden w-full aspect-video flex items-center justify-center cursor-pointer"
+        v-for="(image, index) in settings.gallery"
+        :key="index"
+        class="overflow-hidden w-full aspect-square flex items-center justify-center cursor-pointer"
         :class="{
           'rounded-xl': designRounded === 'xl',
           'rounded-md': designRounded === 'md',
           'rounded-none': designRounded === 'none',
+          'col-span-3 aspect-video': index === 0,
         }"
         @click="showModal = true"
       >
         <NuxtImg
-          :src="settings.gallery[0].url"
-          class="object-cover w-full hover:scale-110 transition-all duration-500"
+          :src="image.url"
+          class="object-cover w-full h-full hover:scale-110 transition-all duration-500"
           preload
         />
-      </div>
-      <div
-        class="grid grid-cols-2 lg:grid-cols-3 gap-2"
-      >
-        <div
-          v-for="(image, index) in settings.gallery.slice(1, 7)"
-          :key="index"
-          class="overflow-hidden w-full aspect-square flex items-center justify-center cursor-pointer"
-          :class="{
-            'rounded-xl': designRounded === 'xl',
-            'rounded-md': designRounded === 'md',
-            'rounded-none': designRounded === 'none',
-          }"
-          @click="showModal = true"
-        >
-          <NuxtImg
-            :src="image.url"
-            class="object-cover w-full h-full hover:scale-110 transition-all duration-500"
-            preload
-          />
-        </div>
       </div>
     </div>
     <UModal
@@ -69,6 +53,13 @@ const showModal = ref(false)
               :src="item.url"
               class="rounded-xl max-w-full max-h-full"
             >
+            <div
+              v-if="item.title || item.description"
+              class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4 rounded-b-xl"
+            >
+              <h3 class="text-lg font-semibold">{{ item.title }}</h3>
+              <p class="text-sm">{{ item.description }}</p>
+            </div>
           </UCarousel>
         </div>
       </template>

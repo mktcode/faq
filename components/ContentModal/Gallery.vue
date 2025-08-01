@@ -1,62 +1,47 @@
 <script setup lang="ts">
-const toast = useToast()
-
-const { data: currentSettings } = await useFetch(`/api/user/settings`)
+const { settings, saveSettings } = await useProfile()
 
 const form = ref({
-  gallery: currentSettings.value?.gallery || [],
+  gallery: settings.value?.gallery || [],
 })
-
-const saveSattingsDebounceInterval = ref<NodeJS.Timeout | null>(null)
-async function saveSettings() {
-  if (saveSattingsDebounceInterval.value) {
-    clearTimeout(saveSattingsDebounceInterval.value)
-  }
-  saveSattingsDebounceInterval.value = setTimeout(async () => {
-    await $fetch('/api/user/settings', {
-      method: 'POST',
-      body: form.value,
-    })
-    toast.add({
-      title: 'Einstellungen gespeichert',
-      description: 'Deine Einstellungen wurden erfolgreich gespeichert.',
-      color: 'success',
-    })
-  }, 500)
-}
 
 const fileInput = ref<HTMLInputElement | null>(null)
 const isDragging = ref(false)
+const isUploading = ref(false)
+const uploadProgress = ref(0)
 
 const uploadFile = async (files: FileList | null) => {
   if (!files || files.length === 0) return
 
-  const formData = new FormData()
-
+  isUploading.value = true
+  let uploadedFiles = 0
+  
   for (let i = 0; i < files.length; i++) {
+    const formData = new FormData()
     formData.append('files', files[i])
-  }
+    try {
+      const { imageUrls } = await $fetch('/api/user/upload/image', {
+        method: 'POST',
+        body: formData,
+      })
+  
+      form.value.gallery = [
+        ...form.value.gallery,
+        ...imageUrls.map((url: string) => ({ url })),
+      ]
+  
+      await saveSettings(form.value)
 
-  try {
-    const { imageUrls } = await $fetch('/api/user/upload/image', {
-      method: 'POST',
-      body: formData,
-    })
-
-    form.value.gallery = [
-      ...form.value.gallery,
-      ...imageUrls.map((url: string) => ({ url })),
-    ]
-
-    await saveSettings()
-
-    // Clear the input to allow selecting the same file again
-    if (fileInput.value) {
-      fileInput.value.value = ''
+      uploadedFiles++
+      uploadProgress.value = Math.round((uploadedFiles / files.length) * 100)
+    }
+    catch (error) {
+      console.error('Error uploading files:', error)
     }
   }
-  catch (error) {
-    console.error('Error uploading files:', error)
+  isUploading.value = false
+  if (fileInput.value) {
+    fileInput.value.value = ''
   }
 }
 
@@ -89,7 +74,8 @@ const onDrop = async (e: DragEvent) => {
 
 const deleteItem = (index: number) => {
   form.value.gallery.splice(index, 1)
-  saveSettings()
+  // TODO: Delete from bucket
+  saveSettings(form.value)
 }
 </script>
 
@@ -125,6 +111,10 @@ const deleteItem = (index: number) => {
         class="w-full h-full absolute top-0 left-0 cursor-pointer"
       />
     </div>
+    <UProgress
+      v-if="isUploading"    
+      v-model="uploadProgress"
+    />
     <div class="flex flex-col gap-2">
       <div
         v-for="(image, index) in form.gallery"
@@ -141,7 +131,6 @@ const deleteItem = (index: number) => {
               v-model="image.title"
               placeholder="Bildtitel"
               class="flex-1"
-              @blur="saveSettings"
             />
             <UButton
               icon="i-heroicons-trash"
@@ -153,10 +142,15 @@ const deleteItem = (index: number) => {
           <UTextarea
             v-model="image.description"
             placeholder="Bildbeschreibung"
-            @blur="saveSettings"
           />
         </div>
       </div>
     </div>
+    <UButton
+      label="Einstellungen speichern"
+      variant="solid"
+      color="primary"
+      @click="saveSettings(form)"
+    />
   </div>
 </template>

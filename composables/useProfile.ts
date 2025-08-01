@@ -2,6 +2,7 @@ import type { SettingsForm } from "~/types/db"
 
 export const useProfile = async () => {
   const { ssrContext } = useNuxtApp()
+  const toast = useToast()
   const path = useRoute().path
 
   const username = useState<string | null>('username', () => null)
@@ -30,6 +31,18 @@ export const useProfile = async () => {
     refreshSettings = refresh
   }
 
+  async function saveSettings (newSettings: SettingsForm) {
+    await $fetch('/api/user/settings', {
+      method: 'POST',
+      body: newSettings,
+    })
+    toast.add({
+      title: 'Einstellungen gespeichert',
+      description: 'Deine Einstellungen wurden erfolgreich gespeichert.',
+      color: 'success',
+    })
+    refreshSettings()
+  }
 
   const showLegalDataWarning = computed(() => isOwned && (!settings.value?.company?.name || !settings.value?.company?.city || !settings.value?.company?.street || !settings.value?.company?.zip || !settings.value?.company?.email))
 
@@ -42,6 +55,7 @@ export const useProfile = async () => {
     path,
     settings,
     refreshSettings,
+    saveSettings,
     showLegalDataWarning,
   }
 }
