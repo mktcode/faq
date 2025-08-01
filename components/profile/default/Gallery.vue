@@ -47,13 +47,45 @@ function scrollTo() {
       </div>
     </div>
     <UModal
+      title="Bilder"
       v-model:open="showModal"
       @after:enter="scrollTo"
       fullscreen
       :ui="{
         body: 'mbody overflow-hidden',
+        header: 'flex gap-4 items-center justify-between p-4',
       }"
     >
+      <template #header>
+        <h2 class="text-lg font-semibold">Bilder</h2>
+        <div class="flex items-center gap-0.5 overflow-x-scroll">
+          <img
+            v-for="(item, index) in settings?.gallery"
+            :src="item?.url"
+            class="size-10 object-cover shrink-0 cursor-pointer transition-all border-2"
+            :class="{
+              'border-primary': index === carouselIndex,
+              'border-transparent opacity-60 hover:opacity-100': index !== carouselIndex,
+              'rounded-full': designRounded === 'xl',
+              'rounded-md': designRounded === 'md',
+              'rounded-none': designRounded === 'none',
+            }"
+            @click="carouselIndex = index; scrollTo()"
+          />
+        </div>
+        <UButton
+          @click="showModal = false"
+          variant="ghost"
+          color="neutral"
+          class="aspect-square"
+        >
+          <UIcon
+            name="i-lucide-x"
+            class="size-5"
+          />
+        </UButton>
+      </template>
+
       <template #body>
         <UCarousel
           ref="carousel"
@@ -64,7 +96,9 @@ function scrollTo() {
             viewport: 'h-full',
             container: 'h-full',
             item: 'h-full flex flex-col items-center justify-center',
+            controls: 'absolute z-50 -top-16 left-1/2 w-[80vw] -translate-x-1/2',
           }"
+          @select="carouselIndex = $event"
         >
           <div class="flex-1 w-full relative">
             <div class="inset-0 absolute flex items-center justify-center">
