@@ -1,35 +1,18 @@
 <script setup lang="ts">
-const { images } = defineProps<{
-  images: {
-    url: string
-    description?: string | null
-    title?: string | null
-  }[]
-}>()
-
-const showModal = ref(false)
-
-const showImages = ref<number[]>([])
-
-onMounted(() => {
-  for (let i = 0; i < images.length; i++) {
-    setTimeout(() => {
-      showImages.value.push(i)
-    }, i * 100)
-  }
-})
-
 const { settings } = await useProfile()
 const designRounded = ref(settings.value?.rounded || 'md')
+const showModal = ref(false)
 </script>
 
 <template>
-  <div class="my-6 w-full">
+  <div
+    v-if="settings?.gallery?.length"
+    class="my-6 w-full"
+  >
     <div class="flex flex-col gap-2">
       <div
         class="overflow-hidden w-full aspect-video flex items-center justify-center cursor-pointer"
         :class="{
-          'bg-gray-100': !showImages.includes(0),
           'rounded-xl': designRounded === 'xl',
           'rounded-md': designRounded === 'md',
           'rounded-none': designRounded === 'none',
@@ -37,9 +20,8 @@ const designRounded = ref(settings.value?.rounded || 'md')
         @click="showModal = true"
       >
         <NuxtImg
-          :src="images[0].url"
-          class="object-cover w-full hover:scale-110 transition-all duration-500 opacity-0"
-          :class="{ 'opacity-100': showImages.includes(0) }"
+          :src="settings.gallery[0].url"
+          class="object-cover w-full hover:scale-110 transition-all duration-500"
           preload
         />
       </div>
@@ -47,11 +29,10 @@ const designRounded = ref(settings.value?.rounded || 'md')
         class="grid grid-cols-2 lg:grid-cols-3 gap-2"
       >
         <div
-          v-for="(image, index) in images.slice(1, 7)"
+          v-for="(image, index) in settings.gallery.slice(1, 7)"
           :key="index"
           class="overflow-hidden w-full aspect-square flex items-center justify-center cursor-pointer"
           :class="{
-            'bg-gray-100': !showImages.includes(index + 1),
             'rounded-xl': designRounded === 'xl',
             'rounded-md': designRounded === 'md',
             'rounded-none': designRounded === 'none',
@@ -60,8 +41,7 @@ const designRounded = ref(settings.value?.rounded || 'md')
         >
           <NuxtImg
             :src="image.url"
-            class="object-cover w-full h-full hover:scale-110 transition-all duration-500 opacity-0"
-            :class="{ 'opacity-100': showImages.includes(index + 1) }"
+            class="object-cover w-full h-full hover:scale-110 transition-all duration-500"
             preload
           />
         </div>
@@ -78,7 +58,7 @@ const designRounded = ref(settings.value?.rounded || 'md')
             class-names
             arrows
             dots
-            :items="images"
+            :items="settings.gallery"
             :ui="{
               root: 'h-full [&_>_div:first-child]:h-full',
               container: 'h-full',

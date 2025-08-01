@@ -1,15 +1,10 @@
 <script setup lang="ts">
-const { offers } = defineProps<{
-  offers: {
-    title: string
-    description: string
-  }[]
-}>()
+const { settings } = await useProfile()
 
-const items = offers.map(offer => ({
+const items = settings.value?.offers?.map(offer => ({
   title: offer.title,
   description: offer.description,
-}))
+})) || []
 </script>
 
 <template>

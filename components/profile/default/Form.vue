@@ -1,15 +1,8 @@
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
 import type { SimilarQuestion } from '~/server/api/qanda/similarQuestions.post'
-import type { SettingsForm } from '~/types/db'
 
-const { form, username, contactPhone } = defineProps<{
-  form: SettingsForm['form']
-  username: string
-  contactPhone: string
-}>()
-
-const { isSubscribed, settings } = await useProfile()
+const { username, isSubscribed, settings } = await useProfile()
 
 const message = ref('')
 const messageLongEnough = computed(() => message.value.trim().length >= 5)
@@ -96,22 +89,22 @@ const disabled = computed(() => {
       href="#anfrage"
       class="block pt-12 text-2xl font-semibold cursor-pointer relative before:content-['#'] before:absolute before:-left-6 before:text-gray-200 before:opacity-0 before:transition-opacity hover:before:opacity-100"
     >
-      {{ form?.title || 'Anfrage' }}
+      {{ settings?.form?.title || 'Anfrage' }}
     </a>
 
     <p class="text-gray-500 mb-8 mt-3">
-      {{ form?.description || 'Beschreiben Sie Ihr Anliegen. Wir melden uns zeitnah bei Ihnen.' }}
+      {{ settings?.form?.description || 'Beschreiben Sie Ihr Anliegen. Wir melden uns zeitnah bei Ihnen.' }}
     </p>
 
     <div
-      v-if="contactPhone"
+      v-if="settings?.company?.phone"
       class="flex text-2xl items-center justify-center gap-1 mb-8"
     >
       <UIcon
         name="i-heroicons-phone"
       />
       <span class="text-gray-500 ml-2">
-        {{ contactPhone }}
+        {{ settings.company.phone }}
       </span>
     </div>
 
@@ -159,7 +152,7 @@ const disabled = computed(() => {
       variant="soft"
       icon="i-heroicons-check-circle"
       title="Anfrage gesendet"
-      :description="form?.successMessage || 'Vielen Dank für Ihre Anfrage. Wir melden uns zeitnah bei Ihnen.'"
+      :description="settings?.form?.successMessage || 'Vielen Dank für Ihre Anfrage. Wir melden uns zeitnah bei Ihnen.'"
       @close="savedRequestSuccess = false"
     />
   </Transition>

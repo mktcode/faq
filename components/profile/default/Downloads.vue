@@ -1,23 +1,17 @@
 <script setup lang="ts">
-const { downloads } = defineProps<{
-  downloads: {
-    title: string
-    description?: string | null
-    url: string
-    type: string
-  }[]
-}>()
-
 const { settings } = await useProfile()
 
 const designRounded = ref(settings.value?.rounded || 'md')
 </script>
 
 <template>
-  <div class="my-6 w-full">
+  <div
+    v-if="settings?.downloads?.length"
+    class="my-6 w-full"
+  >
     <div class="flex flex-col gap-2">
       <div
-        v-for="download in downloads"
+        v-for="download in settings.downloads"
         :key="download.url"
         class="p-4 border border-gray-200"
         :class="{
