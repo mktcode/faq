@@ -16,19 +16,23 @@ const { settings } = await useProfile()
       <div
         v-if="settings?.logo"
       >
-        <NuxtImg
-          :src="settings.logo"
-          alt="Logo"
-          class="w-32 mb-4"
-        />
+        <a href="/">
+          <NuxtImg
+            :src="settings.logo"
+            alt="Logo"
+            class="w-32 mb-4"
+          />
+        </a>
       </div>
-      <h1
-        class="text-center font-bold mb-4 leading-none"
-        :class="getColorClass(settings?.headerTitleColor || 'black', 'text')"
-        :style="{ 'font-size': (settings?.headerTitleFontSize || '10') + 'cqw' }"
-      >
-        {{ settings?.title }}
-      </h1>
+      <a href="/">
+        <h1
+          class="text-center font-bold mb-4 leading-none"
+          :class="getColorClass(settings?.headerTitleColor || 'black', 'text')"
+          :style="{ 'font-size': (settings?.headerTitleFontSize || '10') + 'cqw' }"
+        >
+          {{ settings?.title }}
+        </h1>
+      </a>
       <p
         v-if="settings?.description"
         class="text-center mb-4"
