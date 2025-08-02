@@ -5,7 +5,7 @@ const subscriptionSuccess = !!route.query.subscriptionSuccess
 
 const { me } = await useMe()
 
-const { username, settings, refreshSettings } = await useProfile()
+const { settings, refreshSettings } = await useProfile()
 
 useHead({
   title: settings.value?.title || 'Meine Website',
@@ -31,13 +31,8 @@ appConfig.ui.textarea.defaultVariants.rounded = settings.value?.rounded || 'md'
     :font="font"
     class="relative"
   >
-    <ProfileDefaultNav
-      :username="username"
-    />
-    <ProfileDefaultHeader
-      :username="username"
-      :current-settings="settings"
-    />
+    <ProfileDefaultNav />
+    <ProfileDefaultHeader />
     <div
       v-if="settings"
       class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6"
