@@ -14,7 +14,7 @@ const isSavingRequest = ref(false)
 const savedRequestSuccess = ref(false)
 const similarQuestions = ref<SimilarQuestion[]>([])
 
-async function saveRequest() {
+async function saveCustomerRequest() {
   if (isSavingRequest.value) return
 
   isSavingRequest.value = true
@@ -47,7 +47,7 @@ async function getEmbedding() {
   const embedding = await $fetch('/api/qanda/embedding', {
     query: {
       message: message.value,
-      username,
+      username, // TODO: not really safe, needs origin based verification in backend
     },
   })
 
@@ -84,36 +84,14 @@ const disabled = computed(() => {
 
 <template>
   <div class="my-6 w-full">
-    <a
-      id="anfrage"
-      href="#anfrage"
-      class="block pt-12 text-2xl font-semibold cursor-pointer relative before:content-['#'] before:absolute before:-left-6 before:text-gray-200 before:opacity-0 before:transition-opacity hover:before:opacity-100"
-    >
-      {{ settings?.form?.title || 'Anfrage' }}
-    </a>
-
-    <p class="text-gray-500 mb-8 mt-3">
-      {{ settings?.form?.description || 'Beschreiben Sie Ihr Anliegen. Wir melden uns zeitnah bei Ihnen.' }}
-    </p>
-
-    <div
-      v-if="settings?.company?.phone"
-      class="flex text-2xl items-center gap-1 mb-8"
-    >
-      <UIcon
-        name="i-heroicons-phone"
-      />
-      <span class="text-gray-500 ml-2">
-        {{ settings.company.phone }}
-      </span>
-    </div>
+    <ProfileDefaultFormHeader />
 
     <UTextarea
       v-model="message"
       placeholder="Ihr Anliegen oder Ihre Fragen"
       class="w-full"
       :ui="{
-        base: 'rounded-b-none text-xl p-3 !bg-gray-50 !border !border-b-0 !border-gray-200',
+        base: 'rounded-b-none text-xl p-3',
       }"
     />
     <div
@@ -143,69 +121,57 @@ const disabled = computed(() => {
         @text="(text) => { message = text }"
       />
     </div>
-  </div>
-  <Transition name="fade">
-    <UAlert
-      v-if="savedRequestSuccess"
-      class="mt-2"
-      color="success"
-      variant="soft"
-      icon="i-heroicons-check-circle"
-      title="Anfrage gesendet"
-      :description="settings?.form?.successMessage || 'Vielen Dank für Ihre Anfrage. Wir melden uns zeitnah bei Ihnen.'"
-      @close="savedRequestSuccess = false"
-    />
-  </Transition>
-  <Transition name="fade">
-    <div
-      v-if="similarQuestions.length > 0 && messageLongEnough"
-      class="w-full flex flex-col text-gray-800 mt-2 border border-gray-200 p-4"
-      :class="{
-        'rounded-none': designRounded === 'none',
-        'rounded-md': designRounded === 'md',
-        'rounded-xl': designRounded === 'xl',
-      }"
-    >
-      <div class="text-sm text-sky-900/60 mb-2">
-        {{ similarQuestions[0].question }}
-      </div>
-      <div v-html="similarQuestions[0].answer" />
-    </div>
-  </Transition>
-  <div class="flex flex-col gap-2 mt-2 w-full">
     <Transition name="fade">
+      <UAlert
+        v-if="savedRequestSuccess"
+        class="mt-2"
+        color="success"
+        variant="soft"
+        icon="i-heroicons-check-circle"
+        title="Anfrage gesendet"
+        :description="settings?.form?.successMessage || 'Vielen Dank für Ihre Anfrage. Wir melden uns zeitnah bei Ihnen.'"
+        @close="savedRequestSuccess = false"
+      />
+    </Transition>
+    <Transition name="fade">
+      <div
+        v-if="similarQuestions.length > 0 && messageLongEnough"
+        class="w-full flex flex-col text-gray-800 mt-2 border border-gray-200 p-4"
+        :class="{
+          'rounded-none': designRounded === 'none',
+          'rounded-md': designRounded === 'md',
+          'rounded-xl': designRounded === 'xl',
+        }"
+      >
+        <div class="text-sm text-sky-900/60 mb-2">
+          {{ similarQuestions[0].question }}
+        </div>
+        <div v-html="similarQuestions[0].answer" />
+      </div>
+    </Transition>
+    <div class="flex flex-col gap-2 mt-2 w-full">
       <UInput
-        v-if="messageLongEnough"
         v-model="name"
         placeholder="Name"
         class="w-full"
       />
-    </Transition>
-    <Transition name="fade">
       <UInput
-        v-if="messageLongEnough"
         v-model="phone"
         placeholder="Telefon"
         class="w-full"
       />
-    </Transition>
-    <Transition name="fade">
       <UInput
-        v-if="messageLongEnough"
         v-model="email"
         placeholder="E-Mail"
         class="w-full"
       />
-    </Transition>
-    <Transition name="fade">
       <UButton
-        v-if="messageLongEnough"
         label="Anfrage senden"
         block
         :disabled="disabled"
         :loading="isSavingRequest"
-        @click="saveRequest"
+        @click="saveCustomerRequest"
       />
-    </Transition>
+    </div>
   </div>
 </template>
