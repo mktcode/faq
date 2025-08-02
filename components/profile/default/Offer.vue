@@ -10,6 +10,7 @@ const items = settings.value?.offers?.map(offer => ({
 <template>
   <div class="my-24 w-full">
     <UCarousel
+      v-if="items.length > 1"
       v-slot="{ item }"
       :dots="items.length > 1"
       :arrows="items.length > 1"
@@ -23,13 +24,11 @@ const items = settings.value?.offers?.map(offer => ({
         container: 'transition-[height] duration-500 ease-in-out',
       }"
     >
-      <h2 class="text-3xl font-semibold mb-4">
-        {{ item.title }}
-      </h2>
-      <div
-        class="mb-4 prose"
-        v-html="item.description"
-      />
+      <ProfileDefaultOfferItem :item="item" />
     </UCarousel>
+    <ProfileDefaultOfferItem
+      v-else
+      :item="items[0]"
+    />
   </div>
 </template>
