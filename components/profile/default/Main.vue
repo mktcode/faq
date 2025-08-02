@@ -5,7 +5,7 @@ const subscriptionSuccess = !!route.query.subscriptionSuccess
 
 const { me } = await useMe()
 
-const { settings, refreshSettings } = await useProfile()
+const { settings, refreshSettings, isOwned } = await useProfile()
 
 useHead({
   title: settings.value?.title || 'Meine Website',
@@ -31,7 +31,7 @@ appConfig.ui.textarea.defaultVariants.rounded = settings.value?.rounded || 'md'
     :font="font"
     class="relative"
   >
-    <ProfileDefaultNav />
+    <ProfileDefaultNav v-if="me && isOwned" />
     <ProfileDefaultHeader />
     <div
       v-if="settings"
