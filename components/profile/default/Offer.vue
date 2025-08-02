@@ -22,8 +22,8 @@ const pathItem = computed(() => items.value.find(item => item.slug === path.repl
       :dots="items.length > 1"
       :arrows="items.length > 1"
       auto-height
-      :prev="{ variant: 'ghost' }"
-      :next="{ variant: 'ghost' }"
+      :prev="{ variant: 'ghost', color: 'primary', size: 'xl', icon: 'i-heroicons-chevron-left-solid', class: 'disabled:hidden' }"
+      :next="{ variant: 'ghost', color: 'primary', size: 'xl', icon: 'i-heroicons-chevron-right-solid', class: 'disabled:hidden' }"
       :autoplay="{ delay: 20000 }"
       :items="items"
       class="w-full"
