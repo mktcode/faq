@@ -53,6 +53,16 @@ async function saveSettings() {
         class="w-full"
       />
     </UFormField>
+    <UFormField
+      label="Fehlernachricht"
+      description="Diese Nachricht wird angezeigt, wenn beim Senden des Formulars ein Fehler aufgetreten ist. In diesem Fall wird auch ein Link zum Impressum angezeigt."
+    >
+      <UInput
+        v-model="form.form.errorMessage"
+        placeholder="z.B. Beim Senden Ihrer Anfrage ist ein Fehler aufgetreten. Versuchen Sie es bitte später erneut oder per Telefon oder E-Mail."
+        class="w-full"
+      />
+    </UFormField>
     <UButton
       variant="solid"
       color="primary"

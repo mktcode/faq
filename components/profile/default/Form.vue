@@ -12,6 +12,7 @@ const phone = ref('')
 const email = ref('')
 const isSavingRequest = ref(false)
 const savedRequestSuccess = ref(false)
+const savedRequestFailure = ref(false)
 const similarQuestions = ref<SimilarQuestion[]>([])
 
 async function saveCustomerRequest() {
@@ -19,24 +20,29 @@ async function saveCustomerRequest() {
 
   isSavingRequest.value = true
 
-  await $fetch('/api/customerRequests', {
-    method: 'POST',
-    body: {
-      username,
-      message: message.value,
-      embedding: messageEmbedding.value,
-      name: name.value,
-      phone: phone.value || undefined,
-      email: email.value || undefined,
-    },
-  })
-
-  isSavingRequest.value = false
-  savedRequestSuccess.value = true
-  message.value = ''
-  name.value = ''
-  phone.value = ''
-  email.value = ''
+  try {
+    await $fetch('/api/customerRequests', {
+      method: 'POST',
+      body: {
+        username,
+        message: message.value,
+        embedding: messageEmbedding.value,
+        name: name.value,
+        phone: phone.value || undefined,
+        email: email.value || undefined,
+      },
+    })
+  
+    savedRequestSuccess.value = true
+    message.value = ''
+    name.value = ''
+    phone.value = ''
+    email.value = ''
+  } catch (error) {
+    savedRequestFailure.value = true
+  } finally {
+    isSavingRequest.value = false
+  }
 }
 
 async function getEmbedding() {
@@ -122,18 +128,6 @@ const disabled = computed(() => {
       />
     </div>
     <Transition name="fade">
-      <UAlert
-        v-if="savedRequestSuccess"
-        class="mt-2"
-        color="success"
-        variant="soft"
-        icon="i-heroicons-check-circle"
-        title="Anfrage gesendet"
-        :description="settings?.form?.successMessage || 'Vielen Dank für Ihre Anfrage. Wir melden uns zeitnah bei Ihnen.'"
-        @close="savedRequestSuccess = false"
-      />
-    </Transition>
-    <Transition name="fade">
       <div
         v-if="similarQuestions.length > 0 && messageLongEnough"
         class="w-full flex flex-col text-gray-800 mt-2 border border-gray-200 p-4"
@@ -173,5 +167,42 @@ const disabled = computed(() => {
         @click="saveCustomerRequest"
       />
     </div>
+    <Transition name="fade">
+      <UAlert
+        v-if="savedRequestSuccess"
+        class="mt-2"
+        color="primary"
+        variant="soft"
+        icon="i-heroicons-check"
+        title="Ihre Anfrage wurde gesendet."
+        :description="settings?.form?.successMessage || 'Vielen Dank für Ihre Anfrage. Wir melden uns zeitnah bei Ihnen.'"
+        :close="{
+          color: 'primary',
+        }"
+        @update:open="savedRequestSuccess = false"
+      />
+    </Transition>
+    <Transition name="fade">
+      <UAlert
+        v-if="savedRequestFailure"
+        class="mt-2"
+        color="error"
+        variant="soft"
+        icon="i-heroicons-exclamation-triangle"
+        title="Ihre Anfrage konnte nicht gesendet werden."
+        :description="settings?.form?.errorMessage || `Beim Senden Ihrer Anfrage ist ein Fehler aufgetreten. Versuchen Sie es bitte später erneut oder per Telefon oder E-Mail.`"
+        :actions="[
+          {
+            label: 'zum Impressum',
+            color: 'error',
+            onClick: () => { navigateTo('/impressum', { external: true }) }
+          }
+        ]"
+        :close="{
+          color: 'error',
+        }"
+        @update:open="savedRequestFailure = false"
+      />
+    </Transition>
   </div>
 </template>
