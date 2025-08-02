@@ -16,6 +16,8 @@ const showContentModal = useState('showContentModal', () => false)
     <UButton
       icon="i-heroicons-bars-3"
       variant="ghost"
+      class="bg-white"
+      label="Menü"
     />
 
     <template #content>
