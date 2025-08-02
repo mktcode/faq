@@ -98,5 +98,15 @@ export default defineAppConfig({
         rounded: 'md',
       },
     },
+    modal: {
+      slots: {
+        content: '!ring-0',
+      },
+    },
+    popover: {
+      slots: {
+        content: '!ring-0',
+      },
+    },
   },
 })
