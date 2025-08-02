@@ -47,7 +47,7 @@ function computeSlug(title: string) {
             @click="form.offers.splice(index, 1)"
           />
         </div>
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2">
           <UButtonGroup class="flex-1">
             <label :for="`offer-slug-${index}`" class="flex">
               <UBadge color="neutral" variant="soft" size="sm" :label="`https://${username}.${appHost}/`" />
