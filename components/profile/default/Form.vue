@@ -98,7 +98,7 @@ const disabled = computed(() => {
 
     <div
       v-if="settings?.company?.phone"
-      class="flex text-2xl items-center justify-center gap-1 mb-8"
+      class="flex text-2xl items-center gap-1 mb-8"
     >
       <UIcon
         name="i-heroicons-phone"

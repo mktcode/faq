@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import { useClipboard } from '@vueuse/core'
 const { me } = await useMe()
 const { username, isOwned, settings } = await useProfile()
 
 const { public: { appHost } } = useRuntimeConfig()
 const showModal = useState('showLinksModal', () => false)
+
+const websiteLink = ref(`https://${username.value}.${appHost}`)
+const { copy, copied } = useClipboard()
 </script>
 
 <template>
@@ -48,8 +52,10 @@ const showModal = useState('showLinksModal', () => false)
             </span>
             <UButton
               class="ml-2"
-              icon="i-heroicons-clipboard"
+              :label="copied ? 'kopiert!' : 'kopieren'"
               variant="soft"
+              size="sm"
+              @click="copy(websiteLink)"
             />
           </div>
           <div class="flex flex-col gap-2">
@@ -81,6 +87,7 @@ const showModal = useState('showLinksModal', () => false)
     </UPopover>
 
     <UButton
+      v-if="me && isOwned"
       icon="i-lucide-ellipsis"
       @click="showModal = true"
     />

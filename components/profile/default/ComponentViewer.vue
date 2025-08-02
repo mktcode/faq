@@ -15,11 +15,9 @@ function isComponentDisplayed(component: ComponentKey, index: number): boolean {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 w-full">
-    <ProfileDefaultOffer v-if="isComponentDisplayed('offer', slotIndex)" />
-    <ProfileDefaultGallery v-if="isComponentDisplayed('gallery', slotIndex)" />
-    <ProfileDefaultDownloads v-if="isComponentDisplayed('downloads', slotIndex)" />
-    <ProfileDefaultForm v-if="isComponentDisplayed('form', slotIndex)" />
-    <ProfileDefaultFAQ v-if="isComponentDisplayed('faq', slotIndex)" />
-  </div>
+  <ProfileDefaultOffer v-if="isComponentDisplayed('offer', slotIndex)" />
+  <ProfileDefaultGallery v-else-if="isComponentDisplayed('gallery', slotIndex)" />
+  <ProfileDefaultDownloads v-else-if="isComponentDisplayed('downloads', slotIndex)" />
+  <ProfileDefaultForm v-else-if="isComponentDisplayed('form', slotIndex)" />
+  <ProfileDefaultFAQ v-else-if="isComponentDisplayed('faq', slotIndex)" />
 </template>
