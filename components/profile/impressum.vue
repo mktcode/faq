@@ -12,21 +12,8 @@ const logo = computed(() => {
 
 <template>
   <FontWrapper :font="font">
+    <ProfileDefaultHeader />
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
-      <div
-        v-if="logo"
-      >
-        <NuxtImg
-          :src="logo"
-          alt="Logo"
-          class="w-16 mb-4"
-        />
-      </div>
-
-      <h1 class="text-lg font-bold mb-4">
-        {{ settings?.title || username }}
-      </h1>
-
       <div class="prose-xl">
         <h1 class="text-center">
           Impressum

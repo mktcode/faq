@@ -12,23 +12,11 @@ const logo = computed(() => {
 
 <template>
   <FontWrapper :font="font">
+    <ProfileDefaultHeader />
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
-      <div
-        v-if="logo"
-      >
-        <NuxtImg
-          :src="logo"
-          alt="Logo"
-          class="w-16 mb-4"
-        />
-      </div>
-      <h1 class="text-lg font-bold mb-4">
-        {{ settings?.title || username }}
-      </h1>
-
       <div class="prose-xl">
         <h1 class="text-center">
-          Impressum
+          Datenschutzerklärung
         </h1>
         <p>
           Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und Zwecke der Verarbeitung von personenbezogenen Daten (nachfolgend kurz „Daten“) innerhalb unseres Onlineangebotes auf. Die verwendeten Begrifflichkeiten, wie z.B. „Verarbeitung“ oder „Verantwortlicher“, beziehen sich auf die Definitionen im Art. 4 der Datenschutz-Grundverordnung (DSGVO).
