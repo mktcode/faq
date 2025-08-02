@@ -8,6 +8,14 @@ const showModal = useState('showLinksModal', () => false)
 
 const websiteLink = ref(`https://${username.value}.${appHost}`)
 const { copy, copied } = useClipboard()
+const { copy: copyForInstagram, copied: copiedForInstagram } = useClipboard()
+
+function shareOnInstagram() {
+  copyForInstagram(websiteLink.value)
+  setTimeout(() => {
+    window.open('https://www.instagram.com/', '_blank')
+  }, 2000)
+}
 </script>
 
 <template>
@@ -63,16 +71,21 @@ const { copy, copied } = useClipboard()
               label="Auf Facebook teilen"
               icon="i-lucide-facebook"
               variant="soft"
+              target="_blank"
+              :to="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(websiteLink)}`"
             />
             <UButton
-              label="Auf Instagram teilen"
+              :label="copiedForInstagram ? 'Link kopiert! Öffne Instagram...' : 'Auf Instagram teilen'"
               icon="i-lucide-instagram"
               variant="soft"
+              @click="shareOnInstagram"
             />
             <UButton
               label="per E-Mail teilen"
               icon="i-heroicons-envelope"
               variant="soft"
+              target="_blank"
+              :to="`mailto:?subject=${encodeURIComponent('Schau dir meine Website an!')}&body=${encodeURIComponent(`Hier ist meine Website: ${websiteLink}`)}`"
             />
             <UButton
               label="Auf WhatsApp teilen"
