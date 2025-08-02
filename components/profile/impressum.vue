@@ -1,13 +1,8 @@
 <script setup lang="ts">
-const { username, settings } = await useProfile()
-
+const { settings } = await useProfile()
 const appConfig = useAppConfig()
 const font = computed(() => settings.value?.font || 'roboto')
 appConfig.ui.colors.primary = settings.value?.color || 'sky'
-
-const logo = computed(() => {
-  return settings.value?.logo || null
-})
 </script>
 
 <template>
