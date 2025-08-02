@@ -30,12 +30,12 @@ const qandaAccordionItems = computed(() => {
       :items="qandaAccordionItems"
       :ui="{
         root: 'w-full flex flex-col gap-2',
-        header: `bg-primary-50 px-4 !py-0 hover:bg-primary-100 rounded-${settings?.rounded || 'md'}`,
+        header: `bg-primary-500 px-4 !py-0 hover:bg-primary-600 rounded-${settings?.rounded || 'md'}`,
         trigger: 'py-2',
-        label: 'text-lg text-primary-950',
+        label: 'text-lg text-primary-50',
         body: 'text-lg text-gray-500 pt-2',
         item: '!border-0',
-        trailingIcon: 'text-primary-500',
+        trailingIcon: 'text-primary-50',
       }"
     >
       <template #body="{ item }">
