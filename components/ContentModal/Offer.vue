@@ -1,25 +1,17 @@
 <script setup lang="ts">
-const toast = useToast()
-
-const emit = defineEmits(['update'])
-
-const { data: currentSettings } = await useFetch(`/api/user/settings`)
+const { username, settings, saveSettings } = await useProfile()
+const { appHost } = useRuntimeConfig().public
 
 const form = ref({
-  offers: currentSettings.value?.offers || [],
+  offers: settings.value?.offers || [],
 })
 
-async function saveSettings() {
-  await $fetch('/api/user/settings', {
-    method: 'POST',
-    body: form.value,
-  })
-  toast.add({
-    title: 'Einstellungen gespeichert',
-    description: 'Deine Einstellungen wurden erfolgreich gespeichert.',
-    color: 'success',
-  })
-  emit('update')
+function computeSlug(title: string) {
+  return title.toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w-]+/g, '')
+    .replace(/--+/g, '-')
+    .replace(/^-+|-+$/g, '')
 }
 </script>
 
@@ -34,24 +26,47 @@ async function saveSettings() {
       :key="index"
       class="flex flex-col gap-4 border-b border-gray-200 pb-4"
     >
-      <div class="flex items-center gap-4">
-        <UFormField
-          label="Titel"
-          class="flex-1"
-        >
-          <UInput
-            v-model="offer.title"
-            placeholder="Website erstellen"
-            class="w-full"
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-4">
+          <UFormField
+            label="Titel"
+            class="flex-1"
+          >
+            <UInput
+              v-model="offer.title"
+              placeholder="Website erstellen"
+              class="w-full"
+              @keyup="offer.slug = computeSlug(offer.title)"
+            />
+          </UFormField>
+          <UButton
+            icon="i-heroicons-trash"
+            variant="soft"
+            color="error"
+            class="self-end"
+            @click="form.offers.splice(index, 1)"
           />
-        </UFormField>
-        <UButton
-          icon="i-heroicons-trash"
-          variant="soft"
-          color="error"
-          class="self-end"
-          @click="form.offers.splice(index, 1)"
-        />
+        </div>
+        <div class="flex items-center gap-4">
+          <UButtonGroup class="flex-1">
+            <label :for="`offer-slug-${index}`" class="flex">
+              <UBadge color="neutral" variant="soft" size="sm" :label="`https://${username}.${appHost}/`" />
+            </label>
+            <UInput
+              :id="`offer-slug-${index}`"
+              v-model="offer.slug"
+              placeholder="website-erstellen"
+              class="w-full"
+              size="sm"
+            />
+          </UButtonGroup>
+          <UButton
+            icon="i-heroicons-clipboard"
+            variant="soft"
+            class="self-end"
+            size="sm"
+          />
+        </div>
       </div>
       <UFormField label="Beschreibung">
         <WysiwygEditor
@@ -64,14 +79,14 @@ async function saveSettings() {
       icon="i-heroicons-plus"
       variant="soft"
       class="w-full"
-      @click="form.offers.push({ title: '', description: '' })"
+      @click="form.offers.push({ title: '', description: '', slug: '' })"
     >
       Angebot hinzufügen
     </UButton>
     <UButton
       variant="solid"
       color="primary"
-      @click="saveSettings"
+      @click="() => saveSettings(form)"
     >
       Einstellungen speichern
     </UButton>
