@@ -111,8 +111,8 @@ watch(acc2active, (newVal) => {
           >
             <UButton
               :to="`https://${me.userName}.${appHost}`"
-              label="Mein Profil"
-              icon="i-heroicons-identification"
+              label="Meine Website"
+              icon="i-heroicons-globe-alt"
               variant="ghost"
               class="text-white hover:bg-white/20 backdrop-blur-sm"
             />
@@ -154,13 +154,13 @@ watch(acc2active, (newVal) => {
                 label="Kostenlose Website erstellen"
                 :to="me ? `https://${me.userName}.${appHost}` : '/register'"
                 size="xxl"
-                class="gap-2 bg-gradient-to-r from-sky-500 via-30% via-sky-400 to-sky-600 !text-shadow-xs text-shadow-sky-950/40 shadow-lg hover:shadow-sky-950/50 hover:scale-x-[102%] hover:scale-y-[101%] transition-all duration-300 text-base sm:text-lg"
+                class="gap-2 bg-gradient-to-r from-sky-500 via-30% via-sky-400 to-sky-600 !text-shadow-xs text-shadow-sky-950/40 shadow-lg hover:shadow-sky-950/50 opacity-95 hover:opacity-100 transition-all duration-300 text-base sm:text-lg"
                 trailing-icon="i-heroicons-arrow-right"
                 :ui="{ trailingIcon: 'opacity-50' }"
               />
               <div>
                 <div>
-                  Beratung und <NuxtLink to="/fernwartung" class="underline">Fernwartung</NuxtLink>:
+                  Beratung und <NuxtLink to="https://markus-kottlaender.de/support" class="underline" target="_blank">Fernwartung</NuxtLink>:
                 </div>
                 <div class="text-white text-3xl font-bold">
                   0176 70 86 46 27
@@ -179,7 +179,7 @@ watch(acc2active, (newVal) => {
     <div class="flex flex-col items-center justify-center max-w-3xl mx-auto pt-16 sm:pt-24 pb-24 sm:pb-32 px-4" id="main-content">
       <p class="text-gray-500 text-lg sm:text-xl mb-6">
         Unsere Standard-Website ist für Sie kostenlos. Sie können Ihre eigene Domain verknüpfen und Anfragen an Ihre vorhandene E-Mail-Adresse erhalten.
-        Im Abonnement für 15 € mtl. (zzgl. MwSt.) erhalten Sie zusätzliche Funktionen und individuellere Gestaltungsmöglichkeiten.
+        Im Abonnement erhalten Sie zusätzliche Funktionen und individuellere Gestaltungsmöglichkeiten.
         <NuxtLink
           to="#standard-website"
           class="text-sky-500 inline-flex items-center"
@@ -429,72 +429,74 @@ watch(acc2active, (newVal) => {
         Unsere Standard-Website deckt das Wichtigste auf unkomplizierte Weise ab und Sie bekommen ein Gefühl dafür, was Sie wirklich brauchen und was nicht.
         Was auch immer das dann ist, im Abonnement ist es vermutlich bereits enthalten - auf jeden Fall möglich.
       </p>
+    </div>
 
-      <ul class="list-none text-gray-500 mt-10 border border-gray-200 rounded-lg p-6 flex flex-col gap-2 w-full *:flex *:items-center *:gap-2">
-        <li class="text-lg sm:text-xl font-bold text-gray-900">
-          Vorteile Ihrer kostenlosen Website:
-        </li>
-        <li>
-          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
-          Technisch sauber und visuell ansprechend
-        </li>
-        <li>
-          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
-          Automatisch korrektes Impressum und passgenaue, lesbare Datenschutzerklärung, basierend auf genutzten Funktionen
-        </li>
-        <li>
-          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
-          Keine unnötigen Cookies und intransparenten Einwilligungen
-        </li>
-        <li>
-          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
-          Definitiv optimiert für Suchmaschinen, KI und Mobilgeräte
-        </li>
-        <li>
-          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
-          Nutzbar mit und ohne vorhandene Domain und E-Mail-Adresse
-        </li>
-        <li>
-          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
-          Alle Links an einem Ort - Social Media, Anzeigenportale, externe Buchungskalender und Shops, etc.
-        </li>
-        <li class="text-lg sm:text-xl font-bold text-gray-900 mt-6">
-          Im Abonnement für 15 € mtl. (zzgl. MwSt.):
-        </li>
-        <li>
-          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
-          Komplett freie Gestaltungsmöglichkeiten
-        </li>
-        <li>
-          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
-          Integrierter Buchungskalender und einfache Shop-Funktion
-        </li>
-        <li>
-          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
-          Intelligentes FAQ - Antworten Sie schneller und erhalten Sie konkretere Anfragen
-        </li>
-        <li>
-          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
-          Mehr Speicherplatz für Bilder, Videos und andere Dateien
-        </li>
-        <li>
-          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
-          .de-Domain und E-Mail-Adresse inklusive
-        </li>
-        <li>
-          <span class="text-sky-500 text-2xl sm:text-3xl">✔</span>
-          Monatlich kündbar, per Klick in der App
-        </li>
-      </ul>
-
-      <div class="text-white">
-        <UButton
-          label="Website erstellen"
-          to="/register"
-          size="xxl"
-          class="mt-12 gap-2"
-          trailing-icon="i-heroicons-arrow-right"
-        />
+    <div class="bg-gradient-to-r from-sky-500 via-sky-600 to-sky-500 flex flex-col items-center justify-center py-16 px-4 text-white" id="main-content">
+      <div class="max-w-3xl mx-auto">
+        <ul class="list-none mt-10 flex flex-col gap-2 w-full *:flex *:items-center *:gap-2">
+          <li class="text-xl sm:text-2xl font-bold">
+            Vorteile Ihrer kostenlosen Website:
+          </li>
+          <li>
+            <span class="text-sky-200 text-2xl sm:text-3xl">✔</span>
+            Technisch sauber und visuell ansprechend
+          </li>
+          <li>
+            <span class="text-sky-200 text-2xl sm:text-3xl">✔</span>
+            Korrektes Impressum und passgenaue Datenschutzerklärung, basierend auf genutzten Funktionen
+          </li>
+          <li>
+            <span class="text-sky-200 text-2xl sm:text-3xl">✔</span>
+            Keine unnötigen Cookies und intransparenten Einwilligungen
+          </li>
+          <li>
+            <span class="text-sky-200 text-2xl sm:text-3xl">✔</span>
+            Definitiv optimiert für Suchmaschinen, KI und Mobilgeräte
+          </li>
+          <li>
+            <span class="text-sky-200 text-2xl sm:text-3xl">✔</span>
+            Alle Links an einem Ort - Social Media, Anzeigenportale, externe Buchungskalender und Shops, etc.
+          </li>
+          <li class="text-xl sm:text-2xl font-bold mt-8">
+            Im Abonnement für 17,85 € mtl. (inkl. MwSt.):
+          </li>
+          <li>
+            <span class="text-sky-200 text-2xl sm:text-3xl">✔</span>
+            Mehr Gestaltungsmöglichkeiten und individuelle Anpassungen durch uns
+          </li>
+          <li>
+            <span class="text-sky-200 text-2xl sm:text-3xl">✔</span>
+            Integrierter Buchungskalender und einfache Shop-Funktion
+          </li>
+          <li>
+            <span class="text-sky-200 text-2xl sm:text-3xl">✔</span>
+            Intelligentes FAQ - Antworten Sie schneller und erhalten Sie konkretere Anfragen
+          </li>
+          <li>
+            <span class="text-sky-200 text-2xl sm:text-3xl">✔</span>
+            Mehr Speicherplatz für Bilder, Videos und andere Dateien
+          </li>
+          <li>
+            <span class="text-sky-200 text-2xl sm:text-3xl">✔</span>
+            .de-Domain und E-Mail-Adresse inklusive
+          </li>
+          <li>
+            <span class="text-sky-200 text-2xl sm:text-3xl">✔</span>
+            Monatlich kündbar, per Klick in der App
+          </li>
+        </ul>
+  
+        <div class="text-white text-center">
+          <UButton
+            label="Kostenlose Website erstellen"
+            :to="me ? `https://${me.userName}.${appHost}` : '/register'"
+            size="xxl"
+            class="mt-20 mb-6 gap-2 transition-all duration-300 text-base sm:text-lg bg-white hover:bg-white shadow-lg shadow-sky-900/50 hover:shadow-xl opacity-95 hover:opacity-100"
+            variant="soft"
+            color="neutral"
+            trailing-icon="i-heroicons-arrow-right"
+          />
+        </div>
       </div>
     </div>
 
@@ -510,6 +512,12 @@ watch(acc2active, (newVal) => {
         target="_blank"
       >
         Datenschutz
+      </NuxtLink>
+      <NuxtLink
+        to="https://markus-kottlaender.de/agb"
+        target="_blank"
+      >
+        AGB
       </NuxtLink>
     </div>
   </div>
