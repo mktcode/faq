@@ -91,6 +91,7 @@ export const settingsFormSchema = z.object({
     .array(
       z.object({
         title: z.string(),
+        slug: z.string(),
         description: z.string(),
       }),
     )
