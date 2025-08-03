@@ -69,9 +69,11 @@ async function signIn() {
           size="xl"
           block
         />
-        <NuxtLink
+        <UButton
           to="/"
-          class="mt-6 text-gray-500 hover:text-gray-700 text-sm flex items-center gap-1 leading-0 mx-auto"
+          variant="ghost"
+          color="neutral"
+          class="flex items-center gap-1 text-gray-400 hover:text-gray-600 mr-auto"
         >
           <UIcon
             name="i-heroicons-arrow-left"
@@ -80,7 +82,7 @@ async function signIn() {
           <span class="leading-0">
             Zurück zur Startseite
           </span>
-        </NuxtLink>
+        </UButton>
       </div>
     </div>
     <div />
