@@ -99,7 +99,11 @@ export async function getMe(event: H3Event) {
     .selectFrom('users')
     .selectAll()
     .where('id', '=', user.id)
-    .executeTakeFirstOrThrow()
+    .executeTakeFirst()
+  
+  if (!userInDb) {
+    return null
+  }
 
   const isSubscribed = checkSubscribed(userInDb.lastPaidAt)
 
