@@ -159,6 +159,31 @@ const disabled = computed(() => {
         placeholder="E-Mail"
         class="w-full"
       />
+      <template v-for="field in settings?.form?.fields || []">
+        <UFormField :label="field.label" v-if="field.type === 'text'">
+          <UInput
+            :placeholder="field.help || ''"
+            class="w-full"
+          />
+        </UFormField>
+        <UFormField :label="field.label" v-else-if="field.type === 'textarea'">
+          <UTextarea
+            :placeholder="field.help || ''"
+            class="w-full"
+          />
+        </UFormField>
+        <UFormField
+          :label="field.label" v-else-if="field.type === 'select'"
+          :description="field.help || ''"
+        >
+          <USelect
+            :items="field.options || []"
+            :multiple="field.multiple"
+            placeholder="Auswahl treffen"
+            class="w-full"
+          />
+        </UFormField>
+      </template>
       <UButton
         label="Anfrage senden"
         block

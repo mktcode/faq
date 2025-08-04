@@ -1,30 +1,15 @@
 <script setup lang="ts">
-const toast = useToast()
-
-const emit = defineEmits(['update'])
-
-const { data: currentSettings } = await useFetch(`/api/user/settings`)
+const { settings, saveSettings } = await useProfile()
 
 const form = ref({
-  form: currentSettings.value?.form || {
-    title: '',
-    description: '',
-    successMessage: '',
+  form: {
+    title: settings.value?.form?.title || '',
+    description: settings.value?.form?.description || '',
+    successMessage: settings.value?.form?.successMessage || '',
+    errorMessage: settings.value?.form?.errorMessage || '',
+    fields: settings.value?.form?.fields || [],
   },
 })
-
-async function saveSettings() {
-  await $fetch('/api/user/settings', {
-    method: 'POST',
-    body: form.value,
-  })
-  toast.add({
-    title: 'Einstellungen gespeichert',
-    description: 'Deine Einstellungen wurden erfolgreich gespeichert.',
-    color: 'success',
-  })
-  emit('update')
-}
 </script>
 
 <template>
@@ -43,6 +28,7 @@ async function saveSettings() {
         class="w-full"
       />
     </UFormField>
+    <ContentModalFormFields v-model:fields="form.form.fields" />
     <UFormField
       label="Erfolgsnachricht"
       description="Diese Nachricht wird angezeigt, wenn das Formular erfolgreich übermittelt wurde."
@@ -66,7 +52,7 @@ async function saveSettings() {
     <UButton
       variant="solid"
       color="primary"
-      @click="saveSettings"
+      @click="() => saveSettings(form)"
     >
       Einstellungen speichern
     </UButton>
