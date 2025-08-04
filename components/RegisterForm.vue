@@ -10,8 +10,8 @@ const isDevMode = process.env.NODE_ENV === 'development'
 const userName = ref('')
 const userNameAvailable = ref(true)
 const checkingUserNameAvailability = ref(false)
-const font = ref<AvailableFont>(availableFonts.value[0])
-const color = ref<AvailableColor>(availableColors.value[0])
+const font = ref(availableFonts.value[0].value)
+const color = ref(availableColors.value[0].value)
 const displayedComponents = ref<{ [key: string]: boolean }>(
   Object.fromEntries(
     componentDetails.map(component => [component.key, true])
@@ -33,8 +33,8 @@ async function signUp() {
   await $fetch('/api/user/settings', {
     method: 'POST',
     body: {
-      font: font.value.value,
-      color: color.value.value,
+      font: font.value,
+      color: color.value,
       displayedComponents: Object.keys(displayedComponents.value).filter(key => displayedComponents.value[key]),
     },
   })
@@ -62,14 +62,16 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
     class="w-full max-w-xl flex flex-col gap-4"
     @submit.prevent="signUp"
   >
+    {{ color }}
+    {{ font }}
     <div class="flex gap-4">
       <ColorPicker
-        v-model="color"
+        v-model:color="color"
         label="Primärfarbe"
         class="w-full max-w-lg mx-auto"
       />
       <FontPicker
-        v-model="font"
+        v-model:font="font"
         label="Schriftart"
         class="w-full max-w-lg mx-auto"
       />
