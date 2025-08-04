@@ -6,6 +6,7 @@ const { register } = useWebAuthn({ registerEndpoint: '/api/webauthn/register' })
 const { fetch: fetchUserSession } = useUserSession()
 const { appHost } = useRuntimeConfig().public
 
+const isDevMode = process.env.NODE_ENV === 'development'
 const userName = ref('')
 const userNameAvailable = ref(true)
 const checkingUserNameAvailability = ref(false)
@@ -22,13 +23,18 @@ function sanitizeUserName(name: string) {
 }
 
 async function signUp() {
-  await register({ userName: userName.value })
-  await fetchUserSession()
+  if (isDevMode) {
+    await $fetch('/api/devregister', { method: 'POST' })
+    await fetchUserSession()
+  } else {
+    await register({ userName: userName.value })
+    await fetchUserSession()
+  }
   await $fetch('/api/user/settings', {
     method: 'POST',
     body: {
-      font: font.value,
-      color: color.value,
+      font: font.value.value,
+      color: color.value.value,
       displayedComponents: Object.keys(displayedComponents.value).filter(key => displayedComponents.value[key]),
     },
   })

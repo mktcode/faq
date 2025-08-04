@@ -1,10 +1,4 @@
-import type { SelectItem } from '@nuxt/ui'
-
-export const availableFonts = ref<SelectItem[]>([
-  {
-    type: 'label',
-    label: 'Ohne Serifen',
-  },
+export const availableFonts = ref([
   {
     label: 'Roboto',
     value: 'roboto',
@@ -24,10 +18,6 @@ export const availableFonts = ref<SelectItem[]>([
   {
     label: 'Poppins',
     value: 'poppins',
-  },
-  {
-    type: 'label',
-    label: 'Mit Serifen',
   },
   {
     label: 'Merriweather',
