@@ -1,6 +1,7 @@
 import type { H3Event } from 'h3'
 
 interface HostType {
+  currentHost: string
   isRootDomain: boolean
   isSubdomain: boolean
   isCustomDomain: boolean
@@ -25,12 +26,22 @@ function validateHostHeader(event: H3Event): string {
   return host
 }
 
-function determineHostType(currentHost: string, appHost: string): HostType {
+function determineHostType(event: H3Event): HostType {
+  const currentHost = validateHostHeader(event)
+  const { public: { appHost } } = useRuntimeConfig()
+
   const isRootDomain = currentHost === appHost
   const isSubdomain = !isRootDomain && currentHost.endsWith(`.${appHost}`)
   const isCustomDomain = !isRootDomain && !isSubdomain
 
+  console.log('App Host:', appHost)
+  console.log('Current Host:', currentHost)
+  console.log('Is Root Domain:', isRootDomain)
+  console.log('Is Subdomain:', isSubdomain)
+  console.log('Is Custom Domain:', isCustomDomain)
+
   return {
+    currentHost,
     isRootDomain,
     isSubdomain,
     isCustomDomain,
@@ -92,9 +103,7 @@ async function handleSubdomain(event: H3Event, currentHost: string): Promise<voi
 }
 
 export default defineEventHandler(async (event) => {
-  const { public: { appHost } } = useRuntimeConfig()
-  const currentHost = validateHostHeader(event)
-  const { isRootDomain, isSubdomain, isCustomDomain } = determineHostType(currentHost, appHost)
+  const { currentHost, isRootDomain, isSubdomain, isCustomDomain } = determineHostType(event)
 
   if (isRootDomain) {
     return
