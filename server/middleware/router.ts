@@ -28,17 +28,11 @@ function validateHostHeader(event: H3Event): string {
 
 function determineHostType(event: H3Event): HostType {
   const currentHost = validateHostHeader(event)
-  const { public: { appHost } } = useRuntimeConfig()
+  const { public: { appHost, appIp } } = useRuntimeConfig()
 
-  const isRootDomain = currentHost === appHost
+  const isRootDomain = currentHost === appHost || currentHost === appIp
   const isSubdomain = !isRootDomain && currentHost.endsWith(`.${appHost}`)
   const isCustomDomain = !isRootDomain && !isSubdomain
-
-  console.log('App Host:', appHost)
-  console.log('Current Host:', currentHost)
-  console.log('Is Root Domain:', isRootDomain)
-  console.log('Is Subdomain:', isSubdomain)
-  console.log('Is Custom Domain:', isCustomDomain)
 
   return {
     currentHost,
@@ -62,6 +56,7 @@ async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUse
   if (!targetUser) {
     const { public: { appHost } } = useRuntimeConfig()
     sendRedirect(event, `https://${appHost}`, 307)
+    return
   }
 
   const { user: loggedInUser } = await getUserSession(event)
