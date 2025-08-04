@@ -34,7 +34,7 @@ const pathItem = computed(() => items.value.find(item => item.slug === path.repl
       <ProfileDefaultOfferItem :item="item" />
     </UCarousel>
     <ProfileDefaultOfferItem
-      v-else
+      v-else-if="items.length === 1"
       :item="items[0]"
     />
   </div>

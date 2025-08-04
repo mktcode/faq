@@ -8,6 +8,16 @@ const { slotIndex } = defineProps<{
 const { settings } = await useProfile()
 
 function isComponentDisplayed(component: ComponentKey, index: number): boolean {
+  if (component === 'offer' && !settings.value?.offers?.length) {
+    return false
+  }
+  if (component === 'gallery' && !settings.value?.gallery?.length) {
+    return false
+  }
+  if (component === 'downloads' && !settings.value?.downloads?.length) {
+    return false
+  }
+
   const isVisible = settings.value?.displayedComponents?.includes(component) || false
   const correctIndex = settings.value?.displayedComponents?.indexOf(component) === index
   return isVisible && correctIndex
