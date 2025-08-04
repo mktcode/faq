@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
     .insertInto('users')
     .values({
       name: 'Dev User',
-      userName: 'devuser',
+      userName: 'markus',
       email: 'devuser@example.com',
       settings: JSON.stringify(settings),
       published: false,
