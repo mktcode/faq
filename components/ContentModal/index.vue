@@ -27,16 +27,16 @@ const showModal = useState('showContentModal', () => false)
         storage-key="content-info-dismissed"
         class="rounded-none"
       >
-        Ihre Website besteht aus den unten aufgeführten Inhalten. Klicken und Ziehen sie einen Eintrag, um die Reihenfolge zu ändern
+        Ihre Website besteht aus den unten aufgeführten Inhalten. Ändern Sie die Reihenfolge
         <UIcon
           name="i-heroicons-arrows-up-down"
           class="inline-block size-4 text-white align-top"
         />
-        und blenden Sie Bereiche aus, die Sie nicht nutzen bzw. (noch) nicht anzeigen möchten.
+        und blenden Sie Bereiche aus
         <UIcon
           name="i-heroicons-eye"
           class="inline-block size-4 text-white align-top"
-        />
+        />, die Sie nicht nutzen möchten.
       </DismissableAlert>
       <ContentModalAccordion @update="$emit('update')" />
     </template>
