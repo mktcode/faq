@@ -23,8 +23,6 @@ async function saveCustomerRequest() {
   isSavingRequest.value = true
 
   try {
-    console.log('Extra fields:', extraFields.value)
-
     await $fetch('/api/customerRequests', {
       method: 'POST',
       body: {
