@@ -118,7 +118,9 @@ export const settingsFormSchema = z.object({
           name: z.string(),
           type: z.enum(['text', 'email', 'tel', 'date', 'datetime', 'textarea', 'select', 'checkbox']),
           required: z.boolean().optional().default(false),
-          options: z.array(z.string()).optional().nullable(),
+          options: z.array(z.object({
+            label: z.string(),
+          })),
           multiple: z.boolean().optional().default(false),
         }),
       )

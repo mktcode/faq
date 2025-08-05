@@ -10,6 +10,7 @@ const messageEmbedding = ref<number[] | null>(null)
 const name = ref('')
 const phone = ref('')
 const email = ref('')
+const extraFields = ref<Record<string, string | string[]>>({})
 const isSavingRequest = ref(false)
 const savedRequestSuccess = ref(false)
 const savedRequestFailure = ref(false)
@@ -22,6 +23,8 @@ async function saveCustomerRequest() {
   isSavingRequest.value = true
 
   try {
+    console.log('Extra fields:', extraFields.value)
+
     await $fetch('/api/customerRequests', {
       method: 'POST',
       body: {
@@ -31,6 +34,7 @@ async function saveCustomerRequest() {
         name: name.value,
         phone: phone.value || undefined,
         email: email.value || undefined,
+        extraFields: extraFields.value,
       },
     })
   
@@ -40,6 +44,7 @@ async function saveCustomerRequest() {
     name.value = ''
     phone.value = ''
     email.value = ''
+    extraFields.value = {}
   } catch (error) {
     savedRequestFailure.value = true
   } finally {
@@ -168,24 +173,28 @@ const disabled = computed(() => {
       <template v-for="field in settings?.form?.fields || []">
         <UFormField :label="field.label" v-if="field.type === 'text'">
           <UInput
+            v-model="extraFields[field.label] as string"
             :placeholder="field.help || ''"
             class="w-full"
           />
         </UFormField>
         <UFormField :label="field.label" v-else-if="field.type === 'email'">
           <UInput
+            v-model="extraFields[field.label] as string"
             :placeholder="field.help || ''"
             class="w-full"
           />
         </UFormField>
         <UFormField :label="field.label" v-else-if="field.type === 'tel'">
           <UInput
+            v-model="extraFields[field.label] as string"
             :placeholder="field.help || ''"
             class="w-full"
           />
         </UFormField>
         <UFormField :label="field.label" v-else-if="field.type === 'date'">
           <UInput
+            v-model="extraFields[field.label] as string"
             type="date"
             :placeholder="field.help || ''"
             class="w-full"
@@ -193,6 +202,7 @@ const disabled = computed(() => {
         </UFormField>
         <UFormField :label="field.label" v-else-if="field.type === 'datetime'">
           <UInput
+            v-model="extraFields[field.label] as string"
             type="datetime-local"
             :placeholder="field.help || ''"
             class="w-full"
@@ -200,6 +210,7 @@ const disabled = computed(() => {
         </UFormField>
         <UFormField :label="field.label" v-else-if="field.type === 'textarea'">
           <UTextarea
+            v-model="extraFields[field.label] as string"
             :placeholder="field.help || ''"
             class="w-full"
           />
@@ -209,7 +220,8 @@ const disabled = computed(() => {
           :description="field.help || ''"
         >
           <USelect
-            :items="field.options || []"
+            v-model="extraFields[field.label]"
+            :items="field.options.map(option => option.label) || []"
             :multiple="field.multiple"
             placeholder="Auswahl treffen"
             class="w-full"

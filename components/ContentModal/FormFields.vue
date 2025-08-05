@@ -6,7 +6,9 @@ const fields = defineModel('fields', {
     name: string;
     type: string;
     required: boolean;
-    options?: string[] | null;
+    options: {
+      label: string;
+    }[];
     multiple: boolean;
   }>,
   default: () => [],
@@ -19,7 +21,10 @@ function addField() {
     name: '',
     type: 'text',
     required: false,
-    options: ['', ''],
+    options: [
+      { label: 'Option 1' },
+      { label: 'Option 2' },
+    ],
     multiple: false,
   })
 }
@@ -95,38 +100,7 @@ const fieldTypes = [{
               size="sm"
             />
           </UFormField>
-          <template v-if="field.options && field.type === 'select'">
-            <label class="block font-medium text-sm">
-              Auswahlmöglichkeiten
-            </label>
-            <div
-              v-for="(option, index) in field.options"
-              :key="option"
-              class="flex items-center gap-2"
-            >
-              <UInput
-                :model-value="option"
-                @update:model-value="field.options[index] = $event"
-                placeholder="Option"
-                class="w-full"
-                size="sm"
-              />
-              <UButton
-                variant="soft"
-                color="error"
-                icon="i-heroicons-trash"
-                size="sm"
-                @click="field.options.splice(index, 1)"
-              />
-            </div>
-            <UButton
-              label="Option hinzufügen"
-              variant="soft"
-              color="primary"
-              icon="i-heroicons-plus"
-              @click="field.options.push('')"
-            />
-          </template>
+          <ContentModalFormFieldOptions v-model:options="field.options" />
           <div class="flex items-start justify-between gap-2">
             <div>
               <UCheckbox

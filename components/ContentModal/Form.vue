@@ -28,10 +28,9 @@ const form = ref({
         class="w-full"
       />
     </UFormField>
-    <ContentModalFormFields v-model:fields="form.form.fields" />
     <UFormField
-      label="Erfolgsnachricht"
-      description="Diese Nachricht wird angezeigt, wenn das Formular erfolgreich übermittelt wurde."
+      label="Erfolgsmeldung"
+      description="Wird angezeigt, wenn das Formular erfolgreich übermittelt wurde."
     >
       <UInput
         v-model="form.form.successMessage"
@@ -40,8 +39,8 @@ const form = ref({
       />
     </UFormField>
     <UFormField
-      label="Fehlernachricht"
-      description="Diese Nachricht wird angezeigt, wenn beim Senden des Formulars ein Fehler aufgetreten ist. In diesem Fall wird auch ein Link zum Impressum angezeigt."
+      label="Fehlermeldung"
+      description="Wird angezeigt, wenn beim Senden des Formulars ein Fehler aufgetreten ist. In diesem Fall wird auch ein Link zum Impressum angezeigt."
     >
       <UInput
         v-model="form.form.errorMessage"
@@ -49,6 +48,7 @@ const form = ref({
         class="w-full"
       />
     </UFormField>
+    <ContentModalFormFields v-model:fields="form.form.fields" />
     <UButton
       variant="solid"
       color="primary"
