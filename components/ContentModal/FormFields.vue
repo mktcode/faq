@@ -41,6 +41,9 @@ const fieldTypes = [{
   value: 'date',
   label: 'Datum',
 }, {
+  value: 'datetime',
+  label: 'Datum & Uhrzeit',
+}, {
   value: 'tel',
   label: 'Telefonnummer',
 }, {

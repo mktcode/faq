@@ -144,24 +144,56 @@ const disabled = computed(() => {
       </div>
     </Transition>
     <div class="flex flex-col gap-2 mt-2 w-full">
-      <UInput
-        v-model="name"
-        placeholder="Name"
-        class="w-full"
-      />
-      <UInput
-        v-model="phone"
-        placeholder="Telefon"
-        class="w-full"
-      />
-      <UInput
-        v-model="email"
-        placeholder="E-Mail"
-        class="w-full"
-      />
+      <UFormField label="Name">
+        <UInput
+          v-model="name"
+          placeholder="Geben Sie Ihren Namen ein"
+          class="w-full"
+        />
+      </UFormField>
+      <UFormField label="Telefon">
+        <UInput
+          v-model="phone"
+          placeholder="Telefon"
+          class="w-full"
+        />
+      </UFormField>
+      <UFormField label="E-Mail">
+        <UInput
+          v-model="email"
+          placeholder="E-Mail"
+          class="w-full"
+        />
+      </UFormField> 
       <template v-for="field in settings?.form?.fields || []">
         <UFormField :label="field.label" v-if="field.type === 'text'">
           <UInput
+            :placeholder="field.help || ''"
+            class="w-full"
+          />
+        </UFormField>
+        <UFormField :label="field.label" v-else-if="field.type === 'email'">
+          <UInput
+            :placeholder="field.help || ''"
+            class="w-full"
+          />
+        </UFormField>
+        <UFormField :label="field.label" v-else-if="field.type === 'tel'">
+          <UInput
+            :placeholder="field.help || ''"
+            class="w-full"
+          />
+        </UFormField>
+        <UFormField :label="field.label" v-else-if="field.type === 'date'">
+          <UInput
+            type="date"
+            :placeholder="field.help || ''"
+            class="w-full"
+          />
+        </UFormField>
+        <UFormField :label="field.label" v-else-if="field.type === 'datetime'">
+          <UInput
+            type="datetime-local"
             :placeholder="field.help || ''"
             class="w-full"
           />
@@ -180,6 +212,12 @@ const disabled = computed(() => {
             :items="field.options || []"
             :multiple="field.multiple"
             placeholder="Auswahl treffen"
+            class="w-full"
+          />
+        </UFormField>
+        <UFormField :label="field.label" v-else-if="field.type === 'checkbox'">
+          <UCheckbox
+            :label="field.help || ''"
             class="w-full"
           />
         </UFormField>
