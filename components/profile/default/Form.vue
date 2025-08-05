@@ -14,6 +14,7 @@ const isSavingRequest = ref(false)
 const savedRequestSuccess = ref(false)
 const savedRequestFailure = ref(false)
 const similarQuestions = ref<SimilarQuestion[]>([])
+const designRounded = ref(settings.value?.rounded || 'md')
 
 async function saveCustomerRequest() {
   if (isSavingRequest.value) return
@@ -24,7 +25,7 @@ async function saveCustomerRequest() {
     await $fetch('/api/customerRequests', {
       method: 'POST',
       body: {
-        username,
+        username: username.value,
         message: message.value,
         embedding: messageEmbedding.value,
         name: name.value,
@@ -34,6 +35,7 @@ async function saveCustomerRequest() {
     })
   
     savedRequestSuccess.value = true
+    savedRequestFailure.value = false
     message.value = ''
     name.value = ''
     phone.value = ''
@@ -77,8 +79,6 @@ async function getSimilarQuestions() {
 }
 
 watchDebounced(message, getEmbedding, { debounce: 2000 })
-
-const designRounded = ref(settings.value?.rounded || 'md')
 
 const disabled = computed(() => {
   return isSavingRequest.value
