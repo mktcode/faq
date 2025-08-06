@@ -1,17 +1,43 @@
 <script setup lang="ts">
 import type { AccordionItem } from '@nuxt/ui'
+import { availableComponents, type ComponentKey } from '~/types/db'
 
-const { data: displayedComponents } = await useFetch('/api/user/settings/displayedComponents')
+const { settings, saveSettings } = await useProfile()
 
-const items = shallowRef<AccordionItem[]>(displayedComponents.value || [])
 const active = ref<string | undefined>(undefined)
+const items = shallowRef<AccordionItem[]>(availableComponents.map(component => ({
+  id: component.key,
+  label: component.title,
+  icon: component.icon,
+  slot: component.key,
+})) || [])
 
-async function saveOrder() {
-  // await $fetch('/api/user/settings/displayedComponents', {
-  //   method: 'POST',
-  //   body: items.value.map(item => item.slot),
-  // })
-  console.log('Saving order:', items.value.map(item => item.slot))
+const form = ref(settings.value)
+
+function changeOrder(key: ComponentKey, direction: 'up' | 'down') {
+  if (!form.value || !form.value.components[key]) return
+
+  const currentPosition = form.value.components[key].order
+  if (direction === 'up' && currentPosition <= 1) return
+  if (direction === 'down' && currentPosition >= Object.keys(form.value.components).length) return
+  
+  const newPosition = direction === 'up' ? currentPosition - 1 : currentPosition + 1
+  const adjacentComponentKey = Object.keys(form.value.components).find(
+    (key) => form.value?.components[key as ComponentKey].order === newPosition
+  ) as ComponentKey | undefined;
+
+  if (adjacentComponentKey) {
+    form.value.components[key].order = newPosition
+    form.value.components[adjacentComponentKey].order = currentPosition
+  }
+
+  saveSettings(form.value)
+}
+
+function toggleVisibility(key: ComponentKey) {
+  if (!form.value || !form.value.components[key]) return
+  form.value.components[key].visible = !form.value.components[key].visible
+  saveSettings(form.value)
 }
 </script>
 
@@ -24,22 +50,24 @@ async function saveOrder() {
       header: 'px-4 hover:bg-gray-50',
     }"
   >
-    <template #trailing="{ open }">
+    <template #trailing="{ item, open }">
       <div class="ml-auto flex items-center">
         <UButton
           variant="ghost"
           size="sm"
-          @click.stop="saveOrder"
+          :color="form?.components[item.id as ComponentKey]?.visible ? 'primary' : 'neutral'"
+          :class="form?.components[item.id as ComponentKey]?.visible ? 'text-primary-600' : 'text-gray-300'"
+          @click.stop="toggleVisibility(item.id)"
         >
           <UIcon
-            name="i-heroicons-eye"
+            :name="form?.components[item.id as ComponentKey]?.visible ? 'i-heroicons-eye' : 'i-heroicons-eye-slash'"
             class="size-5"
           />
         </UButton>
         <UButton
           variant="ghost"
           size="sm"
-          @click.stop="saveOrder"
+          @click.stop="changeOrder(item.id, 'up')"
         >
           <UIcon
             name="i-heroicons-arrow-up"
@@ -49,7 +77,7 @@ async function saveOrder() {
         <UButton
           variant="ghost"
           size="sm"
-          @click.stop="saveOrder"
+          @click.stop="changeOrder(item.id, 'down')"
         >
           <UIcon
             name="i-heroicons-arrow-down"

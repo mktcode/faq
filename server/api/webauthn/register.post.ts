@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { defaultSettings } from '~/types/db'
 
 export default defineWebAuthnRegisterEventHandler({
   async validateUser(userBody, event) {
@@ -37,28 +38,7 @@ export default defineWebAuthnRegisterEventHandler({
       const newUser = await createUser({
         name: user.userName,
         userName: user.userName,
-        settings: {
-          font: 'montserrat',
-          color: 'black',
-          title: 'Herzlich Willkommen',
-          description: 'Auf unserer Website von Solihost.de',
-          headerTitleColor: 'black',
-          headerTitleFontSize: 10,
-          headerDescriptionColor: 'black',
-          headerDescriptionFontSize: 6,
-          headerImageOverlay: {
-            color: 'black',
-            opacity: 4,
-          },
-          displayedComponents: ['offer', 'gallery', 'form', 'faq', 'downloads'],
-          form: {
-            title: 'Anfrage',
-            description: 'Wir freuen uns auf Ihre Nachricht!',
-          },
-          company: {
-            isSmallBusiness: true,
-          }
-        }
+        settings: defaultSettings,
       })
 
       await setUserSession(event, {

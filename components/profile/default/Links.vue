@@ -20,9 +20,9 @@ function shareOnInstagram() {
 
 <template>
   <div class="w-full flex items-center justify-center gap-2 mb-4">
-    <template v-if="settings?.links && settings.links.length > 0">
+    <template v-if="settings?.header.links && settings.header.links.length > 0">
       <UButton
-        v-for="(link, index) in settings.links"
+        v-for="(link, index) in settings.header.links"
         :key="index"
         :label="link.title"
         :icon="link.icon === 'none' ? undefined : link.icon"
@@ -32,7 +32,7 @@ function shareOnInstagram() {
     </template>
 
     <UPopover
-      v-if="settings?.showShareButton"
+      v-if="settings?.header.showShareButton"
       class="mb-auto"
     >
       <UButton

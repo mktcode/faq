@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
-import { componentDetails } from '~/types/db'
+import { availableComponents } from '~/types/db'
 
 const { register } = useWebAuthn({ registerEndpoint: '/api/webauthn/register' })
 const { fetch: fetchUserSession } = useUserSession()
@@ -14,7 +14,7 @@ const font = ref(availableFonts.value[0].value)
 const color = ref(availableColors.value[0].value)
 const displayedComponents = ref<{ [key: string]: boolean }>(
   Object.fromEntries(
-    componentDetails.map(component => [component.key, true])
+    availableComponents.map(component => [component.key, true])
   )
 )
 
@@ -27,17 +27,10 @@ async function signUp() {
     await $fetch('/api/devregister', { method: 'POST' })
     await fetchUserSession()
   } else {
-    await register({ userName: userName.value })
+    await register({ userName: userName.value, settings: { design: { font: font.value, color: color.value } } })
     await fetchUserSession()
   }
-  await $fetch('/api/user/settings', {
-    method: 'POST',
-    body: {
-      font: font.value,
-      color: color.value,
-      displayedComponents: Object.keys(displayedComponents.value).filter(key => displayedComponents.value[key]),
-    },
-  })
+  
   navigateTo(`https://${userName.value}.${appHost}`, { external: true })
 }
 
@@ -62,8 +55,6 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
     class="w-full max-w-xl flex flex-col gap-4"
     @submit.prevent="signUp"
   >
-    {{ color }}
-    {{ font }}
     <div class="flex gap-4">
       <ColorPicker
         v-model:color="color"
@@ -82,7 +73,7 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
     >
       <div class="flex flex-col gap-2">
         <UCard
-          v-for="(componentDetail, index) in componentDetails"
+          v-for="(componentDetail, index) in availableComponents"
           :variant="displayedComponents[componentDetail.key] ? 'outline' : 'soft'"
           :key="index"
           :ui="{

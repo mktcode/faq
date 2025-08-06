@@ -18,9 +18,9 @@ export type User = Selectable<UsersTable>
 export type NewUser = Insertable<UsersTable>
 export type UserUpdate = Updateable<UsersTable>
 
-export const componentDetails = [
+export const availableComponents = [
   {
-    key: 'offer',
+    key: 'offers',
     title: 'Angebote',
     description: 'Hier können Sie Ihre Angebote mit Bild und Text präsentieren.',
     icon: 'i-heroicons-megaphone',
@@ -50,93 +50,164 @@ export const componentDetails = [
     icon: 'i-heroicons-arrow-down-tray',
   },
 ] as const
-export const componentKeys = ['offer', 'gallery', 'downloads', 'form', 'faq'] as const
-export type ComponentKey = (typeof componentKeys)[number]
+
+const componentSettingsBaseSchema = z.object({
+  title: z.string().nullable(),
+  description: z.string().nullable(),
+  visible: z.boolean(),
+  order: z.number(),
+})
 export const settingsFormSchema = z.object({
   company: z.object({
-    name: z.string().optional().nullable(),
-    street: z.string().optional().nullable(),
-    zip: z.string().optional().nullable(),
-    city: z.string().optional().nullable(),
-    phone: z.string().optional().nullable(),
-    email: z.string().optional().nullable(),
-    taxId: z.string().optional().nullable(),
-    isSmallBusiness: z.boolean().optional(),
-  }).optional().nullable(),
-  logo: z.string().optional().nullable(),
-  image: z.string().optional().nullable(),
-  title: z.string().optional().nullable(),
-  description: z.string().optional().nullable(),
-  font: z.string().optional().nullable(),
-  color: z.string().optional().nullable(),
-  rounded: z.string().optional().nullable(),
-  headerImage: z.string().optional().nullable(),
-  headerImageOverlay: z.object({
+    name: z.string(),
+    street: z.string(),
+    zip: z.string(),
+    city: z.string(),
+    phone: z.string(),
+    email: z.string(),
+    taxId: z.string().nullable(),
+    isSmallBusiness: z.boolean(),
+    logo: z.string().nullable(),
+  }),
+  design: z.object({
+    font: z.string(),
     color: z.string(),
-    opacity: z.number().min(0).max(100),
-  }).optional().nullable(),
-  headerTitleFontSize: z.number().optional().nullable(),
-  headerTitleColor: z.string().optional().nullable(),
-  headerDescriptionFontSize: z.number().optional().nullable(),
-  headerDescriptionColor: z.string().optional().nullable(),
-  downloads: z.array(
-    z.object({
-      title: z.string(),
-      description: z.string().optional().nullable(),
-      url: z.string().url(),
-      type: z.string(),
-    }),
-  ).optional().nullable(),
-  offers: z
-    .array(
-      z.object({
-        title: z.string(),
-        slug: z.string(),
-        description: z.string(),
-      }),
-    )
-    .optional().nullable(),
-  gallery: z
-    .array(
-      z.object({
-        url: z.string(),
-        description: z.string().optional().nullable(),
-        title: z.string().optional().nullable(),
-      }),
-    )
-    .optional().nullable(),
-  form: z.object({
-    title: z.string().optional().nullable(),
-    description: z.string().optional().nullable(),
-    successMessage: z.string().optional().nullable(),
-    errorMessage: z.string().optional().nullable(),
-    fields: z
-      .array(
-        z.object({
-          label: z.string(),
-          help: z.string().optional().nullable(),
-          name: z.string(),
-          type: z.enum(['text', 'email', 'tel', 'date', 'datetime', 'textarea', 'select', 'checkbox']),
-          required: z.boolean().optional().default(false),
-          options: z.array(z.object({
-            label: z.string(),
-          })),
-          multiple: z.boolean().optional().default(false),
-        }),
-      )
-      .optional().nullable(),
-  }).optional().nullable(),
-  links: z
-    .array(
+    rounded: z.string(),
+  }),
+  header: z.object({
+    title: z.string().nullable(),
+    description: z.string().nullable(),
+    image: z.string().nullable(),
+    imageOverlay: z.object({
+      color: z.string(),
+      opacity: z.number().min(0).max(100),
+    }).nullable(),
+    titleFontSize: z.number(),
+    titleColor: z.string(),
+    descriptionFontSize: z.number(),
+    descriptionColor: z.string(),
+    showShareButton: z.boolean(),
+    links: z.array(
       z.object({
         title: z.string(),
         url: z.string().url(),
         icon: z.string(),
       }),
-    )
-    .optional().nullable(),
-  showShareButton: z.boolean().optional().nullable(),
-  displayedComponents: z.array(z.enum(componentKeys)).optional(),
+    ),
+  }),
+  components: z.object({
+    offers: componentSettingsBaseSchema.extend({
+      items: z.array(z.object({
+        title: z.string(),
+        slug: z.string(),
+        description: z.string(),
+      })),
+    }),
+    gallery: componentSettingsBaseSchema.extend({
+      items: z.array(z.object({
+        url: z.string(),
+        description: z.string().nullable(),
+        title: z.string().nullable(),
+      })),
+    }),
+    form: componentSettingsBaseSchema.extend({
+      successMessage: z.string(),
+      errorMessage: z.string(),
+      fields: z.array(z.object({
+        label: z.string(),
+        help: z.string().nullable(),
+        name: z.string(),
+        type: z.enum(['text', 'email', 'tel', 'date', 'datetime', 'textarea', 'select', 'checkbox']),
+        required: z.boolean(),
+        options: z.array(z.object({
+          label: z.string(),
+        })),
+        multiple: z.boolean(),
+      })),
+    }),
+    faq: componentSettingsBaseSchema,
+    downloads: componentSettingsBaseSchema.extend({
+      items: z.array(z.object({
+        title: z.string(),
+        description: z.string().nullable(),
+        url: z.string().url(),
+        type: z.string(),
+      })),
+    }),
+  }),
 })
 
 export type SettingsForm = z.infer<typeof settingsFormSchema>
+export type ComponentKey = keyof SettingsForm['components']
+
+export const defaultSettings: SettingsForm = {
+  company: {
+    name: 'Solihost',
+    street: 'Musterstraße 1',
+    zip: '12345',
+    city: 'Musterstadt',
+    phone: '+491234567890',
+    email: 'info@solihost.de',
+    taxId: null,
+    isSmallBusiness: true,
+    logo: null,
+  },
+  design: {
+    font: 'montserrat',
+    color: 'sky',
+    rounded: 'md',
+  },
+  header: {
+    title: 'Herzlich Willkommen',
+    description: 'Auf unserer Website von Solihost.de',
+    titleColor: 'black',
+    titleFontSize: 10,
+    descriptionColor: 'black',
+    descriptionFontSize: 6,
+    image: null,
+    imageOverlay: {
+      color: 'black',
+      opacity: 4,
+    },
+    showShareButton: true,
+    links: [],
+  },
+  components: {
+    offers: {
+      visible: true,
+      order: 3,
+      title: null,
+      description: null,
+      items: [],
+    },
+    gallery: {
+      visible: true,
+      order: 2,
+      title: null,
+      description: null,
+      items: [],
+    },
+    form: {
+      visible: true,
+      order: 1,
+      title: 'Anfrage',
+      description: 'Wir freuen uns auf Ihre Nachricht!',
+      successMessage: 'Vielen Dank für Ihre Anfrage! Wir werden uns so schnell wie möglich bei Ihnen melden.',
+      errorMessage: 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.',
+      fields: [],
+    },
+    faq: {
+      visible: true,
+      order: 4,
+      title: 'Häufig gestellte Fragen',
+      description: null,
+    },
+    downloads: {
+      visible: true,
+      order: 5,
+      title: 'Downloads',
+      description: null,
+      items: [],
+    },
+  },
+}

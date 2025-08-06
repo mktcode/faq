@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ComponentKey } from '~/types/db'
+import type { ComponentKey, SettingsForm } from '~/types/db'
 
 const { slotIndex } = defineProps<{
   slotIndex: number
@@ -7,25 +7,26 @@ const { slotIndex } = defineProps<{
 
 const { settings } = await useProfile()
 
-function isComponentDisplayed(component: ComponentKey, index: number): boolean {
-  if (component === 'offer' && !settings.value?.offers?.length) {
+function isComponentDisplayed(componentKey: ComponentKey, index: number): boolean {
+  if (componentKey === 'offers' && !settings.value?.components.offers.items.length) {
     return false
   }
-  if (component === 'gallery' && !settings.value?.gallery?.length) {
+  if (componentKey === 'gallery' && !settings.value?.components.gallery.items.length) {
     return false
   }
-  if (component === 'downloads' && !settings.value?.downloads?.length) {
+  if (componentKey === 'downloads' && !settings.value?.components.downloads.items.length) {
     return false
   }
 
-  const isVisible = settings.value?.displayedComponents?.includes(component) || false
-  const correctIndex = settings.value?.displayedComponents?.indexOf(component) === index
-  return isVisible && correctIndex
+  const isVisible = settings.value?.components[componentKey].visible
+  const correctIndex = settings.value?.components[componentKey].order === index
+
+  return !!(isVisible && correctIndex)
 }
 </script>
 
 <template>
-  <ProfileDefaultOffer v-if="isComponentDisplayed('offer', slotIndex)" />
+  <ProfileDefaultOffer v-if="isComponentDisplayed('offers', slotIndex)" />
   <ProfileDefaultGallery v-else-if="isComponentDisplayed('gallery', slotIndex)" />
   <ProfileDefaultDownloads v-else-if="isComponentDisplayed('downloads', slotIndex)" />
   <ProfileDefaultForm v-else-if="isComponentDisplayed('form', slotIndex)" />

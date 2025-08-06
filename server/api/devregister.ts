@@ -1,3 +1,5 @@
+import { defaultSettings } from "~/types/db"
+
 export default defineEventHandler(async (event) => {
   if (process.env.NODE_ENV !== 'development') {
     throw createError({
@@ -8,36 +10,13 @@ export default defineEventHandler(async (event) => {
 
   const db = await getDatabaseConnection()
 
-  const settings = {
-      font: 'montserrat',
-      color: 'black',
-      title: 'Herzlich Willkommen',
-      description: 'Auf unserer Website von Solihost.de',
-      headerTitleColor: 'black',
-      headerTitleFontSize: 10,
-      headerDescriptionColor: 'black',
-      headerDescriptionFontSize: 6,
-      headerImageOverlay: {
-        color: 'black',
-        opacity: 4,
-      },
-      displayedComponents: ['offer', 'gallery', 'form', 'faq', 'downloads'],
-      form: {
-        title: 'Anfrage',
-        description: 'Wir freuen uns auf Ihre Nachricht!',
-      },
-      company: {
-        isSmallBusiness: true,
-      }
-    }
-
   const insertResult = await db
     .insertInto('users')
     .values({
       name: 'Dev User',
       userName: 'markus',
       email: 'devuser@example.com',
-      settings: JSON.stringify(settings),
+      settings: JSON.stringify(defaultSettings),
       published: false,
     })
     .executeTakeFirstOrThrow()

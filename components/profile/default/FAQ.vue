@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Qanda } from '~/types/db'
+import { defaultSettings, type Qanda } from '~/types/db'
 
 
 const { username, settings } = await useProfile()
@@ -16,6 +16,8 @@ const qandaAccordionItems = computed(() => {
     content: item.answer,
   })) || []
 })
+
+const designRounded = ref(settings.value?.design.rounded || defaultSettings.design.rounded)
 </script>
 
 <template>
@@ -30,7 +32,7 @@ const qandaAccordionItems = computed(() => {
       :items="qandaAccordionItems"
       :ui="{
         root: 'w-full flex flex-col gap-2',
-        header: `bg-primary-500 px-4 !py-0 hover:bg-primary-600 rounded-${settings?.rounded || 'md'}`,
+        header: `bg-primary-500 px-4 !py-0 hover:bg-primary-600 rounded-${designRounded}`,
         trigger: 'py-2',
         label: 'text-lg text-primary-50',
         body: 'text-lg text-gray-500 pt-2',

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { defaultSettings } from '~/types/db'
+
 const route = useRoute()
 const emailVerified = !!route.query.emailVerified
 const subscriptionSuccess = !!route.query.subscriptionSuccess
@@ -8,22 +10,22 @@ const { me } = await useMe()
 const { settings, refreshSettings, isOwned } = await useProfile()
 
 useHead({
-  title: settings.value?.title || 'Meine Website',
+  title: settings.value?.header.title || defaultSettings.header.title,
   meta: [
     {
       name: 'description',
-      content: settings.value?.description || 'Mein Unternehmen auf einem Blick',
+      content: settings.value?.header.description || defaultSettings.header.description,
     },
   ],
 })
 
 const appConfig = useAppConfig()
-const font = computed(() => settings.value?.font || 'roboto')
-appConfig.ui.colors.primary = settings.value?.color || 'sky'
-appConfig.ui.button.defaultVariants.rounded = settings.value?.rounded || 'md'
-appConfig.ui.input.defaultVariants.rounded = settings.value?.rounded || 'md'
-appConfig.ui.select.defaultVariants.rounded = settings.value?.rounded || 'md'
-appConfig.ui.textarea.defaultVariants.rounded = settings.value?.rounded || 'md'
+const font = computed(() => settings.value?.design.font || defaultSettings.design.font)
+appConfig.ui.colors.primary = settings.value?.design.color || defaultSettings.design.color
+appConfig.ui.button.defaultVariants.rounded = settings.value?.design.rounded || defaultSettings.design.rounded
+appConfig.ui.input.defaultVariants.rounded = settings.value?.design.rounded || defaultSettings.design.rounded
+appConfig.ui.select.defaultVariants.rounded = settings.value?.design.rounded || defaultSettings.design.rounded
+appConfig.ui.textarea.defaultVariants.rounded = settings.value?.design.rounded || defaultSettings.design.rounded
 </script>
 
 <template>
@@ -38,7 +40,7 @@ appConfig.ui.textarea.defaultVariants.rounded = settings.value?.rounded || 'md'
       class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6"
     >
       <ProfileDefaultComponentViewer
-        v-for="index in Array.from({ length: settings?.displayedComponents?.length || 0 }, (_, i) => i)"
+        v-for="index in 5"
         :key="index"
         :slot-index="index"
       />

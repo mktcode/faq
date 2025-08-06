@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
 import type { SimilarQuestion } from '~/server/api/qanda/similarQuestions.post'
+import { defaultSettings } from '~/types/db'
 
 const { username, isSubscribed, settings } = await useProfile()
 
@@ -15,7 +16,7 @@ const isSavingRequest = ref(false)
 const savedRequestSuccess = ref(false)
 const savedRequestFailure = ref(false)
 const similarQuestions = ref<SimilarQuestion[]>([])
-const designRounded = ref(settings.value?.rounded || 'md')
+const designRounded = ref(settings.value?.design.rounded || defaultSettings.design.rounded)
 
 async function saveCustomerRequest() {
   if (isSavingRequest.value) return
@@ -167,8 +168,8 @@ const disabled = computed(() => {
           placeholder="E-Mail"
           class="w-full"
         />
-      </UFormField> 
-      <template v-for="field in settings?.form?.fields || []">
+      </UFormField>
+      <template v-for="field in settings?.components.form.fields || []">
         <UFormField :label="field.label" v-if="field.type === 'text'">
           <UInput
             v-model="extraFields[field.label] as string"
@@ -248,7 +249,7 @@ const disabled = computed(() => {
         variant="soft"
         icon="i-heroicons-check"
         title="Ihre Anfrage wurde gesendet."
-        :description="settings?.form?.successMessage || 'Vielen Dank für Ihre Anfrage. Wir melden uns zeitnah bei Ihnen.'"
+        :description="settings?.components.form.successMessage || 'Vielen Dank für Ihre Anfrage. Wir melden uns zeitnah bei Ihnen.'"
         :close="{
           color: 'primary',
         }"
@@ -263,7 +264,7 @@ const disabled = computed(() => {
         variant="soft"
         icon="i-heroicons-exclamation-triangle"
         title="Ihre Anfrage konnte nicht gesendet werden."
-        :description="settings?.form?.errorMessage || `Beim Senden Ihrer Anfrage ist ein Fehler aufgetreten. Versuchen Sie es bitte später erneut oder per Telefon oder E-Mail.`"
+        :description="settings?.components.form.errorMessage || `Beim Senden Ihrer Anfrage ist ein Fehler aufgetreten. Versuchen Sie es bitte später erneut oder per Telefon oder E-Mail.`"
         :actions="[
           {
             label: 'zum Impressum',

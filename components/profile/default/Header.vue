@@ -4,21 +4,21 @@ const { settings } = await useProfile()
 
 <template>
   <div
-    :style="{ backgroundImage: settings?.headerImage ? `url(${settings.headerImage})` : 'none' }"
+    :style="{ backgroundImage: settings?.header?.image ? `url(${settings.header.image})` : 'none' }"
     class="w-full bg-cover bg-center relative z-0"
   >
     <div
       class="absolute inset-0 z-0"
-      :class="getColorClass(settings?.headerImageOverlay?.color, 'bg')"
-      :style="{ opacity: (settings?.headerImageOverlay?.opacity || 0) / 100 }"
+      :class="getColorClass(settings?.header?.imageOverlay?.color, 'bg')"
+      :style="{ opacity: (settings?.header?.imageOverlay?.opacity || 0) / 100 }"
     />
     <div class="@container flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-24 px-6 relative z-10">
       <div
-        v-if="settings?.logo"
+        v-if="settings?.company.logo"
       >
         <a href="/">
           <NuxtImg
-            :src="settings.logo"
+            :src="settings.company.logo"
             alt="Logo"
             class="w-32 mb-4"
           />
@@ -27,19 +27,19 @@ const { settings } = await useProfile()
       <a href="/">
         <h1
           class="text-center font-bold mb-4 leading-none"
-          :class="getColorClass(settings?.headerTitleColor || 'black', 'text')"
-          :style="{ 'font-size': (settings?.headerTitleFontSize || '10') + 'cqw' }"
+          :class="getColorClass(settings?.header.titleColor || 'black', 'text')"
+          :style="{ 'font-size': (settings?.header.titleFontSize || '10') + 'cqw' }"
         >
-          {{ settings?.title }}
+          {{ settings?.header.title }}
         </h1>
       </a>
       <p
-        v-if="settings?.description"
+        v-if="settings?.header.description"
         class="text-center mb-4"
-        :class="getColorClass(settings?.headerDescriptionColor || 'black', 'text')"
-        :style="{ 'font-size': (settings?.headerDescriptionFontSize || '6') + 'cqw' }"
+        :class="getColorClass(settings?.header.descriptionColor || 'black', 'text')"
+        :style="{ 'font-size': (settings?.header.descriptionFontSize || '6') + 'cqw' }"
       >
-        {{ settings?.description }}
+        {{ settings?.header.description }}
       </p>
       <ProfileDefaultLinks />
     </div>

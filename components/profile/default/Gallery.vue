@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { defaultSettings } from '~/types/db'
+
 const { settings } = await useProfile()
-const designRounded = ref(settings.value?.rounded || 'md')
+const designRounded = ref(settings.value?.design.rounded || defaultSettings.design.rounded)
 const showModal = ref(false)
 const carousel = useTemplateRef('carousel')
 const carouselIndex = ref(0)
@@ -17,12 +19,12 @@ function scrollTo() {
 
 <template>
   <div
-    v-if="settings?.gallery?.length"
+    v-if="settings?.components.gallery.items.length"
     class="my-6 w-full"
   >
     <div class="grid grid-cols-2 lg:grid-cols-3 gap-2">
       <div
-        v-for="(image, index) in settings.gallery.slice(0, 7)"
+        v-for="(image, index) in settings.components.gallery.items.slice(0, 7)"
         :key="index"
         class="overflow-hidden w-full aspect-square flex items-center justify-center cursor-pointer relative"
         :class="{
@@ -39,10 +41,10 @@ function scrollTo() {
           preload
         />
         <div
-          v-if="index === 6 && settings.gallery.length > 7"
+          v-if="index === 6 && settings.components.gallery.items.length > 7"
           class="absolute inset-0 flex items-center justify-center bg-black/30 text-white/80 text-3xl font-semibold pointer-events-none"
         >
-          +{{ settings.gallery.length - 7 }}
+          +{{ settings.components.gallery.items.length - 7 }}
         </div>
       </div>
     </div>
@@ -60,7 +62,7 @@ function scrollTo() {
         <h2 class="text-lg font-semibold">Bilder</h2>
         <div class="flex items-center gap-0.5 overflow-x-scroll">
           <img
-            v-for="(item, index) in settings?.gallery"
+            v-for="(item, index) in settings?.components.gallery.items"
             :src="item?.url"
             class="size-10 object-cover shrink-0 cursor-pointer transition-all border-2"
             :class="{
@@ -90,7 +92,7 @@ function scrollTo() {
         <UCarousel
           ref="carousel"
           v-slot="{ item }"
-          :items="settings.gallery"
+          :items="settings.components.gallery.items"
           :ui="{
             root: 'h-full',
             viewport: 'h-full',
@@ -122,29 +124,6 @@ function scrollTo() {
               {{ item.description }}
             </p>
           </div>
-          <!-- <div class="grow">
-            <img
-              :src="item.url"
-              class="rounded-xl h-full"
-            >
-          </div>
-          <div
-            v-if="item.title || item.description"
-            class="p-4 flex flex-col gap-1 grow"
-          >
-            <h3
-              v-if="item.title"
-              class="text-lg font-semibold"
-            >
-              {{ item.title }}
-            </h3>
-            <p
-              v-if="item.description"
-              class="text-sm"
-            >
-              {{ item.description }}
-            </p>
-          </div> -->
         </UCarousel>
       </template>
     </UModal>

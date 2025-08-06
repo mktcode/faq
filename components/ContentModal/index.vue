@@ -1,6 +1,4 @@
 <script setup lang="ts">
-defineEmits(['update'])
-
 const showModal = useState('showContentModal', () => false)
 </script>
 
@@ -38,7 +36,7 @@ const showModal = useState('showContentModal', () => false)
           class="inline-block size-4 text-white align-top"
         />, die Sie nicht nutzen möchten.
       </DismissableAlert>
-      <ContentModalAccordion @update="$emit('update')" />
+      <ContentModalAccordion />
     </template>
   </UModal>
 </template>

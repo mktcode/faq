@@ -1,17 +1,19 @@
 <script setup lang="ts">
+import { defaultSettings } from '~/types/db';
+
 const { settings } = await useProfile()
 
-const designRounded = ref(settings.value?.rounded || 'md')
+const designRounded = ref(settings.value?.design.rounded || defaultSettings.design.rounded)
 </script>
 
 <template>
   <div
-    v-if="settings?.downloads?.length"
+    v-if="settings?.components.downloads.items.length"
     class="my-6 w-full"
   >
     <div class="flex flex-col gap-2">
       <div
-        v-for="download in settings.downloads"
+        v-for="download in settings.components.downloads.items"
         :key="download.url"
         class="p-4 border border-gray-200"
         :class="{

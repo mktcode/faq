@@ -9,11 +9,11 @@ const { settings } = await useProfile()
       href="#anfrage"
       class="block pt-12 text-2xl font-semibold cursor-pointer relative before:content-['#'] before:absolute before:-left-6 before:text-gray-200 before:opacity-0 before:transition-opacity hover:before:opacity-100"
     >
-      {{ settings?.form?.title || 'Anfrage' }}
+      {{ settings?.components.form.title || 'Anfrage' }}
     </a>
 
     <p class="text-gray-500 mt-3">
-      {{ settings?.form?.description || 'Beschreiben Sie Ihr Anliegen. Wir melden uns zeitnah bei Ihnen.' }}
+      {{ settings?.components.form.description || 'Beschreiben Sie Ihr Anliegen. Wir melden uns zeitnah bei Ihnen.' }}
     </p>
 
     <div

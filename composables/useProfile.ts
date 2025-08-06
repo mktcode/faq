@@ -32,10 +32,10 @@ export const useProfile = async () => {
     refreshSettings = refresh
   }
 
-  async function saveSettings (newSettings: SettingsForm) {
+  async function saveSettings (changedSettings: SettingsForm) {
     await $fetch('/api/user/settings', {
       method: 'POST',
-      body: newSettings,
+      body: changedSettings,
     })
     toast.add({
       title: 'Einstellungen gespeichert',
