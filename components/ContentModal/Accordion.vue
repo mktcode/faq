@@ -4,7 +4,6 @@ import { availableComponents, type ComponentKey } from '~/types/db'
 
 const { settings, saveSettings } = await useProfile()
 
-const active = ref<string | undefined>(undefined)
 const items = shallowRef<AccordionItem[]>(availableComponents.map(component => ({
   id: component.key,
   label: component.title,
@@ -43,7 +42,6 @@ function toggleVisibility(key: ComponentKey) {
 
 <template>
   <UAccordion
-    v-model="active"
     :items="items"
     :unmount-on-hide="false"
     :ui="{
@@ -96,7 +94,7 @@ function toggleVisibility(key: ComponentKey) {
     <template #gallery>
       <ContentModalGallery />
     </template>
-    <template #offer>
+    <template #offers>
       <ContentModalOffer />
     </template>
     <template #form>

@@ -3,17 +3,17 @@ import { settingsFormSchema } from '~/types/db'
 
 function mergeSettings(
   existingSettings: SettingsForm,
-  newSettings: SettingsForm,
+  changes: Partial<SettingsForm>,
 ) {
   return {
     ...existingSettings,
-    ...newSettings,
+    ...changes,
   }
 }
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
-  const settings = await readValidatedBody(event, body => settingsFormSchema.parse(body))
+  const changes = await readValidatedBody(event, body => settingsFormSchema.partial().parse(body))
   const db = await getDatabaseConnection()
 
   const existingSettingsString = await db
@@ -26,17 +26,17 @@ export default defineEventHandler(async (event) => {
     ? JSON.parse(existingSettingsString.settings) as SettingsForm
     : existingSettingsString.settings as SettingsForm
 
-  if (settings.gallery) {
-    for (const image of existingSettings.gallery || []) {
-      if (!settings.gallery.includes(image)) {
+  if (changes.components?.gallery) {
+    for (const image of existingSettings.components.gallery.items || []) {
+      if (!changes.components.gallery.items.includes(image)) {
         const fileKey = getKeyFromUrl(image.url)
         await deleteFile(user.id, fileKey)
       }
     }
   }
-  if (settings.downloads) {
-    for (const file of existingSettings.downloads || []) {
-      if (!settings.downloads.includes(file)) {
+  if (changes.components?.downloads) {
+    for (const file of existingSettings.components.downloads.items || []) {
+      if (!changes.components.downloads.items.includes(file)) {
         const fileKey = getKeyFromUrl(file.url)
         await deleteFile(user.id, fileKey)
       }
@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
 
   const newSettings = mergeSettings(
     existingSettings,
-    settings,
+    changes,
   )
 
   await db

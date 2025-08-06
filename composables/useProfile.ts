@@ -32,7 +32,11 @@ export const useProfile = async () => {
     refreshSettings = refresh
   }
 
-  async function saveSettings (changedSettings: SettingsForm) {
+  async function saveSettings(changedSettings: SettingsForm | null) {
+    if (!changedSettings) {
+      return
+    }
+
     await $fetch('/api/user/settings', {
       method: 'POST',
       body: changedSettings,
