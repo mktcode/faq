@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ComponentKey, SettingsForm } from '~/types/db'
+import type { ComponentKey } from '~/types/db'
 
 const { slotIndex } = defineProps<{
   slotIndex: number

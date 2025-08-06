@@ -1,15 +1,24 @@
 <script setup lang="ts">
-import type { AccordionItem } from '@nuxt/ui'
 import { availableComponents, type ComponentKey } from '~/types/db'
 
 const { settings, saveSettings } = await useProfile()
 
-const items = shallowRef<AccordionItem[]>(availableComponents.map(component => ({
-  id: component.key,
-  label: component.title,
-  icon: component.icon,
-  slot: component.key,
-})) || [])
+const items = computed(() => {
+  if (!settings.value) return []
+
+  return Object.keys(settings.value.components)
+    .sort((a, b) => {
+      const orderA = settings.value?.components[a as ComponentKey].order || 0
+      const orderB = settings.value?.components[b as ComponentKey].order || 0
+      return orderA - orderB
+    })
+    .map(key => ({
+      id: key as ComponentKey,
+      label: availableComponents.find(component => component.key === key)?.title || '',
+      icon: availableComponents.find(component => component.key === key)?.icon || '',
+      slot: key,
+    }))
+})
 
 const form = ref(settings.value)
 
