@@ -4,17 +4,17 @@ const { settings } = await useProfile()
 
 <template>
   <div
-    :style="{ backgroundImage: settings?.header?.image ? `url(${settings.header.image})` : 'none' }"
+    :style="{ backgroundImage: settings.header.image ? `url(${settings.header.image})` : 'none' }"
     class="w-full bg-cover bg-center relative z-0"
   >
     <div
       class="absolute inset-0 z-0"
-      :class="getColorClass(settings.header.imageOverlay?.color, 'bg')"
-      :style="{ opacity: (settings.header.imageOverlay?.opacity || 0) / 100 }"
+      :class="getColorClass(settings.header.imageOverlay.color, 'bg')"
+      :style="{ opacity: (settings.header.imageOverlay.opacity || 0) / 100 }"
     />
     <div class="@container flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-24 px-6 relative z-10">
       <div
-        v-if="settings?.company.logo"
+        v-if="settings.company.logo"
       >
         <a href="/">
           <NuxtImg
