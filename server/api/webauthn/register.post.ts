@@ -4,7 +4,6 @@ import { settingsFormSchema } from '~/types/db'
 export default defineWebAuthnRegisterEventHandler({
   async storeChallenge(event, challenge, attemptId) {
     // Store the challenge in a KV store or DB
-    console.log('Storing challenge:', challenge, attemptId)
     await useStorage().setItem(`attempt:${attemptId}`, challenge)
   },
   async getChallenge(event, attemptId) {
