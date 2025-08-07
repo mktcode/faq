@@ -1,20 +1,31 @@
 <script setup lang="ts">
-import { defaultSettings } from '~/types/db'
-
 const route = useRoute()
 const emailVerified = !!route.query.emailVerified
 const subscriptionSuccess = !!route.query.subscriptionSuccess
 
 const { me } = await useMe()
 
-const { settings, refreshSettings, isOwned } = await useProfile()
+const { settings, refreshSettings, isOwned, isPublic } = await useProfile()
 
 useHead({
-  title: settings.value.header.title || defaultSettings.header.title,
+  title: settings.value.meta.title || settings.value.header.title || settings.value.company.name || 'Solihost Website',
   meta: [
+    { name: 'robots', content: isPublic ? 'index, follow' : 'noindex, nofollow' },
+    { property: 'og:image', content: settings.value.meta.ogimage || settings.value.header.image || '' },
     {
       name: 'description',
-      content: settings.value.header.description || defaultSettings.header.description,
+      content: settings.value.meta.description || settings.value.header.description || '',
+    },
+    {
+      name: 'keywords',
+      content: settings.value.meta.keywords || '',
+    },
+  ],
+  link: [
+    {
+      rel: 'icon',
+      type: 'image/png',
+      href: settings.value.meta.favicon || settings.value.company.logo || '',
     },
   ],
 })

@@ -58,6 +58,13 @@ const componentSettingsBaseSchema = z.object({
   order: z.number(),
 })
 export const settingsFormSchema = z.object({
+  meta: z.object({
+    title: z.string(),
+    description: z.string(),
+    keywords: z.string(),
+    ogimage: z.string(),
+    favicon: z.string(),
+  }),
   company: z.object({
     name: z.string(),
     street: z.string(),
@@ -141,6 +148,13 @@ export type SettingsForm = z.infer<typeof settingsFormSchema>
 export type ComponentKey = keyof SettingsForm['components']
 
 export const defaultSettings: SettingsForm = {
+  meta: {
+    title: '',
+    description: '',
+    keywords: '',
+    ogimage: '',
+    favicon: '',
+  },
   company: {
     name: '',
     street: '',
