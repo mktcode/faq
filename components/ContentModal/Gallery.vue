@@ -1,9 +1,7 @@
 <script setup lang="ts">
 const { settings, saveSettings } = await useProfile()
 
-const form = ref({
-  gallery: settings.value?.gallery || [],
-})
+const form = ref(settings.value)
 
 const fileInput = ref<HTMLInputElement | null>(null)
 const isDragging = ref(false)
@@ -11,7 +9,7 @@ const isUploading = ref(false)
 const uploadProgress = ref(0)
 
 const uploadFile = async (files: FileList | null) => {
-  if (!files || files.length === 0) return
+  if (!form.value || !files || files.length === 0) return
 
   isUploading.value = true
   let uploadedFiles = 0
@@ -25,9 +23,9 @@ const uploadFile = async (files: FileList | null) => {
         body: formData,
       })
   
-      form.value.gallery = [
-        ...form.value.gallery,
-        ...imageUrls.map((url: string) => ({ url })),
+      form.value.components.gallery.items = [
+        ...form.value.components.gallery.items,
+        ...imageUrls.map((url: string) => ({ url, title: null, description: null })),
       ]
   
       await saveSettings(form.value)
@@ -73,7 +71,8 @@ const onDrop = async (e: DragEvent) => {
 }
 
 const deleteItem = async (index: number) => {
-  form.value.gallery.splice(index, 1)
+  if (!form.value) return
+  form.value.components.gallery.items.splice(index, 1)
   await saveSettings(form.value)
 }
 </script>
@@ -115,9 +114,9 @@ const deleteItem = async (index: number) => {
       v-model="uploadProgress"
     />
     <div class="flex flex-col gap-2">
-      <TransitionGroup name="fade" mode="out-in">
+      <TransitionGroup name="fade">
         <div
-          v-for="(image, index) in form.gallery"
+          v-for="(image, index) in form?.components.gallery.items"
           :key="index"
           class="flex items-center justify-center w-full gap-2"
         >
