@@ -13,6 +13,7 @@ export default defineWebAuthnRegisterEventHandler({
     }).parse(userBody)
   },
   async onSuccess(event, { credential, user }) {
+    console.log('WebAuthn registration successful:', user)
     const db = await getDatabaseConnection()
 
     const username = makeUsername(user.userName)
