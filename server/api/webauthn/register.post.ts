@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { defaultSettings, settingsFormSchema } from '~/types/db'
+import { settingsFormSchema } from '~/types/db'
 
 export default defineWebAuthnRegisterEventHandler({
   async validateUser(userBody, event) {
