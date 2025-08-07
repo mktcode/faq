@@ -142,12 +142,12 @@ export type ComponentKey = keyof SettingsForm['components']
 
 export const defaultSettings: SettingsForm = {
   company: {
-    name: 'Solihost',
-    street: 'Musterstraße 1',
-    zip: '12345',
-    city: 'Musterstadt',
-    phone: '+491234567890',
-    email: 'info@solihost.de',
+    name: '',
+    street: '',
+    zip: '',
+    city: '',
+    phone: '',
+    email: '',
     taxId: '',
     isSmallBusiness: true,
     logo: '',
