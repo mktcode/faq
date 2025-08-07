@@ -160,7 +160,7 @@ watch(acc2active, (newVal) => {
               />
               <div>
                 <div>
-                  Beratung und <NuxtLink
+                  IT-Beratung und <NuxtLink
                     to="https://markus-kottlaender.de/support"
                     class="underline"
                     target="_blank"
