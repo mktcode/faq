@@ -8,17 +8,9 @@ const { appHost } = useRuntimeConfig().public
 
 const userName = ref('')
 
-const isDevMode = process.env.NODE_ENV === 'development'
-
 async function signIn() {
-  if (isDevMode) {
-    await $fetch('/api/devlogin', { method: 'POST' })
-    await fetchUserSession()
-  }
-  else {
-    await authenticate(userName.value)
-    await fetchUserSession()
-  }
+  await authenticate(userName.value)
+  await fetchUserSession()
   navigateTo(`https://${userName.value}.${appHost}`, { external: true })
 }
 </script>
