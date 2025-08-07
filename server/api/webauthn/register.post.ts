@@ -2,14 +2,25 @@ import { z } from 'zod'
 import { settingsFormSchema } from '~/types/db'
 
 export default defineWebAuthnRegisterEventHandler({
-  async validateUser(userBody, event) {
-    const session = await getUserSession(event)
-    if (session.user) {
-      throw createError({ statusCode: 400, message: 'User already logged in.' })
-    }
+  async storeChallenge(event, challenge, attemptId) {
+    // Store the challenge in a KV store or DB
+    console.log('Storing challenge:', challenge, attemptId)
+    await useStorage().setItem(`attempt:${attemptId}`, challenge)
+  },
+  async getChallenge(event, attemptId) {
+    const challenge = await useStorage().getItem(`attempt:${attemptId}`)
 
+    // Make sure to always remove the attempt because they are single use only!
+    await useStorage().removeItem(`attempt:${attemptId}`)
+
+    if (!challenge)
+      throw createError({ statusCode: 400, message: 'Challenge expired' })
+
+    return challenge as string
+  },
+  async validateUser(userBody) {
     return z.object({
-      userName: z.string(),
+      userName: z.string().min(3).max(20),
       settings: settingsFormSchema
     }).parse(userBody)
   },
