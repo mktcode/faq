@@ -55,6 +55,7 @@ appConfig.ui.textarea.defaultVariants.rounded = settings.value.design.rounded
       <DesignModal @update="refreshSettings" />
       <ContentModal @update="refreshSettings" />
       <LinksModal @update="refreshSettings" />
+      <FeedbackModal />
       <ClientOnly>
         <WelcomeModal />
       </ClientOnly>

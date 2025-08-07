@@ -4,6 +4,7 @@ const { showLegalDataWarning } = await useProfile()
 const showSettingsModal = useState('showSettingsModal', () => false)
 const showDesignModal = useState('showDesignModal', () => false)
 const showContentModal = useState('showContentModal', () => false)
+const showFeedbackModal = useState('showFeedbackModal', () => false)
 </script>
 
 <template>
@@ -16,7 +17,7 @@ const showContentModal = useState('showContentModal', () => false)
     <UButton
       icon="i-heroicons-bars-3"
       variant="ghost"
-      class="bg-white"
+      class="bg-white/90 hover:bg-white"
       label="Menü"
     />
 
@@ -50,6 +51,14 @@ const showContentModal = useState('showContentModal', () => false)
           label="Inhalt und Funktion"
           icon="i-lucide-letter-text"
           @click="showContentModal = true"
+        />
+
+        <UButton
+          label="Feedback"
+          variant="ghost"
+          class="bg-white/90 hover:bg-white"
+          icon="i-heroicons-chat-bubble-left-right"
+          @click="showFeedbackModal = true"
         />
       </div>
     </template>
