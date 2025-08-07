@@ -1,35 +1,13 @@
 <script setup lang="ts">
-const toast = useToast()
+const { settings, saveSettings } = await useProfile()
 
-const { data: currentSettings } = await useFetch(`/api/user/settings`)
-
-const form = ref({
-  downloads: currentSettings.value?.downloads || [],
-})
-
-const saveSattingsDebounceInterval = ref<NodeJS.Timeout | null>(null)
-async function saveSettings() {
-  if (saveSattingsDebounceInterval.value) {
-    clearTimeout(saveSattingsDebounceInterval.value)
-  }
-  saveSattingsDebounceInterval.value = setTimeout(async () => {
-    await $fetch('/api/user/settings', {
-      method: 'POST',
-      body: form.value,
-    })
-    toast.add({
-      title: 'Einstellungen gespeichert',
-      description: 'Deine Einstellungen wurden erfolgreich gespeichert.',
-      color: 'success',
-    })
-  }, 500)
-}
+const form = ref(settings.value)
 
 const fileInput = ref<HTMLInputElement | null>(null)
 const isDragging = ref(false)
 
 const uploadFile = async (files: FileList | null) => {
-  if (!files || files.length === 0) return
+  if (!form.value || !files || files.length === 0) return
 
   const formData = new FormData()
 
@@ -43,12 +21,12 @@ const uploadFile = async (files: FileList | null) => {
       body: formData,
     })
 
-    form.value.downloads = [
-      ...form.value.downloads,
+    form.value.components.downloads.items = [
+      ...form.value.components.downloads.items,
       ...uploadedFiles,
     ]
 
-    await saveSettings()
+    await saveSettings(form.value)
 
     // Clear the input to allow selecting the same file again
     if (fileInput.value) {
@@ -126,7 +104,7 @@ const onDrop = async (e: DragEvent) => {
     </div>
     <div class="flex flex-col gap-2">
       <div
-        v-for="(download, index) in form.downloads"
+        v-for="(download, index) in form?.components.downloads.items"
         :key="index"
         class="flex flex-col items-center justify-center w-full gap-2"
       >
@@ -135,7 +113,6 @@ const onDrop = async (e: DragEvent) => {
             v-model="download.title"
             class="flex-1"
             placeholder="Bildtitel"
-            @blur="saveSettings"
           />
           <UButton
             variant="soft"
@@ -148,16 +125,19 @@ const onDrop = async (e: DragEvent) => {
             color="error"
             variant="soft"
             icon="i-heroicons-trash"
-            @click="form.downloads.splice(index, 1); saveSettings()"
+            @click="form?.components.downloads.items.splice(index, 1); saveSettings(form)"
           />
         </div>
         <UTextarea
           v-model="download.description"
           class="w-full"
           placeholder="Bildbeschreibung"
-          @blur="saveSettings"
         />
       </div>
     </div>
+    <UButton
+      label="Einstellungen speichern"
+      @click="saveSettings(form)"
+    />
   </div>
 </template>
