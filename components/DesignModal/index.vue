@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const showModal = useState('showDesignModal', () => false)
-
+const toast = useToast()
 const { settings, saveSettings } = await useProfile()
 
 const headerImageInput = ref<HTMLInputElement | null>(null)
@@ -79,6 +79,32 @@ const clickLogoInput = () => {
   if (logoInput.value) {
     logoInput.value.click()
   }
+}
+
+async function deleteImage(image: 'logo' | 'header') {
+  const url = image === 'logo' ? settings.value.company.logo : settings.value.header.image
+
+  const { success } = await $fetch('/api/user/upload/delete', {
+    method: 'POST',
+    body: JSON.stringify({ url }),
+  })
+
+  if (!success) {
+    toast.add({
+      title: 'Fehler',
+      description: 'Die Datei konnte nicht gelöscht werden.',
+      color: 'error',
+    })
+    return
+  }
+
+  if (image === 'logo') {
+    settings.value.company.logo = ''
+  } else {
+    settings.value.header.image = ''
+  }
+
+  saveSettings()
 }
 </script>
 
@@ -250,7 +276,7 @@ const clickLogoInput = () => {
               variant="ghost"
               color="error"
               size="sm"
-              @click="settings.company.logo = ''"
+              @click="deleteImage('logo')"
             />
             <UButton
               v-if="settings.header.image"
@@ -259,7 +285,7 @@ const clickLogoInput = () => {
               variant="ghost"
               color="error"
               size="sm"
-              @click="settings.header.image = ''"
+              @click="deleteImage('header')"
             />
           </div>
         </div>

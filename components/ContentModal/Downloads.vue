@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const toast = useToast()
 const { settings, saveSettings } = await useProfile()
 
 const fileInput = ref<HTMLInputElement | null>(null)
@@ -62,6 +63,26 @@ const onDrop = async (e: DragEvent) => {
     uploadFile(e.dataTransfer.files)
   }
 }
+
+async function deleteDownload(index: number) {
+  const url = settings.value.components.downloads.items[index].url
+  const { success } = await $fetch('/api/user/upload/delete', {
+    method: 'POST',
+    body: JSON.stringify({ url }),
+  })
+
+  if (!success) {
+    toast.add({
+      title: 'Fehler',
+      description: 'Die Datei konnte nicht gelöscht werden.',
+      color: 'error',
+    })
+    return
+  }
+
+  settings.value.components.downloads.items.splice(index, 1)
+  saveSettings()
+}
 </script>
 
 <template>
@@ -123,7 +144,7 @@ const onDrop = async (e: DragEvent) => {
             color="error"
             variant="soft"
             icon="i-heroicons-trash"
-            @click="settings.components.downloads.items.splice(index, 1); saveSettings()"
+            @click="deleteDownload(index)"
           />
         </div>
         <UTextarea
