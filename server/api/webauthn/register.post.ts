@@ -1,19 +1,19 @@
 import { z } from 'zod'
-import { defaultSettings } from '~/types/db'
+import { defaultSettings, settingsFormSchema } from '~/types/db'
 
 export default defineWebAuthnRegisterEventHandler({
   async validateUser(userBody, event) {
     const session = await getUserSession(event)
-    if (session.user?.userName && session.user.userName !== userBody.userName) {
-      throw createError({ statusCode: 400, message: 'Username not matching current session' })
+    if (session.user) {
+      throw createError({ statusCode: 400, message: 'User already logged in.' })
     }
 
     return z.object({
       userName: z.string(),
+      settings: settingsFormSchema
     }).parse(userBody)
   },
   async onSuccess(event, { credential, user }) {
-    console.log('WebAuthn registration successful:', user)
     const db = await getDatabaseConnection()
 
     const username = makeUsername(user.userName)
@@ -39,7 +39,7 @@ export default defineWebAuthnRegisterEventHandler({
       const newUser = await createUser({
         name: user.userName,
         userName: user.userName,
-        settings: defaultSettings,
+        settings: user.settings,
       })
 
       await setUserSession(event, {

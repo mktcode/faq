@@ -1,36 +1,25 @@
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
-import { availableComponents } from '~/types/db'
+import { availableComponents, defaultSettings } from '~/types/db'
 
 const { register } = useWebAuthn({ registerEndpoint: '/api/webauthn/register' })
 const { fetch: fetchUserSession } = useUserSession()
 const { appHost } = useRuntimeConfig().public
 
-const isDevMode = process.env.NODE_ENV === 'development'
 const userName = ref('')
 const userNameAvailable = ref(true)
 const checkingUserNameAvailability = ref(false)
-const font = ref(availableFonts.value[0].value)
-const color = ref(availableColors.value[0].value)
-const displayedComponents = ref<{ [key: string]: boolean }>(
-  Object.fromEntries(
-    availableComponents.map(component => [component.key, true])
-  )
-)
+
+const settings = ref(defaultSettings)
 
 function sanitizeUserName(name: string) {
   userName.value = name.toLowerCase().replace(/[^a-z]/g, '')
 }
 
 async function signUp() {
-  if (isDevMode) {
-    await $fetch('/api/devregister', { method: 'POST' })
-    await fetchUserSession()
-  } else {
-    await register({ userName: userName.value, settings: { design: { font: font.value, color: color.value } } })
-    await fetchUserSession()
-  }
-  
+  await register({ userName: userName.value, settings: settings.value })
+  await fetchUserSession()
+
   navigateTo(`https://${userName.value}.${appHost}`, { external: true })
 }
 
@@ -57,12 +46,12 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
   >
     <div class="flex gap-4">
       <ColorPicker
-        v-model:color="color"
+        v-model:color="settings.design.color"
         label="Primärfarbe"
         class="w-full max-w-lg mx-auto"
       />
       <FontPicker
-        v-model:font="font"
+        v-model:font="settings.design.font"
         label="Schriftart"
         class="w-full max-w-lg mx-auto"
       />
@@ -74,7 +63,7 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
       <div class="flex flex-col gap-2">
         <UCard
           v-for="(componentDetail, index) in availableComponents"
-          :variant="displayedComponents[componentDetail.key] ? 'outline' : 'soft'"
+          :variant="settings.components[componentDetail.key].visible ? 'outline' : 'soft'"
           :key="index"
           :ui="{
             header: '!p-3',
@@ -85,7 +74,7 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
           <h3 class="font-semibold flex gap-2 justify-between">
             <span
               class="flex items-center gap-2 text-base"
-              :class="{ 'text-gray-500': !displayedComponents[componentDetail.key] }"
+              :class="{ 'text-gray-500': !settings.components[componentDetail.key].visible }"
             >
               <UIcon
                 :name="componentDetail.icon"
@@ -94,7 +83,7 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
               {{ componentDetail.title }}
             </span>
             <USwitch
-              v-model="displayedComponents[componentDetail.key]"
+              v-model="settings.components[componentDetail.key].visible"
               class="ml-2"
             />
           </h3>
