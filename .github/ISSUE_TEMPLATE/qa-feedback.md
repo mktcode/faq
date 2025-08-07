@@ -2,7 +2,7 @@
 name: 🧪 Feedback zur Benutzeroberfläche
 about: Melde visuelle oder funktionale Auffälligkeiten aus Sicht eines Nutzers
 title: "[🧪 QA] - "
-labels: ["qa"]
+labels: ["enhancement"]
 assignees: []
 ---
 
