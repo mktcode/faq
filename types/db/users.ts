@@ -52,8 +52,8 @@ export const availableComponents = [
 ] as const
 
 const componentSettingsBaseSchema = z.object({
-  title: z.string().nullable(),
-  description: z.string().nullable(),
+  title: z.string(),
+  description: z.string(),
   visible: z.boolean(),
   order: z.number(),
 })
@@ -65,9 +65,9 @@ export const settingsFormSchema = z.object({
     city: z.string(),
     phone: z.string(),
     email: z.string(),
-    taxId: z.string().nullable(),
+    taxId: z.string(),
     isSmallBusiness: z.boolean(),
-    logo: z.string().nullable(),
+    logo: z.string(),
   }),
   design: z.object({
     font: z.string(),
@@ -75,13 +75,13 @@ export const settingsFormSchema = z.object({
     rounded: z.string(),
   }),
   header: z.object({
-    title: z.string().nullable(),
-    description: z.string().nullable(),
-    image: z.string().nullable(),
+    title: z.string(),
+    description: z.string(),
+    image: z.string(),
     imageOverlay: z.object({
       color: z.string(),
       opacity: z.number().min(0).max(100),
-    }).nullable(),
+    }),
     titleFontSize: z.number(),
     titleColor: z.string(),
     descriptionFontSize: z.number(),
@@ -106,8 +106,8 @@ export const settingsFormSchema = z.object({
     gallery: componentSettingsBaseSchema.extend({
       items: z.array(z.object({
         url: z.string(),
-        description: z.string().nullable(),
-        title: z.string().nullable(),
+        description: z.string(),
+        title: z.string(),
       })),
     }),
     form: componentSettingsBaseSchema.extend({
@@ -115,7 +115,7 @@ export const settingsFormSchema = z.object({
       errorMessage: z.string(),
       fields: z.array(z.object({
         label: z.string(),
-        help: z.string().nullable(),
+        help: z.string(),
         name: z.string(),
         type: z.enum(['text', 'email', 'tel', 'date', 'datetime', 'textarea', 'select', 'checkbox']),
         required: z.boolean(),
@@ -129,7 +129,7 @@ export const settingsFormSchema = z.object({
     downloads: componentSettingsBaseSchema.extend({
       items: z.array(z.object({
         title: z.string(),
-        description: z.string().nullable(),
+        description: z.string(),
         url: z.string().url(),
         type: z.string(),
       })),
@@ -148,9 +148,9 @@ export const defaultSettings: SettingsForm = {
     city: 'Musterstadt',
     phone: '+491234567890',
     email: 'info@solihost.de',
-    taxId: null,
+    taxId: '',
     isSmallBusiness: true,
-    logo: null,
+    logo: '',
   },
   design: {
     font: 'montserrat',
@@ -164,7 +164,7 @@ export const defaultSettings: SettingsForm = {
     titleFontSize: 10,
     descriptionColor: 'black',
     descriptionFontSize: 6,
-    image: null,
+    image: '',
     imageOverlay: {
       color: 'black',
       opacity: 4,
@@ -176,15 +176,15 @@ export const defaultSettings: SettingsForm = {
     offers: {
       visible: true,
       order: 3,
-      title: null,
-      description: null,
+      title: '',
+      description: '',
       items: [],
     },
     gallery: {
       visible: true,
       order: 2,
-      title: null,
-      description: null,
+      title: '',
+      description: '',
       items: [],
     },
     form: {
@@ -200,13 +200,13 @@ export const defaultSettings: SettingsForm = {
       visible: true,
       order: 4,
       title: 'Häufig gestellte Fragen',
-      description: null,
+      description: '',
     },
     downloads: {
       visible: true,
       order: 5,
       title: 'Downloads',
-      description: null,
+      description: '',
       items: [],
     },
   },

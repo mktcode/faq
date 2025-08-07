@@ -2,8 +2,6 @@
 const { username, settings, saveSettings } = await useProfile()
 const { appHost } = useRuntimeConfig().public
 
-const form = ref(settings.value)
-
 function computeSlug(title: string) {
   return title.toLowerCase()
     .replace(/\s+/g, '-')
@@ -20,7 +18,7 @@ function computeSlug(title: string) {
       Was unterscheidet Sie von anderen? Welche Vorteile hat der Kunde, kurz- wie langfristig?
     </p>
     <div
-      v-for="(offer, index) in form?.components.offers.items"
+      v-for="(offer, index) in settings.components.offers.items"
       :key="index"
       class="flex flex-col gap-4 border-b border-gray-200 pb-4"
     >
@@ -42,7 +40,7 @@ function computeSlug(title: string) {
             variant="soft"
             color="error"
             class="self-end"
-            @click="form?.components.offers.items.splice(index, 1)"
+            @click="settings.components.offers.items.splice(index, 1)"
           />
         </div>
         <div class="flex items-center gap-2">
@@ -77,14 +75,14 @@ function computeSlug(title: string) {
       icon="i-heroicons-plus"
       variant="soft"
       class="w-full"
-      @click="form?.components.offers.items.push({ title: '', description: '', slug: '' })"
+      @click="settings.components.offers.items.push({ title: '', description: '', slug: '' })"
     >
       Angebot hinzufügen
     </UButton>
     <UButton
       variant="solid"
       color="primary"
-      @click="() => saveSettings(form)"
+      @click="() => saveSettings()"
     >
       Einstellungen speichern
     </UButton>

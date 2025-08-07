@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { settings, path } = await useProfile()
 
-const items = computed(() => settings.value?.components.offers.items.map(offer => ({
+const items = computed(() => settings.value.components.offers.items.map(offer => ({
   title: offer.title,
   description: offer.description,
   slug: offer.slug,

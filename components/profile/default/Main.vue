@@ -10,22 +10,22 @@ const { me } = await useMe()
 const { settings, refreshSettings, isOwned } = await useProfile()
 
 useHead({
-  title: settings.value?.header.title || defaultSettings.header.title,
+  title: settings.value.header.title || defaultSettings.header.title,
   meta: [
     {
       name: 'description',
-      content: settings.value?.header.description || defaultSettings.header.description,
+      content: settings.value.header.description || defaultSettings.header.description,
     },
   ],
 })
 
 const appConfig = useAppConfig()
-const font = computed(() => settings.value?.design.font || defaultSettings.design.font)
-appConfig.ui.colors.primary = settings.value?.design.color || defaultSettings.design.color
-appConfig.ui.button.defaultVariants.rounded = settings.value?.design.rounded || defaultSettings.design.rounded
-appConfig.ui.input.defaultVariants.rounded = settings.value?.design.rounded || defaultSettings.design.rounded
-appConfig.ui.select.defaultVariants.rounded = settings.value?.design.rounded || defaultSettings.design.rounded
-appConfig.ui.textarea.defaultVariants.rounded = settings.value?.design.rounded || defaultSettings.design.rounded
+const font = computed(() => settings.value.design.font)
+appConfig.ui.colors.primary = settings.value.design.color
+appConfig.ui.button.defaultVariants.rounded = settings.value.design.rounded
+appConfig.ui.input.defaultVariants.rounded = settings.value.design.rounded
+appConfig.ui.select.defaultVariants.rounded = settings.value.design.rounded
+appConfig.ui.textarea.defaultVariants.rounded = settings.value.design.rounded
 </script>
 
 <template>

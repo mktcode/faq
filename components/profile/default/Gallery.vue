@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { defaultSettings } from '~/types/db'
-
-const { settings } = await useProfile()
-const designRounded = ref(settings.value?.design.rounded || defaultSettings.design.rounded)
+const { settings, designRounded } = await useProfile()
 const showModal = ref(false)
 const carousel = useTemplateRef('carousel')
 const carouselIndex = ref(0)
@@ -19,7 +16,7 @@ function scrollTo() {
 
 <template>
   <div
-    v-if="settings?.components.gallery.items.length"
+    v-if="settings.components.gallery.items.length"
     class="my-6 w-full"
   >
     <div class="grid grid-cols-2 lg:grid-cols-3 gap-2">
@@ -62,7 +59,7 @@ function scrollTo() {
         <h2 class="text-lg font-semibold">Bilder</h2>
         <div class="flex items-center gap-0.5 overflow-x-scroll">
           <img
-            v-for="(item, index) in settings?.components.gallery.items"
+            v-for="(item, index) in settings.components.gallery.items"
             :src="item?.url"
             class="size-10 object-cover shrink-0 cursor-pointer transition-all border-2"
             :class="{

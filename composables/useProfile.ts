@@ -1,4 +1,4 @@
-import type { SettingsForm } from "~/types/db"
+import { defaultSettings, type SettingsForm } from "~/types/db"
 
 export const useProfile = async () => {
   const { ssrContext } = useNuxtApp()
@@ -10,8 +10,9 @@ export const useProfile = async () => {
   const isOwned = useState<boolean>('isOwned', () => false)
   const isPublic = useState<boolean>('isPublic', () => false)
   const design = useState<string>('design', () => 'default')
-  const settings = useState<SettingsForm | null>('settings', () => null)
+  const settings = useState<SettingsForm>('settings', () => defaultSettings)
   const showLegalDataWarning = computed(() => isOwned && (!settings.value?.company?.name || !settings.value?.company?.city || !settings.value?.company?.street || !settings.value?.company?.zip || !settings.value?.company?.email))
+  const designRounded = computed(() => settings.value.design.rounded)
 
   let refreshSettings = async () => {}
 
@@ -28,18 +29,16 @@ export const useProfile = async () => {
       },
     })
 
-    settings.value = currentSettings.value
+    if (currentSettings.value) {
+      settings.value = currentSettings.value
+    }
     refreshSettings = refresh
   }
 
-  async function saveSettings(changedSettings: SettingsForm | null) {
-    if (!changedSettings) {
-      return
-    }
-
+  async function saveSettings() {
     await $fetch('/api/user/settings', {
       method: 'POST',
-      body: changedSettings,
+      body: settings.value,
     })
     toast.add({
       title: 'Einstellungen gespeichert',
@@ -60,5 +59,6 @@ export const useProfile = async () => {
     refreshSettings,
     saveSettings,
     showLegalDataWarning,
+    designRounded,
   }
 }

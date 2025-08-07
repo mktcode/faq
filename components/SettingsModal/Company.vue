@@ -1,33 +1,5 @@
 <script setup lang="ts">
-const toast = useToast()
-
-const { settings, refreshSettings } = await useProfile()
-
-const form = ref({
-  company: settings.value?.company || {
-    name: '',
-    street: '',
-    zip: '',
-    city: '',
-    phone: '',
-    email: '',
-    taxId: '',
-    isSmallBusiness: true,
-  },
-})
-
-async function saveSettings() {
-  await $fetch('/api/user/settings', {
-    method: 'POST',
-    body: form.value,
-  })
-  toast.add({
-    title: 'Einstellungen gespeichert',
-    description: 'Deine Einstellungen wurden erfolgreich gespeichert.',
-    color: 'success',
-  })
-  refreshSettings()
-}
+const { settings, saveSettings } = await useProfile()
 </script>
 
 <template>
@@ -48,14 +20,14 @@ async function saveSettings() {
 
     <UFormField label="Name Ihres Unternehmens">
       <UInput
-        v-model="form.company.name"
+        v-model="settings.company.name"
         placeholder="Geben Sie den Titel Ihres Unternehmens ein"
         class="w-full"
       />
     </UFormField>
     <UFormField label="Straße und Hausnummer">
       <UInput
-        v-model="form.company.street"
+        v-model="settings.company.street"
         placeholder="Geben Sie die Straße und Hausnummer ein"
         class="w-full"
       />
@@ -66,7 +38,7 @@ async function saveSettings() {
         class="w-32"
       >
         <UInput
-          v-model="form.company.zip"
+          v-model="settings.company.zip"
           placeholder="Postleitzahl"
         />
       </UFormField>
@@ -75,7 +47,7 @@ async function saveSettings() {
         class="flex-1"
       >
         <UInput
-          v-model="form.company.city"
+          v-model="settings.company.city"
           placeholder="Geben Sie die Stadt ein"
           class="w-full"
         />
@@ -83,14 +55,14 @@ async function saveSettings() {
     </div>
     <UFormField label="Telefonnummer">
       <UInput
-        v-model="form.company.phone"
+        v-model="settings.company.phone"
         placeholder="Geben Sie die Telefonnummer ein"
         class="w-full"
       />
     </UFormField>
     <UFormField label="E-Mail-Adresse">
       <UInput
-        v-model="form.company.email"
+        v-model="settings.company.email"
         type="email"
         placeholder="Geben Sie die E-Mail-Adresse ein"
         class="w-full"
@@ -113,31 +85,30 @@ async function saveSettings() {
       description="Wenn Sie die Kleinunternehmerregelung nutzen, müssen Sie keine Umsatzsteuer ausweisen. Im Impressum steht dann ein entsprechender Hinweis."
     >
       <USwitch
-        v-model="form.company.isSmallBusiness"
+        v-model="settings.company.isSmallBusiness"
         label="Ich bin Kleinunternehmer"
         class="w-full"
       />
     </UFormField>
     <Transition name="fade">
       <UFormField
-        v-if="!form.company.isSmallBusiness"
+        v-if="!settings.company.isSmallBusiness"
         label="Umsatzsteuer-ID oder Wirtschafts-ID"
         description="Geben Sie hier nicht Ihre persönliche Steuernummer (123/456/78901) an."
       >
         <UInput
-          v-model="form.company.taxId"
+          v-model="settings.company.taxId"
           placeholder="DE123456789"
           class="w-full"
         />
       </UFormField>
     </Transition>
     <UButton
+      label="Einstellungen speichern"
       variant="solid"
       color="primary"
       class="mt-4"
       @click="saveSettings"
-    >
-      Einstellungen speichern
-    </UButton>
+    />
   </div>
 </template>

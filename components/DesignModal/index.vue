@@ -1,41 +1,7 @@
 <script setup lang="ts">
-const emit = defineEmits(['update'])
-
-const toast = useToast()
 const showModal = useState('showDesignModal', () => false)
 
-const { data: currentSettings } = await useFetch(`/api/user/settings`)
-
-const form = ref({
-  title: currentSettings.value?.title || '',
-  description: currentSettings.value?.description || '',
-  headerImage: currentSettings.value?.headerImage || '',
-  headerImageOverlay: currentSettings.value?.headerImageOverlay || {
-    color: 'white',
-    opacity: 50,
-  },
-  headerTitleFontSize: currentSettings.value?.headerTitleFontSize || 5,
-  headerTitleColor: currentSettings.value?.headerTitleColor || 'white',
-  headerDescriptionFontSize: currentSettings.value?.headerDescriptionFontSize || 3,
-  headerDescriptionColor: currentSettings.value?.headerDescriptionColor || 'white',
-  color: currentSettings.value?.color || 'sky',
-  font: currentSettings.value?.font || 'roboto',
-  rounded: currentSettings.value?.rounded || 'md',
-  logo: currentSettings.value?.logo || '',
-})
-
-async function saveSettings() {
-  await $fetch('/api/user/settings', {
-    method: 'POST',
-    body: form.value,
-  })
-  toast.add({
-    title: 'Einstellungen gespeichert',
-    description: 'Deine Einstellungen wurden erfolgreich gespeichert.',
-    color: 'success',
-  })
-  emit('update')
-}
+const { settings, saveSettings } = await useProfile()
 
 const headerImageInput = ref<HTMLInputElement | null>(null)
 const logoInput = ref<HTMLInputElement | null>(null)
@@ -55,7 +21,7 @@ const uploadHeaderImage = async (files: FileList | null) => {
       body: formData,
     })
 
-    form.value.headerImage = imageUrls[0] || ''
+    settings.value.header.image = imageUrls[0] || ''
 
     await saveSettings()
 
@@ -82,7 +48,7 @@ const uploadLogo = async (file: File | null) => {
     })
 
     const randomSuffix = Math.random().toString(36).substring(2, 15)
-    form.value.logo = imageUrl ? `${imageUrl}?${randomSuffix}` : ''
+    settings.value.company.logo = imageUrl ? `${imageUrl}?${randomSuffix}` : ''
 
     await saveSettings()
 
@@ -114,10 +80,6 @@ const clickLogoInput = () => {
     logoInput.value.click()
   }
 }
-
-function switchToSubscription() {
-  // TODO: Re-implement
-}
 </script>
 
 <template>
@@ -139,7 +101,7 @@ function switchToSubscription() {
             class="flex-1 w-full"
           >
             <UInput
-              v-model="form.title"
+              v-model="settings.header.title"
               placeholder="Gib den Titel deines Unternehmens ein"
               class="w-full"
             />
@@ -149,13 +111,13 @@ function switchToSubscription() {
             class="w-28"
           >
             <UInputNumber
-              v-model="form.headerTitleFontSize"
+              v-model="settings.header.titleFontSize"
               size="xl"
             />
           </UFormField>
           <div class="w-28">
             <ColorPicker
-              v-model:color="form.headerTitleColor"
+              v-model:color="settings.header.titleColor"
               label="Farbe"
             />
           </div>
@@ -166,7 +128,7 @@ function switchToSubscription() {
             class="flex-1 w-full"
           >
             <UInput
-              v-model="form.description"
+              v-model="settings.header.description"
               placeholder="Gib eine kurze Beschreibung deines Unternehmens ein"
               class="w-full"
             />
@@ -176,13 +138,13 @@ function switchToSubscription() {
             class="w-28"
           >
             <UInputNumber
-              v-model="form.headerDescriptionFontSize"
+              v-model="settings.header.descriptionFontSize"
               size="xl"
             />
           </UFormField>
           <div class="w-28">
             <ColorPicker
-              v-model:color="form.headerDescriptionColor"
+              v-model:color="settings.header.descriptionColor"
               label="Farbe"
             />
           </div>
@@ -192,15 +154,15 @@ function switchToSubscription() {
             class="@container group relative flex flex-col items-center justify-center w-full rounded-lg cursor-pointer transition-all overflow-hidden hover:bg-gray-100"
           >
             <img
-              v-if="form.headerImage"
-              :src="form.headerImage"
+              v-if="settings.header.image"
+              :src="settings.header.image"
               alt="Header Image"
               class="absolute w-full h-full object-cover z-0 group-hover:scale-105 transition-transform duration-300"
             >
             <div
               class="absolute inset-0 z-10"
-              :class="getColorClass(form.headerImageOverlay.color)"
-              :style="{ opacity: form.headerImageOverlay.opacity / 100 }"
+              :class="getColorClass(settings.header.imageOverlay.color)"
+              :style="{ opacity: settings.header.imageOverlay.opacity / 100 }"
               @click.stop="clickHeaderImageInput"
             />
             <div class="flex flex-col items-center justify-center pt-5 p-6 z-10 pointer-events-none">
@@ -209,8 +171,8 @@ function switchToSubscription() {
                 class="size-8 text-black/10 absolute top-3 left-3 pointer-events-none"
               />
               <img
-                v-if="form.logo"
-                :src="form.logo"
+                v-if="settings.company.logo"
+                :src="settings.company.logo"
                 class="w-full max-w-[32cqw] pointer-events-auto hover:scale-105 transition-transform duration-600"
                 @click.stop="clickLogoInput"
               >
@@ -227,36 +189,36 @@ function switchToSubscription() {
                 @click.stop="clickLogoInput"
               />
               <FontWrapper
-                :font="form.font"
+                :font="settings.design.font"
                 class="text-center"
               >
                 <h1
-                  v-if="form.title"
+                  v-if="settings.header.title"
                   class="text-lg font-semibold mt-2 leading-none"
-                  :class="getColorClass(form.headerTitleColor, 'text')"
-                  :style="{ 'font-size': form.headerTitleFontSize + 'cqw' }"
+                  :class="getColorClass(settings.header.titleColor, 'text')"
+                  :style="{ 'font-size': settings.header.titleFontSize + 'cqw' }"
                 >
-                  {{ form.title }}
+                  {{ settings.header.title }}
                 </h1>
                 <p
-                  v-if="form.description"
+                  v-if="settings.header.description"
                   class="text-sm mt-1"
-                  :class="getColorClass(form.headerDescriptionColor, 'text')"
-                  :style="{ 'font-size': form.headerDescriptionFontSize + 'cqw' }"
+                  :class="getColorClass(settings.header.descriptionColor, 'text')"
+                  :style="{ 'font-size': settings.header.descriptionFontSize + 'cqw' }"
                 >
-                  {{ form.description }}
+                  {{ settings.header.description }}
                 </p>
                 <div
-                  v-if="currentSettings?.links && currentSettings?.links.length"
+                  v-if="settings.header.links.length"
                   class="mt-4 flex flex-wrap items-center justify-center gap-2"
                 >
                   <UButton
-                    v-for="link in currentSettings.links"
+                    v-for="link in settings.header.links"
                     :key="link.url"
                     :label="link.title"
                     :href="link.url"
                     size="sm"
-                    :class="getColorClass(form.color, 'bg')"
+                    :class="getColorClass(settings.design.color, 'bg')"
                   />
                 </div>
               </FontWrapper>
@@ -278,32 +240,32 @@ function switchToSubscription() {
             >
           </div>
           <div
-            v-if="form.headerImage || form.logo"
+            v-if="settings.header.image || settings.company.logo"
             class="flex items-center justify-end gap-2"
           >
             <UButton
-              v-if="form.logo"
+              v-if="settings.company.logo"
               label="Logo entfernen"
               icon="i-heroicons-trash"
               variant="ghost"
               color="error"
               size="sm"
-              @click="form.logo = ''"
+              @click="settings.company.logo = ''"
             />
             <UButton
-              v-if="form.headerImage"
+              v-if="settings.header.image"
               label="Bild entfernen"
               icon="i-heroicons-trash"
               variant="ghost"
               color="error"
               size="sm"
-              @click="form.headerImage = ''"
+              @click="settings.header.image = ''"
             />
           </div>
         </div>
         <div class="flex gap-2">
           <ColorPicker
-            v-model:color="form.headerImageOverlay.color"
+            v-model:color="settings.header.imageOverlay.color"
             label="Hintergrund"
           />
           <UFormField
@@ -311,14 +273,14 @@ function switchToSubscription() {
             class="flex-1"
           >
             <USlider
-              v-model="form.headerImageOverlay.opacity"
+              v-model="settings.header.imageOverlay.opacity"
               class="flex-1 mt-4"
             />
           </UFormField>
         </div>
         <div class="flex gap-2">
           <ColorPicker
-            v-model:color="form.color"
+            v-model:color="settings.design.color"
             label="Primäre Farbe"
           />
           <UFormField
@@ -326,7 +288,7 @@ function switchToSubscription() {
             class="flex-1"
           >
             <USelect
-              v-model="form.rounded"
+              v-model="settings.design.rounded"
               class="w-full"
               :items="[
                 { label: 'Eckig', value: 'none' },
@@ -336,14 +298,13 @@ function switchToSubscription() {
             />
           </UFormField>
         </div>
-        <FontPicker v-model:font="form.font" />
+        <FontPicker v-model:font="settings.design.font" />
         <UButton
+          label="Einstellungen speichern"
           variant="solid"
           color="primary"
           @click="saveSettings"
-        >
-          Einstellungen speichern
-        </UButton>
+        />
       </div>
     </template>
   </UModal>

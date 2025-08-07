@@ -1,13 +1,11 @@
 <script setup lang="ts">
 const { settings, saveSettings } = await useProfile()
 
-const form = ref(settings.value)
-
 const fileInput = ref<HTMLInputElement | null>(null)
 const isDragging = ref(false)
 
 const uploadFile = async (files: FileList | null) => {
-  if (!form.value || !files || files.length === 0) return
+  if (!files || files.length === 0) return
 
   const formData = new FormData()
 
@@ -21,12 +19,12 @@ const uploadFile = async (files: FileList | null) => {
       body: formData,
     })
 
-    form.value.components.downloads.items = [
-      ...form.value.components.downloads.items,
+    settings.value.components.downloads.items = [
+      ...settings.value.components.downloads.items,
       ...uploadedFiles,
     ]
 
-    await saveSettings(form.value)
+    await saveSettings()
 
     // Clear the input to allow selecting the same file again
     if (fileInput.value) {
@@ -104,7 +102,7 @@ const onDrop = async (e: DragEvent) => {
     </div>
     <div class="flex flex-col gap-2">
       <div
-        v-for="(download, index) in form?.components.downloads.items"
+        v-for="(download, index) in settings.components.downloads.items"
         :key="index"
         class="flex flex-col items-center justify-center w-full gap-2"
       >
@@ -125,7 +123,7 @@ const onDrop = async (e: DragEvent) => {
             color="error"
             variant="soft"
             icon="i-heroicons-trash"
-            @click="form?.components.downloads.items.splice(index, 1); saveSettings(form)"
+            @click="settings.components.downloads.items.splice(index, 1); saveSettings()"
           />
         </div>
         <UTextarea
@@ -137,7 +135,7 @@ const onDrop = async (e: DragEvent) => {
     </div>
     <UButton
       label="Einstellungen speichern"
-      @click="saveSettings(form)"
+      @click="saveSettings()"
     />
   </div>
 </template>

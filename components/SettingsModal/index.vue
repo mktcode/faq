@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { AccordionItem } from '@nuxt/ui'
 
-defineEmits(['update'])
-
 const toast = useToast()
 const showModal = useState('showSettingsModal', () => false)
 const { me } = await useMe()

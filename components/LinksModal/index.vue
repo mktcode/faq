@@ -1,26 +1,6 @@
 <script setup lang="ts">
-const toast = useToast()
 const showModal = useState('showLinksModal', () => false)
-
-const { settings, refreshSettings } = await useProfile()
-
-const form = ref({
-  links: settings.value?.links || [],
-  showShareButton: settings.value?.showShareButton || true,
-})
-
-async function saveSettings() {
-  await $fetch('/api/user/settings', {
-    method: 'POST',
-    body: form.value,
-  })
-  toast.add({
-    title: 'Einstellungen gespeichert',
-    description: 'Deine Einstellungen wurden erfolgreich gespeichert.',
-    color: 'success',
-  })
-  refreshSettings()
-}
+const { settings, saveSettings } = await useProfile()
 </script>
 
 <template>
@@ -31,11 +11,11 @@ async function saveSettings() {
     <template #body>
       <div class="flex flex-col gap-4">
         <USwitch
-          v-model="form.showShareButton"
+          v-model="settings.header.showShareButton"
           label="Teilen-Button anzeigen"
         />
         <div
-          v-for="(link, index) in form.links"
+          v-for="(link, index) in settings.header.links"
           :key="index"
           class="flex items-start gap-2"
         >
@@ -56,7 +36,7 @@ async function saveSettings() {
             icon="i-heroicons-trash"
             variant="ghost"
             color="neutral"
-            @click="form.links.splice(index, 1)"
+            @click="settings.header.links.splice(index, 1)"
           />
         </div>
         <UButton
@@ -64,17 +44,16 @@ async function saveSettings() {
           icon="i-heroicons-plus"
           variant="soft"
           color="neutral"
-          @click="form.links.push({ title: '', url: '', icon: 'i-lucide-link' })"
+          @click="settings.header.links.push({ title: '', url: '', icon: 'i-lucide-link' })"
         />
       </div>
       <UButton
+        label="Einstellungen speichern"
         variant="solid"
         color="primary"
         class="mt-4"
         @click="saveSettings"
-      >
-        Einstellungen speichern
-      </UButton>
+      />
     </template>
   </UModal>
 </template>

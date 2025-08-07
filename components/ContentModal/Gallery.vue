@@ -1,15 +1,13 @@
 <script setup lang="ts">
 const { settings, saveSettings } = await useProfile()
 
-const form = ref(settings.value)
-
 const fileInput = ref<HTMLInputElement | null>(null)
 const isDragging = ref(false)
 const isUploading = ref(false)
 const uploadProgress = ref(0)
 
 const uploadFile = async (files: FileList | null) => {
-  if (!form.value || !files || files.length === 0) return
+  if (!files || files.length === 0) return
 
   isUploading.value = true
   let uploadedFiles = 0
@@ -22,13 +20,13 @@ const uploadFile = async (files: FileList | null) => {
         method: 'POST',
         body: formData,
       })
-  
-      form.value.components.gallery.items = [
-        ...form.value.components.gallery.items,
-        ...imageUrls.map((url: string) => ({ url, title: null, description: null })),
+
+      settings.value.components.gallery.items = [
+        ...settings.value.components.gallery.items,
+        ...imageUrls.map((url: string) => ({ url, title: '', description: '' })),
       ]
-  
-      await saveSettings(form.value)
+
+      await saveSettings()
 
       uploadedFiles++
       uploadProgress.value = Math.round((uploadedFiles / files.length) * 100)
@@ -71,9 +69,8 @@ const onDrop = async (e: DragEvent) => {
 }
 
 const deleteItem = async (index: number) => {
-  if (!form.value) return
-  form.value.components.gallery.items.splice(index, 1)
-  await saveSettings(form.value)
+  settings.value.components.gallery.items.splice(index, 1)
+  await saveSettings()
 }
 </script>
 
@@ -116,7 +113,7 @@ const deleteItem = async (index: number) => {
     <div class="flex flex-col gap-2">
       <TransitionGroup name="fade">
         <div
-          v-for="(image, index) in form?.components.gallery.items"
+          v-for="(image, index) in settings.components.gallery.items"
           :key="index"
           class="flex items-center justify-center w-full gap-2"
         >
@@ -150,7 +147,7 @@ const deleteItem = async (index: number) => {
       label="Einstellungen speichern"
       variant="solid"
       color="primary"
-      @click="saveSettings(form)"
+      @click="saveSettings()"
     />
   </div>
 </template>

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { defaultSettings, type Qanda } from '~/types/db'
+import { type Qanda } from '~/types/db'
 
-
-const { username, settings } = await useProfile()
+const { username, designRounded } = await useProfile()
 
 const { data: qanda } = await useFetch<Qanda[]>(`/api/qanda`, {
   query: {
@@ -16,8 +15,6 @@ const qandaAccordionItems = computed(() => {
     content: item.answer,
   })) || []
 })
-
-const designRounded = ref(settings.value?.design.rounded || defaultSettings.design.rounded)
 </script>
 
 <template>

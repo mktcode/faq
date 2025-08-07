@@ -20,32 +20,27 @@ const items = computed(() => {
     }))
 })
 
-const form = ref(settings.value)
-
 function changeOrder(key: ComponentKey, direction: 'up' | 'down') {
-  if (!form.value || !form.value.components[key]) return
-
-  const currentPosition = form.value.components[key].order
+  const currentPosition = settings.value.components[key].order
   if (direction === 'up' && currentPosition <= 1) return
-  if (direction === 'down' && currentPosition >= Object.keys(form.value.components).length) return
-  
+  if (direction === 'down' && currentPosition >= Object.keys(settings.value.components).length) return
+
   const newPosition = direction === 'up' ? currentPosition - 1 : currentPosition + 1
-  const adjacentComponentKey = Object.keys(form.value.components).find(
-    (key) => form.value?.components[key as ComponentKey].order === newPosition
+  const adjacentComponentKey = Object.keys(settings.value.components).find(
+    (key) => settings.value.components[key as ComponentKey].order === newPosition
   ) as ComponentKey | undefined;
 
   if (adjacentComponentKey) {
-    form.value.components[key].order = newPosition
-    form.value.components[adjacentComponentKey].order = currentPosition
+    settings.value.components[key].order = newPosition
+    settings.value.components[adjacentComponentKey].order = currentPosition
   }
 
-  saveSettings(form.value)
+  saveSettings()
 }
 
 function toggleVisibility(key: ComponentKey) {
-  if (!form.value || !form.value.components[key]) return
-  form.value.components[key].visible = !form.value.components[key].visible
-  saveSettings(form.value)
+  settings.value.components[key].visible = !settings.value.components[key].visible
+  saveSettings()
 }
 </script>
 
@@ -62,12 +57,12 @@ function toggleVisibility(key: ComponentKey) {
         <UButton
           variant="ghost"
           size="sm"
-          :color="form?.components[item.id as ComponentKey]?.visible ? 'primary' : 'neutral'"
-          :class="form?.components[item.id as ComponentKey]?.visible ? 'text-primary-600' : 'text-gray-300'"
+          :color="settings.components[item.id as ComponentKey]?.visible ? 'primary' : 'neutral'"
+          :class="settings.components[item.id as ComponentKey]?.visible ? 'text-primary-600' : 'text-gray-300'"
           @click.stop="toggleVisibility(item.id)"
         >
           <UIcon
-            :name="form?.components[item.id as ComponentKey]?.visible ? 'i-heroicons-eye' : 'i-heroicons-eye-slash'"
+            :name="settings.components[item.id as ComponentKey]?.visible ? 'i-heroicons-eye' : 'i-heroicons-eye-slash'"
             class="size-5"
           />
         </UButton>

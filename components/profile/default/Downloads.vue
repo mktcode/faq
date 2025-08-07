@@ -1,14 +1,10 @@
 <script setup lang="ts">
-import { defaultSettings } from '~/types/db';
-
-const { settings } = await useProfile()
-
-const designRounded = ref(settings.value?.design.rounded || defaultSettings.design.rounded)
+const { settings, designRounded } = await useProfile()
 </script>
 
 <template>
   <div
-    v-if="settings?.components.downloads.items.length"
+    v-if="settings.components.downloads.items.length"
     class="my-6 w-full"
   >
     <div class="flex flex-col gap-2">
