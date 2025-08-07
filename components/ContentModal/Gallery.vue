@@ -113,7 +113,6 @@ async function deleteImage(index: number) {
         ref="fileInput"
         type="file"
         class="hidden"
-        capture
         multiple
         @change="handleInputChange"
       >

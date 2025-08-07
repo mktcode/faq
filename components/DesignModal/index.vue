@@ -254,15 +254,12 @@ async function deleteImage(image: 'logo' | 'header') {
               ref="headerImageInput"
               type="file"
               class="hidden"
-              capture
-              multiple
               @change="handleHeaderImageInputChange"
             >
             <input
               ref="logoInput"
               type="file"
               class="hidden"
-              capture
               @change="handleLogoInputChange"
             >
           </div>
