@@ -62,6 +62,7 @@ function scrollTo() {
         <div class="flex items-center gap-0.5 overflow-x-scroll">
           <img
             v-for="(item, index) in settings.components.gallery.items"
+            :key="index"
             :src="item?.url"
             class="size-10 object-cover shrink-0 cursor-pointer transition-all border-2"
             :class="{

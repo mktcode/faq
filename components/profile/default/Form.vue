@@ -169,7 +169,10 @@ const disabled = computed(() => {
           class="w-full"
         />
       </UFormField>
-      <template v-for="field in settings.components.form.fields || []">
+      <div
+        v-for="(field, index) in settings.components.form.fields || []"
+        :key="index"
+      >
         <UFormField
           v-if="field.type === 'text'"
           :label="field.label"
@@ -254,7 +257,7 @@ const disabled = computed(() => {
             class="w-full"
           />
         </UFormField>
-      </template>
+      </div>
       <UButton
         label="Anfrage senden"
         block
