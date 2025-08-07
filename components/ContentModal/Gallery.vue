@@ -12,7 +12,7 @@ const uploadFile = async (files: FileList | null) => {
 
   isUploading.value = true
   let uploadedFiles = 0
-  
+
   for (let i = 0; i < files.length; i++) {
     const formData = new FormData()
     formData.append('files', files[i])
@@ -123,7 +123,7 @@ async function deleteImage(index: number) {
       />
     </div>
     <UProgress
-      v-if="isUploading"    
+      v-if="isUploading"
       v-model="uploadProgress"
     />
     <div class="flex flex-col gap-2">

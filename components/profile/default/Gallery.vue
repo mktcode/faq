@@ -46,17 +46,19 @@ function scrollTo() {
       </div>
     </div>
     <UModal
-      title="Bilder"
       v-model:open="showModal"
-      @after:enter="scrollTo"
+      title="Bilder"
       fullscreen
       :ui="{
         body: 'mbody overflow-hidden',
         header: 'flex gap-4 items-center justify-between p-4',
       }"
+      @after:enter="scrollTo"
     >
       <template #header>
-        <h2 class="text-lg font-semibold">Bilder</h2>
+        <h2 class="text-lg font-semibold">
+          Bilder
+        </h2>
         <div class="flex items-center gap-0.5 overflow-x-scroll">
           <img
             v-for="(item, index) in settings.components.gallery.items"
@@ -70,13 +72,13 @@ function scrollTo() {
               'rounded-none': designRounded === 'none',
             }"
             @click="carouselIndex = index; scrollTo()"
-          />
+          >
         </div>
         <UButton
-          @click="showModal = false"
           variant="ghost"
           color="neutral"
           class="aspect-square"
+          @click="showModal = false"
         >
           <UIcon
             name="i-lucide-x"

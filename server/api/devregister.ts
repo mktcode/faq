@@ -1,4 +1,4 @@
-import { defaultSettings } from "~/types/db"
+import { defaultSettings } from '~/types/db'
 
 export default defineEventHandler(async (event) => {
   if (process.env.NODE_ENV !== 'development') {

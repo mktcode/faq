@@ -47,7 +47,7 @@ export async function createUser({
     .selectAll()
     .where('id', '=', newUserId)
     .executeTakeFirstOrThrow()
-  
+
   const customerRequestInsertResult = await db
     .insertInto('customerRequests')
     .values({
@@ -59,7 +59,7 @@ export async function createUser({
       status: 'pending',
     })
     .executeTakeFirstOrThrow()
-  
+
   if (!customerRequestInsertResult.insertId) {
     throw new Error('Failed to insert customer request')
   }
@@ -100,7 +100,7 @@ export async function getMe(event: H3Event) {
     .selectAll()
     .where('id', '=', user.id)
     .executeTakeFirst()
-  
+
   if (!userInDb) {
     return null
   }

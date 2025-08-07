@@ -100,7 +100,8 @@ async function deleteImage(image: 'logo' | 'header') {
 
   if (image === 'logo') {
     settings.value.company.logo = ''
-  } else {
+  }
+  else {
     settings.value.header.image = ''
   }
 

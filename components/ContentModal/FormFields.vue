@@ -1,15 +1,15 @@
 <script setup lang="ts">
 const fields = defineModel('fields', {
   type: Array<{
-    label: string;
-    help?: string | null;
-    name: string;
-    type: string;
-    required: boolean;
+    label: string
+    help?: string | null
+    name: string
+    type: string
+    required: boolean
     options: {
-      label: string;
-    }[];
-    multiple: boolean;
+      label: string
+    }[]
+    multiple: boolean
   }>,
   default: () => [],
 })

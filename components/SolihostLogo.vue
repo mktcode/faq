@@ -1,8 +1,9 @@
 <script setup lang="ts">
 const { beta = false } = defineProps<{
   beta?: boolean
-}>();
+}>()
 </script>
+
 <template>
   <div class="@container flex flex-col gap-[0.2cqw] mx-auto w-full">
     <div class="text-[22cqw] font-bold drop-shadow-lg leading-none text-center">

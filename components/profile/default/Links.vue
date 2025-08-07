@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
+
 const { me } = await useMe()
 const { username, isOwned, settings } = await useProfile()
 

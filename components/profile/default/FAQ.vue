@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Qanda } from '~/types/db'
+import type { Qanda } from '~/types/db'
 
 const { username, designRounded } = await useProfile()
 

@@ -20,7 +20,7 @@ export default defineWebAuthnRegisterEventHandler({
   async validateUser(userBody) {
     return z.object({
       userName: z.string().min(3).max(20),
-      settings: settingsFormSchema
+      settings: settingsFormSchema,
     }).parse(userBody)
   },
   async onSuccess(event, { credential, user }) {

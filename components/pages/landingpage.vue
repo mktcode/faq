@@ -160,7 +160,11 @@ watch(acc2active, (newVal) => {
               />
               <div>
                 <div>
-                  Beratung und <NuxtLink to="https://markus-kottlaender.de/support" class="underline" target="_blank">Fernwartung</NuxtLink>:
+                  Beratung und <NuxtLink
+                    to="https://markus-kottlaender.de/support"
+                    class="underline"
+                    target="_blank"
+                  >Fernwartung</NuxtLink>:
                 </div>
                 <div class="text-white text-3xl font-bold">
                   0176 70 86 46 27
@@ -176,7 +180,10 @@ watch(acc2active, (newVal) => {
     </div>
 
     <!-- Main Content -->
-    <div class="flex flex-col items-center justify-center max-w-3xl mx-auto pt-16 sm:pt-24 pb-24 sm:pb-32 px-4" id="main-content">
+    <div
+      id="main-content"
+      class="flex flex-col items-center justify-center max-w-3xl mx-auto pt-16 sm:pt-24 pb-24 sm:pb-32 px-4"
+    >
       <p class="text-gray-500 text-lg sm:text-xl mb-6">
         Unsere Standard-Website ist für Sie kostenlos. Sie können Ihre eigene Domain verknüpfen und Anfragen an Ihre vorhandene E-Mail-Adresse erhalten.
         Im Abonnement erhalten Sie zusätzliche Funktionen und individuellere Gestaltungsmöglichkeiten.
@@ -386,7 +393,7 @@ watch(acc2active, (newVal) => {
           Sie brauchen keine Cookie-Einwilligung, wenn Sie keine Cookies verwenden, die personenbezogene Daten speichern.
           Und das tun Sie nicht, solange Sie keine Analyse-Tools wie Google Analytics nutzen, die für Ihre Zwecke völlig überdimensioniert sind.
           Diese Tools brauchen Sie nur, wenn Sie die Umsätze durch Ihre Website perfekt optimieren wollen.
-          Es reicht auch erstmal ein anonymisierter Aufrufzähler, am besten je nach Quelle, damit Sie sehen, von wo Ihre Besucher kommen. 
+          Es reicht auch erstmal ein anonymisierter Aufrufzähler, am besten je nach Quelle, damit Sie sehen, von wo Ihre Besucher kommen.
         </template>
         <template #slot6>
           Eine Website braucht eine Domain, also das, was Sie in die Adresszeile des Browsers eingeben, z.B. meinefirma.de.
@@ -425,13 +432,19 @@ watch(acc2active, (newVal) => {
         Fangen Sie klein an und wachsen Sie mit der Zeit.
       </p>
 
-      <p class="mt-10 text-gray-500 text-lg sm:text-xl" id="standard-website">
+      <p
+        id="standard-website"
+        class="mt-10 text-gray-500 text-lg sm:text-xl"
+      >
         Unsere Standard-Website deckt das Wichtigste auf unkomplizierte Weise ab und Sie bekommen ein Gefühl dafür, was Sie wirklich brauchen und was nicht.
         Was auch immer das dann ist, im Abonnement ist es vermutlich bereits enthalten - auf jeden Fall möglich.
       </p>
     </div>
 
-    <div class="bg-gradient-to-r from-sky-500 via-sky-600 to-sky-500 flex flex-col items-center justify-center py-16 px-4 text-white" id="main-content">
+    <div
+      id="main-content"
+      class="bg-gradient-to-r from-sky-500 via-sky-600 to-sky-500 flex flex-col items-center justify-center py-16 px-4 text-white"
+    >
       <div class="max-w-3xl mx-auto">
         <ul class="list-none mt-10 flex flex-col gap-2 w-full *:flex *:items-center *:gap-2">
           <li class="text-xl sm:text-2xl font-bold">
@@ -485,7 +498,7 @@ watch(acc2active, (newVal) => {
             Monatlich kündbar, per Klick in der App
           </li>
         </ul>
-  
+
         <div class="text-white text-center">
           <UButton
             label="Kostenlose Website erstellen"

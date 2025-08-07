@@ -1,6 +1,6 @@
 import { sql } from 'kysely'
 import { z } from 'zod'
-import { SettingsForm } from '~/types/db'
+import type { SettingsForm } from '~/types/db'
 
 const inputSchema = z.object({
   username: z.string().min(1, 'Username is required'),
@@ -46,7 +46,8 @@ export default defineEventHandler(async (event) => {
   if (embedding) {
     await sql`INSERT INTO messages (customerRequestId, body, embedding, isCustomer) VALUES (${customerRequestId}, ${message}, VEC_FromText(${JSON.stringify(embedding)}), true)`
       .execute(db)
-  } else {
+  }
+  else {
     await db.insertInto('messages')
       .values({
         customerRequestId,

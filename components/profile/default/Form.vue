@@ -34,7 +34,7 @@ async function saveCustomerRequest() {
         extraFields: extraFields.value,
       },
     })
-  
+
     savedRequestSuccess.value = true
     savedRequestFailure.value = false
     message.value = ''
@@ -42,9 +42,11 @@ async function saveCustomerRequest() {
     phone.value = ''
     email.value = ''
     extraFields.value = {}
-  } catch (error) {
+  }
+  catch (error) {
     savedRequestFailure.value = true
-  } finally {
+  }
+  finally {
     isSavingRequest.value = false
   }
 }
@@ -168,28 +170,40 @@ const disabled = computed(() => {
         />
       </UFormField>
       <template v-for="field in settings.components.form.fields || []">
-        <UFormField :label="field.label" v-if="field.type === 'text'">
+        <UFormField
+          v-if="field.type === 'text'"
+          :label="field.label"
+        >
           <UInput
             v-model="extraFields[field.label] as string"
             :placeholder="field.help || ''"
             class="w-full"
           />
         </UFormField>
-        <UFormField :label="field.label" v-else-if="field.type === 'email'">
+        <UFormField
+          v-else-if="field.type === 'email'"
+          :label="field.label"
+        >
           <UInput
             v-model="extraFields[field.label] as string"
             :placeholder="field.help || ''"
             class="w-full"
           />
         </UFormField>
-        <UFormField :label="field.label" v-else-if="field.type === 'tel'">
+        <UFormField
+          v-else-if="field.type === 'tel'"
+          :label="field.label"
+        >
           <UInput
             v-model="extraFields[field.label] as string"
             :placeholder="field.help || ''"
             class="w-full"
           />
         </UFormField>
-        <UFormField :label="field.label" v-else-if="field.type === 'date'">
+        <UFormField
+          v-else-if="field.type === 'date'"
+          :label="field.label"
+        >
           <UInput
             v-model="extraFields[field.label] as string"
             type="date"
@@ -197,7 +211,10 @@ const disabled = computed(() => {
             class="w-full"
           />
         </UFormField>
-        <UFormField :label="field.label" v-else-if="field.type === 'datetime'">
+        <UFormField
+          v-else-if="field.type === 'datetime'"
+          :label="field.label"
+        >
           <UInput
             v-model="extraFields[field.label] as string"
             type="datetime-local"
@@ -205,7 +222,10 @@ const disabled = computed(() => {
             class="w-full"
           />
         </UFormField>
-        <UFormField :label="field.label" v-else-if="field.type === 'textarea'">
+        <UFormField
+          v-else-if="field.type === 'textarea'"
+          :label="field.label"
+        >
           <UTextarea
             v-model="extraFields[field.label] as string"
             :placeholder="field.help || ''"
@@ -213,7 +233,8 @@ const disabled = computed(() => {
           />
         </UFormField>
         <UFormField
-          :label="field.label" v-else-if="field.type === 'select'"
+          v-else-if="field.type === 'select'"
+          :label="field.label"
           :description="field.help || ''"
         >
           <USelect
@@ -224,7 +245,10 @@ const disabled = computed(() => {
             class="w-full"
           />
         </UFormField>
-        <UFormField :label="field.label" v-else-if="field.type === 'checkbox'">
+        <UFormField
+          v-else-if="field.type === 'checkbox'"
+          :label="field.label"
+        >
           <UCheckbox
             :label="field.help || ''"
             class="w-full"
@@ -267,8 +291,8 @@ const disabled = computed(() => {
           {
             label: 'zum Impressum',
             color: 'error',
-            onClick: () => { navigateTo('/impressum', { external: true }) }
-          }
+            onClick: () => { navigateTo('/impressum', { external: true }) },
+          },
         ]"
         :close="{
           color: 'error',

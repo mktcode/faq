@@ -27,8 +27,8 @@ function changeOrder(key: ComponentKey, direction: 'up' | 'down') {
 
   const newPosition = direction === 'up' ? currentPosition - 1 : currentPosition + 1
   const adjacentComponentKey = Object.keys(settings.value.components).find(
-    (key) => settings.value.components[key as ComponentKey].order === newPosition
-  ) as ComponentKey | undefined;
+    key => settings.value.components[key as ComponentKey].order === newPosition,
+  ) as ComponentKey | undefined
 
   if (adjacentComponentKey) {
     settings.value.components[key].order = newPosition

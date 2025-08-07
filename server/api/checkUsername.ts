@@ -1,11 +1,11 @@
-import z from "zod"
+import z from 'zod'
 
 const querySchema = z.object({
   userName: z.string().min(3, 'Username must be at least 3 characters long'),
 })
 
 export default defineEventHandler(async (event) => {
-  const query = await getValidatedQuery(event, (query) => querySchema.parse(query))
+  const query = await getValidatedQuery(event, query => querySchema.parse(query))
   const db = await getDatabaseConnection()
 
   const user = await db

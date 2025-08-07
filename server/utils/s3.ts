@@ -77,10 +77,10 @@ export async function deleteFile(userId: number, fileKey: string) {
   if (!userIdInFileKey || Number(userIdInFileKey) !== userId) {
     throw new Error('File does not belong to this user')
   }
-  
+
   const s3 = createS3Client()
   const { s3BucketName } = useRuntimeConfig()
-  
+
   const command = new DeleteObjectCommand({
     Bucket: s3BucketName,
     Key: fileKey,

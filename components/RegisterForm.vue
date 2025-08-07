@@ -63,12 +63,12 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
       <div class="flex flex-col gap-2">
         <UCard
           v-for="(componentDetail, index) in availableComponents"
-          :variant="settings.components[componentDetail.key].visible ? 'outline' : 'soft'"
           :key="index"
+          :variant="settings.components[componentDetail.key].visible ? 'outline' : 'soft'"
           :ui="{
             header: '!p-3',
             body: '!p-3',
-            footer: '!p-3'
+            footer: '!p-3',
           }"
         >
           <h3 class="font-semibold flex gap-2 justify-between">

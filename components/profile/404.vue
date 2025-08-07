@@ -19,7 +19,7 @@ appConfig.ui.button.defaultVariants.rounded = settings.value.design.rounded
         :src="settings.company.logo"
         alt="Logo"
         class="max-w-3xs mb-12"
-      />
+      >
       <p>
         Dieses Seite existiert nicht.
       </p>

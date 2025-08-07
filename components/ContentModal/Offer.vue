@@ -45,8 +45,16 @@ function computeSlug(title: string) {
         </div>
         <div class="flex items-center gap-2">
           <UButtonGroup class="flex-1">
-            <label :for="`offer-slug-${index}`" class="flex">
-              <UBadge color="neutral" variant="soft" size="sm" :label="`https://${username}.${appHost}/`" />
+            <label
+              :for="`offer-slug-${index}`"
+              class="flex"
+            >
+              <UBadge
+                color="neutral"
+                variant="soft"
+                size="sm"
+                :label="`https://${username}.${appHost}/`"
+              />
             </label>
             <UInput
               :id="`offer-slug-${index}`"

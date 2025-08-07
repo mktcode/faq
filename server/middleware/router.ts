@@ -98,9 +98,9 @@ async function handleSubdomain(event: H3Event, currentHost: string): Promise<voi
 }
 
 export default defineEventHandler(async (event) => {
-  if (process.dev) {
+  if (import.meta.dev) {
     // TODO: Remove when fixed in Nuxt
-    event.node.req.headers['x-forwarded-proto'] = 'https';
+    event.node.req.headers['x-forwarded-proto'] = 'https'
   }
 
   const { currentHost, isRootDomain, isSubdomain, isCustomDomain } = determineHostType(event)

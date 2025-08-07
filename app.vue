@@ -2,7 +2,7 @@
 import { de } from '@nuxt/ui/locale'
 
 const { settings, username, isOwned, isPublic, design, path } = await useProfile()
-const offerPaths = computed(() => settings.value && settings.value.components.offers.items.length > 1 ? settings.value.components.offers.items.map((offer) => `/${offer.slug}`) : [])
+const offerPaths = computed(() => settings.value && settings.value.components.offers.items.length > 1 ? settings.value.components.offers.items.map(offer => `/${offer.slug}`) : [])
 </script>
 
 <template>

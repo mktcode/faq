@@ -32,7 +32,10 @@ function close() {
           /> Menü, über das Sie Ihre Website verwalten können.
         </p>
         <p class="text-gray-600">
-          Für Fragen oder Feedback schreiben Sie uns gerne eine E-Mail an <a href="mailto:support@beispiel.de" class="italic">support@solihost.de</a>.
+          Für Fragen oder Feedback schreiben Sie uns gerne eine E-Mail an <a
+            href="mailto:support@beispiel.de"
+            class="italic"
+          >support@solihost.de</a>.
         </p>
         <UButton
           label="Schließen"

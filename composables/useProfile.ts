@@ -1,4 +1,4 @@
-import { defaultSettings, type SettingsForm } from "~/types/db"
+import { defaultSettings, type SettingsForm } from '~/types/db'
 
 export const useProfile = async () => {
   const { ssrContext } = useNuxtApp()
@@ -22,7 +22,7 @@ export const useProfile = async () => {
     isOwned.value = ssrContext.event.context.profile.isOwned
     isPublic.value = ssrContext.event.context.profile.isPublic
     design.value = ssrContext.event.context.profile.design
-    
+
     const { data: currentSettings, refresh } = await useFetch(`/api/settings`, {
       query: {
         username,
