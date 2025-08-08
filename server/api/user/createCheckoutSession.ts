@@ -33,7 +33,8 @@ export default defineEventHandler(async (event) => {
 
     if (existingCustomerByUserId) {
       stripeCustomerId = existingCustomerByUserId.id
-    } else if (existingCustomerByOldest) {
+    }
+    else if (existingCustomerByOldest) {
       stripeCustomerId = existingCustomerByOldest.id
       await stripe.customers.update(stripeCustomerId, {
         metadata: {
@@ -41,14 +42,15 @@ export default defineEventHandler(async (event) => {
           solihostUserId: userInDb.id.toString(),
         },
       })
-    } else {
+    }
+    else {
       const stripeCustomer = await stripe.customers.create({
         email: userInDb.email,
         metadata: {
           solihostUserId: userInDb.id.toString(),
         },
       })
-      
+
       stripeCustomerId = stripeCustomer.id
     }
 
@@ -69,7 +71,7 @@ export default defineEventHandler(async (event) => {
   const session = await stripe.checkout.sessions.create({
     customer: stripeCustomerId,
     success_url: `https://${userInDb.userName}.${appHost}?subscriptionSuccess=1`,
-    
+
     line_items: [
       {
         price: stripePriceId,

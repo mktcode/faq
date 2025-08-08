@@ -49,10 +49,10 @@ const { copy: copyEmail, copied: copiedEmail } = useClipboard()
         :label="copiedEmail ? 'E-Mail kopiert!' : feedbackEmail"
         trailing-icon="i-heroicons-clipboard-document"
         variant="outline"
-        @click="copyEmail(feedbackEmail)"
         :ui="{
           trailingIcon: 'ml-auto opacity-50',
         }"
+        @click="copyEmail(feedbackEmail)"
       />
     </template>
   </UModal>

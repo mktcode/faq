@@ -52,7 +52,7 @@ async function updateEmail() {
             Keine einmaligen Kosten • Monatlich kündbar
           </p>
         </div>
-      <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2">
           <UButton
             label="Abonnement abschließen"
             trailing-icon="i-heroicons-rocket-launch"

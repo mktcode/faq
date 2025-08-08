@@ -52,13 +52,13 @@ watchDebounced(existingDomain, checkDns, { debounce: 750 })
           v-if="domainConnectedSuccessfully"
           title="Domain erfolgreich verbunden!"
           icon="i-heroicons-check"
-          :description="`Sie können Ihre Website jetzt über ${me?.domain} erreichen. Ihre bisherige Subdomain ${ me?.userName }.solihost.de leitet nun dorthin weiter.`"
+          :description="`Sie können Ihre Website jetzt über ${me?.domain} erreichen. Ihre bisherige Subdomain ${me?.userName}.solihost.de leitet nun dorthin weiter.`"
           color="primary"
           close
-          @update:open="domainConnectedSuccessfully = false"
           :ui="{
             close: 'text-primary-100 hover:text-primary-50 active:text-primary-200',
           }"
+          @update:open="domainConnectedSuccessfully = false"
         />
       </Transition>
       <p

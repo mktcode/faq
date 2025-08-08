@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto"
+import { createHash } from 'node:crypto'
 
 const WINDOW_MS = 60_000
 const MAX_REQUESTS = 1000
