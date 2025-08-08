@@ -26,14 +26,13 @@ watch(isOpen, (newValue) => {
     <template #body>
       <div class="flex flex-col gap-4">
         <h1 class="text-2xl font-bold text-center">
-          Abonnement freigeschaltet!
+          Abonnement abgeschlossen!
         </h1>
         <p class="text-center text-gray-600">
           Sie haben nun Zugriff auf alle erweiterten Funktionen.
         </p>
         <UButton
           label="Alles klar!"
-          class="ml-auto"
           @click="isOpen = false"
         />
       </div>
