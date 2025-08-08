@@ -1,11 +1,24 @@
 <script setup lang="ts">
 const toast = useToast()
-const { settings, saveSettings } = await useProfile()
+const { settings, saveSettings, isSubscribed } = await useProfile()
 
 const fileInput = ref<HTMLInputElement | null>(null)
 const isDragging = ref(false)
 const isUploading = ref(false)
 const uploadProgress = ref(0)
+const galleryTypes = ref([
+  {
+    label: 'Raster',
+    value: 'grid'
+  },
+  {
+    label: 'Mauerwerk',
+    value: 'masonry',
+    disabled: !isSubscribed.value,
+  },
+])
+
+watch(() => settings.value.components.gallery.type, saveSettings)
 
 const uploadFile = async (files: FileList | null) => {
   if (!files || files.length === 0) return
@@ -92,6 +105,23 @@ async function deleteImage(index: number) {
 
 <template>
   <div class="flex flex-col gap-4 p-6">
+    <UFormField label="Darstellung">
+      <USelect
+        v-model="settings.components.gallery.type"
+        :items="galleryTypes"
+        label="Galerie Layout"
+        class="w-full"
+      >
+        <template #item-trailing="{ item }">
+          <UBadge
+            v-if="item.disabled"
+            label="Premium"
+            variant="outline"
+            class="mr-2"
+          />
+        </template>
+      </USelect>
+    </UFormField>
     <div
       :class="`relative flex flex-col items-center justify-center w-full h-auto border-2 ${isDragging ? 'border-primary-500' : 'border-gray-300'} border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100`"
       @dragenter="onDragEnter"
