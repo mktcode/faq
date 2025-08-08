@@ -3,13 +3,13 @@ const showModal = useState('showContentModal', () => false)
 </script>
 
 <template>
-  <UModal
+  <UDrawer
     v-model:open="showModal"
     :ui="{
-      body: '!p-0',
+      container: 'max-w-2xl mx-auto',
     }"
   >
-    <template #title>
+    <template #header>
       <h3 class="text-lg font-semibold flex items-center gap-2">
         <UIcon
           name="i-lucide-letter-text"
@@ -38,5 +38,5 @@ const showModal = useState('showContentModal', () => false)
       </DismissableAlert>
       <ContentModalAccordion />
     </template>
-  </UModal>
+  </UDrawer>
 </template>

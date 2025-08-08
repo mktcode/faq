@@ -9,7 +9,7 @@ const uploadProgress = ref(0)
 const galleryTypes = ref([
   {
     label: 'Raster',
-    value: 'grid'
+    value: 'grid',
   },
   {
     label: 'Mauerwerk',

@@ -110,8 +110,13 @@ async function deleteImage(image: 'logo' | 'header') {
 </script>
 
 <template>
-  <UModal v-model:open="showModal">
-    <template #title>
+  <UDrawer
+    v-model:open="showModal"
+    :ui="{
+      container: 'max-w-2xl mx-auto',
+    }"
+  >
+    <template #header>
       <h3 class="text-lg font-semibold flex items-center gap-2">
         <UIcon
           name="i-heroicons-paint-brush"
@@ -331,5 +336,5 @@ async function deleteImage(image: 'logo' | 'header') {
         />
       </div>
     </template>
-  </UModal>
+  </UDrawer>
 </template>
