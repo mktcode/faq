@@ -111,6 +111,7 @@ export const settingsFormSchema = z.object({
       })),
     }),
     gallery: componentSettingsBaseSchema.extend({
+      type: z.enum(['grid', 'masonry']),
       items: z.array(z.object({
         url: z.string(),
         description: z.string(),
@@ -195,6 +196,7 @@ export const defaultSettings: SettingsForm = {
       items: [],
     },
     gallery: {
+      type: 'grid',
       visible: true,
       order: 2,
       title: '',
