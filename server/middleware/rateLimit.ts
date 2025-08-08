@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto"
+
 const WINDOW_MS = 60_000
 const MAX_REQUESTS = 1000
 const CLEANUP_INTERVAL = 60_000
@@ -17,9 +19,11 @@ setInterval(() => {
 
 export default defineEventHandler(async (event) => {
   const ip = getRequestHeader(event, 'x-forwarded-for') || event.node.req.socket.remoteAddress || 'unknown'
+  const userAgent = getRequestHeader(event, 'user-agent') || 'unknown'
+  const idHash = createHash('sha256').update(`${ip}-${userAgent}`).digest('hex')
   const now = Date.now()
 
-  const entry = rateLimitMap.get(ip)
+  const entry = rateLimitMap.get(idHash)
 
   if (!entry || now - entry.lastReset > WINDOW_MS) {
     rateLimitMap.set(ip, { count: 1, lastReset: now })
@@ -28,8 +32,8 @@ export default defineEventHandler(async (event) => {
     if (entry.count >= MAX_REQUESTS) {
       throw createError({
         statusCode: 429,
-        statusMessage: 'Too Many Requests',
-        message: 'You have exceeded the rate limit. Please try again later.',
+        statusMessage: 'Zu viele Anfragen',
+        message: 'Sie haben das Anfrage-Limit überschritten. Bitte warten Sie einen Moment.',
       })
     }
     entry.count++
