@@ -40,36 +40,29 @@ async function updateEmail() {
     </template>
     <template v-else>
       <template v-if="me?.email && !me?.emailConfirmationToken">
-        <p class="text-gray-600">
-          Mit einem Abonnement erhalten Sie Zugriff auf erweiterte Funktionen und individuellere Gestaltungsmöglichkeiten.
-        </p>
-        <ul class="list-disc list-inside text-gray-600 mb-6">
-          <li>Domain und E-Mail-Adresse inkl.</li>
-          <li>Mehr Speicherplatz für Bilder und Downloads</li>
-          <li>KI-Assisstent für Anfragen und FAQ</li>
-          <li>Premium-Design ab 500 € einmalig</li>
-        </ul>
-        <div class="flex items-end gap-4 text-2xl">
-          <div class="flex flex-col font-bold w-full">
-            15 € mtl.
-            <span class="text-gray-500 text-sm font-normal">inkl. MwSt.</span>
+        <div class="text-center border border-gray-200 p-4 rounded-xl">
+          <div class="flex items-baseline justify-center gap-2 mb-2">
+            <span class="text-3xl font-bold text-gray-900 dark:text-white">17,85 €</span>
+            <span class="text-lg text-gray-600">/Monat</span>
           </div>
-          <div class="flex flex-col gap-2">
-            <UButton
-              label="Ich brauche nur Domain und E-Mail"
-              variant="soft"
-            />
-            <UButton
-              label="Plus abonnieren"
-              trailing-icon="i-heroicons-rocket-launch"
-              class="w-full"
-              :ui="{
-                trailingIcon: 'ml-auto',
-              }"
-              :loading="isStartingCheckout"
-              @click="startCheckoutSession"
-            />
+          <div class="text-sm text-gray-500 mb-1">
+            15 € Netto + 2,85 € Umsatzsteuer
           </div>
+          <p class="text-sm text-gray-500 mt-2">
+            Keine einmaligen Kosten • Monatlich kündbar
+          </p>
+        </div>
+      <div class="flex flex-col gap-2">
+          <UButton
+            label="Abonnement abschließen"
+            trailing-icon="i-heroicons-rocket-launch"
+            class="w-full"
+            :ui="{
+              trailingIcon: 'ml-auto',
+            }"
+            :loading="isStartingCheckout"
+            @click="startCheckoutSession"
+          />
         </div>
       </template>
       <template v-else>
