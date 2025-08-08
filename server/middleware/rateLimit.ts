@@ -1,9 +1,9 @@
 const WINDOW_MS = 60_000
-const MAX_REQUESTS = 100
+const MAX_REQUESTS = 1000
 const CLEANUP_INTERVAL = 60_000
 
 // TODO: Use redis
-// TODO: Incorporate user-based rate limiting
+// TODO: Incorporate user-based rate limiting (per website)
 const rateLimitMap = new Map<string, { count: number, lastReset: number }>()
 
 setInterval(() => {
