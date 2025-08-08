@@ -8,7 +8,11 @@ const { appHost } = useRuntimeConfig().public
     <p>
       Diese Seite konnte nicht gefunden werden.
     </p>
-    <div class="mt-4 flex items-center">
+    <div class="mt-4 flex items-center gap-2">
+      <UButton
+        label="Anmelden"
+        :to="`https://${appHost}/login`"
+      />
       <UButton
         label="Zur Startseite"
         :to="`https://${appHost}`"
