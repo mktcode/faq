@@ -73,19 +73,20 @@ async function updateEmail() {
         </div>
       </template>
       <template v-else>
-        <p class="text-gray-400">
-          Mit einem Abonnement erhalten Sie Zugriff auf erweiterte Funktionen und individuellere Gestaltungsmöglichkeiten.
-        </p>
-        <ul class="list-disc list-inside text-gray-400">
-          <li>Domain und E-Mail-Adresse inkl.</li>
-          <li>Mehr Speicherplatz für Bilder und Downloads</li>
-          <li>KI-Assisstent für Anfragen und FAQ</li>
-          <li>Individuelle Gestaltung verfügbar (ab einmalig 500 €)</li>
-        </ul>
-        <p class="text-gray-400">
-          Bitte geben Sie Ihre E-Mail-Adresse an, um ein Plus-Abonnement abzuschließen.
-          Sie bekommen eine E-Mail mit einem Bestätigungslink, um Ihre E-Mail-Adresse zu verifizieren.
-          Danach können Sie über unseren Zahlungsdienstleister Stripe ein Abonnement abschließen, monatlich kündbar.
+        <div class="text-center border border-gray-200 p-4 rounded-xl">
+          <div class="flex items-baseline justify-center gap-2 mb-2">
+            <span class="text-3xl font-bold text-gray-900 dark:text-white">17,85 €</span>
+            <span class="text-lg text-gray-600">/Monat</span>
+          </div>
+          <div class="text-sm text-gray-500 mb-1">
+            15 € Netto + 2,85 € Umsatzsteuer
+          </div>
+          <p class="text-sm text-gray-500 mt-2">
+            Keine einmaligen Kosten • Monatlich kündbar
+          </p>
+        </div>
+        <p class="text-gray-600">
+          Ihre monatliche Rechnung erhalten Sie per E-Mail. Geben Sie dazu bitte eine vorhandene E-Mail-Adresse an und bestätigen Sie diese, in dem Sie auf den Link klicken, den wir Ihnen zusenden.
         </p>
         <UInput
           v-model="emailToVerify"
