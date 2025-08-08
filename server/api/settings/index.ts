@@ -15,6 +15,7 @@ export default defineEventHandler(async (event) => {
     .where('userName', '=', username)
     .executeTakeFirstOrThrow()
 
+  // TODO: auto-repair settings with defaults
   return settingsFormSchema.parse(
     typeof user.settings === 'string'
       ? JSON.parse(user.settings)
