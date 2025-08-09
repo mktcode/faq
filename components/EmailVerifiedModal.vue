@@ -1,6 +1,12 @@
 <script setup lang="ts">
 const isOpen = ref(true)
 const { isStartingCheckout, startCheckoutSession } = useCheckoutSession()
+const { settings, saveSettings, isSavingSettings } = await useProfile()
+
+async function saveAndStartCheckout() {
+  await saveSettings()
+  startCheckoutSession()
+}
 </script>
 
 <template>
@@ -16,6 +22,43 @@ const { isStartingCheckout, startCheckoutSession } = useCheckoutSession()
         <p class="text-center text-gray-600">
           Vielen Dank! Sie können nun ein Abonnement abschließen, um Zugriff auf erweiterte Funktionen zu erhalten.
         </p>
+        <div class="flex flex-col gap-2">
+          <UFormField label="Name Ihres Unternehmens">
+            <UInput
+              v-model="settings.company.name"
+              placeholder="Geben Sie den Titel Ihres Unternehmens ein"
+              class="w-full"
+            />
+          </UFormField>
+          <UFormField label="Straße und Hausnummer">
+            <UInput
+              v-model="settings.company.street"
+              placeholder="Geben Sie die Straße und Hausnummer ein"
+              class="w-full"
+            />
+          </UFormField>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <UFormField
+              label="PLZ"
+              class="w-32"
+            >
+              <UInput
+                v-model="settings.company.zip"
+                placeholder="Postleitzahl"
+              />
+            </UFormField>
+            <UFormField
+              label="Stadt"
+              class="flex-1"
+            >
+              <UInput
+                v-model="settings.company.city"
+                placeholder="Geben Sie die Stadt ein"
+                class="w-full"
+              />
+            </UFormField>
+          </div>
+        </div>
         <UButton
           label="Abonnement abschließen"
           trailing-icon="i-heroicons-rocket-launch"
@@ -23,8 +66,8 @@ const { isStartingCheckout, startCheckoutSession } = useCheckoutSession()
           :ui="{
             trailingIcon: 'ml-auto',
           }"
-          :loading="isStartingCheckout"
-          @click="startCheckoutSession"
+          :loading="isStartingCheckout || isSavingSettings"
+          @click="saveAndStartCheckout"
         />
         <UButton
           label="Später"

@@ -11,6 +11,7 @@ export const useProfile = async () => {
   const isPublic = useState<boolean>('isPublic', () => false)
   const design = useState<string>('design', () => 'default')
   const settings = useState<SettingsForm>('settings', () => defaultSettings)
+  const isSavingSettings = ref(false)
   const showLegalDataWarning = computed(() => isOwned && (!settings.value?.company?.name || !settings.value?.company?.city || !settings.value?.company?.street || !settings.value?.company?.zip || !settings.value?.company?.email))
   const designRounded = computed(() => settings.value.design.rounded)
 
@@ -36,6 +37,9 @@ export const useProfile = async () => {
   }
 
   async function saveSettings() {
+    if (isSavingSettings.value) return
+    isSavingSettings.value = true
+
     await $fetch('/api/user/settings', {
       method: 'POST',
       body: settings.value,
@@ -46,6 +50,7 @@ export const useProfile = async () => {
       color: 'success',
     })
     refreshSettings()
+    isSavingSettings.value = false
   }
 
   return {
@@ -56,6 +61,7 @@ export const useProfile = async () => {
     design,
     path,
     settings,
+    isSavingSettings,
     refreshSettings,
     saveSettings,
     showLegalDataWarning,

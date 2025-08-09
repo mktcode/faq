@@ -3,6 +3,8 @@ const { stripePortalUrl } = useRuntimeConfig().public
 const { me } = await useMe()
 const { isStartingCheckout, startCheckoutSession } = useCheckoutSession()
 
+const { settings, saveSettings, isSavingSettings } = await useProfile()
+
 const emailToVerify = ref(me.value?.email || '')
 const isUpdatingEmail = ref(false)
 const showEmailVerificationHint = ref(false)
@@ -17,6 +19,11 @@ async function updateEmail() {
 
   showEmailVerificationHint.value = true
   isUpdatingEmail.value = false
+}
+
+async function saveAndStartCheckout() {
+  await saveSettings()
+  startCheckoutSession()
 }
 </script>
 
@@ -53,17 +60,52 @@ async function updateEmail() {
           </p>
         </div>
         <div class="flex flex-col gap-2">
-          <UButton
-            label="Abonnement abschließen"
-            trailing-icon="i-heroicons-rocket-launch"
-            class="w-full"
-            :ui="{
-              trailingIcon: 'ml-auto',
-            }"
-            :loading="isStartingCheckout"
-            @click="startCheckoutSession"
-          />
+          <UFormField label="Name Ihres Unternehmens">
+            <UInput
+              v-model="settings.company.name"
+              placeholder="Geben Sie den Titel Ihres Unternehmens ein"
+              class="w-full"
+            />
+          </UFormField>
+          <UFormField label="Straße und Hausnummer">
+            <UInput
+              v-model="settings.company.street"
+              placeholder="Geben Sie die Straße und Hausnummer ein"
+              class="w-full"
+            />
+          </UFormField>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <UFormField
+              label="PLZ"
+              class="w-32"
+            >
+              <UInput
+                v-model="settings.company.zip"
+                placeholder="Postleitzahl"
+              />
+            </UFormField>
+            <UFormField
+              label="Stadt"
+              class="flex-1"
+            >
+              <UInput
+                v-model="settings.company.city"
+                placeholder="Geben Sie die Stadt ein"
+                class="w-full"
+              />
+            </UFormField>
+          </div>
         </div>
+        <UButton
+          label="Abonnement abschließen"
+          trailing-icon="i-heroicons-rocket-launch"
+          class="w-full"
+          :ui="{
+            trailingIcon: 'ml-auto',
+          }"
+          :loading="isStartingCheckout || isSavingSettings"
+          @click="saveAndStartCheckout"
+        />
       </template>
       <template v-else>
         <div class="text-center border border-gray-200 p-4 rounded-xl">
