@@ -1,4 +1,5 @@
 import type { H3Event } from 'h3'
+import { checkSubscriptionStatus } from '~/server/utils/user'
 
 interface HostType {
   currentHost: string
@@ -40,16 +41,6 @@ function determineHostType(event: H3Event): HostType {
     isSubdomain,
     isCustomDomain,
   }
-}
-
-function checkSubscriptionStatus(lastPaidAt: Date | null): boolean {
-  if (!lastPaidAt) {
-    return false
-  }
-
-  const now = new Date()
-  const thirtyOneDaysAgo = new Date(now.getTime() - (31 * 24 * 60 * 60 * 1000))
-  return lastPaidAt >= thirtyOneDaysAgo
 }
 
 async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUser | undefined): Promise<void> {

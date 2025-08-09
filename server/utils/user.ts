@@ -79,7 +79,7 @@ export async function createUser({
 }
 
 // TODO: Should be checked on database level
-export function checkSubscribed(lastPaidAt: Date | string | null): boolean {
+export function checkSubscriptionStatus(lastPaidAt: Date | string | null): boolean {
   if (!lastPaidAt) {
     return false
   }
@@ -105,7 +105,7 @@ export async function getMe(event: H3Event) {
     return null
   }
 
-  const isSubscribed = checkSubscribed(userInDb.lastPaidAt)
+  const isSubscribed = checkSubscriptionStatus(userInDb.lastPaidAt)
 
   return {
     ...userInDb,
@@ -143,7 +143,7 @@ export async function requireProfileSubscription(username: string) {
     .where('userName', '=', username)
     .executeTakeFirst()
 
-  const isSubscribed = checkSubscribed(user?.lastPaidAt || null) || false
+  const isSubscribed = checkSubscriptionStatus(user?.lastPaidAt || null) || false
 
   if (!isSubscribed) {
     throw createError({
