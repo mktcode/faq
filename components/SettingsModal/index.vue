@@ -49,10 +49,16 @@ const active = ref<string | undefined>(undefined)
 </script>
 
 <template>
-  <UModal
+  <USlideover
     v-model:open="showModal"
+    side="left"
+    close-icon="i-heroicons-arrow-left"
+    :overlay="false"
     :ui="{
       body: '!p-0',
+    }"
+    :close="{
+      size: 'md',
     }"
   >
     <template #title>
@@ -64,6 +70,7 @@ const active = ref<string | undefined>(undefined)
         Einstellungen
       </h3>
     </template>
+
     <template #body>
       <div class="p-4 border-b border-gray-200">
         <USwitch
@@ -101,5 +108,5 @@ const active = ref<string | undefined>(undefined)
         </template>
       </UAccordion>
     </template>
-  </UModal>
+  </USlideover>
 </template>

@@ -110,13 +110,16 @@ async function deleteImage(image: 'logo' | 'header') {
 </script>
 
 <template>
-  <UDrawer
+  <USlideover
     v-model:open="showModal"
-    :ui="{
-      container: 'max-w-2xl mx-auto',
+    side="left"
+    close-icon="i-heroicons-arrow-left"
+    :overlay="false"
+    :close="{
+      size: 'md',
     }"
   >
-    <template #header>
+    <template #title>
       <h3 class="text-lg font-semibold flex items-center gap-2">
         <UIcon
           name="i-heroicons-paint-brush"
@@ -125,6 +128,7 @@ async function deleteImage(image: 'logo' | 'header') {
         Design
       </h3>
     </template>
+
     <template #body>
       <div class="flex flex-col gap-4">
         <div class="flex gap-2">
@@ -336,5 +340,5 @@ async function deleteImage(image: 'logo' | 'header') {
         />
       </div>
     </template>
-  </UDrawer>
+  </USlideover>
 </template>

@@ -3,13 +3,19 @@ const showModal = useState('showContentModal', () => false)
 </script>
 
 <template>
-  <UDrawer
+  <USlideover
     v-model:open="showModal"
+    side="left"
+    close-icon="i-heroicons-arrow-left"
+    :overlay="false"
     :ui="{
-      container: 'max-w-2xl mx-auto',
+      body: '!p-0',
+    }"
+    :close="{
+      size: 'md',
     }"
   >
-    <template #header>
+    <template #title>
       <h3 class="text-lg font-semibold flex items-center gap-2">
         <UIcon
           name="i-lucide-letter-text"
@@ -18,6 +24,7 @@ const showModal = useState('showContentModal', () => false)
         Inhalt und Funktion
       </h3>
     </template>
+    
     <template #body>
       <DismissableAlert
         title="Sichtbarkeit und Reihenfolge"
@@ -38,5 +45,5 @@ const showModal = useState('showContentModal', () => false)
       </DismissableAlert>
       <ContentModalAccordion />
     </template>
-  </UDrawer>
+  </USlideover>
 </template>
