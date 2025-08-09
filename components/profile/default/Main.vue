@@ -60,6 +60,8 @@ appConfig.ui.textarea.defaultVariants.rounded = settings.value.design.rounded
     </div>
 
     <template v-if="me">
+      <DesignModal @update="refreshSettings" />
+      <ContentModal @update="refreshSettings" />
       <EmailVerifiedModal v-if="emailVerified" />
       <SubscriptionSuccessModal v-if="subscriptionSuccess" />
       <LinksModal @update="refreshSettings" />

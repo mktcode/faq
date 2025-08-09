@@ -7,10 +7,19 @@ const showDesignModal = useState('showDesignModal', () => false)
 const showContentModal = useState('showContentModal', () => false)
 const showFeedbackModal = useState('showFeedbackModal', () => false)
 
-const showOverlay = ref(true)
-setTimeout(() => {
-  showOverlay.value = false
-}, 5000)
+function closeAndOpenDesign() {
+  showMenu.value = false
+  setTimeout(() => {
+    showDesignModal.value = true
+  }, 750)
+}
+
+function closeAndOpenContent() {
+  showMenu.value = false
+  setTimeout(() => {
+    showContentModal.value = true
+  }, 750)
+}
 </script>
 
 <template>
@@ -49,7 +58,7 @@ setTimeout(() => {
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
-        @click="showDesignModal = true"
+        @click="closeAndOpenDesign"
       />
 
       <UButton
@@ -58,12 +67,10 @@ setTimeout(() => {
         class="w-full rounded-none p-4"
         variant="ghost"
         color="neutral"
-        @click="showContentModal = true"
+        @click="closeAndOpenContent"
       />
 
       <SettingsModal @update="refreshSettings" />
-      <DesignModal @update="refreshSettings" />
-      <ContentModal @update="refreshSettings" />
     </template>
 
     <template #footer>

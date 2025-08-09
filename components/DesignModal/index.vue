@@ -110,13 +110,17 @@ async function deleteImage(image: 'logo' | 'header') {
 </script>
 
 <template>
-  <USlideover
+  <UDrawer
     v-model:open="showModal"
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"
     :close="{
       size: 'md',
+    }"
+    :ui="{
+      content: 'shadow-2xl shadow-black',
+      container: 'max-w-lg mx-auto',
     }"
   >
     <template #title>
@@ -340,5 +344,5 @@ async function deleteImage(image: 'logo' | 'header') {
         />
       </div>
     </template>
-  </USlideover>
+  </UDrawer>
 </template>

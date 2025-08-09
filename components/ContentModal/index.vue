@@ -3,13 +3,15 @@ const showModal = useState('showContentModal', () => false)
 </script>
 
 <template>
-  <USlideover
+  <UDrawer
     v-model:open="showModal"
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"
     :ui="{
+      content: 'shadow-2xl shadow-black',
       body: '!p-0',
+      container: 'max-w-lg mx-auto',
     }"
     :close="{
       size: 'md',
@@ -45,5 +47,5 @@ const showModal = useState('showContentModal', () => false)
       </DismissableAlert>
       <ContentModalAccordion />
     </template>
-  </USlideover>
+  </UDrawer>
 </template>
