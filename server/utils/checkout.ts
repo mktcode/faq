@@ -33,16 +33,19 @@ export async function requireCompleteStripeCustomer(
   const { stripeApiSecretKey } = useRuntimeConfig()
   const stripe = new Stripe(stripeApiSecretKey)
 
-  const address = {
-    city: settings.company.city,
-    country: 'DE',
-    postal_code: settings.company.zip,
-  }
-  const metadata = {
-    solihostUserId: userId.toString(),
-  }
-  const tax = {
-    validate_location: 'immediately' as const
+  const stripeCustomerData = {
+    name: settings.company.name,
+    address: {
+      city: settings.company.city,
+      country: 'DE',
+      postal_code: settings.company.zip,
+    },
+    metadata: {
+      solihostUserId: userId.toString(),
+    },
+    tax: {
+      validate_location: 'immediately' as const
+    }
   }
 
   const customers = await stripe.customers.list({ email })
@@ -55,11 +58,11 @@ export async function requireCompleteStripeCustomer(
   let finalCustomerId = null
 
   if (foundCustomer) {
-    await stripe.customers.update(foundCustomer.id, { address, metadata, tax })
+    await stripe.customers.update(foundCustomer.id, stripeCustomerData)
     finalCustomerId = foundCustomer.id
   }
   else {
-    const newStripeCustomer = await stripe.customers.create({ email, address, metadata, tax })
+    const newStripeCustomer = await stripe.customers.create({ email, ...stripeCustomerData })
     finalCustomerId = newStripeCustomer.id
   }
 
