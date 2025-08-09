@@ -33,10 +33,11 @@ export async function requireCompleteStripeCustomer(
   const { stripeApiSecretKey } = useRuntimeConfig()
   const stripe = new Stripe(stripeApiSecretKey)
 
-  const stripeCustomerData = {
+  const stripeCustomerData: Stripe.CustomerCreateParams = {
     name: settings.company.name,
     address: {
       city: settings.company.city,
+      line1: settings.company.street,
       country: 'DE',
       postal_code: settings.company.zip,
     },
