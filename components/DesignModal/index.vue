@@ -137,6 +137,30 @@ async function deleteImage(image: 'logo' | 'header') {
     <template #body>
       <div class="flex flex-col gap-4">
         <div class="flex gap-2">
+          <ColorPicker
+            v-model:color="settings.design.color"
+            label="Primäre Farbe"
+            :disabled-colors="['black', 'white']"
+          />
+          <UFormField
+            label="Stil"
+            class="flex-1"
+          >
+            <USelect
+              v-model="settings.design.rounded"
+              class="w-full"
+              :items="[
+                { label: 'Eckig', value: 'none' },
+                { label: 'Rund', value: 'md' },
+                { label: 'Sehr rund', value: 'xl' },
+              ]"
+            />
+          </UFormField>
+        </div>
+        <UFormField label="Schriftart">
+          <FontPicker v-model:font="settings.design.font" />
+        </UFormField>
+        <div class="flex gap-2">
           <UFormField
             label="Titel"
             class="flex-1 w-full"
@@ -316,27 +340,6 @@ async function deleteImage(image: 'logo' | 'header') {
             />
           </UFormField>
         </div>
-        <div class="flex gap-2">
-          <ColorPicker
-            v-model:color="settings.design.color"
-            label="Primäre Farbe"
-          />
-          <UFormField
-            label="Stil"
-            class="flex-1"
-          >
-            <USelect
-              v-model="settings.design.rounded"
-              class="w-full"
-              :items="[
-                { label: 'Eckig', value: 'none' },
-                { label: 'Rund', value: 'md' },
-                { label: 'Sehr rund', value: 'xl' },
-              ]"
-            />
-          </UFormField>
-        </div>
-        <FontPicker v-model:font="settings.design.font" />
         <UButton
           label="Einstellungen speichern"
           variant="solid"
