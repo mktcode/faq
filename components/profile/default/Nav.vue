@@ -1,6 +1,9 @@
 <script setup lang="ts">
 const { showLegalDataWarning, refreshSettings } = await useProfile()
 
+const { clear } = useUserSession()
+const { refreshMe } = await useMe()
+
 const showMenu = ref(false)
 const showSettingsModal = useState('showSettingsModal', () => false)
 const showDesignModal = useState('showDesignModal', () => false)
@@ -19,6 +22,11 @@ function closeAndOpenContent() {
   setTimeout(() => {
     showContentModal.value = true
   }, 600)
+}
+
+async function signOut() {
+  await clear()
+  refreshMe()
 }
 </script>
 
@@ -79,6 +87,12 @@ function closeAndOpenContent() {
         variant="ghost"
         icon="i-heroicons-chat-bubble-left-right"
         @click="showMenu = false; showFeedbackModal = true"
+      />
+      <UButton
+        label="Abmelden"
+        icon="i-heroicons-power"
+        variant="ghost"
+        @click="signOut"
       />
     </template>
   </USlideover>
