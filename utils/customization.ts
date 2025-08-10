@@ -117,18 +117,6 @@ export const availableColors = ref([
     value: 'slate',
   },
   {
-    label: 'Grau',
-    value: 'gray',
-  },
-  {
-    label: 'Zink',
-    value: 'zinc',
-  },
-  {
-    label: 'Neutral',
-    value: 'neutral',
-  },
-  {
     label: 'Stein',
     value: 'stone',
   },
