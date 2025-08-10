@@ -14,14 +14,14 @@ function closeAndOpenDesign() {
   showMenu.value = false
   setTimeout(() => {
     showDesignModal.value = true
-  }, 600)
+  }, 500)
 }
 
 function closeAndOpenContent() {
   showMenu.value = false
   setTimeout(() => {
     showContentModal.value = true
-  }, 600)
+  }, 500)
 }
 
 async function signOut() {
