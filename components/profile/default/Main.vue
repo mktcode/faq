@@ -11,6 +11,7 @@ useHead({
   title: settings.value.meta.title || settings.value.header.title || settings.value.company.name || 'Solihost Website',
   meta: [
     { name: 'robots', content: isPublic ? 'index, follow' : 'noindex, nofollow' },
+    { name: 'theme-color', content: settings.value.design.color },
     { property: 'og:image', content: settings.value.meta.ogimage || settings.value.header.image || '' },
     {
       name: 'description',
