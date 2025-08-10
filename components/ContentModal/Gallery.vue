@@ -117,7 +117,6 @@ async function deleteImage(index: number) {
             v-if="item.disabled"
             label="Premium"
             variant="outline"
-            class="mr-2"
           />
         </template>
       </USelect>

@@ -41,6 +41,7 @@ async function signOut() {
     :ui="{
       body: '!p-0',
       overlay: 'backdrop-blur-xs',
+      footer: 'justify-between',
     }"
   >
     <UButton
@@ -84,7 +85,6 @@ async function signOut() {
     <template #footer>
       <UButton
         label="Feedback"
-        variant="ghost"
         icon="i-heroicons-chat-bubble-left-right"
         @click="showMenu = false; showFeedbackModal = true"
       />

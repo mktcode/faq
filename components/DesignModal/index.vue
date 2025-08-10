@@ -1,10 +1,11 @@
 <script setup lang="ts">
 const showModal = useState('showDesignModal', () => false)
 const toast = useToast()
-const { settings, saveSettings } = await useProfile()
+const { settings, saveSettings, isSubscribed } = await useProfile()
 
 const headerImageInput = ref<HTMLInputElement | null>(null)
 const logoInput = ref<HTMLInputElement | null>(null)
+const showUploadHeaderModal = ref(false)
 
 const uploadHeaderImage = async (files: FileList | null) => {
   if (!files || files.length === 0) return
@@ -63,6 +64,7 @@ const uploadLogo = async (file: File | null) => {
 
 const handleHeaderImageInputChange = () => {
   uploadHeaderImage(headerImageInput.value?.files || null)
+  showUploadHeaderModal.value = false
 }
 
 const handleLogoInputChange = () => {
@@ -228,7 +230,7 @@ async function deleteImage(image: 'logo' | 'header') {
               class="absolute inset-0 z-10"
               :class="getColorClass(settings.header.imageOverlay.color)"
               :style="{ opacity: settings.header.imageOverlay.opacity / 100 }"
-              @click.stop="clickHeaderImageInput"
+              @click.stop="showUploadHeaderModal = true"
             />
             <div class="flex flex-col items-center justify-center pt-5 p-6 z-10 pointer-events-none">
               <UIcon
@@ -347,6 +349,59 @@ async function deleteImage(image: 'logo' | 'header') {
           @click="saveSettings"
         />
       </div>
+      <UModal
+        v-model:open="showUploadHeaderModal"
+        title="Hintergrund auswählen"
+        :dismissible="false"
+        :ui="{
+          body: 'flex flex-col !p-0',
+        }"
+      >
+        <template #body>
+          <UButton
+            label="Bild auswählen"
+            icon="i-heroicons-camera"
+            class="w-full rounded-none p-4 border-b border-gray-200"
+            variant="ghost"
+            color="neutral"
+            @click="clickHeaderImageInput"
+          />
+          <UButton
+            label="Bild generieren"
+            icon="i-heroicons-sparkles"
+            class="w-full rounded-none p-4 border-b border-gray-200"
+            variant="ghost"
+            color="neutral"
+            :disabled="!isSubscribed"
+          >
+            <template #trailing>
+              <UBadge
+                v-if="!isSubscribed"
+                label="Premium"
+                variant="outline"
+                class="ml-auto"
+              />
+            </template>
+          </UButton>
+          <UButton
+            label="Video auswählen"
+            icon="i-heroicons-play"
+            class="w-full rounded-none p-4"
+            variant="ghost"
+            color="neutral"
+            :disabled="!isSubscribed"
+          >
+            <template #trailing>
+              <UBadge
+                v-if="!isSubscribed"
+                label="Premium"
+                variant="outline"
+                class="ml-auto"
+              />
+            </template>
+          </UButton>
+        </template>
+      </UModal>
     </template>
   </UDrawer>
 </template>
