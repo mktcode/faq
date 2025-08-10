@@ -1,6 +1,7 @@
 <script setup lang="ts">
 defineProps<{
   label?: string
+  disabledColors?: string[]
 }>()
 
 const color = defineModel('color', {
@@ -17,7 +18,7 @@ const color = defineModel('color', {
     <USelect
       v-model="color"
       class="w-full"
-      :items="availableColors"
+      :items="availableColors.filter(color => !disabledColors?.includes(color.value))"
       :ui="{
         content: 'w-44',
       }"

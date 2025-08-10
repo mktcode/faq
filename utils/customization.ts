@@ -37,6 +37,14 @@ export type AvailableFont = typeof availableFonts.value[number]
 
 export const availableColors = ref([
   {
+    label: 'Schwarz',
+    value: 'black',
+  },
+  {
+    label: 'Weiß',
+    value: 'white',
+  },
+  {
     label: 'Rot',
     value: 'red',
   },

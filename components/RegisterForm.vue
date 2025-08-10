@@ -49,6 +49,7 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
         v-model:color="settings.design.color"
         label="Primärfarbe"
         class="w-full max-w-lg mx-auto"
+        :disabled-colors="['black', 'white']"
       />
       <FontPicker
         v-model:font="settings.design.font"
