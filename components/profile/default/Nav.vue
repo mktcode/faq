@@ -11,14 +11,14 @@ function closeAndOpenDesign() {
   showMenu.value = false
   setTimeout(() => {
     showDesignModal.value = true
-  }, 750)
+  }, 600)
 }
 
 function closeAndOpenContent() {
   showMenu.value = false
   setTimeout(() => {
     showContentModal.value = true
-  }, 750)
+  }, 600)
 }
 </script>
 
