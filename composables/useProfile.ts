@@ -47,7 +47,7 @@ export const useProfile = async () => {
     toast.add({
       title: 'Einstellungen gespeichert',
       description: 'Deine Einstellungen wurden erfolgreich gespeichert.',
-      color: 'success',
+      color: 'primary',
     })
     refreshSettings()
     isSavingSettings.value = false
