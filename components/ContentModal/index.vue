@@ -8,6 +8,7 @@ const showModal = useState('showContentModal', () => false)
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"
+    :close-threshold="0.85"
     :ui="{
       content: 'shadow-2xl shadow-black',
       body: '!p-0',

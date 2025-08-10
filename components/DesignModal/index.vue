@@ -115,6 +115,7 @@ async function deleteImage(image: 'logo' | 'header') {
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"
+    :close-threshold="0.85"
     :close="{
       size: 'md',
     }"
