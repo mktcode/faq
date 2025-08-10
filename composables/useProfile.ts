@@ -2,6 +2,7 @@ import { defaultSettings, type SettingsForm } from '~/types/db'
 
 export const useProfile = async () => {
   const { ssrContext } = useNuxtApp()
+  const appConfig = useAppConfig()
   const toast = useToast()
   const path = useRoute().path
 
@@ -14,6 +15,7 @@ export const useProfile = async () => {
   const isSavingSettings = ref(false)
   const showLegalDataWarning = computed(() => isOwned && (!settings.value?.company?.name || !settings.value?.company?.city || !settings.value?.company?.street || !settings.value?.company?.zip || !settings.value?.company?.email))
   const designRounded = computed(() => settings.value.design.rounded)
+  const font = computed(() => settings.value.design.font)
 
   let refreshSettings = async () => {}
 
@@ -35,6 +37,14 @@ export const useProfile = async () => {
     }
     refreshSettings = refresh
   }
+
+  watch(settings.value, () => {
+    appConfig.ui.colors.primary = settings.value.design.color
+    appConfig.ui.button.defaultVariants.rounded = settings.value.design.rounded
+    appConfig.ui.input.defaultVariants.rounded = settings.value.design.rounded
+    appConfig.ui.select.defaultVariants.rounded = settings.value.design.rounded
+    appConfig.ui.textarea.defaultVariants.rounded = settings.value.design.rounded
+  }, { immediate: true })
 
   async function saveSettings() {
     if (isSavingSettings.value) return
@@ -66,5 +76,6 @@ export const useProfile = async () => {
     saveSettings,
     showLegalDataWarning,
     designRounded,
+    font,
   }
 }

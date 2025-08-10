@@ -5,7 +5,7 @@ const subscriptionSuccess = !!route.query.subscriptionSuccess
 
 const { me } = await useMe()
 
-const { settings, refreshSettings, isOwned, isPublic } = await useProfile()
+const { settings, refreshSettings, isOwned, isPublic, font } = await useProfile()
 
 useHead({
   title: settings.value.meta.title || settings.value.header.title || settings.value.company.name || 'Solihost Website',
@@ -29,14 +29,6 @@ useHead({
     },
   ],
 })
-
-const appConfig = useAppConfig()
-const font = computed(() => settings.value.design.font)
-appConfig.ui.colors.primary = settings.value.design.color
-appConfig.ui.button.defaultVariants.rounded = settings.value.design.rounded
-appConfig.ui.input.defaultVariants.rounded = settings.value.design.rounded
-appConfig.ui.select.defaultVariants.rounded = settings.value.design.rounded
-appConfig.ui.textarea.defaultVariants.rounded = settings.value.design.rounded
 </script>
 
 <template>
