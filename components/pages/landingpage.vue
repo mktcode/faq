@@ -110,29 +110,28 @@ watch(acc2active, (newVal) => {
             S
           </div>
           <span class="font-extrabold tracking-[.2px]">Solihost</span>
-          <span class="inline-block px-2 py-[.1rem] rounded-full border text-[.8rem] bg-white border-black/15 text-slate-600 dark:bg-white/10 dark:border-white/15 dark:text-[#b3bfd1]">
-            beta
-          </span>
         </div>
         <div class="flex items-center gap-2">
           <button
             type="button"
-            class="inline-flex items-center gap-2 px-5 py-4 rounded-[12px] font-semibold tracking-[.2px] border border-slate-900/10 bg-white/10 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
+            class="opacity-50 hover:opacity-100 inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-3 rounded-[12px] font-semibold tracking-[.2px] text-slate-900 transition duration-200 dark:text-[#e7ecf4]"
             aria-label="Farbschema wechseln"
-            title="Farbschema wechseln"
+            :title="colorMode === 'dark' ? 'Tagmodus' : 'Nachtmodus'"
             @click="toggleColorMode"
           >
             <UIcon
               v-if="colorMode === 'dark'"
               name="i-heroicons-sun"
+              size="20"
             />
             <UIcon
               v-else
               name="i-heroicons-moon"
+              size="20"
             />
           </button>
           <a
-            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-slate-900/10 bg-white/10 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
+            class="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-3 rounded-[12px] font-semibold tracking-[.2px] border border-slate-900/10 bg-white/10 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
             href="tel:+4917670864627"
             aria-label="Anrufen"
           >
@@ -168,25 +167,37 @@ watch(acc2active, (newVal) => {
         >
       </video>
       <div
-        class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,.16),rgba(0,0,0,.16)),radial-gradient(100%_80%_at_20%_20%,rgba(14,165,233,.42),rgba(255,255,255,.6)_55%),linear-gradient(180deg,rgba(2,132,199,.12),rgba(2,132,199,.22))] dark:bg-[radial-gradient(100%_80%_at_20%_20%,rgba(14,165,233,.45),rgba(11,16,32,.85)_55%),linear-gradient(180deg,rgba(11,16,32,.2),rgba(11,16,32,.25))]"
+        class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,.36),rgba(0,0,0,.36)),radial-gradient(100%_80%_at_20%_20%,rgba(14,165,233,.52),rgba(255,255,255,.2)_75%),linear-gradient(180deg,rgba(2,132,199,.12),rgba(2,132,199,.22))] dark:bg-[radial-gradient(100%_80%_at_20%_20%,rgba(14,165,233,.45),rgba(11,16,32,.85)_55%),linear-gradient(180deg,rgba(11,16,32,.2),rgba(11,16,32,.25))]"
         aria-hidden="true"
       />
       <div class="relative z-[1] p-[clamp(28px,5vw,64px)] pb-0 grid gap-[22px] max-w-[900px] text-white dark:text-[#e7ecf4]">
         <h1 class="m-0 text-[clamp(28px,4vw,52px)] leading-[1.1]">
-          Ihr professioneller Auftritt – <span class="text-[#56bae9]">klar, rechtssicher</span> und ohne unnötige Kosten.
+          Ihr professioneller Auftritt – <span class="font-semibold text-sky-400 text-shadow-sky-950/20 text-shadow-md sm:text-shadow-lg">klar, rechtssicher</span> und ohne unnötige Kosten.
         </h1>
         <p class="m-0 text-[clamp(16px,2.1vw,20px)] text-white/90 dark:text-[#b3bfd1]">
           Wir begleiten Freiberufler &amp; Einzelunternehmer Schritt für Schritt – von der Einrichtung der Buchhaltung über die erste Sichtbarkeit im Netz bis zur eigenen Website mit Domain und E-Mail-Postfächern. Verständlich, fokussiert und mit Blick auf das, was sich wirklich für Sie lohnt.
         </p>
         <div class="flex flex-wrap gap-3 mt-2">
           <a
-            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200 border-b border-white/50 hover:border-white/70 hover:bg-gradient-to-b hover:ring-white/50 hover:shadow-[0_6px_18px_rgba(14,165,233,.55)]"
+            class="w-full sm:w-auto inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200 border-b border-white/50 hover:border-white/70 hover:bg-gradient-to-b hover:ring-white/50 hover:shadow-[0_6px_18px_rgba(14,165,233,.55)]"
             :href="me ? `https://${me.userName}.${appHost}` : '/register'"
-          >Kostenlose Website erstellen</a>
+          >
+            <UIcon
+              name="i-heroicons-globe-alt"
+              size="20"
+            />
+            Website erstellen
+          </a>
           <a
-            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 bg-white/10 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
+            class="w-full sm:w-auto inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 bg-white/10 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
             href="tel:+4917670864627"
-          >Erstberatung am Telefon</a>
+          >
+            <UIcon
+              name="i-lucide-headset"
+              size="20"
+            />
+            IT-Support
+          </a>
         </div>
       </div>
       <div class="grid md:grid-cols-3 grid-cols-1 gap-[14px] my-[26px] mb-[10px] relative z-[1] p-[clamp(28px,5vw,64px)] pt-0">
