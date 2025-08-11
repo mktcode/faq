@@ -157,15 +157,15 @@ watch(acc2active, (newVal) => {
           type="video/mp4"
         >
       </video>
-      <div
-        class="absolute inset-0 bg-[radial-gradient(100%_80%_at_20%_20%,rgba(14,165,233,.45),rgba(11,16,32,.85)_55%),linear-gradient(180deg,rgba(11,16,32,.2),rgba(11,16,32,.25))]"
-        aria-hidden="true"
-      />
-      <div class="relative z-[1] p-[clamp(28px,5vw,64px)] pb-0 grid gap-[22px] max-w-[900px] text-[#e7ecf4]">
+  <div
+  class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,.16),rgba(0,0,0,.16)),radial-gradient(100%_80%_at_20%_20%,rgba(14,165,233,.42),rgba(255,255,255,.6)_55%),linear-gradient(180deg,rgba(2,132,199,.12),rgba(2,132,199,.22))] dark:bg-[radial-gradient(100%_80%_at_20%_20%,rgba(14,165,233,.45),rgba(11,16,32,.85)_55%),linear-gradient(180deg,rgba(11,16,32,.2),rgba(11,16,32,.25))]"
+    aria-hidden="true"
+  />
+  <div class="relative z-[1] p-[clamp(28px,5vw,64px)] pb-0 grid gap-[22px] max-w-[900px] text-white dark:text-[#e7ecf4]">
         <h1 class="m-0 text-[clamp(28px,4vw,52px)] leading-[1.1]">
-          Ihr professioneller Auftritt – <span class="text-[#0ea5e9]">klar, rechtssicher</span> und ohne unnötige Kosten.
+          Ihr professioneller Auftritt – <span class="text-[#56bae9]">klar, rechtssicher</span> und ohne unnötige Kosten.
         </h1>
-        <p class="m-0 text-[clamp(16px,2.1vw,20px)] text-[#b3bfd1]">
+  <p class="m-0 text-[clamp(16px,2.1vw,20px)] text-white/90 dark:text-[#b3bfd1]">
           Wir begleiten Freiberufler &amp; Einzelunternehmer Schritt für Schritt – von der Einrichtung der Buchhaltung über die erste Sichtbarkeit im Netz bis zur eigenen Website mit Domain und E-Mail-Postfächern. Verständlich, fokussiert und mit Blick auf das, was sich wirklich für Sie lohnt.
         </p>
         <div class="flex flex-wrap gap-3 mt-2">
@@ -174,7 +174,7 @@ watch(acc2active, (newVal) => {
             :href="me ? `https://${me.userName}.${appHost}` : '/register'"
           >Kostenlose Website erstellen</a>
           <a
-            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/10 bg-white/5 text-[#e7ecf4]"
+            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 bg-white/10 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
             href="tel:+4917670864627"
           >Erstberatung am Telefon</a>
         </div>
