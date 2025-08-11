@@ -141,7 +141,7 @@ watch(acc2active, (newVal) => {
             />
             Beratung: 0176 70 86 46 27</a>
           <a
-            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200"
+            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200 border-b border-white/50 hover:border-white/70 hover:bg-gradient-to-b hover:ring-white/50 hover:shadow-[0_6px_18px_rgba(14,165,233,.55)]"
             :href="me ? `https://${me.userName}.${appHost}` : '/register'"
           >Kostenlose Website erstellen</a>
         </div>
@@ -181,7 +181,7 @@ watch(acc2active, (newVal) => {
         </p>
         <div class="flex flex-wrap gap-3 mt-2">
           <a
-            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200"
+            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200 border-b border-white/50 hover:border-white/70 hover:bg-gradient-to-b hover:ring-white/50 hover:shadow-[0_6px_18px_rgba(14,165,233,.55)]"
             :href="me ? `https://${me.userName}.${appHost}` : '/register'"
           >Kostenlose Website erstellen</a>
           <a
@@ -362,11 +362,11 @@ watch(acc2active, (newVal) => {
         class="flex flex-wrap gap-3 mt-[18px]"
       >
         <a
-          class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200"
+          class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200 border-b border-white/50 hover:border-white/70 hover:bg-gradient-to-b hover:ring-white/50 hover:shadow-[0_6px_18px_rgba(14,165,233,.55)]"
           :href="me ? `https://${me.userName}.${appHost}` : '/register'"
         >Kostenlose Website erstellen</a>
         <a
-          class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-black/10 bg-black/5 text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
+          class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-slate-900/10 bg-white/10 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
           href="mailto:info@solihost.de"
         >Fragen? Schreiben Sie uns</a>
       </div>
