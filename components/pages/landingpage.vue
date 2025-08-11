@@ -4,6 +4,23 @@ import type { AccordionItem } from '@nuxt/ui'
 const { public: { appHost } } = useRuntimeConfig()
 const { me } = await useMe()
 
+// Lightweight color mode just for this page (no Nuxt color mode)
+const colorMode = ref<'dark' | 'light'>('dark')
+if (import.meta.client) {
+  const saved = (localStorage.getItem('lp-color-mode') as 'dark' | 'light' | null)
+  if (saved) {
+    colorMode.value = saved
+  } else {
+    colorMode.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  }
+}
+watch(colorMode, (v) => {
+  if (import.meta.client) localStorage.setItem('lp-color-mode', v)
+})
+const toggleColorMode = () => {
+  colorMode.value = colorMode.value === 'dark' ? 'light' : 'dark'
+}
+
 const acc1items = ref<AccordionItem[]>([
   {
     label: 'Klarheit: Ist Ihr Angebot in einem Satz erklärbar? Wer (genau!) ist Ihre Zielgruppe?',
@@ -79,9 +96,10 @@ watch(acc2active, (newVal) => {
 
 <template>
   <div
-    class="font-poppins bg-[#0b1020] text-[#e7ecf4] text-[16px]/[1.6]"
+    :class="[{ dark: colorMode === 'dark' }]"
+    class="font-poppins text-[16px]/[1.6] bg-slate-50 text-slate-900 dark:bg-[#0b1020] dark:text-[#e7ecf4]"
   >
-    <header class="sticky top-0 z-50 bg-[linear-gradient(180deg,rgba(11,16,32,.9),rgba(11,16,32,.75)_60%,rgba(11,16,32,0))] backdrop-saturate-150 backdrop-blur">
+    <header class="sticky top-0 z-50 backdrop-saturate-150 backdrop-blur bg-[linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,255,255,.65)_60%,rgba(255,255,255,0))] dark:bg-[linear-gradient(180deg,rgba(11,16,32,.9),rgba(11,16,32,.75)_60%,rgba(11,16,32,0))]">
       <div class="mx-auto w-[92vw] max-w-[1200px] flex items-center justify-between py-[14px]">
         <div class="flex items-center gap-3">
           <div
@@ -91,11 +109,23 @@ watch(acc2active, (newVal) => {
             S
           </div>
           <span class="font-extrabold tracking-[.2px]">Solihost</span>
-          <span class="inline-block px-2 py-[.25rem] rounded-full bg-white/10 border border-white/15 text-[.8rem] text-[#b3bfd1]">beta</span>
+          <span class="inline-block px-2 py-[.1rem] rounded-full border text-[.8rem] bg-white border-black/15 text-slate-600 dark:bg-white/10 dark:border-white/15 dark:text-[#b3bfd1]">
+            beta
+          </span>
         </div>
         <div class="flex items-center gap-2">
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 px-3 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-black/10 bg-white/80 text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
+            @click="toggleColorMode"
+            aria-label="Farbschema wechseln"
+            title="Farbschema wechseln"
+          >
+            <UIcon v-if="colorMode === 'dark'" name="i-heroicons-sun" />
+            <UIcon v-else name="i-heroicons-moon" />
+          </button>
           <a
-            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/10 bg-white/5 text-[#e7ecf4]"
+            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-black/10 bg-white/80 text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
             href="tel:+4917670864627"
             aria-label="Anrufen"
           >📞 Beratung: 0176 70 86 46 27</a>
@@ -131,7 +161,7 @@ watch(acc2active, (newVal) => {
         class="absolute inset-0 bg-[radial-gradient(100%_80%_at_20%_20%,rgba(14,165,233,.45),rgba(11,16,32,.85)_55%),linear-gradient(180deg,rgba(11,16,32,.2),rgba(11,16,32,.25))]"
         aria-hidden="true"
       />
-      <div class="relative z-[1] p-[clamp(28px,5vw,64px)] pb-0 grid gap-[22px] max-w-[900px]">
+      <div class="relative z-[1] p-[clamp(28px,5vw,64px)] pb-0 grid gap-[22px] max-w-[900px] text-[#e7ecf4]">
         <h1 class="m-0 text-[clamp(28px,4vw,52px)] leading-[1.1]">
           Ihr professioneller Auftritt – <span class="text-[#0ea5e9]">klar, rechtssicher</span> und ohne unnötige Kosten.
         </h1>
@@ -150,13 +180,13 @@ watch(acc2active, (newVal) => {
         </div>
       </div>
       <div class="grid md:grid-cols-3 grid-cols-1 gap-[14px] my-[26px] mb-[10px] relative z-[1] p-[clamp(28px,5vw,64px)] pt-0">
-        <div class="bg-[#0f162e] border border-white/10 rounded-[14px] px-[14px] py-[12px] flex items-center gap-[10px]">
+  <div class="rounded-[14px] px-[14px] py-[12px] flex items-center gap-[10px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           ✅ <strong>Cookie‑frei</strong> &amp; DSGVO-konform
         </div>
-        <div class="bg-[#0f162e] border border-white/10 rounded-[14px] px-[14px] py-[12px] flex items-center gap-[10px]">
+  <div class="rounded-[14px] px-[14px] py-[12px] flex items-center gap-[10px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           ⚡ <strong>Schnell</strong> &amp; mobil optimiert
         </div>
-        <div class="bg-[#0f162e] border border-white/10 rounded-[14px] px-[14px] py-[12px] flex items-center gap-[10px]">
+  <div class="rounded-[14px] px-[14px] py-[12px] flex items-center gap-[10px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           🔎 <strong>SEO‑ &amp; KI‑ready</strong>
         </div>
       </div>
@@ -166,24 +196,24 @@ watch(acc2active, (newVal) => {
       <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-3">
         So kommen Sie schnell zu Ergebnissen
       </h2>
-      <p class="text-[#b3bfd1] mb-7">
+      <p class="text-slate-600 dark:text-[#b3bfd1] mb-7">
         Pragmatisch statt umständlich: Wir starten schlank und verbessern gezielt, wenn sich zeigt, was wirkt.
       </p>
       <div class="grid md:grid-cols-3 grid-cols-1 gap-[18px] [counter-reset:step]">
-        <div class="bg-[#0f162e] border border-white/10 rounded-[16px] p-[18px]">
-          <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:bg-[rgba(14,165,233,.25)] before:text-[#e6f7ff] before:font-bold flex items-center">
+        <div class="border rounded-[16px] p-[18px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
+          <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:bg-sky-500 before:text-[#e6f7ff] before:font-bold flex items-center">
             Klarheit schaffen
           </h3>
           <p>Ihr Angebot auf den Punkt: Zielgruppe, Nutzenversprechen, nächste Aktion. Wir helfen bei Texten – auf Wunsch mit KI‑Unterstützung.</p>
         </div>
-        <div class="bg-[#0f162e] border border-white/10 rounded-[16px] p-[18px]">
-          <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:bg-[rgba(14,165,233,.25)] before:text-[#e6f7ff] before:font-bold flex items-center">
+        <div class="border rounded-[16px] p-[18px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
+          <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:bg-sky-500 before:text-[#e6f7ff] before:font-bold flex items-center">
             Sichtbar werden
           </h3>
           <p>Google Unternehmensprofil, Social‑Kanäle, Bewertungen – wir richten die Basics ein und verknüpfen alles sauber.</p>
         </div>
-        <div class="bg-[#0f162e] border border-white/10 rounded-[16px] p-[18px]">
-          <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:bg-[rgba(14,165,233,.25)] before:text-[#e6f7ff] before:font-bold flex items-center">
+        <div class="border rounded-[16px] p-[18px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
+          <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:bg-sky-500 before:text-[#e6f7ff] before:font-bold flex items-center">
             Website launchen
           </h3>
           <p>Technisch sauber, mobil schnell, rechtssicher. Ihr Auftritt wird zur zentralen Anlaufstelle für Links, Buchung &amp; Kontakt.</p>
@@ -195,55 +225,55 @@ watch(acc2active, (newVal) => {
       <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-3">
         Was Sie bekommen
       </h2>
-      <p class="text-[#b3bfd1] mb-7">
+      <p class="text-slate-600 dark:text-[#b3bfd1] mb-7">
         Die Standard‑Website ist kostenlos – und deckt die wichtigsten Grundlagen ab. Im Abo können wir jederzeit ausbauen.
       </p>
       <div class="grid md:grid-cols-3 grid-cols-1 gap-[18px]">
-        <div class="bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] border border-white/10 rounded-[16px] p-[18px] pb-4">
+        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] dark:border-white/10">
           <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
             <span class="inline-block w-[18px] h-[18px]">🔧</span>Technisch sauber
           </h3>
-          <p class="text-[#b3bfd1] m-0">
+          <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
             Sauberer Code, saubere Metadaten, korrekte Vorschaubilder – alles, was einen guten ersten Eindruck in Suchmaschinen &amp; Social Media ausmacht.
           </p>
         </div>
-        <div class="bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] border border-white/10 rounded-[16px] p-[18px] pb-4">
+        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] dark:border-white/10">
           <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
             <span class="inline-block w-[18px] h-[18px]">📜</span>Rechtssicher
           </h3>
-          <p class="text-[#b3bfd1] m-0">
+          <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
             Korrektes Impressum &amp; passgenaue Datenschutzerklärung – basierend auf den tatsächlich genutzten Funktionen.
           </p>
         </div>
-        <div class="bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] border border-white/10 rounded-[16px] p-[18px] pb-4">
+        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] dark:border-white/10">
           <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
             <span class="inline-block w-[18px] h-[18px]">📱</span>Mobil &amp; schnell
           </h3>
-          <p class="text-[#b3bfd1] m-0">
+          <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
             Optimiert für Smartphones und große Bildschirme. Fokus auf Ladezeit statt Ballast.
           </p>
         </div>
-        <div class="bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] border border-white/10 rounded-[16px] p-[18px] pb-4">
+        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] dark:border-white/10">
           <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
             <span class="inline-block w-[18px] h-[18px]">🧭</span>Geführt statt allein
           </h3>
-          <p class="text-[#b3bfd1] m-0">
+          <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
             Wir beraten Sie bei jedem Schritt – pragmatisch, verständlich und ohne Agentur‑Sprech.
           </p>
         </div>
-        <div class="bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] border border-white/10 rounded-[16px] p-[18px] pb-4">
+        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] dark:border-white/10">
           <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
             <span class="inline-block w-[18px] h-[18px]">🔗</span>Alle Links an einem Ort
           </h3>
-          <p class="text-[#b3bfd1] m-0">
+          <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
             Social Media, Anzeigenportale, externe Buchungskalender oder Shops: sauber verknüpft.
           </p>
         </div>
-        <div class="bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] border border-white/10 rounded-[16px] p-[18px] pb-4">
+        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] dark:border-white/10">
           <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
             <span class="inline-block w-[18px] h-[18px]">🤖</span>SEO‑ &amp; KI‑ready
           </h3>
-          <p class="text-[#b3bfd1] m-0">
+          <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
             Strukturierte Daten und Zugänglichkeit, damit Suchmaschinen &amp; Assistenten Ihre Infos korrekt verstehen.
           </p>
         </div>
@@ -257,19 +287,19 @@ watch(acc2active, (newVal) => {
       <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-3">
         Preise
       </h2>
-      <p class="text-[#b3bfd1] mb-7">
+      <p class="text-slate-600 dark:text-[#b3bfd1] mb-7">
         Wir wollen vor allem jene unterstützen, die mit nicht ganz so großem finanziellen Spielraum und ohne technische Vorkenntnisse etwas auf die Beine stellen wollen.
         Unser kostenloses Angebot ist daher so gestaltet, dass es für uns vertretbar bleibt und Ihnen einen echten Mehrwert bietet.
       </p>
       <div class="grid md:grid-cols-2 grid-cols-1 gap-[18px]">
-        <div class="bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] border border-white/10 rounded-[16px] p-[22px]">
+        <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] dark:border-white/10">
           <span class="inline-block px-2 py-[.25rem] rounded-full bg-white/10 border border-white/15 text-[.8rem] text-[#b3bfd1]">Standard</span>
           <div class="flex items-end gap-1 my-1 mb-3">
             <span class="text-[38px] font-extrabold">0 €</span> <span class="text-[#b3bfd1]">einmalig</span>
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Standard‑Website, visuell ansprechend
+              <span class="w-[18px] h-[18px] rounded-[6px] text-white bg-sky-500 dark:bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Standard‑Website, visuell ansprechend
             </li>
             <li class="flex gap-2 items-start">
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Impressum &amp; Datenschutzerklärung passend zu Funktionen
@@ -285,7 +315,7 @@ watch(acc2active, (newVal) => {
             </li>
           </ul>
         </div>
-        <div class="bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] border border-white/10 rounded-[16px] p-[22px]">
+  <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] dark:border-white/10">
           <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Premium</span>
           <div class="flex items-end gap-1 my-1 mb-3">
             <span class="text-[38px] font-extrabold">25,00 €</span> <span class="text-[#b3bfd1]">/ Monat zzgl. MwSt.</span>
@@ -321,7 +351,7 @@ watch(acc2active, (newVal) => {
           :href="me ? `https://${me.userName}.${appHost}` : '/register'"
         >Kostenlose Website erstellen</a>
         <a
-          class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/10 bg-white/5 text-[#e7ecf4]"
+          class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-black/10 bg-black/5 text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
           href="mailto:info@solihost.de"
         >Fragen? Schreiben Sie uns</a>
       </div>
@@ -331,21 +361,21 @@ watch(acc2active, (newVal) => {
       <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-3">
         Sichtbar werden ohne Website
       </h2>
-      <p class="text-[#b3bfd1] mb-7">
+      <p class="text-slate-600 dark:text-[#b3bfd1] mb-7">
         Hilfe zur Selbsthilfe: Hier finden Sie nützliche Tipps und Ressourcen, wenn Sie die Dinge gerne selbst in die Hand nehmen möchten.
         Schöpfen Sie die zahlreichen kostenlosen Möglichkeiten aus, um auch ohne eigene Website online Sichtbar zu werden und Kunden zu gewinnen.
       </p>
-      <UAccordion
+    <UAccordion
         v-model="acc1active"
         :items="acc1items"
         :unmount-on-hide="false"
         :ui="{
-          root: 'flex flex-col gap-3',
-          item: 'rounded-[16px] border border-white/10 bg-[#0f162e]',
-          trigger: 'px-4 py-3 rounded-[12px] hover:bg-white/5 text-[#e7ecf4] transition-colors',
+      root: 'flex flex-col gap-3',
+      item: 'rounded-[16px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10',
+      trigger: 'px-4 py-3 rounded-[12px] hover:bg-black/5 text-slate-900 transition-colors dark:hover:bg-white/5 dark:text-[#e7ecf4]',
           label: 'text-[1.05rem] font-semibold',
           leadingIcon: 'text-sky-500 size-8',
-          content: 'text-[#b3bfd1] text-base sm:text-lg pt-4 p-4',
+          content: 'text-slate-600 dark:text-[#b3bfd1] text-base sm:text-lg pt-4 p-4',
         }"
       >
         <template #leading="{ index }">
@@ -407,21 +437,21 @@ watch(acc2active, (newVal) => {
       <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-3 mt-16">
         Die professionelle Website
       </h2>
-      <p class="text-[#b3bfd1] mb-7">
+      <p class="text-slate-600 dark:text-[#b3bfd1] mb-7">
         Wenn Sie bereit sind, Ihre Online-Präsenz auf das nächste Level zu heben, ist eine professionelle Website der Schlüssel zum Erfolg.
         Damit Sie auch hier möglichst unabhängig agieren können, erklären wir ein paar Grundlagen, auf die Sie achten und Ihren Anbieter ansprechen sollten.
       </p>
-      <UAccordion
+    <UAccordion
         v-model="acc2active"
         :items="acc2items"
         :unmount-on-hide="false"
         :ui="{
-          root: 'flex flex-col gap-3',
-          item: 'rounded-[16px] border border-white/10 bg-[#0f162e]',
-          trigger: 'px-4 py-3 rounded-[12px] hover:bg-white/5 text-[#e7ecf4] transition-colors',
+      root: 'flex flex-col gap-3',
+      item: 'rounded-[16px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10',
+      trigger: 'px-4 py-3 rounded-[12px] hover:bg-black/5 text-slate-900 transition-colors dark:hover:bg-white/5 dark:text-[#e7ecf4]',
           label: 'text-[1.05rem] font-semibold',
           leadingIcon: 'text-sky-500 size-8',
-          content: 'text-[#b3bfd1] text-base sm:text-lg pt-4 p-4',
+          content: 'text-slate-600 dark:text-[#b3bfd1] text-base sm:text-lg pt-4 p-4',
         }"
       >
         <template #leading="{ index }">
@@ -501,7 +531,7 @@ watch(acc2active, (newVal) => {
       </UAccordion>
     </section>
 
-    <footer class="py-[38px] pb-[58px] text-[#b3bfd1]">
+    <footer class="py-[38px] pb-[58px] text-slate-600 dark:text-[#b3bfd1]">
       <div class="mx-auto w-[92vw] max-w-[1200px] flex flex-wrap gap-5 justify-between items-center">
         <div class="flex items-center gap-3">
           <div
@@ -509,14 +539,14 @@ watch(acc2active, (newVal) => {
             aria-hidden="true"
           >
             <div
-              class="w-10 h-10 text-white font-bold text-2xl rounded-[13px] bg-[radial-gradient(100%_100%_at_30%_20%,#58d0ff_0%,#0ea5e9_40%,#04669e_100%)] grid place-items-center shadow-[0_10px_18px_rgba(14,165,233,.35)]"
+              class="w-10 h-10 font-bold text-2xl rounded-[13px] text-white bg-[radial-gradient(100%_100%_at_30%_20%,#58d0ff_0%,#0ea5e9_40%,#04669e_100%)] grid place-items-center shadow-[0_10px_18px_rgba(14,165,233,.35)]"
               aria-hidden="true"
             >
               S
             </div>
           </div>
           <div>
-            <strong class="text-white text-lg">Solihost</strong><br>
+            <strong class="text-slate-900 dark:text-white text-lg">Solihost</strong><br>
             Webhosting &amp; IT‑Beratung · <a
               class="text-[#0ea5e9]"
               href="tel:+4917670864627"
@@ -547,3 +577,5 @@ watch(acc2active, (newVal) => {
     </footer>
   </div>
 </template>
+
+<!-- No scoped CSS: Tailwind dark utilities handle theming -->
