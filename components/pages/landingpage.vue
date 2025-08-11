@@ -117,7 +117,7 @@ watch(acc2active, (newVal) => {
         <div class="flex items-center gap-2">
           <button
             type="button"
-            class="inline-flex items-center gap-2 px-3 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-black/10 bg-white/80 text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
+            class="inline-flex items-center gap-2 px-5 py-4 rounded-[12px] font-semibold tracking-[.2px] border border-slate-900/10 bg-white/10 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
             aria-label="Farbschema wechseln"
             title="Farbschema wechseln"
             @click="toggleColorMode"
@@ -132,10 +132,14 @@ watch(acc2active, (newVal) => {
             />
           </button>
           <a
-            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-black/10 bg-white/80 text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
+            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-slate-900/10 bg-white/10 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
             href="tel:+4917670864627"
             aria-label="Anrufen"
-          >📞 Beratung: 0176 70 86 46 27</a>
+          >
+            <UIcon
+              name="i-heroicons-phone"
+            />
+            Beratung: 0176 70 86 46 27</a>
           <a
             class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200"
             :href="me ? `https://${me.userName}.${appHost}` : '/register'"
@@ -203,7 +207,7 @@ watch(acc2active, (newVal) => {
       <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-3">
         So kommen Sie schnell zu Ergebnissen
       </h2>
-      <p class="text-slate-600 dark:text-[#b3bfd1] mb-7">
+      <p class="text-base sm:text-lg text-slate-600 dark:text-[#b3bfd1] mb-7">
         Pragmatisch statt umständlich: Wir starten schlank und verbessern gezielt, wenn sich zeigt, was wirkt.
       </p>
       <div class="grid md:grid-cols-3 grid-cols-1 gap-[18px] [counter-reset:step]">
@@ -223,7 +227,7 @@ watch(acc2active, (newVal) => {
           <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:bg-sky-500 before:text-[#e6f7ff] before:font-bold flex items-center">
             Website launchen
           </h3>
-          <p>Technisch sauber, mobil schnell, rechtssicher. Ihr Auftritt wird zur zentralen Anlaufstelle für Links, Buchung &amp; Kontakt.</p>
+          <p>Technisch sauber, mobil schnell, rechtssicher. Ihr Auftritt wird zur zentralen Anlaufstelle für Social-Media, Buchung &amp; Kontakt.</p>
         </div>
       </div>
     </section>
@@ -273,7 +277,7 @@ watch(acc2active, (newVal) => {
             <span class="inline-block w-[18px] h-[18px]">🔗</span>Alle Links an einem Ort
           </h3>
           <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
-            Social Media, Anzeigenportale, externe Buchungskalender oder Shops: sauber verknüpft.
+            Social Media, Anzeigenportale, externe Buchungskalender oder Shops: Alles auf einen Blick
           </p>
         </div>
         <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
@@ -297,6 +301,7 @@ watch(acc2active, (newVal) => {
       <p class="text-base sm:text-lg text-slate-600 dark:text-[#b3bfd1] mb-7">
         Wir wollen vor allem jene unterstützen, die mit nicht ganz so großem finanziellen Spielraum und ohne technische Vorkenntnisse etwas auf die Beine stellen wollen.
         Unser kostenloses Angebot ist daher so gestaltet, dass es für uns vertretbar bleibt und Ihnen einen echten Mehrwert bietet.
+        Wenn Sie zufrieden sind, aber etwas mehr brauchen, dann freuen wir uns über ein Premium-Abonnement.
       </p>
       <div class="grid md:grid-cols-2 grid-cols-1 gap-[18px]">
         <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
