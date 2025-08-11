@@ -137,7 +137,7 @@ watch(acc2active, (newVal) => {
             aria-label="Anrufen"
           >📞 Beratung: 0176 70 86 46 27</a>
           <a
-            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-transparent bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200 hover:-translate-y-px"
+            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200"
             :href="me ? `https://${me.userName}.${appHost}` : '/register'"
           >Kostenlose Website erstellen</a>
         </div>
@@ -177,7 +177,7 @@ watch(acc2active, (newVal) => {
         </p>
         <div class="flex flex-wrap gap-3 mt-2">
           <a
-            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-transparent bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200 hover:-translate-y-px"
+            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200"
             :href="me ? `https://${me.userName}.${appHost}` : '/register'"
           >Kostenlose Website erstellen</a>
           <a
@@ -318,14 +318,17 @@ watch(acc2active, (newVal) => {
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> SEO/KI‑Basics &amp; Mobil‑Optimierung
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Verlinkung aller relevanten Profile &amp; Tools
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Verlinkung Ihrer externen Profile &amp; Tools
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Nutzbar mit vorhandener Domain
             </li>
           </ul>
         </div>
         <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Premium</span>
           <div class="flex items-end gap-1 mt-3 mb-6">
-            <span class="text-[38px] font-extrabold leading-none">25,00 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
+            <span class="text-[38px] font-extrabold leading-none">24,99 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
@@ -354,7 +357,7 @@ watch(acc2active, (newVal) => {
         class="flex flex-wrap gap-3 mt-[18px]"
       >
         <a
-          class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-transparent bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200 hover:-translate-y-px"
+          class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200"
           :href="me ? `https://${me.userName}.${appHost}` : '/register'"
         >Kostenlose Website erstellen</a>
         <a
@@ -378,7 +381,7 @@ watch(acc2active, (newVal) => {
         :unmount-on-hide="false"
         :ui="{
           root: 'flex flex-col gap-3',
-          item: 'rounded-[16px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10',
+          item: 'rounded-[16px] border !border-b bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10',
           trigger: 'px-4 py-3 rounded-[12px] hover:bg-black/5 text-slate-900 transition-colors dark:hover:bg-white/5 dark:text-[#e7ecf4]',
           label: 'text-[1.05rem] font-semibold',
           leadingIcon: 'text-sky-500 size-8',
@@ -454,7 +457,7 @@ watch(acc2active, (newVal) => {
         :unmount-on-hide="false"
         :ui="{
           root: 'flex flex-col gap-3',
-          item: 'rounded-[16px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10',
+          item: 'rounded-[16px] border !border-b bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10',
           trigger: 'px-4 py-3 rounded-[12px] hover:bg-black/5 text-slate-900 transition-colors dark:hover:bg-white/5 dark:text-[#e7ecf4]',
           label: 'text-[1.05rem] font-semibold',
           leadingIcon: 'text-sky-500 size-8',
@@ -542,7 +545,7 @@ watch(acc2active, (newVal) => {
       <div class="mx-auto w-[92vw] max-w-[1200px] flex flex-wrap gap-5 justify-between items-center">
         <div class="flex items-center gap-3">
           <div
-            class="w-10 h-10 rounded-[13px] bg-[radial-gradient(100%_100%_at_30%_20%,#58d0ff_0%,#0ea5e9_40%,#04669e_100%)] grid place-items-center shadow-[0_10px_18px_rgba(14,165,233,.35)]"
+            class="w-10 h-10 rounded-[13px] bg-[radial-gradient(100%_100%_at_30%_20%,#58d0ff_0%,#0ea5e9_40%,#04669e_100%)] grid place-items-center"
             aria-hidden="true"
           >
             <div
