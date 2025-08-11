@@ -139,11 +139,10 @@ watch(acc2active, (newVal) => {
             <UIcon
               name="i-heroicons-phone"
             />
-            Beratung: 0176 70 86 46 27</a>
-          <a
-            class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200 border-b border-white/50 hover:border-white/70 hover:bg-gradient-to-b hover:ring-white/50 hover:shadow-[0_6px_18px_rgba(14,165,233,.55)]"
-            :href="me ? `https://${me.userName}.${appHost}` : '/register'"
-          >Kostenlose Website erstellen</a>
+            <span>
+              Beratung<span class="hidden sm:inline">: 0176 70 86 46 27</span>
+            </span>
+          </a>
         </div>
       </div>
     </header>
