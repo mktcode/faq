@@ -232,7 +232,7 @@ watch(acc2active, (newVal) => {
       <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-3">
         Was Sie bekommen
       </h2>
-      <p class="text-slate-600 dark:text-[#b3bfd1] mb-7">
+      <p class="text-base sm:text-lg text-slate-600 dark:text-[#b3bfd1] mb-7">
         Die Standard‑Website ist kostenlos – und deckt die wichtigsten Grundlagen ab. Im Abo können wir jederzeit ausbauen.
       </p>
       <div class="grid md:grid-cols-3 grid-cols-1 gap-[18px]">
@@ -294,7 +294,7 @@ watch(acc2active, (newVal) => {
       <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-3">
         Preise
       </h2>
-      <p class="text-slate-600 dark:text-[#b3bfd1] mb-7">
+      <p class="text-base sm:text-lg text-slate-600 dark:text-[#b3bfd1] mb-7">
         Wir wollen vor allem jene unterstützen, die mit nicht ganz so großem finanziellen Spielraum und ohne technische Vorkenntnisse etwas auf die Beine stellen wollen.
         Unser kostenloses Angebot ist daher so gestaltet, dass es für uns vertretbar bleibt und Ihnen einen echten Mehrwert bietet.
       </p>
@@ -371,7 +371,7 @@ watch(acc2active, (newVal) => {
       <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-3">
         Sichtbar werden ohne Website
       </h2>
-      <p class="text-slate-600 dark:text-[#b3bfd1] mb-7">
+      <p class="text-base sm:text-lg text-slate-600 dark:text-[#b3bfd1] mb-7">
         Hilfe zur Selbsthilfe: Hier finden Sie nützliche Tipps und Ressourcen, wenn Sie die Dinge gerne selbst in die Hand nehmen möchten.
         Schöpfen Sie die zahlreichen kostenlosen Möglichkeiten aus, um auch ohne eigene Website online Sichtbar zu werden und Kunden zu gewinnen.
       </p>
@@ -447,7 +447,7 @@ watch(acc2active, (newVal) => {
       <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-3 mt-16">
         Die professionelle Website
       </h2>
-      <p class="text-slate-600 dark:text-[#b3bfd1] mb-7">
+      <p class="text-base sm:text-lg text-slate-600 dark:text-[#b3bfd1] mb-7">
         Wenn Sie bereit sind, Ihre Online-Präsenz auf das nächste Level zu heben, ist eine professionelle Website der Schlüssel zum Erfolg.
         Damit Sie auch hier möglichst unabhängig agieren können, erklären wir ein paar Grundlagen, auf die Sie achten und Ihren Anbieter ansprechen sollten.
       </p>
