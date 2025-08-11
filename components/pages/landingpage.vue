@@ -26,8 +26,8 @@ const acc1items = ref<AccordionItem[]>([
     slot: 'slot5',
   },
 ])
-const acc1active = ref<string | undefined>('0')
-const acc1ItemsOpened = ref<string[]>(['0'])
+const acc1active = ref<string | undefined>(undefined)
+const acc1ItemsOpened = ref<string[]>([])
 watch(acc1active, (newVal) => {
   if (newVal) {
     if (!acc1ItemsOpened.value.includes(newVal)) {
@@ -42,7 +42,7 @@ const acc2items = ref<AccordionItem[]>([
     slot: 'slot1',
   },
   {
-    label: 'Künstliche Intelligenz: Haben Sie keine Angst davor!',
+    label: 'Künstliche Intelligenz: Eine Trendwende',
     slot: 'slot2',
   },
   {
@@ -66,8 +66,8 @@ const acc2items = ref<AccordionItem[]>([
     slot: 'slot7',
   },
 ])
-const acc2active = ref<string | undefined>('0')
-const acc2ItemsOpened = ref<string[]>(['0'])
+const acc2active = ref<string | undefined>(undefined)
+const acc2ItemsOpened = ref<string[]>([])
 watch(acc2active, (newVal) => {
   if (newVal) {
     if (!acc2ItemsOpened.value.includes(newVal)) {
@@ -85,14 +85,10 @@ watch(acc2active, (newVal) => {
       <div class="mx-auto w-[92vw] max-w-[1200px] flex items-center justify-between py-[14px]">
         <div class="flex items-center gap-3">
           <div
-            class="w-10 h-10 rounded-[13px] bg-[radial-gradient(100%_100%_at_30%_20%,#58d0ff_0%,#0ea5e9_40%,#04669e_100%)] grid place-items-center shadow-[0_10px_18px_rgba(14,165,233,.35)]"
+            class="w-10 h-10 text-white font-bold text-2xl rounded-[13px] bg-[radial-gradient(100%_100%_at_30%_20%,#58d0ff_0%,#0ea5e9_40%,#04669e_100%)] grid place-items-center shadow-[0_10px_18px_rgba(14,165,233,.35)]"
             aria-hidden="true"
           >
-            <svg
-              viewBox="0 0 24 24"
-              class="w-6 h-6 fill-white"
-              aria-hidden="true"
-            ><path d="M16.7 7.6c0-2.2-1.9-3.8-4.5-3.8-2.3 0-4.5 1.1-5.9 2.8-.5.6-.5 1.5.1 2.1s1.6.5 2.1-.1c.9-1.1 2.3-1.8 3.7-1.8 1.3 0 2.2.6 2.2 1.5 0 1.2-1.5 1.7-3.4 2.1-2.7.6-5.8 1.3-5.8 4.6 0 2.5 2.3 4.3 5.4 4.3 2.1 0 4.1-.8 5.5-2.2.6-.6.6-1.5 0-2.1-.6-.6-1.5-.6-2.1 0-1 .9-2.2 1.4-3.4 1.4-1.3 0-2.3-.6-2.3-1.5 0-1.4 1.9-1.8 4-2.2 2.5-.6 5.2-1.2 5.2-4.9Z" /></svg>
+            S
           </div>
           <span class="font-extrabold tracking-[.2px]">Solihost</span>
           <span class="inline-block px-2 py-[.25rem] rounded-full bg-white/10 border border-white/15 text-[.8rem] text-[#b3bfd1]">beta</span>
@@ -132,12 +128,12 @@ watch(acc2active, (newVal) => {
         >
       </video>
       <div
-        class="absolute inset-0 bg-[radial-gradient(100%_80%_at_20%_20%,rgba(14,165,233,.45),rgba(11,16,32,.85)_55%),linear-gradient(180deg,rgba(11,16,32,.2),rgba(11,16,32,.85))]"
+        class="absolute inset-0 bg-[radial-gradient(100%_80%_at_20%_20%,rgba(14,165,233,.45),rgba(11,16,32,.85)_55%),linear-gradient(180deg,rgba(11,16,32,.2),rgba(11,16,32,.25))]"
         aria-hidden="true"
       />
       <div class="relative z-[1] p-[clamp(28px,5vw,64px)] pb-0 grid gap-[22px] max-w-[900px]">
         <h1 class="m-0 text-[clamp(28px,4vw,52px)] leading-[1.1]">
-          Ihr professioneller Auftritt – <span class="text-[#0ea5e9]">klar, rechtssicher</span> und ohne Overkill.
+          Ihr professioneller Auftritt – <span class="text-[#0ea5e9]">klar, rechtssicher</span> und ohne unnötige Kosten.
         </h1>
         <p class="m-0 text-[clamp(16px,2.1vw,20px)] text-[#b3bfd1]">
           Wir begleiten Freiberufler &amp; Einzelunternehmer Schritt für Schritt – von der Einrichtung der Buchhaltung über die erste Sichtbarkeit im Netz bis zur eigenen Website mit Domain und E-Mail-Postfächern. Verständlich, fokussiert und mit Blick auf das, was sich wirklich für Sie lohnt.
@@ -155,7 +151,7 @@ watch(acc2active, (newVal) => {
       </div>
       <div class="grid md:grid-cols-3 grid-cols-1 gap-[14px] my-[26px] mb-[10px] relative z-[1] p-[clamp(28px,5vw,64px)] pt-0">
         <div class="bg-[#0f162e] border border-white/10 rounded-[14px] px-[14px] py-[12px] flex items-center gap-[10px]">
-          ✅ <strong>Cookie‑frei</strong> &amp; DSGVO‑sauber
+          ✅ <strong>Cookie‑frei</strong> &amp; DSGVO-konform
         </div>
         <div class="bg-[#0f162e] border border-white/10 rounded-[14px] px-[14px] py-[12px] flex items-center gap-[10px]">
           ⚡ <strong>Schnell</strong> &amp; mobil optimiert
@@ -262,7 +258,8 @@ watch(acc2active, (newVal) => {
         Preise
       </h2>
       <p class="text-[#b3bfd1] mb-7">
-        Starten Sie kostenlos. Wenn Sie mehr Gestaltungsspielraum wollen, buchen Sie das Abo jederzeit dazu – monatlich kündbar.
+        Wir wollen vor allem jene unterstützen, die mit nicht ganz so großem finanziellen Spielraum und ohne technische Vorkenntnisse etwas auf die Beine stellen wollen.
+        Unser kostenloses Angebot ist daher so gestaltet, dass es für uns vertretbar bleibt und Ihnen einen echten Mehrwert bietet.
       </p>
       <div class="grid md:grid-cols-2 grid-cols-1 gap-[18px]">
         <div class="bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] border border-white/10 rounded-[16px] p-[22px]">
@@ -272,45 +269,45 @@ watch(acc2active, (newVal) => {
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-[rgba(22,163,74,.2)] grid place-items-center mt-[2px]">✓</span> Standard‑Website, visuell ansprechend
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Standard‑Website, visuell ansprechend
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-[rgba(22,163,74,.2)] grid place-items-center mt-[2px]">✓</span> Impressum &amp; Datenschutzerklärung passend zu Funktionen
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Impressum &amp; Datenschutzerklärung passend zu Funktionen
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-[rgba(22,163,74,.2)] grid place-items-center mt-[2px]">✓</span> Cookie‑frei (solange keine externen Tracker)
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Cookie‑frei (solange keine externen Tracker)
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-[rgba(22,163,74,.2)] grid place-items-center mt-[2px]">✓</span> SEO/KI‑Basics &amp; Mobil‑Optimierung
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> SEO/KI‑Basics &amp; Mobil‑Optimierung
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-[rgba(22,163,74,.2)] grid place-items-center mt-[2px]">✓</span> Verlinkung aller relevanten Profile &amp; Tools
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Verlinkung aller relevanten Profile &amp; Tools
             </li>
           </ul>
         </div>
         <div class="bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] border border-white/10 rounded-[16px] p-[22px]">
-          <span class="inline-block px-2 py-[.25rem] rounded-full bg-white/10 border border-white/15 text-[.8rem] text-[#b3bfd1]">Abo</span>
+          <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Premium</span>
           <div class="flex items-end gap-1 my-1 mb-3">
-            <span class="text-[38px] font-extrabold">17,85 €</span> <span class="text-[#b3bfd1]">/ Monat inkl. MwSt.</span>
+            <span class="text-[38px] font-extrabold">25,00 €</span> <span class="text-[#b3bfd1]">/ Monat zzgl. MwSt.</span>
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-[rgba(22,163,74,.2)] grid place-items-center mt-[2px]">✓</span> Mehr Gestaltung &amp; individuelle Anpassungen durch uns
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Mehr Gestaltung &amp; individuelle Anpassungen durch uns
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-[rgba(22,163,74,.2)] grid place-items-center mt-[2px]">✓</span> Integrierter Buchungskalender &amp; einfache Shop‑Funktion
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Integrierter Buchungskalender &amp; einfache Shop‑Funktion
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-[rgba(22,163,74,.2)] grid place-items-center mt-[2px]">✓</span> Intelligentes FAQ für bessere Anfragen
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Intelligentes FAQ für bessere Anfragen
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-[rgba(22,163,74,.2)] grid place-items-center mt-[2px]">✓</span> Mehr Speicher für Medien &amp; Dateien
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Mehr Speicher für Medien &amp; Dateien
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-[rgba(22,163,74,.2)] grid place-items-center mt-[2px]">✓</span> .de‑Domain &amp; E‑Mail‑Adresse inklusive
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> .de‑Domain &amp; E‑Mail‑Adresse inklusive
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-[rgba(22,163,74,.2)] grid place-items-center mt-[2px]">✓</span> Monatlich kündbar, per Klick
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Monatlich kündbar, per Klick
             </li>
           </ul>
         </div>
@@ -332,8 +329,12 @@ watch(acc2active, (newVal) => {
 
     <section class="mx-auto w-[92vw] max-w-[1200px] py-16">
       <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-3">
-        Leitfaden für Anfänger
+        Sichtbar werden ohne Website
       </h2>
+      <p class="text-[#b3bfd1] mb-7">
+        Hilfe zur Selbsthilfe: Hier finden Sie nützliche Tipps und Ressourcen, wenn Sie die Dinge gerne selbst in die Hand nehmen möchten.
+        Schöpfen Sie die zahlreichen kostenlosen Möglichkeiten aus, um auch ohne eigene Website online Sichtbar zu werden und Kunden zu gewinnen.
+      </p>
       <UAccordion
         v-model="acc1active"
         :items="acc1items"
@@ -368,14 +369,10 @@ watch(acc2active, (newVal) => {
             target="_blank"
           >Google Gemini</a> können Ihnen helfen,
           Klarheit zu gewinnen und professionelle Texte zu schreiben, z.B. für Kleinanzeigen oder Social Media Posts. Auch bei rechtlichen und steuerlichen Fragen können diese Tools eine gute erste Orientierung geben.
-          Lesen Sie unsere <a
-            class="text-sky-500"
-            href="/"
-            target="_blank"
-          >Prompt-Anleitung</a> für gute Ergebnisse.
+          Den Steuerberater können sie aktuell aber noch nicht ersetzen.
         </template>
         <template #slot2>
-          Werden Sie gefunden. Das ist ebenfalls kostenlos und wesentlich wichtiger als eine Website, die ansonsten ohnehin kaum jemand findet, gerade am Anfang.
+          Werden Sie gefunden. Das ist ebenfalls kostenlos und wesentlich wichtiger, als eine Website, die ansonsten ohnehin kaum jemand findet, gerade am Anfang.
           Legen Sie sich ein <a
             class="text-sky-500"
             href="https://accounts.google.com/signup"
@@ -406,6 +403,14 @@ watch(acc2active, (newVal) => {
           Es spricht auch nichts gegen ein Video, wenn Sie sich damit wohlfühlen. Zeigen Sie sich und Ihre Arbeit!
         </template>
       </UAccordion>
+
+      <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-3 mt-16">
+        Die professionelle Website
+      </h2>
+      <p class="text-[#b3bfd1] mb-7">
+        Wenn Sie bereit sind, Ihre Online-Präsenz auf das nächste Level zu heben, ist eine professionelle Website der Schlüssel zum Erfolg.
+        Damit Sie auch hier möglichst unabhängig agieren können, erklären wir ein paar Grundlagen, auf die Sie achten und Ihren Anbieter ansprechen sollten.
+      </p>
       <UAccordion
         v-model="acc2active"
         :items="acc2items"
@@ -503,14 +508,16 @@ watch(acc2active, (newVal) => {
             class="w-10 h-10 rounded-[13px] bg-[radial-gradient(100%_100%_at_30%_20%,#58d0ff_0%,#0ea5e9_40%,#04669e_100%)] grid place-items-center shadow-[0_10px_18px_rgba(14,165,233,.35)]"
             aria-hidden="true"
           >
-            <svg
-              viewBox="0 0 24 24"
-              class="w-6 h-6 fill-white"
-            ><path d="M16.7 7.6c0-2.2-1.9-3.8-4.5-3.8-2.3 0-4.5 1.1-5.9 2.8-.5.6-.5 1.5.1 2.1s1.6.5 2.1-.1c.9-1.1 2.3-1.8 3.7-1.8 1.3 0 2.2.6 2.2 1.5 0 1.2-1.5 1.7-3.4 2.1-2.7.6-5.8 1.3-5.8 4.6 0 2.5 2.3 4.3 5.4 4.3 2.1 0 4.1-.8 5.5-2.2.6-.6.6-1.5 0-2.1-.6-.6-1.5-.6-2.1 0-1 .9-2.2 1.4-3.4 1.4-1.3 0-2.3-.6-2.3-1.5 0-1.4 1.9-1.8 4-2.2 2.5-.6 5.2-1.2 5.2-4.9Z" /></svg>
+            <div
+              class="w-10 h-10 text-white font-bold text-2xl rounded-[13px] bg-[radial-gradient(100%_100%_at_30%_20%,#58d0ff_0%,#0ea5e9_40%,#04669e_100%)] grid place-items-center shadow-[0_10px_18px_rgba(14,165,233,.35)]"
+              aria-hidden="true"
+            >
+              S
+            </div>
           </div>
           <div>
-            <strong class="text-white">Solihost</strong><br>
-            IT‑Beratung &amp; Fernwartung · <a
+            <strong class="text-white text-lg">Solihost</strong><br>
+            Webhosting &amp; IT‑Beratung · <a
               class="text-[#0ea5e9]"
               href="tel:+4917670864627"
             >0176 70 86 46 27</a>
