@@ -187,13 +187,13 @@ watch(acc2active, (newVal) => {
         </div>
       </div>
       <div class="grid md:grid-cols-3 grid-cols-1 gap-[14px] my-[26px] mb-[10px] relative z-[1] p-[clamp(28px,5vw,64px)] pt-0">
-        <div class="rounded-[14px] px-[14px] py-[12px] flex items-center gap-[10px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
+        <div class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 bg-white/10 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]">
           ✅ <strong>Cookie‑frei</strong> &amp; DSGVO-konform
         </div>
-        <div class="rounded-[14px] px-[14px] py-[12px] flex items-center gap-[10px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
+        <div class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 bg-white/10 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]">
           ⚡ <strong>Schnell</strong> &amp; mobil optimiert
         </div>
-        <div class="rounded-[14px] px-[14px] py-[12px] flex items-center gap-[10px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
+        <div class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 bg-white/10 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]">
           🔎 <strong>SEO‑ &amp; KI‑ready</strong>
         </div>
       </div>
