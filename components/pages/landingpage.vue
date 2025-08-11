@@ -229,7 +229,7 @@ watch(acc2active, (newVal) => {
         Die Standard‑Website ist kostenlos – und deckt die wichtigsten Grundlagen ab. Im Abo können wir jederzeit ausbauen.
       </p>
       <div class="grid md:grid-cols-3 grid-cols-1 gap-[18px]">
-        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] dark:border-white/10">
+        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
             <span class="inline-block w-[18px] h-[18px]">🔧</span>Technisch sauber
           </h3>
@@ -237,7 +237,7 @@ watch(acc2active, (newVal) => {
             Sauberer Code, saubere Metadaten, korrekte Vorschaubilder – alles, was einen guten ersten Eindruck in Suchmaschinen &amp; Social Media ausmacht.
           </p>
         </div>
-        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] dark:border-white/10">
+        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
             <span class="inline-block w-[18px] h-[18px]">📜</span>Rechtssicher
           </h3>
@@ -245,7 +245,7 @@ watch(acc2active, (newVal) => {
             Korrektes Impressum &amp; passgenaue Datenschutzerklärung – basierend auf den tatsächlich genutzten Funktionen.
           </p>
         </div>
-        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] dark:border-white/10">
+        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
             <span class="inline-block w-[18px] h-[18px]">📱</span>Mobil &amp; schnell
           </h3>
@@ -253,7 +253,7 @@ watch(acc2active, (newVal) => {
             Optimiert für Smartphones und große Bildschirme. Fokus auf Ladezeit statt Ballast.
           </p>
         </div>
-        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] dark:border-white/10">
+        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
             <span class="inline-block w-[18px] h-[18px]">🧭</span>Geführt statt allein
           </h3>
@@ -261,7 +261,7 @@ watch(acc2active, (newVal) => {
             Wir beraten Sie bei jedem Schritt – pragmatisch, verständlich und ohne Agentur‑Sprech.
           </p>
         </div>
-        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] dark:border-white/10">
+        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
             <span class="inline-block w-[18px] h-[18px]">🔗</span>Alle Links an einem Ort
           </h3>
@@ -269,7 +269,7 @@ watch(acc2active, (newVal) => {
             Social Media, Anzeigenportale, externe Buchungskalender oder Shops: sauber verknüpft.
           </p>
         </div>
-        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] dark:border-white/10">
+        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
             <span class="inline-block w-[18px] h-[18px]">🤖</span>SEO‑ &amp; KI‑ready
           </h3>
@@ -292,52 +292,52 @@ watch(acc2active, (newVal) => {
         Unser kostenloses Angebot ist daher so gestaltet, dass es für uns vertretbar bleibt und Ihnen einen echten Mehrwert bietet.
       </p>
       <div class="grid md:grid-cols-2 grid-cols-1 gap-[18px]">
-        <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] dark:border-white/10">
-          <span class="inline-block px-2 py-[.25rem] rounded-full bg-white/10 border border-white/15 text-[.8rem] text-[#b3bfd1]">Standard</span>
-          <div class="flex items-end gap-1 my-1 mb-3">
-            <span class="text-[38px] font-extrabold">0 €</span> <span class="text-[#b3bfd1]">einmalig</span>
+        <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
+          <span class="inline-block px-2 py-[.25rem] rounded-full text-[.8rem] bg-white border border-black/15 text-slate-600 dark:bg-white/10 dark:border-white/15 dark:text-[#b3bfd1]">Standard</span>
+          <div class="flex items-end gap-1 mt-3 mb-6">
+            <span class="text-[38px] font-extrabold leading-none">0 €</span>
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] text-white bg-sky-500 dark:bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Standard‑Website, visuell ansprechend
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Standard‑Website, visuell ansprechend
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Impressum &amp; Datenschutzerklärung passend zu Funktionen
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Impressum &amp; Datenschutzerklärung passend zu Funktionen
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Cookie‑frei (solange keine externen Tracker)
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Cookie‑frei (solange keine externen Tracker)
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> SEO/KI‑Basics &amp; Mobil‑Optimierung
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> SEO/KI‑Basics &amp; Mobil‑Optimierung
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Verlinkung aller relevanten Profile &amp; Tools
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Verlinkung aller relevanten Profile &amp; Tools
             </li>
           </ul>
         </div>
-  <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))] dark:border-white/10">
+  <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Premium</span>
-          <div class="flex items-end gap-1 my-1 mb-3">
-            <span class="text-[38px] font-extrabold">25,00 €</span> <span class="text-[#b3bfd1]">/ Monat zzgl. MwSt.</span>
+          <div class="flex items-end gap-1 mt-3 mb-6">
+            <span class="text-[38px] font-extrabold leading-none">25,00 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Mehr Gestaltung &amp; individuelle Anpassungen durch uns
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Mehr Gestaltung &amp; individuelle Anpassungen durch uns
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Integrierter Buchungskalender &amp; einfache Shop‑Funktion
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Integrierter Buchungskalender &amp; einfache Shop‑Funktion
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Intelligentes FAQ für bessere Anfragen
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Intelligentes FAQ für bessere Anfragen
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Mehr Speicher für Medien &amp; Dateien
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Mehr Speicher für Medien &amp; Dateien
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> .de‑Domain &amp; E‑Mail‑Adresse inklusive
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> .de-Domain &amp; E-Mail-Adresse inklusive
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-900 flex items-center justify-center mt-[2px]">✓</span> Monatlich kündbar, per Klick
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Monatlich kündbar, per Klick
             </li>
           </ul>
         </div>
