@@ -7,10 +7,11 @@ const { me } = await useMe()
 // Lightweight color mode just for this page (no Nuxt color mode)
 const colorMode = ref<'dark' | 'light'>('dark')
 if (import.meta.client) {
-  const saved = (localStorage.getItem('lp-color-mode') as 'dark' | 'light' | null)
+  const saved = localStorage.getItem('lp-color-mode') as 'dark' | 'light' | null
   if (saved) {
     colorMode.value = saved
-  } else {
+  }
+  else {
     colorMode.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
   }
 }
@@ -117,12 +118,18 @@ watch(acc2active, (newVal) => {
           <button
             type="button"
             class="inline-flex items-center gap-2 px-3 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-black/10 bg-white/80 text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
-            @click="toggleColorMode"
             aria-label="Farbschema wechseln"
             title="Farbschema wechseln"
+            @click="toggleColorMode"
           >
-            <UIcon v-if="colorMode === 'dark'" name="i-heroicons-sun" />
-            <UIcon v-else name="i-heroicons-moon" />
+            <UIcon
+              v-if="colorMode === 'dark'"
+              name="i-heroicons-sun"
+            />
+            <UIcon
+              v-else
+              name="i-heroicons-moon"
+            />
           </button>
           <a
             class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-black/10 bg-white/80 text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
@@ -157,15 +164,15 @@ watch(acc2active, (newVal) => {
           type="video/mp4"
         >
       </video>
-  <div
-  class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,.16),rgba(0,0,0,.16)),radial-gradient(100%_80%_at_20%_20%,rgba(14,165,233,.42),rgba(255,255,255,.6)_55%),linear-gradient(180deg,rgba(2,132,199,.12),rgba(2,132,199,.22))] dark:bg-[radial-gradient(100%_80%_at_20%_20%,rgba(14,165,233,.45),rgba(11,16,32,.85)_55%),linear-gradient(180deg,rgba(11,16,32,.2),rgba(11,16,32,.25))]"
-    aria-hidden="true"
-  />
-  <div class="relative z-[1] p-[clamp(28px,5vw,64px)] pb-0 grid gap-[22px] max-w-[900px] text-white dark:text-[#e7ecf4]">
+      <div
+        class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,.16),rgba(0,0,0,.16)),radial-gradient(100%_80%_at_20%_20%,rgba(14,165,233,.42),rgba(255,255,255,.6)_55%),linear-gradient(180deg,rgba(2,132,199,.12),rgba(2,132,199,.22))] dark:bg-[radial-gradient(100%_80%_at_20%_20%,rgba(14,165,233,.45),rgba(11,16,32,.85)_55%),linear-gradient(180deg,rgba(11,16,32,.2),rgba(11,16,32,.25))]"
+        aria-hidden="true"
+      />
+      <div class="relative z-[1] p-[clamp(28px,5vw,64px)] pb-0 grid gap-[22px] max-w-[900px] text-white dark:text-[#e7ecf4]">
         <h1 class="m-0 text-[clamp(28px,4vw,52px)] leading-[1.1]">
           Ihr professioneller Auftritt – <span class="text-[#56bae9]">klar, rechtssicher</span> und ohne unnötige Kosten.
         </h1>
-  <p class="m-0 text-[clamp(16px,2.1vw,20px)] text-white/90 dark:text-[#b3bfd1]">
+        <p class="m-0 text-[clamp(16px,2.1vw,20px)] text-white/90 dark:text-[#b3bfd1]">
           Wir begleiten Freiberufler &amp; Einzelunternehmer Schritt für Schritt – von der Einrichtung der Buchhaltung über die erste Sichtbarkeit im Netz bis zur eigenen Website mit Domain und E-Mail-Postfächern. Verständlich, fokussiert und mit Blick auf das, was sich wirklich für Sie lohnt.
         </p>
         <div class="flex flex-wrap gap-3 mt-2">
@@ -180,13 +187,13 @@ watch(acc2active, (newVal) => {
         </div>
       </div>
       <div class="grid md:grid-cols-3 grid-cols-1 gap-[14px] my-[26px] mb-[10px] relative z-[1] p-[clamp(28px,5vw,64px)] pt-0">
-  <div class="rounded-[14px] px-[14px] py-[12px] flex items-center gap-[10px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
+        <div class="rounded-[14px] px-[14px] py-[12px] flex items-center gap-[10px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           ✅ <strong>Cookie‑frei</strong> &amp; DSGVO-konform
         </div>
-  <div class="rounded-[14px] px-[14px] py-[12px] flex items-center gap-[10px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
+        <div class="rounded-[14px] px-[14px] py-[12px] flex items-center gap-[10px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           ⚡ <strong>Schnell</strong> &amp; mobil optimiert
         </div>
-  <div class="rounded-[14px] px-[14px] py-[12px] flex items-center gap-[10px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
+        <div class="rounded-[14px] px-[14px] py-[12px] flex items-center gap-[10px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           🔎 <strong>SEO‑ &amp; KI‑ready</strong>
         </div>
       </div>
@@ -315,7 +322,7 @@ watch(acc2active, (newVal) => {
             </li>
           </ul>
         </div>
-  <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
+        <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Premium</span>
           <div class="flex items-end gap-1 mt-3 mb-6">
             <span class="text-[38px] font-extrabold leading-none">25,00 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
@@ -365,14 +372,14 @@ watch(acc2active, (newVal) => {
         Hilfe zur Selbsthilfe: Hier finden Sie nützliche Tipps und Ressourcen, wenn Sie die Dinge gerne selbst in die Hand nehmen möchten.
         Schöpfen Sie die zahlreichen kostenlosen Möglichkeiten aus, um auch ohne eigene Website online Sichtbar zu werden und Kunden zu gewinnen.
       </p>
-    <UAccordion
+      <UAccordion
         v-model="acc1active"
         :items="acc1items"
         :unmount-on-hide="false"
         :ui="{
-      root: 'flex flex-col gap-3',
-      item: 'rounded-[16px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10',
-      trigger: 'px-4 py-3 rounded-[12px] hover:bg-black/5 text-slate-900 transition-colors dark:hover:bg-white/5 dark:text-[#e7ecf4]',
+          root: 'flex flex-col gap-3',
+          item: 'rounded-[16px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10',
+          trigger: 'px-4 py-3 rounded-[12px] hover:bg-black/5 text-slate-900 transition-colors dark:hover:bg-white/5 dark:text-[#e7ecf4]',
           label: 'text-[1.05rem] font-semibold',
           leadingIcon: 'text-sky-500 size-8',
           content: 'text-slate-600 dark:text-[#b3bfd1] text-base sm:text-lg pt-4 p-4',
@@ -441,14 +448,14 @@ watch(acc2active, (newVal) => {
         Wenn Sie bereit sind, Ihre Online-Präsenz auf das nächste Level zu heben, ist eine professionelle Website der Schlüssel zum Erfolg.
         Damit Sie auch hier möglichst unabhängig agieren können, erklären wir ein paar Grundlagen, auf die Sie achten und Ihren Anbieter ansprechen sollten.
       </p>
-    <UAccordion
+      <UAccordion
         v-model="acc2active"
         :items="acc2items"
         :unmount-on-hide="false"
         :ui="{
-      root: 'flex flex-col gap-3',
-      item: 'rounded-[16px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10',
-      trigger: 'px-4 py-3 rounded-[12px] hover:bg-black/5 text-slate-900 transition-colors dark:hover:bg-white/5 dark:text-[#e7ecf4]',
+          root: 'flex flex-col gap-3',
+          item: 'rounded-[16px] border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10',
+          trigger: 'px-4 py-3 rounded-[12px] hover:bg-black/5 text-slate-900 transition-colors dark:hover:bg-white/5 dark:text-[#e7ecf4]',
           label: 'text-[1.05rem] font-semibold',
           leadingIcon: 'text-sky-500 size-8',
           content: 'text-slate-600 dark:text-[#b3bfd1] text-base sm:text-lg pt-4 p-4',
