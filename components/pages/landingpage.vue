@@ -172,7 +172,7 @@ watch(acc2active, (newVal) => {
       />
       <div class="relative z-[1] p-[clamp(28px,5vw,64px)] pb-0 grid gap-[22px] max-w-[900px] text-white dark:text-[#e7ecf4]">
         <h1 class="m-0 text-[clamp(28px,4vw,52px)] leading-[1.1]">
-          Ihr professioneller Auftritt – <span class="font-semibold text-sky-400 text-shadow-sky-950/20 text-shadow-md sm:text-shadow-lg">klar, rechtssicher</span> und ohne unnötige Kosten.
+          Ihr professioneller Auftritt – <span class="font-semibold text-sky-400 text-shadow-sky-950/20 text-shadow-md sm:text-shadow-lg">klar, effektiv</span> und ohne unnötige Kosten.
         </h1>
         <p class="m-0 text-[clamp(16px,2.1vw,20px)] text-white/90 dark:text-[#b3bfd1]">
           Wir begleiten Freiberufler &amp; Einzelunternehmer Schritt für Schritt – von der Einrichtung der Buchhaltung über die erste Sichtbarkeit im Netz bis zur eigenen Website mit Domain und E-Mail-Postfächern. Verständlich, fokussiert und mit Blick auf das, was sich wirklich für Sie lohnt.
@@ -201,14 +201,26 @@ watch(acc2active, (newVal) => {
         </div>
       </div>
       <div class="grid md:grid-cols-3 grid-cols-1 gap-[14px] my-[26px] mb-[10px] relative z-[1] p-[clamp(28px,5vw,64px)] pt-0">
-        <div class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 bg-white/10 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]">
-          ✅ <strong>Cookie‑frei</strong> &amp; DSGVO-konform
+        <div class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 dark:border-white/10 dark:text-[#e7ecf4]">
+          <UIcon
+            name="i-heroicons-hand-thumb-up"
+            size="20"
+          />
+          <strong>Einfach zu bedienen</strong>
         </div>
-        <div class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 bg-white/10 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]">
-          ⚡ <strong>Schnell</strong> &amp; mobil optimiert
+        <div class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 dark:border-white/10 dark:text-[#e7ecf4]">
+          <UIcon
+            name="i-heroicons-rocket-launch"
+            size="20"
+          />
+          <strong>Sofort online</strong>
         </div>
-        <div class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 bg-white/10 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]">
-          🔎 <strong>SEO‑ &amp; KI‑ready</strong>
+        <div class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 dark:border-white/10 dark:text-[#e7ecf4]">
+          <UIcon
+            name="i-heroicons-sparkles"
+            size="20"
+          />
+          <strong>Modernes Design</strong>
         </div>
       </div>
     </div>
@@ -222,19 +234,19 @@ watch(acc2active, (newVal) => {
       </p>
       <div class="grid md:grid-cols-3 grid-cols-1 gap-[18px] [counter-reset:step]">
         <div class="border rounded-[16px] p-[18px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:bg-sky-500 before:text-[#e6f7ff] before:font-bold flex items-center">
+          <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:border before:border-black/10 dark:before:border-white/10 before:text-slate-900 dark:before:text-white before:font-bold flex items-center">
             Klarheit schaffen
           </h3>
           <p>Ihr Angebot auf den Punkt: Zielgruppe, Nutzenversprechen, nächste Aktion. Wir helfen bei Texten – auf Wunsch mit KI‑Unterstützung.</p>
         </div>
         <div class="border rounded-[16px] p-[18px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:bg-sky-500 before:text-[#e6f7ff] before:font-bold flex items-center">
+          <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:border before:border-black/10 dark:before:border-white/10 before:text-slate-900 dark:before:text-white before:font-bold flex items-center">
             Sichtbar werden
           </h3>
           <p>Google Unternehmensprofil, Social‑Kanäle, Bewertungen – wir richten die Basics ein und verknüpfen alles sauber.</p>
         </div>
         <div class="border rounded-[16px] p-[18px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:bg-sky-500 before:text-[#e6f7ff] before:font-bold flex items-center">
+          <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:border before:border-black/10 dark:before:border-white/10 before:text-slate-900 dark:before:text-white before:font-bold flex items-center">
             Website launchen
           </h3>
           <p>Technisch sauber, mobil schnell, rechtssicher. Ihr Auftritt wird zur zentralen Anlaufstelle für Social-Media, Buchung &amp; Kontakt.</p>
