@@ -2,13 +2,7 @@
 import type { AccordionItem } from '@nuxt/ui'
 
 const { public: { appHost } } = useRuntimeConfig()
-const { clear } = useUserSession()
-const { me, refreshMe } = await useMe()
-
-async function signOut() {
-  await clear()
-  refreshMe()
-}
+const { me } = await useMe()
 
 const acc1items = ref<AccordionItem[]>([
   {
@@ -346,11 +340,11 @@ watch(acc2active, (newVal) => {
         :unmount-on-hide="false"
         :ui="{
           root: 'flex flex-col gap-3',
-          trigger: 'px-4 hover:bg-gray-50',
-          label: 'text-base sm:text-lg font-bold',
+          item: 'rounded-[16px] border border-white/10 bg-[#0f162e]',
+          trigger: 'px-4 py-3 rounded-[12px] hover:bg-white/5 text-[#e7ecf4] transition-colors',
+          label: 'text-[1.05rem] font-semibold',
           leadingIcon: 'text-sky-500 size-8',
-          content: 'text-base sm:text-lg pt-4 p-4',
-          item: 'border last:border border-gray-200 rounded-lg',
+          content: 'text-[#b3bfd1] text-base sm:text-lg pt-4 p-4',
         }"
       >
         <template #leading="{ index }">
@@ -418,11 +412,11 @@ watch(acc2active, (newVal) => {
         :unmount-on-hide="false"
         :ui="{
           root: 'flex flex-col gap-3',
-          trigger: 'px-4 hover:bg-gray-50',
-          label: 'text-gray-900 text-lg font-bold',
+          item: 'rounded-[16px] border border-white/10 bg-[#0f162e]',
+          trigger: 'px-4 py-3 rounded-[12px] hover:bg-white/5 text-[#e7ecf4] transition-colors',
+          label: 'text-[1.05rem] font-semibold',
           leadingIcon: 'text-sky-500 size-8',
-          content: 'text-gray-500 text-base sm:text-lg pt-4 p-4',
-          item: 'border last:border border-gray-200 rounded-lg',
+          content: 'text-[#b3bfd1] text-base sm:text-lg pt-4 p-4',
         }"
       >
         <template #leading="{ index }">
