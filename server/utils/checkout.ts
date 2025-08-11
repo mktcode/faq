@@ -1,5 +1,5 @@
-import Stripe from "stripe"
-import { SettingsForm } from "~/types/db"
+import Stripe from 'stripe'
+import type { SettingsForm } from '~/types/db'
 
 export type HasEmailFields<TUser> = TUser & {
   email: string | null
@@ -27,7 +27,7 @@ export function requireVerifiedEmail<TUser>(
 export async function requireCompleteStripeCustomer(
   userId: number,
   email: string,
-  settings: SettingsForm
+  settings: SettingsForm,
 ): Promise<string> {
   const db = await getDatabaseConnection()
   const { stripeApiSecretKey } = useRuntimeConfig()
@@ -45,8 +45,8 @@ export async function requireCompleteStripeCustomer(
       solihostUserId: userId.toString(),
     },
     tax: {
-      validate_location: 'immediately' as const
-    }
+      validate_location: 'immediately' as const,
+    },
   }
 
   const customers = await stripe.customers.list({ email })

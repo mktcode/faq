@@ -32,11 +32,11 @@ async function signOut() {
 
 <template>
   <USlideover
+    v-model:open="showMenu"
     title="Menü"
     side="left"
-    v-model:open="showMenu"
     :close="{
-      size: 'md'
+      size: 'md',
     }"
     :ui="{
       body: '!p-0',

@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   const userWithVerifiedEmail = requireVerifiedEmail(userInDb)
 
   const settings = settingsFormSchema.parse(
-    typeof userWithVerifiedEmail.settings === 'string' ? JSON.parse(userWithVerifiedEmail.settings) : userWithVerifiedEmail.settings
+    typeof userWithVerifiedEmail.settings === 'string' ? JSON.parse(userWithVerifiedEmail.settings) : userWithVerifiedEmail.settings,
   )
 
   const stripeCustomerId = await requireCompleteStripeCustomer(

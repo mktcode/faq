@@ -27,7 +27,7 @@ const showModal = useState('showContentModal', () => false)
         Inhalt und Funktion
       </h3>
     </template>
-    
+
     <template #body>
       <DismissableAlert
         title="Sichtbarkeit und Reihenfolge"
