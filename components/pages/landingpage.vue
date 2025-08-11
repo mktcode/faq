@@ -307,7 +307,7 @@ watch(acc2active, (newVal) => {
         <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <span class="inline-block px-2 py-[.25rem] rounded-full text-[.8rem] bg-white border border-black/15 text-slate-600 dark:bg-white/10 dark:border-white/15 dark:text-[#b3bfd1]">Standard</span>
           <div class="flex items-end gap-1 mt-3 mb-6">
-            <span class="text-[38px] font-extrabold leading-none">0 €</span>
+            <span class="text-[38px] font-extrabold leading-none">kostenlos</span>
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
@@ -337,10 +337,10 @@ watch(acc2active, (newVal) => {
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Mehr Gestaltung &amp; individuelle Anpassungen durch uns
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Mehr Gestaltungsoptionen &amp; Anpassungen durch uns
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Integrierter Buchungskalender &amp; einfache Shop‑Funktion
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Persönlicher Telefon-Support und Fernwartung
             </li>
             <li class="flex gap-2 items-start">
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Intelligentes FAQ für bessere Anfragen
