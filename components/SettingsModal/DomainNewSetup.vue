@@ -2,6 +2,10 @@
 import { watchDebounced } from '@vueuse/core'
 
 const newDomain = ref('')
+watch(newDomain, () => isTyping.value = true)
+watchDebounced(newDomain, () => isTyping.value = false, { debounce: 600 })
+watchDebounced(newDomain, checkDomainAvailability, { debounce: 500 })
+
 const isDomainValid = computed(() => /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?$/.test(newDomain.value)) // without tld!
 const isCheckingDomain = ref(false)
 const isAvailable = ref(false)
@@ -29,9 +33,26 @@ async function checkDomainAvailability() {
   }
 }
 
-watch(newDomain, () => isTyping.value = true)
-watchDebounced(newDomain, () => isTyping.value = false, { debounce: 600 })
-watchDebounced(newDomain, checkDomainAvailability, { debounce: 500 })
+const isRegisteringDomain = ref(false)
+
+async function registerDomain() {
+  if (!isDomainValid.value || isCheckingDomain.value || !isAvailable.value) {
+    return
+  }
+
+  isRegisteringDomain.value = true
+
+  try {
+    await $fetch('/api/user/registerDomain', {
+      method: 'POST',
+      body: { domain: newDomain.value + '.de' },
+    })
+  } catch (error) {
+    console.error('Error registering domain:', error)
+  } finally {
+    isRegisteringDomain.value = false
+  }
+}
 </script>
 
 <template>
@@ -89,6 +110,7 @@ watchDebounced(newDomain, checkDomainAvailability, { debounce: 500 })
     <UButton
       label="Domain registrieren"
       :disabled="!isDomainValid || isCheckingDomain || !isAvailable"
+      @click="registerDomain"
     />
   </div>
 </template>
