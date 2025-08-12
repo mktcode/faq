@@ -2,42 +2,55 @@
 import { watchDebounced } from '@vueuse/core'
 
 const newDomain = ref('')
+const isDomainValid = computed(() => /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?$/.test(newDomain.value)) // without tld!
 const isCheckingDomain = ref(false)
 const isAvailable = ref(false)
+const isTyping = ref(false)
 
 async function checkDomainAvailability() {
-  if (!newDomain.value.endsWith('.de')) {
-    isAvailable.value = false
-    return
-  }
-
   isCheckingDomain.value = true
   isAvailable.value = false
 
-  // endpoint: /api/user/checkDomainAvailability
-  const checkResult = await $fetch('/api/user/checkDomainAvailability', {
-    method: 'POST',
-    body: { domain: newDomain.value },
-  })
+  try {
+    const checkResult = await $fetch('/api/user/checkDomainAvailability', {
+      method: 'POST',
+      body: { domain: newDomain.value + '.de' },
+    })
 
-  await new Promise(resolve => setTimeout(resolve, 1000))
+    await new Promise(resolve => setTimeout(resolve, 1000))
 
-  isAvailable.value = checkResult.isAvailable
-  isCheckingDomain.value = false
+    isAvailable.value = checkResult.isAvailable
+    isCheckingDomain.value = false
+  } catch (error) {
+    console.error('Error checking domain availability:', error)
+    isAvailable.value = false
+  } finally {
+    isCheckingDomain.value = false
+  }
 }
 
+watch(newDomain, () => isTyping.value = true)
+watchDebounced(newDomain, () => isTyping.value = false, { debounce: 600 })
 watchDebounced(newDomain, checkDomainAvailability, { debounce: 500 })
 </script>
 
 <template>
   <div class="flex flex-col gap-4">
-    <UFormField label="Domain registrieren">
+    <UFormField label="Neue .de-Domain registrieren">
       <UButtonGroup class="w-full">
         <UInput
           v-model="newDomain"
-          placeholder="ihre-domain.de"
+          placeholder="ihre-domain"
           class="w-full"
           size="xxl"
+        />
+        <UBadge
+          label=".de"
+          color="neutral"
+          variant="soft"
+          :ui="{
+            base: 'px-4',
+          }"
         />
         <UBadge
           v-if="isCheckingDomain"
@@ -61,11 +74,11 @@ watchDebounced(newDomain, checkDomainAvailability, { debounce: 500 })
           }"
         />
         <UBadge
-          v-if="!isAvailable && !isCheckingDomain && newDomain.endsWith('.de')"
+          v-if="!isAvailable && !isCheckingDomain && newDomain && !isTyping"
           icon="i-lucide-x"
           color="neutral"
           variant="soft"
-          label="Nicht verfügbar"
+          :label="isDomainValid ? 'Nicht verfügbar' : 'Ungültige Domain'"
           :ui="{
             base: 'px-4',
             leadingIcon: 'text-red-600'
@@ -75,7 +88,7 @@ watchDebounced(newDomain, checkDomainAvailability, { debounce: 500 })
     </UFormField>
     <UButton
       label="Domain registrieren"
-      :disabled="!newDomain"
+      :disabled="!isDomainValid || isCheckingDomain || !isAvailable"
     />
   </div>
 </template>
