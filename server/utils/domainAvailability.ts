@@ -97,7 +97,7 @@ export async function checkDomainAvailability(
   if (servers.length === 0 && o.useRdapOrgFallback) servers = ['https://rdap.org/']
   if (servers.length === 0) return result(false, 'tld-unsupported')
 
-  let lastErr: any = null
+  let lastErr: unknown = null
   for (const base of servers) {
     const url = new URL(`domain/${ascii}`, ensureSlash(base)).toString()
     try {
@@ -105,26 +105,42 @@ export async function checkDomainAvailability(
       if (res.status === 404) return result(true, 'available', base, 404)
 
       if (res.status === 429) {
-        lastErr = new Error('rate-limited'); (lastErr as any).status = 429
+        const err: Error & { status?: number } = new Error('rate-limited')
+        err.status = 429
+        lastErr = err
         continue
       }
-      if (res.status >= 500) { lastErr = new Error(`server error ${res.status}`); continue }
+      if (res.status >= 500) {
+        lastErr = new Error(`server error ${res.status}`)
+        continue
+      }
 
       if (res.ok) {
         const data = await safeJson(res)
-        const statuses = normalizeStatuses(data?.status)
+        let statuses: string[] = []
+        if (data && typeof data === 'object') {
+          const s = (data as Record<string, unknown>).status
+          statuses = normalizeStatuses(s)
+        }
         if (statuses.some(s => s.includes('reserved'))) return result(false, 'reserved', base, res.status, statuses)
         if (statuses.some(s => s.includes('blocked'))) return result(false, 'blocked', base, res.status, statuses)
         return result(false, 'registered', base, res.status, statuses)
       }
 
-      lastErr = new Error(`unexpected ${res.status}`); (lastErr as any).status = res.status
+      const err: Error & { status?: number } = new Error(`unexpected ${res.status}`)
+      err.status = res.status
+      lastErr = err
     }
-    catch (e) { lastErr = e; continue }
+    catch (e: unknown) {
+      lastErr = e
+      continue
+    }
   }
 
-  if ((lastErr as any)?.status === 429) return result(false, 'rate-limited')
-  if ((lastErr as any)?.name === 'AbortError') return result(false, 'network-error')
+  const lastStatus = getErrorStatus(lastErr)
+  if (lastStatus === 429) return result(false, 'rate-limited')
+  const lastName = getErrorName(lastErr)
+  if (lastName === 'AbortError') return result(false, 'network-error')
   return result(false, 'unknown')
 }
 
@@ -218,8 +234,12 @@ export async function verifyDomainAvailable(
 
 function normaliseDomain(d: string): string {
   const trimmed = d.trim().toLowerCase().replace(/\.$/, '')
-  try { return toASCII(trimmed) }
-  catch { return '' }
+  try {
+    return toASCII(trimmed)
+  }
+  catch {
+    return ''
+  }
 }
 
 function isValidAsciiDomain(d: string): boolean {
@@ -234,19 +254,31 @@ function isValidAsciiDomain(d: string): boolean {
   return true
 }
 
-function ensureSlash(u: string): string { return u.endsWith('/') ? u : u + '/' }
+function ensureSlash(u: string): string {
+  return u.endsWith('/') ? u : u + '/'
+}
 
-async function getRdapServersForTld(tld: string, o: Required<CheckOptions>): Promise<string[]> {
+async function getRdapServersForTld(
+  tld: string,
+  o: Readonly<Pick<Required<CheckOptions>, 'bootstrapUrl' | 'timeoutMs' | 'userAgent'>>,
+): Promise<string[]> {
   const now = Date.now()
   if (!BOOTSTRAP_CACHE || now - BOOTSTRAP_CACHE.fetchedAt > BOOTSTRAP_TTL_MS) {
     const res = await fetchWithTimeout(o.bootstrapUrl, o.timeoutMs, o.userAgent)
     if (!res.ok) throw new Error(`bootstrap fetch failed: ${res.status}`)
-    const data = await res.json()
+    const data: unknown = await res.json()
     const map: Record<string, string[]> = {}
-    for (const entry of data.services as any[]) {
-      const tlds: string[] = entry[0]
-      const servers: string[] = entry[1]
-      for (const t of tlds) map[t.toLowerCase()] = servers
+    const root = (data && typeof data === 'object') ? data as Record<string, unknown> : {}
+    const services = root.services
+    if (Array.isArray(services)) {
+      for (const entry of services) {
+        if (!Array.isArray(entry) || entry.length < 2) continue
+        const tldsRaw = entry[0]
+        const serversRaw = entry[1]
+        const tlds = Array.isArray(tldsRaw) ? tldsRaw.filter((x): x is string => typeof x === 'string') : []
+        const servers = Array.isArray(serversRaw) ? serversRaw.filter((x): x is string => typeof x === 'string') : []
+        for (const t of tlds) map[t.toLowerCase()] = servers
+      }
     }
     BOOTSTRAP_CACHE = { fetchedAt: now, tldMap: map }
   }
@@ -255,7 +287,7 @@ async function getRdapServersForTld(tld: string, o: Required<CheckOptions>): Pro
 
 async function fetchWithRetries(url: string, o: Required<CheckOptions>): Promise<Response> {
   let attempt = 0
-  let lastErr: any = null
+  let lastErr: unknown = null
   while (attempt <= o.retries) {
     try {
       const res = await fetchWithTimeout(url, o.timeoutMs, o.userAgent)
@@ -266,7 +298,7 @@ async function fetchWithRetries(url: string, o: Required<CheckOptions>): Promise
         return res
       }
     }
-    catch (e: any) {
+    catch (e: unknown) {
       lastErr = e
       // AbortError → Timer gelaufen, retry
     }
@@ -276,7 +308,8 @@ async function fetchWithRetries(url: string, o: Required<CheckOptions>): Promise
       await sleep(backoff)
     }
   }
-  throw lastErr ?? new Error('fetch failed')
+  if (lastErr instanceof Error) throw lastErr
+  throw new Error(lastErr ? String(lastErr) : 'fetch failed')
 }
 
 async function fetchWithTimeout(url: string, timeoutMs: number, userAgent: string): Promise<Response> {
@@ -298,13 +331,17 @@ async function fetchWithTimeout(url: string, timeoutMs: number, userAgent: strin
   }
 }
 
-async function safeJson(res: Response): Promise<any | undefined> {
-  try { return await res.json() }
-  catch { return undefined }
+async function safeJson(res: Response): Promise<unknown | undefined> {
+  try {
+    return await res.json()
+  }
+  catch {
+    return undefined
+  }
 }
 
-function normalizeStatuses(raw: any): string[] {
-  const arr = Array.isArray(raw) ? raw : []
+function normalizeStatuses(raw: unknown): string[] {
+  const arr: unknown[] = Array.isArray(raw) ? raw : []
   return arr.map(v => String(v).toLowerCase())
 }
 
@@ -333,9 +370,9 @@ async function checkNsDelegation(domainAscii: string, timeoutMs: number): Promis
     const ns = await dns.resolveNs(domainAscii) // nutzt System-Resolver
     return { delegated: Array.isArray(ns) && ns.length > 0, ns }
   }
-  catch (e: any) {
+  catch (e: unknown) {
     // NXDOMAIN, ENODATA etc. ⇒ nicht delegiert (aber kein Beweis für „frei“)
-    const code = e?.code ? String(e.code) : undefined
+    const code = getErrorCode(e)
     if (code === 'ENODATA' || code === 'ENOTFOUND' || code === 'SERVFAIL' || code === 'REFUSED' || code === 'ETIMEOUT') {
       return { delegated: false, error: code }
     }
@@ -344,4 +381,30 @@ async function checkNsDelegation(domainAscii: string, timeoutMs: number): Promis
   finally {
     clearTimeout(timer)
   }
+}
+
+/* ===== additional type guards ===== */
+
+function getErrorStatus(e: unknown): number | undefined {
+  if (e && typeof e === 'object' && 'status' in e) {
+    const val = (e as Record<string, unknown>).status
+    if (typeof val === 'number') return val
+  }
+  return undefined
+}
+
+function getErrorName(e: unknown): string | undefined {
+  if (e && typeof e === 'object' && 'name' in e) {
+    const val = (e as Record<string, unknown>).name
+    if (typeof val === 'string') return val
+  }
+  return undefined
+}
+
+function getErrorCode(e: unknown): string | undefined {
+  if (e && typeof e === 'object' && 'code' in e) {
+    const val = (e as Record<string, unknown>).code
+    if (typeof val === 'string') return val
+  }
+  return undefined
 }
