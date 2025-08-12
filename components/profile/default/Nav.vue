@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { showLegalDataWarning, refreshSettings } = await useProfile()
+const { showLegalDataWarning, isSubscribed, refreshSettings } = await useProfile()
 
 const { clear } = useUserSession()
 const { refreshMe } = await useMe()
@@ -9,6 +9,7 @@ const showSettingsModal = useState('showSettingsModal', () => false)
 const showDesignModal = useState('showDesignModal', () => false)
 const showContentModal = useState('showContentModal', () => false)
 const showFeedbackModal = useState('showFeedbackModal', () => false)
+const showAssistantModal = useState('showAssistantModal', () => false)
 
 function closeAndOpenDesign() {
   showMenu.value = false
@@ -73,12 +74,32 @@ async function signOut() {
       <UButton
         label="Inhalt und Funktion"
         icon="i-lucide-letter-text"
-        class="w-full rounded-none p-4"
+        class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
         @click="closeAndOpenContent"
       />
 
+      <UButton
+        label="Assistent"
+        icon="i-lucide-bot"
+        class="w-full rounded-none p-4 border-b border-gray-200"
+        variant="ghost"
+        color="neutral"
+        @click="showAssistantModal = true"
+        :disabled="!isSubscribed"
+      >
+        <template #trailing>
+          <UBadge
+            v-if="!isSubscribed"
+            label="Premium"
+            variant="outline"
+            class="ml-auto"
+          />
+        </template>
+      </UButton>
+
+      <AssistantModal />
       <SettingsModal @update="refreshSettings" />
     </template>
 
