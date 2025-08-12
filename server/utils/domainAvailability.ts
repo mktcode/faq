@@ -1,6 +1,5 @@
-import { toASCII } from 'punycode/'
+import { toASCII } from 'punycode'
 import { setTimeout as sleep } from 'node:timers/promises'
-import * as dns from 'node:dns/promises'
 
 export type AvailabilityReason
   = | 'available'
@@ -28,29 +27,8 @@ export interface CheckOptions {
   bootstrapUrl?: string
   userAgent?: string
   useRdapOrgFallback?: boolean
-  /** Prüfreihenfolge überschreiben (nur für Advanced/Verify) */
+  /** Prüfreihenfolge überschreiben (nur für Advanced) */
   overrideServers?: string[]
-}
-
-export interface VerifyOptions extends CheckOptions {
-  /** Anzahl einzelner Probes (Default 3) */
-  probes?: number
-  /** Mind. Bestätigungen „available“ (Default 2) */
-  minConfirmations?: number
-  /** Basisintervall zwischen Probes (Default 1200ms) */
-  intervalMs?: number
-  /** Cross-Server rotieren (Default true) */
-  crossServer?: boolean
-  /** Zusätzlich NS-Delegation prüfen (Default true) */
-  dnsNsCheck?: boolean
-  /** Harte Obergrenze für die gesamte Verifikation (Default 12s) */
-  hardTimeoutMs?: number
-}
-
-export interface VerifyResult extends DomainAvailability {
-  confirmations: number
-  probes: Array<Pick<DomainAvailability, 'available' | 'reason' | 'rdapServer' | 'httpStatus'>>
-  dns?: { delegated: boolean, ns?: string[], error?: string }
 }
 
 const DEFAULTS: Required<Omit<CheckOptions, 'overrideServers'>> = {
@@ -61,23 +39,27 @@ const DEFAULTS: Required<Omit<CheckOptions, 'overrideServers'>> = {
   useRdapOrgFallback: true,
 }
 
-const VERIFY_DEFAULTS: Required<
-  Omit<VerifyOptions, keyof CheckOptions | 'overrideServers'>
-> = {
-  probes: 3,
-  minConfirmations: 2,
-  intervalMs: 1200,
-  crossServer: true,
-  dnsNsCheck: true,
-  hardTimeoutMs: 12_000,
-}
-
 type BootstrapCache = { fetchedAt: number, tldMap: Record<string, string[]> }
 let BOOTSTRAP_CACHE: BootstrapCache | null = null
 const BOOTSTRAP_TTL_MS = 24 * 60 * 60 * 1000 // 24h
+// rdap.org fallback is known to be non-authoritative/unreliable for these TLDs.
+// For these, don't trust a 404 from rdap.org as "available".
+const UNRELIABLE_FALLBACK_TLDS = new Set<string>(['de'])
+// Known authoritative RDAP endpoints for TLDs that may be missing in IANA bootstrap
+// or where the generic fallback is unreliable.
+const AUTHORITATIVE_OVERRIDES: Record<string, string[]> = {
+  de: ['https://rdap.denic.de/'],
+}
 
 /* ====================== PUBLIC API ====================== */
 
+/**
+ * Single, robust domain availability check.
+ * - Normalizes and validates domain
+ * - Resolves RDAP servers (IANA bootstrap, optional rdap.org fallback)
+ * - Queries up to two servers (first two unique entries) with retries+timeout
+ * - 404 => available; 2xx => parse RDAP status; 429 => rate-limited; 5xx/Abort => network/unknown
+ */
 export async function checkDomainAvailability(
   inputDomain: string,
   opts: CheckOptions = {},
@@ -94,24 +76,47 @@ export async function checkDomainAvailability(
     ? opts.overrideServers
     : await getRdapServersForTld(tld, o).catch(() => [])
 
+  // ensure fallback, dedupe, and cap to at most two servers
+  // If IANA bootstrap returned nothing, try built-in authoritative overrides
+  if (servers.length === 0 && AUTHORITATIVE_OVERRIDES[tld]) {
+    servers = AUTHORITATIVE_OVERRIDES[tld]
+  }
+  // Track whether we have authoritative RDAP servers (from IANA/bootstrap or explicit override/built-in overrides)
+  const hasAuthoritativeServers = servers.length > 0
   if (servers.length === 0 && o.useRdapOrgFallback) servers = ['https://rdap.org/']
   if (servers.length === 0) return result(false, 'tld-unsupported')
+  servers = Array.from(new Set(servers)).slice(0, 2)
 
-  let lastErr: unknown = null
+  let sawRateLimited = false
+  let sawAbort = false
+  let sawFallback404 = false
+
   for (const base of servers) {
     const url = new URL(`domain/${ascii}`, ensureSlash(base)).toString()
     try {
       const res = await fetchWithRetries(url, o)
-      if (res.status === 404) return result(true, 'available', base, 404)
+
+      // Only trust 404 => available when querying an authoritative RDAP server.
+      // When we only have the rdap.org fallback (non-authoritative for some TLDs like .de),
+      // a 404 can simply mean "no RDAP data", not actual availability.
+      if (res.status === 404) {
+        if (hasAuthoritativeServers) return result(true, 'available', base, 404)
+        // Fallback-only case
+        if (UNRELIABLE_FALLBACK_TLDS.has(tld)) {
+          // Don't trust 404 for unreliable TLDs
+          sawFallback404 = true
+          continue
+        }
+        // For other TLDs, accept rdap.org 404 as available to keep UX simple
+        return result(true, 'available', base, 404)
+      }
 
       if (res.status === 429) {
-        const err: Error & { status?: number } = new Error('rate-limited')
-        err.status = 429
-        lastErr = err
+        sawRateLimited = true
         continue
       }
       if (res.status >= 500) {
-        lastErr = new Error(`server error ${res.status}`)
+        // try next server if available
         continue
       }
 
@@ -127,107 +132,21 @@ export async function checkDomainAvailability(
         return result(false, 'registered', base, res.status, statuses)
       }
 
-      const err: Error & { status?: number } = new Error(`unexpected ${res.status}`)
-      err.status = res.status
-      lastErr = err
+      // unexpected but not decisive; try next
+      continue
     }
     catch (e: unknown) {
-      lastErr = e
+      const name = getErrorName(e)
+      if (name === 'AbortError') sawAbort = true
+      // try next server
       continue
     }
   }
 
-  const lastStatus = getErrorStatus(lastErr)
-  if (lastStatus === 429) return result(false, 'rate-limited')
-  const lastName = getErrorName(lastErr)
-  if (lastName === 'AbortError') return result(false, 'network-error')
+  if (sawRateLimited) return result(false, 'rate-limited')
+  if (sawAbort) return result(false, 'network-error')
+  if (sawFallback404) return result(false, 'unknown')
   return result(false, 'unknown')
-}
-
-/**
- * Mehrstufige Verifikation:
- * - Mehrere RDAP-Probes (optional rotierend über verschiedene Server)
- * - Jitter/Backoff
- * - Optionaler DNS-NS-Check (Delegation ⇒ definitiv registriert)
- */
-export async function verifyDomainAvailable(
-  inputDomain: string,
-  opts: VerifyOptions = {},
-): Promise<VerifyResult> {
-  const baseOpts = { ...DEFAULTS, ...opts }
-  const v = { ...VERIFY_DEFAULTS, ...opts }
-
-  const start = Date.now()
-  const ascii = normaliseDomain(inputDomain)
-  if (!ascii || !isValidAsciiDomain(ascii)) {
-    return { ...result(false, 'invalid'), confirmations: 0, probes: [] }
-  }
-
-  // Ermittele bevorzugte Server-Reihenfolge einmalig
-  const tld = ascii.split('.').pop()!
-  let servers = opts.overrideServers && opts.overrideServers.length
-    ? opts.overrideServers
-    : await getRdapServersForTld(tld, baseOpts).catch(() => [])
-
-  if (servers.length === 0 && baseOpts.useRdapOrgFallback) servers = ['https://rdap.org/']
-  if (servers.length === 0) {
-    return { ...result(false, 'tld-unsupported'), confirmations: 0, probes: [] }
-  }
-
-  const probes: VerifyResult['probes'] = []
-  let confirmations = 0
-  let decisive: DomainAvailability | null = null
-
-  for (let i = 0; i < v.probes; i++) {
-    if (Date.now() - start > v.hardTimeoutMs) break
-
-    const server = v.crossServer ? servers[i % servers.length] : servers[0]
-    const res = await checkDomainAvailability(ascii, { ...baseOpts, overrideServers: [server] })
-
-    probes.push({ available: res.available, reason: res.reason, rdapServer: res.rdapServer, httpStatus: res.httpStatus })
-
-    // Harte Gegenbeweise sofort abbrechen
-    if (!res.available && (res.reason === 'registered' || res.reason === 'reserved' || res.reason === 'blocked')) {
-      decisive = res
-      break
-    }
-
-    if (res.available) confirmations++
-
-    if (confirmations >= (v.minConfirmations ?? 2)) {
-      // Optionaler DNS-NS-Check als „Sanity Check“
-      if (v.dnsNsCheck) {
-        const dnsRes = await checkNsDelegation(ascii, baseOpts.timeoutMs).catch(e => ({ delegated: false, error: String(e) }))
-        if (dnsRes.delegated) {
-          // Delegiert ⇒ doch registriert
-          return {
-            ...result(false, 'registered', res.rdapServer, res.httpStatus),
-            confirmations,
-            probes,
-            dns: dnsRes,
-          }
-        }
-        return {
-          ...result(true, 'available', res.rdapServer, res.httpStatus),
-          confirmations,
-          probes,
-          dns: dnsRes,
-        }
-      }
-      return { ...result(true, 'available', res.rdapServer, res.httpStatus), confirmations, probes }
-    }
-
-    // Jitter/Backoff vor nächstem Probe
-    const wait = v.intervalMs + Math.floor(Math.random() * 300) + i * 250
-    await sleep(wait)
-  }
-
-  if (decisive) {
-    return { ...decisive, confirmations, probes }
-  }
-
-  // Falls wir keine ausreichenden Bestätigungen haben → unknown/weak signal
-  return { ...result(false, confirmations > 0 ? 'unknown' : 'network-error'), confirmations, probes }
 }
 
 /* ====================== helpers ====================== */
@@ -285,7 +204,10 @@ async function getRdapServersForTld(
   return BOOTSTRAP_CACHE.tldMap[tld.toLowerCase()] ?? []
 }
 
-async function fetchWithRetries(url: string, o: Required<CheckOptions>): Promise<Response> {
+async function fetchWithRetries(
+  url: string,
+  o: Readonly<Pick<Required<CheckOptions>, 'timeoutMs' | 'retries' | 'userAgent'>>,
+): Promise<Response> {
   let attempt = 0
   let lastErr: unknown = null
   while (attempt <= o.retries) {
@@ -362,48 +284,11 @@ function result(
   }
 }
 
-/** Einfache NS-Delegationsprüfung: wenn NS-Records vorhanden, ist die Domain definitiv registriert+delegiert */
-async function checkNsDelegation(domainAscii: string, timeoutMs: number): Promise<{ delegated: boolean, ns?: string[], error?: string }> {
-  const t = AbortController ? new AbortController() : null
-  const timer = setTimeout(() => t?.abort(), Math.max(1000, Math.floor(timeoutMs * 0.6)))
-  try {
-    const ns = await dns.resolveNs(domainAscii) // nutzt System-Resolver
-    return { delegated: Array.isArray(ns) && ns.length > 0, ns }
-  }
-  catch (e: unknown) {
-    // NXDOMAIN, ENODATA etc. ⇒ nicht delegiert (aber kein Beweis für „frei“)
-    const code = getErrorCode(e)
-    if (code === 'ENODATA' || code === 'ENOTFOUND' || code === 'SERVFAIL' || code === 'REFUSED' || code === 'ETIMEOUT') {
-      return { delegated: false, error: code }
-    }
-    return { delegated: false, error: String(e) }
-  }
-  finally {
-    clearTimeout(timer)
-  }
-}
-
 /* ===== additional type guards ===== */
-
-function getErrorStatus(e: unknown): number | undefined {
-  if (e && typeof e === 'object' && 'status' in e) {
-    const val = (e as Record<string, unknown>).status
-    if (typeof val === 'number') return val
-  }
-  return undefined
-}
 
 function getErrorName(e: unknown): string | undefined {
   if (e && typeof e === 'object' && 'name' in e) {
     const val = (e as Record<string, unknown>).name
-    if (typeof val === 'string') return val
-  }
-  return undefined
-}
-
-function getErrorCode(e: unknown): string | undefined {
-  if (e && typeof e === 'object' && 'code' in e) {
-    const val = (e as Record<string, unknown>).code
     if (typeof val === 'string') return val
   }
   return undefined
