@@ -2,7 +2,7 @@ import { settingsFormSchema } from '~/types/db'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
-  
+
   const publicSettings = await readValidatedBody(event, body => settingsFormSchema.shape.public.parse(body))
   const settings = await getSettings(user.id)
   settings.public = publicSettings

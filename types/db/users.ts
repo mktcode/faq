@@ -148,8 +148,8 @@ export const settingsFormSchema = z.object({
   private: z.object({
     assistant: z.object({
       instructions: z.string().nullable(),
-      context: z.string().nullable()
-    })
+      context: z.string().nullable(),
+    }),
   }),
 })
 
