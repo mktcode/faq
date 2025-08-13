@@ -69,14 +69,14 @@ Solihost is a platform that helps clients become visible online, offering a simp
   if (settings.private.assistant.context) {
     messages.unshift({
       role: 'user',
-      content: settings.private.assistant.context
+      content: settings.private.assistant.context,
     })
   }
 
   if (settings.private.assistant.instructions) {
     messages.unshift({
       role: 'user',
-      content: settings.private.assistant.instructions
+      content: settings.private.assistant.instructions,
     })
   }
 
@@ -86,11 +86,24 @@ Solihost is a platform that helps clients become visible online, offering a simp
     instructions,
     input: messages,
     reasoning: {
-      effort: 'minimal',
+      effort: 'medium',
     },
     text: {
       verbosity: 'low',
     },
+    tools: [
+      {
+        type: 'web_search_preview',
+        user_location: {
+          type: 'approximate',
+          country: 'DE',
+          city: settings.public.company.city || undefined,
+        },
+      },
+      {
+        type: 'image_generation',
+      },
+    ],
   })
 
   return response
