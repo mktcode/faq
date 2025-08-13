@@ -3,6 +3,9 @@ import { marked } from 'marked'
 import sanitizeHtml from 'sanitize-html'
 
 const showModal = useState('showAssistantModal', () => false)
+const { privateSettings, isSavingPrivateSettings, savePrivateSettings } = await usePrivateSettings()
+
+const editInfoOpen = ref(false)
 
 const quota = useState('assistantQuota', () => 12)
 const userInput = ref('')
@@ -82,15 +85,46 @@ async function generateResponse() {
         :ui="{ base: 'rounded-none' }"
       />
       <div class="p-4">
-        <div class="flex flex-col gap-4">
+        <UCollapsible
+          v-if="privateSettings"
+          v-model:open="editInfoOpen"
+          class="flex flex-col gap-2"
+          :ui="{
+            root: 'border border-primary-500 rounded-lg',
+            content: 'flex flex-col gap-2 px-3 pb-3',
+          }"
+        >
           <UButton
-            label="Informationen bearbeiten"
-            icon="i-lucide-edit"
-            color="neutral"
-            variant="outline"
-            class="w-full"
+            label="Kontext und Anweisungen bearbeiten"
+            color="primary"
+            variant="link"
+            trailing-icon="i-heroicons-chevron-down"
+            :ui="{
+              trailingIcon: `ml-auto transition-transform ${editInfoOpen ? 'rotate-180' : ''}`,
+            }"
           />
-        </div>
+
+          <template #content>
+            <UInput
+              v-model="privateSettings.assistant.context"
+              placeholder="Kontext"
+              class="w-full"
+              size="xxl"
+            />
+            <UInput
+              v-model="privateSettings.assistant.instructions"
+              placeholder="Anweisungen"
+              class="w-full"
+              size="xxl"
+            />
+
+            <UButton
+              label="Speichern"
+              :loading="isSavingPrivateSettings"
+              @click="savePrivateSettings"
+            />
+          </template>
+        </UCollapsible>
         <div class="flex flex-col gap-2 mt-4">
           <div
             v-for="(message, index) in messages"
