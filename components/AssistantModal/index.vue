@@ -1,7 +1,43 @@
 <script setup lang="ts">
+import { marked } from 'marked'
+import sanitizeHtml from 'sanitize-html'
+
 const showModal = useState('showAssistantModal', () => false)
 
 const quota = useState('assistantQuota', () => 12)
+const userInput = ref('')
+const isGeneratingResponse = ref(false)
+const messages = ref<{ role: 'user' | 'assistant'; content: string }[]>([])
+
+async function generateResponse() {
+  if (isGeneratingResponse.value) return;
+  isGeneratingResponse.value = true;
+
+  try {
+    messages.value.push({
+      role: 'user',
+      content: userInput.value,
+    })
+    userInput.value = ''
+
+    const response = await $fetch('/api/user/assistant/respond', {
+      method: 'POST',
+      body: {
+        messages: messages.value
+      },
+    })
+
+    messages.value.push({
+      role: 'assistant',
+      content: response.output_text,
+    })
+  } catch (error) {
+    console.error('Error generating response:', error)
+  } finally {
+    isGeneratingResponse.value = false
+    userInput.value = ''
+  }
+}
 </script>
 
 <template>
@@ -53,15 +89,51 @@ const quota = useState('assistantQuota', () => 12)
             class="w-full"
           />
         </div>
+        <div class="flex flex-col gap-2 mt-4">
+          <div
+            v-for="(message, index) in messages"
+            :key="index"
+            class="p-2 bg-gray-100 rounded-lg"
+          >
+            <div class="text-sm text-gray-400 flex gap-2 items-center mb-2">
+              <UIcon
+                :name="message.role === 'user' ? 'i-lucide-user' : 'i-lucide-bot'"
+                size="20"
+              />
+              <span>{{ message.role === 'user' ? 'Sie' : 'Assistent' }}</span>
+            </div>
+            <div
+              v-html="sanitizeHtml(marked.parse(message.content, { async: false }))"
+              class="prose text-sm"
+            />
+          </div>
+        </div>
       </div>
     </template>
 
     <template #footer>
-      <UTextarea
-        placeholder="Frage an den Assistenten..."
-        class="w-full"
-        :rows="2"
-      />
+      <div class="flex flex-col w-full">
+        <UTextarea
+          v-model="userInput"
+          placeholder="Frage an den Assistenten..."
+          class="w-full"
+          :rows="2"
+          :ui="{
+            base: 'rounded-b-none',
+          }"
+        />
+        <div class="bg-gray-100 p-2 flex items-center gap-2 justify-end rounded-b-lg">
+          <AssistantModalRecordAudio
+            @text="text => userInput = text"
+          />
+          <UButton
+            icon="i-lucide-send-horizontal"
+            color="primary"
+            :disabled="isGeneratingResponse || !userInput"
+            @click="generateResponse"
+          />
+        </div>
+      </div>
     </template>
   </USlideover>
 </template>

@@ -1,5 +1,5 @@
 import type { H3Event } from 'h3'
-import type { SettingsForm } from '~/types/db'
+import { settingsFormSchema, type SettingsForm } from '~/types/db'
 
 export function makeUsername(name: string): string {
   // TODO: check for uniqueness in the database
@@ -152,4 +152,19 @@ export async function requireProfileSubscription(username: string) {
       message: 'The profile is not subscribed.',
     })
   }
+}
+
+
+export async function getSettings(user: { id: number }) {
+  const db = await getDatabaseConnection()
+
+  const { settings } = await db
+    .selectFrom('users')
+    .select('settings')
+    .where('id', '=', user.id)
+    .executeTakeFirstOrThrow()
+  
+  const validatedSettings = settingsFormSchema.parse(typeof settings === 'string' ? JSON.parse(settings) : settings)
+
+  return validatedSettings
 }
