@@ -86,8 +86,8 @@ async function signOut() {
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
-        @click="showAssistantModal = true"
         :disabled="!isSubscribed"
+        @click="showAssistantModal = true"
       >
         <template #trailing>
           <UBadge

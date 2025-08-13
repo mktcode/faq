@@ -2,7 +2,7 @@
 withDefaults(defineProps<{
   disabled?: boolean
 }>(), {
-  disabled: false
+  disabled: false,
 })
 
 const emit = defineEmits<{

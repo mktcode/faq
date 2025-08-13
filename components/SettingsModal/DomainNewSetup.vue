@@ -25,10 +25,12 @@ async function checkDomainAvailability() {
 
     isAvailable.value = checkResult.isAvailable
     isCheckingDomain.value = false
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error checking domain availability:', error)
     isAvailable.value = false
-  } finally {
+  }
+  finally {
     isCheckingDomain.value = false
   }
 }
@@ -47,9 +49,11 @@ async function registerDomain() {
       method: 'POST',
       body: { domain: newDomain.value + '.de' },
     })
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error registering domain:', error)
-  } finally {
+  }
+  finally {
     isRegisteringDomain.value = false
   }
 }
@@ -80,7 +84,7 @@ async function registerDomain() {
           variant="soft"
           :ui="{
             base: 'px-4',
-            leadingIcon: 'animate-spin'
+            leadingIcon: 'animate-spin',
           }"
         />
         <UBadge
@@ -91,7 +95,7 @@ async function registerDomain() {
           label="Verfügbar"
           :ui="{
             base: 'px-4',
-            leadingIcon: 'text-green-600'
+            leadingIcon: 'text-green-600',
           }"
         />
         <UBadge
@@ -102,7 +106,7 @@ async function registerDomain() {
           :label="isDomainValid ? 'Nicht verfügbar' : 'Ungültige Domain'"
           :ui="{
             base: 'px-4',
-            leadingIcon: 'text-red-600'
+            leadingIcon: 'text-red-600',
           }"
         />
       </UButtonGroup>

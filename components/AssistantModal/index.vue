@@ -7,11 +7,11 @@ const showModal = useState('showAssistantModal', () => false)
 const quota = useState('assistantQuota', () => 12)
 const userInput = ref('')
 const isGeneratingResponse = ref(false)
-const messages = ref<{ role: 'user' | 'assistant'; content: string }[]>([])
+const messages = ref<{ role: 'user' | 'assistant', content: string }[]>([])
 
 async function generateResponse() {
-  if (isGeneratingResponse.value) return;
-  isGeneratingResponse.value = true;
+  if (isGeneratingResponse.value) return
+  isGeneratingResponse.value = true
 
   try {
     messages.value.push({
@@ -23,7 +23,7 @@ async function generateResponse() {
     const response = await $fetch('/api/user/assistant/respond', {
       method: 'POST',
       body: {
-        messages: messages.value
+        messages: messages.value,
       },
     })
 
@@ -31,9 +31,11 @@ async function generateResponse() {
       role: 'assistant',
       content: response.output_text,
     })
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error generating response:', error)
-  } finally {
+  }
+  finally {
     isGeneratingResponse.value = false
     userInput.value = ''
   }
@@ -103,8 +105,8 @@ async function generateResponse() {
               <span>{{ message.role === 'user' ? 'Sie' : 'Assistent' }}</span>
             </div>
             <div
-              v-html="sanitizeHtml(marked.parse(message.content, { async: false }))"
               class="prose text-sm"
+              v-html="sanitizeHtml(marked.parse(message.content, { async: false }))"
             />
           </div>
         </div>
@@ -134,8 +136,8 @@ async function generateResponse() {
             @click="messages = []"
           />
           <AssistantModalRecordAudio
-            @text="text => userInput = text"
             class="ml-auto"
+            @text="text => userInput = text"
           />
           <UButton
             icon="i-lucide-send-horizontal"

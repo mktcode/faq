@@ -6,7 +6,7 @@ const bodySchema = z.object({
   messages: z.array(z.object({
     role: z.enum(['user', 'assistant']),
     content: z.string().min(1, 'Die Eingabe darf nicht leer sein.'),
-  }))
+  })),
 })
 
 export default defineEventHandler(async (event) => {
@@ -73,7 +73,7 @@ ${settings.header.description ? `- Beschreibung: ${settings.header.description}`
     },
     text: {
       verbosity: 'low',
-    }
+    },
   })
 
   return response

@@ -154,7 +154,6 @@ export async function requireProfileSubscription(username: string) {
   }
 }
 
-
 export async function getSettings(user: { id: number }) {
   const db = await getDatabaseConnection()
 
@@ -163,7 +162,7 @@ export async function getSettings(user: { id: number }) {
     .select('settings')
     .where('id', '=', user.id)
     .executeTakeFirstOrThrow()
-  
+
   const validatedSettings = settingsFormSchema.parse(typeof settings === 'string' ? JSON.parse(settings) : settings)
 
   return validatedSettings
