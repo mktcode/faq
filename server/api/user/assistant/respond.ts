@@ -11,6 +11,8 @@ const bodySchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
+  await requireProfileSubscription(user.userName)
+  
   const settings = await getSettings(user)
   const { messages } = await readValidatedBody(event, body => bodySchema.parse(body))
   const { openaiApiKey } = useRuntimeConfig(event)
