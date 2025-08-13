@@ -118,6 +118,7 @@ async function generateResponse() {
           placeholder="Frage an den Assistenten..."
           class="w-full"
           :rows="2"
+          autoresize
           :ui="{
             base: 'rounded-b-none',
           }"
