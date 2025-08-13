@@ -154,16 +154,45 @@ export async function requireProfileSubscription(username: string) {
   }
 }
 
-export async function getSettings(user: { id: number }) {
+function getValidatedSettings(settings: string | Record<string, unknown>): SettingsForm {
+  return settingsFormSchema.parse(typeof settings === 'string' ? JSON.parse(settings) : settings)
+}
+
+export async function getSettings(userIdOrName: number | string) {
   const db = await getDatabaseConnection()
 
-  const { settings } = await db
-    .selectFrom('users')
-    .select('settings')
-    .where('id', '=', user.id)
-    .executeTakeFirstOrThrow()
+  let settings: SettingsForm | null = null
 
-  const validatedSettings = settingsFormSchema.parse(typeof settings === 'string' ? JSON.parse(settings) : settings)
+  if (typeof userIdOrName === 'number') {
+    const user = await db
+      .selectFrom('users')
+      .select('settings')
+      .where('id', '=', userIdOrName)
+      .executeTakeFirstOrThrow()
 
-  return validatedSettings
+    settings = getValidatedSettings(user.settings)
+  }
+  else {
+    const user = await db
+      .selectFrom('users')
+      .select('settings')
+      .where('userName', '=', userIdOrName)
+      .executeTakeFirstOrThrow()
+
+    settings = getValidatedSettings(user.settings)
+  }
+
+  return settings
+}
+
+export async function getPublicSettings(userNameOrId: number | string) {
+  const settings = await getSettings(userNameOrId)
+
+  return settings.public
+}
+
+export async function getPrivateSettings(userNameOrId: number | string) {
+  const settings = await getSettings(userNameOrId)
+
+  return settings.private
 }

@@ -11,7 +11,7 @@ export const useProfile = async () => {
   const isOwned = useState<boolean>('isOwned', () => false)
   const isPublic = useState<boolean>('isPublic', () => false)
   const design = useState<string>('design', () => 'default')
-  const settings = useState<SettingsForm>('settings', () => defaultSettings)
+  const settings = useState<SettingsForm['public']>('settings', () => defaultSettings.public)
   const isSavingSettings = ref(false)
   const showLegalDataWarning = computed(() => isOwned && (!settings.value?.company?.name || !settings.value?.company?.city || !settings.value?.company?.street || !settings.value?.company?.zip || !settings.value?.company?.email))
   const designRounded = computed(() => settings.value.design.rounded)
