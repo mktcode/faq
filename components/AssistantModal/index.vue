@@ -122,9 +122,18 @@ async function generateResponse() {
             base: 'rounded-b-none',
           }"
         />
-        <div class="bg-gray-100 p-2 flex items-center gap-2 justify-end rounded-b-lg">
+        <div class="bg-gray-100 p-2 flex items-center gap-2 rounded-b-lg">
+          <UButton
+            v-if="messages.length > 0"
+            label="Gesprächsverlauf leeren"
+            icon="i-lucide-x"
+            color="neutral"
+            variant="ghost"
+            @click="messages = []"
+          />
           <AssistantModalRecordAudio
             @text="text => userInput = text"
+            class="ml-auto"
           />
           <UButton
             icon="i-lucide-send-horizontal"
