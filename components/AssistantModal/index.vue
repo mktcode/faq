@@ -117,8 +117,9 @@ async function generateResponse() {
           v-model="userInput"
           placeholder="Frage an den Assistenten..."
           class="w-full"
-          :rows="2"
           autoresize
+          :rows="2"
+          :maxrows="10"
           :ui="{
             base: 'rounded-b-none',
           }"
