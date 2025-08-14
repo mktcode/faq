@@ -54,3 +54,14 @@ button,
 mark {
   @apply bg-primary-200 text-primary-900 py-px px-1;
 }
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

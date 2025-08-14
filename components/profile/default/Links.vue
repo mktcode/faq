@@ -5,7 +5,6 @@ const { me } = await useMe()
 const { username, isOwned, settings } = await useProfile()
 
 const { public: { appHost } } = useRuntimeConfig()
-const showModal = useState('showLinksModal', () => false)
 
 const websiteLink = ref(`https://${username.value}.${appHost}`)
 const { copy, copied } = useClipboard()
@@ -16,6 +15,21 @@ function shareOnInstagram() {
   setTimeout(() => {
     window.open('https://www.instagram.com/', '_blank')
   }, 2000)
+}
+
+function getStaggeredAnimationClass(index: number) {
+  return [
+    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_1.0s_forwards]',
+    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_1.2s_forwards]',
+    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_1.4s_forwards]',
+    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_1.6s_forwards]',
+    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_1.8s_forwards]',
+    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_2.0s_forwards]',
+    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_2.2s_forwards]',
+    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_2.4s_forwards]',
+    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_2.6s_forwards]',
+    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_2.8s_forwards]',
+  ][index]
 }
 </script>
 
@@ -29,6 +43,7 @@ function shareOnInstagram() {
         :icon="link.icon === 'none' ? undefined : link.icon"
         :href="link.url"
         target="_blank"
+        :class="getStaggeredAnimationClass(index)"
       />
     </template>
 
@@ -39,6 +54,7 @@ function shareOnInstagram() {
       <UButton
         label="Teilen"
         icon="i-heroicons-share"
+        :class="getStaggeredAnimationClass(settings.header.links ? settings.header.links.length : 0)"
       />
 
       <template #content>
@@ -99,11 +115,5 @@ function shareOnInstagram() {
         </div>
       </template>
     </UPopover>
-
-    <UButton
-      v-if="me && isOwned"
-      icon="i-lucide-ellipsis"
-      @click="showModal = true"
-    />
   </div>
 </template>
