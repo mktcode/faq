@@ -133,7 +133,7 @@ async function deleteImage(image: 'logo' | 'header') {
           name="i-heroicons-paint-brush"
           class="inline-block size-6 opacity-50"
         />
-        Design
+        Design &amp; Kopfbereich
       </h3>
     </template>
 
@@ -256,40 +256,6 @@ async function deleteImage(image: 'logo' | 'header') {
                 }"
                 @click.stop="clickLogoInput"
               />
-              <FontWrapper
-                :font="settings.design.font"
-                class="text-center"
-              >
-                <h1
-                  v-if="settings.header.title"
-                  class="text-lg font-semibold mt-2 leading-none"
-                  :class="getColorClass(settings.header.titleColor, 'text')"
-                  :style="{ 'font-size': settings.header.titleFontSize + 'cqw' }"
-                >
-                  {{ settings.header.title }}
-                </h1>
-                <p
-                  v-if="settings.header.description"
-                  class="text-sm mt-1"
-                  :class="getColorClass(settings.header.descriptionColor, 'text')"
-                  :style="{ 'font-size': settings.header.descriptionFontSize + 'cqw' }"
-                >
-                  {{ settings.header.description }}
-                </p>
-                <div
-                  v-if="settings.header.links.length"
-                  class="mt-4 flex flex-wrap items-center justify-center gap-2"
-                >
-                  <UButton
-                    v-for="link in settings.header.links"
-                    :key="link.url"
-                    :label="link.title"
-                    :href="link.url"
-                    size="sm"
-                    :class="getColorClass(settings.design.color, 'bg')"
-                  />
-                </div>
-              </FontWrapper>
             </div>
             <input
               ref="headerImageInput"
