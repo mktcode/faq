@@ -39,7 +39,7 @@ export const useProfile = async () => {
   }
 
   watch(settings.value, () => {
-    appConfig.ui.colors.primary = settings.value.design.color
+    appConfig.ui.colors.primary = 'website'
     appConfig.ui.button.defaultVariants.rounded = settings.value.design.rounded
     appConfig.ui.input.defaultVariants.rounded = settings.value.design.rounded
     appConfig.ui.select.defaultVariants.rounded = settings.value.design.rounded

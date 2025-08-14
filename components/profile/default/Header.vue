@@ -14,8 +14,10 @@ const { settings } = await useProfile()
   >
     <div
       class="absolute inset-0 z-0"
-      :class="getColorClass(settings.header.imageOverlay.color, 'bg')"
-      :style="{ opacity: (settings.header.imageOverlay.opacity || 0) / 100 }"
+      :style="{
+        backgroundColor: settings.header.imageOverlay.color || 'transparent',
+        opacity: (settings.header.imageOverlay.opacity || 0) / 100,
+      }"
     />
     <div
       class="@container w-full flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-24 px-6 relative z-10"
@@ -34,10 +36,10 @@ const { settings } = await useProfile()
       <a href="/">
         <h1
           class="text-center text-shadow-lg font-bold mb-4 leading-none opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.5s_forwards]"
-          :class="[
-            getColorClass(settings.header.titleColor || 'black', 'text'),
-          ]"
-          :style="{ 'font-size': (settings.header.titleFontSize || '10') + 'cqw' }"
+          :style="{
+            'color': settings.header.titleColor || 'black',
+            'font-size': (settings.header.titleFontSize || '10') + 'cqw',
+          }"
         >
           {{ settings.header.title }}
         </h1>
@@ -45,10 +47,10 @@ const { settings } = await useProfile()
       <p
         v-if="settings.header.description"
         class="text-center text-shadow-md mb-4 opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.8s_forwards]"
-        :class="[
-          getColorClass(settings.header.descriptionColor || 'black', 'text'),
-        ]"
-        :style="{ 'font-size': (settings.header.descriptionFontSize || '6') + 'cqw' }"
+        :style="{
+          'color': settings.header.descriptionColor || 'black',
+          'font-size': (settings.header.descriptionFontSize || '6') + 'cqw',
+        }"
       >
         {{ settings.header.description }}
       </p>

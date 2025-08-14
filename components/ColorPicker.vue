@@ -6,8 +6,10 @@ defineProps<{
 
 const color = defineModel('color', {
   type: String,
-  default: 'sky',
+  default: 'hsl(199, 100%, 48%)',
 })
+
+const chip = computed(() => ({ backgroundColor: color.value }))
 </script>
 
 <template>
@@ -15,29 +17,16 @@ const color = defineModel('color', {
     :label="label"
     class="flex-1"
   >
-    <USelect
-      v-model="color"
-      class="w-full"
-      :items="availableColors.filter(color => !disabledColors?.includes(color.value))"
-      :ui="{
-        content: 'w-44',
-      }"
-    >
-      <template #leading="{ modelValue }">
-        <div
-          class="w-5 h-5 rounded-full border-2 border-gray-100"
-          :class="getColorClass(modelValue)"
-        />
+    <UPopover>
+      <UButton color="neutral" variant="outline">
+        <template #leading>
+          <span :style="chip" class="size-3 rounded-full" />
+        </template>
+      </UButton>
+
+      <template #content>
+        <UColorPicker v-model="color" format="hsl" class="p-2" />
       </template>
-      <template #item="{ item }">
-        <div class="flex items-center">
-          <div
-            class="w-5 h-5 rounded-full mr-2 border-2 border-gray-100"
-            :class="getColorClass(item.value)"
-          />
-          {{ item.label }}
-        </div>
-      </template>
-    </USelect>
+    </UPopover>
   </UFormField>
 </template>

@@ -230,8 +230,10 @@ async function deleteImage(image: 'logo' | 'header') {
             >
             <div
               class="absolute inset-0 z-10"
-              :class="getColorClass(settings.header.imageOverlay.color)"
-              :style="{ opacity: settings.header.imageOverlay.opacity / 100 }"
+              :style="{
+                backgroundColor: settings.header.imageOverlay.color || 'transparent',
+                opacity: settings.header.imageOverlay.opacity / 100,
+              }"
               @click.stop="showUploadHeaderModal = true"
             />
             <div class="flex flex-col items-center justify-center pt-5 p-6 z-10 pointer-events-none">

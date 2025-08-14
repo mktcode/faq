@@ -87,6 +87,7 @@ const active = ref<string | undefined>(undefined)
           description="Bevor Sie Ihr Profil veröffentlichen können, müssen Sie unter Anschrift und Rechtliches Ihre Unternehmensdaten angeben, damit diese im Impressum und in der Datenschutzerklärung aufgeführt werden."
           icon="i-heroicons-exclamation-triangle"
           class="mt-2"
+          color="warning"
         />
       </div>
       <UAccordion
