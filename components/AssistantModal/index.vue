@@ -46,7 +46,7 @@ async function generateResponse() {
     :overlay="false"
     :ui="{
       body: '!p-0',
-      footer: '!p-0',
+      footer: '!p-0 flex-col',
     }"
     :close="{
       size: 'md',
@@ -64,20 +64,16 @@ async function generateResponse() {
 
     <template #body>
       <DismissableAlert
-        title="Ihr KI-Assistent"
+        title="Ihr persönlicher Assistent"
         icon="i-lucide-info"
         storage-key="assistant-info-dismissed"
         class="rounded-none"
       >
         Ihr Assistent kennt Ihre Website und damit auch Ihr Unternehmen.
-        Weitere Informationen können Sie hinzufügen, damit nicht immer wieder die selben Rückfragen kommen.
-        Sie können Fragen stellen oder Änderungen an Ihrer Website besprechen und umsetzen lassen.
-        Speichern Sie Ihre Eingaben als wiederverwendbare Vorlagen und nutzen Sie die mitgelieferten.
+        Weitere Informationen können Sie im <strong>Unternehmenskontext</strong> hinzufügen.
+        Der Balken am unteren Bildschirmrand zeigt Ihr aktuelles Kontingent an.
+        Lesen Sie die Tipps, um mehr über die Funktionen des Assistenten zu erfahren.
       </DismissableAlert>
-      <UProgress
-        v-model="quota"
-        :ui="{ base: 'rounded-none' }"
-      />
       <UCollapsible
         v-if="privateSettings"
         v-model:open="editContextOpen"
@@ -142,7 +138,7 @@ async function generateResponse() {
         <template #content>
           <strong>Unternehmenskontext</strong><br>
           Hilft dem Assistenten, besser auf Ihre spezifischen Bedürfnisse einzugehen und relevantere Antworten zu liefern.
-          Der Assistent kann den Kontext auch aus dem aktuellen Gesprächsverlauf aktualisieren.
+          Hinterlegen Sie Informationen zur Zielgruppe oder Ihren Alleinstellungsmerkmalen.
 
           <strong>Online-Recherche:</strong><br>
           Sagen Sie "Suche nach ..." oder "Kannst du das mal recherchieren?" und der Assistent wird versuchen, relevante Informationen online zu finden.
@@ -187,6 +183,10 @@ async function generateResponse() {
           />
         </div>
       </div>
+      <UProgress
+        v-model="quota"
+        :ui="{ base: 'rounded-none' }"
+      />
     </template>
   </USlideover>
 </template>

@@ -74,6 +74,23 @@ export default defineEventHandler(async (event) => {
         },
         strict: true,
       },
+      {
+        type: 'function',
+        name: 'ask_website_manual_assistant',
+        description: 'Update the company context with new information provided by the user. Never use this tool without explicit user consent.',
+        parameters: {
+          type: 'object',
+          properties: {
+            request: {
+              type: 'string',
+              description: 'A detailed description of the questions to ask the website manual assistant.',
+            },
+          },
+          required: ['request'],
+          additionalProperties: false,
+        },
+        strict: true,
+      },
     ],
     parallel_tool_calls: false,
   })
