@@ -6,7 +6,8 @@ import sanitizeHtml from 'sanitize-html'
 const showModal = useState('showAssistantModal', () => false)
 const { privateSettings, isSavingPrivateSettings, savePrivateSettings, refreshPrivateSettings } = await usePrivateSettings()
 
-const editInfoOpen = ref(false)
+const editContextOpen = ref(false)
+const tipsOpen = ref(false)
 
 const quota = useState('assistantQuota', () => 12)
 const userInput = ref('')
@@ -45,6 +46,7 @@ async function generateResponse() {
     :overlay="false"
     :ui="{
       body: '!p-0',
+      footer: '!p-0',
     }"
     :close="{
       size: 'md',
@@ -76,46 +78,80 @@ async function generateResponse() {
         v-model="quota"
         :ui="{ base: 'rounded-none' }"
       />
-      <div class="p-4">
-        <UCollapsible
-          v-if="privateSettings"
-          v-model:open="editInfoOpen"
-          class="flex flex-col gap-2"
+      <UCollapsible
+        v-if="privateSettings"
+        v-model:open="editContextOpen"
+        class="flex flex-col gap-2"
+        :ui="{
+          root: 'border-b border-gray-200',
+          content: 'flex flex-col gap-2 px-3 pb-3',
+        }"
+      >
+        <UButton
+          icon="i-heroicons-building-office-2"
+          label="Unternehmenskontext bearbeiten"
+          color="neutral"
+          variant="link"
+          trailing-icon="i-heroicons-chevron-down"
           :ui="{
-            root: 'border border-primary-500 rounded-lg',
-            content: 'flex flex-col gap-2 px-3 pb-3',
+            leadingIcon: 'size-5',
+            trailingIcon: `ml-auto transition-transform ${editContextOpen ? 'rotate-180' : ''}`,
           }"
-        >
-          <UButton
-            label="Kontext bearbeiten"
-            color="primary"
-            variant="link"
-            trailing-icon="i-heroicons-chevron-down"
+        />
+
+        <template #content>
+          <UTextarea
+            v-model="privateSettings.assistant.context"
+            placeholder="Kontext"
+            class="w-full"
+            autoresize
+            :rows="2"
+            :maxrows="10"
             :ui="{
-              trailingIcon: `ml-auto transition-transform ${editInfoOpen ? 'rotate-180' : ''}`,
+              base: 'text-sm',
             }"
           />
 
-          <template #content>
-            <UTextarea
-              v-model="privateSettings.assistant.context"
-              placeholder="Kontext"
-              class="w-full"
-              autoresize
-              :rows="2"
-              :maxrows="10"
-              :ui="{
-                base: 'text-sm',
-              }"
-            />
+          <UButton
+            label="Speichern"
+            :loading="isSavingPrivateSettings"
+            @click="savePrivateSettings"
+          />
+        </template>
+      </UCollapsible>
+      <UCollapsible
+        v-model:open="tipsOpen"
+        class="flex flex-col gap-2"
+        :ui="{
+          root: 'border-b border-gray-200',
+          content: 'flex flex-col gap-2 text-sm px-3 pb-3',
+        }"
+      >
+        <UButton
+          icon="i-heroicons-light-bulb"
+          label="Tipps"
+          color="neutral"
+          variant="link"
+          trailing-icon="i-heroicons-chevron-down"
+          :ui="{
+            leadingIcon: 'size-5',
+            trailingIcon: `ml-auto transition-transform ${tipsOpen ? 'rotate-180' : ''}`,
+          }"
+        />
 
-            <UButton
-              label="Speichern"
-              :loading="isSavingPrivateSettings"
-              @click="savePrivateSettings"
-            />
-          </template>
-        </UCollapsible>
+        <template #content>
+          <strong>Unternehmenskontext</strong><br>
+          Hilft dem Assistenten, besser auf Ihre spezifischen Bedürfnisse einzugehen und relevantere Antworten zu liefern.
+          Der Assistent kann den Kontext auch aus dem aktuellen Gesprächsverlauf aktualisieren.
+
+          <strong>Online-Recherche:</strong><br>
+          Sagen Sie "Suche nach ..." oder "Kannst du das mal recherchieren?" und der Assistent wird versuchen, relevante Informationen online zu finden.
+
+          <strong>Bilder generieren:</strong><br>
+          Für Ihre Website oder Social Media.
+        </template>
+      </UCollapsible>
+      <div class="p-4">
         <div
           v-if="response"
           class="mt-4 prose-sm"
@@ -134,10 +170,10 @@ async function generateResponse() {
           :rows="2"
           :maxrows="10"
           :ui="{
-            base: 'rounded-b-none',
+            base: 'rounded-none border-b border-gray-200',
           }"
         />
-        <div class="bg-gray-100 p-2 flex items-center gap-2 rounded-b-lg">
+        <div class="p-2 flex items-center gap-2">
           <AssistantModalRecordAudio
             class="ml-auto"
             @transcript="transcript => userInput = transcript"
