@@ -1,39 +1,31 @@
 <script setup lang="ts">
 import { marked } from 'marked'
+import type OpenAI from 'openai'
 import sanitizeHtml from 'sanitize-html'
 
 const showModal = useState('showAssistantModal', () => false)
-const { privateSettings, isSavingPrivateSettings, savePrivateSettings } = await usePrivateSettings()
+const { privateSettings, isSavingPrivateSettings, savePrivateSettings, refreshPrivateSettings } = await usePrivateSettings()
 
 const editInfoOpen = ref(false)
 
 const quota = useState('assistantQuota', () => 12)
 const userInput = ref('')
 const isGeneratingResponse = ref(false)
-const messages = ref<{ role: 'user' | 'assistant', content: string }[]>([])
+const response = ref<OpenAI.Responses.Response | null>(null)
 
 async function generateResponse() {
   if (isGeneratingResponse.value) return
   isGeneratingResponse.value = true
 
   try {
-    messages.value.push({
-      role: 'user',
-      content: userInput.value,
-    })
-    userInput.value = ''
-
-    const response = await $fetch('/api/user/assistant/respond', {
+    response.value = await $fetch('/api/user/assistant/respond', {
       method: 'POST',
       body: {
-        messages: messages.value,
+        userInput: userInput.value,
+        responseId: response.value?.id || undefined,
       },
     })
-
-    messages.value.push({
-      role: 'assistant',
-      content: response.output_text,
-    })
+    refreshPrivateSettings()
   }
   catch (error) {
     console.error('Error generating response:', error)
@@ -105,11 +97,16 @@ async function generateResponse() {
           />
 
           <template #content>
-            <UInput
+            <UTextarea
               v-model="privateSettings.assistant.context"
               placeholder="Kontext"
               class="w-full"
-              size="xxl"
+              autoresize
+              :rows="2"
+              :maxrows="10"
+              :ui="{
+                base: 'text-sm',
+              }"
             />
 
             <UButton
@@ -119,25 +116,11 @@ async function generateResponse() {
             />
           </template>
         </UCollapsible>
-        <div class="flex flex-col gap-2 mt-4">
-          <div
-            v-for="(message, index) in messages"
-            :key="index"
-            class="p-2 bg-gray-100 rounded-lg"
-          >
-            <div class="text-sm text-gray-400 flex gap-2 items-center mb-2">
-              <UIcon
-                :name="message.role === 'user' ? 'i-lucide-user' : 'i-lucide-bot'"
-                size="20"
-              />
-              <span>{{ message.role === 'user' ? 'Sie' : 'Assistent' }}</span>
-            </div>
-            <div
-              class="prose text-sm"
-              v-html="sanitizeHtml(marked.parse(message.content, { async: false }))"
-            />
-          </div>
-        </div>
+        <div
+          v-if="response"
+          class="mt-4 prose-sm"
+          v-html="sanitizeHtml(marked.parse(response.output_text))"
+        />
       </div>
     </template>
 
@@ -156,7 +139,7 @@ async function generateResponse() {
         />
         <div class="bg-gray-100 p-2 flex items-center gap-2 rounded-b-lg">
           <UButton
-            v-if="messages.length > 0"
+            v-if="response"
             label="Gesprächsverlauf leeren"
             icon="i-lucide-x"
             color="neutral"
@@ -165,11 +148,12 @@ async function generateResponse() {
           />
           <AssistantModalRecordAudio
             class="ml-auto"
-            @text="text => userInput = text"
+            @transcript="transcript => userInput = transcript"
           />
           <UButton
             icon="i-lucide-send-horizontal"
             color="primary"
+            :loading="isGeneratingResponse"
             :disabled="isGeneratingResponse || !userInput"
             @click="generateResponse"
           />

@@ -10,14 +10,14 @@ const userName = ref('')
 const userNameAvailable = ref(true)
 const checkingUserNameAvailability = ref(false)
 
-const settings = ref(defaultSettings)
+const settings = ref(defaultSettings.public)
 
 function sanitizeUserName(name: string) {
   userName.value = name.toLowerCase().replace(/[^a-z]/g, '')
 }
 
 async function signUp() {
-  await register({ userName: userName.value, settings: settings.value })
+  await register({ userName: userName.value, settings: { public: settings.value, private: defaultSettings.private } })
   await fetchUserSession()
 
   navigateTo(`https://${userName.value}.${appHost}`, { external: true })
