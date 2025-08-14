@@ -117,6 +117,7 @@ async function deleteImage(image: 'logo' | 'header') {
     v-model:open="showModal"
     side="left"
     close-icon="i-heroicons-arrow-left"
+    handle-only
     :overlay="false"
     :close-threshold="0.85"
     :close="{
