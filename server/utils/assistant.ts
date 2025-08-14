@@ -81,7 +81,7 @@ export async function updateCompanyContext(openai: OpenAI, userId: number, updat
   return { success: true }
 }
 
-export async function readWebsiteManual(openai: OpenAI, userInput: string) {
+export async function askWebsiteManualAssistant(openai: OpenAI, userInput: string) {
   const manual = `Website Manual: Coming soon...`
 
   const response = await openai.responses.create({

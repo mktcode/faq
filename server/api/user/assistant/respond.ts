@@ -100,8 +100,33 @@ export default defineEventHandler(async (event) => {
   if (functionCall) {
     const functionCallArguments = JSON.parse(functionCall.arguments)
 
-    if (functionCallArguments.updates) {
+    if (functionCallArguments.updates && functionCall.name === 'update_company_context') {
       const result = await updateCompanyContext(openai, user.id, functionCallArguments.updates)
+
+      const responseAfterToolCall = await openai.responses.create({
+        previous_response_id: response.id,
+        model: 'gpt-5-mini',
+        instructions,
+        input: [
+          {
+            type: 'function_call_output',
+            call_id: functionCall.call_id,
+            output: JSON.stringify(result),
+          },
+        ],
+        reasoning: {
+          effort: 'medium',
+        },
+        text: {
+          verbosity: 'low',
+        },
+      })
+
+      return responseAfterToolCall
+    }
+
+    if (functionCallArguments.request && functionCall.name === 'ask_website_manual_assistant') {
+      const result = await askWebsiteManualAssistant(openai, functionCallArguments.request)
 
       const responseAfterToolCall = await openai.responses.create({
         previous_response_id: response.id,
