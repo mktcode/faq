@@ -138,13 +138,6 @@ async function generateResponse() {
           }"
         />
         <div class="bg-gray-100 p-2 flex items-center gap-2 rounded-b-lg">
-          <UButton
-            v-if="response"
-            label="Gesprächsverlauf leeren"
-            icon="i-lucide-x"
-            color="neutral"
-            variant="ghost"
-          />
           <AssistantModalRecordAudio
             class="ml-auto"
             @transcript="transcript => userInput = transcript"
