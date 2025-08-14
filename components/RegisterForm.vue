@@ -47,9 +47,8 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
     <div class="flex gap-4">
       <ColorPicker
         v-model:color="settings.design.color"
-        label="Primärfarbe"
+        label="Primäre Farbe"
         class="w-full max-w-lg mx-auto"
-        :disabled-colors="['black', 'white']"
       />
       <FontPicker
         v-model:font="settings.design.font"

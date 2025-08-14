@@ -180,7 +180,7 @@ export const defaultSettings: SettingsForm = {
     },
     design: {
       font: 'montserrat',
-      color: 'sky',
+      color: 'hsl(199, 100%, 48%)',
       rounded: 'md',
     },
     header: {

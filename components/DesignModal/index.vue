@@ -144,7 +144,6 @@ async function deleteImage(image: 'logo' | 'header') {
           <ColorPicker
             v-model:color="settings.design.color"
             label="Primäre Farbe"
-            :disabled-colors="['black', 'white']"
           />
           <UFormField
             label="Stil"

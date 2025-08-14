@@ -1,7 +1,6 @@
 <script setup lang="ts">
 defineProps<{
   label?: string
-  disabledColors?: string[]
 }>()
 
 const color = defineModel('color', {
