@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const { appHost } = useRuntimeConfig().public
+const appConfig = useAppConfig()
+appConfig.ui.colors.primary = 'sky'
 </script>
 
 <template>

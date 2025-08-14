@@ -13,7 +13,7 @@ const variantsRounded = {
 export default defineAppConfig({
   ui: {
     colors: {
-      primary: 'sky',
+      primary: 'website',
     },
     button: {
       variants: {

@@ -25,6 +25,7 @@ export const useProfile = async () => {
     isOwned.value = ssrContext.event.context.profile.isOwned
     isPublic.value = ssrContext.event.context.profile.isPublic
     design.value = ssrContext.event.context.profile.design
+    appConfig.ui.colors.primary = 'website'
 
     const { data: currentSettings, refresh } = await useFetch(`/api/settings`, {
       query: {
@@ -39,7 +40,6 @@ export const useProfile = async () => {
   }
 
   watch(settings.value, () => {
-    appConfig.ui.colors.primary = 'website'
     appConfig.ui.button.defaultVariants.rounded = settings.value.design.rounded
     appConfig.ui.input.defaultVariants.rounded = settings.value.design.rounded
     appConfig.ui.select.defaultVariants.rounded = settings.value.design.rounded

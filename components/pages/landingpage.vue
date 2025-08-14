@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { AccordionItem } from '@nuxt/ui'
 
+const appConfig = useAppConfig()
 const { public: { appHost } } = useRuntimeConfig()
 const { me } = await useMe()
 
@@ -93,6 +94,8 @@ watch(acc2active, (newVal) => {
     }
   }
 })
+
+appConfig.ui.colors.primary = 'sky'
 </script>
 
 <template>

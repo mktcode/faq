@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const appConfig = useAppConfig()
 const { authenticate } = useWebAuthn({
   registerEndpoint: '/api/webauthn/register',
   authenticateEndpoint: '/api/webauthn/authenticate',
@@ -13,6 +14,8 @@ async function signIn() {
   await fetchUserSession()
   navigateTo(`https://${userName.value}.${appHost}`, { external: true })
 }
+
+appConfig.ui.colors.primary = 'sky'
 </script>
 
 <template>

@@ -1,10 +1,13 @@
 <script setup lang="ts">
+const appConfig = useAppConfig()
 const { user } = useUserSession()
 const { appHost } = useRuntimeConfig().public
 
 if (user.value) {
   navigateTo(`https://${user.value.userName}.${appHost}`, { external: true })
 }
+
+appConfig.ui.colors.primary = 'sky'
 </script>
 
 <template>
