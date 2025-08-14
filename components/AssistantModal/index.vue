@@ -119,7 +119,7 @@ async function generateResponse() {
         <div
           v-if="response"
           class="mt-4 prose-sm"
-          v-html="sanitizeHtml(marked.parse(response.output_text))"
+          v-html="sanitizeHtml(marked.parse(response.output_text, { async: false }))"
         />
       </div>
     </template>
@@ -144,7 +144,6 @@ async function generateResponse() {
             icon="i-lucide-x"
             color="neutral"
             variant="ghost"
-            @click="messages = []"
           />
           <AssistantModalRecordAudio
             class="ml-auto"

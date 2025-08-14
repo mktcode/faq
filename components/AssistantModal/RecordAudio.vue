@@ -6,7 +6,7 @@ withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  (e: 'transcript', text: string): void
+  (e: 'transcript', transcript: string): void
 }>()
 
 const { transcript, volumeHistory, isRecordingAudio, isTranscribingAudio, startRecordingAudio, stopRecordingAudio } = useAudioRecorder()
