@@ -20,15 +20,15 @@ function shareOnInstagram() {
 function getStaggeredAnimationClass(index: number) {
   return [
     'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_1.0s_forwards]',
+    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_1.1s_forwards]',
     'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_1.2s_forwards]',
+    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_1.3s_forwards]',
     'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_1.4s_forwards]',
+    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_1.5s_forwards]',
     'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_1.6s_forwards]',
+    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_1.7s_forwards]',
     'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_1.8s_forwards]',
-    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_2.0s_forwards]',
-    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_2.2s_forwards]',
-    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_2.4s_forwards]',
-    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_2.6s_forwards]',
-    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_2.8s_forwards]',
+    'opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_1.9s_forwards]',
   ][index]
 }
 </script>
