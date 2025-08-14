@@ -5,7 +5,7 @@ const subscriptionSuccess = !!route.query.subscriptionSuccess
 
 const { me } = await useMe()
 
-const { settings, refreshSettings, isOwned, isPublic, font } = await useProfile()
+const { username, settings, refreshSettings, isOwned, isPublic, font } = await useProfile()
 
 useHead({
   title: settings.value.meta.title || settings.value.header.title || settings.value.company.name || 'Solihost Website',
@@ -30,7 +30,7 @@ useHead({
     },
     {
       rel: 'stylesheet',
-      href: `/api/css?userName=${me.value?.userName}`,
+      href: `/api/css?userName=${username.value}`,
     },
   ],
 })
