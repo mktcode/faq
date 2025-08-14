@@ -60,7 +60,7 @@ const acc2items = ref<AccordionItem[]>([
     slot: 'slot1',
   },
   {
-    label: 'Künstliche Intelligenz: Eine Trendwende',
+    label: 'Künstliche Intelligenz: Gekommen um zu bleiben',
     slot: 'slot2',
   },
   {
@@ -434,7 +434,7 @@ watch(acc2active, (newVal) => {
             class="text-sky-500"
             href="https://gemini.google.com"
             target="_blank"
-          >Google Gemini</a> können Ihnen helfen,
+          >Google Gemini</a> (oder der Solihost Assistent) können Ihnen helfen,
           Klarheit zu gewinnen und professionelle Texte zu schreiben, z.B. für Kleinanzeigen oder Social Media Posts. Auch bei rechtlichen und steuerlichen Fragen können diese Tools eine gute erste Orientierung geben.
           Den Steuerberater können sie aktuell aber noch nicht ersetzen.
         </template>
@@ -448,7 +448,7 @@ watch(acc2active, (newVal) => {
             class="text-sky-500"
             href="https://www.youtube.com/results?search_query=google+unternehmensprofil+erstellen"
             target="_blank"
-          >Anleitungen auf YouTube</a> an.
+          >Anleitungen auf YouTube</a> an. Ein paar Klicks und fertig. Vielleicht kommt noch ein Freischaltcode per Post, den Sie bei Google eingeben müssen. Das Wichtigste ist damit aber erstmal geschafft.
         </template>
         <template #slot3>
           Kleinanzeigen.de, nebenan.de, Instagram, Facebook oder TikTok – Es gibt viele kostenlose Plattformen, auf denen Sie aktiv werben und Kunden gewinnen können.
@@ -518,6 +518,7 @@ watch(acc2active, (newVal) => {
           Egal wie und wo Sie Ihre Website erstellen, Ihnen wird versprochen werden, dass sie auf allen Geräten gut aussieht.
           Prüfen Sie das! Der Klassiker sind überdimensionierte Schriftgrößen und unglücklich platzierte Elemente, die das Layout sprengen.
           Das Ergebnis von Baukastensystemen erfordert oft noch einiges an Detailarbeit.
+          Auch teure Agenturen sind hier manchmal etwas schludrig.
           Prüfen Sie Ihre Website mindestens auf dem Smartphone und einem großen Bildschirm.
           Und auch wenn das Internet mal etwas langsamer ist, sollte Ihre Website mehr oder weniger sofort sichtbar sein.
         </template>
@@ -530,8 +531,7 @@ watch(acc2active, (newVal) => {
           Vermeiden Sie es nur, eine Unterseite nach der anderen zu erstellen, weil Ihnen dieses oder jenes noch einfällt.
         </template>
         <template #slot5>
-          Ruinieren Sie sich nicht selbst mit einer Cookie-Einwilligung Ihre Website.
-          Das nervt die Besucher und sorgt für längere Ladezeiten und frühzeitige Absprünge potenzieller Kunden.
+          Das kennen Sie sicher selbst. Es nervt und sorgt für längere Ladezeiten und frühzeitige Absprünge potenzieller Kunden.
           Sie brauchen keine Cookie-Einwilligung, wenn Sie keine Cookies verwenden, die personenbezogene Daten speichern.
           Und das tun Sie nicht, solange Sie keine Analyse-Tools wie Google Analytics nutzen, die für Ihre Zwecke völlig überdimensioniert sind.
           Diese Tools brauchen Sie nur, wenn Sie die Umsätze durch Ihre Website perfekt optimieren wollen.
