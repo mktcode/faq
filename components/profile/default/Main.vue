@@ -28,12 +28,17 @@ useHead({
       type: 'image/png',
       href: settings.value.meta.favicon || settings.value.company.logo || '',
     },
+    {
+      rel: 'stylesheet',
+      href: '/api/css?userName=markus',
+    },
   ],
 })
 </script>
 
 <template>
   <FontWrapper
+    id="main"
     :font="font"
     class="relative"
   >

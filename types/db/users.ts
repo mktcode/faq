@@ -59,6 +59,7 @@ const componentSettingsBaseSchema = z.object({
 })
 export const settingsFormSchema = z.object({
   public: z.object({
+    css: z.string(),
     meta: z.object({
       title: z.string(),
       description: z.string(),
@@ -157,6 +158,7 @@ export type ComponentKey = keyof SettingsForm['public']['components']
 
 export const defaultSettings: SettingsForm = {
   public: {
+    css: '',
     meta: {
       title: '',
       description: '',
