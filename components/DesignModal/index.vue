@@ -138,7 +138,7 @@ async function deleteImage(image: 'logo' | 'header') {
     </template>
 
     <template #body>
-      <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-4 max-h-[60vh] overflow-y-auto">
         <div class="flex gap-2">
           <ColorPicker
             v-model:color="settings.design.color"
