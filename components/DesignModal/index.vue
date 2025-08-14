@@ -6,6 +6,7 @@ const { settings, saveSettings, isSubscribed } = await useProfile()
 const headerImageInput = ref<HTMLInputElement | null>(null)
 const logoInput = ref<HTMLInputElement | null>(null)
 const showUploadHeaderModal = ref(false)
+const showCustomCss = ref(false)
 
 const uploadHeaderImage = async (files: FileList | null) => {
   if (!files || files.length === 0) return
@@ -342,6 +343,53 @@ async function deleteImage(image: 'logo' | 'header') {
             />
           </UFormField>
         </div>
+        <UCollapsible
+          v-model:open="showCustomCss"
+          class="flex flex-col gap-2"
+          :ui="{
+            root: 'border border-gray-200 rounded-lg',
+            content: '',
+          }"
+        >
+          <UButton
+            icon="i-lucide-file-json-2"
+            label="Stylesheet bearbeiten"
+            color="neutral"
+            variant="link"
+            trailing-icon="i-heroicons-chevron-down"
+            :disabled="!isSubscribed"
+          >
+            <template #trailing>
+              <div class="ml-auto flex items-center gap-2">
+                <UBadge
+                  v-if="!isSubscribed"
+                  label="Premium"
+                  variant="outline"
+                />
+                <UIcon
+                  v-else
+                  name="i-heroicons-chevron-down"
+                  class="transition-transform"
+                  :class="{ 'rotate-180': showCustomCss }"
+                />
+              </div>
+            </template>
+          </UButton>
+
+          <template #content>
+            <UTextarea
+              v-model="settings.css"
+              placeholder="CSS hier eingeben"
+              class="w-full"
+              autoresize
+              :rows="2"
+              :maxrows="15"
+              :ui="{
+                base: 'text-sm rounded-t-none',
+              }"
+            />
+          </template>
+        </UCollapsible>
         <UButton
           label="Einstellungen speichern"
           variant="solid"
