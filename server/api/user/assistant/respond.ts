@@ -1,20 +1,13 @@
 import OpenAI from 'openai'
-import z from 'zod'
 import { getSettings } from '~/server/utils/user'
-
-const bodySchema = z.object({
-  messages: z.array(z.object({
-    role: z.enum(['user', 'assistant']),
-    content: z.string().min(1, 'Die Eingabe darf nicht leer sein.'),
-  })),
-})
+import { updateCompanyContext } from '~/server/utils/assistant'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
   await requireProfileSubscription(user.userName)
 
   const settings = await getSettings(user.id)
-  const { messages } = await readValidatedBody(event, body => bodySchema.parse(body))
+  const { messages } = await readBody(event) as { messages: OpenAI.Responses.ResponseInputItem[] }
   const { openaiApiKey } = useRuntimeConfig(event)
   const openai = new OpenAI({
     apiKey: openaiApiKey,
@@ -25,11 +18,10 @@ Solihost is a platform that helps clients become visible online, offering a simp
 
 **Objectives:**
 
+* Understand the user's business and goals and create a comprehensive overview for context in future interactions.
 * Support users in creating and improving their website content and service descriptions.
-* Suggest and facilitate simple SEO improvements.
 * Provide actionable ideas for increasing visibility beyond the website itself.
-* Present all suggestions clearly, concisely, without unnecessary jargon, and straight to the point.
-* The goal is to reassure the user, give them confidence, and make them feel: *“We can do this together.”*
+* Reassure the user, give them confidence, and make them feel: *“We can do this together.”*
 * If in doubt, Solihost Support can help via remote assistance.
 
 **Tone & Style:**
@@ -68,20 +60,12 @@ Solihost is a platform that helps clients become visible online, offering a simp
 
   if (settings.private.assistant.context) {
     messages.unshift({
-      role: 'user',
-      content: settings.private.assistant.context,
-    })
-  }
-
-  if (settings.private.assistant.instructions) {
-    messages.unshift({
-      role: 'user',
-      content: settings.private.assistant.instructions,
+      role: 'developer',
+      content: `<company_context>${settings.private.assistant.context}</company_context>`,
     })
   }
 
   const response = await openai.responses.create({
-    store: false,
     model: 'gpt-5-mini',
     instructions,
     input: messages,
@@ -103,8 +87,46 @@ Solihost is a platform that helps clients become visible online, offering a simp
       {
         type: 'image_generation',
       },
+      {
+        type: 'function',
+        name: 'update_company_context',
+        description: 'Update the company context with new information provided by the user. Never use this tool without explicit user consent.',
+        parameters: {
+          type: "object",
+          properties: {
+            updates: {
+              type: "string",
+              description: "A detailed description of the company context updates.",
+            },
+          },
+          required: ["updates"],
+          additionalProperties: false,
+        },
+        strict: true
+      },
     ],
+    parallel_tool_calls: false,
   })
 
-  return response
+  // Append model output items to the conversation array in-place
+  for (const item of response.output) {
+    messages.push(item)
+  }
+
+  const functionCall = response.output.find((item) => item.type === 'function_call') as OpenAI.Responses.ResponseFunctionToolCall | undefined
+
+  if (functionCall) {
+  const functionCallArguments = JSON.parse(functionCall.arguments);
+
+    if (functionCallArguments.updates) {
+      const result = await updateCompanyContext(openai, user.id, functionCallArguments.updates);
+      messages.push({
+        type: 'function_call_output',
+        call_id: functionCall.call_id,
+        output: JSON.stringify(result),
+      })
+    }
+  }
+
+  return messages
 })

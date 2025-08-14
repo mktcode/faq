@@ -95,7 +95,7 @@ async function generateResponse() {
           }"
         >
           <UButton
-            label="Kontext und Anweisungen bearbeiten"
+            label="Kontext bearbeiten"
             color="primary"
             variant="link"
             trailing-icon="i-heroicons-chevron-down"
@@ -108,12 +108,6 @@ async function generateResponse() {
             <UInput
               v-model="privateSettings.assistant.context"
               placeholder="Kontext"
-              class="w-full"
-              size="xxl"
-            />
-            <UInput
-              v-model="privateSettings.assistant.instructions"
-              placeholder="Anweisungen"
               class="w-full"
               size="xxl"
             />
