@@ -34,7 +34,10 @@ function getStaggeredAnimationClass(index: number) {
 </script>
 
 <template>
-  <div class="w-full flex items-center justify-center gap-2 mb-4">
+  <div
+    id="links"
+    class="max-w-xs sm:max-w-none w-full flex flex-col sm:flex-row items-center justify-center gap-2 mb-4"
+  >
     <template v-if="settings.header.links && settings.header.links.length > 0">
       <UButton
         v-for="(link, index) in settings.header.links"
@@ -43,6 +46,7 @@ function getStaggeredAnimationClass(index: number) {
         :icon="link.icon === 'none' ? undefined : link.icon"
         :href="link.url"
         target="_blank"
+        class="header-link shadow-sm hover:shadow-lg transition-all w-full sm:w-auto"
         :class="getStaggeredAnimationClass(index)"
       />
     </template>
@@ -55,6 +59,7 @@ function getStaggeredAnimationClass(index: number) {
         label="Teilen"
         icon="i-heroicons-share"
         :class="getStaggeredAnimationClass(settings.header.links ? settings.header.links.length : 0)"
+        class="header-link shadow-sm hover:shadow-lg transition-all w-full sm:w-auto"
       />
 
       <template #content>

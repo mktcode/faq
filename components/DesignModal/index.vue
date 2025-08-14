@@ -343,6 +343,19 @@ async function deleteImage(image: 'logo' | 'header') {
             />
           </UFormField>
         </div>
+        <UFormField
+          label="Höhe"
+        >
+          <USelect
+            v-model="settings.header.height"
+            :items="[
+              { label: 'Automatisch', value: 'auto' },
+              { label: 'Hälfte', value: 'half' },
+              { label: 'Voll', value: 'full' },
+            ]"
+            class="w-full"
+          />
+        </UFormField>
         <UCollapsible
           v-model:open="showCustomCss"
           class="flex flex-col gap-2"

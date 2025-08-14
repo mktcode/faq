@@ -63,7 +63,7 @@ async function signOut() {
       />
 
       <UButton
-        label="Design anpassen"
+        label="Design & Kopfbereich"
         icon="i-heroicons-paint-brush"
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
