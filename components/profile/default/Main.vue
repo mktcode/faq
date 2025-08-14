@@ -30,7 +30,7 @@ useHead({
     },
     {
       rel: 'stylesheet',
-      href: '/api/css?userName=markus',
+      href: `/api/css?userName=${me.value?.userName}`,
     },
   ],
 })
