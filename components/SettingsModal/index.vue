@@ -84,11 +84,14 @@ const active = ref<string | undefined>(undefined)
           v-if="showLegalDataWarning"
           variant="soft"
           title="Rechtliche Angaben fehlen"
-          description="Bevor Sie Ihr Profil veröffentlichen können, müssen Sie unter Anschrift und Rechtliches Ihre Unternehmensdaten angeben, damit diese im Impressum und in der Datenschutzerklärung aufgeführt werden."
           icon="i-heroicons-exclamation-triangle"
           class="mt-2"
-          color="warning"
-        />
+          color="error"
+        >
+          <template #description>
+            Bevor Sie Ihre Website veröffentlichen können, müssen Sie unter <strong>Anschrift und Rechtliches</strong> Ihre Unternehmensdaten angeben, damit diese im Impressum und in der Datenschutzerklärung aufgeführt werden.
+          </template>
+        </UAlert>
       </div>
       <UAccordion
         v-model="active"

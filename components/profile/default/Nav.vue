@@ -34,7 +34,7 @@ async function signOut() {
 <template>
   <USlideover
     v-model:open="showMenu"
-    title="Menü"
+    title="Administration"
     side="left"
     :close="{
       size: 'md',
@@ -49,7 +49,7 @@ async function signOut() {
       icon="i-heroicons-bars-3"
       variant="ghost"
       class="bg-white/90 hover:bg-white fixed top-2 left-2 z-10"
-      label="Menü"
+      label="Administration"
     />
 
     <template #body>

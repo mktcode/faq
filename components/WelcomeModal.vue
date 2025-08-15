@@ -25,11 +25,11 @@ function close() {
           Willkommen auf Ihrer Website!
         </h1>
         <p class="text-gray-600">
-          Aktuell ist Ihre Website nur für Sie sichtbar. Oben links finden Sie das
+          Aktuell ist Ihre Website nur für Sie sichtbar. Oben links finden Sie die
           <UIcon
             name="i-heroicons-bars-3"
             class="text-primary-500"
-          /> Menü, über das Sie Ihre Website verwalten können.
+          /> Administration, über die Sie Ihre Website verwalten können.
         </p>
         <p class="text-gray-600">
           Für Fragen oder Feedback schreiben Sie uns gerne eine E-Mail an <a

@@ -25,7 +25,7 @@ const { copy: copyEmail, copied: copiedEmail } = useClipboard()
     </template>
     <template #body>
       <p>
-        Da wir uns noch in der Betaphase befinden, sind wir auf Ihr Feedback angewiesen. Bitte teilen Sie uns mit, was Ihnen gefällt, was verbessert werden kann oder welche Funktionen Sie sich wünschen.
+        Da wir uns noch in der Testhase befinden, sind wir auf Ihr Feedback angewiesen. Bitte teilen Sie uns mit, was Ihnen gefällt, was verbessert werden kann oder welche Funktionen Sie sich wünschen.
       </p>
       <p>
         Wir nutzen die Entwickler-Plattform GitHub, um Feedback möglichst einheitlich zu sammeln und direkt dort, wo wir arbeiten.

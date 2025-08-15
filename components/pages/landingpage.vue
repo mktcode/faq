@@ -240,7 +240,10 @@ appConfig.ui.colors.primary = 'sky'
           <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:border before:border-black/10 dark:before:border-white/10 before:text-slate-900 dark:before:text-white before:font-bold flex items-center">
             Klarheit schaffen
           </h3>
-          <p>Ihr Angebot auf den Punkt: Zielgruppe, Nutzenversprechen, nächste Aktion. Wir helfen bei Texten – auf Wunsch mit KI‑Unterstützung.</p>
+          <p>
+            Ihr Angebot auf den Punkt: Zielgruppe, Nutzenversprechen, nächste Aktion.
+            Wir helfen bei Texten – auf Wunsch mit KI‑Unterstützung.
+          </p>
         </div>
         <div class="border rounded-[16px] p-[18px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:border before:border-black/10 dark:before:border-white/10 before:text-slate-900 dark:before:text-white before:font-bold flex items-center">
@@ -332,20 +335,20 @@ appConfig.ui.colors.primary = 'sky'
         <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <span class="inline-block px-2 py-[.25rem] rounded-full text-[.8rem] bg-white border border-black/15 text-slate-600 dark:bg-white/10 dark:border-white/15 dark:text-[#b3bfd1]">Standard</span>
           <div class="flex items-end gap-1 mt-3 mb-6">
-            <span class="text-[38px] font-extrabold leading-none">kostenlos</span>
+            <span class="text-[38px] font-extrabold leading-none">3 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Standard‑Website, visuell ansprechend
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Impressum &amp; Datenschutzerklärung passend zu Funktionen
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Impressum &amp; Datenschutzerklärung
             </li>
             <li class="flex gap-2 items-start">
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Cookie‑frei (solange keine externen Tracker)
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> SEO/KI‑Basics &amp; Mobil‑Optimierung
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Suchmaschinen/KI‑Basics &amp; Mobil‑Optimierung
             </li>
             <li class="flex gap-2 items-start">
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Verlinkung Ihrer externen Profile &amp; Tools
@@ -358,7 +361,7 @@ appConfig.ui.colors.primary = 'sky'
         <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Premium</span>
           <div class="flex items-end gap-1 mt-3 mb-6">
-            <span class="text-[38px] font-extrabold leading-none">35 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
+            <span class="text-[38px] font-extrabold leading-none">33 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
