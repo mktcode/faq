@@ -12,19 +12,39 @@ const tipsOpen = ref(false)
 const quota = useState('assistantQuota', () => 12)
 const userInput = ref('')
 const isGeneratingResponse = ref(false)
-const response = ref<OpenAI.Responses.Response | null>(null)
+const responseStreamEvents = ref<OpenAI.Responses.ResponseStreamEvent[]>([])
+const previousResponseId = ref<string | null>(null)
 
 async function generateResponse() {
   if (isGeneratingResponse.value) return
   isGeneratingResponse.value = true
 
   try {
-    response.value = await $fetch('/api/user/assistant/respond', {
+    const responseStream = await fetch('/api/user/assistant/respond', {
       method: 'POST',
-      body: {
+      body: JSON.stringify({
         userInput: userInput.value,
-        responseId: response.value?.id || undefined,
+        responseId: previousResponseId.value || undefined,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
       },
+    })
+
+    if (!responseStream.body) {
+      throw new Error(responseStream.statusText)
+    }
+
+    const responseStreamReader = responseStream.body.getReader()
+
+    readResponseStream(responseStreamReader, event => {
+      if (event.type === 'response.created') {
+        previousResponseId.value = event.response.id
+      }
+
+      responseStreamEvents.value.push(event)
+    }, () => {
+      isGeneratingResponse.value = false
     })
     refreshPrivateSettings()
   }
@@ -149,10 +169,14 @@ async function generateResponse() {
       </UCollapsible>
       <div class="p-4">
         <div
-          v-if="response"
+          v-for="event in responseStreamEvents"
           class="mt-4 prose-sm"
-          v-html="sanitizeHtml(marked.parse(response.output_text, { async: false }))"
-        />
+        >
+          <template v-if="event.type === 'response.output_text.done'">
+            <h4 class="text-lg font-semibold mb-2">Antwort</h4>
+            {{ event.text }}
+          </template>
+        </div>
       </div>
     </template>
 

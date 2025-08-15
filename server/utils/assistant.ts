@@ -101,3 +101,144 @@ export async function askWebsiteManualAssistant(openai: OpenAI, userInput: strin
 
   return response.output_text
 }
+
+export async function* streamResponse(
+  instructions: string,
+  messages: OpenAI.Responses.ResponseInput,
+  openai: OpenAI,
+  responseId: string | undefined,
+  userId: number,
+  userCity: string | undefined
+) {
+  const response = await openai.responses.create({
+    stream: true,
+    previous_response_id: responseId,
+    model: 'gpt-5-mini',
+    instructions,
+    input: messages,
+    reasoning: {
+      effort: 'medium',
+    },
+    text: {
+      verbosity: 'low',
+    },
+    tools: [
+      {
+        type: 'web_search_preview',
+        user_location: {
+          type: 'approximate',
+          country: 'DE',
+          city: userCity,
+        },
+      },
+      {
+        type: 'image_generation',
+      },
+      {
+        type: 'function',
+        name: 'update_company_context',
+        description: 'Update the company context with new information provided by the user. Never use this tool without explicit user consent.',
+        parameters: {
+          type: 'object',
+          properties: {
+            updates: {
+              type: 'string',
+              description: 'A detailed description of the company context updates.',
+            },
+          },
+          required: ['updates'],
+          additionalProperties: false,
+        },
+        strict: true,
+      },
+      {
+        type: 'function',
+        name: 'ask_website_manual_assistant',
+        description: 'Update the company context with new information provided by the user. Never use this tool without explicit user consent.',
+        parameters: {
+          type: 'object',
+          properties: {
+            request: {
+              type: 'string',
+              description: 'A detailed description of the questions to ask the website manual assistant.',
+            },
+          },
+          required: ['request'],
+          additionalProperties: false,
+        },
+        strict: true,
+      },
+    ],
+    parallel_tool_calls: false,
+  })
+
+  let nextResponseId: string | null = null
+
+  for await (const event of response) {
+    yield event;
+
+    nextResponseId = event.type === 'response.created' ? event.response.id : null
+
+    const functionCall = event.type === 'response.output_item.added' && event.item.type === 'function_call' ? event.item : undefined
+
+    if (functionCall) {
+      const functionCallArguments = JSON.parse(functionCall.arguments)
+  
+      if (functionCallArguments.updates && functionCall.name === 'update_company_context') {
+        const result = await updateCompanyContext(openai, userId, functionCallArguments.updates)
+  
+        const responseAfterToolCall = await openai.responses.create({
+          stream: true,
+          previous_response_id: nextResponseId,
+          model: 'gpt-5-mini',
+          instructions,
+          input: [
+            {
+              type: 'function_call_output',
+              call_id: functionCall.call_id,
+              output: JSON.stringify(result),
+            },
+          ],
+          reasoning: {
+            effort: 'medium',
+          },
+          text: {
+            verbosity: 'low',
+          },
+        })
+  
+        for await (const event of responseAfterToolCall) {
+          yield event;
+        }
+      }
+  
+      if (functionCallArguments.request && functionCall.name === 'ask_website_manual_assistant') {
+        const result = await askWebsiteManualAssistant(openai, functionCallArguments.request)
+  
+        const responseAfterToolCall = await openai.responses.create({
+          stream: true,
+          previous_response_id: nextResponseId,
+          model: 'gpt-5-mini',
+          instructions,
+          input: [
+            {
+              type: 'function_call_output',
+              call_id: functionCall.call_id,
+              output: JSON.stringify(result),
+            },
+          ],
+          reasoning: {
+            effort: 'medium',
+          },
+          text: {
+            verbosity: 'low',
+          },
+        })
+  
+        for await (const event of responseAfterToolCall) {
+          yield event;
+        }
+      }
+    }
+  }
+}
