@@ -4,6 +4,7 @@ const toast = useToast()
 const { settings, saveSettings, isSubscribed } = await useProfile()
 
 const headerImageInput = ref<HTMLInputElement | null>(null)
+const headerVideoInput = ref<HTMLInputElement | null>(null)
 const logoInput = ref<HTMLInputElement | null>(null)
 const showUploadHeaderModal = ref(false)
 const showCustomCss = ref(false)
@@ -30,6 +31,35 @@ const uploadHeaderImage = async (files: FileList | null) => {
     // Clear the input to allow selecting the same file again
     if (headerImageInput.value) {
       headerImageInput.value.value = ''
+    }
+  }
+  catch (error) {
+    console.error('Error uploading files:', error)
+  }
+}
+
+const uploadHeaderVideo = async (files: FileList | null) => {
+  if (!files || files.length === 0) return
+
+  const formData = new FormData()
+
+  for (let i = 0; i < files.length; i++) {
+    formData.append('files', files[i])
+  }
+
+  try {
+    const { videoUrl } = await $fetch('/api/user/upload/video', {
+      method: 'POST',
+      body: formData,
+    })
+
+    settings.value.header.video = videoUrl || ''
+
+    await saveSettings()
+
+    // Clear the input to allow selecting the same file again
+    if (headerVideoInput.value) {
+      headerVideoInput.value.value = ''
     }
   }
   catch (error) {
@@ -68,6 +98,11 @@ const handleHeaderImageInputChange = () => {
   showUploadHeaderModal.value = false
 }
 
+const handleHeaderVideoInputChange = () => {
+  uploadHeaderVideo(headerVideoInput.value?.files || null)
+  showUploadHeaderModal.value = false
+}
+
 const handleLogoInputChange = () => {
   uploadLogo(logoInput.value?.files ? logoInput.value.files[0] : null)
 }
@@ -75,6 +110,12 @@ const handleLogoInputChange = () => {
 const clickHeaderImageInput = () => {
   if (headerImageInput.value) {
     headerImageInput.value.click()
+  }
+}
+
+const clickHeaderVideoInput = () => {
+  if (headerVideoInput.value) {
+    headerVideoInput.value.click()
   }
 }
 
@@ -263,7 +304,15 @@ async function deleteImage(image: 'logo' | 'header') {
               ref="headerImageInput"
               type="file"
               class="hidden"
+              accept="image/*"
               @change="handleHeaderImageInputChange"
+            >
+            <input
+              ref="headerVideoInput"
+              type="file"
+              class="hidden"
+              accept="video/*"
+              @change="handleHeaderVideoInputChange"
             >
             <input
               ref="logoInput"
@@ -419,6 +468,7 @@ async function deleteImage(image: 'logo' | 'header') {
             variant="ghost"
             color="neutral"
             :disabled="!isSubscribed"
+            @click="clickHeaderVideoInput"
           >
             <template #trailing>
               <UBadge

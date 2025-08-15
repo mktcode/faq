@@ -86,6 +86,7 @@ export const settingsFormSchema = z.object({
     header: z.object({
       title: z.string(),
       description: z.string(),
+      video: z.string(),
       image: z.string(),
       imageOverlay: z.object({
         color: z.string(),
@@ -191,6 +192,7 @@ export const defaultSettings: SettingsForm = {
       titleFontSize: 10,
       descriptionColor: 'black',
       descriptionFontSize: 6,
+      video: '',
       image: '',
       imageOverlay: {
         color: 'black',
