@@ -262,8 +262,20 @@ async function deleteImage(image: 'logo' | 'header') {
           <div
             class="@container group relative flex flex-col items-center justify-center w-full rounded-lg cursor-pointer transition-all overflow-hidden hover:bg-gray-100"
           >
+            <video
+              v-if="settings.header.video"
+              class="absolute inset-0 z-0 w-full h-full object-cover object-center pointer-events-none"
+              :src="settings.header.video"
+              :poster="settings.header.image || undefined"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="auto"
+              aria-hidden="true"
+            />
             <img
-              v-if="settings.header.image"
+              v-else-if="settings.header.image"
               :src="settings.header.image"
               alt="Header Image"
               class="absolute w-full h-full object-cover z-0 group-hover:scale-105 transition-transform duration-300"
