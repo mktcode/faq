@@ -4,20 +4,24 @@ import type OpenAI from 'openai'
 import sanitizeHtml from 'sanitize-html'
 
 const showModal = useState('showAssistantModal', () => false)
-const { privateSettings, isSavingPrivateSettings, savePrivateSettings, refreshPrivateSettings } = await usePrivateSettings()
-
-const editContextOpen = ref(false)
-const tipsOpen = ref(false)
+const { refreshPrivateSettings } = await usePrivateSettings()
 
 const quota = useState('assistantQuota', () => 12)
 const userInput = ref('')
 const isGeneratingResponse = ref(false)
 const responseStreamEvents = ref<OpenAI.Responses.ResponseStreamEvent[]>([])
 const previousResponseId = ref<string | null>(null)
+const currentActivity = ref<string | null>(null)
+const messages = ref<{ role: 'user' | 'assistant'; content: string }[]>([
+  // { role: 'user', content: 'Erzähle mir einen Witz.' },
+  // { role: 'assistant', content: 'Warum können Elefanten nicht Fliegen? Weil sie zu schwer sind!' }
+])
 
 async function generateResponse() {
   if (isGeneratingResponse.value) return
   isGeneratingResponse.value = true
+
+  messages.value.push({ role: 'user', content: userInput.value })
 
   try {
     const responseStream = await fetch('/api/user/assistant/respond', {
@@ -36,10 +40,37 @@ async function generateResponse() {
     }
 
     const responseStreamReader = responseStream.body.getReader()
+    let nextMessageIndex: number | null = null
 
-    readResponseStream(responseStreamReader, event => {
+    await readResponseStream(responseStreamReader, event => {
       if (event.type === 'response.created') {
         previousResponseId.value = event.response.id
+      }
+
+      if (event.type === 'response.output_item.added') {
+        if (event.item.type === 'reasoning') {
+          currentActivity.value = 'Denke nach...'
+        }
+        if (event.item.type === 'web_search_call') {
+          currentActivity.value = 'Suche im Internet...'
+        }
+        if (event.item.type === 'message') {
+          currentActivity.value = null
+          messages.value.push({ role: 'assistant', content: '' })
+          nextMessageIndex = messages.value.length - 1
+        }
+      }
+
+      if (event.type === 'response.output_text.delta') {
+        if (!nextMessageIndex) {
+          throw new Error('No next message index found. Event order may be incorrect.')
+        }
+
+        messages.value[nextMessageIndex].content += event.delta
+      }
+
+      if (event.type === 'response.web_search_call.in_progress') {
+        currentActivity.value = 'Web-Suche läuft...'
       }
 
       responseStreamEvents.value.push(event)
@@ -54,6 +85,8 @@ async function generateResponse() {
   finally {
     isGeneratingResponse.value = false
     userInput.value = ''
+    currentActivity.value = null
+    console.log('Response stream events:', responseStreamEvents.value)
   }
 }
 </script>
@@ -65,7 +98,7 @@ async function generateResponse() {
     close-icon="i-heroicons-arrow-left"
     :overlay="false"
     :ui="{
-      body: '!p-0',
+      body: '!p-0 flex flex-col',
       footer: '!p-0 flex-col',
     }"
     :close="{
@@ -94,89 +127,84 @@ async function generateResponse() {
         Der Balken am unteren Bildschirmrand zeigt Ihr aktuelles Kontingent an.
         Lesen Sie die Tipps, um mehr über die Funktionen des Assistenten zu erfahren.
       </DismissableAlert>
-      <UCollapsible
-        v-if="privateSettings"
-        v-model:open="editContextOpen"
-        class="flex flex-col gap-2"
-        :ui="{
-          root: 'border-b border-gray-200',
-          content: 'flex flex-col gap-2 px-3 pb-3',
-        }"
-      >
-        <UButton
-          icon="i-heroicons-building-office-2"
-          label="Unternehmenskontext bearbeiten"
-          color="neutral"
-          variant="link"
-          trailing-icon="i-heroicons-chevron-down"
-          :ui="{
-            leadingIcon: 'size-5',
-            trailingIcon: `ml-auto transition-transform ${editContextOpen ? 'rotate-180' : ''}`,
-          }"
-        />
-
-        <template #content>
-          <UTextarea
-            v-model="privateSettings.assistant.context"
-            placeholder="Kontext"
-            class="w-full"
-            autoresize
-            :rows="2"
-            :maxrows="10"
-            :ui="{
-              base: 'text-sm',
-            }"
-          />
-
-          <UButton
-            label="Speichern"
-            :loading="isSavingPrivateSettings"
-            @click="savePrivateSettings"
-          />
-        </template>
-      </UCollapsible>
-      <UCollapsible
-        v-model:open="tipsOpen"
-        class="flex flex-col gap-2"
-        :ui="{
-          root: 'border-b border-gray-200',
-          content: 'flex flex-col gap-2 text-sm px-3 pb-3',
-        }"
-      >
-        <UButton
-          icon="i-heroicons-light-bulb"
-          label="Tipps"
-          color="neutral"
-          variant="link"
-          trailing-icon="i-heroicons-chevron-down"
-          :ui="{
-            leadingIcon: 'size-5',
-            trailingIcon: `ml-auto transition-transform ${tipsOpen ? 'rotate-180' : ''}`,
-          }"
-        />
-
-        <template #content>
-          <strong>Unternehmenskontext</strong><br>
-          Hilft dem Assistenten, besser auf Ihre spezifischen Bedürfnisse einzugehen und relevantere Antworten zu liefern.
-          Hinterlegen Sie Informationen zur Zielgruppe oder Ihren Alleinstellungsmerkmalen.
-
-          <strong>Online-Recherche:</strong><br>
-          Sagen Sie "Suche nach ..." oder "Kannst du das mal recherchieren?" und der Assistent wird versuchen, relevante Informationen online zu finden.
-
-          <strong>Bilder generieren:</strong><br>
-          Für Ihre Website oder Social Media.
-        </template>
-      </UCollapsible>
-      <div class="p-4">
+      <AssistantModalContextSettings />
+      <AssistantModalTips />
+      <div class="flex flex-col flex-1">
         <div
-          v-for="event in responseStreamEvents"
-          class="mt-4 prose-sm"
+          v-for="(message, index) in messages"
+          :key="index"
+          class="border-b border-gray-200 p-4"
         >
-          <template v-if="event.type === 'response.output_text.done'">
-            <h4 class="text-lg font-semibold mb-2">Antwort</h4>
-            {{ event.text }}
-          </template>
+          <div class="font-semibold flex mb-1">
+            <UIcon
+              :name="message.role === 'user' ? 'i-lucide-user' : 'i-lucide-bot'"
+              class="inline-block size-5 mr-2"
+            />
+            {{ message.role === 'user' ? 'Sie' : 'Assistent' }}
+          </div>
+          <div
+            v-html="sanitizeHtml(marked.parse(message.content, { async: false }))"
+            class="prose-sm prose-gray"
+          />
         </div>
+        <Transition name="fade">
+          <div
+            v-if="currentActivity"
+            class="text-gray-400 flex items-center justify-center gap-2 p-4"
+          >
+            <UIcon
+              name="i-lucide-loader-circle"
+              class="inline-block size-5 animate-spin"
+            />
+            <span class="animate-pulse italic">{{ currentActivity }}</span>
+          </div>
+        </Transition>
+        <Transition name="fade">
+          <div
+            v-if="messages.length === 0"
+            class="p-4 flex flex-col gap-1 mt-auto"
+          >
+            <UButton
+              label="Erzähle mir einen Witz über Online-Marketing."
+              color="neutral"
+              variant="outline"
+              class="w-full"
+              icon="i-lucide-smile"
+              trailing-icon="i-lucide-arrow-down"
+              size="md"
+              @click="userInput = 'Erzähle mir einen Witz über Online-Marketing.'"
+              :ui="{
+                trailingIcon: 'ml-auto opacity-40',
+              }"
+            />
+            <UButton
+              label="Verbessere meine Angebotstexte."
+              color="neutral"
+              variant="outline"
+              class="w-full"
+              icon="i-lucide-edit-2"
+              trailing-icon="i-lucide-arrow-down"
+              size="md"
+              @click="userInput = 'Verbessere meine Angebotstexte.'"
+              :ui="{
+                trailingIcon: 'ml-auto opacity-40',
+              }"
+            />
+            <UButton
+              label="Erstelle einen Post für Social Media mit Bild."
+              color="neutral"
+              variant="outline"
+              class="w-full"
+              icon="i-lucide-image-plus"
+              trailing-icon="i-lucide-arrow-down"
+              size="md"
+              @click="userInput = 'Erstelle ein Bild für Social Media.'"
+              :ui="{
+                trailingIcon: 'ml-auto opacity-40',
+              }"
+            />
+          </div>
+        </Transition>
       </div>
     </template>
 
@@ -187,6 +215,7 @@ async function generateResponse() {
           placeholder="Frage an den Assistenten..."
           class="w-full"
           autoresize
+          :disabled="isGeneratingResponse"
           :rows="2"
           :maxrows="10"
           :ui="{
