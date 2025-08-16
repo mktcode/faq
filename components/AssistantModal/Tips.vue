@@ -40,7 +40,7 @@ const tipsOpen = ref(false)
       <div>
         <strong>Online-Recherche:</strong><br>
         Sagen Sie "Suche nach ..." oder "Kannst du das mal recherchieren?" und der Assistent wird versuchen, relevante Informationen online zu finden.
-  
+
         <strong>Bilder generieren:</strong><br>
         Für Ihre Website oder Social Media.
       </div>

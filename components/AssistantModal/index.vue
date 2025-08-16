@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { marked } from 'marked'
-import type OpenAI from 'openai'
 import sanitizeHtml from 'sanitize-html'
 
 const showModal = useState('showAssistantModal', () => false)
@@ -11,7 +10,7 @@ const userInput = ref('')
 const isGeneratingResponse = ref(false)
 const previousResponseId = ref<string | null>(null)
 const currentActivity = ref<string | null>(null)
-const messages = ref<{ role: 'user' | 'assistant'; content: string }[]>([
+const messages = ref<{ role: 'user' | 'assistant', content: string }[]>([
   // { role: 'user', content: 'Erzähle mir einen Witz.' },
   // { role: 'assistant', content: 'Warum können Elefanten nicht Fliegen? Weil sie zu schwer sind!' },
 ])
@@ -46,7 +45,7 @@ async function generateResponse() {
     const responseStreamReader = responseStream.body.getReader()
     let nextMessageIndex: number | null = null
 
-    await readResponseStream(responseStreamReader, event => {
+    await readResponseStream(responseStreamReader, (event) => {
       console.log('ResponseEvent', event)
       if (event.type === 'response.created') {
         previousResponseId.value = event.response.id
@@ -144,7 +143,10 @@ async function generateResponse() {
       </DismissableAlert>
       <AssistantModalContextSettings />
       <AssistantModalTips />
-      <div class="flex flex-col flex-1 overflow-y-auto" ref="messagesContainer">
+      <div
+        ref="messagesContainer"
+        class="flex flex-col flex-1 overflow-y-auto"
+      >
         <div
           v-for="(message, index) in messages"
           :key="index"
@@ -158,8 +160,8 @@ async function generateResponse() {
             {{ message.role === 'user' ? 'Sie' : 'Assistent' }}
           </div>
           <div
-            v-html="sanitizeHtml(marked.parse(message.content, { async: false }))"
             class="prose-sm prose-gray"
+            v-html="sanitizeHtml(marked.parse(message.content, { async: false }))"
           />
         </div>
         <Transition name="fade">
@@ -187,10 +189,10 @@ async function generateResponse() {
               icon="i-lucide-message-circle-question-mark"
               trailing-icon="i-lucide-arrow-down"
               size="md"
-              @click="userInput = 'Befrage mich zu meinem Unternehmen.'"
               :ui="{
                 trailingIcon: 'ml-auto opacity-40',
               }"
+              @click="userInput = 'Befrage mich zu meinem Unternehmen.'"
             />
             <UButton
               label="Erzähle mir einen Witz über Online-Marketing."
@@ -200,10 +202,10 @@ async function generateResponse() {
               icon="i-lucide-smile"
               trailing-icon="i-lucide-arrow-down"
               size="md"
-              @click="userInput = 'Erzähle mir einen Witz über Online-Marketing.'"
               :ui="{
                 trailingIcon: 'ml-auto opacity-40',
               }"
+              @click="userInput = 'Erzähle mir einen Witz über Online-Marketing.'"
             />
             <UButton
               label="Verbessere meine Angebotstexte."
@@ -213,10 +215,10 @@ async function generateResponse() {
               icon="i-lucide-edit-2"
               trailing-icon="i-lucide-arrow-down"
               size="md"
-              @click="userInput = 'Verbessere meine Angebotstexte.'"
               :ui="{
                 trailingIcon: 'ml-auto opacity-40',
               }"
+              @click="userInput = 'Verbessere meine Angebotstexte.'"
             />
             <UButton
               label="Erstelle einen Post für Social Media mit Bild."
@@ -226,10 +228,10 @@ async function generateResponse() {
               icon="i-lucide-image-plus"
               trailing-icon="i-lucide-arrow-down"
               size="md"
-              @click="userInput = 'Erstelle ein Bild für Social Media.'"
               :ui="{
                 trailingIcon: 'ml-auto opacity-40',
               }"
+              @click="userInput = 'Erstelle ein Bild für Social Media.'"
             />
             <UButton
               label="Wie ändere ich das Bild oben?"
@@ -239,10 +241,10 @@ async function generateResponse() {
               icon="i-lucide-book-open-text"
               trailing-icon="i-lucide-arrow-down"
               size="md"
-              @click="userInput = 'Wie ändere ich das Bild oben?'"
               :ui="{
                 trailingIcon: 'ml-auto opacity-40',
               }"
+              @click="userInput = 'Wie ändere ich das Bild oben?'"
             />
           </div>
         </Transition>

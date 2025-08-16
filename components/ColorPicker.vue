@@ -17,14 +17,24 @@ const chip = computed(() => ({ backgroundColor: color.value }))
     class="flex-1"
   >
     <UPopover>
-      <UButton color="neutral" variant="outline">
+      <UButton
+        color="neutral"
+        variant="outline"
+      >
         <template #leading>
-          <span :style="chip" class="size-3 rounded-full" />
+          <span
+            :style="chip"
+            class="size-3 rounded-full"
+          />
         </template>
       </UButton>
 
       <template #content>
-        <UColorPicker v-model="color" format="hsl" class="p-2" />
+        <UColorPicker
+          v-model="color"
+          format="hsl"
+          class="p-2"
+        />
       </template>
     </UPopover>
   </UFormField>

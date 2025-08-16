@@ -116,7 +116,7 @@ export async function* streamResponse(
   openai: OpenAI,
   responseId: string | undefined,
   userId: number,
-  userCity: string | undefined
+  userCity: string | undefined,
 ) {
   const response = await openai.responses.create({
     stream: true,
@@ -184,7 +184,7 @@ export async function* streamResponse(
 
   for await (const event of response) {
     nextResponseId = event.type === 'response.completed' ? event.response.id : null
-    
+
     const functionCall = event.type === 'response.output_item.done' && event.item.type === 'function_call' ? event.item : undefined
     if (functionCall) {
       functionCalls.push({
@@ -192,23 +192,23 @@ export async function* streamResponse(
         result: '',
       })
     }
-    
-    yield event;
+
+    yield event
   }
 
   if (functionCalls.length > 0) {
     for (const functionCall of functionCalls) {
       const functionCallArguments = JSON.parse(functionCall.arguments)
-  
+
       if (functionCallArguments.updates && functionCall.name === 'update_company_context') {
         functionCall.result = await updateCompanyContext(openai, userId, functionCallArguments.updates)
       }
-  
+
       if (functionCallArguments.request && functionCall.name === 'ask_website_manual_assistant') {
         functionCall.result = await askWebsiteManualAssistant(openai, functionCallArguments.request)
       }
     }
-  
+
     const responseAfterToolCall = await openai.responses.create({
       stream: true,
       previous_response_id: nextResponseId,
@@ -226,9 +226,9 @@ export async function* streamResponse(
         verbosity: 'low',
       },
     })
-  
+
     for await (const event of responseAfterToolCall) {
-      yield event;
+      yield event
     }
   }
 }
