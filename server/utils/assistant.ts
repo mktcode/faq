@@ -197,12 +197,13 @@ export async function* streamResponse(
   const functionCalls = []
 
   for await (const event of response) {
-    nextResponseId = event.type === 'response.completed' ? event.response.id : null
+    if (event.type === 'response.completed') {
+      nextResponseId = event.response.id
+    }
 
-    const functionCall = event.type === 'response.output_item.done' && event.item.type === 'function_call' ? event.item : undefined
-    if (functionCall) {
+    if (event.type === 'response.output_item.done' && event.item.type === 'function_call') {
       functionCalls.push({
-        ...functionCall,
+        ...event.item,
         result: '',
       })
     }
