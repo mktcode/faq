@@ -34,5 +34,13 @@ export default defineEventHandler(async (event) => {
     content: userInput,
   })
 
-  return sendIterable(event, streamResponse(instructions, messages, openai, responseId, user.id, settings.public.company.city))
+  const stream = streamResponse(instructions, messages, openai, responseId, user.id, settings.public.company.city)
+
+  const ndjson = (async function* () {
+    for await (const event of stream) {
+      yield JSON.stringify(event) + '\n';
+    }
+  })();
+
+  return sendIterable(event, ndjson)
 })

@@ -17,12 +17,11 @@ export async function readResponseStream(
       break
     }
 
-    const rawMessagesString = decoder.decode(value)
-    const messagesJsonString = `[${rawMessagesString.replace(/}\s*?{/g, '},{')}]` // Why no valid json? WHY?!
-    const messages = JSON.parse(messagesJsonString)
+    const rawMessagesString = decoder.decode(value, { stream: true })
+    const messages = rawMessagesString.split('\n').filter(Boolean)
 
     for (const message of messages) {
-      handler(message)
+      handler(JSON.parse(message))
     }
   }
 }
