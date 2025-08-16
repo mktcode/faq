@@ -9,19 +9,23 @@ const { refreshPrivateSettings } = await usePrivateSettings()
 const quota = useState('assistantQuota', () => 12)
 const userInput = ref('')
 const isGeneratingResponse = ref(false)
-const responseStreamEvents = ref<OpenAI.Responses.ResponseStreamEvent[]>([])
 const previousResponseId = ref<string | null>(null)
 const currentActivity = ref<string | null>(null)
 const messages = ref<{ role: 'user' | 'assistant'; content: string }[]>([
   // { role: 'user', content: 'Erzähle mir einen Witz.' },
-  // { role: 'assistant', content: 'Warum können Elefanten nicht Fliegen? Weil sie zu schwer sind!' }
+  // { role: 'assistant', content: 'Warum können Elefanten nicht Fliegen? Weil sie zu schwer sind!' },
 ])
+const messagesContainer = ref<HTMLDivElement | null>(null)
+function scrollToBottom() {
+  messagesContainer.value?.scrollTo(0, messagesContainer.value.scrollHeight)
+}
 
 async function generateResponse() {
   if (isGeneratingResponse.value) return
   isGeneratingResponse.value = true
 
   messages.value.push({ role: 'user', content: userInput.value })
+  scrollToBottom()
 
   try {
     const responseStream = await fetch('/api/user/assistant/respond', {
@@ -43,7 +47,7 @@ async function generateResponse() {
     let nextMessageIndex: number | null = null
 
     await readResponseStream(responseStreamReader, event => {
-      // console.log('ResponseEvent', event)
+      console.log('ResponseEvent', event)
       if (event.type === 'response.created') {
         previousResponseId.value = event.response.id
       }
@@ -85,7 +89,7 @@ async function generateResponse() {
         currentActivity.value = 'Web-Suche läuft...'
       }
 
-      responseStreamEvents.value.push(event)
+      scrollToBottom()
     }, () => {
       isGeneratingResponse.value = false
     })
@@ -109,7 +113,7 @@ async function generateResponse() {
     close-icon="i-heroicons-arrow-left"
     :overlay="false"
     :ui="{
-      body: '!p-0 flex flex-col',
+      body: '!p-0 flex flex-col overflow-y-hidden',
       footer: '!p-0 flex-col',
     }"
     :close="{
@@ -140,11 +144,11 @@ async function generateResponse() {
       </DismissableAlert>
       <AssistantModalContextSettings />
       <AssistantModalTips />
-      <div class="flex flex-col flex-1">
+      <div class="flex flex-col flex-1 overflow-y-auto" ref="messagesContainer">
         <div
           v-for="(message, index) in messages"
           :key="index"
-          class="border-b border-gray-200 p-4"
+          class="border-b last:border-b-0 border-gray-200 p-4"
         >
           <div class="font-semibold flex mb-1">
             <UIcon
@@ -223,6 +227,19 @@ async function generateResponse() {
               trailing-icon="i-lucide-arrow-down"
               size="md"
               @click="userInput = 'Erstelle ein Bild für Social Media.'"
+              :ui="{
+                trailingIcon: 'ml-auto opacity-40',
+              }"
+            />
+            <UButton
+              label="Wie ändere ich das Bild oben?"
+              color="neutral"
+              variant="outline"
+              class="w-full"
+              icon="i-lucide-book-open-text"
+              trailing-icon="i-lucide-arrow-down"
+              size="md"
+              @click="userInput = 'Wie ändere ich das Bild oben?'"
               :ui="{
                 trailingIcon: 'ml-auto opacity-40',
               }"
