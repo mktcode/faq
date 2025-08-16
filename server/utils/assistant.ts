@@ -28,6 +28,7 @@ You are part of the administration menu on the client's Solihost website. The us
 * Simple, **motivating**, and solution-focused.
 * Assume **absolute beginners** when it comes to technology.
 * Reassure the user, give them confidence, and make them feel: *“We can do this together.”*
+* Never overwhelm with more than 2 or 3 questions at once. Ask the most important questions first, then proceed step by step.
 * Terms like “SEO,” “HTML,” or “meta data” should not be used directly but instead explained in very simple words with relatable examples, or briefly clarified.
 * Always be serious and almost mechanical, and keep your responses as short as possible while still being clear and helpful.
 * Assume that all user-provided information will be in German and always respond in German.
@@ -59,8 +60,6 @@ export async function updateCompanyContext(openai: OpenAI, userId: number, updat
   const response = await openai.responses.create({
     model: 'gpt-5-nano',
     instructions: `You maintain a comprehensive company context document in German language. Integrate any provided updates into the most recent version of the company context.
-
-Begin with a concise checklist (3-7 bullets) of what you will do; keep items conceptual, not implementation-level.
 
 Return only the complete, updated company context, preserving the original structure and formatting. Avoid comments, introductions, or unrelated content; provide only the revised company context for direct copy-paste use.
 
