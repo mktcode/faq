@@ -176,6 +176,19 @@ async function generateResponse() {
             class="p-4 flex flex-col gap-1 mt-auto"
           >
             <UButton
+              label="Befrage mich zu meinem Unternehmen."
+              color="neutral"
+              variant="outline"
+              class="w-full"
+              icon="i-lucide-message-circle-question-mark"
+              trailing-icon="i-lucide-arrow-down"
+              size="md"
+              @click="userInput = 'Befrage mich zu meinem Unternehmen.'"
+              :ui="{
+                trailingIcon: 'ml-auto opacity-40',
+              }"
+            />
+            <UButton
               label="Erzähle mir einen Witz über Online-Marketing."
               color="neutral"
               variant="outline"
