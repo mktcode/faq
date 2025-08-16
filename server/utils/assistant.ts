@@ -78,7 +78,7 @@ export async function updateCompanyContext(openai: OpenAI, userId: number, updat
     .where('id', '=', userId)
     .execute()
 
-  return { success: true }
+  return 'Company context updated successfully.'
 }
 
 export async function askWebsiteManualAssistant(openai: OpenAI, userInput: string) {
@@ -169,76 +169,58 @@ export async function* streamResponse(
         strict: true,
       },
     ],
-    parallel_tool_calls: false,
   })
 
   let nextResponseId: string | null = null
+  const functionCalls = []
 
   for await (const event of response) {
-    yield event;
-
-    nextResponseId = event.type === 'response.created' ? event.response.id : null
-
-    const functionCall = event.type === 'response.output_item.added' && event.item.type === 'function_call' ? event.item : undefined
-
+    nextResponseId = event.type === 'response.completed' ? event.response.id : null
+    
+    const functionCall = event.type === 'response.output_item.done' && event.item.type === 'function_call' ? event.item : undefined
     if (functionCall) {
+      functionCalls.push({
+        ...functionCall,
+        result: '',
+      })
+    }
+    
+    yield event;
+  }
+
+  if (functionCalls.length > 0) {
+    for (const functionCall of functionCalls) {
       const functionCallArguments = JSON.parse(functionCall.arguments)
   
       if (functionCallArguments.updates && functionCall.name === 'update_company_context') {
-        const result = await updateCompanyContext(openai, userId, functionCallArguments.updates)
-  
-        const responseAfterToolCall = await openai.responses.create({
-          stream: true,
-          previous_response_id: nextResponseId,
-          model: 'gpt-5-mini',
-          instructions,
-          input: [
-            {
-              type: 'function_call_output',
-              call_id: functionCall.call_id,
-              output: JSON.stringify(result),
-            },
-          ],
-          reasoning: {
-            effort: 'medium',
-          },
-          text: {
-            verbosity: 'low',
-          },
-        })
-  
-        for await (const event of responseAfterToolCall) {
-          yield event;
-        }
+        functionCall.result = await updateCompanyContext(openai, userId, functionCallArguments.updates)
       }
   
       if (functionCallArguments.request && functionCall.name === 'ask_website_manual_assistant') {
-        const result = await askWebsiteManualAssistant(openai, functionCallArguments.request)
-  
-        const responseAfterToolCall = await openai.responses.create({
-          stream: true,
-          previous_response_id: nextResponseId,
-          model: 'gpt-5-mini',
-          instructions,
-          input: [
-            {
-              type: 'function_call_output',
-              call_id: functionCall.call_id,
-              output: JSON.stringify(result),
-            },
-          ],
-          reasoning: {
-            effort: 'medium',
-          },
-          text: {
-            verbosity: 'low',
-          },
-        })
-  
-        for await (const event of responseAfterToolCall) {
-          yield event;
-        }
+        functionCall.result = await askWebsiteManualAssistant(openai, functionCallArguments.request)
       }
+    }
+  
+    const responseAfterToolCall = await openai.responses.create({
+      stream: true,
+      previous_response_id: nextResponseId,
+      model: 'gpt-5-mini',
+      instructions,
+      input: functionCalls.map(call => ({
+        type: 'function_call_output',
+        call_id: call.call_id,
+        output: call.result,
+      })),
+      reasoning: {
+        effort: 'medium',
+      },
+      text: {
+        verbosity: 'low',
+      },
+    })
+  
+    for await (const event of responseAfterToolCall) {
+      yield event;
     }
   }
 }

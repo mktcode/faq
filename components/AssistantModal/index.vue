@@ -43,6 +43,7 @@ async function generateResponse() {
     let nextMessageIndex: number | null = null
 
     await readResponseStream(responseStreamReader, event => {
+      // console.log('ResponseEvent', event)
       if (event.type === 'response.created') {
         previousResponseId.value = event.response.id
       }
@@ -53,6 +54,17 @@ async function generateResponse() {
         }
         if (event.item.type === 'web_search_call') {
           currentActivity.value = 'Suche im Internet...'
+        }
+        if (event.item.type === 'function_call') {
+          if (event.item.name === 'tell_joke') {
+            currentActivity.value = 'Denke Witz aus...'
+          }
+          if (event.item.name === 'ask_website_manual_assistant') {
+            currentActivity.value = 'Lese Website-Handbuch...'
+          }
+          if (event.item.name === 'update_company_context') {
+            currentActivity.value = 'Aktualisiere Unternehmenskontext...'
+          }
         }
         if (event.item.type === 'message') {
           currentActivity.value = null
@@ -86,7 +98,6 @@ async function generateResponse() {
     isGeneratingResponse.value = false
     userInput.value = ''
     currentActivity.value = null
-    console.log('Response stream events:', responseStreamEvents.value)
   }
 }
 </script>
