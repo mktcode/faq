@@ -3,15 +3,19 @@ const route = useRoute()
 const emailVerified = !!route.query.emailVerified
 const subscriptionSuccess = !!route.query.subscriptionSuccess
 
+const { appHost } = useRuntimeConfig().public
 const { me } = await useMe()
-
 const { username, settings, refreshSettings, isOwned, isPublic, font } = await useProfile()
+const canonicalUrl = computed(() => {
+  return me.value?.domain ? `https://${me.value.domain}` : `https://${username.value}.${appHost}`
+})
 
 useHead({
   title: settings.value.meta.title || settings.value.header.title || settings.value.company.name || 'Solihost Website',
   meta: [
     { name: 'robots', content: isPublic ? 'index, follow' : 'noindex, nofollow' },
     { name: 'theme-color', content: settings.value.design.color },
+    { property: 'og:url', content: canonicalUrl.value },
     { property: 'og:image', content: settings.value.meta.ogimage || settings.value.header.image || '' },
     {
       name: 'description',
@@ -23,6 +27,10 @@ useHead({
     },
   ],
   link: [
+    {
+      rel: 'canonical',
+      href: canonicalUrl.value,
+    },
     {
       rel: 'icon',
       type: 'image/png',
