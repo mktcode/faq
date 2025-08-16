@@ -5,23 +5,42 @@ export async function readResponseStream(
   handler: (event: OpenAI.Responses.ResponseStreamEvent) => void,
   callback?: () => void,
 ) {
-  const decoder = new TextDecoder('utf-8')
+  const decoder = new TextDecoder('utf-8');
+  let buffer = '';
 
-  while (true) {
-    const { done, value } = await reader.read()
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
 
-    if (done) {
-      if (callback) {
-        callback()
+      buffer += decoder.decode(value, { stream: true });
+
+      // Nur komplette Zeilen verarbeiten, Rest aufheben
+      let lastNL = buffer.lastIndexOf('\n');
+      if (lastNL >= 0) {
+        const block = buffer.slice(0, lastNL);
+        buffer = buffer.slice(lastNL + 1);
+
+        for (const line of block.split('\n')) {
+          const s = line.replace(/\r$/, '').trim();
+          if (!s) continue;
+          try {
+            handler(JSON.parse(s));
+          } catch (e) {
+            // defensiv: falls doch unvollständig -> wieder in den Buffer
+            buffer = s + '\n' + buffer;
+            break;
+          }
+        }
       }
-      break
     }
 
-    const rawMessagesString = decoder.decode(value, { stream: true })
-    const messages = rawMessagesString.split('\n').filter(Boolean)
-
-    for (const message of messages) {
-      handler(JSON.parse(message))
-    }
+    // Decoder final flush
+    buffer += decoder.decode();
+    const rest = buffer.trim();
+    if (rest) handler(JSON.parse(rest));
+  } finally {
+    try { reader.releaseLock?.(); } catch {}
+    callback?.();
   }
 }
