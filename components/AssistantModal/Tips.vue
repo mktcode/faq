@@ -24,15 +24,26 @@ const tipsOpen = ref(false)
     />
 
     <template #content>
-      <strong>Unternehmenskontext</strong><br>
-      Hilft dem Assistenten, besser auf Ihre spezifischen Bedürfnisse einzugehen und relevantere Antworten zu liefern.
-      Hinterlegen Sie Informationen zur Zielgruppe oder Ihren Alleinstellungsmerkmalen.
+      <div>
+        <strong>Bildschirmausschnitt teilen</strong><br>
+        Teilen Sie einen Bildschirmausschnitt, um dem Assistenten zu helfen, Ihr Problem besser zu verstehen.
+        Auf einem Windows-PC drücken Sie <UKbd value="win" /> + <UKbd value="shift" /> + <UKbd value="s" />, auf einem Mac <UKbd value="shift" /> + <UKbd value="command" /> + <UKbd value="4" />.
+        Achten Sie bitte darauf, keine sensiblen Informationen zu teilen.
+      </div>
 
-      <strong>Online-Recherche:</strong><br>
-      Sagen Sie "Suche nach ..." oder "Kannst du das mal recherchieren?" und der Assistent wird versuchen, relevante Informationen online zu finden.
+      <div>
+        <strong>Unternehmenskontext</strong><br>
+        Hilft dem Assistenten, besser auf Ihre spezifischen Bedürfnisse einzugehen und relevantere Antworten zu liefern.
+        Hinterlegen Sie Informationen zur Zielgruppe oder Ihren Alleinstellungsmerkmalen.
+      </div>
 
-      <strong>Bilder generieren:</strong><br>
-      Für Ihre Website oder Social Media.
+      <div>
+        <strong>Online-Recherche:</strong><br>
+        Sagen Sie "Suche nach ..." oder "Kannst du das mal recherchieren?" und der Assistent wird versuchen, relevante Informationen online zu finden.
+  
+        <strong>Bilder generieren:</strong><br>
+        Für Ihre Website oder Social Media.
+      </div>
     </template>
   </UCollapsible>
 </template>
