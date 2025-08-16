@@ -135,14 +135,11 @@ appConfig.ui.colors.primary = 'sky'
           </button>
           <a
             class="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-3 rounded-[12px] font-semibold tracking-[.2px] border border-slate-900/10 bg-white/10 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
-            href="tel:+4917670864627"
-            aria-label="Anrufen"
+            :href="me ? `https://${me.userName}.${appHost}` : '/login'"
+            aria-label="Anmelden"
           >
-            <UIcon
-              name="i-heroicons-phone"
-            />
             <span>
-              Beratung<span class="hidden sm:inline">: 0176 70 86 46 27</span>
+              Anmelden
             </span>
           </a>
         </div>
