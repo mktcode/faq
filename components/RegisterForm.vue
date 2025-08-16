@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
-import { availableComponents, defaultSettings } from '~/types/db'
+import { defaultSettings } from '~/types/db'
 
 const { register } = useWebAuthn({ registerEndpoint: '/api/webauthn/register' })
 const { fetch: fetchUserSession } = useUserSession()
@@ -9,6 +9,8 @@ const { appHost } = useRuntimeConfig().public
 const userName = ref('')
 const userNameAvailable = ref(true)
 const checkingUserNameAvailability = ref(false)
+
+const companyInfo = ref('')
 
 const settings = ref(defaultSettings.public)
 
@@ -45,82 +47,85 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
     @submit.prevent="signUp"
   >
     <div class="flex gap-4">
-      <ColorPicker
-        v-model:color="settings.design.color"
-        label="Primäre Farbe"
-        class="w-full max-w-lg mx-auto"
+      <UFormField
+        label="Firmenname"
+        class="flex-1"
+        help="Ihr Vor- und Nachname oder das, was Sie in der Gewerbeanmeldung eingetragen haben."
+      >
+        <UInput
+          v-model="settings.company.name"
+          class="w-full"
+        />
+      </UFormField>
+      <UFormField
+        label="Stadt"
+        class="flex-1 max-w-1/3"
+      >
+        <UInput
+          v-model="settings.company.city"
+          class="w-full"
+        />
+      </UFormField>
+    </div>
+    <UFormField
+      label="Über Ihr Unternehmen"
+      hint="(optional)"
+      help="Beschreiben Sie Ihr Unternehmen stichpunktartig oder in zwei, drei Sätzen. Was bieten Sie an? Was macht Sie besonders? Wer ist Ihre Zielgruppe?"
+    >
+      <UTextarea
+        v-model="companyInfo"
+        label="Informationen"
+        class="w-full"
       />
+    </UFormField>
+    <div class="flex gap-4">
       <FontPicker
         v-model:font="settings.design.font"
         label="Schriftart"
-        class="w-full max-w-lg mx-auto"
+        class="w-full flex-1"
+      />
+      <ColorPicker
+        v-model:color="settings.design.color"
+        label="Primäre Farbe"
       />
     </div>
-    <UFormField
-      label="Welche Komponenten möchten Sie nutzen?"
-      class="flex-1"
-    >
-      <div class="flex flex-col gap-2">
-        <UCard
-          v-for="(componentDetail, index) in availableComponents"
-          :key="index"
-          :variant="settings.components[componentDetail.key].visible ? 'outline' : 'soft'"
-          :ui="{
-            header: '!p-3',
-            body: '!p-3',
-            footer: '!p-3',
-          }"
-        >
-          <h3 class="font-semibold flex gap-2 justify-between">
-            <span
-              class="flex items-center gap-2 text-base"
-              :class="{ 'text-gray-500': !settings.components[componentDetail.key].visible }"
-            >
-              <UIcon
-                :name="componentDetail.icon"
-                class="inline-block size-5"
-              />
-              {{ componentDetail.title }}
-            </span>
-            <USwitch
-              v-model="settings.components[componentDetail.key].visible"
-              class="ml-2"
-            />
-          </h3>
-          <p class="text-gray-500 mt-1">
-            {{ componentDetail.description }}
-          </p>
-        </UCard>
-      </div>
-    </UFormField>
     <div>
       <UFormField
         label="Benutzername"
         :error="userNameAvailable ? '' : 'Dieser Benutzername ist bereits vergeben.'"
         class="flex-1"
+        help="Ihren Benutzernamen benötigen Sie zum Anmelden. Er ist außerdem Teil Ihrer vorläufigen Domain. Eine eigene Domain können Sie später verbinden."
         :ui="{
-          error: 'text-sky-800 bg-sky-50 border-sky-200 px-4 py-2 rounded-lg',
+          error: 'text-error-800 bg-error-50 border-error-200 px-4 py-2 rounded-lg',
         }"
       >
         <div class="flex">
           <UInput
             :value="userName"
-            placeholder="Benutzername"
+            maxlength="15"
             size="xxl"
             class="w-full"
             :ui="{
               base: 'rounded-r-none',
             }"
             @input="sanitizeUserName($event.target.value)"
-          />
-          <div class="text-gray-500 border border-gray-100 rounded-lg rounded-l-none border-l-0 flex items-center justify-center px-4">
+          >
+            <template #trailing>
+              <div
+                id="character-count"
+                class="text-xs text-muted tabular-nums mr-3"
+                aria-live="polite"
+                role="status"
+              >
+                {{ userName.length }}/{{ 15 }}
+              </div>
+            </template>
+          </UInput>
+          <div class="text-lg text-gray-600 border border-gray-100 rounded-lg rounded-l-none border-l-0 flex items-center justify-center px-4">
             .solihost.de
           </div>
         </div>
       </UFormField>
-      <div class="text-gray-400 text-sm mt-2">
-        Es sind ausschließlich Kleinbuchstaben erlaubt. Sie können später eine eigene Domain verbinden.
-      </div>
     </div>
     <div class="flex gap-2">
       <UButton

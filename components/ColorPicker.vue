@@ -12,10 +12,7 @@ const chip = computed(() => ({ backgroundColor: color.value }))
 </script>
 
 <template>
-  <UFormField
-    :label="label"
-    class="flex-1"
-  >
+  <UFormField :label="label">
     <UPopover>
       <UButton
         color="neutral"
