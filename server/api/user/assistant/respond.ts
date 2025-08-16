@@ -42,5 +42,10 @@ export default defineEventHandler(async (event) => {
     }
   })();
 
+  setHeader(event, 'Content-Type', 'application/x-ndjson; charset=utf-8');
+  setHeader(event, 'Cache-Control', 'no-cache, no-transform');
+  setHeader(event, 'Connection', 'keep-alive');
+  setHeader(event, 'X-Accel-Buffering', 'no');
+
   return sendIterable(event, ndjson)
 })
