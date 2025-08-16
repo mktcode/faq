@@ -216,10 +216,10 @@ async function generateResponse() {
           class="w-full"
           autoresize
           :disabled="isGeneratingResponse"
-          :rows="2"
+          :rows="3"
           :maxrows="10"
           :ui="{
-            base: 'rounded-none border-b border-gray-200',
+            base: 'rounded-none border-gray-200',
           }"
         />
         <div class="p-2 flex items-center gap-2">
