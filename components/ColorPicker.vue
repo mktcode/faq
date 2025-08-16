@@ -24,7 +24,7 @@ const chip = computed(() => ({ backgroundColor: color.value }))
         <template #leading>
           <span
             :style="chip"
-            class="size-3 rounded-full"
+            class="size-5 rounded-full"
           />
         </template>
       </UButton>
