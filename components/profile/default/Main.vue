@@ -7,7 +7,9 @@ const { appHost } = useRuntimeConfig().public
 const { me } = await useMe()
 const { username, settings, refreshSettings, isOwned, isPublic, font } = await useProfile()
 const canonicalUrl = computed(() => {
-  return me.value?.domain ? `https://${me.value.domain}` : `https://${username.value}.${appHost}`
+  const domain = me.value?.domain ? `https://${me.value.domain}` : `https://${username.value}.${appHost}`
+  const path = route.path && route.path !== '/' ? route.path : ''
+  return `${domain}${path}`
 })
 
 useHead({
