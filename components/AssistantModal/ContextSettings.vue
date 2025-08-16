@@ -1,44 +1,53 @@
 <script setup lang="ts">
-const { privateSettings, isSavingPrivateSettings, savePrivateSettings } = await usePrivateSettings()
+const showModal = useState('showAssistantContextModal', () => false)
 
-const editContextOpen = ref(false)
+const { privateSettings, isSavingPrivateSettings, savePrivateSettings } = await usePrivateSettings()
 </script>
 
 <template>
-  <UCollapsible
-    v-if="privateSettings"
-    v-model:open="editContextOpen"
-    class="flex flex-col gap-2"
+  <USlideover
+    v-model:open="showModal"
+    side="left"
+    close-icon="i-heroicons-arrow-left"
+    :overlay="false"
     :ui="{
-      root: 'border-b border-gray-200',
-      content: 'flex flex-col gap-2 px-3 pb-3',
+      body: 'flex flex-col gap-4',
+    }"
+    :close="{
+      size: 'md',
     }"
   >
-    <UButton
-      icon="i-heroicons-building-office-2"
-      label="Unternehmenskontext bearbeiten"
-      color="neutral"
-      variant="link"
-      trailing-icon="i-heroicons-chevron-down"
-      :ui="{
-        leadingIcon: 'size-5',
-        trailingIcon: `ml-auto transition-transform ${editContextOpen ? 'rotate-180' : ''}`,
-      }"
-    />
+    <template #title>
+      <h3 class="text-lg font-semibold flex items-center gap-2">
+        <UIcon
+          name="i-lucide-bot"
+          class="inline-block size-6 opacity-50"
+        />
+        Assistent: Einstellungen
+      </h3>
+    </template>
 
-    <template #content>
-      <UTextarea
-        v-model="privateSettings.assistant.context"
-        placeholder="Kontext"
-        class="w-full"
-        autoresize
-        :disabled="isSavingPrivateSettings"
-        :rows="2"
-        :maxrows="10"
-        :ui="{
-          base: 'text-sm',
-        }"
-      />
+    <template #body>
+      <UFormField
+        label="Zusätzlicher Kontext"
+        description="Hinterlegen Sie Informationen, die dem Assistenten helfen, Ihre spezifischen Bedürfnisse zu verstehen."
+        help="Tip: Der Assistent kann diese Informationen auch für Sie pflegen, wenn Sie im Gespräch darum bitten."
+      >
+        <UTextarea
+          v-if="privateSettings"
+          v-model="privateSettings.assistant.context"
+          placeholder="Kontext"
+          class="w-full"
+          autoresize
+          :disabled="isSavingPrivateSettings"
+          :rows="2"
+          :maxrows="10"
+          spellcheck="false"
+          :ui="{
+            base: 'text-sm',
+          }"
+        />
+      </UFormField>
 
       <UButton
         label="Speichern"
@@ -46,5 +55,5 @@ const editContextOpen = ref(false)
         @click="savePrivateSettings"
       />
     </template>
-  </UCollapsible>
+  </USlideover>
 </template>

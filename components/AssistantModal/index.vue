@@ -3,6 +3,8 @@ import { marked } from 'marked'
 import sanitizeHtml from 'sanitize-html'
 
 const showModal = useState('showAssistantModal', () => false)
+const showAssistantTipsModal = useState('showAssistantTipsModal', () => false)
+const showAssistantContextModal = useState('showAssistantContextModal', () => false)
 const { refreshPrivateSettings } = await usePrivateSettings()
 
 const quota = useState('assistantQuota', () => 12)
@@ -114,19 +116,34 @@ async function generateResponse() {
     :ui="{
       body: '!p-0 flex flex-col overflow-y-hidden',
       footer: '!p-0 flex-col',
+      title: 'flex items-center gap-2 flex-1',
+      header: '*:first:flex-1 *:first:pr-8',
     }"
     :close="{
       size: 'md',
     }"
   >
     <template #title>
-      <h3 class="text-lg font-semibold flex items-center gap-2">
-        <UIcon
-          name="i-lucide-bot"
-          class="inline-block size-6 opacity-50"
-        />
-        Assistent
-      </h3>
+      <UIcon
+        name="i-lucide-bot"
+        class="inline-block size-6 opacity-50"
+      />
+      Assistent
+      <UButton
+        icon="i-lucide-settings"
+        color="neutral"
+        variant="ghost"
+        class="ml-auto"
+        size="md"
+        @click="showAssistantContextModal = !showAssistantContextModal"
+      />
+      <UButton
+        icon="i-lucide-lightbulb"
+        color="neutral"
+        variant="ghost"
+        size="md"
+        @click="showAssistantTipsModal = !showAssistantTipsModal"
+      />
     </template>
 
     <template #body>
@@ -141,8 +158,7 @@ async function generateResponse() {
         Der Balken am unteren Bildschirmrand zeigt Ihr aktuelles Kontingent an.
         Lesen Sie die Tipps, um mehr über die Funktionen des Assistenten zu erfahren.
       </DismissableAlert>
-      <AssistantModalContextSettings />
-      <AssistantModalTips />
+
       <div
         ref="messagesContainer"
         class="flex flex-col flex-1 overflow-y-auto"
@@ -249,6 +265,8 @@ async function generateResponse() {
           </div>
         </Transition>
       </div>
+      <AssistantModalContextSettings />
+      <AssistantModalTips />
     </template>
 
     <template #footer>

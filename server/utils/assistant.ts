@@ -58,11 +58,27 @@ export async function updateCompanyContext(openai: OpenAI, userId: number, updat
 
   const response = await openai.responses.create({
     model: 'gpt-5-nano',
-    instructions: `Integrate the provided update into the latest version of the company context. Return only the fully updated and complete company context. Exclude any comments, introductions, or headings—output strictly the revised company context for straightforward copy-paste.`,
+    instructions: `You maintain a comprehensive company context document in German language. Integrate any provided updates into the most recent version of the company context.
+
+Begin with a concise checklist (3-7 bullets) of what you will do; keep items conceptual, not implementation-level.
+
+Return only the complete, updated company context, preserving the original structure and formatting. Avoid comments, introductions, or unrelated content; provide only the revised company context for direct copy-paste use.
+
+If the update contains ambiguous, conflicting, or incomplete details, clearly highlight those sections using [UNKLAR: ...] tags, while leaving the rest of the original context untouched for those areas.
+
+After completing the integration, review the output to confirm that structure, formatting, and required sections match the original version or were reasonably updated. If any discrepancies or missing sections are found, self-correct before finalizing the output.`,
     input: [
       {
         role: 'developer',
+        content: 'Existing Company Context:',
+      },
+      {
+        role: 'developer',
         content: settings.private.assistant.context || 'No existing context available. Please start with a clean slate.',
+      },
+      {
+        role: 'developer',
+        content: 'Updates:',
       },
       {
         role: 'user',
@@ -85,7 +101,7 @@ export async function updateCompanyContext(openai: OpenAI, userId: number, updat
 }
 
 export async function askWebsiteManualAssistant(openai: OpenAI, userInput: string) {
-  const manual = `# Website manual
+  const manual = `# Solihost Website Manual
 
 ## Header
 
@@ -93,8 +109,7 @@ To update the header image, open the "Design & Kopfbereich" Section in the Menu.
 
   const response = await openai.responses.create({
     model: 'gpt-5-mini',
-    instructions: `You are the Solihost Website Manual Assistant. Your task is to provide information and answer questions about the Solihost website manual.    
-Please never invent anything that's not in the manual. If you don't have the right information for the user, kindly refer them to the Solihost Support.`,
+    instructions: `Answer questions and provide information strictly based on the Solihost website manual. If the required information is not in the manual, refer the user to Solihost Support.`,
     input: [
       {
         role: 'developer',

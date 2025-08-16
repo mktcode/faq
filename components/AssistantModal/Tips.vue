@@ -1,33 +1,36 @@
 <script setup lang="ts">
-const tipsOpen = ref(false)
+const showModal = useState('showAssistantTipsModal', () => false)
 </script>
 
 <template>
-  <UCollapsible
-    v-model:open="tipsOpen"
-    class="flex flex-col gap-2"
+  <USlideover
+    v-model:open="showModal"
+    side="left"
+    close-icon="i-heroicons-arrow-left"
+    :overlay="false"
     :ui="{
-      root: 'border-b border-gray-200',
-      content: 'flex flex-col gap-2 text-sm px-3 pb-3',
+      body: 'flex flex-col gap-4',
+    }"
+    :close="{
+      size: 'md',
     }"
   >
-    <UButton
-      icon="i-heroicons-light-bulb"
-      label="Tipps"
-      color="neutral"
-      variant="link"
-      trailing-icon="i-heroicons-chevron-down"
-      :ui="{
-        leadingIcon: 'size-5',
-        trailingIcon: `ml-auto transition-transform ${tipsOpen ? 'rotate-180' : ''}`,
-      }"
-    />
+    <template #title>
+      <h3 class="text-lg font-semibold flex items-center gap-2">
+        <UIcon
+          name="i-lucide-bot"
+          class="inline-block size-6 opacity-50"
+        />
+        Assistent: Tipps
+      </h3>
+    </template>
 
-    <template #content>
+    <template #body>
       <div>
         <strong>Bildschirmausschnitt teilen</strong><br>
         Teilen Sie einen Bildschirmausschnitt, um dem Assistenten zu helfen, Ihr Problem besser zu verstehen.
-        Auf einem Windows-PC drücken Sie <UKbd value="win" /> + <UKbd value="shift" /> + <UKbd value="s" />, auf einem Mac <UKbd value="shift" /> + <UKbd value="command" /> + <UKbd value="4" />.
+        Auf einem Windows-PC drücken Sie <UKbd value="win" /> + <UKbd value="shift" /> + <UKbd value="s" />, auf einem Mac <UKbd value="shift" /> + <UKbd value="command" /> + <UKbd value="4" />
+        und auf dem Smartphone meist die Leiser-Taste + Ein-/Ausschalt-Taste.
         Achten Sie bitte darauf, keine sensiblen Informationen zu teilen.
       </div>
 
@@ -40,10 +43,7 @@ const tipsOpen = ref(false)
       <div>
         <strong>Online-Recherche:</strong><br>
         Sagen Sie "Suche nach ..." oder "Kannst du das mal recherchieren?" und der Assistent wird versuchen, relevante Informationen online zu finden.
-
-        <strong>Bilder generieren:</strong><br>
-        Für Ihre Website oder Social Media.
       </div>
     </template>
-  </UCollapsible>
+  </USlideover>
 </template>
