@@ -187,11 +187,11 @@ export const defaultSettings: SettingsForm = {
     header: {
       title: 'Herzlich Willkommen',
       description: 'Auf Ihrer neuen Website von Solihost.de',
-      height: 'auto',
+      height: 'full',
       titleColor: 'black',
-      titleFontSize: 10,
+      titleFontSize: 12,
       descriptionColor: 'black',
-      descriptionFontSize: 6,
+      descriptionFontSize: 8,
       video: '',
       image: '',
       imageOverlay: {

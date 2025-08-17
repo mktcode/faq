@@ -1,5 +1,8 @@
+import OpenAI from 'openai'
+import { zodTextFormat } from 'openai/helpers/zod'
 import type { H3Event } from 'h3'
 import { settingsFormSchema, type SettingsForm } from '~/types/db'
+import z from 'zod'
 
 export function makeUsername(name: string): string {
   // TODO: check for uniqueness in the database
@@ -195,4 +198,62 @@ export async function getPrivateSettings(userNameOrId: number | string) {
   const settings = await getSettings(userNameOrId)
 
   return settings.private
+}
+
+export async function prefillSettings(companyInfo: string, settings: SettingsForm): Promise<SettingsForm> {
+  const { openaiApiKey } = useRuntimeConfig()
+  const openai = new OpenAI({
+    apiKey: openaiApiKey,
+  })
+
+  const prefillSchema = z.object({
+    title: z.string(),
+    title_color: z.string(),
+    slogan: z.string(),
+    slogan_color: z.string(),
+    background: z.object({
+      color: z.string(),
+      opacity: z.number().min(0).max(100),
+    }),
+  })
+
+  const response = await openai.responses.parse({
+    model: 'gpt-5-mini',
+    instructions: `You will receive minimum information about the company and its design preferences. Your job is to imagine a modern website header and fill in the necessary fields.
+For colors use the same hsl color format as for the primary color. Choose colors and background opacity (0-100) carefully and ensure they are visually appealing.
+`,
+    input: [
+      {
+        role: 'user',
+        content: `Company Name: ${settings.public.company.name}
+Small Business: ${settings.public.company.isSmallBusiness ? 'Yes' : 'No'}
+City: ${settings.public.company.city}
+About: ${companyInfo}
+
+Primary Color: ${settings.public.design.color}
+Font: ${settings.public.design.font}`,
+      },
+    ],
+    text: {
+      format: zodTextFormat(prefillSchema, 'header_settings'),
+    },
+  })
+
+  const prefill = response.output_parsed
+
+  if (prefill) {
+    settings.public.header = {
+      ...settings.public.header,
+      title: prefill.title,
+      titleColor: prefill.title_color,
+      description: prefill.slogan,
+      descriptionColor: prefill.slogan_color,
+      imageOverlay: {
+        color: prefill.background.color,
+        opacity: prefill.background.opacity,
+      },
+    }
+  }
+
+  return settings
 }

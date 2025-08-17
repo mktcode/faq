@@ -19,7 +19,14 @@ function sanitizeUserName(name: string) {
 }
 
 async function signUp() {
-  await register({ userName: userName.value, settings: { public: settings.value, private: defaultSettings.private } })
+  await register({
+    userName: userName.value,
+    settings: {
+      public: settings.value,
+      private: defaultSettings.private,
+    },
+    companyInfo: companyInfo.value,
+  })
   await fetchUserSession()
 
   navigateTo(`https://${userName.value}.${appHost}`, { external: true })
@@ -78,6 +85,10 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
         class="w-full"
       />
     </UFormField>
+    <USwitch
+      v-model="settings.company.isSmallBusiness"
+      label="Ich nutze die Kleinunternehmer-Regelung."
+    />
     <div class="flex gap-4">
       <FontPicker
         v-model:font="settings.design.font"

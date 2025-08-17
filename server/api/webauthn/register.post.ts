@@ -21,6 +21,7 @@ export default defineWebAuthnRegisterEventHandler({
     return z.object({
       userName: z.string().min(3).max(20),
       settings: settingsFormSchema,
+      companyInfo: z.string(),
     }).parse(userBody)
   },
   async onSuccess(event, { credential, user }) {
@@ -46,6 +47,10 @@ export default defineWebAuthnRegisterEventHandler({
       })
     }
     else {
+      if (user.companyInfo) {
+        user.settings = await prefillSettings(user.companyInfo, user.settings)
+      }
+
       const newUser = await createUser({
         name: user.userName,
         userName: user.userName,
