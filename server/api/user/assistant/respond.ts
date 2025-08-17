@@ -38,14 +38,14 @@ export default defineEventHandler(async (event) => {
 
   const ndjson = (async function* () {
     for await (const event of stream) {
-      yield JSON.stringify(event) + '\n';
+      yield JSON.stringify(event) + '\n'
     }
-  })();
+  })()
 
-  setHeader(event, 'Content-Type', 'application/x-ndjson; charset=utf-8');
-  setHeader(event, 'Cache-Control', 'no-cache, no-transform');
-  setHeader(event, 'Connection', 'keep-alive');
-  setHeader(event, 'X-Accel-Buffering', 'no');
+  setHeader(event, 'Content-Type', 'application/x-ndjson; charset=utf-8')
+  setHeader(event, 'Cache-Control', 'no-cache, no-transform')
+  setHeader(event, 'Connection', 'keep-alive')
+  setHeader(event, 'X-Accel-Buffering', 'no')
 
   return sendIterable(event, ndjson)
 })
