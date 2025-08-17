@@ -1,0 +1,41 @@
+# Dependencies
+node_modules
+**/node_modules
+
+# Output artifacts
+.output
+.nuxt
+.dist
+.next
+
+# Logs
+npm-debug.log*
+.yarn-debug.log*
+.yarn-error.log*
+.pnpm-debug.log*
+
+# Env files (don’t send secrets to build context)
+.env*
+!.env.example
+
+# Git
+.git
+.gitignore
+
+# Editor/OS
+.vscode
+.idea
+.DS_Store
+*.swp
+
+# Tests and coverage
+coverage
+**/__tests__
+**/*.spec.*
+**/*.test.*
+
+# Docker
+Dockerfile*
+
+# Misc
+*.log
