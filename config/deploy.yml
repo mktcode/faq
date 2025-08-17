@@ -40,6 +40,11 @@ builder:
   arch:
     # - amd64
     - arm64
+proxy:
+  forward_headers: true
+  response_timeout: 600
+  buffering:
+    responses: false
 accessories:
   db:
     image: mysql:9.0
