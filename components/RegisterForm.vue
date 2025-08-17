@@ -35,6 +35,7 @@ async function signUp() {
     navigateTo(`https://${userName.value}.${appHost}`, { external: true })
   }
   catch (error) {
+    isRegistering.value = false
     if (error instanceof Error) {
       toast.add({
         title: 'Registrierung fehlgeschlagen',
@@ -49,9 +50,6 @@ async function signUp() {
         color: 'error',
       })
     }
-  }
-  finally {
-    isRegistering.value = false
   }
 }
 
@@ -76,6 +74,18 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
     class="w-full max-w-xl flex flex-col gap-4"
     @submit.prevent="signUp"
   >
+    <Transition name="fade">
+      <div
+        v-if="isRegistering"
+        class="fixed inset-0 flex flex-col items-center justify-center bg-white/30 backdrop-blur-lg text-xl z-50"
+      >
+        <UIcon
+          name="i-lucide-loader-2"
+          class="animate-spin size-10 text-sky-500 mb-2"
+        />
+        <span>Ihre Website wird eingerichtet...</span>
+      </div>
+    </Transition>
     <div class="flex gap-4">
       <UFormField
         label="Firmenname"
