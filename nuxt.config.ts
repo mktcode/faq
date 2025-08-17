@@ -44,6 +44,7 @@ export default defineNuxtConfig({
     session: {
       password: process.env.SESSION_PASSWORD || '',
       cookie: {
+        // Devnote: Set .de to .local for preview mode
         domain: process.env.NODE_ENV === 'production' ? 'solihost.de' : 'solihost.local',
         sameSite: 'strict',
       },
