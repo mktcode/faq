@@ -175,7 +175,7 @@ appConfig.ui.colors.primary = 'sky'
           Ihr professioneller Auftritt – <span class="font-semibold text-sky-400 text-shadow-sky-950/20 text-shadow-md sm:text-shadow-lg">klar, effektiv</span> und ohne unnötige Kosten.
         </h1>
         <p class="m-0 text-[clamp(16px,2.1vw,20px)] text-white/90 dark:text-[#b3bfd1]">
-          Wir begleiten Freiberufler &amp; Einzelunternehmer Schritt für Schritt – von der Einrichtung der Buchhaltung über die erste Sichtbarkeit im Netz bis zur eigenen Website mit Domain und E-Mail-Postfächern. Verständlich, fokussiert und mit Blick auf das, was sich wirklich für Sie lohnt.
+          Wir begleiten Freiberufler &amp; Einzelunternehmer Schritt für Schritt – von der Hilfe am Computer über die erste Sichtbarkeit im Netz bis zur eigenen Website mit Domain und E-Mail-Postfächern. Verständlich, fokussiert und mit Blick auf das, was sich wirklich für Sie lohnt.
         </p>
         <div class="flex flex-wrap gap-3 mt-2">
           <a
@@ -200,22 +200,22 @@ appConfig.ui.colors.primary = 'sky'
           </a>
         </div>
       </div>
-      <div class="grid md:grid-cols-3 grid-cols-1 gap-[14px] my-[26px] mb-[10px] relative z-[1] p-[clamp(28px,5vw,64px)] pt-0">
-        <div class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 dark:border-white/10 dark:text-[#e7ecf4]">
+      <div class="flex md:flex-row flex-col gap-x-[24px] mt-[26px] relative z-[1] p-[clamp(28px,5vw,64px)] pt-0">
+        <div class="inline-flex items-center gap-2 py-1 rounded-[12px] font-semibold tracking-[.2px] text-white dark:border-white/10 dark:text-[#e7ecf4]">
           <UIcon
             name="i-heroicons-hand-thumb-up"
             size="20"
           />
           <strong>Einfach zu bedienen</strong>
         </div>
-        <div class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 dark:border-white/10 dark:text-[#e7ecf4]">
+        <div class="inline-flex items-center gap-2 py-1 rounded-[12px] font-semibold tracking-[.2px] text-white dark:border-white/10 dark:text-[#e7ecf4]">
           <UIcon
             name="i-heroicons-rocket-launch"
             size="20"
           />
           <strong>Sofort online</strong>
         </div>
-        <div class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 dark:border-white/10 dark:text-[#e7ecf4]">
+        <div class="inline-flex items-center gap-2 py-1 rounded-[12px] font-semibold tracking-[.2px] text-white dark:border-white/10 dark:text-[#e7ecf4]">
           <UIcon
             name="i-heroicons-sparkles"
             size="20"
@@ -275,10 +275,11 @@ appConfig.ui.colors.primary = 'sky'
         </div>
         <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
-            <span class="inline-block w-[18px] h-[18px]">📜</span>Rechtssicher
+            <span class="inline-block w-[18px] h-[18px]">🛡️</span>IT-Assistenz
           </h3>
           <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
-            Korrektes Impressum &amp; passgenaue Datenschutzerklärung – basierend auf den tatsächlich genutzten Funktionen.
+            Wir stehen Ihnen persönlich zur Seite und unterstützen Sie bei technischen Fragen.
+            Der Solihost Assistent hilft Ihnen, Ihre Website zu verwalten und Ihr Angebot zu optimieren.
           </p>
         </div>
         <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
@@ -332,7 +333,7 @@ appConfig.ui.colors.primary = 'sky'
         <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <span class="inline-block px-2 py-[.25rem] rounded-full text-[.8rem] bg-white border border-black/15 text-slate-600 dark:bg-white/10 dark:border-white/15 dark:text-[#b3bfd1]">Standard</span>
           <div class="flex items-end gap-1 mt-3 mb-6">
-            <span class="text-[38px] font-extrabold leading-none">3 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
+            <span class="text-[38px] font-extrabold leading-none">kostenlos</span>
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
@@ -342,7 +343,7 @@ appConfig.ui.colors.primary = 'sky'
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Impressum &amp; Datenschutzerklärung
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Cookie‑frei (solange keine externen Tracker)
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Cookie‑frei &amp; datensparsam
             </li>
             <li class="flex gap-2 items-start">
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Suchmaschinen/KI‑Basics &amp; Mobil‑Optimierung
@@ -362,7 +363,10 @@ appConfig.ui.colors.primary = 'sky'
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Mehr Gestaltungsoptionen &amp; Anpassungen durch uns
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> .de-Domain &amp; E-Mail-Adresse inklusive
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Mehr Gestaltungsoptionen &amp; individuelle Anpassungen
             </li>
             <li class="flex gap-2 items-start">
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Persönlicher Telefon-Support und Fernwartung
@@ -371,10 +375,7 @@ appConfig.ui.colors.primary = 'sky'
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Intelligentes FAQ für bessere Anfragen
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Mehr Speicher für Medien &amp; Dateien
-            </li>
-            <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> .de-Domain &amp; E-Mail-Adresse inklusive
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Personalisierbarer KI-Assistent
             </li>
             <li class="flex gap-2 items-start">
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Monatlich kündbar, per Klick
