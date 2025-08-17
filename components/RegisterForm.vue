@@ -12,9 +12,7 @@ const userNameAvailable = ref(true)
 const checkingUserNameAvailability = ref(false)
 const isRegistering = ref(false)
 
-const companyInfo = ref('')
-
-const settings = ref(defaultSettings.public)
+const settings = ref(defaultSettings)
 
 function sanitizeUserName(name: string) {
   userName.value = name.toLowerCase().replace(/[^a-z]/g, '')
@@ -25,11 +23,7 @@ async function signUp() {
   try {
     await register({
       userName: userName.value,
-      settings: {
-        public: settings.value,
-        private: defaultSettings.private,
-      },
-      companyInfo: companyInfo.value,
+      settings: settings.value,
     })
     await fetchUserSession()
     navigateTo(`https://${userName.value}.${appHost}`, { external: true })
@@ -93,7 +87,7 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
         help="Ihr Vor- und Nachname oder das, was Sie in der Gewerbeanmeldung eingetragen haben."
       >
         <UInput
-          v-model="settings.company.name"
+          v-model="settings.public.company.name"
           class="w-full"
         />
       </UFormField>
@@ -102,7 +96,7 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
         class="flex-1 max-w-1/3"
       >
         <UInput
-          v-model="settings.company.city"
+          v-model="settings.public.company.city"
           class="w-full"
         />
       </UFormField>
@@ -113,23 +107,23 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
       help="Beschreiben Sie Ihr Unternehmen stichpunktartig oder in zwei, drei Sätzen. Was bieten Sie an? Was macht Sie besonders? Wer ist Ihre Zielgruppe?"
     >
       <UTextarea
-        v-model="companyInfo"
+        v-model="settings.private.assistant.context"
         label="Informationen"
         class="w-full"
       />
     </UFormField>
     <USwitch
-      v-model="settings.company.isSmallBusiness"
+      v-model="settings.public.company.isSmallBusiness"
       label="Ich nutze die Kleinunternehmer-Regelung."
     />
     <div class="flex gap-4">
       <FontPicker
-        v-model:font="settings.design.font"
+        v-model:font="settings.public.design.font"
         label="Schriftart"
         class="w-full flex-1"
       />
       <ColorPicker
-        v-model:color="settings.design.color"
+        v-model:color="settings.public.design.color"
         label="Primäre Farbe"
       />
     </div>
@@ -188,7 +182,7 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
         label="Zugang erstellen"
         icon="i-heroicons-key"
         size="xl"
-        :disabled="isRegistering || !userNameAvailable || !settings.company.name"
+        :disabled="isRegistering || !userNameAvailable || !settings.public.company.name"
         :loading="isRegistering"
         :ui="{
           leadingIcon: 'text-primary-300',

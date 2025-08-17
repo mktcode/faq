@@ -200,7 +200,7 @@ export async function getPrivateSettings(userNameOrId: number | string) {
   return settings.private
 }
 
-export async function prefillSettings(companyInfo: string, settings: SettingsForm): Promise<SettingsForm> {
+export async function prefillSettings(settings: SettingsForm): Promise<SettingsForm> {
   const { openaiApiKey } = useRuntimeConfig()
   const openai = new OpenAI({
     apiKey: openaiApiKey,
@@ -210,8 +210,8 @@ export async function prefillSettings(companyInfo: string, settings: SettingsFor
     primary_color: z.string(),
     title: z.string(),
     title_color: z.string(),
-    slogan: z.string(),
-    slogan_color: z.string(),
+    subtitle: z.string(),
+    subtitle_color: z.string(),
     background: z.object({
       color: z.string(),
       opacity: z.number().min(0).max(100),
@@ -231,7 +231,7 @@ export async function prefillSettings(companyInfo: string, settings: SettingsFor
         content: `Company Name: ${settings.public.company.name}
 Small Business: ${settings.public.company.isSmallBusiness ? 'Yes' : 'No'}
 City: ${settings.public.company.city}
-About: ${companyInfo}
+About: ${settings.private.assistant.context}
 
 Primary Color: ${settings.public.design.color}
 Font: ${settings.public.design.font}`,
@@ -250,8 +250,8 @@ Font: ${settings.public.design.font}`,
       ...settings.public.header,
       title: prefill.title,
       titleColor: prefill.title_color,
-      description: prefill.slogan,
-      descriptionColor: prefill.slogan_color,
+      description: prefill.subtitle,
+      descriptionColor: prefill.subtitle_color,
       imageOverlay: {
         color: prefill.background.color,
         opacity: prefill.background.opacity,
