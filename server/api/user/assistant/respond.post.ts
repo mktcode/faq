@@ -14,8 +14,8 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
   const user = await db.selectFrom('users').selectAll().limit(1).executeTakeFirstOrThrow()
 
+  // await requireProfileSubscription(user.userName)
   // DEBUG END
-  await requireProfileSubscription(user.userName)
 
   const settings = await getSettings(user.id)
   const { userInput, responseId } = await readValidatedBody(event, body => bodySchema.parse(body))
