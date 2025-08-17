@@ -208,7 +208,7 @@ async function generateResponse() {
               :ui="{
                 trailingIcon: 'ml-auto opacity-40',
               }"
-              @click="userInput = 'Befrage mich zu meinem Unternehmen.'"
+              @click="userInput = 'Befrage mich zu meinem Unternehmen und lass uns gemeinsam den Unternehmenskontext aufbauen.'"
             />
             <UButton
               label="Erzähle mir einen Witz über Online-Marketing."
