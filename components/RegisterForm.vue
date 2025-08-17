@@ -5,10 +5,12 @@ import { defaultSettings } from '~/types/db'
 const { register } = useWebAuthn({ registerEndpoint: '/api/webauthn/register' })
 const { fetch: fetchUserSession } = useUserSession()
 const { appHost } = useRuntimeConfig().public
+const toast = useToast()
 
 const userName = ref('')
 const userNameAvailable = ref(true)
 const checkingUserNameAvailability = ref(false)
+const isRegistering = ref(false)
 
 const companyInfo = ref('')
 
@@ -19,17 +21,38 @@ function sanitizeUserName(name: string) {
 }
 
 async function signUp() {
-  await register({
-    userName: userName.value,
-    settings: {
-      public: settings.value,
-      private: defaultSettings.private,
-    },
-    companyInfo: companyInfo.value,
-  })
-  await fetchUserSession()
-
-  navigateTo(`https://${userName.value}.${appHost}`, { external: true })
+  isRegistering.value = true
+  try {
+    await register({
+      userName: userName.value,
+      settings: {
+        public: settings.value,
+        private: defaultSettings.private,
+      },
+      companyInfo: companyInfo.value,
+    })
+    await fetchUserSession()
+    navigateTo(`https://${userName.value}.${appHost}`, { external: true })
+  }
+  catch (error) {
+    if (error instanceof Error) {
+      toast.add({
+        title: 'Registrierung fehlgeschlagen',
+        description: error.message,
+        color: 'error',
+      })
+    }
+    else {
+      toast.add({
+        title: 'Registrierung fehlgeschlagen',
+        description: 'Ein unbekannter Fehler ist aufgetreten.',
+        color: 'error',
+      })
+    }
+  }
+  finally {
+    isRegistering.value = false
+  }
 }
 
 async function checkUserNameAvailability() {
@@ -150,12 +173,13 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
         }"
       />
       <UButton
-        :disabled="!userNameAvailable || userName.length < 3"
         type="submit"
         class="ml-auto"
         label="Zugang erstellen"
         icon="i-heroicons-key"
         size="xl"
+        :disabled="isRegistering || !userNameAvailable || !settings.company.name"
+        :loading="isRegistering"
         :ui="{
           leadingIcon: 'text-primary-300',
         }"
