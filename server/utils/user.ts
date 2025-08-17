@@ -207,6 +207,7 @@ export async function prefillSettings(companyInfo: string, settings: SettingsFor
   })
 
   const prefillSchema = z.object({
+    primary_color: z.string(),
     title: z.string(),
     title_color: z.string(),
     slogan: z.string(),
@@ -219,9 +220,11 @@ export async function prefillSettings(companyInfo: string, settings: SettingsFor
 
   const response = await openai.responses.parse({
     model: 'gpt-5-mini',
-    instructions: `You will receive minimum information about the company and its design preferences. Your job is to imagine a modern website header and fill in the necessary fields.
-For colors use the same hsl color format as for the primary color. Choose colors and background opacity (0-100) carefully and ensure they are visually appealing.
-`,
+    instructions: `You’ll receive only minimal information about the company and its design preferences. Your task is to propose a modern website header and complete all required fields.
+
+* Use HSL notation for all colors, matching the format used for the primary color.
+* Adjust the primary color only if necessary—for example, if it’s too bright and hurts readability.
+* Choose colors and a background opacity (0–100) that are visually appealing and provide strong contrast.`,
     input: [
       {
         role: 'user',
@@ -242,6 +245,7 @@ Font: ${settings.public.design.font}`,
   const prefill = response.output_parsed
 
   if (prefill) {
+    settings.public.design.color = prefill.primary_color
     settings.public.header = {
       ...settings.public.header,
       title: prefill.title,
