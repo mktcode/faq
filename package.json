@@ -7,7 +7,7 @@
     "lint:fix": "eslint . --fix",
     "build": "nuxt build",
     "dev": "nuxt dev --host --dotenv .env.local",
-    "preview": "nuxt preview",
+    "preview": "NITRO_HOST=solihost.local NITRO_SSL_CERT=\"$(cat .localcert/solihost.local+1.pem)\" NITRO_SSL_KEY=\"$(cat .localcert/solihost.local+1-key.pem)\" node .output/server/index.mjs",
     "postinstall": "nuxt prepare",
     "migrate": "npx tsx db/migrate.ts",
     "migrate:down": "npx tsx db/down.ts",
