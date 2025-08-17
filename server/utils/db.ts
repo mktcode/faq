@@ -6,6 +6,9 @@ let connection: Kysely<Database> | null = null
 
 export async function getDatabaseConnection() {
   const { databaseUrl } = useRuntimeConfig()
+  if (!databaseUrl) {
+    throw new Error(`Database URL is not defined in the runtime configuration. (Value: ${databaseUrl})`)
+  }
 
   if (connection) {
     return connection
