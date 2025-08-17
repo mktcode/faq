@@ -60,15 +60,18 @@ async function generateResponse() {
         if (event.item.type === 'web_search_call') {
           currentActivity.value = 'Suche im Internet...'
         }
+        if (event.item.type === 'image_generation_call') {
+          currentActivity.value = 'Generiere Bild...'
+        }
         if (event.item.type === 'function_call') {
-          if (event.item.name === 'tell_joke') {
-            currentActivity.value = 'Denke Witz aus...'
-          }
-          if (event.item.name === 'ask_website_manual_assistant') {
-            currentActivity.value = 'Lese Website-Handbuch...'
-          }
           if (event.item.name === 'update_company_context') {
             currentActivity.value = 'Aktualisiere Unternehmenskontext...'
+          }
+          if (event.item.name === 'ask_solihost_manual_assistant') {
+            currentActivity.value = 'Lese Solihost-Handbuch...'
+          }
+          if (event.item.name === 'contact_support') {
+            currentActivity.value = 'Kontaktiere Support...'
           }
         }
         if (event.item.type === 'message') {
