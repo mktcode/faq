@@ -39,6 +39,12 @@ export default defineEventHandler(async (event) => {
     content: userInput,
   })
 
+  setHeader(event, 'Content-Type', 'application/x-ndjson; charset=utf-8')
+  setHeader(event, 'Cache-Control', 'no-cache, no-transform')
+  setHeader(event, 'Connection', 'keep-alive')
+  setHeader(event, 'X-Accel-Buffering', 'no')
+  event.node.res.flushHeaders?.()
+
   const stream = streamResponse(instructions, messages, openai, responseId, user.id, settings.public.company.city)
 
   const ndjson = (async function* () {
@@ -46,11 +52,6 @@ export default defineEventHandler(async (event) => {
       yield JSON.stringify(event) + '\n'
     }
   })()
-
-  setHeader(event, 'Content-Type', 'application/x-ndjson; charset=utf-8')
-  setHeader(event, 'Cache-Control', 'no-cache, no-transform')
-  setHeader(event, 'Connection', 'keep-alive')
-  setHeader(event, 'X-Accel-Buffering', 'no')
 
   return sendIterable(event, ndjson)
 })
