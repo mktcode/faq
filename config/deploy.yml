@@ -32,10 +32,10 @@ env:
     - NUXT_STRIPE_PRICE_ID
     - NUXT_PUBLIC_STRIPE_PORTAL_URL
 aliases:
-  shell: app exec --interactive --reuse "sh"
+  shell: app exec --interactive --reuse "bash"
   logs: app logs -f
   migrate: app exec --primary 'npx tsx server/migrate.ts'
-  db: accessory exec db --interactive --reuse "sh"
+  db: accessory exec db --interactive --reuse "bash"
 builder:
   arch:
     # - amd64
