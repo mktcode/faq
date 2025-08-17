@@ -175,7 +175,7 @@ appConfig.ui.colors.primary = 'sky'
           Ihr professioneller Auftritt – <span class="font-semibold text-sky-400 text-shadow-sky-950/20 text-shadow-md sm:text-shadow-lg">klar, effektiv</span> und ohne unnötige Kosten.
         </h1>
         <p class="m-0 text-[clamp(16px,2.1vw,20px)] text-white/90 dark:text-[#b3bfd1]">
-          Wir begleiten Freiberufler &amp; Einzelunternehmer Schritt für Schritt – von der Hilfe am Computer über die erste Sichtbarkeit im Netz bis zur eigenen Website mit Domain und E-Mail-Postfächern. Verständlich, fokussiert und mit Blick auf das, was sich wirklich für Sie lohnt.
+          Wir begleiten Freiberufler &amp; Einzelunternehmer Schritt für Schritt – von der Starthilfe am Computer über die erste Sichtbarkeit im Netz bis zur eigenen Website mit Domain und E-Mail-Postfächern. Verständlich, fokussiert und mit Blick auf das, was sich wirklich für Sie lohnt.
         </p>
         <div class="flex flex-wrap gap-3 mt-2">
           <a
@@ -238,8 +238,8 @@ appConfig.ui.colors.primary = 'sky'
             Klarheit schaffen
           </h3>
           <p>
-            Ihr Angebot auf den Punkt: Zielgruppe, Nutzenversprechen, nächste Aktion.
-            Wir helfen bei Texten – auf Wunsch mit KI‑Unterstützung.
+            Angebotstexte, Zielgruppe, Nutzenversprechen, nächste Aktion.
+            Wir helfen dabei, Ihr Angebot auf den Punkt zu bringen.
           </p>
         </div>
         <div class="border rounded-[16px] p-[18px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
@@ -267,7 +267,11 @@ appConfig.ui.colors.primary = 'sky'
       <div class="grid md:grid-cols-3 grid-cols-1 gap-[18px]">
         <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
-            <span class="inline-block w-[18px] h-[18px]">🔧</span>Technisch sauber
+            <UIcon
+              name="i-lucide-shield"
+              class="text-sky-600 size-6"
+            />
+            Technisch saubere Website
           </h3>
           <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
             Sauberer Code, saubere Metadaten, korrekte Vorschaubilder – alles, was einen guten ersten Eindruck in Suchmaschinen &amp; Social Media ausmacht.
@@ -275,7 +279,23 @@ appConfig.ui.colors.primary = 'sky'
         </div>
         <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
-            <span class="inline-block w-[18px] h-[18px]">🛡️</span>IT-Assistenz
+            <UIcon
+              name="i-lucide-globe"
+              class="text-sky-600 size-6"
+            />
+            Domain und E-Mail
+          </h3>
+          <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
+            Registrieren Sie Ihre Wunsch-Domain und richten Sie Ihre E-Mail-Adressen ein – direkt in der App.
+          </p>
+        </div>
+        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
+          <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
+            <UIcon
+              name="i-lucide-headset"
+              class="text-sky-600 size-6"
+            />
+            IT-Assistenz
           </h3>
           <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
             Wir stehen Ihnen persönlich zur Seite und unterstützen Sie bei technischen Fragen.
@@ -296,14 +316,6 @@ appConfig.ui.colors.primary = 'sky'
           </h3>
           <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
             Wir beraten Sie bei jedem Schritt – pragmatisch, verständlich und ohne Agentur‑Sprech.
-          </p>
-        </div>
-        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
-            <span class="inline-block w-[18px] h-[18px]">🔗</span>Alle Links an einem Ort
-          </h3>
-          <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
-            Social Media, Anzeigenportale, externe Buchungskalender oder Shops: Alles auf einen Blick
           </p>
         </div>
         <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
@@ -403,7 +415,7 @@ appConfig.ui.colors.primary = 'sky'
         Sichtbar werden ohne Website
       </h2>
       <p class="text-base sm:text-lg text-slate-600 dark:text-[#b3bfd1] mb-7">
-        Hilfe zur Selbsthilfe: Hier finden Sie nützliche Tipps und Ressourcen, wenn Sie die Dinge gerne selbst in die Hand nehmen möchten.
+        Hier finden Sie nützliche Tipps und Ressourcen, wenn Sie die Dinge gerne selbst in die Hand nehmen möchten.
         Schöpfen Sie die zahlreichen kostenlosen Möglichkeiten aus, um auch ohne eigene Website online Sichtbar zu werden und Kunden zu gewinnen.
       </p>
       <UAccordion
@@ -416,7 +428,7 @@ appConfig.ui.colors.primary = 'sky'
           trigger: 'px-4 py-3 rounded-[12px] hover:bg-black/5 text-slate-900 transition-colors dark:hover:bg-white/5 dark:text-[#e7ecf4]',
           label: 'text-[1.05rem] font-semibold',
           leadingIcon: 'text-sky-500 size-8',
-          content: 'text-slate-600 dark:text-[#b3bfd1] text-base sm:text-lg pt-4 p-4',
+          content: 'text-slate-600 dark:text-[#b3bfd1] text-base sm:text-lg',
         }"
       >
         <template #leading="{ index }">
@@ -428,50 +440,60 @@ appConfig.ui.colors.primary = 'sky'
           >✔</span>
         </template>
         <template #slot1>
-          Beim heutigen Konsumverhalten hilft es, wenn Sie in Überschriftenlänge oder maximal zwei bis drei kurzen Sätzen erklären können, was Sie anbieten, für wen und welche Vorteile Kunden bei Ihnen haben.
-          Je präziser Ihre Zielgruppe definiert ist, desto gezielter können Sie diese ansprechen.
-          Kostenlose KI-Tools wie <a
-            class="text-sky-500"
-            href="https://chat.openai.com/"
-            target="_blank"
-          >ChatGPT</a> oder <a
-            class="text-sky-500"
-            href="https://gemini.google.com"
-            target="_blank"
-          >Google Gemini</a> (oder der Solihost Assistent) können Ihnen helfen,
-          Klarheit zu gewinnen und professionelle Texte zu schreiben, z.B. für Kleinanzeigen oder Social Media Posts. Auch bei rechtlichen und steuerlichen Fragen können diese Tools eine gute erste Orientierung geben.
-          Den Steuerberater können sie aktuell aber noch nicht ersetzen.
+          <div class="p-4">
+            Beim heutigen Konsumverhalten hilft es, wenn Sie in Überschriftenlänge oder maximal zwei bis drei kurzen Sätzen erklären können, was Sie anbieten, für wen und welche Vorteile Kunden bei Ihnen haben.
+            Je präziser Ihre Zielgruppe definiert ist, desto gezielter können Sie diese ansprechen.
+            Kostenlose KI-Tools wie <a
+              class="text-sky-500"
+              href="https://chat.openai.com/"
+              target="_blank"
+            >ChatGPT</a> oder <a
+              class="text-sky-500"
+              href="https://gemini.google.com"
+              target="_blank"
+            >Google Gemini</a> (oder der Solihost Assistent) können Ihnen helfen,
+            Klarheit zu gewinnen und professionelle Texte zu schreiben, z.B. für Kleinanzeigen oder Social Media Posts. Auch bei rechtlichen und steuerlichen Fragen können diese Tools eine gute erste Orientierung geben.
+            Den Steuerberater können sie aktuell aber noch nicht ersetzen.
+          </div>
         </template>
         <template #slot2>
-          Werden Sie gefunden. Das ist ebenfalls kostenlos und wesentlich wichtiger, als eine Website, die ansonsten ohnehin kaum jemand findet, gerade am Anfang.
-          Legen Sie sich ein <a
-            class="text-sky-500"
-            href="https://accounts.google.com/signup"
-            target="_blank"
-          >Google-Konto</a> an (falls Sie noch keins haben) und schauen Sie sich eine der zahlreichen <a
-            class="text-sky-500"
-            href="https://www.youtube.com/results?search_query=google+unternehmensprofil+erstellen"
-            target="_blank"
-          >Anleitungen auf YouTube</a> an. Ein paar Klicks und fertig. Vielleicht kommt noch ein Freischaltcode per Post, den Sie bei Google eingeben müssen. Das Wichtigste ist damit aber erstmal geschafft.
+          <div class="p-4">
+            Werden Sie gefunden. Das ist ebenfalls kostenlos und wesentlich wichtiger, als eine Website, die ansonsten ohnehin kaum jemand findet, gerade am Anfang.
+            Legen Sie sich ein <a
+              class="text-sky-500"
+              href="https://accounts.google.com/signup"
+              target="_blank"
+            >Google-Konto</a> an (falls Sie noch keins haben) und schauen Sie sich eine der zahlreichen <a
+              class="text-sky-500"
+              href="https://www.youtube.com/results?search_query=google+unternehmensprofil+erstellen"
+              target="_blank"
+            >Anleitungen auf YouTube</a> an. Ein paar Klicks und fertig. Vielleicht kommt noch ein Freischaltcode per Post, den Sie bei Google eingeben müssen. Das Wichtigste ist damit aber erstmal geschafft.
+          </div>
         </template>
         <template #slot3>
-          Kleinanzeigen.de, nebenan.de, Instagram, Facebook oder TikTok – Es gibt viele kostenlose Plattformen, auf denen Sie aktiv werben und Kunden gewinnen können.
-          Nutzen Sie diese Kanäle und kommen Sie mit Ihrer Zielgruppe in Kontakt.
+          <div class="p-4">
+            Kleinanzeigen.de, nebenan.de, Instagram, Facebook oder TikTok – Es gibt viele kostenlose Plattformen, auf denen Sie aktiv werben und Kunden gewinnen können.
+            Nutzen Sie diese Kanäle und kommen Sie mit Ihrer Zielgruppe in Kontakt.
+          </div>
         </template>
         <template #slot4>
-          Bitten Sie Kunden, Ihr <a
-            class="text-sky-500"
-            href="https://support.google.com/business/answer/3474122?hl=de"
-            target="_blank"
-          >Unternehmen auf Google zu bewerten</a> oder Ihnen auf Facebook und Co. zu folgen oder auf "Gefällt mir" zu klicken.
-          Interagieren Sie mit Ihren Kunden, beantworten Sie Fragen und Kommentare und klären Sie kritische Rezensionen.
-          Sowohl für Ihre Kunden als auch für Google und Co. ist es außerdem relevant, von wo aus auf Ihre Website verlinkt wird.
-          Fragen Sie Kooperationspartner, ob Sie auf deren Websites oder Social Media Profilen verlinkt werden können.
+          <div class="p-4">
+            Bitten Sie Kunden, Ihr <a
+              class="text-sky-500"
+              href="https://support.google.com/business/answer/3474122?hl=de"
+              target="_blank"
+            >Unternehmen auf Google zu bewerten</a> oder Ihnen auf Facebook und Co. zu folgen oder auf "Gefällt mir" zu klicken.
+            Interagieren Sie mit Ihren Kunden, beantworten Sie Fragen und Kommentare und klären Sie kritische Rezensionen.
+            Sowohl für Ihre Kunden als auch für Google und Co. ist es außerdem relevant, von wo aus auf Ihre Website verlinkt wird.
+            Fragen Sie Kooperationspartner, ob Sie auf deren Websites oder Social Media Profilen verlinkt werden können.
+          </div>
         </template>
         <template #slot5>
-          Smartphones machen heutzutage gute Fotos und können diese auch gleich bearbeiten und optimieren.
-          Achten Sie ein wenig auf gute Beleuchtung und gut sichtbare Motive und sparen Sie sich den teuren Fotografen, erstmal zumindest.
-          Es spricht auch nichts gegen ein Video, wenn Sie sich damit wohlfühlen. Zeigen Sie sich und Ihre Arbeit!
+          <div class="p-4">
+            Smartphones machen heutzutage gute Fotos und können diese auch gleich bearbeiten und optimieren.
+            Achten Sie ein wenig auf gute Beleuchtung und gut sichtbare Motive und sparen Sie sich den teuren Fotografen, erstmal zumindest.
+            Es spricht auch nichts gegen ein Video, wenn Sie sich damit wohlfühlen. Zeigen Sie sich und Ihre Arbeit!
+          </div>
         </template>
       </UAccordion>
 
@@ -492,7 +514,7 @@ appConfig.ui.colors.primary = 'sky'
           trigger: 'px-4 py-3 rounded-[12px] hover:bg-black/5 text-slate-900 transition-colors dark:hover:bg-white/5 dark:text-[#e7ecf4]',
           label: 'text-[1.05rem] font-semibold',
           leadingIcon: 'text-sky-500 size-8',
-          content: 'text-slate-600 dark:text-[#b3bfd1] text-base sm:text-lg pt-4 p-4',
+          content: 'text-slate-600 dark:text-[#b3bfd1] text-base sm:text-lg',
         }"
       >
         <template #leading="{ index }">
@@ -504,70 +526,84 @@ appConfig.ui.colors.primary = 'sky'
           >✔</span>
         </template>
         <template #slot1>
-          Welche Überschrift und Beschreibung wird bei Google und Co. angezeigt?
-          Auch Messenger-Dienste wie WhatsApp oder soziale Medien zeigen eine Vorschau, wenn Sie Ihre Website teilen.
-          Achten Sie darauf, dass nicht einfach irgendein zufälliges Bild und ein Platzhaltertext angezeigt wird.
-          Eine Website hat auch immer ein kleines Icon, das in Suchergebnissen und Lesezeichen angezeigt wird.
-          Bei vielen Seiten ist das immernoch das Logo von WordPress und Co., weil vergessen wurde, es auszutauschen.
-          Auch Fehlerseiten, z.B. der berühmte 404-Fehler, sollten in Ihrem Branding erscheinen.
+          <div class="p-4">
+            Welche Überschrift und Beschreibung wird bei Google und Co. angezeigt?
+            Auch Messenger-Dienste wie WhatsApp oder soziale Medien zeigen eine Vorschau, wenn Sie Ihre Website teilen.
+            Achten Sie darauf, dass nicht einfach irgendein zufälliges Bild und ein Platzhaltertext angezeigt wird.
+            Eine Website hat auch immer ein kleines Icon, das in Suchergebnissen und Lesezeichen angezeigt wird.
+            Bei vielen Seiten ist das immernoch das Logo von WordPress und Co., weil vergessen wurde, es auszutauschen.
+            Auch Fehlerseiten, z.B. der berühmte 404-Fehler, sollten in Ihrem Branding erscheinen.
+          </div>
         </template>
         <template #slot2>
-          KI wird zunehmend in Suchmaschinen eingesetzt, um Inhalte zu analysieren und das best mögliche Ergebnis zu liefern.
-          Nutzer fragen auch immer häufiger direkt ChatGPT und Co. nach Empfehlungen für Produkte und Dienstleistungen.
-          Die KI durchforstet dann das Internet und liefert einen maßgeschneiderten Vorschlag.
-          Damit Ihre Website dabei berücksichtigt werden kann, sind einige technische Details zu beachten.
-          Es macht also Sinn, die eigene Website daraufhin zu optimieren oder zumindest die grundlegende Zugänglichkeit für KI-Tools zu gewährleisten.
+          <div class="p-4">
+            KI wird zunehmend in Suchmaschinen eingesetzt, um Inhalte zu analysieren und das best mögliche Ergebnis zu liefern.
+            Nutzer fragen auch immer häufiger direkt ChatGPT und Co. nach Empfehlungen für Produkte und Dienstleistungen.
+            Die KI durchforstet dann das Internet und liefert einen maßgeschneiderten Vorschlag.
+            Damit Ihre Website dabei berücksichtigt werden kann, sind einige technische Details zu beachten.
+            Es macht also Sinn, die eigene Website daraufhin zu optimieren oder zumindest die grundlegende Zugänglichkeit für KI-Tools zu gewährleisten.
+          </div>
         </template>
         <template #slot3>
-          Egal wie und wo Sie Ihre Website erstellen, Ihnen wird versprochen werden, dass sie auf allen Geräten gut aussieht.
-          Prüfen Sie das! Der Klassiker sind überdimensionierte Schriftgrößen und unglücklich platzierte Elemente, die das Layout sprengen.
-          Das Ergebnis von Baukastensystemen erfordert oft noch einiges an Detailarbeit.
-          Auch teure Agenturen sind hier manchmal etwas schludrig.
-          Prüfen Sie Ihre Website mindestens auf dem Smartphone und einem großen Bildschirm.
+          <div class="p-4">
+            Egal wie und wo Sie Ihre Website erstellen, Ihnen wird versprochen werden, dass sie auf allen Geräten gut aussieht.
+            Prüfen Sie das! Der Klassiker sind überdimensionierte Schriftgrößen und unglücklich platzierte Elemente, die das Layout sprengen.
+            Das Ergebnis von Baukastensystemen erfordert oft noch einiges an Detailarbeit.
+            Auch teure Agenturen sind hier manchmal etwas schludrig.
+            Prüfen Sie Ihre Website mindestens auf dem Smartphone und einem großen Bildschirm.
+          </div>
           Und auch wenn das Internet mal etwas langsamer ist, sollte Ihre Website mehr oder weniger sofort sichtbar sein.
         </template>
         <template #slot4>
-          Konzentrieren Sie sich auf klare und prägnante Angebotsseiten (sog. Landingpage), die alle wichtigen Informationen enthalten,
-          die potentielle Kunden benötigen, um eine Entscheidung zu treffen.
-          Das heißt nicht, dass Sie sämtliche Persönlichkeit weglassen sollen.
-          Vor allem nicht, wenn Sie genau das von anderen abhebt.
-          Ein kurzer "Über Mich" Abschnitt kann auch auf mehreren Seiten auftauchen, wenn es für den Lese- und Entscheidungsfluss sinnvoll ist.
+          <div class="p-4">
+            Konzentrieren Sie sich auf klare und prägnante Angebotsseiten (sog. Landingpage), die alle wichtigen Informationen enthalten,
+            die potentielle Kunden benötigen, um eine Entscheidung zu treffen.
+            Das heißt nicht, dass Sie sämtliche Persönlichkeit weglassen sollen.
+            Vor allem nicht, wenn Sie genau das von anderen abhebt.
+            Ein kurzer "Über Mich" Abschnitt kann auch auf mehreren Seiten auftauchen, wenn es für den Lese- und Entscheidungsfluss sinnvoll ist.
+          </div>
           Vermeiden Sie es nur, eine Unterseite nach der anderen zu erstellen, weil Ihnen dieses oder jenes noch einfällt.
         </template>
         <template #slot5>
-          Das kennen Sie sicher selbst. Es nervt und sorgt für längere Ladezeiten und frühzeitige Absprünge potenzieller Kunden.
-          Sie brauchen keine Cookie-Einwilligung, wenn Sie keine Cookies verwenden, die personenbezogene Daten speichern.
-          Und das tun Sie nicht, solange Sie keine Analyse-Tools wie Google Analytics nutzen, die für Ihre Zwecke völlig überdimensioniert sind.
-          Diese Tools brauchen Sie nur, wenn Sie die Umsätze durch Ihre Website perfekt optimieren wollen.
-          Es reicht auch erstmal ein anonymisierter Aufrufzähler, am besten je nach Quelle, damit Sie sehen, von wo Ihre Besucher kommen.
+          <div class="p-4">
+            Das kennen Sie sicher selbst. Es nervt und sorgt für längere Ladezeiten und frühzeitige Absprünge potenzieller Kunden.
+            Sie brauchen keine Cookie-Einwilligung, wenn Sie keine Cookies verwenden, die personenbezogene Daten speichern.
+            Und das tun Sie nicht, solange Sie keine Analyse-Tools wie Google Analytics nutzen, die für Ihre Zwecke völlig überdimensioniert sind.
+            Diese Tools brauchen Sie nur, wenn Sie die Umsätze durch Ihre Website perfekt optimieren wollen.
+            Es reicht auch erstmal ein anonymisierter Aufrufzähler, am besten je nach Quelle, damit Sie sehen, von wo Ihre Besucher kommen.
+          </div>
         </template>
         <template #slot6>
-          Eine Website braucht eine Domain, also das, was Sie in die Adresszeile des Browsers eingeben, z.B. meinefirma.de.
-          Dann können auch E-Mail-Adressen wie info@meinefirma.de eingerichtet werden.
-          Das wirkt professioneller als maxmusterman1988@gmail.com oder @gmx.de.
-          Wenn Sie die allerdings bereits auf 500 Visitenkarten gedruckt haben, dann ist das auch völlig in Ordnung.
-          Entscheidend ist Ihre Arbeit, nicht Ihre E-Mail-Adresse.
-          Sie brauchen sich jedenfalls nicht tagelang Gedanken über die perfekte Premium-Domain zu machen.
-          Es reicht eine "normale" .de Domain für maximal 1 € im Monat.
-          Eine Domain gibt man ohnehin selten manuell ein, sondern klickt auf eine Anzeige, ein Social Media Profil oder ein Suchergebniss.
+          <div class="p-4">
+            Eine Website braucht eine Domain, also das, was Sie in die Adresszeile des Browsers eingeben, z.B. meinefirma.de.
+            Dann können auch E-Mail-Adressen wie info@meinefirma.de eingerichtet werden.
+            Das wirkt professioneller als maxmusterman1988@gmail.com oder @gmx.de.
+            Wenn Sie die allerdings bereits auf 500 Visitenkarten gedruckt haben, dann ist das auch völlig in Ordnung.
+            Entscheidend ist Ihre Arbeit, nicht Ihre E-Mail-Adresse.
+            Sie brauchen sich jedenfalls nicht tagelang Gedanken über die perfekte Premium-Domain zu machen.
+            Es reicht eine "normale" .de Domain für maximal 1 € im Monat.
+            Eine Domain gibt man ohnehin selten manuell ein, sondern klickt auf eine Anzeige, ein Social Media Profil oder ein Suchergebniss.
+          </div>
         </template>
         <template #slot7>
-          Da Sie gewerblich tätig sind, ist ein Impressum Pflicht und auch um eine Datenschutzerklärung kommen Sie nicht herum.
-          Für beides gibt es online <a
-            class="text-sky-500"
-            href="https://www.e-recht24.de/impressum-generator.html"
-            target="_blank"
-          >Generatoren</a>.
-          Leider liegt der Teufel hier im Detail - wer hätte das gedacht?
-          Sie können nicht einfach ein YouTube-Video auf Ihrer Website anzeigen, ohne den Besucher um Erlaubnis zu bitten.
-          Haben Sie ein Kontaktformular? Was passiert mit den Daten, die dort eingegeben werden?
-          Sogar die verwendete Schriftart kann Auswirkungen haben, wenn Sie technisch nicht korrekt implementiert ist.
-          Viele nutzen daher vorgefertigte Lösungen, die dann haufenweise Paragraphen enthalten, die sie gar nicht betreffen und dazu führen, dass es wirklich niemand mehr liest, außer den Abmahnanwälten.
-          Dabei sollte eine Datenschutzerklärung eigentlich einen Zweck erfüllen: Vertrauen schaffen. Lesen Sie doch mal <a
-            class="text-sky-500"
-            href="/datenschutz"
-            target="_blank"
-          >unsere</a>.
+          <div class="p-4">
+            Da Sie gewerblich tätig sind, ist ein Impressum Pflicht und auch um eine Datenschutzerklärung kommen Sie nicht herum.
+            Für beides gibt es online <a
+              class="text-sky-500"
+              href="https://www.e-recht24.de/impressum-generator.html"
+              target="_blank"
+            >Generatoren</a>.
+            Leider liegt der Teufel hier im Detail - wer hätte das gedacht?
+            Sie können nicht einfach ein YouTube-Video auf Ihrer Website anzeigen, ohne den Besucher um Erlaubnis zu bitten.
+            Haben Sie ein Kontaktformular? Was passiert mit den Daten, die dort eingegeben werden?
+            Sogar die verwendete Schriftart kann Auswirkungen haben, wenn Sie technisch nicht korrekt implementiert ist.
+            Viele nutzen daher vorgefertigte Lösungen, die dann haufenweise Paragraphen enthalten, die sie gar nicht betreffen und dazu führen, dass es wirklich niemand mehr liest, außer den Abmahnanwälten.
+            Dabei sollte eine Datenschutzerklärung eigentlich einen Zweck erfüllen: Vertrauen schaffen. Lesen Sie doch mal <a
+              class="text-sky-500"
+              href="/datenschutz"
+              target="_blank"
+            >unsere</a>.
+          </div>
         </template>
       </UAccordion>
     </section>
