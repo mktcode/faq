@@ -9,13 +9,8 @@ const bodySchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  // const { user } = await requireUserSession(event)
-  // DEBUG:
-  const db = await getDatabaseConnection()
-  const user = await db.selectFrom('users').selectAll().limit(1).executeTakeFirstOrThrow()
-
-  // await requireProfileSubscription(user.userName)
-  // DEBUG END
+  const { user } = await requireUserSession(event)
+  await requireProfileSubscription(user.userName)
 
   const settings = await getSettings(user.id)
   const { userInput, responseId } = await readValidatedBody(event, body => bodySchema.parse(body))
