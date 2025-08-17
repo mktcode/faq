@@ -129,8 +129,11 @@ To update the header image, open the "Design & Kopfbereich" Section in the Menu.
 }
 
 export async function contactSupport(openai: OpenAI, customerId: string, message: string) {
-  const response = `# Mail send successfully!`
+  console.log(`Contacting support for customer ${customerId} with message: ${message}`)
 
+  await new Promise(resolve => setTimeout(resolve, 2000))
+
+  const response = `# Mail send successfully!`
   return response
 }
 
