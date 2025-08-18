@@ -6,20 +6,24 @@ const showModal = useState('showAssistantModal', () => false)
 const showAssistantTipsModal = useState('showAssistantTipsModal', () => false)
 const showAssistantContextModal = useState('showAssistantContextModal', () => false)
 const { refreshPrivateSettings } = await usePrivateSettings()
+const { settings } = await useProfile()
 
 const quota = useState('assistantQuota', () => 12)
 const userInput = ref('')
 const isGeneratingResponse = ref(false)
 const previousResponseId = ref<string | null>(null)
 const currentActivity = ref<string | null>(null)
-const messages = ref<{ role: 'user' | 'assistant', content: string }[]>([
-  // { role: 'user', content: 'Erzähle mir einen Witz.' },
-  // { role: 'assistant', content: 'Warum können Elefanten nicht Fliegen? Weil sie zu schwer sind!' },
-])
+const messages = ref<{ role: 'user' | 'assistant', content: string }[]>([])
 const messagesContainer = ref<HTMLDivElement | null>(null)
 function scrollToBottom() {
   messagesContainer.value?.scrollTo(0, messagesContainer.value.scrollHeight)
 }
+
+const showContentForm = ref(false)
+const contentFormType = ref<'offer' | 'post' | 'other'>('offer')
+const contentFormContent = ref<string>('')
+const contentFormContentId = ref<string | null>(null)
+
 
 async function generateResponse() {
   if (isGeneratingResponse.value) return
@@ -67,6 +71,12 @@ async function generateResponse() {
           if (event.item.name === 'update_company_context') {
             currentActivity.value = 'Aktualisiere Unternehmenskontext...'
           }
+          if (event.item.name === 'load_offers') {
+            currentActivity.value = 'Lade Angebote...'
+          }
+          if (event.item.name === 'render_rich_textfield') {
+            currentActivity.value = 'Bereite Textfeld vor...'
+          }
           if (event.item.name === 'ask_solihost_manual_assistant') {
             currentActivity.value = 'Lese Solihost-Handbuch...'
           }
@@ -78,6 +88,25 @@ async function generateResponse() {
           currentActivity.value = null
           messages.value.push({ role: 'assistant', content: '' })
           nextMessageIndex = messages.value.length - 1
+        }
+      }
+
+      if (event.type === 'response.output_item.done') {
+        if (event.item.type === 'function_call') {
+          if (event.item.name === 'render_rich_textfield') {
+            let functionArguments: Record<string, any> = {}
+            try {
+              functionArguments = JSON.parse(event.item.arguments)
+              console.log(functionArguments)
+            } catch (error) {
+              console.error('Error parsing arguments:', error)
+            }
+  
+            showContentForm.value = true
+            contentFormType.value = functionArguments.content_type || 'other'
+            contentFormContent.value = functionArguments.current_content || ''
+            contentFormContentId.value = functionArguments.content_id || null
+          }
         }
       }
 
@@ -227,7 +256,7 @@ async function generateResponse() {
               @click="userInput = 'Erzähle mir einen Witz über Online-Marketing.'"
             />
             <UButton
-              label="Verbessere meine Angebotstexte."
+              label="Lass uns die Angebotstexte bearbeiten."
               color="neutral"
               variant="outline"
               class="w-full"
@@ -237,7 +266,7 @@ async function generateResponse() {
               :ui="{
                 trailingIcon: 'ml-auto opacity-40',
               }"
-              @click="userInput = 'Verbessere meine Angebotstexte.'"
+              @click="userInput = 'Lass uns die Angebotstexte bearbeiten.'"
             />
             <UButton
               label="Erstelle einen Post für Social Media mit Bild."
@@ -274,6 +303,29 @@ async function generateResponse() {
 
     <template #footer>
       <div class="flex flex-col w-full">
+        <div
+          v-if="showContentForm"
+          class="w-full"
+        >
+          <UFormField
+            :label="contentFormType === 'offer' ? 'Angebot' : contentFormType === 'post' ? 'Post' : 'Textbearbeitung'"
+            :ui="{
+              label: 'px-4 pt-4'
+            }"
+          >
+            <WysiwygEditor
+              v-model="contentFormContent"
+              class="w-full rounded-none"
+              rounded="none"
+            />
+          </UFormField>
+          <div v-if="contentFormType === 'offer'" class="p-1 flex items-center gap-2 justify-end">
+            <UButton
+              :label="`Angebot ${contentFormContentId ? 'speichern' : 'erstellen'}`"
+              size="md"
+            />
+          </div>
+        </div>
         <UTextarea
           v-model="userInput"
           placeholder="Frage an den Assistenten..."
@@ -287,6 +339,11 @@ async function generateResponse() {
           }"
         />
         <div class="p-2 flex items-center gap-2">
+          <UButton
+            icon="i-lucide-camera"
+            variant="soft"
+            :disabled="isGeneratingResponse"
+          />
           <AssistantModalRecordAudio
             class="ml-auto"
             @transcript="transcript => userInput = transcript"

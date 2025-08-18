@@ -5,9 +5,13 @@ import Highlight from '@tiptap/extension-highlight'
 import TextAlign from '@tiptap/extension-text-align'
 import StarterKit from '@tiptap/starter-kit'
 
+const props = defineProps<{
+  rounded?: 'none' | 'md' | 'xl'
+}>()
+
 const model = defineModel<string | null>()
 const { settings } = await useProfile()
-const designRounded = ref(settings.value?.rounded || 'md')
+const designRounded = ref(props.rounded || settings.value?.design.rounded || 'md')
 
 const roundedClass = computed(() => {
   if (designRounded.value === 'none') {
@@ -189,7 +193,7 @@ function click(editor: Editor) {
         Highlight
       </WysiwygEditorButton>
     </div>
-    <EditorContent :editor="editor" />
+    <EditorContent :editor="editor" class="max-h-80 overflow-auto" />
   </div>
 </template>
 

@@ -5,6 +5,7 @@ import z from 'zod'
 
 const bodySchema = z.object({
   userInput: z.string().min(1, 'Die Eingabe darf nicht leer sein.'),
+  currentOfferIndex: z.number().min(0, 'Der Angebotsindex muss eine positive Zahl sein.').optional(),
   responseId: z.string().optional(),
 })
 

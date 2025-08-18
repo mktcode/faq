@@ -285,7 +285,7 @@ Font: ${settings.public.design.font}`,
 * Each marketing text should be concise (no more than 100 words) and focus on the key benefits of the offering.
 * Titles should be attention-grabbing, professional, and relevant to the offering.
 * If insufficient information is provided, write at least one generic marketing text suitable for a small business in the given industry.
-* You may use simple HTML markup without any attributes. Allowed tags are: <p>, <strong>, <em>, <u>, <mark>, <ul>, <ol>, and <li>.`,
+* You may use simple HTML markup without any attributes. Allowed tags are <p>, <strong>, <em>, <u>, <mark>, <ul>, <ol>, and <li>.`,
     input: [
       {
         role: 'user',
