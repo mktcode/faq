@@ -84,7 +84,7 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
       <UFormField
         label="Firmenname"
         class="flex-1"
-        help="Ihr Vor- und Nachname oder das, was Sie in der Gewerbeanmeldung eingetragen haben."
+        help="Ihr Vor- und Nachname bzw. das, was Sie in der Gewerbeanmeldung eingetragen haben."
       >
         <UInput
           v-model="settings.public.company.name"
@@ -104,13 +104,24 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
     <UFormField
       label="Über Ihr Unternehmen"
       hint="(optional)"
-      help="Beschreiben Sie Ihr Unternehmen stichpunktartig oder in zwei, drei Sätzen. Was bieten Sie an? Was macht Sie besonders? Wer ist Ihre Zielgruppe?"
+      help="Was bieten Sie an? Wer ist Ihre Zielgruppe? Beschreiben Sie Ihr Unternehmen stichpunktartig oder in zwei bis drei kurzen Sätzen, über Ihre Tastatur oder per Spracheingabe."
     >
       <UTextarea
         v-model="settings.private.assistant.context"
         label="Informationen"
         class="w-full"
+        autoresize
+        :rows="3"
+        :maxrows="10"
+        :ui="{
+          base: 'rounded-b-none',
+        }"
       />
+      <div class="flex justify-end bg-gray-100 p-1 rounded-lg rounded-t-none">
+        <RegisterRecordAudio
+          @transcript="transcript => settings.private.assistant.context = settings.private.assistant.context + transcript"
+        />
+      </div>
     </UFormField>
     <USwitch
       v-model="settings.public.company.isSmallBusiness"
