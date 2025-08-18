@@ -252,7 +252,10 @@ appConfig.ui.colors.primary = 'sky'
           <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:border before:border-black/10 dark:before:border-white/10 before:text-slate-900 dark:before:text-white before:font-bold flex items-center">
             Website launchen
           </h3>
-          <p>Technisch sauber, mobil schnell, rechtssicher. Ihr Auftritt wird zur zentralen Anlaufstelle für Social-Media, Buchung &amp; Kontakt.</p>
+          <p>
+            Sauber umgesetzt, modern und vollständig, inkl. Impressum und Datenschutzerklärung.
+            Ihr Auftritt wird zur zentralen Anlaufstelle für Social-Media, Buchung &amp; Kontakt.
+          </p>
         </div>
       </div>
     </section>
