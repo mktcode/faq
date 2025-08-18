@@ -4,6 +4,14 @@ import type { H3Event } from 'h3'
 import { settingsFormSchema, type SettingsForm } from '~/types/db'
 import z from 'zod'
 
+function computeSlug(title: string) {
+  return title.toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w-]+/g, '')
+    .replace(/--+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
 export function makeUsername(name: string): string {
   // TODO: check for uniqueness in the database
   return name
@@ -206,7 +214,8 @@ export async function prefillSettings(settings: SettingsForm): Promise<SettingsF
     apiKey: openaiApiKey,
   })
 
-  const prefillSchema = z.object({
+  // Design
+  const designPrefillSchema = z.object({
     primary_color: z.string(),
     title: z.string(),
     title_color: z.string(),
@@ -218,7 +227,7 @@ export async function prefillSettings(settings: SettingsForm): Promise<SettingsF
     }),
   })
 
-  const response = await openai.responses.parse({
+  const designResponse = await openai.responses.parse({
     model: 'gpt-5-mini',
     instructions: `You’ll receive only minimal information about the company and its design preferences. Your task is to propose a modern website header and complete all required fields.
 
@@ -238,25 +247,66 @@ Font: ${settings.public.design.font}`,
       },
     ],
     text: {
-      format: zodTextFormat(prefillSchema, 'header_settings'),
+      format: zodTextFormat(designPrefillSchema, 'header_settings'),
     },
   })
 
-  const prefill = response.output_parsed
+  const designPrefill = designResponse.output_parsed
 
-  if (prefill) {
-    settings.public.design.color = prefill.primary_color
+  if (designPrefill) {
+    settings.public.design.color = designPrefill.primary_color
     settings.public.header = {
       ...settings.public.header,
-      title: prefill.title,
-      titleColor: prefill.title_color,
-      description: prefill.subtitle,
-      descriptionColor: prefill.subtitle_color,
+      title: designPrefill.title,
+      titleColor: designPrefill.title_color,
+      description: designPrefill.subtitle,
+      descriptionColor: designPrefill.subtitle_color,
       imageOverlay: {
-        color: prefill.background.color,
-        opacity: prefill.background.opacity,
+        color: designPrefill.background.color,
+        opacity: designPrefill.background.opacity,
       },
     }
+  }
+
+  // Offers
+  const offersPrefillSchema = z.object({
+    offers: z.array(z.object({
+      title: z.string(),
+      description: z.string(),
+    })),
+  })
+
+  const offersResponse = await openai.responses.parse({
+    model: 'gpt-5-mini',
+    instructions: `Your task is to create compelling marketing copy that highlights the unique selling points of the company's offerings.
+
+* Based on the company details provided below, create up to three marketing texts for the company's offerings on their website.
+* Each marketing text should be concise (no more than 100 words) and focus on the key benefits of the offering.
+* Titles should be attention-grabbing, professional, and relevant to the offering.
+* If insufficient information is provided, write at least one generic marketing text suitable for a small business in the given industry.
+* You may use simple HTML markup without any attributes. Allowed tags are: <p>, <strong>, <em>, <u>, <mark>, <ul>, <ol>, and <li>.`,
+    input: [
+      {
+        role: 'user',
+        content: `Company Name: ${settings.public.company.name}
+Small Business: ${settings.public.company.isSmallBusiness ? 'Yes' : 'No'}
+City: ${settings.public.company.city}
+About: ${settings.private.assistant.context}`,
+      },
+    ],
+    text: {
+      format: zodTextFormat(offersPrefillSchema, 'offers'),
+    },
+  })
+
+  const offersPrefill = offersResponse.output_parsed
+
+  if (offersPrefill) {
+    settings.public.components.offers.items = offersPrefill.offers.map((offer) => ({
+      title: offer.title,
+      description: offer.description,
+      slug: computeSlug(offer.title),
+    }))
   }
 
   return settings
