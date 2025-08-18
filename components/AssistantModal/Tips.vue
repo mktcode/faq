@@ -46,6 +46,13 @@ const showModal = useState('showAssistantTipsModal', () => false)
         Auf einem Windows-PC drücken Sie <UKbd value="win" /> + <UKbd value="shift" /> + <UKbd value="s" />, auf einem Mac <UKbd value="shift" /> + <UKbd value="command" /> + <UKbd value="4" />
         und auf dem Smartphone meist die Leiser-Taste + Ein-/Ausschalt-Taste.
       </div>
+
+      <div>
+        <strong>Gesprächsverlauf</strong><br>
+        Starten Sie regelmäßig eine neue Unterhaltung, damit der Assistent nicht durch alte Informationen abgelenkt wird.
+        In einem einzelnen Gesprächsverlauf werden ältere Nachrichten außerdem irgendwann nur noch zusammengefasst gespeichert.
+        Die grundlegenden Informationen über Ihr Unternehmen und Ihre zusätzlichen Kontextinformationen hat der Assistent in jedem Gespräch "auf dem Schirm".
+      </div>
     </template>
   </USlideover>
 </template>
