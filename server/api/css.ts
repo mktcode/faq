@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
   const { userName } = await getValidatedQuery(event, query => querySchema.parse(query))
   const settings = await getPublicSettings(userName)
 
-  const match = settings.design.color.match(/hsl\(\s*([\d.]+)\s+([\d.]+)%\s+([\d.]+)%\s*\)/)
+  const match = settings.design.color.match(/hsl\(\s*([\d.]+),?\s+([\d.]+)%,?\s+([\d.]+)%\s*\)/)
 
   if (!match) {
     return '/* Invalid HSL color format */'
