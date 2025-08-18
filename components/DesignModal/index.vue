@@ -26,6 +26,10 @@ const uploadHeaderImage = async (files: FileList | null) => {
 
     settings.value.header.image = imageUrls[0] || ''
 
+    if (settings.value.header.imageOverlay.opacity > 90) {
+      settings.value.header.imageOverlay.opacity = 90
+    }
+
     await saveSettings()
 
     // Clear the input to allow selecting the same file again
@@ -54,6 +58,10 @@ const uploadHeaderVideo = async (files: FileList | null) => {
     })
 
     settings.value.header.video = videoUrl || ''
+
+    if (settings.value.header.imageOverlay.opacity > 90) {
+      settings.value.header.imageOverlay.opacity = 90
+    }
 
     await saveSettings()
 
