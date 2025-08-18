@@ -77,7 +77,7 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
           name="i-lucide-loader-2"
           class="animate-spin size-10 text-sky-500 mb-2"
         />
-        <span>Ihre Website wird eingerichtet...</span>
+        <span>Ihre Website wird eingerichtet. Das kann einen Moment dauern...</span>
       </div>
     </Transition>
     <div class="flex gap-4">
