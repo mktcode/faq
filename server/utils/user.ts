@@ -219,8 +219,8 @@ export async function prefillSettings(settings: SettingsForm): Promise<SettingsF
     primary_color: z.string(),
     title: z.string(),
     title_color: z.string(),
-    subtitle: z.string(),
-    subtitle_color: z.string(),
+    tagline: z.string(),
+    tagline_color: z.string(),
     background: z.object({
       color: z.string(),
       opacity: z.number().min(0).max(100),
@@ -233,7 +233,8 @@ export async function prefillSettings(settings: SettingsForm): Promise<SettingsF
 
 * Use HSL notation for all colors, matching the format used for the primary color.
 * Adjust the primary color only if necessary—for example, if it’s too bright and hurts readability.
-* Choose colors and a background opacity (0–100) that are visually appealing and provide strong contrast.`,
+* Choose colors and a background opacity (0–100) that are visually appealing and provide strong contrast.
+* The tagline should be a short, professional slogan that sits under the company name. It must not include product details, prices, promotions, or specific offers — only a concise reflection of the company's mission and values.`,
     input: [
       {
         role: 'user',
@@ -259,8 +260,8 @@ Font: ${settings.public.design.font}`,
       ...settings.public.header,
       title: designPrefill.title,
       titleColor: designPrefill.title_color,
-      description: designPrefill.subtitle,
-      descriptionColor: designPrefill.subtitle_color,
+      description: designPrefill.tagline,
+      descriptionColor: designPrefill.tagline_color,
       imageOverlay: {
         color: designPrefill.background.color,
         opacity: designPrefill.background.opacity,
