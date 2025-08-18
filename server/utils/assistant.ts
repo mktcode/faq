@@ -62,7 +62,7 @@ export async function updateCompanyContext(openai: OpenAI, userId: number, updat
   const settings = await getSettings(userId)
 
   const response = await openai.responses.create({
-    model: 'gpt-5-nano',
+    model: 'gpt-5-mini',
     instructions: `You maintain a comprehensive company context document in German language. Integrate any provided updates into the most recent version of the company context.
 
 Return only the complete, updated company context, preserving the original structure and formatting. Avoid comments, introductions, or unrelated content; provide only the revised company context for direct copy-paste use.
