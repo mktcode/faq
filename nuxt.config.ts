@@ -66,9 +66,9 @@ export default defineNuxtConfig({
     '/**': {
       headers: {
         'Content-Security-Policy': [
-          'connect-src \'self\' https://api.stripe.com',
-          'frame-src \'self\' https://*.js.stripe.com https://js.stripe.com https://hooks.stripe.com',
-          'script-src \'self\' \'unsafe-inline\' https://*.js.stripe.com https://js.stripe.com',
+          'connect-src \'self\' https://api.stripe.com https://chat.markus-kottlaender.de',
+          'frame-src \'self\' https://*.js.stripe.com https://js.stripe.com https://hooks.stripe.com https://chat.markus-kottlaender.de',
+          'script-src \'self\' \'unsafe-inline\' https://*.js.stripe.com https://js.stripe.com https://chat.markus-kottlaender.de',
         ].join('; '),
       },
     },

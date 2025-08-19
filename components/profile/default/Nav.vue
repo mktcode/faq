@@ -40,6 +40,7 @@ async function signOut() {
       size: 'md',
     }"
     :ui="{
+      wrapper: 'z-40',
       body: '!p-0',
       overlay: 'backdrop-blur-xs',
       footer: 'justify-between',

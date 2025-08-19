@@ -12,6 +12,16 @@ const canonicalUrl = computed(() => {
   return `${domain}${path}`
 })
 
+const extraScripts = []
+
+if (me.value) {
+  extraScripts.push({
+    src: '/chatwoot.js',
+    defer: true,
+    async: true,
+  })
+}
+
 useHead({
   title: settings.value.meta.title || settings.value.header.title || settings.value.company.name || 'Solihost Website',
   meta: [
@@ -43,6 +53,7 @@ useHead({
       href: `/api/css?userName=${username.value}`,
     },
   ],
+  script: extraScripts,
 })
 </script>
 

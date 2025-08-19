@@ -65,3 +65,7 @@ mark {
     transform: translateY(0);
   }
 }
+
+#cw-bubble-holder {
+  @apply z-0 absolute;
+}
