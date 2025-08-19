@@ -10,6 +10,7 @@ const isDomainValid = computed(() => /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-
 const isCheckingDomain = ref(false)
 const isAvailable = ref(false)
 const isTyping = ref(false)
+const customerHasConfirmedDomain = ref(false)
 
 async function checkDomainAvailability() {
   isCheckingDomain.value = true
@@ -49,6 +50,7 @@ async function registerDomain() {
       method: 'POST',
       body: { domain: newDomain.value + '.de' },
     })
+    await new Promise(resolve => setTimeout(resolve, 3000))
   }
   catch (error) {
     console.error('Error registering domain:', error)
@@ -68,11 +70,13 @@ async function registerDomain() {
           placeholder="ihre-domain"
           class="w-full"
           size="xxl"
+          :disabled="isCheckingDomain || isRegisteringDomain"
         />
         <UBadge
           label=".de"
           color="neutral"
           variant="soft"
+          size="xl"
           :ui="{
             base: 'px-4',
           }"
@@ -111,9 +115,16 @@ async function registerDomain() {
         />
       </UButtonGroup>
     </UFormField>
+    <USwitch
+      v-if="isDomainValid && !isCheckingDomain && isAvailable && newDomain && !isTyping"
+      v-model="customerHasConfirmedDomain"
+      label="Ja, ich möchte diese Domain registrieren und mit meiner Solihost-Website verbinden."
+      :disabled="isRegisteringDomain"
+    />
     <UButton
       label="Domain registrieren"
-      :disabled="!isDomainValid || isCheckingDomain || !isAvailable"
+      :disabled="!isDomainValid || isCheckingDomain || isRegisteringDomain || !isAvailable || !customerHasConfirmedDomain"
+      :loading="isRegisteringDomain"
       @click="registerDomain"
     />
   </div>

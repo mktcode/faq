@@ -23,7 +23,7 @@ async function checkDns() {
 }
 
 async function updateDomain() {
-  const { success } = await $fetch('/api/user/updateDomain', {
+  const { success } = await $fetch('/api/user/updateExternalDomain', {
     method: 'POST',
     body: { domain: existingDomain.value },
   })
@@ -108,7 +108,7 @@ watchDebounced(existingDomain, checkDns, { debounce: 750 })
         icon="i-lucide-headset"
       >
         <template #description>
-          Sie können uns jederzeit unter <strong>support@solihost.de</strong> oder telefonisch unter <strong>0176 70 86 46 27</strong> erreichen.
+          Sie können uns jederzeit unter <strong>support@solihost.de</strong> oder über den Live-Chat unten rechts auf Ihrer Website erreichen.
         </template>
       </UAlert>
     </template>

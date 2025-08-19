@@ -6,7 +6,8 @@ const bodySchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  await requireUserSession(event)
+  const { user } = await requireUserSession(event)
+  const db = await getDatabaseConnection()
   const { domain } = await readValidatedBody(event, body => bodySchema.parse(body))
 
   const domainAvailability = await checkDomainAvailability(domain)
@@ -16,6 +17,12 @@ export default defineEventHandler(async (event) => {
   }
 
   // const id = await registerDomain(domain)
+
+  await db
+    .updateTable('users')
+    .set({ domain, domainIsExternal: false })
+    .where('id', '=', user.id)
+    .execute()
 
   return { success: true }
 })

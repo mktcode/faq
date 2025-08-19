@@ -9,6 +9,7 @@ export interface UsersTable {
   emailConfirmationToken: string | null
   published: boolean
   domain: string | null
+  domainIsExternal: boolean
   stripeCustomerId: string | null
   lastPaidAt: ColumnType<Date | null, Date | null, Date | null>
   settings: string

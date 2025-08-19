@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
 
   await db
     .updateTable('users')
-    .set({ domain })
+    .set({ domain, domainIsExternal: true })
     .where('id', '=', user.id)
     .execute()
 
