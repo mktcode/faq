@@ -41,6 +41,7 @@ export default defineNuxtConfig({
     stripeApiSecretKey: process.env.STRIPE_API_SECRET_KEY,
     stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
     stripePriceId: process.env.STRIPE_PRICE_ID,
+    hetznerApiKey: process.env.HETZNER_API_KEY,
     session: {
       password: process.env.SESSION_PASSWORD || '',
       cookie: {
