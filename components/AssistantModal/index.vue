@@ -6,7 +6,6 @@ const showModal = useState('showAssistantModal', () => false)
 const showAssistantTipsModal = useState('showAssistantTipsModal', () => false)
 const showAssistantContextModal = useState('showAssistantContextModal', () => false)
 const { refreshPrivateSettings } = await usePrivateSettings()
-const { settings } = await useProfile()
 
 const quota = useState('assistantQuota', () => 12)
 const userInput = ref('')
