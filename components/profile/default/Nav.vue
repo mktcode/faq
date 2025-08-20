@@ -10,6 +10,7 @@ const showDesignModal = useState('showDesignModal', () => false)
 const showContentModal = useState('showContentModal', () => false)
 const showFeedbackModal = useState('showFeedbackModal', () => false)
 const showAssistantModal = useState('showAssistantModal', () => false)
+const showAssistantResearchModal = useState('showAssistantResearchModal', () => false)
 
 function closeAndOpenDesign() {
   showMenu.value = false
@@ -104,7 +105,7 @@ async function signOut() {
         variant="ghost"
         color="neutral"
         :disabled="!isSubscribed"
-        @click="showAssistantModal = true"
+        @click="showAssistantResearchModal = true"
       >
         <template #trailing>
           <UBadge
@@ -155,6 +156,7 @@ async function signOut() {
       </UButton>
 
       <AssistantModal />
+      <AssistantModalResearch />
       <SettingsModal @update="refreshSettings" />
     </template>
 
