@@ -1,4 +1,4 @@
-export default function useAudioRecorder() {
+export default function useAudioRecorder(maxBars: number = 20) {
   const transcript = ref<string | null>(null)
   const mediaRecorder = ref<MediaRecorder | null>(null)
   const audioChunks = ref<Blob[]>([])
@@ -8,8 +8,8 @@ export default function useAudioRecorder() {
   const analyser = ref<AnalyserNode | null>(null)
   const animationFrame = ref<number | null>(null)
   const volumeLevel = ref(0)
-  const volumeHistory = ref<number[]>([])
-  const maxBars = 20
+  const initialHistory = Array(maxBars).fill(0)
+  const volumeHistory = ref<number[]>(initialHistory)
 
   let frameCounter = 0
   const updateInterval = 5
@@ -48,7 +48,7 @@ export default function useAudioRecorder() {
       animationFrame.value = null
     }
     volumeLevel.value = 0
-    volumeHistory.value = []
+    volumeHistory.value = initialHistory
     frameCounter = 0
 
     if (audioContext.value && audioContext.value.state !== 'closed') {

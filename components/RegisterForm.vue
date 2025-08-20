@@ -6,6 +6,7 @@ const { register } = useWebAuthn({ registerEndpoint: '/api/webauthn/register' })
 const { fetch: fetchUserSession } = useUserSession()
 const { appHost } = useRuntimeConfig().public
 const toast = useToast()
+const route = useRoute()
 
 const userName = ref('')
 const userNameAvailable = ref(true)
@@ -13,6 +14,9 @@ const checkingUserNameAvailability = ref(false)
 const isRegistering = ref(false)
 
 const settings = ref(defaultSettings)
+if (typeof route.query.context === 'string') {
+  settings.value.private.assistant.context = route.query.context
+}
 
 function sanitizeUserName(name: string) {
   userName.value = name.toLowerCase().replace(/[^a-z]/g, '')
@@ -119,7 +123,7 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
       />
       <div class="flex justify-end bg-gray-100 p-1 rounded-lg rounded-t-none">
         <RegisterRecordAudio
-          @transcript="transcript => settings.private.assistant.context = settings.private.assistant.context + transcript"
+          @transcript="transcript => settings.private.assistant.context = (settings.private.assistant.context || '') + transcript"
         />
       </div>
     </UFormField>

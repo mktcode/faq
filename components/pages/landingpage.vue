@@ -5,6 +5,8 @@ const appConfig = useAppConfig()
 const { public: { appHost } } = useRuntimeConfig()
 const { me } = await useMe()
 
+const companyContext = ref('')
+
 // Lightweight color mode just for this page (no Nuxt color mode)
 const colorMode = ref<'dark' | 'light'>('dark')
 if (import.meta.client) {
@@ -51,46 +53,6 @@ watch(acc1active, (newVal) => {
   if (newVal) {
     if (!acc1ItemsOpened.value.includes(newVal)) {
       acc1ItemsOpened.value.push(newVal)
-    }
-  }
-})
-
-const acc2items = ref<AccordionItem[]>([
-  {
-    label: 'Der erste Eindruck: Suchmaschinen und soziale Medien',
-    slot: 'slot1',
-  },
-  {
-    label: 'Künstliche Intelligenz: Gekommen um zu bleiben',
-    slot: 'slot2',
-  },
-  {
-    label: 'Mobiloptimierung: Ein guter Eindruck auf allen Geräten',
-    slot: 'slot3',
-  },
-  {
-    label: 'Weniger ist mehr: Klare Angebote statt zu vieler Unterseiten',
-    slot: 'slot4',
-  },
-  {
-    label: 'Cookie Einwilligung: Brauchen Sie NICHT!',
-    slot: 'slot5',
-  },
-  {
-    label: 'Domain und E-Mail: Ihr digitaler Grundbesitz',
-    slot: 'slot6',
-  },
-  {
-    label: 'Rechtliches: Impressum und Datenschutz',
-    slot: 'slot7',
-  },
-])
-const acc2active = ref<string | undefined>(undefined)
-const acc2ItemsOpened = ref<string[]>([])
-watch(acc2active, (newVal) => {
-  if (newVal) {
-    if (!acc2ItemsOpened.value.includes(newVal)) {
-      acc2ItemsOpened.value.push(newVal)
     }
   }
 })
@@ -223,7 +185,7 @@ appConfig.ui.colors.primary = 'sky'
       </h2>
       <div class="grid md:grid-cols-3 grid-cols-1 gap-[18px]">
         <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <h3 class="flex items-center gap-2 mb-2 text-[1.05rem]">
+          <h3 class="flex items-center gap-2 mb-3 text-[1.05rem]">
             <UIcon
               name="i-heroicons-computer-desktop"
               class="text-sky-600 size-6"
@@ -235,7 +197,7 @@ appConfig.ui.colors.primary = 'sky'
           </p>
         </div>
         <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <h3 class="flex items-center gap-2 mb-2 text-[1.05rem]">
+          <h3 class="flex items-center gap-2 mb-3 text-[1.05rem]">
             <UIcon
               name="i-lucide-at-sign"
               class="text-sky-600 size-6"
@@ -247,7 +209,7 @@ appConfig.ui.colors.primary = 'sky'
           </p>
         </div>
         <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <h3 class="flex items-center gap-2 mb-2 text-[1.05rem]">
+          <h3 class="flex items-center gap-2 mb-3 text-[1.05rem]">
             <UIcon
               name="i-lucide-headset"
               class="text-sky-600 size-6"
@@ -286,13 +248,6 @@ appConfig.ui.colors.primary = 'sky'
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Nutzbar mit vorhandener Domain
             </li>
           </ul>
-          <a
-            class="mt-6 w-full inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-sky-500/80 hover:bg-sky-500 border border-sky-300/40 text-white transition duration-200"
-            :href="me ? `https://${me.userName}.${appHost}` : '/register'"
-          >
-            Kostenlose Website erstellen
-            <UIcon name="i-heroicons-arrow-right" class="ml-auto" />
-          </a>
         </div>
         <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Premium</span>
@@ -319,10 +274,29 @@ appConfig.ui.colors.primary = 'sky'
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Monatlich kündbar, per Klick
             </li>
           </ul>
-          <a
-            class="mt-6 w-full inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-slate-900/10 bg-white/10 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
-            href="/login"
-          >Anmelden zum Abonnieren</a>
+        </div>
+        <div class="col-span-2 border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
+          <div class="flex items-end gap-1 mt-3 mb-6">
+            <span class="text-[38px] font-extrabold leading-none">Erzählen Sie von sich</span>
+          </div>
+          <p class="text-slate-600 dark:text-[#b3bfd1] mb-3">
+            Wer ist Ihre Zielgruppe und was bieten Sie an? Was macht Sie besonders?
+            Erzählen Sie in Stichpunkten oder ganz natürlich per Sprachaufnahme von Ihrem Unternehmen. Seien Sie so ausführlich, wie Sie möchten. Wir bekommen dadurch einen ersten Eindruck und Ihre Website wird gleich mit passenden Inhalten gefüllt.
+          </p>
+          <textarea
+            v-model="companyContext"
+            class="w-full h-[200px] ring-sky-600 focus:ring-3 outline-0 rounded-[12px] p-4 bg-gray-100 dark:bg-[#0b1020] text-slate-900 dark:text-[#e7ecf4]"
+          ></textarea>
+          <div class="flex flex-col sm:flex-row justify-between gap-4 mt-4">
+            <LandingpageRecordAudio @transcript="companyContext = (companyContext || '') + $event" />
+            <a
+              class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-sky-500/80 hover:bg-sky-500 border border-sky-300/40 text-white transition duration-200"
+              :href="me ? `https://${me.userName}.${appHost}` : `/register?context=${encodeURIComponent(companyContext)}`"
+            >
+              Kostenlose Website erstellen
+              <UIcon name="i-heroicons-arrow-right" class="ml-auto" />
+            </a>
+          </div>
         </div>
       </div>
     </section>
