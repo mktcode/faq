@@ -46,6 +46,10 @@ const acc1items = ref<AccordionItem[]>([
     label: 'Zeigen Sie sich: Bilder sagen mehr als tausend Worte.',
     slot: 'slot5',
   },
+  {
+    label: 'Rechtliches: Impressum und Datenschutzerklärung',
+    slot: 'slot6',
+  },
 ])
 const acc1active = ref<string | undefined>(undefined)
 const acc1ItemsOpened = ref<string[]>([])
@@ -380,6 +384,26 @@ appConfig.ui.colors.primary = 'sky'
             Smartphones machen heutzutage gute Fotos und können diese auch gleich bearbeiten und optimieren.
             Achten Sie ein wenig auf gute Beleuchtung und gut sichtbare Motive und sparen Sie sich den teuren Fotografen, erstmal zumindest.
             Es spricht auch nichts gegen ein Video, wenn Sie sich damit wohlfühlen. Zeigen Sie sich und Ihre Arbeit!
+          </div>
+        </template>
+        <template #slot6>
+          <div class="p-4">
+            Da Sie gewerblich tätig sind, ist ein Impressum Pflicht und auch um eine Datenschutzerklärung kommen Sie nicht herum.
+            Für beides gibt es online <a
+              class="text-sky-500"
+              href="https://www.e-recht24.de/impressum-generator.html"
+              target="_blank"
+            >Generatoren</a>.
+            Leider liegt der Teufel hier im Detail - wer hätte das gedacht?
+            Sie können nicht einfach ein YouTube-Video auf Ihrer Website anzeigen, ohne den Besucher um Erlaubnis zu bitten.
+            Haben Sie ein Kontaktformular? Was passiert mit den Daten, die dort eingegeben werden?
+            Sogar die verwendete Schriftart kann Auswirkungen haben, wenn Sie technisch nicht korrekt implementiert ist.
+            Viele nutzen daher vorgefertigte Lösungen, die dann haufenweise Paragraphen enthalten, die sie gar nicht betreffen und dazu führen, dass es wirklich niemand mehr liest, außer den Abmahnanwälten.
+            Dabei sollte eine Datenschutzerklärung eigentlich einen Zweck erfüllen: Vertrauen schaffen. Lesen Sie doch mal <a
+              class="text-sky-500"
+              href="/datenschutz"
+              target="_blank"
+            >unsere</a>.
           </div>
         </template>
       </UAccordion>
