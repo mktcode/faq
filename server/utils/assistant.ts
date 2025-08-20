@@ -352,7 +352,7 @@ Your mission: simplify complex topics into logical steps and deliver **clear, be
 
 # Instructions
 - Understand the user’s topic, goal, and how much detail they want.
-- Break the topic into 2 - 3 logical sub-questions or research steps.
+- Break the topic into 3 - 7 logical sub-questions or research steps.
 - Research and answer each sub-question **step by step** (one at a time), presenting the findings before moving on.
 - Summarize each answer in **plain, non-technical language**.
 - After all sub-questions are answered, combine the results into a clear, practical final synthesis.
@@ -374,7 +374,7 @@ Your mission: simplify complex topics into logical steps and deliver **clear, be
 - Do **not** disclose internal reasoning to the user.
 
 # Output Format
-- Use tables and numbered or bulleted lists for clarity where helpful.
+- Use markdown tables and numbered or bulleted lists only when necessary or appropriate.
 - Write in **plain, everyday language** suitable for non-technical readers.
 - Always include short source notes for web findings.
 
@@ -503,51 +503,46 @@ export async function* streamResearchResponse(
         content: `Now work on step ${index + 1}: ${step}`,
       })
 
-      console.log('stepMessages', stepMessages)
-
-      const stepResponse = await openai.responses.create({
-        stream: true,
-        previous_response_id: lastResponseId,
-        model: 'gpt-5-mini',
-        input: stepMessages,
-        reasoning: {
-          effort: 'minimal',
-        },
-        text: {
-          verbosity: 'low',
-        },
-        metadata: {
-          step: index.toString(),
-        },
-        tool_choice: {
-          type: 'web_search_preview',
-        },
-        tools: [
-          {
-            type: 'web_search_preview',
-            search_context_size: "medium",
-            user_location: {
-              type: 'approximate',
-              country: 'DE',
-              city: settings.public.company.city || undefined,
-            },
+      try {
+        const stepResponse = await openai.responses.create({
+          stream: true,
+          previous_response_id: lastResponseId,
+          model: 'gpt-5-mini',
+          input: stepMessages,
+          reasoning: {
+            effort: 'low',
           },
-        ]
-      })
+          text: {
+            verbosity: 'low',
+          },
+          metadata: {
+            step: index.toString(),
+          },
+          tools: [
+            {
+              type: 'web_search_preview',
+              search_context_size: "medium",
+              user_location: {
+                type: 'approximate',
+                country: 'DE',
+                city: settings.public.company.city || undefined,
+              },
+            },
+          ]
+        })
 
-      console.log('stepResponse', stepResponse)
-
-      for await (const event of stepResponse) {
-        console.log(event.type)
-        if (event.type === 'response.completed') {
-          lastResponseId = event.response.id
+        for await (const event of stepResponse) {
+          if (event.type === 'response.completed') {
+            lastResponseId = event.response.id
+          }
+          
+          yield event
         }
-        
-        yield event
+      }
+      catch (error) {
+        console.error('Error processing step response:', error)
       }
     }
-
-    console.log('Writing final synthesis...')
 
     const finalResponse = await openai.responses.create({
       stream: true,
@@ -555,7 +550,33 @@ export async function* streamResearchResponse(
       model: 'gpt-5-mini',
       input: [{
         role: 'developer',
-        content: `Now synthesize the results of the research steps into a clear, actionable summary for the user. Use markdown to format your response and do not forget to include sources.`,
+        content: `Now synthesize a comprehensive report following the template below. Replace [placeholders] with actual values. Use markdown tables for monetary and statistical data. Write in German:
+
+## [A brief version of the original question]
+
+### [A brief title for step 1]
+
+[A brief summary of the findings for step 1]
+
+### [A brief title for step 2]
+
+[A brief summary of the findings for step 2]
+
+[Repeat for each step/sub-question]
+
+## [A brief informative headline for the final report]
+
+[The final synthesis of findings across all steps, highlighting key insights in alignment with the user's original question and purpose]
+
+---
+
+### Handlungsempfehlungen
+
+[A list of actionable recommendations based on the findings]
+
+### Quellen und Ressourcen
+
+[A full list of sources used, deeplinks formatted as markdown links with descriptive labels]`,
       }],
       reasoning: {
         effort: 'minimal',

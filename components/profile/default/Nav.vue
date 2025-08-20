@@ -99,7 +99,7 @@ async function signOut() {
       </div>
 
       <UButton
-        label="Recherche"
+        label="Suche und Recherche"
         icon="i-lucide-search"
         class="w-full rounded-none p-4 border-y border-gray-200"
         variant="ghost"
@@ -123,13 +123,18 @@ async function signOut() {
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
-        :disabled="!isSubscribed"
-        @click="showAssistantModal = true"
+        disabled
       >
         <template #trailing>
           <UBadge
             v-if="!isSubscribed"
             label="Premium"
+            variant="outline"
+            class="ml-auto"
+          />
+          <UBadge
+            v-else
+            label="In Arbeit"
             variant="outline"
             class="ml-auto"
           />
@@ -142,13 +147,18 @@ async function signOut() {
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
-        :disabled="!isSubscribed"
-        @click="showAssistantModal = true"
+        disabled
       >
         <template #trailing>
           <UBadge
             v-if="!isSubscribed"
             label="Premium"
+            variant="outline"
+            class="ml-auto"
+          />
+          <UBadge
+            v-else
+            label="In Arbeit"
             variant="outline"
             class="ml-auto"
           />

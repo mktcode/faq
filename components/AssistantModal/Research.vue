@@ -21,15 +21,11 @@ const isGeneratingResponse = ref(false)
 const currentActivity = ref<string | null>(null)
 const report = ref('')
 const reportContainer = ref<HTMLDivElement | null>(null)
-function scrollToBottom() {
-  reportContainer.value?.scrollTo(0, reportContainer.value.scrollHeight)
-}
 
 async function generateResponse() {
   if (isGeneratingResponse.value) return
   isGeneratingResponse.value = true
   currentActivity.value = 'Lese Rechercheauftrag...'
-  scrollToBottom()
 
   try {
     const responseStream = await fetch('/api/user/assistant/research', {
@@ -53,14 +49,16 @@ async function generateResponse() {
     const responseStreamReader = responseStream.body.getReader()
 
     await readResponseStream(responseStreamReader, (event) => {
-      console.log('Event received:', event)
       if (event.type === 'response.created') {
-        console.log('Response created:', event.response.metadata)
+        const metadata = event.response.metadata
+        if (metadata?.step && typeof metadata.step === 'string') {
+        }
       }
-
       if (event.type === 'response.completed') {
         const metadata = event.response.metadata
-        console.log('Response completed:', metadata)
+        if (metadata?.step && typeof metadata.step === 'string') {
+          stepsDone.value[Number(metadata.step)] = true
+        }
       }
 
       if (event.type === 'response.output_item.added') {
@@ -76,7 +74,12 @@ async function generateResponse() {
           }
         }
         if (event.item.type === 'message') {
-          currentActivity.value = null
+          if (stepsDone.value.length < steps.value.length) {
+            currentActivity.value = `Verarbeite Schritt ${stepsDone.value.length + 1} von ${steps.value.length}...`
+          }
+          else {
+            currentActivity.value = null
+          }
         }
       }
 
@@ -86,7 +89,6 @@ async function generateResponse() {
             let functionArguments: Record<string, any> = {}
             try {
               functionArguments = JSON.parse(event.item.arguments)
-              console.log(functionArguments)
             } catch (error) {
               console.error('Error parsing arguments:', error)
             }
@@ -96,15 +98,9 @@ async function generateResponse() {
         }
       }
 
-      if (event.type === 'response.output_text.delta') {
+      if (event.type === 'response.output_text.delta' && stepsDone.value.length === steps.value.length) {
         report.value += event.delta
       }
-
-      if (event.type === 'response.web_search_call.in_progress') {
-        currentActivity.value = 'Web-Suche läuft...'
-      }
-
-      scrollToBottom()
     }, () => {
       isGeneratingResponse.value = false
     })
@@ -178,7 +174,7 @@ async function generateResponse() {
       >
         <div
           v-if="steps.length"
-          class="flex flex-col gap-2 p-4 bg-gray-50 border-t border-gray-200 text-gray-400"
+          class="flex flex-col gap-2 p-4 bg-gray-50 border-t border-gray-200 text-gray-400 text-xs"
         >
           <div
             v-for="(step, index) in steps"
@@ -219,7 +215,7 @@ async function generateResponse() {
             Bericht
           </div>
           <div
-            class="prose-sm prose-sky"
+            class="prose prose-sm prose-sky"
             v-html="sanitizeHtml(marked.parse(report, { async: false }))"
           />
         </div>
