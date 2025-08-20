@@ -388,7 +388,7 @@ appConfig.ui.colors.primary = 'sky'
         </template>
         <template #slot6>
           <div class="p-4">
-            Da Sie gewerblich tätig sind, ist ein Impressum Pflicht und auch um eine Datenschutzerklärung kommen Sie nicht herum.
+            Da Sie gewerblich tätig sind, ist ein Impressum auf der Website Pflicht und auch um eine Datenschutzerklärung kommen Sie nicht herum.
             Für beides gibt es online <a
               class="text-sky-500"
               href="https://www.e-recht24.de/impressum-generator.html"
@@ -397,7 +397,7 @@ appConfig.ui.colors.primary = 'sky'
             Leider liegt der Teufel hier im Detail - wer hätte das gedacht?
             Sie können nicht einfach ein YouTube-Video auf Ihrer Website anzeigen, ohne den Besucher um Erlaubnis zu bitten.
             Haben Sie ein Kontaktformular? Was passiert mit den Daten, die dort eingegeben werden?
-            Sogar die verwendete Schriftart kann Auswirkungen haben, wenn Sie technisch nicht korrekt implementiert ist.
+            Sogar die verwendete Schriftart oder eingefügte Bilder können Auswirkungen haben, wenn Sie technisch nicht korrekt implementiert sind.
             Viele nutzen daher vorgefertigte Lösungen, die dann haufenweise Paragraphen enthalten, die sie gar nicht betreffen und dazu führen, dass es wirklich niemand mehr liest, außer den Abmahnanwälten.
             Dabei sollte eine Datenschutzerklärung eigentlich einen Zweck erfüllen: Vertrauen schaffen. Lesen Sie doch mal <a
               class="text-sky-500"
