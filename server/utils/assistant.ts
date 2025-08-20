@@ -451,12 +451,12 @@ export async function* streamResearchResponse(
     ],
   })
 
-  let nextResponseId: string | null = null
+  let lastResponseId: string | null = null
   const functionCalls = []
 
   for await (const event of response) {
     if (event.type === 'response.completed') {
-      nextResponseId = event.response.id
+      lastResponseId = event.response.id
     }
 
     if (event.type === 'response.output_item.done' && event.item.type === 'function_call') {
@@ -507,7 +507,7 @@ export async function* streamResearchResponse(
 
       const stepResponse = await openai.responses.create({
         stream: true,
-        previous_response_id: nextResponseId,
+        previous_response_id: lastResponseId,
         model: 'gpt-5-mini',
         input: stepMessages,
         reasoning: {
@@ -517,8 +517,7 @@ export async function* streamResearchResponse(
           verbosity: 'low',
         },
         metadata: {
-          // @ts-ignore: OpenAI TS bug?
-          step: index,
+          step: index.toString(),
         },
         tool_choice: {
           type: 'web_search_preview',
@@ -541,7 +540,7 @@ export async function* streamResearchResponse(
       for await (const event of stepResponse) {
         console.log(event.type)
         if (event.type === 'response.completed') {
-          nextResponseId = event.response.id
+          lastResponseId = event.response.id
         }
         
         yield event
@@ -552,7 +551,7 @@ export async function* streamResearchResponse(
 
     const finalResponse = await openai.responses.create({
       stream: true,
-      previous_response_id: nextResponseId,
+      previous_response_id: lastResponseId,
       model: 'gpt-5-mini',
       input: [{
         role: 'developer',
