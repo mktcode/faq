@@ -1,4 +1,4 @@
-window.chatwootSettings = {"position":"right","type":"expanded_bubble","launcherTitle":"Live-Chat"};
+window.chatwootSettings = {"position":"right","type":"expanded_bubble","launcherTitle":"Solohost Support"};
 (function(d,t) {
   var BASE_URL="https://chat.markus-kottlaender.de";
   var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
