@@ -14,7 +14,7 @@ const canonicalUrl = computed(() => {
 
 const extraScripts = []
 
-if (me.value) {
+if (me.value && me.value.isSubscribed && isOwned) {
   extraScripts.push({
     src: '/chatwoot.js',
     defer: true,

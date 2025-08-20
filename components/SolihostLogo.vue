@@ -1,9 +1,3 @@
-<script setup lang="ts">
-const { beta = false } = defineProps<{
-  beta?: boolean
-}>()
-</script>
-
 <template>
   <div class="@container flex flex-col gap-[0.2cqw] mx-auto w-full">
     <div class="flex items-center gap-3">
@@ -13,7 +7,7 @@ const { beta = false } = defineProps<{
       >
         S
       </div>
-      <span class="font-extrabold tracking-[.2px]">Solihost</span>
+      <span class="font-extrabold tracking-[.2px]">Solohost</span>
     </div>
   </div>
 </template>

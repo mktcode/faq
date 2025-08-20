@@ -105,15 +105,7 @@ appConfig.ui.colors.primary = 'sky'
   >
     <header class="sticky top-0 z-50 backdrop-saturate-150 backdrop-blur bg-[linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,255,255,.65)_60%,rgba(255,255,255,0))] dark:bg-[linear-gradient(180deg,rgba(11,16,32,.9),rgba(11,16,32,.75)_60%,rgba(11,16,32,0))]">
       <div class="mx-auto w-[92vw] max-w-[1200px] flex items-center justify-between py-[14px]">
-        <div class="flex items-center gap-3">
-          <div
-            class="w-10 h-10 text-white font-bold text-2xl rounded-[13px] bg-[radial-gradient(100%_100%_at_30%_20%,#58d0ff_0%,#0ea5e9_40%,#04669e_100%)] grid place-items-center shadow-[0_10px_18px_rgba(14,165,233,.35)]"
-            aria-hidden="true"
-          >
-            S
-          </div>
-          <span class="font-extrabold tracking-[.2px]">Solihost</span>
-        </div>
+        <SolihostLogo />
         <div class="flex items-center gap-2">
           <button
             type="button"
@@ -172,18 +164,18 @@ appConfig.ui.colors.primary = 'sky'
       />
       <div class="relative z-[1] p-[clamp(28px,5vw,64px)] pb-0 grid gap-[22px] max-w-[900px] text-white dark:text-[#e7ecf4]">
         <h1 class="m-0 text-[clamp(28px,4vw,52px)] leading-[1.1]">
-          Ihr professioneller Auftritt – <span class="font-semibold text-sky-400 text-shadow-sky-950/20 text-shadow-md sm:text-shadow-lg">klar, effektiv</span> und ohne unnötige Kosten.
+          Ihr Start in die Solo-Selbstständigkeit <span class="font-semibold text-sky-400 text-shadow-sky-950/20 text-shadow-md sm:text-shadow-lg">ohne IT-Sorgen</span>.
         </h1>
         <p class="m-0 text-[clamp(16px,2.1vw,20px)] text-white/90 dark:text-[#b3bfd1]">
-          Wir begleiten Freiberufler &amp; Einzelunternehmer Schritt für Schritt – von der Starthilfe am Computer über die erste Sichtbarkeit im Netz bis zur eigenen Website mit Domain und E-Mail-Postfächern. Verständlich, fokussiert und mit Blick auf das, was sich wirklich für Sie lohnt.
+          Wir begleiten Einzelunternehmer Schritt für Schritt – von der Starthilfe am Computer über die erste Sichtbarkeit im Netz bis zur eigenen Website mit Domain und E-Mail-Postfächern. Verständlich und mit Blick auf das, was sich wirklich für Sie lohnt.
         </p>
         <div class="flex flex-wrap gap-3 mt-2">
           <a
-            class="w-full sm:w-auto inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200 border-b border-white/50 hover:border-white/70 hover:bg-gradient-to-b hover:ring-white/50 hover:shadow-[0_6px_18px_rgba(14,165,233,.55)]"
+            class="w-full sm:w-auto inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-sky-500/80 hover:bg-sky-500 border border-sky-300/40 text-white transition duration-200"
             :href="me ? `https://${me.userName}.${appHost}` : '/register'"
           >
             <UIcon
-              name="i-heroicons-globe-alt"
+              name="i-heroicons-computer-desktop"
               size="20"
             />
             Website erstellen
@@ -225,126 +217,50 @@ appConfig.ui.colors.primary = 'sky'
       </div>
     </div>
 
-    <section class="mx-auto w-[92vw] max-w-[1200px] py-16">
-      <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-3">
-        So kommen Sie schnell zu Ergebnissen
-      </h2>
-      <p class="text-base sm:text-lg text-slate-600 dark:text-[#b3bfd1] mb-7">
-        Pragmatisch statt umständlich: Wir starten schlank und verbessern gezielt, wenn sich zeigt, was wirkt.
-      </p>
-      <div class="grid md:grid-cols-3 grid-cols-1 gap-[18px] [counter-reset:step]">
-        <div class="border rounded-[16px] p-[18px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:border before:border-black/10 dark:before:border-white/10 before:text-slate-900 dark:before:text-white before:font-bold flex items-center">
-            Klarheit schaffen
-          </h3>
-          <p>
-            Angebotstexte, Zielgruppe, Nutzenversprechen, nächste Aktion.
-            Wir helfen dabei, Ihr Angebot auf den Punkt zu bringen.
-          </p>
-        </div>
-        <div class="border rounded-[16px] p-[18px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:border before:border-black/10 dark:before:border-white/10 before:text-slate-900 dark:before:text-white before:font-bold flex items-center">
-            Sichtbar werden
-          </h3>
-          <p>Google Unternehmensprofil, Social‑Kanäle, Bewertungen – wir richten die Basics ein und verknüpfen alles sauber.</p>
-        </div>
-        <div class="border rounded-[16px] p-[18px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <h3 class="m-0 mb-2 before:content-[counter(step)] before:[counter-increment:step] before:inline-grid before:place-items-center before:w-[28px] before:h-[28px] before:mr-[10px] before:rounded-[8px] before:border before:border-black/10 dark:before:border-white/10 before:text-slate-900 dark:before:text-white before:font-bold flex items-center">
-            Website launchen
-          </h3>
-          <p>
-            Sauber umgesetzt, modern und vollständig, inkl. Impressum und Datenschutzerklärung.
-            Ihr Auftritt wird zur zentralen Anlaufstelle für Social-Media, Buchung &amp; Kontakt.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="mx-auto w-[92vw] max-w-[1200px] py-16">
-      <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-3">
+    <section class="mx-auto w-[92vw] max-w-[1200px] pb-16 pt-24">
+      <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-6">
         Was Sie bekommen
       </h2>
-      <p class="text-base sm:text-lg text-slate-600 dark:text-[#b3bfd1] mb-7">
-        Die Standard‑Website ist kostenlos – und deckt die wichtigsten Grundlagen ab. Im Abo können wir jederzeit ausbauen.
-      </p>
       <div class="grid md:grid-cols-3 grid-cols-1 gap-[18px]">
         <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
+          <h3 class="flex items-center gap-2 mb-2 text-[1.05rem]">
             <UIcon
-              name="i-lucide-shield"
+              name="i-heroicons-computer-desktop"
               class="text-sky-600 size-6"
             />
-            Technisch saubere Website
+            Professionelle Website
           </h3>
           <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
-            Sauberer Code, saubere Metadaten, korrekte Vorschaubilder – alles, was einen guten ersten Eindruck in Suchmaschinen &amp; Social Media ausmacht.
+            Technisch sauber und wirklich einfach zu bedienen. Beinhaltet alles, was einen guten ersten und zweiten Eindruck ausmacht, auch in Suchmaschinen &amp; Social Media.
           </p>
         </div>
         <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
+          <h3 class="flex items-center gap-2 mb-2 text-[1.05rem]">
             <UIcon
-              name="i-lucide-globe"
+              name="i-lucide-at-sign"
               class="text-sky-600 size-6"
             />
             Domain und E-Mail
           </h3>
           <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
-            Registrieren Sie Ihre Wunsch-Domain und richten Sie Ihre E-Mail-Adressen ein – direkt in der App.
+            Registrieren Sie Ihre Wunsch-Domain und legen Sie bis zu 3 professionelle E-Mail-Adressen an. Beim Einrichten Ihres E-Mail-Programms helfen wir gerne persönlich.
           </p>
         </div>
         <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
+          <h3 class="flex items-center gap-2 mb-2 text-[1.05rem]">
             <UIcon
               name="i-lucide-headset"
               class="text-sky-600 size-6"
             />
-            IT-Assistenz
+            IT-Support
           </h3>
           <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
-            Wir stehen Ihnen persönlich zur Seite und unterstützen Sie bei technischen Fragen.
-            Der Solihost Assistent hilft Ihnen, Ihre Website zu verwalten und Ihr Angebot zu optimieren.
-          </p>
-        </div>
-        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
-            <span class="inline-block w-[18px] h-[18px]">📱</span>Mobil &amp; schnell
-          </h3>
-          <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
-            Optimiert für Smartphones und große Bildschirme. Fokus auf Ladezeit statt Ballast.
-          </p>
-        </div>
-        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
-            <span class="inline-block w-[18px] h-[18px]">🧭</span>Geführt statt allein
-          </h3>
-          <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
-            Wir beraten Sie bei jedem Schritt – pragmatisch, verständlich und ohne Agentur‑Sprech.
-          </p>
-        </div>
-        <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <h3 class="flex items-center gap-2 mb-1 text-[1.05rem]">
-            <span class="inline-block w-[18px] h-[18px]">🤖</span>SEO‑ &amp; KI‑ready
-          </h3>
-          <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
-            Strukturierte Daten und Zugänglichkeit, damit Suchmaschinen &amp; Assistenten Ihre Infos korrekt verstehen.
+            Wir stehen Ihnen persönlich zur Seite und unterstützen Sie bei technischen Fragen,
+            per Live-Chat, am Telefon oder per Fernwartung, direkt auf Ihrem Bildschirm.
           </p>
         </div>
       </div>
-    </section>
-
-    <section
-      id="preise"
-      class="mx-auto w-[92vw] max-w-[1200px] py-16"
-    >
-      <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-3">
-        Preise
-      </h2>
-      <p class="text-base sm:text-lg text-slate-600 dark:text-[#b3bfd1] mb-7">
-        Wir wollen vor allem jene unterstützen, die mit nicht ganz so großem finanziellen Spielraum und ohne technische Vorkenntnisse etwas auf die Beine stellen wollen.
-        Unser kostenloses Angebot ist daher so gestaltet, dass es für uns vertretbar bleibt und Ihnen einen echten Mehrwert bietet.
-        Wenn Sie zufrieden sind, aber etwas mehr brauchen, dann freuen wir uns über ein Premium-Abonnement.
-      </p>
-      <div class="grid md:grid-cols-2 grid-cols-1 gap-[18px]">
+      <div class="grid md:grid-cols-2 grid-cols-1 gap-[18px] mt-[18px]">
         <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <span class="inline-block px-2 py-[.25rem] rounded-full text-[.8rem] bg-white border border-black/15 text-slate-600 dark:bg-white/10 dark:border-white/15 dark:text-[#b3bfd1]">Standard</span>
           <div class="flex items-end gap-1 mt-3 mb-6">
@@ -352,75 +268,69 @@ appConfig.ui.colors.primary = 'sky'
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Standard‑Website, visuell ansprechend
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Standard-Website, visuell ansprechend
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Impressum &amp; Datenschutzerklärung
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Kontaktformular, Impressum &amp; Datenschutzerklärung
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Cookie‑frei &amp; datensparsam
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Keine Cookie-Einwilligung nötig
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Suchmaschinen/KI‑Basics &amp; Mobil‑Optimierung
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Suchmaschinen-Basics &amp; Mobil-Optimierung
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Verlinkung Ihrer externen Profile &amp; Tools
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Support per E-Mail und je nach Verfügbarkeit
             </li>
             <li class="flex gap-2 items-start">
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Nutzbar mit vorhandener Domain
             </li>
           </ul>
+          <a
+            class="mt-6 w-full inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-sky-500/80 hover:bg-sky-500 border border-sky-300/40 text-white transition duration-200"
+            :href="me ? `https://${me.userName}.${appHost}` : '/register'"
+          >
+            Kostenlose Website erstellen
+            <UIcon name="i-heroicons-arrow-right" class="ml-auto" />
+          </a>
         </div>
         <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Premium</span>
           <div class="flex items-end gap-1 mt-3 mb-6">
-            <span class="text-[38px] font-extrabold leading-none">33 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
+            <span class="text-[38px] font-extrabold leading-none">49 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> .de-Domain &amp; E-Mail-Adresse inklusive
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> .de-Domain &amp; 3 E-Mail-Adressen inklusive
             </li>
             <li class="flex gap-2 items-start">
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Mehr Gestaltungsoptionen &amp; individuelle Anpassungen
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Persönlicher Telefon-Support und Fernwartung
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Live-Chat und Fernwartung
             </li>
             <li class="flex gap-2 items-start">
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Intelligentes FAQ für bessere Anfragen
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Personalisierbarer KI-Assistent
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> KI-Assistent für Recherche und Texterstellung
             </li>
             <li class="flex gap-2 items-start">
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Monatlich kündbar, per Klick
             </li>
           </ul>
+          <a
+            class="mt-6 w-full inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-slate-900/10 bg-white/10 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
+            href="/login"
+          >Anmelden zum Abonnieren</a>
         </div>
-      </div>
-      <div
-        id="cta"
-        class="flex flex-wrap gap-3 mt-[18px]"
-      >
-        <a
-          class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-gradient-to-b from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_6px_18px_rgba(14,165,233,.35)] transition duration-200 border-b border-white/50 hover:border-white/70 hover:bg-gradient-to-b hover:ring-white/50 hover:shadow-[0_6px_18px_rgba(14,165,233,.55)]"
-          :href="me ? `https://${me.userName}.${appHost}` : '/register'"
-        >Kostenlose Website erstellen</a>
-        <a
-          class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-slate-900/10 bg-white/10 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
-          href="mailto:info@solihost.de"
-        >Fragen? Schreiben Sie uns</a>
       </div>
     </section>
 
     <section class="mx-auto w-[92vw] max-w-[1200px] py-16">
-      <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-3">
-        Sichtbar werden ohne Website
+      <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-6">
+        So werden Sie sichtbar
       </h2>
-      <p class="text-base sm:text-lg text-slate-600 dark:text-[#b3bfd1] mb-7">
-        Hier finden Sie nützliche Tipps und Ressourcen, wenn Sie die Dinge gerne selbst in die Hand nehmen möchten.
-        Schöpfen Sie die zahlreichen kostenlosen Möglichkeiten aus, um auch ohne eigene Website online Sichtbar zu werden und Kunden zu gewinnen.
-      </p>
       <UAccordion
         v-model="acc1active"
         :items="acc1items"
@@ -496,116 +406,6 @@ appConfig.ui.colors.primary = 'sky'
             Smartphones machen heutzutage gute Fotos und können diese auch gleich bearbeiten und optimieren.
             Achten Sie ein wenig auf gute Beleuchtung und gut sichtbare Motive und sparen Sie sich den teuren Fotografen, erstmal zumindest.
             Es spricht auch nichts gegen ein Video, wenn Sie sich damit wohlfühlen. Zeigen Sie sich und Ihre Arbeit!
-          </div>
-        </template>
-      </UAccordion>
-
-      <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-3 mt-16">
-        Die professionelle Website
-      </h2>
-      <p class="text-base sm:text-lg text-slate-600 dark:text-[#b3bfd1] mb-7">
-        Wenn Sie bereit sind, Ihre Online-Präsenz auf das nächste Level zu heben, ist eine professionelle Website der Schlüssel zum Erfolg.
-        Damit Sie auch hier möglichst unabhängig agieren können, erklären wir ein paar Grundlagen, auf die Sie achten und Ihren Anbieter ansprechen sollten.
-      </p>
-      <UAccordion
-        v-model="acc2active"
-        :items="acc2items"
-        :unmount-on-hide="false"
-        :ui="{
-          root: 'flex flex-col gap-3',
-          item: 'rounded-[16px] border !border-b bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10',
-          trigger: 'px-4 py-3 rounded-[12px] hover:bg-black/5 text-slate-900 transition-colors dark:hover:bg-white/5 dark:text-[#e7ecf4]',
-          label: 'text-[1.05rem] font-semibold',
-          leadingIcon: 'text-sky-500 size-8',
-          content: 'text-slate-600 dark:text-[#b3bfd1] text-base sm:text-lg',
-        }"
-      >
-        <template #leading="{ index }">
-          <span
-            class="text-sky-500 text-3xl sm:text-4xl"
-            :class="{
-              'opacity-30 grayscale': !acc2ItemsOpened.includes(index.toString()),
-            }"
-          >✔</span>
-        </template>
-        <template #slot1>
-          <div class="p-4">
-            Welche Überschrift und Beschreibung wird bei Google und Co. angezeigt?
-            Auch Messenger-Dienste wie WhatsApp oder soziale Medien zeigen eine Vorschau, wenn Sie Ihre Website teilen.
-            Achten Sie darauf, dass nicht einfach irgendein zufälliges Bild und ein Platzhaltertext angezeigt wird.
-            Eine Website hat auch immer ein kleines Icon, das in Suchergebnissen und Lesezeichen angezeigt wird.
-            Bei vielen Seiten ist das immernoch das Logo von WordPress und Co., weil vergessen wurde, es auszutauschen.
-            Auch Fehlerseiten, z.B. der berühmte 404-Fehler, sollten in Ihrem Branding erscheinen.
-          </div>
-        </template>
-        <template #slot2>
-          <div class="p-4">
-            KI wird zunehmend in Suchmaschinen eingesetzt, um Inhalte zu analysieren und das best mögliche Ergebnis zu liefern.
-            Nutzer fragen auch immer häufiger direkt ChatGPT und Co. nach Empfehlungen für Produkte und Dienstleistungen.
-            Die KI durchforstet dann das Internet und liefert einen maßgeschneiderten Vorschlag.
-            Damit Ihre Website dabei berücksichtigt werden kann, sind einige technische Details zu beachten.
-            Es macht also Sinn, die eigene Website daraufhin zu optimieren oder zumindest die grundlegende Zugänglichkeit für KI-Tools zu gewährleisten.
-          </div>
-        </template>
-        <template #slot3>
-          <div class="p-4">
-            Egal wie und wo Sie Ihre Website erstellen, Ihnen wird versprochen werden, dass sie auf allen Geräten gut aussieht.
-            Prüfen Sie das! Der Klassiker sind überdimensionierte Schriftgrößen und unglücklich platzierte Elemente, die das Layout sprengen.
-            Das Ergebnis von Baukastensystemen erfordert oft noch einiges an Detailarbeit.
-            Auch teure Agenturen sind hier manchmal etwas schludrig.
-            Prüfen Sie Ihre Website mindestens auf dem Smartphone und einem großen Bildschirm.
-          </div>
-          Und auch wenn das Internet mal etwas langsamer ist, sollte Ihre Website mehr oder weniger sofort sichtbar sein.
-        </template>
-        <template #slot4>
-          <div class="p-4">
-            Konzentrieren Sie sich auf klare und prägnante Angebotsseiten (sog. Landingpage), die alle wichtigen Informationen enthalten,
-            die potentielle Kunden benötigen, um eine Entscheidung zu treffen.
-            Das heißt nicht, dass Sie sämtliche Persönlichkeit weglassen sollen.
-            Vor allem nicht, wenn Sie genau das von anderen abhebt.
-            Ein kurzer "Über Mich" Abschnitt kann auch auf mehreren Seiten auftauchen, wenn es für den Lese- und Entscheidungsfluss sinnvoll ist.
-          </div>
-          Vermeiden Sie es nur, eine Unterseite nach der anderen zu erstellen, weil Ihnen dieses oder jenes noch einfällt.
-        </template>
-        <template #slot5>
-          <div class="p-4">
-            Das kennen Sie sicher selbst. Es nervt und sorgt für längere Ladezeiten und frühzeitige Absprünge potenzieller Kunden.
-            Sie brauchen keine Cookie-Einwilligung, wenn Sie keine Cookies verwenden, die personenbezogene Daten speichern.
-            Und das tun Sie nicht, solange Sie keine Analyse-Tools wie Google Analytics nutzen, die für Ihre Zwecke völlig überdimensioniert sind.
-            Diese Tools brauchen Sie nur, wenn Sie die Umsätze durch Ihre Website perfekt optimieren wollen.
-            Es reicht auch erstmal ein anonymisierter Aufrufzähler, am besten je nach Quelle, damit Sie sehen, von wo Ihre Besucher kommen.
-          </div>
-        </template>
-        <template #slot6>
-          <div class="p-4">
-            Eine Website braucht eine Domain, also das, was Sie in die Adresszeile des Browsers eingeben, z.B. meinefirma.de.
-            Dann können auch E-Mail-Adressen wie info@meinefirma.de eingerichtet werden.
-            Das wirkt professioneller als maxmusterman1988@gmail.com oder @gmx.de.
-            Wenn Sie die allerdings bereits auf 500 Visitenkarten gedruckt haben, dann ist das auch völlig in Ordnung.
-            Entscheidend ist Ihre Arbeit, nicht Ihre E-Mail-Adresse.
-            Sie brauchen sich jedenfalls nicht tagelang Gedanken über die perfekte Premium-Domain zu machen.
-            Es reicht eine "normale" .de Domain für maximal 1 € im Monat.
-            Eine Domain gibt man ohnehin selten manuell ein, sondern klickt auf eine Anzeige, ein Social Media Profil oder ein Suchergebniss.
-          </div>
-        </template>
-        <template #slot7>
-          <div class="p-4">
-            Da Sie gewerblich tätig sind, ist ein Impressum Pflicht und auch um eine Datenschutzerklärung kommen Sie nicht herum.
-            Für beides gibt es online <a
-              class="text-sky-500"
-              href="https://www.e-recht24.de/impressum-generator.html"
-              target="_blank"
-            >Generatoren</a>.
-            Leider liegt der Teufel hier im Detail - wer hätte das gedacht?
-            Sie können nicht einfach ein YouTube-Video auf Ihrer Website anzeigen, ohne den Besucher um Erlaubnis zu bitten.
-            Haben Sie ein Kontaktformular? Was passiert mit den Daten, die dort eingegeben werden?
-            Sogar die verwendete Schriftart kann Auswirkungen haben, wenn Sie technisch nicht korrekt implementiert ist.
-            Viele nutzen daher vorgefertigte Lösungen, die dann haufenweise Paragraphen enthalten, die sie gar nicht betreffen und dazu führen, dass es wirklich niemand mehr liest, außer den Abmahnanwälten.
-            Dabei sollte eine Datenschutzerklärung eigentlich einen Zweck erfüllen: Vertrauen schaffen. Lesen Sie doch mal <a
-              class="text-sky-500"
-              href="/datenschutz"
-              target="_blank"
-            >unsere</a>.
           </div>
         </template>
       </UAccordion>
