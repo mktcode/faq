@@ -125,15 +125,15 @@ appConfig.ui.colors.primary = 'sky'
         aria-hidden="true"
       />
       <div class="relative z-[1] p-[clamp(28px,5vw,64px)] pb-0 grid gap-[22px] max-w-[900px] text-white dark:text-[#e7ecf4]">
-        <h1 class="m-0 text-[clamp(28px,4vw,52px)] leading-[1.1]">
+        <h1 class="m-0 text-[clamp(28px,4vw,52px)] leading-[1.1] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_forwards]">
           Ihr Start in die Solo-Selbstständigkeit <span class="font-semibold text-sky-400 text-shadow-sky-950/20 text-shadow-md sm:text-shadow-lg">ohne IT-Sorgen</span>.
         </h1>
-        <p class="m-0 text-[clamp(16px,2.1vw,20px)] text-white/90 dark:text-[#b3bfd1]">
+        <p class="m-0 text-[clamp(16px,2.1vw,20px)] text-white/90 dark:text-[#b3bfd1] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.1s_forwards]">
           Wir begleiten Einzelunternehmer Schritt für Schritt – von der Starthilfe am Computer über die erste Sichtbarkeit im Netz bis zur eigenen Website mit Domain und E-Mail-Postfächern. Verständlich und mit Blick auf das, was sich wirklich für Sie lohnt.
         </p>
         <div class="flex flex-wrap gap-3 mt-2">
           <a
-            class="w-full sm:w-auto inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-sky-500/80 hover:bg-sky-500 border border-sky-300/40 text-white transition duration-200"
+            class="w-full sm:w-auto inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-sky-500/80 hover:bg-sky-500 border border-sky-300/40 text-white transition duration-200 opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.5s_forwards]"
             :href="me ? `https://${me.userName}.${appHost}` : '/register'"
           >
             <UIcon
@@ -143,7 +143,7 @@ appConfig.ui.colors.primary = 'sky'
             Website erstellen
           </a>
           <a
-            class="w-full sm:w-auto inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 bg-white/10 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
+            class="w-full sm:w-auto inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 bg-white/10 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.6s_forwards]"
             href="tel:+4917670864627"
           >
             <UIcon
@@ -155,21 +155,21 @@ appConfig.ui.colors.primary = 'sky'
         </div>
       </div>
       <div class="flex md:flex-row flex-col gap-x-[24px] mt-[26px] relative z-[1] p-[clamp(28px,5vw,64px)] pt-0">
-        <div class="inline-flex items-center gap-2 py-1 rounded-[12px] font-semibold tracking-[.2px] text-white dark:border-white/10 dark:text-[#e7ecf4]">
+        <div class="inline-flex items-center gap-2 py-1 rounded-[12px] font-semibold tracking-[.2px] text-white dark:border-white/10 dark:text-[#e7ecf4] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.6s_forwards]">
           <UIcon
             name="i-heroicons-hand-thumb-up"
             size="20"
           />
           <strong>Einfach zu bedienen</strong>
         </div>
-        <div class="inline-flex items-center gap-2 py-1 rounded-[12px] font-semibold tracking-[.2px] text-white dark:border-white/10 dark:text-[#e7ecf4]">
+        <div class="inline-flex items-center gap-2 py-1 rounded-[12px] font-semibold tracking-[.2px] text-white dark:border-white/10 dark:text-[#e7ecf4] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.7s_forwards]">
           <UIcon
             name="i-heroicons-rocket-launch"
             size="20"
           />
           <strong>Sofort online</strong>
         </div>
-        <div class="inline-flex items-center gap-2 py-1 rounded-[12px] font-semibold tracking-[.2px] text-white dark:border-white/10 dark:text-[#e7ecf4]">
+        <div class="inline-flex items-center gap-2 py-1 rounded-[12px] font-semibold tracking-[.2px] text-white dark:border-white/10 dark:text-[#e7ecf4] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.8s_forwards]">
           <UIcon
             name="i-heroicons-sparkles"
             size="20"
