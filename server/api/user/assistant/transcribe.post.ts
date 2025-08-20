@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import OpenAI from 'openai'
 
 export default defineEventHandler(async (event) => {
+  await requireUserSession(event)
   const audioChunks = await readMultipartFormData(event)
   const runtimeConfig = useRuntimeConfig(event)
   const openai = new OpenAI({
