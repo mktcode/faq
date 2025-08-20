@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { showLegalDataWarning, isSubscribed, refreshSettings } = await useProfile()
+const { isSubscribed, refreshSettings } = await useProfile()
 
 const { clear } = useUserSession()
 const { refreshMe } = await useMe()
@@ -63,10 +63,18 @@ async function signOut() {
         @click="showSettingsModal = true"
       />
 
+      <div class="px-4 pt-6 pb-2 flex gap-2 items-center text-sm text-gray-500">
+        <UIcon
+          name="i-heroicons-computer-desktop"
+          class="size-5"
+        />
+        Website
+      </div>
+
       <UButton
         label="Design & Kopfbereich"
         icon="i-heroicons-paint-brush"
-        class="w-full rounded-none p-4 border-b border-gray-200"
+        class="w-full rounded-none p-4 border-y border-gray-200"
         variant="ghost"
         color="neutral"
         @click="closeAndOpenDesign"
@@ -74,16 +82,62 @@ async function signOut() {
 
       <UButton
         label="Inhalt und Funktion"
-        icon="i-lucide-letter-text"
+        icon="i-lucide-layout-template"
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
         @click="closeAndOpenContent"
       />
 
+      <div class="px-4 pt-6 pb-2 flex gap-2 items-center text-sm text-gray-500">
+        <UIcon
+          name="i-lucide-bot"
+          class="size-5"
+        />
+        Assistent
+      </div>
+
       <UButton
-        label="Assistent"
-        icon="i-lucide-bot"
+        label="Recherche"
+        icon="i-lucide-search"
+        class="w-full rounded-none p-4 border-y border-gray-200"
+        variant="ghost"
+        color="neutral"
+        :disabled="!isSubscribed"
+        @click="showAssistantModal = true"
+      >
+        <template #trailing>
+          <UBadge
+            v-if="!isSubscribed"
+            label="Premium"
+            variant="outline"
+            class="ml-auto"
+          />
+        </template>
+      </UButton>
+
+      <UButton
+        label="Textbearbeitung"
+        icon="i-lucide-letter-text"
+        class="w-full rounded-none p-4 border-b border-gray-200"
+        variant="ghost"
+        color="neutral"
+        :disabled="!isSubscribed"
+        @click="showAssistantModal = true"
+      >
+        <template #trailing>
+          <UBadge
+            v-if="!isSubscribed"
+            label="Premium"
+            variant="outline"
+            class="ml-auto"
+          />
+        </template>
+      </UButton>
+
+      <UButton
+        label="IT-Support"
+        icon="i-lucide-cable"
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
