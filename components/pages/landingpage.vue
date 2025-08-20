@@ -130,7 +130,7 @@ appConfig.ui.colors.primary = 'sky'
       />
       <div class="relative z-[1] p-[clamp(28px,5vw,64px)] pb-0 grid gap-[22px] max-w-[900px] text-white dark:text-[#e7ecf4]">
         <h1 class="m-0 text-[clamp(28px,4vw,52px)] leading-[1.1] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_forwards]">
-          Ihr Start in die Solo-Selbstständigkeit <span class="font-semibold text-sky-400 text-shadow-sky-950/20 text-shadow-md sm:text-shadow-lg">ohne IT-Sorgen</span>.
+          Ihr <span class="font-semibold text-sky-400 text-shadow-sky-950/20 text-shadow-md sm:text-shadow-lg">IT-Experte</span> für den Start in die Solo-Selbstständigkeit.
         </h1>
         <p class="m-0 text-[clamp(16px,2.1vw,20px)] text-white/90 dark:text-[#b3bfd1] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.1s_forwards]">
           Wir begleiten Einzelunternehmer Schritt für Schritt – von der Starthilfe am Computer über die erste Sichtbarkeit im Netz bis zur eigenen Website mit Domain und E-Mail-Postfächern. Verständlich und mit Blick auf das, was sich wirklich für Sie lohnt.
@@ -289,7 +289,7 @@ appConfig.ui.colors.primary = 'sky'
           </p>
           <textarea
             v-model="companyContext"
-            class="w-full h-[200px] ring-sky-600 focus:ring-3 outline-0 rounded-[12px] p-4 bg-gray-100 dark:bg-[#0b1020] text-slate-900 dark:text-[#e7ecf4]"
+            class="w-full resize-none h-[200px] ring-sky-600 focus:ring-3 outline-0 rounded-[12px] p-4 bg-gray-100 dark:bg-[#0b1020] text-slate-900 dark:text-[#e7ecf4]"
           ></textarea>
           <div class="flex flex-col sm:flex-row justify-between gap-4 mt-4">
             <LandingpageRecordAudio @transcript="companyContext = (companyContext || '') + $event" />
