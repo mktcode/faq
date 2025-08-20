@@ -9,17 +9,20 @@ const { refreshPrivateSettings } = await usePrivateSettings()
 
 const quota = useState('assistantQuota', () => 12)
 
-const topic = ref('Versicherungen für Hausmeister')
-const question = ref('Welche einfachen Versicherungen brauche ich als frisch gestarteter Hausmeister, um abgesichert zu sein, ohne gleich zu viel Geld auszugeben?')
-const purpose = ref('Ich möchte wissen, was ich wirklich brauche, damit ich abgesichert bin, und was ich mir am Anfang sparen kann, weil ich noch nicht so viel verdiene.')
-const depth = ref<'shallow' | 'deep'>('shallow')
-const userInstructions = ref('')
+const userInput = ref('')
 const steps = ref<string[]>([])
+const showSteps = ref(true)
 const stepsDone = ref<boolean[]>([])
+watch(stepsDone.value, (newVal) => {
+  if (newVal.filter(Boolean).length === steps.value.length) {
+    showSteps.value = false
+  }
+})
 
 const isGeneratingResponse = ref(false)
 const currentActivity = ref<string | null>(null)
 const report = ref('')
+
 const reportContainer = ref<HTMLDivElement | null>(null)
 
 async function generateResponse() {
@@ -31,11 +34,7 @@ async function generateResponse() {
     const responseStream = await fetch('/api/user/assistant/research', {
       method: 'POST',
       body: JSON.stringify({
-        topic: topic.value,
-        question: question.value,
-        purpose: purpose.value,
-        depth: depth.value,
-        userInstructions: userInstructions.value,
+        userInput: userInput.value
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -112,6 +111,7 @@ async function generateResponse() {
   finally {
     isGeneratingResponse.value = false
     currentActivity.value = null
+    userInput.value = ''
   }
 }
 </script>
@@ -168,18 +168,49 @@ async function generateResponse() {
         Lesen Sie die Tipps, um mehr über die Funktionen des Assistenten zu erfahren.
       </DismissableAlert>
 
-      <div
-        ref="reportContainer"
-        class="flex flex-col flex-1 overflow-y-auto"
+      <UCollapsible
+        v-if="steps.length"
+        v-model:open="showSteps"
+        class="flex flex-col gap-2"
+        :ui="{
+          root: 'border-b border-gray-200',
+          content: 'p-3 flex flex-col gap-2 text-sm',
+        }"
       >
-        <div
-          v-if="steps.length"
-          class="flex flex-col gap-2 p-4 bg-gray-50 border-t border-gray-200 text-gray-400 text-xs"
+        <UButton
+          :label="stepsDone.filter(Boolean).length === steps.length ? 'Alle Schritte abgeschlossen' : `${stepsDone.filter(Boolean).length}/${steps.length}: ${steps[stepsDone.filter(Boolean).length]}`"
+          color="neutral"
+          variant="link"
+          trailing-icon="i-heroicons-chevron-down"
         >
+          <template #leading>
+            <UIcon
+              v-if="stepsDone.filter(Boolean).length === steps.length"
+              name="i-heroicons-check-circle"
+              class="inline-block text-green-600 size-5 shrink-0"
+            />
+            <UIcon
+              v-else
+              name="i-lucide-loader-2"
+              class="inline-block text-gray-400 size-5 animate-spin shrink-0"
+            />
+          </template>
+          <template #trailing>
+            <div class="ml-auto flex items-center gap-2">
+              <UIcon
+                name="i-heroicons-chevron-down"
+                class="transition-transform"
+                :class="{ 'rotate-180': showSteps }"
+              />
+            </div>
+          </template>
+        </UButton>
+
+        <template #content>
           <div
             v-for="(step, index) in steps"
             :key="index"
-            class="flex items-center gap-2"
+            class="flex gap-2"
           >
             <UIcon
               :name="`${stepsDone[index] ? 'i-lucide-check-circle' : 'i-lucide-loader-2'}`"
@@ -190,7 +221,13 @@ async function generateResponse() {
               {{ step }}
             </span>
           </div>
-        </div>
+        </template>
+      </UCollapsible>
+
+      <div
+        ref="reportContainer"
+        class="flex flex-col flex-1 overflow-y-auto"
+      >
         <Transition name="fade">
           <div
             v-if="currentActivity"
@@ -227,56 +264,9 @@ async function generateResponse() {
 
     <template #footer>
       <div class="flex flex-col w-full">
-        <div class="flex flex-col">
-          
-          <UInput
-            v-model="topic"
-            placeholder="Thema"
-            class="w-full"
-            :ui="{
-              base: 'rounded-none border-gray-200/80 border-b',
-            }"
-          />
-        
-          <UInput
-            v-model="question"
-            placeholder="Fragestellung"
-            class="w-full"
-            :ui="{
-              base: 'rounded-none border-gray-200/80 border-b',
-            }"
-          />
-          
-          <UInput
-            v-model="purpose"
-            placeholder="Zweck der Recherche"
-            class="w-full"
-            :ui="{
-              base: 'rounded-none border-gray-200/80 border-b',
-            }"
-          />
-
-          <USelect
-            v-model="depth"
-            class="w-full"
-            :items="[
-              {
-                label: 'Oberflächlich',
-                value: 'shallow'
-              },
-              {
-                label: 'Ausführlich',
-                value: 'deep'
-              }
-            ]"
-            :ui="{
-              base: 'rounded-none border-gray-200/80 border-b',
-            }"
-          />
-        </div>
         <UTextarea
-          v-model="userInstructions"
-          placeholder="Zusätzliche Anweisungen und Hinweise..."
+          v-model="userInput"
+          placeholder="Ihr Rechercheauftrag"
           class="w-full"
           autoresize
           :disabled="isGeneratingResponse"
@@ -287,20 +277,15 @@ async function generateResponse() {
           }"
         />
         <div class="p-2 flex items-center gap-2">
-          <UButton
-            icon="i-lucide-camera"
-            variant="soft"
-            :disabled="isGeneratingResponse"
-          />
           <AssistantModalRecordAudio
             class="ml-auto"
-            @transcript="transcript => userInstructions = transcript"
+            @transcript="transcript => userInput = transcript"
           />
           <UButton
             icon="i-lucide-send-horizontal"
             color="primary"
             :loading="isGeneratingResponse"
-            :disabled="isGeneratingResponse || !topic || !question"
+            :disabled="isGeneratingResponse || !userInput"
             @click="generateResponse"
           />
         </div>
