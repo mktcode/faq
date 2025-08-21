@@ -277,6 +277,9 @@ async function generateResponse() {
           }"
         />
         <div class="p-2 flex items-center gap-2">
+          <USwitch
+            label="Ausführliche Recherche"
+          />
           <AssistantModalRecordAudio
             class="ml-auto"
             @transcript="transcript => userInput = transcript"
