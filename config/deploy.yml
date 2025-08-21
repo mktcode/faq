@@ -33,6 +33,7 @@ env:
     - NUXT_PUBLIC_STRIPE_PORTAL_URL
     - NUXT_HETZNER_API_KEY
     - NUXT_AUTODNS_API_KEY
+    - NUXT_QBOXMAIL_API_KEY
 aliases:
   shell: app exec --interactive --reuse "bash"
   logs: app logs -f
