@@ -1,18 +1,9 @@
 import { z } from 'zod'
 
-/**
- * if not already done:
- * - create domain contact
- * 
- * then:
- * - register the domain (autodns)
- * - set A record to app/lb ip (autodns)
- * - create certificate for lb (hetzner)
- */
-
 // allow only .de domains
 const bodySchema = z.object({
-  domain: z.string().regex(/\.de$/, 'Invalid domain'),
+  // TODO: improve domain validation
+  domain: z.string().regex(/^[a-z0-9-]{1,63}\.de$/, 'Invalid domain'),
 })
 
 export default defineEventHandler(async (event) => {
@@ -22,22 +13,31 @@ export default defineEventHandler(async (event) => {
 
   const currentDomainInfo = await db
     .selectFrom('users')
-    .select(['domain', 'domainIsExternal'])
+    .select(['domainContactId'])
     .where('id', '=', user.id)
     .executeTakeFirstOrThrow()
 
-  if (currentDomainInfo.domain && !currentDomainInfo.domainIsExternal) {
+  // TODO: improve this check and make sure external domains can still be changed
+  if (currentDomainInfo.domainContactId) {
     throw createError({ statusCode: 409, statusMessage: 'Domain already registered' })
   }
 
-  const domainAvailability = await checkDomainAvailability(domain)
+  await requireDomainAvailability(domain)
 
-  if (!domainAvailability.available) {
-    throw createError({ statusCode: 409, statusMessage: 'Domain not available' })
-  }
+  const settings = await getPublicSettings(user.id)
+  const domainContactId = await autodns.createDomainContact({
+    // TODO: set first and lastname correctly
+    firstname: settings.company.name,
+    lastname: settings.company.name,
+    street: settings.company.street,
+    city: settings.company.city,
+    postalCode: settings.company.zip,
+    country: 'DE',
+  })
+  await db.updateTable('users').set({ domainContactId }).where('id', '=', user.id).execute()
 
-  const domainContactId = await autodns.findOrCreateDomainContact('kontakt@emmaherbst.de')
-  const domainId = await autodns.registerDomain(domain, domainContactId)
+  await autodns.registerDomainWithZone(domain, domainContactId)
+  // TODO: surely we need to wait a bit here
   await hetzner.addNewCertToLoadBalancer(domain)
 
   await db

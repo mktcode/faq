@@ -1,8 +1,20 @@
-import z from 'zod'
 import { DomainRobot, DomainRobotModels } from "js-domainrobot-sdk";
 
-const autodnsApiUrl = 'https://api.autodns.com/v1'
+const autodnsApiUrl = 'https://api.demo.autodns.com/v1'
 const autodnsApiUser = 'api@markus-kottlaender.de'
+
+function getDomainRobot() {
+  const { autodnsApiKey } = useRuntimeConfig()
+
+  return new DomainRobot({
+    url: autodnsApiUrl,
+    auth: {
+      user: autodnsApiUser,
+      password: autodnsApiKey,
+      context: 1,
+    },
+  })
+}
 
 async function createDomainContact(contact: {
   firstname: string
@@ -11,118 +23,88 @@ async function createDomainContact(contact: {
   city: string
   postalCode: string
   country: string
-  email: string
 }) {
-  const { autodnsApiKey } = useRuntimeConfig()
-
-  const resultSchema = z.object({
-    data: z.object({
-      id: z.number(),
-    }),
-  })
-  type ResultType = z.infer<typeof resultSchema>
-
-  const result = await $fetch<ResultType>(`${autodnsApiUrl}/contact`, {
-    method: 'POST',
-    headers: {
-      'X-Domainrobot-Demo': 'true',
-      'X-Domainrobot-Context': '1',
-      'Authorization': `Basic ${Buffer.from(`${autodnsApiUser}:${autodnsApiKey}`).toString('base64')}`,
-      'Content-Type': 'application/json',
-    },
-    body: {
-      type: "PERSON",
-      email: contact.email,
-      fname: contact.firstname,
-      lname: contact.lastname,
-      address: [contact.street],
-      city: contact.city,
-      pcode: contact.postalCode,
-      country: contact.country,
-    },
-  })
-
-  const validatedResult = resultSchema.parse(result)
-
-  return validatedResult.data.id
-}
-
-async function findDomainContact(email: string) {
-  const { autodnsApiKey } = useRuntimeConfig()
-  console.log(autodnsApiKey)
-
-  const domainRobot = new DomainRobot({
-    url: autodnsApiUrl,
-    auth: {
-      user: autodnsApiUser,
-      password: autodnsApiKey,
-      context: 4,
-    },
-  })
-
-  const query = new DomainRobotModels.Query({
-    'filters': [
-      {
-        "key": "email",
-        "value": email,
-        "operator": "EQUAL"
-      },
-    ],
+  const query = new DomainRobotModels.Contact({
+    type: "PERSON",
+    fname: contact.firstname,
+    lname: contact.lastname,
+    address: [contact.street],
+    city: contact.city,
+    pcode: contact.postalCode,
+    country: contact.country,
   });
 
-  const contacts = await domainRobot.contact().list(query)
-
-  return contacts
-}
-
-async function registerDomain(domain: string, contactId: number) {
-  const { autodnsApiKey } = useRuntimeConfig()
-
-  const resultSchema = z.object({
-    certificate: z.object({
-      id: z.number(),
-    }),
-  })
-  type ResultType = z.infer<typeof resultSchema>
-
-  const result = await $fetch<ResultType>(`${autodnsApiUrl}/certificates`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${autodnsApiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: {
-      name: domain,
-      type: 'managed',
-      domain_names: [domain, `www.${domain}`],
-    },
-  })
-
-  const validatedResult = resultSchema.parse(result)
-
-  return validatedResult.certificate.id
-}
-
-async function findOrCreateDomainContact(email: string) {
-  const existingContactId = await findDomainContact(email)
-  if (existingContactId) {
-    return existingContactId
+  const domainRobot = getDomainRobot()
+  const domainContact = await domainRobot.contact().create(query)
+  const domainContactId = domainContact.result.data[0].id
+  if (!domainContactId) {
+    throw new Error('Failed to create domain contact')
   }
 
-  return createDomainContact({
-    email,
-    firstname: 'Emma',
-    lastname: 'Herbst',
-    street: 'Musterstraße 1',
-    city: 'Musterstadt',
-    postalCode: '12345',
-    country: 'DE',
-  })
+  return domainContactId
+}
+
+async function registerDomainWithZone(domain: string, contactId: number) {
+  const { appIp } = useRuntimeConfig().public
+  const domainRobot = getDomainRobot()
+
+  await domainRobot.domain().create(new DomainRobotModels.Domain({
+    name: domain,
+    ownerc: {
+      id: contactId,
+    },
+    zone: {
+      origin: domain,
+      resourceRecords: [
+        {
+          type: "A",
+          value: appIp,
+        },
+      ],
+    }
+  }))
+}
+
+async function addMissingMailRecords(domain: string, mailDomainId: string, mailVerifyIp: string) {
+  const domainRobot = getDomainRobot()
+
+  const records = await domainRobot.zone().info(domain, 'a.ns14.net')
+  const zone = records.result.data[0]
+  const resourceRecords = zone.resourceRecords || []
+
+  const hasARecord = resourceRecords.some(record => record.type === 'A' && record.name === mailDomainId && record.value === mailVerifyIp)
+  const hasMXRecord1 = resourceRecords.some(record => record.type === 'MX' && record.value === 'mx01.qboxmail.com')
+  const hasMXRecord2 = resourceRecords.some(record => record.type === 'MX' && record.value === 'mx02.qboxmail.com')
+
+  if (!hasARecord || !hasMXRecord1 || !hasMXRecord2) {
+    await domainRobot.zone().update(
+      new DomainRobotModels.Zone({
+        origin: domain,
+        resourceRecords: [
+          {
+            type: 'A',
+            name: mailDomainId,
+            value: mailVerifyIp,
+          },
+          {
+            type: "MX",
+            value: 'mx01.qboxmail.com',
+            pref: 10
+          },
+          {
+            type: "MX",
+            value: 'mx02.qboxmail.com',
+            pref: 20
+          },
+        ],
+      }),
+      'a.ns14.net',
+    )
+  }
 }
 
 export const autodns = {
   createDomainContact,
-  findDomainContact,
-  findOrCreateDomainContact,
-  registerDomain,
+  registerDomainWithZone,
+  addMissingMailRecords,
 }

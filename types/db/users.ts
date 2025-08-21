@@ -10,6 +10,7 @@ export interface UsersTable {
   published: boolean
   domain: string | null
   domainIsExternal: boolean
+  domainContactId: number | null
   stripeCustomerId: string | null
   lastPaidAt: ColumnType<Date | null, Date | null, Date | null>
   settings: string
@@ -153,6 +154,7 @@ export const settingsFormSchema = z.object({
     assistant: z.object({
       context: z.string().nullable(),
     }),
+    mailboxes: z.string().array(),
   }),
 })
 
@@ -246,5 +248,6 @@ export const defaultSettings: SettingsForm = {
     assistant: {
       context: null,
     },
+    mailboxes: [],
   },
 }

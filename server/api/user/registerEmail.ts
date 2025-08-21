@@ -10,29 +10,31 @@ import { z } from 'zod'
  * - create mailbox (qboxmail)
  */
 
-// allow only .de domains
 const bodySchema = z.object({
-  mailbox: z.string().regex(/\.de$/, 'Invalid domain'),
+  mailbox: z.string().regex(/^[a-zA-Z0-9-_.]+$/, 'Invalid mailbox name'),
 })
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
   const db = await getDatabaseConnection()
-  const { domain } = await readValidatedBody(event, body => bodySchema.parse(body))
+  const { mailbox } = await readValidatedBody(event, body => bodySchema.parse(body))
 
-  const domainAvailability = await checkDomainAvailability(domain)
+  const domainInfo = await db
+    .selectFrom('users')
+    .select(['domain'])
+    .where('id', '=', user.id)
+    .executeTakeFirstOrThrow()
 
-  if (!domainAvailability.available) {
-    throw createError({ statusCode: 409, statusMessage: 'Domain not available' })
+  if (!domainInfo.domain) {
+    throw new Error('User has no domain.')
   }
 
-  // const id = await registerDomain(domain)
+  const { id, subdomainVerifyIp } = await qboxmail.createDomainIfNotExists(domainInfo.domain)
 
-  await db
-    .updateTable('users')
-    .set({ domain, domainIsExternal: false })
-    .where('id', '=', user.id)
-    .execute()
+  await autodns.addMissingMailRecords(domainInfo.domain, id, subdomainVerifyIp)
+
+  const settings = await getPublicSettings(user.id)
+  await qboxmail.createMailbox(mailbox, domainInfo.domain, settings.company.name)
 
   return { success: true }
 })

@@ -149,6 +149,13 @@ export async function checkDomainAvailability(
   return result(false, 'unknown')
 }
 
+export async function requireDomainAvailability(domain: string): Promise<void> {
+  const availability = await checkDomainAvailability(domain)
+  if (!availability.available) {
+    throw createError({ statusCode: 409, statusMessage: 'Domain not available' })
+  }
+}
+
 /* ====================== helpers ====================== */
 
 function normaliseDomain(d: string): string {
