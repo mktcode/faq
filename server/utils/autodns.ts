@@ -1,8 +1,10 @@
 import z from 'zod'
+import { DomainRobot, DomainRobotModels } from "js-domainrobot-sdk";
 
-const autodnsApiUrl = 'https://api.demo.autodns.com/v1'
+const autodnsApiUrl = 'https://api.autodns.com/v1'
+const autodnsApiUser = 'api@markus-kottlaender.de'
 
-export async function createDomainContact(contact: {
+async function createDomainContact(contact: {
   firstname: string
   lastname: string
   street: string
@@ -12,10 +14,9 @@ export async function createDomainContact(contact: {
   email: string
 }) {
   const { autodnsApiKey } = useRuntimeConfig()
-  const user = "api@markus-kottlaender.de"
 
   const resultSchema = z.object({
-    certificate: z.object({
+    data: z.object({
       id: z.number(),
     }),
   })
@@ -26,7 +27,7 @@ export async function createDomainContact(contact: {
     headers: {
       'X-Domainrobot-Demo': 'true',
       'X-Domainrobot-Context': '1',
-      'Authorization': `Basic ${Buffer.from(`${user}:${autodnsApiKey}`).toString('base64')}`,
+      'Authorization': `Basic ${Buffer.from(`${autodnsApiUser}:${autodnsApiKey}`).toString('base64')}`,
       'Content-Type': 'application/json',
     },
     body: {
@@ -41,51 +42,40 @@ export async function createDomainContact(contact: {
     },
   })
 
-  return result
+  const validatedResult = resultSchema.parse(result)
 
-  // const validatedResult = resultSchema.parse(result)
-
-  // return validatedResult.certificate.id
+  return validatedResult.data.id
 }
 
-export async function findDomainContact(email: string) {
+async function findDomainContact(email: string) {
   const { autodnsApiKey } = useRuntimeConfig()
-  const user = "api@markus-kottlaender.de"
+  console.log(autodnsApiKey)
 
-  const resultSchema = z.object({
-    certificate: z.object({
-      id: z.number(),
-    }),
-  })
-  type ResultType = z.infer<typeof resultSchema>
-
-  const result = await $fetch<ResultType>(`${autodnsApiUrl}/contact/_search?keys=email`, {
-    method: 'POST',
-    headers: {
-      'X-Domainrobot-Demo': 'true',
-      'X-Domainrobot-Context': '1',
-      'Authorization': `Basic ${Buffer.from(`${user}:${autodnsApiKey}`).toString('base64')}`,
-      'Content-Type': 'application/json',
-    },
-    body: {
-      filters: [
-        {
-          key: "email",
-          value: email,
-          operator: "EQUAL",
-        }
-      ],
+  const domainRobot = new DomainRobot({
+    url: autodnsApiUrl,
+    auth: {
+      user: autodnsApiUser,
+      password: autodnsApiKey,
+      context: 4,
     },
   })
 
-  return result
+  const query = new DomainRobotModels.Query({
+    'filters': [
+      {
+        "key": "email",
+        "value": email,
+        "operator": "EQUAL"
+      },
+    ],
+  });
 
-  // const validatedResult = resultSchema.parse(result)
+  const contacts = await domainRobot.contact().list(query)
 
-  // return validatedResult.certificate.id
+  return contacts
 }
 
-export async function registerDomain(domain: string) {
+async function registerDomain(domain: string, contactId: number) {
   const { autodnsApiKey } = useRuntimeConfig()
 
   const resultSchema = z.object({
@@ -111,4 +101,28 @@ export async function registerDomain(domain: string) {
   const validatedResult = resultSchema.parse(result)
 
   return validatedResult.certificate.id
+}
+
+async function findOrCreateDomainContact(email: string) {
+  const existingContactId = await findDomainContact(email)
+  if (existingContactId) {
+    return existingContactId
+  }
+
+  return createDomainContact({
+    email,
+    firstname: 'Emma',
+    lastname: 'Herbst',
+    street: 'Musterstraße 1',
+    city: 'Musterstadt',
+    postalCode: '12345',
+    country: 'DE',
+  })
+}
+
+export const autodns = {
+  createDomainContact,
+  findDomainContact,
+  findOrCreateDomainContact,
+  registerDomain,
 }

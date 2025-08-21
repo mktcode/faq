@@ -2,7 +2,7 @@ import z from 'zod'
 
 const hetznerApiUrl = 'https://api.hetzner.cloud/v1'
 
-export async function createCertificate(domain: string) {
+async function createCertificate(domain: string) {
   const { hetznerApiKey } = useRuntimeConfig()
 
   const resultSchema = z.object({
@@ -30,7 +30,7 @@ export async function createCertificate(domain: string) {
   return validatedResult.certificate.id
 }
 
-export async function getLoadBalancer() {
+async function getLoadBalancer() {
   const { hetznerApiKey } = useRuntimeConfig()
 
   const resultSchema = z.object({
@@ -77,7 +77,7 @@ export async function getLoadBalancer() {
   return validatedResult.load_balancers[0]
 }
 
-export async function addNewCertToLoadBalancer(domain: string) {
+async function addNewCertToLoadBalancer(domain: string) {
   const { hetznerApiKey } = useRuntimeConfig()
 
   const newCertId = await createCertificate(domain)
@@ -137,4 +137,8 @@ export async function addNewCertToLoadBalancer(domain: string) {
   }
 
   return { success: true, action: validatedResult.action }
+}
+
+export const hetzner = {
+  addNewCertToLoadBalancer,
 }
