@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const appConfig = useAppConfig()
+const route = useRoute()
 const { authenticate } = useWebAuthn({
   registerEndpoint: '/api/webauthn/register',
   authenticateEndpoint: '/api/webauthn/authenticate',
@@ -7,7 +8,8 @@ const { authenticate } = useWebAuthn({
 const { fetch: fetchUserSession } = useUserSession()
 const { appHost } = useRuntimeConfig().public
 
-const userName = ref('')
+const userNameFromQuery = ref(Array.isArray(route.query.username) ? (route.query.username[0] || '') : route.query.username || '')
+const userName = ref<string>(userNameFromQuery.value)
 
 async function signIn() {
   await authenticate(userName.value)

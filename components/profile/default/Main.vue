@@ -63,6 +63,9 @@ useHead({
     :font="font"
     class="relative"
   >
+    <ClientOnly>
+      <ProfileDefaultReLogin />
+    </ClientOnly>
     <ProfileDefaultNav v-if="me && isOwned" />
     <ProfileDefaultHeader />
     <div
