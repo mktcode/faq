@@ -99,7 +99,7 @@ async function signOut() {
       </div>
 
       <UButton
-        label="Suche und Recherche"
+        label="Recherche"
         icon="i-lucide-search"
         class="w-full rounded-none p-4 border-y border-gray-200"
         variant="ghost"
