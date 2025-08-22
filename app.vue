@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { de } from '@nuxt/ui/locale'
 
-const { settings, username, isOwned, isPublic, design, path } = await useProfile()
-const offerPaths = computed(() => settings.value && settings.value.components.offers.items.length > 1 ? settings.value.components.offers.items.map(offer => `/${offer.slug}`) : [])
+const path = useRoute().path
+
+const { username, isOwned, isPublic, design } = await useProfile()
 </script>
 
 <template>
   <UApp :locale="de">
     <template v-if="username">
       <template v-if="isOwned || isPublic">
-        <ProfileDefaultMain v-if="['/', ...offerPaths].includes(path) && design === 'default'" />
+        <ProfileDefaultMain v-if="path === '/' && design === 'default'" />
         <ProfileImpressum v-else-if="path === '/impressum'" />
         <ProfileDatenschutz v-else-if="path === '/datenschutz'" />
         <Profile404 v-else />

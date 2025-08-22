@@ -113,7 +113,6 @@ export const settingsFormSchema = z.object({
       offers: componentSettingsBaseSchema.extend({
         items: z.array(z.object({
           title: z.string(),
-          slug: z.string(),
           description: z.string(),
         })),
       }),

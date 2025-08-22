@@ -4,7 +4,6 @@ export const useProfile = async () => {
   const { ssrContext } = useNuxtApp()
   const appConfig = useAppConfig()
   const toast = useToast()
-  const path = useRoute().path
 
   const username = useState<string | null>('username', () => null)
   const isSubscribed = useState<boolean>('isSubscribed', () => false)
@@ -69,7 +68,6 @@ export const useProfile = async () => {
     isOwned,
     isPublic,
     design,
-    path,
     settings,
     isSavingSettings,
     refreshSettings,
