@@ -161,9 +161,9 @@ async function signOut() {
         </template>
       </UButton>
 
-      <AssistantModal />
-      <AssistantModalResearch />
-      <SettingsModal />
+      <AdminAssistantModal />
+      <AdminAssistantModalResearch />
+      <AdminSettingsModal />
     </template>
 
     <template #footer>

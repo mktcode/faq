@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const emit = defineEmits(['goToSubscription'])
-const { me } = await useMe()
 </script>
 
 <template>

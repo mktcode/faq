@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const { me } = await useMe()
 const emit = defineEmits(['goToSubscription'])
 
 const email1 = ref('')

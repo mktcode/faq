@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { me } = await useMe()
+
 </script>
 
 <template>

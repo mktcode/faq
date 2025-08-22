@@ -1,11 +1,9 @@
 <script setup lang="ts">
 const { stripePortalUrl } = useRuntimeConfig().public
-const { me } = await useMe()
 const { isStartingCheckout, startCheckoutSession } = useCheckoutSession()
+const { user } = useUserSession()
 
-const { settings, saveSettings, isSavingSettings } = await useProfile()
-
-const emailToVerify = ref(me.value?.email || '')
+const emailToVerify = ref(user.value?.email || '')
 const isUpdatingEmail = ref(false)
 const showEmailVerificationHint = ref(false)
 

@@ -2,7 +2,6 @@
 import { watchDebounced } from '@vueuse/core'
 
 const { appIp } = useRuntimeConfig().public
-const { me, refreshMe } = await useMe()
 const emit = defineEmits(['goToSubscription'])
 
 const existingDomainSetupOpen = ref(false)
@@ -29,7 +28,6 @@ async function updateDomain() {
   })
 
   if (success) {
-    await refreshMe()
     domainConnectedSuccessfully.value = true
     existingDomainSetupOpen.value = false
     existingDomain.value = ''
