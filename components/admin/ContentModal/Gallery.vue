@@ -1,6 +1,9 @@
 <script setup lang="ts">
 const toast = useToast()
-const { settings, saveSettings, isSubscribed } = await useProfile()
+
+const $profile = useNuxtApp().$profile
+
+function saveSettings() {}
 
 const fileInput = ref<HTMLInputElement | null>(null)
 const isDragging = ref(false)
@@ -14,11 +17,11 @@ const galleryTypes = ref([
   {
     label: 'Mauerwerk',
     value: 'masonry',
-    disabled: !isSubscribed.value,
+    disabled: !$profile.isSubscribed,
   },
 ])
 
-watch(() => settings.value.components.gallery.type, saveSettings)
+watch(() => $profile.settings.components.gallery.type, saveSettings)
 
 const uploadFile = async (files: FileList | null) => {
   if (!files || files.length === 0) return
@@ -35,8 +38,8 @@ const uploadFile = async (files: FileList | null) => {
         body: formData,
       })
 
-      settings.value.components.gallery.items = [
-        ...settings.value.components.gallery.items,
+      $profile.settings.components.gallery.items = [
+        ...$profile.settings.components.gallery.items,
         ...imageUrls.map((url: string) => ({ url, title: '', description: '' })),
       ]
 
@@ -83,7 +86,7 @@ const onDrop = async (e: DragEvent) => {
 }
 
 async function deleteImage(index: number) {
-  const url = settings.value.components.gallery.items[index].url
+  const url = $profile.settings.components.gallery.items[index].url
   const { success } = await $fetch('/api/user/upload/delete', {
     method: 'POST',
     body: JSON.stringify({ url }),
@@ -98,7 +101,7 @@ async function deleteImage(index: number) {
     return
   }
 
-  settings.value.components.gallery.items.splice(index, 1)
+  $profile.settings.components.gallery.items.splice(index, 1)
   saveSettings()
 }
 </script>
@@ -107,7 +110,7 @@ async function deleteImage(index: number) {
   <div class="flex flex-col gap-4 p-6">
     <UFormField label="Darstellung">
       <USelect
-        v-model="settings.components.gallery.type"
+        v-model="$profile.settings.components.gallery.type"
         :items="galleryTypes"
         label="Galerie Layout"
         class="w-full"
@@ -157,7 +160,7 @@ async function deleteImage(index: number) {
     <div class="flex flex-col gap-2">
       <TransitionGroup name="fade">
         <div
-          v-for="(image, index) in settings.components.gallery.items"
+          v-for="(image, index) in $profile.settings.components.gallery.items"
           :key="index"
           class="flex items-center justify-center w-full gap-2"
         >

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const toast = useToast()
-const { settings, saveSettings } = await useProfile()
+
+function saveSettings() {}
+const $profile = useNuxtApp().$profile
 
 const fileInput = ref<HTMLInputElement | null>(null)
 const isDragging = ref(false)
@@ -20,8 +22,8 @@ const uploadFile = async (files: FileList | null) => {
       body: formData,
     })
 
-    settings.value.components.downloads.items = [
-      ...settings.value.components.downloads.items,
+    $profile.settings.components.downloads.items = [
+      ...$profile.settings.components.downloads.items,
       ...uploadedFiles,
     ]
 
@@ -65,7 +67,7 @@ const onDrop = async (e: DragEvent) => {
 }
 
 async function deleteDownload(index: number) {
-  const url = settings.value.components.downloads.items[index].url
+  const url = $profile.settings.components.downloads.items[index].url
   const { success } = await $fetch('/api/user/upload/delete', {
     method: 'POST',
     body: JSON.stringify({ url }),
@@ -80,7 +82,7 @@ async function deleteDownload(index: number) {
     return
   }
 
-  settings.value.components.downloads.items.splice(index, 1)
+  $profile.settings.components.downloads.items.splice(index, 1)
   saveSettings()
 }
 </script>
@@ -123,7 +125,7 @@ async function deleteDownload(index: number) {
     </div>
     <div class="flex flex-col gap-2">
       <div
-        v-for="(download, index) in settings.components.downloads.items"
+        v-for="(download, index) in $profile.settings.components.downloads.items"
         :key="index"
         class="flex flex-col items-center justify-center w-full gap-2"
       >

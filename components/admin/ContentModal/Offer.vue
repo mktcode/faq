@@ -1,14 +1,6 @@
 <script setup lang="ts">
-const { username, settings, saveSettings } = await useProfile()
+function saveSettings() {}
 const { appHost } = useRuntimeConfig().public
-
-function computeSlug(title: string) {
-  return title.toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w-]+/g, '')
-    .replace(/--+/g, '-')
-    .replace(/^-+|-+$/g, '')
-}
 </script>
 
 <template>
@@ -18,7 +10,7 @@ function computeSlug(title: string) {
       Was unterscheidet Sie von anderen? Welche Vorteile hat der Kunde, kurz- wie langfristig?
     </p>
     <div
-      v-for="(offer, index) in settings.components.offers.items"
+      v-for="(offer, index) in $profile.settings.components.offers.items"
       :key="index"
       class="flex flex-col gap-4 border-b border-gray-200 pb-4"
     >
@@ -32,7 +24,6 @@ function computeSlug(title: string) {
               v-model="offer.title"
               placeholder="Website erstellen"
               class="w-full"
-              @keyup="offer.slug = computeSlug(offer.title)"
             />
           </UFormField>
           <UButton
@@ -40,7 +31,7 @@ function computeSlug(title: string) {
             variant="soft"
             color="error"
             class="self-end"
-            @click="settings.components.offers.items.splice(index, 1)"
+            @click="$profile.settings.components.offers.items.splice(index, 1)"
           />
         </div>
         <div class="flex items-center gap-2">
@@ -53,16 +44,9 @@ function computeSlug(title: string) {
                 color="neutral"
                 variant="soft"
                 size="sm"
-                :label="`https://${username}.${appHost}/`"
+                :label="`https://${$profile.username}.${appHost}/`"
               />
             </label>
-            <UInput
-              :id="`offer-slug-${index}`"
-              v-model="offer.slug"
-              placeholder="website-erstellen"
-              class="w-full"
-              size="sm"
-            />
           </UButtonGroup>
           <UButton
             icon="i-heroicons-clipboard"
@@ -83,7 +67,7 @@ function computeSlug(title: string) {
       icon="i-heroicons-plus"
       variant="soft"
       class="w-full"
-      @click="settings.components.offers.items.push({ title: '', description: '', slug: '' })"
+      @click="$profile.settings.components.offers.items.push({ title: '', description: '' })"
     >
       Angebot hinzufügen
     </UButton>

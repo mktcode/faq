@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const { settings, saveSettings } = await useProfile()
+function saveSettings() {
+
+}
 </script>
 
 <template>
@@ -20,14 +22,14 @@ const { settings, saveSettings } = await useProfile()
 
     <UFormField label="Name Ihres Unternehmens">
       <UInput
-        v-model="settings.company.name"
+        v-model="$profile.settings.company.name"
         placeholder="Geben Sie den Titel Ihres Unternehmens ein"
         class="w-full"
       />
     </UFormField>
     <UFormField label="Straße und Hausnummer">
       <UInput
-        v-model="settings.company.street"
+        v-model="$profile.settings.company.street"
         placeholder="Geben Sie die Straße und Hausnummer ein"
         class="w-full"
       />
@@ -38,7 +40,7 @@ const { settings, saveSettings } = await useProfile()
         class="w-32"
       >
         <UInput
-          v-model="settings.company.zip"
+          v-model="$profile.settings.company.zip"
           placeholder="Postleitzahl"
         />
       </UFormField>
@@ -47,7 +49,7 @@ const { settings, saveSettings } = await useProfile()
         class="flex-1"
       >
         <UInput
-          v-model="settings.company.city"
+          v-model="$profile.settings.company.city"
           placeholder="Geben Sie die Stadt ein"
           class="w-full"
         />
@@ -55,14 +57,14 @@ const { settings, saveSettings } = await useProfile()
     </div>
     <UFormField label="Telefonnummer">
       <UInput
-        v-model="settings.company.phone"
+        v-model="$profile.settings.company.phone"
         placeholder="Geben Sie die Telefonnummer ein"
         class="w-full"
       />
     </UFormField>
     <UFormField label="E-Mail-Adresse">
       <UInput
-        v-model="settings.company.email"
+        v-model="$profile.settings.company.email"
         type="email"
         placeholder="Geben Sie die E-Mail-Adresse ein"
         class="w-full"
@@ -85,19 +87,19 @@ const { settings, saveSettings } = await useProfile()
       description="Wenn Sie die Kleinunternehmerregelung nutzen, müssen Sie keine Umsatzsteuer ausweisen. Im Impressum steht dann ein entsprechender Hinweis."
     >
       <USwitch
-        v-model="settings.company.isSmallBusiness"
+        v-model="$profile.settings.company.isSmallBusiness"
         label="Ich bin Kleinunternehmer"
         class="w-full"
       />
     </UFormField>
     <Transition name="fade">
       <UFormField
-        v-if="!settings.company.isSmallBusiness"
+        v-if="!$profile.settings.company.isSmallBusiness"
         label="Umsatzsteuer-ID oder Wirtschafts-ID"
         description="Geben Sie hier nicht Ihre persönliche Steuernummer (123/456/78901) an."
       >
         <UInput
-          v-model="settings.company.taxId"
+          v-model="$profile.settings.company.taxId"
           placeholder="DE123456789"
           class="w-full"
         />

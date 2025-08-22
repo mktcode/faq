@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { availableComponents, type ComponentKey } from '~/types/db'
 
-const { settings, saveSettings } = await useProfile()
+const $profile = useNuxtApp().$profile
+
+function saveSettings() {}
 
 const items = computed(() => {
-  if (!settings.value) return []
+  if (!$profile.settings) return []
 
-  return Object.keys(settings.value.components)
+  return Object.keys($profile.settings.components)
     .sort((a, b) => {
-      const orderA = settings.value?.components[a as ComponentKey].order || 0
-      const orderB = settings.value?.components[b as ComponentKey].order || 0
+      const orderA = $profile.settings.components[a as ComponentKey].order || 0
+      const orderB = $profile.settings.components[b as ComponentKey].order || 0
       return orderA - orderB
     })
     .map(key => ({
@@ -21,25 +23,25 @@ const items = computed(() => {
 })
 
 function changeOrder(key: ComponentKey, direction: 'up' | 'down') {
-  const currentPosition = settings.value.components[key].order
+  const currentPosition = $profile.settings.components[key].order
   if (direction === 'up' && currentPosition <= 1) return
-  if (direction === 'down' && currentPosition >= Object.keys(settings.value.components).length) return
+  if (direction === 'down' && currentPosition >= Object.keys($profile.settings.components).length) return
 
   const newPosition = direction === 'up' ? currentPosition - 1 : currentPosition + 1
-  const adjacentComponentKey = Object.keys(settings.value.components).find(
-    key => settings.value.components[key as ComponentKey].order === newPosition,
+  const adjacentComponentKey = Object.keys($profile.settings.components).find(
+    key => $profile.settings.components[key as ComponentKey].order === newPosition,
   ) as ComponentKey | undefined
 
   if (adjacentComponentKey) {
-    settings.value.components[key].order = newPosition
-    settings.value.components[adjacentComponentKey].order = currentPosition
+    $profile.settings.components[key].order = newPosition
+    $profile.settings.components[adjacentComponentKey].order = currentPosition
   }
 
   saveSettings()
 }
 
 function toggleVisibility(key: ComponentKey) {
-  settings.value.components[key].visible = !settings.value.components[key].visible
+  $profile.settings.components[key].visible = !$profile.settings.components[key].visible
   saveSettings()
 }
 </script>
@@ -57,12 +59,12 @@ function toggleVisibility(key: ComponentKey) {
         <UButton
           variant="ghost"
           size="sm"
-          :color="settings.components[item.id as ComponentKey]?.visible ? 'primary' : 'neutral'"
-          :class="settings.components[item.id as ComponentKey]?.visible ? 'text-primary-600' : 'text-gray-300'"
+          :color="$profile.settings.components[item.id as ComponentKey]?.visible ? 'primary' : 'neutral'"
+          :class="$profile.settings.components[item.id as ComponentKey]?.visible ? 'text-primary-600' : 'text-gray-300'"
           @click.stop="toggleVisibility(item.id)"
         >
           <UIcon
-            :name="settings.components[item.id as ComponentKey]?.visible ? 'i-heroicons-eye' : 'i-heroicons-eye-slash'"
+            :name="$profile.settings.components[item.id as ComponentKey]?.visible ? 'i-heroicons-eye' : 'i-heroicons-eye-slash'"
             class="size-5"
           />
         </UButton>
@@ -96,19 +98,19 @@ function toggleVisibility(key: ComponentKey) {
       </div>
     </template>
     <template #gallery>
-      <ContentModalGallery />
+      <AdminContentModalGallery />
     </template>
     <template #offers>
-      <ContentModalOffer />
+      <AdminContentModalOffer />
     </template>
     <template #form>
-      <ContentModalForm />
+      <AdminContentModalForm />
     </template>
     <template #downloads>
-      <ContentModalDownloads />
+      <AdminContentModalDownloads />
     </template>
     <template #faq>
-      <ContentModalFAQ />
+      <AdminContentModalFAQ />
     </template>
   </UAccordion>
 </template>
