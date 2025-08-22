@@ -1,7 +1,8 @@
 <script setup lang="ts">
-const { settings } = await useProfile()
+const nuxtApp = useNuxtApp()
+const { $profile } = nuxtApp
 
-const items = computed(() => settings.value.components.offers.items.map(offer => ({
+const items = computed(() => $profile.settings.components.offers.items.map(offer => ({
   title: offer.title,
   description: offer.description,
 })) || [])

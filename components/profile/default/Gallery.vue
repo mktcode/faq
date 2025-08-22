@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const { settings, designRounded } = await useProfile()
+const nuxtApp = useNuxtApp()
+const { $profile } = nuxtApp
+
 const showModal = ref(false)
 const carousel = useTemplateRef('carousel')
 const carouselIndex = ref(0)
@@ -16,15 +18,15 @@ function scrollTo() {
 
 <template>
   <div
-    v-if="settings.components.gallery.items.length"
+    v-if="$profile.settings.components.gallery.items.length"
     class="my-6 w-full"
   >
     <ProfileDefaultGalleryGrid
-      v-if="settings.components.gallery.type === 'grid'"
+      v-if="$profile.settings.components.gallery.type === 'grid'"
       @open-modal="openModal"
     />
     <ProfileDefaultGalleryMasonry
-      v-if="settings.components.gallery.type === 'masonry'"
+      v-if="$profile.settings.components.gallery.type === 'masonry'"
       @open-modal="openModal"
     />
     <UModal
@@ -43,16 +45,16 @@ function scrollTo() {
         </h2>
         <div class="flex items-center gap-0.5 overflow-x-scroll">
           <img
-            v-for="(item, index) in settings.components.gallery.items"
+            v-for="(item, index) in $profile.settings.components.gallery.items"
             :key="index"
             :src="item?.url"
             class="size-10 object-cover shrink-0 cursor-pointer transition-all border-2"
             :class="{
               'border-primary': index === carouselIndex,
               'border-transparent opacity-60 hover:opacity-100': index !== carouselIndex,
-              'rounded-full': designRounded === 'xl',
-              'rounded-md': designRounded === 'md',
-              'rounded-none': designRounded === 'none',
+              'rounded-full': $profile.settings.design.rounded === 'xl',
+              'rounded-md': $profile.settings.design.rounded === 'md',
+              'rounded-none': $profile.settings.design.rounded === 'none',
             }"
             @click="carouselIndex = index; scrollTo()"
           >
@@ -74,7 +76,7 @@ function scrollTo() {
         <UCarousel
           ref="carousel"
           v-slot="{ item }"
-          :items="settings.components.gallery.items"
+          :items="$profile.settings.components.gallery.items"
           :ui="{
             root: 'h-full',
             viewport: 'h-full',

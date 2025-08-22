@@ -1,21 +1,22 @@
 <script setup lang="ts">
-const { settings, designRounded } = await useProfile()
+const nuxtApp = useNuxtApp()
+const { $profile } = nuxtApp
 </script>
 
 <template>
   <div
-    v-if="settings.components.downloads.items.length"
+    v-if="$profile.settings.components.downloads.items.length"
     class="my-6 w-full"
   >
     <div class="flex flex-col gap-2">
       <div
-        v-for="download in settings.components.downloads.items"
+        v-for="download in $profile.settings.components.downloads.items"
         :key="download.url"
         class="p-4 border border-gray-200"
         :class="{
-          'rounded-none': designRounded === 'none',
-          'rounded-md': designRounded === 'md',
-          'rounded-xl': designRounded === 'xl',
+          'rounded-none': $profile.settings.design.rounded === 'none',
+          'rounded-md': $profile.settings.design.rounded === 'md',
+          'rounded-xl': $profile.settings.design.rounded === 'xl',
         }"
       >
         <h4 class="text-lg font-semibold">

@@ -2,15 +2,22 @@
 import { de } from '@nuxt/ui/locale'
 
 const path = useRoute().path
-
-const { username, isOwned, isPublic, design } = await useProfile()
+const profile = await useProfile()
 </script>
 
 <template>
   <UApp :locale="de">
-    <template v-if="username">
-      <template v-if="isOwned || isPublic">
-        <ProfileDefaultMain v-if="path === '/' && design === 'default'" />
+    <template v-if="profile">
+      <template v-if="profile.isOwned || profile.isPublic">
+        <ProfileDefaultMain
+          v-if="path === '/' && profile.design === 'default'"
+          :username="profile.username"
+          :isOwned="profile.isOwned"
+          :isPublic="profile.isPublic"
+          :isSubscribed="profile.isSubscribed"
+          :settings="profile.settings"
+          :canonical-url="profile.canonicalUrl"
+        />
         <ProfileImpressum v-else-if="path === '/impressum'" />
         <ProfileDatenschutz v-else-if="path === '/datenschutz'" />
         <Profile404 v-else />

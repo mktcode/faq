@@ -3,7 +3,7 @@ import type { AccordionItem } from '@nuxt/ui'
 
 const appConfig = useAppConfig()
 const { public: { appHost } } = useRuntimeConfig()
-const { me } = await useMe()
+const { user } = useUserSession()
 
 const companyContext = ref('')
 
@@ -93,7 +93,7 @@ appConfig.ui.colors.primary = 'sky'
           </button>
           <a
             class="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-3 rounded-[12px] font-semibold tracking-[.2px] border border-slate-900/10 bg-white/10 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
-            :href="me ? `https://${me.userName}.${appHost}` : '/login'"
+            :href="user ? `https://${user.userName}.${appHost}` : '/login'"
             aria-label="Anmelden"
           >
             <span>
@@ -138,7 +138,7 @@ appConfig.ui.colors.primary = 'sky'
         <div class="flex flex-wrap gap-3 mt-2">
           <a
             class="w-full sm:w-auto inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-sky-500/80 hover:bg-sky-500 border border-sky-300/40 text-white transition duration-200 opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.5s_forwards]"
-            :href="me ? `https://${me.userName}.${appHost}` : '/register'"
+            :href="user ? `https://${user.userName}.${appHost}` : '/register'"
           >
             <UIcon
               name="i-heroicons-computer-desktop"
@@ -295,7 +295,7 @@ appConfig.ui.colors.primary = 'sky'
             <LandingpageRecordAudio @transcript="companyContext = (companyContext || '') + $event" />
             <a
               class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-sky-500/80 hover:bg-sky-500 border border-sky-300/40 text-white transition duration-200"
-              :href="me ? `https://${me.userName}.${appHost}` : `/register?context=${encodeURIComponent(companyContext)}`"
+              :href="user ? `https://${user.userName}.${appHost}` : `/register?context=${encodeURIComponent(companyContext)}`"
             >
               Kostenlose Website erstellen
               <UIcon name="i-heroicons-arrow-right" class="ml-auto" />

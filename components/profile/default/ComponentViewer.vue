@@ -5,21 +5,22 @@ const { slotIndex } = defineProps<{
   slotIndex: number
 }>()
 
-const { settings } = await useProfile()
+const nuxtApp = useNuxtApp()
+const { $profile } = nuxtApp
 
 function isComponentDisplayed(componentKey: ComponentKey, index: number): boolean {
-  if (componentKey === 'offers' && !settings.value.components.offers.items.length) {
+  if (componentKey === 'offers' && !$profile.settings.components.offers.items.length) {
     return false
   }
-  if (componentKey === 'gallery' && !settings.value.components.gallery.items.length) {
+  if (componentKey === 'gallery' && !$profile.settings.components.gallery.items.length) {
     return false
   }
-  if (componentKey === 'downloads' && !settings.value.components.downloads.items.length) {
+  if (componentKey === 'downloads' && !$profile.settings.components.downloads.items.length) {
     return false
   }
 
-  const isVisible = settings.value.components[componentKey].visible
-  const correctIndex = settings.value.components[componentKey].order === index
+  const isVisible = $profile.settings.components[componentKey].visible
+  const correctIndex = $profile.settings.components[componentKey].order === index
 
   return !!(isVisible && correctIndex)
 }

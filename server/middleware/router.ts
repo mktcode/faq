@@ -12,6 +12,7 @@ interface TargetUser {
   userName: string
   published: boolean
   lastPaidAt: Date | null
+  domain: string | null
 }
 
 function validateHostHeader(event: H3Event): string {
@@ -44,20 +45,25 @@ function determineHostType(event: H3Event): HostType {
 }
 
 async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUser | undefined): Promise<void> {
+  const { public: { appHost } } = useRuntimeConfig()
+  
   if (!targetUser) {
-    const { public: { appHost } } = useRuntimeConfig()
-    sendRedirect(event, `https://${appHost}`, 307)
+    await sendRedirect(event, `https://${appHost}`, 307)
     return
   }
 
   const { user: loggedInUser } = await getUserSession(event)
+  const settings = await getPublicSettings(targetUser.userName)
+  const canonicalUrl = targetUser.domain ? `https://${targetUser.domain}${event.node.req.url}` : `https://${targetUser.userName}.${appHost}${event.node.req.url}`
 
   event.context.profile = {
-    username: targetUser?.userName || null,
-    isSubscribed: targetUser ? checkSubscriptionStatus(targetUser.lastPaidAt) : false,
-    isOwned: loggedInUser ? loggedInUser.userName === targetUser?.userName : false,
-    isPublic: targetUser ? targetUser.published : false,
+    username: targetUser.userName,
+    isSubscribed: checkSubscriptionStatus(targetUser.lastPaidAt),
+    isOwned: loggedInUser ? loggedInUser.userName === targetUser.userName : false,
+    isPublic: targetUser.published,
     design: 'default',
+    settings,
+    canonicalUrl,
   }
 }
 
@@ -69,7 +75,7 @@ async function handleCustomDomain(event: H3Event, domain: string): Promise<void>
   const db = await getDatabaseConnection()
 
   const targetUser = await db.selectFrom('users')
-    .select(['userName', 'published', 'lastPaidAt'])
+    .select(['userName', 'published', 'lastPaidAt', 'domain'])
     .where('domain', '=', domain)
     .executeTakeFirst()
 
@@ -81,7 +87,7 @@ async function handleSubdomain(event: H3Event, currentHost: string): Promise<voi
   const username = extractUsernameFromSubdomain(currentHost)
 
   const targetUser = await db.selectFrom('users')
-    .select(['userName', 'published', 'lastPaidAt'])
+    .select(['userName', 'published', 'lastPaidAt', 'domain'])
     .where('userName', '=', username)
     .executeTakeFirst()
 

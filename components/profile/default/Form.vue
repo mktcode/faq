@@ -2,7 +2,8 @@
 import { watchDebounced } from '@vueuse/core'
 import type { SimilarQuestion } from '~/server/api/qanda/similarQuestions.post'
 
-const { username, isSubscribed, settings, designRounded } = await useProfile()
+const nuxtApp = useNuxtApp()
+const { $profile } = nuxtApp
 
 const message = ref('')
 const messageLongEnough = computed(() => message.value.trim().length >= 5)
@@ -25,7 +26,7 @@ async function saveCustomerRequest() {
     await $fetch('/api/customerRequests', {
       method: 'POST',
       body: {
-        username: username.value,
+        username: $profile.username,
         message: message.value,
         embedding: messageEmbedding.value,
         name: name.value,
@@ -52,14 +53,14 @@ async function saveCustomerRequest() {
 }
 
 async function getEmbedding() {
-  if (!messageLongEnough.value || !isSubscribed.value) {
+  if (!messageLongEnough.value || !$profile.isSubscribed) {
     return
   }
 
   const embedding = await $fetch('/api/qanda/embedding', {
     query: {
       message: message.value,
-      username, // TODO: not really safe, needs origin based verification in backend
+      username: $profile.username, // TODO: not really safe, needs origin based verification in backend
     },
   })
 
@@ -73,7 +74,7 @@ async function getSimilarQuestions() {
     const response = await $fetch('/api/qanda/similarQuestions', {
       method: 'POST',
       body: {
-        username,
+        username: $profile.username,
         embedding: messageEmbedding.value,
       },
     })
@@ -88,7 +89,7 @@ const disabled = computed(() => {
   return isSavingRequest.value
     || !name.value
     || (!phone.value && !email.value)
-    || (isSubscribed.value && !messageEmbedding.value)
+    || ($profile.isSubscribed && !messageEmbedding.value)
 })
 </script>
 
@@ -107,9 +108,9 @@ const disabled = computed(() => {
     <div
       class="bg-gray-100 p-2 flex items-center gap-2"
       :class="{
-        'rounded-b-none': designRounded === 'none',
-        'rounded-b-md': designRounded === 'md',
-        'rounded-b-xl': designRounded === 'xl',
+        'rounded-b-none': $profile.settings.design.rounded === 'none',
+        'rounded-b-md': $profile.settings.design.rounded === 'md',
+        'rounded-b-xl': $profile.settings.design.rounded === 'xl',
       }"
     >
       <Transition name="fade">
@@ -125,7 +126,7 @@ const disabled = computed(() => {
         </div>
       </Transition>
       <ProfileDefaultRecordAudio
-        v-if="isSubscribed"
+        v-if="$profile.isSubscribed"
         class="ml-auto"
         :disabled="false"
         @text="(text) => { message = text }"
@@ -136,9 +137,9 @@ const disabled = computed(() => {
         v-if="similarQuestions.length > 0 && messageLongEnough"
         class="w-full flex flex-col text-gray-800 mt-2 border border-gray-200 p-4"
         :class="{
-          'rounded-none': designRounded === 'none',
-          'rounded-md': designRounded === 'md',
-          'rounded-xl': designRounded === 'xl',
+          'rounded-none': $profile.settings.design.rounded === 'none',
+          'rounded-md': $profile.settings.design.rounded === 'md',
+          'rounded-xl': $profile.settings.design.rounded === 'xl',
         }"
       >
         <div class="text-sm text-sky-900/60 mb-2">
@@ -170,7 +171,7 @@ const disabled = computed(() => {
         />
       </UFormField>
       <div
-        v-for="(field, index) in settings.components.form.fields || []"
+        v-for="(field, index) in $profile.settings.components.form.fields || []"
         :key="index"
       >
         <UFormField
@@ -274,7 +275,7 @@ const disabled = computed(() => {
         variant="soft"
         icon="i-heroicons-check"
         title="Ihre Anfrage wurde gesendet."
-        :description="settings.components.form.successMessage || 'Vielen Dank für Ihre Anfrage. Wir melden uns zeitnah bei Ihnen.'"
+        :description="$profile.settings.components.form.successMessage || 'Vielen Dank für Ihre Anfrage. Wir melden uns zeitnah bei Ihnen.'"
         :close="{
           color: 'primary',
         }"
@@ -289,7 +290,7 @@ const disabled = computed(() => {
         variant="soft"
         icon="i-heroicons-exclamation-triangle"
         title="Ihre Anfrage konnte nicht gesendet werden."
-        :description="settings.components.form.errorMessage || `Beim Senden Ihrer Anfrage ist ein Fehler aufgetreten. Versuchen Sie es bitte später erneut oder per Telefon oder E-Mail.`"
+        :description="$profile.settings.components.form.errorMessage || `Beim Senden Ihrer Anfrage ist ein Fehler aufgetreten. Versuchen Sie es bitte später erneut oder per Telefon oder E-Mail.`"
         :actions="[
           {
             label: 'zum Impressum',
