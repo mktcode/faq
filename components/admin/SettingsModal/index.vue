@@ -127,16 +127,16 @@ const active = ref<string | undefined>(undefined)
           </div>
         </template>
         <template #company>
-          <SettingsModalCompany />
+          <AdminSettingsModalCompany />
         </template>
         <template #domain>
-          <SettingsModalDomain @go-to-subscription="active = '2'" />
+          <AdminSettingsModalDomain @go-to-subscription="active = '2'" />
         </template>
         <template #email>
-          <SettingsModalEmail @go-to-subscription="active = '2'" />
+          <AdminSettingsModalEmail @go-to-subscription="active = '2'" />
         </template>
         <template #subscription>
-          <SettingsModalSubscription />
+          <AdminSettingsModalSubscription />
         </template>
       </UAccordion>
     </template>
