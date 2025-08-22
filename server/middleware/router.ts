@@ -46,21 +46,29 @@ function determineHostType(event: H3Event): HostType {
 
 async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUser | undefined): Promise<void> {
   const { public: { appHost } } = useRuntimeConfig()
-  
+
   if (!targetUser) {
     await sendRedirect(event, `https://${appHost}`, 307)
     return
   }
 
   const { user: loggedInUser } = await getUserSession(event)
-  const settings = await getPublicSettings(targetUser.userName)
+  const isOwned = loggedInUser ? loggedInUser.userName === targetUser.userName : false
+  const isPublic = targetUser.published
+
+  if (!isPublic && !isOwned) {
+    await sendRedirect(event, `https://${appHost}`, 307)
+    return
+  }
+
+  const settings = await getSettings(targetUser.userName)
   const canonicalUrl = targetUser.domain ? `https://${targetUser.domain}${event.node.req.url}` : `https://${targetUser.userName}.${appHost}${event.node.req.url}`
 
   event.context.profile = {
     username: targetUser.userName,
     isSubscribed: checkSubscriptionStatus(targetUser.lastPaidAt),
-    isOwned: loggedInUser ? loggedInUser.userName === targetUser.userName : false,
-    isPublic: targetUser.published,
+    isOwned,
+    isPublic,
     design: 'default',
     settings,
     canonicalUrl,

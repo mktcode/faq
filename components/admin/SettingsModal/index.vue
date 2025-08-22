@@ -5,7 +5,7 @@ const toast = useToast()
 const showModal = useState('showSettingsModal', () => false)
 
 const nuxtApp = useNuxtApp()
-const { $profile } = nuxtApp
+const { $profile, $admin } = nuxtApp
 
 const showLegalDataWarning = computed(() => {
   return !$profile.settings.company.name || !$profile.settings.company.street || !$profile.settings.company.phone

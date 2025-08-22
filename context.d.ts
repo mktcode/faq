@@ -8,7 +8,7 @@ declare module 'h3' {
       isOwned: boolean
       isPublic: boolean
       design: string
-      settings: SettingsForm['public']
+      settings: SettingsForm
       canonicalUrl: string
     } | undefined
   }

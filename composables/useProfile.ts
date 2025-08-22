@@ -5,10 +5,10 @@ export const useProfile = async () => {
 
   if (profile.value) {
     appConfig.ui.colors.primary = 'website'
-    appConfig.ui.button.defaultVariants.rounded = profile.value.settings.design.rounded
-    appConfig.ui.input.defaultVariants.rounded = profile.value.settings.design.rounded
-    appConfig.ui.select.defaultVariants.rounded = profile.value.settings.design.rounded
-    appConfig.ui.textarea.defaultVariants.rounded = profile.value.settings.design.rounded
+    appConfig.ui.button.defaultVariants.rounded = profile.value.settings.public.design.rounded
+    appConfig.ui.input.defaultVariants.rounded = profile.value.settings.public.design.rounded
+    appConfig.ui.select.defaultVariants.rounded = profile.value.settings.public.design.rounded
+    appConfig.ui.textarea.defaultVariants.rounded = profile.value.settings.public.design.rounded
   }
 
   return profile

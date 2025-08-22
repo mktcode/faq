@@ -8,21 +8,25 @@ const profile = await useProfile()
 <template>
   <UApp :locale="de">
     <template v-if="profile">
-      <template v-if="profile.isOwned || profile.isPublic">
-        <ProfileDefaultMain
-          v-if="path === '/' && profile.design === 'default'"
-          :username="profile.username"
-          :isOwned="profile.isOwned"
-          :isPublic="profile.isPublic"
-          :isSubscribed="profile.isSubscribed"
-          :settings="profile.settings"
-          :canonical-url="profile.canonicalUrl"
-        />
-        <ProfileImpressum v-else-if="path === '/impressum'" />
-        <ProfileDatenschutz v-else-if="path === '/datenschutz'" />
-        <Profile404 v-else />
-      </template>
-      <Pages404 v-else />
+      <ProfileDefaultAdmin
+        v-if="profile.isOwned"
+        :username="profile.username"
+        :isPublic="profile.isPublic"
+        :isSubscribed="profile.isSubscribed"
+        :settings="profile.settings"
+      />
+      <ProfileDefaultMain
+        v-if="path === '/' && profile.design === 'default'"
+        :username="profile.username"
+        :isOwned="profile.isOwned"
+        :isPublic="profile.isPublic"
+        :isSubscribed="profile.isSubscribed"
+        :settings="profile.settings.public"
+        :canonical-url="profile.canonicalUrl"
+      />
+      <ProfileImpressum v-else-if="path === '/impressum'" />
+      <ProfileDatenschutz v-else-if="path === '/datenschutz'" />
+      <Profile404 v-else />
     </template>
     <template v-else>
       <PagesLandingpage v-if="path === '/'" />

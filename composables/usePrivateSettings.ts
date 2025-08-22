@@ -1,30 +1,27 @@
-export const usePrivateSettings = async () => {
+export const useSettings = () => {
   const toast = useToast()
-  const isSavingPrivateSettings = ref(false)
+  const $profile = useNuxtApp().$profile
+  const isSavingSettings = ref(false)
 
-  const { data: privateSettings, refresh: refreshPrivateSettings } = await useFetch(`/api/user/settings/private`)
+  async function saveSettings() {
+    if (isSavingSettings.value) return
+    isSavingSettings.value = true
 
-  async function savePrivateSettings() {
-    if (isSavingPrivateSettings.value) return
-    isSavingPrivateSettings.value = true
-
-    await $fetch('/api/user/settings/private', {
+    await $fetch('/api/user/settings', {
       method: 'POST',
-      body: privateSettings.value,
+      body: $profile.settings,
     })
     toast.add({
       title: 'Einstellungen gespeichert',
       description: 'Deine Einstellungen wurden erfolgreich gespeichert.',
       color: 'primary',
     })
-    refreshPrivateSettings()
-    isSavingPrivateSettings.value = false
+    isSavingSettings.value = false
   }
 
   return {
-    privateSettings,
-    isSavingPrivateSettings,
-    refreshPrivateSettings,
-    savePrivateSettings,
+    settings: $profile.settings,
+    isSavingSettings,
+    saveSettings,
   }
 }
