@@ -1,5 +1,5 @@
 <script setup lang="ts">
-function saveSettings() {}
+const { saveSettings, isSavingSettings } = useSettings()
 </script>
 
 <template>
@@ -44,6 +44,7 @@ function saveSettings() {}
       variant="solid"
       color="primary"
       @click="saveSettings"
+      :loading="isSavingSettings"
     />
   </div>
 </template>

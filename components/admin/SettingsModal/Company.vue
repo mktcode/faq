@@ -1,6 +1,6 @@
 <script setup lang="ts">
 function saveSettings() {
-
+  console.log('saveSettings called');
 }
 </script>
 

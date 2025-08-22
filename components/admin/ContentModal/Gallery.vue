@@ -2,8 +2,7 @@
 const toast = useToast()
 
 const $profile = useNuxtApp().$profile
-
-function saveSettings() {}
+const { saveSettings, isSavingSettings } = useSettings()
 
 const fileInput = ref<HTMLInputElement | null>(null)
 const isDragging = ref(false)
@@ -195,6 +194,7 @@ async function deleteImage(index: number) {
       variant="solid"
       color="primary"
       @click="saveSettings()"
+      :loading="isSavingSettings"
     />
   </div>
 </template>

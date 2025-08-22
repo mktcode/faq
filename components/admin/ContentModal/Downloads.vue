@@ -1,8 +1,7 @@
 <script setup lang="ts">
 const toast = useToast()
 
-function saveSettings() {}
-const $profile = useNuxtApp().$profile
+const { settings, saveSettings, isSavingSettings } = useSettings()
 
 const fileInput = ref<HTMLInputElement | null>(null)
 const isDragging = ref(false)
@@ -22,8 +21,8 @@ const uploadFile = async (files: FileList | null) => {
       body: formData,
     })
 
-    $profile.settings.components.downloads.items = [
-      ...$profile.settings.components.downloads.items,
+    settings.components.downloads.items = [
+      ...settings.components.downloads.items,
       ...uploadedFiles,
     ]
 
@@ -67,7 +66,7 @@ const onDrop = async (e: DragEvent) => {
 }
 
 async function deleteDownload(index: number) {
-  const url = $profile.settings.components.downloads.items[index].url
+  const url = settings.components.downloads.items[index].url
   const { success } = await $fetch('/api/user/upload/delete', {
     method: 'POST',
     body: JSON.stringify({ url }),
@@ -82,7 +81,7 @@ async function deleteDownload(index: number) {
     return
   }
 
-  $profile.settings.components.downloads.items.splice(index, 1)
+  settings.components.downloads.items.splice(index, 1)
   saveSettings()
 }
 </script>
@@ -159,6 +158,7 @@ async function deleteDownload(index: number) {
     <UButton
       label="Einstellungen speichern"
       @click="saveSettings()"
+      :loading="isSavingSettings"
     />
   </div>
 </template>

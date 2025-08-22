@@ -10,17 +10,17 @@ const props = defineProps<{
 }>()
 
 const model = defineModel<string | null>()
-const { settings } = await useProfile()
-const designRounded = ref(props.rounded || settings.value?.design.rounded || 'md')
+const { settings } = useSettings()
+const designRounded = props.rounded || settings.design.rounded || 'md'
 
 const roundedClass = computed(() => {
-  if (designRounded.value === 'none') {
+  if (designRounded === 'none') {
     return 'rounded-none'
   }
-  else if (designRounded.value === 'md') {
+  else if (designRounded === 'md') {
     return 'rounded-md'
   }
-  else if (designRounded.value === 'xl') {
+  else if (designRounded === 'xl') {
     return 'rounded-xl'
   }
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-function saveSettings() {}
+const { saveSettings, isSavingSettings } = useSettings()
 const { appHost } = useRuntimeConfig().public
 </script>
 
@@ -74,6 +74,7 @@ const { appHost } = useRuntimeConfig().public
     <UButton
       variant="solid"
       color="primary"
+      :loading="isSavingSettings"
       @click="() => saveSettings()"
     >
       Einstellungen speichern
