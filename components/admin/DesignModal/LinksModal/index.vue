@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const showModal = useState('showLinksModal', () => false)
-function saveSettings() {}
+const { saveSettings, isSavingSettings } = useSettings()
 </script>
 
 <template>
@@ -53,6 +53,7 @@ function saveSettings() {}
         color="primary"
         class="mt-4"
         @click="saveSettings"
+        :loading="isSavingSettings"
       />
     </template>
   </UModal>

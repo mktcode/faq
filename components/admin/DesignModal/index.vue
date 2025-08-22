@@ -8,6 +8,7 @@ const headerImageInput = ref<HTMLInputElement | null>(null)
 const headerVideoInput = ref<HTMLInputElement | null>(null)
 const logoInput = ref<HTMLInputElement | null>(null)
 const showUploadHeaderModal = ref(false)
+const showLinksModal = useState('showLinksModal', () => false)
 const showCustomCss = ref(false)
 
 const uploadHeaderImage = async (files: FileList | null) => {
@@ -394,6 +395,10 @@ async function deleteImage(image: 'logo' | 'header') {
             class="w-full"
           />
         </UFormField>
+        <UButton
+          label="Links bearbeiten"
+          @click="showLinksModal = true"
+        />
         <UCollapsible
           v-model:open="showCustomCss"
           class="flex flex-col gap-2"
@@ -503,6 +508,7 @@ async function deleteImage(image: 'logo' | 'header') {
           </UButton>
         </template>
       </UModal>
+      <AdminDesignModalLinksModal />
     </template>
   </UDrawer>
 </template>

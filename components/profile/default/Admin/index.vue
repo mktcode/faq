@@ -8,7 +8,6 @@ const subscriptionSuccess = !!route.query.subscriptionSuccess
   <ProfileDefaultAdminNav />
   <AdminDesignModal />
   <AdminContentModal />
-  <AdminLinksModal />
   <AdminFeedbackModal />
   <AdminEmailVerifiedModal v-if="emailVerified" />
   <AdminSubscriptionSuccessModal v-if="subscriptionSuccess" />
