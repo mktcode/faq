@@ -1,8 +1,5 @@
 <script setup lang="ts">
-const { isSubscribed, refreshSettings } = await useProfile()
-
 const { clear } = useUserSession()
-const { refreshMe } = await useMe()
 
 const showMenu = ref(false)
 const showSettingsModal = useState('showSettingsModal', () => false)
@@ -28,7 +25,6 @@ function closeAndOpenContent() {
 
 async function signOut() {
   await clear()
-  refreshMe()
 }
 </script>
 
@@ -104,12 +100,12 @@ async function signOut() {
         class="w-full rounded-none p-4 border-y border-gray-200"
         variant="ghost"
         color="neutral"
-        :disabled="!isSubscribed"
+        :disabled="!$profile.isSubscribed"
         @click="showAssistantResearchModal = true"
       >
         <template #trailing>
           <UBadge
-            v-if="!isSubscribed"
+            v-if="!$profile.isSubscribed"
             label="Premium"
             variant="outline"
             class="ml-auto"
@@ -127,7 +123,7 @@ async function signOut() {
       >
         <template #trailing>
           <UBadge
-            v-if="!isSubscribed"
+            v-if="!$profile.isSubscribed"
             label="Premium"
             variant="outline"
             class="ml-auto"
@@ -151,7 +147,7 @@ async function signOut() {
       >
         <template #trailing>
           <UBadge
-            v-if="!isSubscribed"
+            v-if="!$profile.isSubscribed"
             label="Premium"
             variant="outline"
             class="ml-auto"
@@ -167,7 +163,7 @@ async function signOut() {
 
       <AssistantModal />
       <AssistantModalResearch />
-      <SettingsModal @update="refreshSettings" />
+      <SettingsModal />
     </template>
 
     <template #footer>

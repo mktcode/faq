@@ -70,7 +70,10 @@ useHead({
     :font="profile.settings.design.font"
     class="relative"
   >
-    <!-- <ProfileDefaultAdmin v-if="profile.isOwned" /> -->
+    <ClientOnly>
+      <ProfileDefaultReLogin />
+    </ClientOnly>
+    <ProfileDefaultAdmin v-if="profile.isOwned" />
     <ProfileDefaultHeader />
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
       <ProfileDefaultComponentViewer

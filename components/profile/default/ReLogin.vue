@@ -2,27 +2,28 @@
 import { useLocalStorage } from '@vueuse/core';
 
 const { appHost } = useRuntimeConfig().public
-const { me } = await useMe()
-const { username, isOwned } = await useProfile()
 const ownedUserNames = useLocalStorage<string[]>('ownedUserNames', [])
+const nuxtApp = useNuxtApp()
+const { $profile } = nuxtApp
+const { loggedIn } = useUserSession()
 
-if (isOwned && username.value && !ownedUserNames.value.includes(username.value)) {
-  ownedUserNames.value.push(username.value)
+if ($profile.isOwned && !ownedUserNames.value.includes($profile.username)) {
+  ownedUserNames.value.push($profile.username)
 }
 
 const showReLoginButton = computed(() => {
-  return username.value && ownedUserNames.value.includes(username.value) && !me.value
+  return ownedUserNames.value.includes($profile.username) && !loggedIn.value
 })
 </script>
 
 <template>
   <div>
     <UButton
-      v-if="showReLoginButton && username"
+      v-if="showReLoginButton"
       variant="ghost"
       class="bg-white/90 hover:bg-white fixed top-2 left-2 z-30"
       label="Anmelden"
-      :href="`https://${appHost}/login?username=${encodeURIComponent(username)}`"
+      :href="`https://${appHost}/login?username=${encodeURIComponent($profile.username)}`"
     />
   </div>
 </template>

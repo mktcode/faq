@@ -6,10 +6,9 @@ const subscriptionSuccess = !!route.query.subscriptionSuccess
 
 <template>
   <ClientOnly>
-    <ProfileDefaultReLogin />
     <WelcomeModal />
   </ClientOnly>
-  <ProfileDefaultNav />
+  <ProfileDefaultAdminNav />
   <DesignModal />
   <ContentModal />
   <LinksModal />
