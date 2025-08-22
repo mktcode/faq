@@ -43,6 +43,7 @@ export async function createUser({
       userName: makeUsername(userName),
       published: false,
       domain: null,
+      domainIsExternal: false,
       settings: JSON.stringify(settings),
     })
     .executeTakeFirstOrThrow()
@@ -165,7 +166,7 @@ export async function requireProfileSubscription(username: string) {
   }
 }
 
-function getValidatedSettings(settings: string | Record<string, unknown>): SettingsForm {
+export function getValidatedSettings(settings: string | Record<string, unknown>): SettingsForm {
   return settingsFormSchema.parse(typeof settings === 'string' ? JSON.parse(settings) : settings)
 }
 

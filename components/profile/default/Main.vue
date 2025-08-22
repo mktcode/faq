@@ -3,6 +3,8 @@ const route = useRoute()
 const emailVerified = !!route.query.emailVerified
 const subscriptionSuccess = !!route.query.subscriptionSuccess
 
+// const { user, loggedIn } = useUserSession()
+
 const { appHost } = useRuntimeConfig().public
 const { me } = await useMe()
 const { username, settings, refreshSettings, isOwned, isPublic, font } = await useProfile()

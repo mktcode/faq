@@ -75,14 +75,19 @@ async function createDomainIfNotExists(domain: string) {
 }
 
 async function listMailboxes(domainCode: string) {
-  const result = await makeRequest<{ resources: {
-    code: string,
-    name: string,
-    email_address: string,
-    firstname: string,
-  }[]}>('GET', `domains/${domainCode}/email_accounts`)
-
-  return result.resources
+  try {
+    const result = await makeRequest<{ resources: {
+      code: string,
+      name: string,
+      email_address: string,
+      firstname: string,
+    }[]}>('GET', `domains/${domainCode}/email_accounts`)
+  
+    return result.resources
+  } catch (error) {
+    // INFO: For some reason qboxmail returns a 404 for an empty list *shrug*
+    return []
+  }
 }
 
 async function createMailbox(mailbox: string, domainCode: string, companyName: string) {

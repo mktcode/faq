@@ -34,9 +34,15 @@ const items: AccordionItem[] = [
     slot: 'company',
   },
   {
-    label: 'Domain und E-Mail',
+    label: 'Domain',
     icon: 'i-heroicons-globe-alt',
     slot: 'domain',
+  },
+  {
+    label: 'E-Mail',
+    icon: 'i-heroicons-envelope',
+    slot: 'email',
+    disabled: !me.value?.isSubscribed
   },
   {
     label: 'Abonnement',
@@ -101,11 +107,30 @@ const active = ref<string | undefined>(undefined)
           header: 'px-4 hover:bg-gray-50',
         }"
       >
+        <template #trailing="{ item, open }">
+          <div class="ml-auto flex items-center gap-2">
+            <UBadge
+              v-if="item.disabled"
+              label="Premium"
+              variant="soft"
+            />
+            <UIcon
+              name="i-heroicons-chevron-down"
+              class="inline-block size-5 opacity-50"
+              :class="{
+                'rotate-180': open
+              }"
+            />
+          </div>
+        </template>
         <template #company>
           <SettingsModalCompany />
         </template>
         <template #domain>
           <SettingsModalDomain @go-to-subscription="active = '2'" />
+        </template>
+        <template #email>
+          <SettingsModalEmail @go-to-subscription="active = '2'" />
         </template>
         <template #subscription>
           <SettingsModalSubscription />
