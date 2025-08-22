@@ -3,8 +3,7 @@ import { useLocalStorage } from '@vueuse/core';
 
 const { appHost } = useRuntimeConfig().public
 const ownedUserNames = useLocalStorage<string[]>('ownedUserNames', [])
-const nuxtApp = useNuxtApp()
-const { $profile } = nuxtApp
+const $profile = useNuxtApp().$profile
 const { loggedIn } = useUserSession()
 
 if ($profile.isOwned && !ownedUserNames.value.includes($profile.username)) {

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-const nuxtApp = useNuxtApp()
-const { $profile } = nuxtApp
+const $profile = useNuxtApp().$profile
 
 const extraScripts = []
 if ($profile.isOwned && $profile.isSubscribed) {
@@ -12,19 +11,19 @@ if ($profile.isOwned && $profile.isSubscribed) {
 }
 
 useHead({
-  title: $profile.settings.meta.title || $profile.settings.header.title || $profile.settings.company.name || 'Solihost Website',
+  title: $profile.settings.public.meta.title || $profile.settings.public.header.title || $profile.settings.public.company.name || 'Solihost Website',
   meta: [
     { name: 'robots', content: $profile.isPublic ? 'index, follow' : 'noindex, nofollow' },
-    { name: 'theme-color', content: $profile.settings.design.color },
+    { name: 'theme-color', content: $profile.settings.public.design.color },
     { property: 'og:url', content: $profile.canonicalUrl },
-    { property: 'og:image', content: $profile.settings.meta.ogimage || $profile.settings.header.image || '' },
+    { property: 'og:image', content: $profile.settings.public.meta.ogimage || $profile.settings.public.header.image || '' },
     {
       name: 'description',
-      content: $profile.settings.meta.description || $profile.settings.header.description || '',
+      content: $profile.settings.public.meta.description || $profile.settings.public.header.description || '',
     },
     {
       name: 'keywords',
-      content: $profile.settings.meta.keywords || '',
+      content: $profile.settings.public.meta.keywords || '',
     },
   ],
   link: [
@@ -35,7 +34,7 @@ useHead({
     {
       rel: 'icon',
       type: 'image/png',
-      href: $profile.settings.meta.favicon || $profile.settings.company.logo || '',
+      href: $profile.settings.public.meta.favicon || $profile.settings.public.company.logo || '',
     },
     {
       rel: 'stylesheet',
@@ -49,7 +48,7 @@ useHead({
 <template>
   <FontWrapper
     id="main"
-    :font="$profile.settings.design.font"
+    :font="$profile.settings.public.design.font"
     class="relative"
   >
     <ClientOnly>
@@ -57,11 +56,11 @@ useHead({
     </ClientOnly>
     <ProfileMainHeader />
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
-      <ProfileMainComponentViewer
+      <!-- <ProfileMainComponentViewer
         v-for="index in 5"
         :key="index"
         :slot-index="index"
-      />
+      /> -->
 
       <ProfileMainFooter />
     </div>

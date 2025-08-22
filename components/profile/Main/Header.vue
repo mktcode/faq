@@ -1,4 +1,4 @@
 <template>
-  <ProfileMainHeaderVideo v-if="$profile.settings.header.video" />
+  <ProfileMainHeaderVideo v-if="$profile.settings.public.header.video" />
   <ProfileMainHeaderImage v-else />
 </template>

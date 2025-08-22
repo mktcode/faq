@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
 
-const nuxtApp = useNuxtApp()
-const { $profile } = nuxtApp
+const $profile = useNuxtApp().$profile
 
 const { copy, copied } = useClipboard()
 const { copy: copyForInstagram, copied: copiedForInstagram } = useClipboard()
@@ -35,9 +34,9 @@ function getStaggeredAnimationClass(index: number) {
     id="links"
     class="max-w-xs sm:max-w-none w-full flex flex-col sm:flex-row items-center justify-center gap-2 mb-4"
   >
-    <template v-if="$profile.settings.header.links && $profile.settings.header.links.length > 0">
+    <template v-if="$profile.settings.public.header.links && $profile.settings.public.header.links.length > 0">
       <UButton
-        v-for="(link, index) in $profile.settings.header.links"
+        v-for="(link, index) in $profile.settings.public.header.links"
         :key="index"
         :label="link.title"
         :icon="link.icon === 'none' ? undefined : link.icon"
@@ -49,13 +48,13 @@ function getStaggeredAnimationClass(index: number) {
     </template>
 
     <UPopover
-      v-if="$profile.settings.header.showShareButton"
+      v-if="$profile.settings.public.header.showShareButton"
       class="mb-auto"
     >
       <UButton
         label="Teilen"
         icon="i-heroicons-share"
-        :class="getStaggeredAnimationClass($profile.settings.header.links ? $profile.settings.header.links.length : 0)"
+        :class="getStaggeredAnimationClass($profile.settings.public.header.links ? $profile.settings.public.header.links.length : 0)"
         class="header-link shadow-sm hover:shadow-lg transition-all w-full sm:w-auto"
       />
 
