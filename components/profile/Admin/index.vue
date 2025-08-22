@@ -22,7 +22,7 @@ const subscriptionSuccess = !!route.query.subscriptionSuccess
 </script>
 
 <template>
-  <ProfileDefaultAdminNav />
+  <ProfileMainAdminNav />
   <AdminDesignModal />
   <AdminContentModal />
   <AdminFeedbackModal />

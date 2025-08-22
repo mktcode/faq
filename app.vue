@@ -8,14 +8,14 @@ const profile = await useProfile()
 <template>
   <UApp :locale="de">
     <template v-if="profile">
-      <ProfileDefaultAdmin
+      <ProfileMainAdmin
         v-if="profile.isOwned"
         :username="profile.username"
         :isPublic="profile.isPublic"
         :isSubscribed="profile.isSubscribed"
         :settings="profile.settings"
       />
-      <ProfileDefaultMain
+      <ProfileMainMain
         v-if="path === '/' && profile.design === 'default'"
         :username="profile.username"
         :isOwned="profile.isOwned"

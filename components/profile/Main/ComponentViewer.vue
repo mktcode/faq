@@ -27,9 +27,9 @@ function isComponentDisplayed(componentKey: ComponentKey, index: number): boolea
 </script>
 
 <template>
-  <ProfileDefaultOffer v-if="isComponentDisplayed('offers', slotIndex)" />
-  <ProfileDefaultGallery v-else-if="isComponentDisplayed('gallery', slotIndex)" />
-  <ProfileDefaultDownloads v-else-if="isComponentDisplayed('downloads', slotIndex)" />
-  <ProfileDefaultForm v-else-if="isComponentDisplayed('form', slotIndex)" />
-  <ProfileDefaultFAQ v-else-if="isComponentDisplayed('faq', slotIndex)" />
+  <ProfileMainOffer v-if="isComponentDisplayed('offers', slotIndex)" />
+  <ProfileMainGallery v-else-if="isComponentDisplayed('gallery', slotIndex)" />
+  <ProfileMainDownloads v-else-if="isComponentDisplayed('downloads', slotIndex)" />
+  <ProfileMainForm v-else-if="isComponentDisplayed('form', slotIndex)" />
+  <ProfileMainFAQ v-else-if="isComponentDisplayed('faq', slotIndex)" />
 </template>

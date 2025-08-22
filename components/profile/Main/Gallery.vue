@@ -21,11 +21,11 @@ function scrollTo() {
     v-if="$profile.settings.components.gallery.items.length"
     class="my-6 w-full"
   >
-    <ProfileDefaultGalleryGrid
+    <ProfileMainGalleryGrid
       v-if="$profile.settings.components.gallery.type === 'grid'"
       @open-modal="openModal"
     />
-    <ProfileDefaultGalleryMasonry
+    <ProfileMainGalleryMasonry
       v-if="$profile.settings.components.gallery.type === 'masonry'"
       @open-modal="openModal"
     />

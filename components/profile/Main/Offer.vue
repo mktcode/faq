@@ -25,9 +25,9 @@ const items = computed(() => $profile.settings.components.offers.items.map(offer
         container: 'transition-[height] duration-500 ease-in-out',
       }"
     >
-      <ProfileDefaultOfferItem :item="item" />
+      <ProfileMainOfferItem :item="item" />
     </UCarousel>
-    <ProfileDefaultOfferItem
+    <ProfileMainOfferItem
       v-else-if="items.length === 1"
       :item="items[0]"
     />

@@ -95,7 +95,7 @@ const disabled = computed(() => {
 
 <template>
   <div class="my-6 w-full">
-    <ProfileDefaultFormHeader />
+    <ProfileMainFormHeader />
 
     <UTextarea
       v-model="message"
@@ -125,7 +125,7 @@ const disabled = computed(() => {
           />
         </div>
       </Transition>
-      <ProfileDefaultRecordAudio
+      <ProfileMainRecordAudio
         v-if="$profile.isSubscribed"
         class="ml-auto"
         :disabled="false"

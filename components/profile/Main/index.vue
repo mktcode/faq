@@ -71,17 +71,17 @@ useHead({
     class="relative"
   >
     <ClientOnly>
-      <ProfileDefaultReLogin />
+      <ProfileMainReLogin />
     </ClientOnly>
-    <ProfileDefaultHeader />
+    <ProfileMainHeader />
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
-      <ProfileDefaultComponentViewer
+      <ProfileMainComponentViewer
         v-for="index in 5"
         :key="index"
         :slot-index="index"
       />
 
-      <ProfileDefaultFooter />
+      <ProfileMainFooter />
     </div>
   </FontWrapper>
 </template>

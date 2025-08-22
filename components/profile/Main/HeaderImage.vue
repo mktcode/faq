@@ -1,33 +1,22 @@
 <template>
   <div
     id="header"
-    class="w-full flex flex-col items-center justify-center relative z-0 overflow-hidden"
+    :style="{ backgroundImage: $profile.settings.header.image ? `url(${$profile.settings.header.image})` : 'none' }"
+    class="w-full flex flex-col items-center justify-center bg-cover bg-center relative z-0"
     :class="{
       'min-h-[50vh]': $profile.settings.header.height === 'half',
       'h-screen': $profile.settings.header.height === 'full',
     }"
   >
-    <!-- Background video -->
-    <video
-      class="absolute inset-0 z-0 w-full h-full object-cover object-center pointer-events-none"
-      :src="$profile.settings.header.video"
-      :poster="$profile.settings.header.image || undefined"
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="auto"
-      aria-hidden="true"
-    />
     <div
-      class="absolute inset-0 z-10"
+      class="absolute inset-0 z-0"
       :style="{
         backgroundColor: $profile.settings.header.imageOverlay.color || 'transparent',
         opacity: ($profile.settings.header.imageOverlay.opacity || 0) / 100,
       }"
     />
     <div
-      class="@container w-full flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-24 px-6 relative z-20"
+      class="@container w-full flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-24 px-6 relative z-10"
     >
       <div
         v-if="$profile.settings.company.logo"
@@ -61,7 +50,7 @@
       >
         {{ $profile.settings.header.description }}
       </p>
-      <ProfileDefaultLinks />
+      <ProfileMainLinks />
     </div>
   </div>
 </template>
