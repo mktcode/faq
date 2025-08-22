@@ -5,7 +5,7 @@ const emit = defineEmits(['goToSubscription'])
 
 <template>
   <div class="flex flex-col gap-4 p-6">
-    <SettingsModalDomainSubscribed v-if="$profile.isSubscribed" />
-    <SettingsModalDomainUnsubscribed v-else />
+    <AdminSettingsModalDomainSubscribed v-if="$profile.isSubscribed" />
+    <AdminSettingsModalDomainUnsubscribed v-else />
   </div>
 </template>

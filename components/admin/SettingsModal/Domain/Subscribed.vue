@@ -38,6 +38,6 @@
       Ihre extern registrierte Domain <strong>{{ me?.domain }}</strong> ist verbunden.
     </div>
   </div>
-  <SettingsModalDomainNewSetup v-if="!me?.domain || me?.domainIsExternal" />
-  <SettingsModalDomainExistingSetup v-if="!me?.domain || me?.domainIsExternal" />
+  <AdminSettingsModalDomainNewSetup v-if="!me?.domain || me?.domainIsExternal" />
+  <AdminSettingsModalDomainExistingSetup v-if="!me?.domain || me?.domainIsExternal" />
 </template>

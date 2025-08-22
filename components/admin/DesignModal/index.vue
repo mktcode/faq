@@ -1,7 +1,9 @@
 <script setup lang="ts">
 const showModal = useState('showDesignModal', () => false)
 const toast = useToast()
-const { settings, saveSettings, isSubscribed } = await useProfile()
+
+function saveSettings() {}
+const $profile = useNuxtApp().$profile
 
 const headerImageInput = ref<HTMLInputElement | null>(null)
 const headerVideoInput = ref<HTMLInputElement | null>(null)
@@ -24,10 +26,10 @@ const uploadHeaderImage = async (files: FileList | null) => {
       body: formData,
     })
 
-    settings.value.header.image = imageUrls[0] || ''
+    $profile.settings.header.image = imageUrls[0] || ''
 
-    if (settings.value.header.imageOverlay.opacity > 90) {
-      settings.value.header.imageOverlay.opacity = 90
+    if ($profile.settings.header.imageOverlay.opacity > 90) {
+      $profile.settings.header.imageOverlay.opacity = 90
     }
 
     await saveSettings()
@@ -57,10 +59,10 @@ const uploadHeaderVideo = async (files: FileList | null) => {
       body: formData,
     })
 
-    settings.value.header.video = videoUrl || ''
+    $profile.settings.header.video = videoUrl || ''
 
-    if (settings.value.header.imageOverlay.opacity > 90) {
-      settings.value.header.imageOverlay.opacity = 90
+    if ($profile.settings.header.imageOverlay.opacity > 90) {
+      $profile.settings.header.imageOverlay.opacity = 90
     }
 
     await saveSettings()
@@ -88,7 +90,7 @@ const uploadLogo = async (file: File | null) => {
     })
 
     const randomSuffix = Math.random().toString(36).substring(2, 15)
-    settings.value.company.logo = imageUrl ? `${imageUrl}?${randomSuffix}` : ''
+    $profile.settings.company.logo = imageUrl ? `${imageUrl}?${randomSuffix}` : ''
 
     await saveSettings()
 
@@ -134,7 +136,7 @@ const clickLogoInput = () => {
 }
 
 async function deleteImage(image: 'logo' | 'header') {
-  const url = image === 'logo' ? settings.value.company.logo : settings.value.header.image
+  const url = image === 'logo' ? $profile.settings.company.logo : $profile.settings.header.image
 
   const { success } = await $fetch('/api/user/upload/delete', {
     method: 'POST',
@@ -151,10 +153,10 @@ async function deleteImage(image: 'logo' | 'header') {
   }
 
   if (image === 'logo') {
-    settings.value.company.logo = ''
+    $profile.settings.company.logo = ''
   }
   else {
-    settings.value.header.image = ''
+    $profile.settings.header.image = ''
   }
 
   saveSettings()
@@ -191,7 +193,7 @@ async function deleteImage(image: 'logo' | 'header') {
       <div class="flex flex-col gap-4 max-h-[60vh] overflow-y-auto">
         <div class="flex gap-2">
           <ColorPicker
-            v-model:color="settings.design.color"
+            v-model:color="$profile.settings.design.color"
             label="Primäre Farbe"
           />
           <UFormField
@@ -199,7 +201,7 @@ async function deleteImage(image: 'logo' | 'header') {
             class="flex-1"
           >
             <USelect
-              v-model="settings.design.rounded"
+              v-model="$profile.settings.design.rounded"
               class="w-full"
               :items="[
                 { label: 'Eckig', value: 'none' },
@@ -210,7 +212,7 @@ async function deleteImage(image: 'logo' | 'header') {
           </UFormField>
         </div>
         <UFormField label="Schriftart">
-          <FontPicker v-model:font="settings.design.font" />
+          <FontPicker v-model:font="$profile.settings.design.font" />
         </UFormField>
         <div class="flex gap-2">
           <UFormField
@@ -218,7 +220,7 @@ async function deleteImage(image: 'logo' | 'header') {
             class="flex-1 w-full"
           >
             <UInput
-              v-model="settings.header.title"
+              v-model="$profile.settings.header.title"
               placeholder="Gib den Titel deines Unternehmens ein"
               class="w-full"
             />
@@ -228,13 +230,13 @@ async function deleteImage(image: 'logo' | 'header') {
             class="w-28"
           >
             <UInputNumber
-              v-model="settings.header.titleFontSize"
+              v-model="$profile.settings.header.titleFontSize"
               size="xl"
             />
           </UFormField>
           <div class="w-28">
             <ColorPicker
-              v-model:color="settings.header.titleColor"
+              v-model:color="$profile.settings.header.titleColor"
               label="Farbe"
             />
           </div>
@@ -245,7 +247,7 @@ async function deleteImage(image: 'logo' | 'header') {
             class="flex-1 w-full"
           >
             <UInput
-              v-model="settings.header.description"
+              v-model="$profile.settings.header.description"
               placeholder="Gib eine kurze Beschreibung deines Unternehmens ein"
               class="w-full"
             />
@@ -255,13 +257,13 @@ async function deleteImage(image: 'logo' | 'header') {
             class="w-28"
           >
             <UInputNumber
-              v-model="settings.header.descriptionFontSize"
+              v-model="$profile.settings.header.descriptionFontSize"
               size="xl"
             />
           </UFormField>
           <div class="w-28">
             <ColorPicker
-              v-model:color="settings.header.descriptionColor"
+              v-model:color="$profile.settings.header.descriptionColor"
               label="Farbe"
             />
           </div>
@@ -271,10 +273,10 @@ async function deleteImage(image: 'logo' | 'header') {
             class="@container group relative flex flex-col items-center justify-center w-full rounded-lg cursor-pointer transition-all overflow-hidden hover:bg-gray-100"
           >
             <video
-              v-if="settings.header.video"
+              v-if="$profile.settings.header.video"
               class="absolute inset-0 z-0 w-full h-full object-cover object-center pointer-events-none"
-              :src="settings.header.video"
-              :poster="settings.header.image || undefined"
+              :src="$profile.settings.header.video"
+              :poster="$profile.settings.header.image || undefined"
               autoplay
               muted
               loop
@@ -283,16 +285,16 @@ async function deleteImage(image: 'logo' | 'header') {
               aria-hidden="true"
             />
             <img
-              v-else-if="settings.header.image"
-              :src="settings.header.image"
+              v-else-if="$profile.settings.header.image"
+              :src="$profile.settings.header.image"
               alt="Header Image"
               class="absolute w-full h-full object-cover z-0 group-hover:scale-105 transition-transform duration-300"
             >
             <div
               class="absolute inset-0 z-10"
               :style="{
-                backgroundColor: settings.header.imageOverlay.color || 'transparent',
-                opacity: settings.header.imageOverlay.opacity / 100,
+                backgroundColor: $profile.settings.header.imageOverlay.color || 'transparent',
+                opacity: $profile.settings.header.imageOverlay.opacity / 100,
               }"
               @click.stop="showUploadHeaderModal = true"
             />
@@ -302,8 +304,8 @@ async function deleteImage(image: 'logo' | 'header') {
                 class="size-8 text-black/10 absolute top-3 left-3 pointer-events-none"
               />
               <img
-                v-if="settings.company.logo"
-                :src="settings.company.logo"
+                v-if="$profile.settings.company.logo"
+                :src="$profile.settings.company.logo"
                 class="w-full max-w-[32cqw] pointer-events-auto hover:scale-105 transition-transform duration-600"
                 @click.stop="clickLogoInput"
               >
@@ -342,11 +344,11 @@ async function deleteImage(image: 'logo' | 'header') {
             >
           </div>
           <div
-            v-if="settings.header.image || settings.company.logo"
+            v-if="$profile.settings.header.image || $profile.settings.company.logo"
             class="flex items-center justify-end gap-2"
           >
             <UButton
-              v-if="settings.company.logo"
+              v-if="$profile.settings.company.logo"
               label="Logo entfernen"
               icon="i-heroicons-trash"
               variant="ghost"
@@ -355,7 +357,7 @@ async function deleteImage(image: 'logo' | 'header') {
               @click="deleteImage('logo')"
             />
             <UButton
-              v-if="settings.header.image"
+              v-if="$profile.settings.header.image"
               label="Bild entfernen"
               icon="i-heroicons-trash"
               variant="ghost"
@@ -367,7 +369,7 @@ async function deleteImage(image: 'logo' | 'header') {
         </div>
         <div class="flex gap-2">
           <ColorPicker
-            v-model:color="settings.header.imageOverlay.color"
+            v-model:color="$profile.settings.header.imageOverlay.color"
             label="Hintergrund"
           />
           <UFormField
@@ -375,7 +377,7 @@ async function deleteImage(image: 'logo' | 'header') {
             class="flex-1"
           >
             <USlider
-              v-model="settings.header.imageOverlay.opacity"
+              v-model="$profile.settings.header.imageOverlay.opacity"
               class="flex-1 mt-4"
             />
           </UFormField>
@@ -384,7 +386,7 @@ async function deleteImage(image: 'logo' | 'header') {
           label="Höhe"
         >
           <USelect
-            v-model="settings.header.height"
+            v-model="$profile.settings.header.height"
             :items="[
               { label: 'Automatisch', value: 'auto' },
               { label: 'Hälfte', value: 'half' },
@@ -407,12 +409,12 @@ async function deleteImage(image: 'logo' | 'header') {
             color="neutral"
             variant="link"
             trailing-icon="i-heroicons-chevron-down"
-            :disabled="!isSubscribed"
+            :disabled="!$profile.isSubscribed"
           >
             <template #trailing>
               <div class="ml-auto flex items-center gap-2">
                 <UBadge
-                  v-if="!isSubscribed"
+                  v-if="!$profile.isSubscribed"
                   label="Premium"
                   variant="outline"
                 />
@@ -428,7 +430,7 @@ async function deleteImage(image: 'logo' | 'header') {
 
           <template #content>
             <UTextarea
-              v-model="settings.css"
+              v-model="$profile.settings.css"
               placeholder="CSS hier eingeben"
               class="w-full"
               autoresize
@@ -470,11 +472,11 @@ async function deleteImage(image: 'logo' | 'header') {
             class="w-full rounded-none p-4 border-b border-gray-200"
             variant="ghost"
             color="neutral"
-            :disabled="!isSubscribed"
+            :disabled="!$profile.isSubscribed"
           >
             <template #trailing>
               <UBadge
-                v-if="!isSubscribed"
+                v-if="!$profile.isSubscribed"
                 label="Premium"
                 variant="outline"
                 class="ml-auto"
@@ -487,12 +489,12 @@ async function deleteImage(image: 'logo' | 'header') {
             class="w-full rounded-none p-4"
             variant="ghost"
             color="neutral"
-            :disabled="!isSubscribed"
+            :disabled="!$profile.isSubscribed"
             @click="clickHeaderVideoInput"
           >
             <template #trailing>
               <UBadge
-                v-if="!isSubscribed"
+                v-if="!$profile.isSubscribed"
                 label="Premium"
                 variant="outline"
                 class="ml-auto"

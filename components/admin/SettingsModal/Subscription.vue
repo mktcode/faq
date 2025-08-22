@@ -3,6 +3,9 @@ const { stripePortalUrl } = useRuntimeConfig().public
 const { isStartingCheckout, startCheckoutSession } = useCheckoutSession()
 const { user } = useUserSession()
 
+function saveSettings() {}
+const isSavingSettings = ref(false)
+
 const emailToVerify = ref(user.value?.email || '')
 const isUpdatingEmail = ref(false)
 const showEmailVerificationHint = ref(false)
@@ -60,14 +63,14 @@ async function saveAndStartCheckout() {
         <div class="flex flex-col gap-2">
           <UFormField label="Name Ihres Unternehmens">
             <UInput
-              v-model="settings.company.name"
+              v-model="$profile.settings.company.name"
               placeholder="Geben Sie den Titel Ihres Unternehmens ein"
               class="w-full"
             />
           </UFormField>
           <UFormField label="Straße und Hausnummer">
             <UInput
-              v-model="settings.company.street"
+              v-model="$profile.settings.company.street"
               placeholder="Geben Sie die Straße und Hausnummer ein"
               class="w-full"
             />
@@ -78,7 +81,7 @@ async function saveAndStartCheckout() {
               class="w-32"
             >
               <UInput
-                v-model="settings.company.zip"
+                v-model="$profile.settings.company.zip"
                 placeholder="Postleitzahl"
               />
             </UFormField>
@@ -87,7 +90,7 @@ async function saveAndStartCheckout() {
               class="flex-1"
             >
               <UInput
-                v-model="settings.company.city"
+                v-model="$profile.settings.company.city"
                 placeholder="Geben Sie die Stadt ein"
                 class="w-full"
               />
