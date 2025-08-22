@@ -100,8 +100,9 @@ export default defineWebAuthnAuthenticateEventHandler({
       .where('webauthnCredentials.credentialId', '=', credential.id)
       .executeTakeFirst()
 
-    if (!userCredential)
+    if (!userCredential) {
       throw createError({ statusCode: 400, message: 'User not found' })
+    }
 
     // Update the counter in the database with authenticationInfo.newCounter
     await db
