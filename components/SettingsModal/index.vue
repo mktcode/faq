@@ -3,10 +3,13 @@ import type { AccordionItem } from '@nuxt/ui'
 
 const toast = useToast()
 const showModal = useState('showSettingsModal', () => false)
-const { me } = await useMe()
-const { showLegalDataWarning } = await useProfile()
 
-const isPublished = ref(me.value?.published || false)
+const nuxtApp = useNuxtApp()
+const { $profile } = nuxtApp
+
+const showLegalDataWarning = computed(() => {
+  return !$profile.settings.company.name || !$profile.settings.company.street || !$profile.settings.company.phone
+})
 
 async function togglePublished() {
   const { published } = await $fetch('/api/user/togglePublished', { method: 'POST' })
@@ -42,7 +45,7 @@ const items: AccordionItem[] = [
     label: 'E-Mail',
     icon: 'i-heroicons-envelope',
     slot: 'email',
-    disabled: !me.value?.isSubscribed
+    disabled: !$profile.isSubscribed
   },
   {
     label: 'Abonnement',
@@ -80,10 +83,10 @@ const active = ref<string | undefined>(undefined)
     <template #body>
       <div class="p-4 border-b border-gray-200">
         <USwitch
-          v-model="isPublished"
+          v-model="$profile.isPublic"
           :disabled="showLegalDataWarning"
           label="Veröffentlicht"
-          :description="isPublished ? 'Ihre Website ist öffentlich zugänglich.' : 'Nur Sie können Ihr Profil sehen, wenn Sie angemeldet sind.'"
+          :description="$profile.isPublic ? 'Ihre Website ist öffentlich zugänglich.' : 'Nur Sie können Ihr Profil sehen, wenn Sie angemeldet sind.'"
           @update:model-value="togglePublished"
         />
         <UAlert
