@@ -6,11 +6,17 @@ watch(newDomain, () => isTyping.value = true)
 watchDebounced(newDomain, () => isTyping.value = false, { debounce: 600 })
 watchDebounced(newDomain, checkDomainAvailability, { debounce: 500 })
 
+const toast = useToast()
+
+const { $profile } = useProfile()
+
+// TODO: improve domain validation
 const isDomainValid = computed(() => /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?$/.test(newDomain.value)) // without tld!
 const isCheckingDomain = ref(false)
 const isAvailable = ref(false)
 const isTyping = ref(false)
 const customerHasConfirmedDomain = ref(false)
+const isRegisteringDomain = ref(false)
 
 async function checkDomainAvailability() {
   isCheckingDomain.value = true
@@ -28,7 +34,11 @@ async function checkDomainAvailability() {
     isCheckingDomain.value = false
   }
   catch (error) {
-    console.error('Error checking domain availability:', error)
+    toast.add({
+      title: 'Unbekannter Fehler',
+      description: 'Die Verfügbarkeit der Domain konnte nicht überprüft werden. Bitte kontaktieren Sie uns.',
+      color: 'error',
+    })
     isAvailable.value = false
   }
   finally {
@@ -36,24 +46,29 @@ async function checkDomainAvailability() {
   }
 }
 
-const isRegisteringDomain = ref(false)
-
 async function registerDomain() {
   if (!isDomainValid.value || isCheckingDomain.value || !isAvailable.value) {
     return
   }
 
   isRegisteringDomain.value = true
+  const domainToRegister = newDomain.value + '.de'
 
   try {
     await $fetch('/api/user/registerDomain', {
       method: 'POST',
-      body: { domain: newDomain.value + '.de' },
+      body: { domain: domainToRegister },
     })
-    await new Promise(resolve => setTimeout(resolve, 3000))
+
+    $profile.domain = domainToRegister
+    $profile.domainIsExternal = false
   }
   catch (error) {
-    console.error('Error registering domain:', error)
+    toast.add({
+      title: 'Unbekannter Fehler',
+      description: 'Die Domain konnte nicht registriert werden. Bitte kontaktieren Sie uns.',
+      color: 'error',
+    })
   }
   finally {
     isRegisteringDomain.value = false
