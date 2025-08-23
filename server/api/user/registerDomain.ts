@@ -13,13 +13,12 @@ export default defineEventHandler(async (event) => {
 
   const currentDomainInfo = await db
     .selectFrom('users')
-    .select(['domainContactId'])
+    .select(['domain'])
     .where('id', '=', user.id)
     .executeTakeFirstOrThrow()
 
-  // TODO: improve this check and make sure external domains can still be changed
-  if (currentDomainInfo.domainContactId) {
-    throw createError({ statusCode: 409, statusMessage: 'Domain already registered' })
+  if (currentDomainInfo.domain) {
+    throw createError({ statusCode: 409, statusMessage: 'A domain is already connected.' })
   }
 
   await requireDomainAvailability(domain)
@@ -35,7 +34,6 @@ export default defineEventHandler(async (event) => {
     country: 'DE',
   })
   await db.updateTable('users').set({ domainContactId }).where('id', '=', user.id).execute()
-
   await autodns.registerDomainWithZone(domain, domainContactId)
   // TODO: surely we need to wait a bit here
   await hetzner.addNewCertToLoadBalancer(domain)
