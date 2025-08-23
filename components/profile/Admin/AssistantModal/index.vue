@@ -41,6 +41,9 @@ async function handleResponseEvents(event: ResponseStreamEvent) {
       currentActivity.value = { label: 'Generiere Bild...' }
     }
     if (event.item.type === 'function_call') {
+      if (event.item.name === 'delegate_to_agent') {
+        currentActivity.value = { label: 'Delegiere an Agenten...' }
+      }
       if (event.item.name === 'update_company_context') {
         currentActivity.value = { label: 'Aktualisiere Unternehmenskontext...' }
       }

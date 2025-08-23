@@ -14,17 +14,6 @@ export default defineEventHandler(async (event) => {
 
   const settings = await getSettings(user.id)
   const { userInput, responseId } = await readValidatedBody(event, body => bodySchema.parse(body))
-  const { openaiApiKey } = useRuntimeConfig(event)
-  const openai = new OpenAI({
-    apiKey: openaiApiKey,
-  })
-
-  const messages: OpenAI.Responses.ResponseInput = []
-
-  messages.push({
-    role: 'user',
-    content: userInput,
-  })
 
   setHeader(event, 'Content-Type', 'application/x-ndjson; charset=utf-8')
   setHeader(event, 'Cache-Control', 'no-cache, no-transform')
@@ -32,7 +21,7 @@ export default defineEventHandler(async (event) => {
   setHeader(event, 'X-Accel-Buffering', 'no')
   event.node.res.flushHeaders?.()
 
-  const stream = streamResponse(messages, openai, responseId, user.id, settings)
+  const stream = assistant.streamResponse(userInput, settings, responseId)
 
   const ndjson = (async function* () {
     for await (const event of stream) {
