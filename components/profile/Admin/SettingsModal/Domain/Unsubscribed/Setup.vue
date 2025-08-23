@@ -2,7 +2,6 @@
 import { watchDebounced } from '@vueuse/core'
 
 const { appIp } = useRuntimeConfig().public
-const emit = defineEmits(['goToSubscription'])
 
 const { isCheckingDns, hasBeenChecked, isACorrect, checkDns } = useDnsCheck()
 const { updateDomain, isUpdatingDomain, domainConnectedSuccessfully } = useExternalDomain()
@@ -99,6 +98,6 @@ watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce:
     :ui="{
       trailingIcon: 'ml-auto',
     }"
-    @click="emit('goToSubscription')"
+    @click="$emit('goToSubscription')"
   />
 </template>

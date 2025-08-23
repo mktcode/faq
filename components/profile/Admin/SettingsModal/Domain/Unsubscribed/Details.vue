@@ -1,7 +1,3 @@
-<script setup lang="ts">
-const emit = defineEmits(['goToSubscription'])
-</script>
-
 <template>
   <p class="text-gray-500">
     Ihre Website ist unter <strong>{{ $profile.domain }}</strong> erreichbar.
@@ -14,6 +10,6 @@ const emit = defineEmits(['goToSubscription'])
     :ui="{
       trailingIcon: 'ml-auto',
     }"
-    @click="emit('goToSubscription')"
+    @click="$emit('goToSubscription')"
   />
 </template>

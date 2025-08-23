@@ -23,20 +23,20 @@ export default defineEventHandler(async (event) => {
 
   await requireDomainAvailability(domain)
 
-  const settings = await getPublicSettings(user.id)
-  const domainContactId = await autodns.createDomainContact({
-    // TODO: set first and lastname correctly
-    firstname: settings.company.name,
-    lastname: settings.company.name,
-    street: settings.company.street,
-    city: settings.company.city,
-    postalCode: settings.company.zip,
-    country: 'DE',
-  })
-  await db.updateTable('users').set({ domainContactId }).where('id', '=', user.id).execute()
-  await autodns.registerDomainWithZone(domain, domainContactId)
-  // TODO: surely we need to wait a bit here
-  await hetzner.addNewCertToLoadBalancer(domain)
+  // const settings = await getPublicSettings(user.id)
+  // const domainContactId = await autodns.createDomainContact({
+  //   // TODO: set first and lastname correctly
+  //   firstname: settings.company.name,
+  //   lastname: settings.company.name,
+  //   street: settings.company.street,
+  //   city: settings.company.city,
+  //   postalCode: settings.company.zip,
+  //   country: 'DE',
+  // })
+  // await db.updateTable('users').set({ domainContactId }).where('id', '=', user.id).execute()
+  // await autodns.registerDomainWithZone(domain, domainContactId)
+  // // TODO: surely we need to wait a bit here
+  // await hetzner.addNewCertToLoadBalancer(domain)
 
   await db
     .updateTable('users')

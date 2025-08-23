@@ -1,6 +1,7 @@
 <script setup lang="ts">
-const emit = defineEmits(['goToSubscription'])
+defineProps<{ domain: string }>()
 
+// TODO: add validation
 const email1 = ref('')
 const email2 = ref('')
 const email3 = ref('')
@@ -41,68 +42,60 @@ async function createEmailAddresses() {
       :key="email.email_address"
       :email="email.email_address"
     />
-    <UFormField
-      label="E-Mail-Adressen anlegen"
-      description="Legen Sie bis zu drei E-Mail-Adressen an."
-      :ui="{
-        container: 'flex flex-col gap-2',
-      }"
-    >
-      <UButtonGroup class="w-full">
-        <UInput
-          v-model="email1"
-          placeholder="z.B. kontakt oder info"
-          class="w-full"
-          size="xxl"
-          :disabled="isCreatingEmailAddresses"
-        />
-        <UBadge
-          :label="`@${$profile.settings.private.domain}`"
-          color="neutral"
-          variant="soft"
-          size="xl"
-          :ui="{
-            base: 'px-4',
-          }"
-        />
-      </UButtonGroup>
-      <UButtonGroup class="w-full">
-        <UInput
-          v-model="email2"
-          placeholder="z.B. bestellung"
-          class="w-full"
-          size="xxl"
-          :disabled="isCreatingEmailAddresses"
-        />
-        <UBadge
-          :label="`@${$profile.settings.private.domain}`"
-          color="neutral"
-          variant="soft"
-          size="xl"
-          :ui="{
-            base: 'px-4',
-          }"
-        />
-      </UButtonGroup>
-      <UButtonGroup class="w-full">
-        <UInput
-          v-model="email3"
-          placeholder="z.B. anfrage"
-          class="w-full"
-          size="xxl"
-          :disabled="isCreatingEmailAddresses"
-        />
-        <UBadge
-          :label="`@${$profile.settings.private.domain}`"
-          color="neutral"
-          variant="soft"
-          size="xl"
-          :ui="{
-            base: 'px-4',
-          }"
-        />
-      </UButtonGroup>
-    </UFormField>
+    <UButtonGroup class="w-full">
+      <UInput
+        v-model="email1"
+        placeholder="z.B. kontakt oder info"
+        class="w-full"
+        size="xxl"
+        :disabled="isCreatingEmailAddresses"
+      />
+      <UBadge
+        :label="`@${domain}`"
+        color="neutral"
+        variant="soft"
+        size="xl"
+        :ui="{
+          base: 'px-4',
+        }"
+      />
+    </UButtonGroup>
+    <UButtonGroup class="w-full">
+      <UInput
+        v-model="email2"
+        placeholder="z.B. bestellung"
+        class="w-full"
+        size="xxl"
+        :disabled="isCreatingEmailAddresses"
+      />
+      <UBadge
+        :label="`@${domain}`"
+        color="neutral"
+        variant="soft"
+        size="xl"
+        :ui="{
+          base: 'px-4',
+        }"
+      />
+    </UButtonGroup>
+    <UButtonGroup class="w-full">
+      <UInput
+        v-model="email3"
+        placeholder="z.B. anfrage"
+        class="w-full"
+        size="xxl"
+        :disabled="isCreatingEmailAddresses"
+      />
+      <UBadge
+        :label="`@${domain}`"
+        color="neutral"
+        variant="soft"
+        size="xl"
+        :ui="{
+          base: 'px-4',
+        }"
+      />
+    </UButtonGroup>
     <USwitch
       v-if="mailboxNamesAreValid && filledEmailFields > 0"
       v-model="emailAddressesConfirmed"

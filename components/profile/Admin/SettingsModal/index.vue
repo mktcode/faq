@@ -132,7 +132,7 @@ const active = ref<string | undefined>(undefined)
           <ProfileAdminSettingsModalDomain @go-to-subscription="active = '3'" />
         </template>
         <template #email>
-          <ProfileAdminSettingsModalEmail @go-to-subscription="active = '3'" />
+          <ProfileAdminSettingsModalEmail />
         </template>
         <template #subscription>
           <ProfileAdminSettingsModalSubscription />
