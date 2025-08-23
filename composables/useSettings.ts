@@ -1,4 +1,4 @@
-export const useSettings = () => {
+export const useProfile = () => {
   const toast = useToast()
   const $profile = useNuxtApp().$profile
   const isSavingSettings = ref(false)
@@ -20,7 +20,7 @@ export const useSettings = () => {
   }
 
   return {
-    settings: $profile.settings,
+    $profile,
     isSavingSettings,
     saveSettings,
   }

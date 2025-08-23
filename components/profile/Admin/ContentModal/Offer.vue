@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { saveSettings, isSavingSettings } = useSettings()
+const { saveSettings, isSavingSettings } = useProfile()
 const { appHost } = useRuntimeConfig().public
 </script>
 
@@ -10,7 +10,7 @@ const { appHost } = useRuntimeConfig().public
       Was unterscheidet Sie von anderen? Welche Vorteile hat der Kunde, kurz- wie langfristig?
     </p>
     <div
-      v-for="(offer, index) in $profile.settings.components.offers.items"
+      v-for="(offer, index) in $profile.settings.public.components.offers.items"
       :key="index"
       class="flex flex-col gap-4 border-b border-gray-200 pb-4"
     >
@@ -31,7 +31,7 @@ const { appHost } = useRuntimeConfig().public
             variant="soft"
             color="error"
             class="self-end"
-            @click="$profile.settings.components.offers.items.splice(index, 1)"
+            @click="$profile.settings.public.components.offers.items.splice(index, 1)"
           />
         </div>
         <div class="flex items-center gap-2">
@@ -67,7 +67,7 @@ const { appHost } = useRuntimeConfig().public
       icon="i-heroicons-plus"
       variant="soft"
       class="w-full"
-      @click="$profile.settings.components.offers.items.push({ title: '', description: '' })"
+      @click="$profile.settings.public.components.offers.items.push({ title: '', description: '' })"
     >
       Angebot hinzufügen
     </UButton>

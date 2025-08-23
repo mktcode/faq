@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const showModal = useState('showLinksModal', () => false)
-const { saveSettings, isSavingSettings } = useSettings()
+const { saveSettings, isSavingSettings } = useProfile()
 </script>
 
 <template>
@@ -11,11 +11,11 @@ const { saveSettings, isSavingSettings } = useSettings()
     <template #body>
       <div class="flex flex-col gap-4">
         <USwitch
-          v-model="$profile.settings.header.showShareButton"
+          v-model="$profile.settings.public.header.showShareButton"
           label="Teilen-Button anzeigen"
         />
         <div
-          v-for="(link, index) in $profile.settings.header.links"
+          v-for="(link, index) in $profile.settings.public.header.links"
           :key="index"
           class="flex items-start gap-2"
         >
@@ -36,7 +36,7 @@ const { saveSettings, isSavingSettings } = useSettings()
             icon="i-heroicons-trash"
             variant="ghost"
             color="neutral"
-            @click="$profile.settings.header.links.splice(index, 1)"
+            @click="$profile.settings.public.header.links.splice(index, 1)"
           />
         </div>
         <UButton
@@ -44,7 +44,7 @@ const { saveSettings, isSavingSettings } = useSettings()
           icon="i-heroicons-plus"
           variant="soft"
           color="neutral"
-          @click="$profile.settings.header.links.push({ title: '', url: '', icon: 'i-lucide-link' })"
+          @click="$profile.settings.public.header.links.push({ title: '', url: '', icon: 'i-lucide-link' })"
         />
       </div>
       <UButton

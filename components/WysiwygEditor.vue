@@ -10,8 +10,8 @@ const props = defineProps<{
 }>()
 
 const model = defineModel<string | null>()
-const { settings } = useSettings()
-const designRounded = props.rounded || settings.design.rounded || 'md'
+const { $profile } = useProfile()
+const designRounded = props.rounded || $profile.settings.public.design.rounded || 'md'
 
 const roundedClass = computed(() => {
   if (designRounded === 'none') {

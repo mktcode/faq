@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const toast = useToast()
 
-const { settings, saveSettings, isSavingSettings } = useSettings()
+const { $profile, saveSettings, isSavingSettings } = useProfile()
 
 const fileInput = ref<HTMLInputElement | null>(null)
 const isDragging = ref(false)
@@ -21,8 +21,8 @@ const uploadFile = async (files: FileList | null) => {
       body: formData,
     })
 
-    settings.components.downloads.items = [
-      ...settings.components.downloads.items,
+    $profile.settings.public.components.downloads.items = [
+      ...$profile.settings.public.components.downloads.items,
       ...uploadedFiles,
     ]
 
@@ -66,7 +66,7 @@ const onDrop = async (e: DragEvent) => {
 }
 
 async function deleteDownload(index: number) {
-  const url = settings.components.downloads.items[index].url
+  const url = $profile.settings.public.components.downloads.items[index].url
   const { success } = await $fetch('/api/user/upload/delete', {
     method: 'POST',
     body: JSON.stringify({ url }),
@@ -81,7 +81,7 @@ async function deleteDownload(index: number) {
     return
   }
 
-  settings.components.downloads.items.splice(index, 1)
+  $profile.settings.public.components.downloads.items.splice(index, 1)
   saveSettings()
 }
 </script>
@@ -124,7 +124,7 @@ async function deleteDownload(index: number) {
     </div>
     <div class="flex flex-col gap-2">
       <div
-        v-for="(download, index) in $profile.settings.components.downloads.items"
+        v-for="(download, index) in $profile.settings.public.components.downloads.items"
         :key="index"
         class="flex flex-col items-center justify-center w-full gap-2"
       >
