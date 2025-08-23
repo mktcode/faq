@@ -12,6 +12,7 @@ const userInput = ref('')
 const steps = ref<string[]>([])
 const showSteps = ref(true)
 const stepsDone = ref<boolean[]>([])
+const deepResearch = ref(false)
 watch(stepsDone.value, (newVal) => {
   if (newVal.filter(Boolean).length === steps.value.length) {
     showSteps.value = false
@@ -33,7 +34,8 @@ async function generateResponse() {
     const responseStream = await fetch('/api/user/assistant/research', {
       method: 'POST',
       body: JSON.stringify({
-        userInput: userInput.value
+        userInput: userInput.value,
+        deepResearch: deepResearch.value,
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -277,6 +279,7 @@ async function generateResponse() {
         <div class="p-2 flex items-center gap-2">
           <USwitch
             label="Ausführliche Recherche"
+            v-model="deepResearch"
           />
           <ProfileAdminAssistantModalRecordAudio
             class="ml-auto"

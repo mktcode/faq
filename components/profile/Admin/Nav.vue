@@ -60,18 +60,10 @@ async function signOut() {
         @click="showSettingsModal = true"
       />
 
-      <div class="px-4 pt-6 pb-2 flex gap-2 items-center text-sm text-gray-500">
-        <UIcon
-          name="i-heroicons-computer-desktop"
-          class="size-5"
-        />
-        Website
-      </div>
-
       <UButton
         label="Design & Kopfbereich"
         icon="i-heroicons-paint-brush"
-        class="w-full rounded-none p-4 border-y border-gray-200"
+        class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
         @click="closeAndOpenDesign"
@@ -86,18 +78,29 @@ async function signOut() {
         @click="closeAndOpenContent"
       />
 
-      <div class="px-4 pt-6 pb-2 flex gap-2 items-center text-sm text-gray-500">
-        <UIcon
-          name="i-lucide-bot"
-          class="size-5"
-        />
-        Assistent
-      </div>
+      <UButton
+        label="Assistent"
+        icon="i-lucide-bot"
+        class="w-full rounded-none p-4 border-b border-gray-200"
+        variant="ghost"
+        color="neutral"
+        :disabled="!$profile.isSubscribed"
+        @click="showAssistantModal = true"
+      >
+        <template #trailing>
+          <UBadge
+            v-if="!$profile.isSubscribed"
+            label="Premium"
+            variant="outline"
+            class="ml-auto"
+          />
+        </template>
+      </UButton>
 
       <UButton
         label="Recherche"
         icon="i-lucide-search"
-        class="w-full rounded-none p-4 border-y border-gray-200"
+        class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
         :disabled="!$profile.isSubscribed"
@@ -107,54 +110,6 @@ async function signOut() {
           <UBadge
             v-if="!$profile.isSubscribed"
             label="Premium"
-            variant="outline"
-            class="ml-auto"
-          />
-        </template>
-      </UButton>
-
-      <UButton
-        label="Textbearbeitung"
-        icon="i-lucide-letter-text"
-        class="w-full rounded-none p-4 border-b border-gray-200"
-        variant="ghost"
-        color="neutral"
-        disabled
-      >
-        <template #trailing>
-          <UBadge
-            v-if="!$profile.isSubscribed"
-            label="Premium"
-            variant="outline"
-            class="ml-auto"
-          />
-          <UBadge
-            v-else
-            label="In Arbeit"
-            variant="outline"
-            class="ml-auto"
-          />
-        </template>
-      </UButton>
-
-      <UButton
-        label="IT-Support"
-        icon="i-lucide-cable"
-        class="w-full rounded-none p-4 border-b border-gray-200"
-        variant="ghost"
-        color="neutral"
-        disabled
-      >
-        <template #trailing>
-          <UBadge
-            v-if="!$profile.isSubscribed"
-            label="Premium"
-            variant="outline"
-            class="ml-auto"
-          />
-          <UBadge
-            v-else
-            label="In Arbeit"
             variant="outline"
             class="ml-auto"
           />

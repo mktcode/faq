@@ -3,6 +3,8 @@ import z from 'zod'
 
 const bodySchema = z.object({
   userInput: z.string().min(1, 'Der Rechercheauftrag darf nicht leer sein.'),
+  deepResearch: z.boolean(),
+  previousResponseId: z.string().optional(),
 })
 
 export default defineEventHandler(async (event) => {
@@ -10,7 +12,7 @@ export default defineEventHandler(async (event) => {
   await requireProfileSubscription(user.userName)
 
   const settings = await getSettings(user.id)
-  const { userInput } = await readValidatedBody(event, body => bodySchema.parse(body))
+  const { userInput, deepResearch, previousResponseId } = await readValidatedBody(event, body => bodySchema.parse(body))
   const { openaiApiKey } = useRuntimeConfig(event)
   const openai = new OpenAI({
     apiKey: openaiApiKey,
@@ -22,7 +24,7 @@ export default defineEventHandler(async (event) => {
   setHeader(event, 'X-Accel-Buffering', 'no')
   event.node.res.flushHeaders?.()
 
-  const stream = streamResearchResponse(openai, settings, userInput)
+  const stream = deepResearchAgent.streamDeepResearchResponse(openai, settings, userInput, previousResponseId)
 
   const ndjson = (async function* () {
     for await (const event of stream) {

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { marked } from 'marked'
+import type { ResponseStreamEvent } from 'openai/resources/responses/responses.mjs'
 import sanitizeHtml from 'sanitize-html'
 
 const showModal = useState('showAssistantModal', () => false)
@@ -8,10 +9,7 @@ const showAssistantContextModal = useState('showAssistantContextModal', () => fa
 
 const quota = useState('assistantQuota', () => 12)
 const userInput = ref('')
-const isGeneratingResponse = ref(false)
 const previousResponseId = ref<string | null>(null)
-const currentActivity = ref<string | null>(null)
-const messages = ref<{ role: 'user' | 'assistant', content: string }[]>([])
 const messagesContainer = ref<HTMLDivElement | null>(null)
 function scrollToBottom() {
   messagesContainer.value?.scrollTo(0, messagesContainer.value.scrollHeight)
@@ -22,117 +20,95 @@ const contentFormType = ref<'offer' | 'post' | 'other'>('offer')
 const contentFormContent = ref<string>('')
 const contentFormContentId = ref<string | null>(null)
 
+const { isGeneratingResponse, currentActivity, messages, nextMessageIndex, error, generateResponse } = useAssistant()
 
-async function generateResponse() {
-  if (isGeneratingResponse.value) return
-  isGeneratingResponse.value = true
+async function handleResponseEvents(event: ResponseStreamEvent) {
+  if (event.type === 'error') {
+    error.value = event.message || 'Unbekannter Fehler'
+  }
+  if (event.type === 'response.created') {
+    previousResponseId.value = event.response.id
+  }
 
-  messages.value.push({ role: 'user', content: userInput.value })
-  scrollToBottom()
+  if (event.type === 'response.output_item.added') {
+    if (event.item.type === 'reasoning') {
+      currentActivity.value = { label: 'Denke nach...' }
+    }
+    if (event.item.type === 'web_search_call') {
+      currentActivity.value = { label: 'Suche im Internet...' }
+    }
+    if (event.item.type === 'image_generation_call') {
+      currentActivity.value = { label: 'Generiere Bild...' }
+    }
+    if (event.item.type === 'function_call') {
+      if (event.item.name === 'update_company_context') {
+        currentActivity.value = { label: 'Aktualisiere Unternehmenskontext...' }
+      }
+      if (event.item.name === 'load_offers') {
+        currentActivity.value = { label: 'Lade Angebote...' }
+      }
+      if (event.item.name === 'render_rich_textfield') {
+        currentActivity.value = { label: 'Bereite Textfeld vor...' }
+      }
+      if (event.item.name === 'ask_solihost_manual_assistant') {
+        currentActivity.value = { label: 'Lese Solihost-Handbuch...' }
+      }
+      if (event.item.name === 'contact_support') {
+        currentActivity.value = { label: 'Kontaktiere Support...' }
+      }
+    }
+    if (event.item.type === 'message') {
+      currentActivity.value = null
+      messages.value.push({ role: 'assistant', content: '' })
+      nextMessageIndex.value = messages.value.length - 1
+    }
+  }
 
-  try {
-    const responseStream = await fetch('/api/user/assistant/respond', {
-      method: 'POST',
-      body: JSON.stringify({
-        userInput: userInput.value,
-        responseId: previousResponseId.value || undefined,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+  if (event.type === 'response.output_item.done') {
+    if (event.item.type === 'function_call') {
+      if (event.item.name === 'render_rich_textfield') {
+        let functionArguments: Record<string, any> = {}
+        try {
+          functionArguments = JSON.parse(event.item.arguments)
+          console.log(functionArguments)
+        } catch (error) {
+          console.error('Error parsing arguments:', error)
+        }
 
-    if (!responseStream.body) {
-      throw new Error(responseStream.statusText)
+        showContentForm.value = true
+        contentFormType.value = functionArguments.content_type || 'other'
+        contentFormContent.value = functionArguments.current_content || ''
+        contentFormContentId.value = functionArguments.content_id || null
+      }
+    }
+  }
+
+  if (event.type === 'response.output_text.delta') {
+    if (!nextMessageIndex.value) {
+      throw new Error('No next message index found. Event order may be incorrect.')
     }
 
-    const responseStreamReader = responseStream.body.getReader()
-    let nextMessageIndex: number | null = null
-
-    await readResponseStream(responseStreamReader, (event) => {
-      console.log('ResponseEvent', event)
-      if (event.type === 'response.created') {
-        previousResponseId.value = event.response.id
-      }
-
-      if (event.type === 'response.output_item.added') {
-        if (event.item.type === 'reasoning') {
-          currentActivity.value = 'Denke nach...'
-        }
-        if (event.item.type === 'web_search_call') {
-          currentActivity.value = 'Suche im Internet...'
-        }
-        if (event.item.type === 'image_generation_call') {
-          currentActivity.value = 'Generiere Bild...'
-        }
-        if (event.item.type === 'function_call') {
-          if (event.item.name === 'update_company_context') {
-            currentActivity.value = 'Aktualisiere Unternehmenskontext...'
-          }
-          if (event.item.name === 'load_offers') {
-            currentActivity.value = 'Lade Angebote...'
-          }
-          if (event.item.name === 'render_rich_textfield') {
-            currentActivity.value = 'Bereite Textfeld vor...'
-          }
-          if (event.item.name === 'ask_solihost_manual_assistant') {
-            currentActivity.value = 'Lese Solihost-Handbuch...'
-          }
-          if (event.item.name === 'contact_support') {
-            currentActivity.value = 'Kontaktiere Support...'
-          }
-        }
-        if (event.item.type === 'message') {
-          currentActivity.value = null
-          messages.value.push({ role: 'assistant', content: '' })
-          nextMessageIndex = messages.value.length - 1
-        }
-      }
-
-      if (event.type === 'response.output_item.done') {
-        if (event.item.type === 'function_call') {
-          if (event.item.name === 'render_rich_textfield') {
-            let functionArguments: Record<string, any> = {}
-            try {
-              functionArguments = JSON.parse(event.item.arguments)
-              console.log(functionArguments)
-            } catch (error) {
-              console.error('Error parsing arguments:', error)
-            }
-  
-            showContentForm.value = true
-            contentFormType.value = functionArguments.content_type || 'other'
-            contentFormContent.value = functionArguments.current_content || ''
-            contentFormContentId.value = functionArguments.content_id || null
-          }
-        }
-      }
-
-      if (event.type === 'response.output_text.delta') {
-        if (!nextMessageIndex) {
-          throw new Error('No next message index found. Event order may be incorrect.')
-        }
-
-        messages.value[nextMessageIndex].content += event.delta
-      }
-
-      if (event.type === 'response.web_search_call.in_progress') {
-        currentActivity.value = 'Web-Suche läuft...'
-      }
-
-      scrollToBottom()
-    }, () => {
-      isGeneratingResponse.value = false
-    })
+    messages.value[nextMessageIndex.value].content += event.delta
   }
-  catch (error) {
-    console.error('Error generating response:', error)
+
+  if (event.type === 'response.web_search_call.in_progress') {
+    currentActivity.value = { label: 'Web-Suche läuft...' }
   }
-  finally {
-    isGeneratingResponse.value = false
-    userInput.value = ''
-    currentActivity.value = null
-  }
+
+  scrollToBottom()
+}
+
+function submit() {
+  messages.value.push({ role: 'user', content: userInput.value })
+  scrollToBottom()
+  generateResponse(
+    '/api/user/assistant/respond',
+    {
+      userInput: userInput.value,
+      responseId: previousResponseId.value || undefined,
+    },
+    handleResponseEvents
+  )
 }
 </script>
 
@@ -188,6 +164,18 @@ async function generateResponse() {
         Lesen Sie die Tipps, um mehr über die Funktionen des Assistenten zu erfahren.
       </DismissableAlert>
 
+      <UAlert
+        v-if="error"
+        title="Ups! Etwas ist schiefgelaufen."
+        color="error"
+        variant="soft"
+        icon="i-lucide-alert-circle"
+        class="rounded-none"
+        :description="error"
+        :closable="true"
+        @close="error = null"
+      />
+
       <div
         ref="messagesContainer"
         class="flex flex-col flex-1 overflow-y-auto"
@@ -218,7 +206,7 @@ async function generateResponse() {
               name="i-lucide-loader-circle"
               class="inline-block size-5 animate-spin"
             />
-            <span class="animate-pulse italic">{{ currentActivity }}</span>
+            <span class="animate-pulse italic">{{ currentActivity.label }}</span>
           </div>
         </Transition>
         <Transition name="fade">
@@ -350,7 +338,7 @@ async function generateResponse() {
             color="primary"
             :loading="isGeneratingResponse"
             :disabled="isGeneratingResponse || !userInput"
-            @click="generateResponse"
+            @click="submit"
           />
         </div>
       </div>

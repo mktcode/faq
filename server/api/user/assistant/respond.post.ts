@@ -1,6 +1,5 @@
 import OpenAI from 'openai'
 import { getSettings } from '~/server/utils/user'
-import { getInstructions, streamResponse } from '~/server/utils/assistant'
 import z from 'zod'
 
 const bodySchema = z.object({
@@ -20,7 +19,6 @@ export default defineEventHandler(async (event) => {
     apiKey: openaiApiKey,
   })
 
-  const instructions = getInstructions(settings.public)
   const messages: OpenAI.Responses.ResponseInput = []
 
   if (!responseId && settings.private.assistant.context) {
@@ -41,7 +39,7 @@ export default defineEventHandler(async (event) => {
   setHeader(event, 'X-Accel-Buffering', 'no')
   event.node.res.flushHeaders?.()
 
-  const stream = streamResponse(instructions, messages, openai, responseId, user.id, settings.public.company.city)
+  const stream = streamResponse(messages, openai, responseId, user.id, settings)
 
   const ndjson = (async function* () {
     for await (const event of stream) {
