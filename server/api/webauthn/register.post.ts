@@ -63,6 +63,7 @@ export default defineWebAuthnRegisterEventHandler({
           userName: username,
           email: newUser.email,
           picture: '',
+          emailConfirmationToken: newUser.emailConfirmationToken,
         },
       })
 

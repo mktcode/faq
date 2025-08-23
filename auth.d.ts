@@ -5,6 +5,7 @@ declare module '#auth-utils' {
     userName: string
     email: string | null
     picture: string
+    emailConfirmationToken: string | null
   }
 
   interface SecureSessionData {

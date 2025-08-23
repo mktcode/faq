@@ -20,6 +20,8 @@ export default defineEventHandler(async (event) => {
     .where('id', '=', user.id)
     .execute()
 
+  await setUserSession(event, { user: { emailConfirmationToken }})
+
   await sendEmail({
     to: email,
     subject: 'Bitte bestätigen Sie Ihre E-Mail-Adresse',

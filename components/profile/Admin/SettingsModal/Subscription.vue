@@ -3,8 +3,7 @@ const { stripePortalUrl } = useRuntimeConfig().public
 const { isStartingCheckout, startCheckoutSession } = useCheckoutSession()
 const { user } = useUserSession()
 
-function saveSettings() {}
-const isSavingSettings = ref(false)
+const { saveSettings, isSavingSettings } = useProfile()
 
 const emailToVerify = ref(user.value?.email || '')
 const isUpdatingEmail = ref(false)
@@ -30,13 +29,13 @@ async function saveAndStartCheckout() {
 
 <template>
   <div class="flex flex-col gap-4 p-6">
-    <template v-if="me?.isSubscribed">
+    <template v-if="$profile.isSubscribed">
       <p class="text-gray-600">
         Sie sind bereits für das Abonnement angemeldet. Vielen Dank für Ihre Unterstützung!
       </p>
       <p class="text-gray-600">
         Um Ihr Abonnement zu verwalten, werden Sie zu unserem Zahlungsdienstleister Stripe weitergeleitet.
-        Geben Sie dort Ihre E-Mail-Adresse ({{ me.email }}) ein, um einen Zugangscode zu erhalten.
+        Geben Sie dort Ihre E-Mail-Adresse ({{ user?.email }}) ein, um einen Zugangscode zu erhalten.
         Aus Sicherheitsgründen ist dieser Code nur einmalig gültig.
       </p>
       <UButton
@@ -47,7 +46,7 @@ async function saveAndStartCheckout() {
       />
     </template>
     <template v-else>
-      <template v-if="me?.email && !me?.emailConfirmationToken">
+      <template v-if="user?.email && !user?.emailConfirmationToken">
         <div class="text-center border border-gray-200 p-4 rounded-xl">
           <div class="flex items-baseline justify-center gap-2 mb-2">
             <span class="text-3xl font-bold text-gray-900 dark:text-white">17,85 €</span>
@@ -63,14 +62,14 @@ async function saveAndStartCheckout() {
         <div class="flex flex-col gap-2">
           <UFormField label="Name Ihres Unternehmens">
             <UInput
-              v-model="$profile.settings.company.name"
+              v-model="$profile.settings.public.company.name"
               placeholder="Geben Sie den Titel Ihres Unternehmens ein"
               class="w-full"
             />
           </UFormField>
           <UFormField label="Straße und Hausnummer">
             <UInput
-              v-model="$profile.settings.company.street"
+              v-model="$profile.settings.public.company.street"
               placeholder="Geben Sie die Straße und Hausnummer ein"
               class="w-full"
             />
@@ -81,7 +80,7 @@ async function saveAndStartCheckout() {
               class="w-32"
             >
               <UInput
-                v-model="$profile.settings.company.zip"
+                v-model="$profile.settings.public.company.zip"
                 placeholder="Postleitzahl"
               />
             </UFormField>
@@ -90,7 +89,7 @@ async function saveAndStartCheckout() {
               class="flex-1"
             >
               <UInput
-                v-model="$profile.settings.company.city"
+                v-model="$profile.settings.public.company.city"
                 placeholder="Geben Sie die Stadt ein"
                 class="w-full"
               />

@@ -47,7 +47,7 @@ watchDebounced(existingDomain, checkDns, { debounce: 750 })
     }"
   >
     <UButton
-      :label="me?.domain ? 'Domain ändern' : 'Existierende Domain verbinden'"
+      :label="$profile.settings.private.domain ? 'Domain ändern' : 'Existierende Domain verbinden'"
       color="primary"
       variant="link"
       trailing-icon="i-heroicons-chevron-down"
@@ -62,7 +62,7 @@ watchDebounced(existingDomain, checkDns, { debounce: 750 })
           v-if="domainConnectedSuccessfully"
           title="Domain erfolgreich verbunden!"
           icon="i-heroicons-check"
-          :description="`Sie können Ihre Website jetzt über ${me?.domain} erreichen. Ihre bisherige Subdomain ${me?.userName}.solihost.de leitet nun dorthin weiter.`"
+          :description="`Sie können Ihre Website jetzt über ${$profile.settings.private.domain} erreichen. Ihre bisherige Subdomain ${$profile.username}.solihost.de leitet nun dorthin weiter.`"
           color="primary"
           close
           :ui="{

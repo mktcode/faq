@@ -4,11 +4,10 @@ import type { AccordionItem } from '@nuxt/ui'
 const toast = useToast()
 const showModal = useState('showSettingsModal', () => false)
 
-const nuxtApp = useNuxtApp()
-const { $profile, $admin } = nuxtApp
+const { $profile } = useProfile()
 
 const showLegalDataWarning = computed(() => {
-  return !$profile.settings.company.name || !$profile.settings.company.street || !$profile.settings.company.phone
+  return !$profile.settings.public.company.name || !$profile.settings.public.company.street || !$profile.settings.public.company.phone
 })
 
 async function togglePublished() {
