@@ -5,7 +5,6 @@ import sanitizeHtml from 'sanitize-html'
 const showModal = useState('showAssistantResearchModal', () => false)
 const showAssistantTipsModal = useState('showAssistantTipsModal', () => false)
 const showAssistantContextModal = useState('showAssistantContextModal', () => false)
-const { refreshPrivateSettings } = await usePrivateSettings()
 
 const quota = useState('assistantQuota', () => 12)
 
@@ -103,7 +102,6 @@ async function generateResponse() {
     }, () => {
       isGeneratingResponse.value = false
     })
-    refreshPrivateSettings()
   }
   catch (error) {
     console.error('Error generating response:', error)

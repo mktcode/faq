@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const showModal = useState('showAssistantContextModal', () => false)
 
-const { privateSettings, isSavingPrivateSettings, savePrivateSettings } = await usePrivateSettings()
+const { $profile, isSavingSettings, saveSettings } = useProfile()
 </script>
 
 <template>
@@ -34,12 +34,12 @@ const { privateSettings, isSavingPrivateSettings, savePrivateSettings } = await 
         help="Tip: Der Assistent kann diese Informationen auch für Sie pflegen, wenn Sie im Gespräch darum bitten."
       >
         <UTextarea
-          v-if="privateSettings"
-          v-model="privateSettings.assistant.context"
+          v-if="$profile.settings.private"
+          v-model="$profile.settings.private.assistant.context"
           placeholder="Kontext"
           class="w-full"
           autoresize
-          :disabled="isSavingPrivateSettings"
+          :disabled="isSavingSettings"
           :rows="2"
           :maxrows="10"
           spellcheck="false"
@@ -51,8 +51,8 @@ const { privateSettings, isSavingPrivateSettings, savePrivateSettings } = await 
 
       <UButton
         label="Speichern"
-        :loading="isSavingPrivateSettings"
-        @click="savePrivateSettings"
+        :loading="isSavingSettings"
+        @click="saveSettings"
       />
     </template>
   </USlideover>
