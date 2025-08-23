@@ -2,7 +2,7 @@
 const nuxtApp = useNuxtApp()
 const { $profile } = nuxtApp
 
-const items = computed(() => $profile.settings.components.offers.items.map(offer => ({
+const items = computed(() => $profile.settings.public.components.offers.items.map(offer => ({
   title: offer.title,
   description: offer.description,
 })) || [])

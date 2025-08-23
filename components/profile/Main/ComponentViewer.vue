@@ -9,18 +9,18 @@ const nuxtApp = useNuxtApp()
 const { $profile } = nuxtApp
 
 function isComponentDisplayed(componentKey: ComponentKey, index: number): boolean {
-  if (componentKey === 'offers' && !$profile.settings.components.offers.items.length) {
+  if (componentKey === 'offers' && !$profile.settings.public.components.offers.items.length) {
     return false
   }
-  if (componentKey === 'gallery' && !$profile.settings.components.gallery.items.length) {
+  if (componentKey === 'gallery' && !$profile.settings.public.components.gallery.items.length) {
     return false
   }
-  if (componentKey === 'downloads' && !$profile.settings.components.downloads.items.length) {
+  if (componentKey === 'downloads' && !$profile.settings.public.components.downloads.items.length) {
     return false
   }
 
-  const isVisible = $profile.settings.components[componentKey].visible
-  const correctIndex = $profile.settings.components[componentKey].order === index
+  const isVisible = $profile.settings.public.components[componentKey].visible
+  const correctIndex = $profile.settings.public.components[componentKey].order === index
 
   return !!(isVisible && correctIndex)
 }

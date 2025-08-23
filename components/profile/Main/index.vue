@@ -56,11 +56,11 @@ useHead({
     </ClientOnly>
     <ProfileMainHeader />
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
-      <!-- <ProfileMainComponentViewer
+      <ProfileMainComponentViewer
         v-for="index in 5"
         :key="index"
         :slot-index="index"
-      /> -->
+      />
 
       <ProfileMainFooter />
     </div>

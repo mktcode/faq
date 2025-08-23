@@ -108,9 +108,9 @@ const disabled = computed(() => {
     <div
       class="bg-gray-100 p-2 flex items-center gap-2"
       :class="{
-        'rounded-b-none': $profile.settings.design.rounded === 'none',
-        'rounded-b-md': $profile.settings.design.rounded === 'md',
-        'rounded-b-xl': $profile.settings.design.rounded === 'xl',
+        'rounded-b-none': $profile.settings.public.design.rounded === 'none',
+        'rounded-b-md': $profile.settings.public.design.rounded === 'md',
+        'rounded-b-xl': $profile.settings.public.design.rounded === 'xl',
       }"
     >
       <Transition name="fade">
@@ -137,9 +137,9 @@ const disabled = computed(() => {
         v-if="similarQuestions.length > 0 && messageLongEnough"
         class="w-full flex flex-col text-gray-800 mt-2 border border-gray-200 p-4"
         :class="{
-          'rounded-none': $profile.settings.design.rounded === 'none',
-          'rounded-md': $profile.settings.design.rounded === 'md',
-          'rounded-xl': $profile.settings.design.rounded === 'xl',
+          'rounded-none': $profile.settings.public.design.rounded === 'none',
+          'rounded-md': $profile.settings.public.design.rounded === 'md',
+          'rounded-xl': $profile.settings.public.design.rounded === 'xl',
         }"
       >
         <div class="text-sm text-sky-900/60 mb-2">
@@ -171,7 +171,7 @@ const disabled = computed(() => {
         />
       </UFormField>
       <div
-        v-for="(field, index) in $profile.settings.components.form.fields || []"
+        v-for="(field, index) in $profile.settings.public.components.form.fields || []"
         :key="index"
       >
         <UFormField
@@ -275,7 +275,7 @@ const disabled = computed(() => {
         variant="soft"
         icon="i-heroicons-check"
         title="Ihre Anfrage wurde gesendet."
-        :description="$profile.settings.components.form.successMessage || 'Vielen Dank für Ihre Anfrage. Wir melden uns zeitnah bei Ihnen.'"
+        :description="$profile.settings.public.components.form.successMessage || 'Vielen Dank für Ihre Anfrage. Wir melden uns zeitnah bei Ihnen.'"
         :close="{
           color: 'primary',
         }"
@@ -290,7 +290,7 @@ const disabled = computed(() => {
         variant="soft"
         icon="i-heroicons-exclamation-triangle"
         title="Ihre Anfrage konnte nicht gesendet werden."
-        :description="$profile.settings.components.form.errorMessage || `Beim Senden Ihrer Anfrage ist ein Fehler aufgetreten. Versuchen Sie es bitte später erneut oder per Telefon oder E-Mail.`"
+        :description="$profile.settings.public.components.form.errorMessage || `Beim Senden Ihrer Anfrage ist ein Fehler aufgetreten. Versuchen Sie es bitte später erneut oder per Telefon oder E-Mail.`"
         :actions="[
           {
             label: 'zum Impressum',
