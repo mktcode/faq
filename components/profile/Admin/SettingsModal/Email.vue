@@ -57,7 +57,7 @@ async function createEmailAddresses() {
           :disabled="isCreatingEmailAddresses"
         />
         <UBadge
-          :label="`@${me?.domain}`"
+          :label="`@${$profile.settings.private.domain}`"
           color="neutral"
           variant="soft"
           size="xl"
@@ -75,7 +75,7 @@ async function createEmailAddresses() {
           :disabled="isCreatingEmailAddresses"
         />
         <UBadge
-          :label="`@${me?.domain}`"
+          :label="`@${$profile.settings.private.domain}`"
           color="neutral"
           variant="soft"
           size="xl"
@@ -93,7 +93,7 @@ async function createEmailAddresses() {
           :disabled="isCreatingEmailAddresses"
         />
         <UBadge
-          :label="`@${me?.domain}`"
+          :label="`@${$profile.settings.private.domain}`"
           color="neutral"
           variant="soft"
           size="xl"

@@ -1,16 +1,16 @@
 <script setup lang="ts">
-
+const domainIsExternal = true
 </script>
 
 <template>
-  <template v-if="me?.domain && !me?.domainIsExternal">
+  <template v-if="$profile.settings.private.domain && !domainIsExternal">
     <UAlert
       title="Domain verbunden"
       variant="soft"
       icon="i-lucide-check"
     >
       <template #description>
-        Ihre Domain <strong>{{ me?.domain }}</strong> ist verbunden.
+        Ihre Domain <strong>{{ $profile.settings.private.domain }}</strong> ist verbunden.
       </template>
     </UAlert>
     <UButton
@@ -27,7 +27,7 @@
     </UAlert>
   </template>
   <div
-    v-if="me?.domain && me?.domainIsExternal"
+    v-if="$profile.settings.private.domain && domainIsExternal"
     class="flex items-center gap-4 bg-primary-600/10 border border-primary-500/20 rounded-lg px-4 py-3"
   >
     <UIcon
@@ -35,9 +35,9 @@
       class="text-primary-500 size-6 shrink-0"
     />
     <div>
-      Ihre extern registrierte Domain <strong>{{ me?.domain }}</strong> ist verbunden.
+      Ihre extern registrierte Domain <strong>{{ $profile.settings.private.domain }}</strong> ist verbunden.
     </div>
   </div>
-  <ProfileAdminSettingsModalDomainNewSetup v-if="!me?.domain || me?.domainIsExternal" />
-  <ProfileAdminSettingsModalDomainExistingSetup v-if="!me?.domain || me?.domainIsExternal" />
+  <ProfileAdminSettingsModalDomainNewSetup v-if="!$profile.settings.private.domain || domainIsExternal" />
+  <ProfileAdminSettingsModalDomainExistingSetup v-if="!$profile.settings.private.domain || domainIsExternal" />
 </template>
