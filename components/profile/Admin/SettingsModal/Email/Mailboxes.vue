@@ -1,24 +1,29 @@
 <script setup lang="ts">
 defineProps<{ domain: string }>()
 
-// TODO: add validation
-const email1 = ref('')
-const email2 = ref('')
-const email3 = ref('')
+const { $profile } = useProfile()
 
-const { data: mailboxes } = await useFetch('/api/user/email/list')
+// TODO: add validation
+const newMailboxes = ref<{ name: string; password: string; passwordBackedup: boolean }[]>([
+  { name: '', password: '', passwordBackedup: false },
+  { name: '', password: '', passwordBackedup: false },
+  { name: '', password: '', passwordBackedup: false },
+])
 
 const filledEmailFields = computed(() => {
-  return [email1.value, email2.value, email3.value].filter(email => email.trim() !== '').length
+  return newMailboxes.value.filter(mailbox => mailbox.name.trim() !== '').length
 })
 
 const mailboxNamesAreValid = computed(() => {
   const emailRegex = /^[a-zA-Z0-9._-]+$/
-  return [email1.value, email2.value, email3.value].filter(email => email.trim() !== '').every(email => emailRegex.test(email.trim()))
+  return newMailboxes.value.filter(mailbox => mailbox.name.trim() !== '').every(mailbox => emailRegex.test(mailbox.name.trim()))
+})
+
+const passwordsBackupsConfirmed = computed(() => {
+  return newMailboxes.value.filter(mailbox => mailbox.passwordBackedup).length === filledEmailFields.value
 })
 
 const emailAddressesConfirmed = ref(false)
-
 const isCreatingEmailAddresses = ref(false)
 
 async function createEmailAddresses() {
@@ -26,76 +31,37 @@ async function createEmailAddresses() {
   try {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2000))
+    $profile.mailboxes.push(...newMailboxes.value.filter(mailbox => mailbox.name.trim() !== '').map(mailbox => mailbox.name.trim()))
   } catch (error) {
     console.error('Error creating email addresses:', error)
   } finally {
     emailAddressesConfirmed.value = false
     isCreatingEmailAddresses.value = false
+    newMailboxes.value = []
   }
 }
 </script>
 
 <template>
   <div class="flex flex-col gap-4 p-4">
-    <ProfileAdminSettingsModalDomainEmailDetails
-      v-for="email in mailboxes"
-      :key="email.email_address"
-      :email="email.email_address"
+    
+    <div class="flex flex-col gap-2">
+      <ProfileAdminSettingsModalEmailMailboxDetails
+        v-for="mailbox in $profile.mailboxes"
+        :key="mailbox"
+        :mailbox="mailbox"
+      />
+    </div>
+    <ProfileAdminSettingsModalEmailMailboxForm
+      v-for="index in 3 - $profile.mailboxes.length"
+      v-model:mailbox="newMailboxes[index].name"
+      v-model:password="newMailboxes[index].password"
+      v-model:password-backedup="newMailboxes[index].passwordBackedup"
+      :key="index"
+      :disabled="isCreatingEmailAddresses"
+      :domain="domain"
+      class="flex flex-col gap-2"
     />
-    <UButtonGroup class="w-full">
-      <UInput
-        v-model="email1"
-        placeholder="z.B. kontakt oder info"
-        class="w-full"
-        size="xxl"
-        :disabled="isCreatingEmailAddresses"
-      />
-      <UBadge
-        :label="`@${domain}`"
-        color="neutral"
-        variant="soft"
-        size="xl"
-        :ui="{
-          base: 'px-4',
-        }"
-      />
-    </UButtonGroup>
-    <UButtonGroup class="w-full">
-      <UInput
-        v-model="email2"
-        placeholder="z.B. bestellung"
-        class="w-full"
-        size="xxl"
-        :disabled="isCreatingEmailAddresses"
-      />
-      <UBadge
-        :label="`@${domain}`"
-        color="neutral"
-        variant="soft"
-        size="xl"
-        :ui="{
-          base: 'px-4',
-        }"
-      />
-    </UButtonGroup>
-    <UButtonGroup class="w-full">
-      <UInput
-        v-model="email3"
-        placeholder="z.B. anfrage"
-        class="w-full"
-        size="xxl"
-        :disabled="isCreatingEmailAddresses"
-      />
-      <UBadge
-        :label="`@${domain}`"
-        color="neutral"
-        variant="soft"
-        size="xl"
-        :ui="{
-          base: 'px-4',
-        }"
-      />
-    </UButtonGroup>
     <USwitch
       v-if="mailboxNamesAreValid && filledEmailFields > 0"
       v-model="emailAddressesConfirmed"
@@ -103,8 +69,9 @@ async function createEmailAddresses() {
       :disabled="isCreatingEmailAddresses"
     />
     <UButton
+      v-if="$profile.mailboxes.length < 3"
       :label="`${filledEmailFields} E-Mail-Adresse${filledEmailFields === 1 ? '' : 'n'} anlegen`"
-      :disabled="filledEmailFields === 0 || !mailboxNamesAreValid || isCreatingEmailAddresses || !emailAddressesConfirmed"
+      :disabled="filledEmailFields === 0 || !mailboxNamesAreValid || isCreatingEmailAddresses || !emailAddressesConfirmed || !passwordsBackupsConfirmed"
       :loading="isCreatingEmailAddresses"
       @click="createEmailAddresses"
     />
