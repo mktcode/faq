@@ -4,33 +4,11 @@ import { watchDebounced } from '@vueuse/core'
 const { appIp } = useRuntimeConfig().public
 const emit = defineEmits(['goToSubscription'])
 
-const { $profile } = useProfile()
-
 const { isCheckingDns, hasBeenChecked, isACorrect, checkDns } = useDnsCheck()
+const { updateDomain, isUpdatingDomain, domainConnectedSuccessfully } = useExternalDomain()
 
 const existingDomain = ref('')
 const existingDomainSetupOpen = ref(false)
-const domainConnectedSuccessfully = ref(false)
-const isUpdatingDomain = ref(false)
-
-async function updateDomain() {
-  if (isUpdatingDomain.value) return
-  isUpdatingDomain.value = true
-
-  const { success } = await $fetch('/api/user/updateExternalDomain', {
-    method: 'POST',
-    body: { domain: existingDomain.value },
-  })
-
-  if (success) {
-    $profile.domain = existingDomain.value
-    $profile.domainIsExternal = true
-    domainConnectedSuccessfully.value = true
-    existingDomain.value = ''
-  }
-
-  isUpdatingDomain.value = false
-}
 
 watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce: 750 })
 </script>
@@ -89,7 +67,8 @@ watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce:
       <UButton
         v-if="hasBeenChecked && isACorrect"
         label="Domain verbinden"
-        @click="updateDomain"
+        @click="() => updateDomain(existingDomain)"
+        :loading="isUpdatingDomain"
       />
       <ProfileAdminSettingsModalDomainDnsCheckFailed
         v-if="hasBeenChecked && !isACorrect"
