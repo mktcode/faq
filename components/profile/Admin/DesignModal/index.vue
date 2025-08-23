@@ -508,7 +508,7 @@ async function deleteImage(image: 'logo' | 'header') {
           </UButton>
         </template>
       </UModal>
-      <AdminDesignModalLinksModal />
+      <ProfileAdminDesignModalLinksModal />
     </template>
   </UDrawer>
 </template>

@@ -296,8 +296,8 @@ async function generateResponse() {
           </div>
         </Transition>
       </div>
-      <AdminAssistantModalContextSettings />
-      <AdminAssistantModalTips />
+      <ProfileAdminAssistantModalContextSettings />
+      <ProfileAdminAssistantModalTips />
     </template>
 
     <template #footer>
@@ -343,7 +343,7 @@ async function generateResponse() {
             variant="soft"
             :disabled="isGeneratingResponse"
           />
-          <AdminAssistantModalRecordAudio
+          <ProfileAdminAssistantModalRecordAudio
             class="ml-auto"
             @transcript="transcript => userInput = transcript"
           />

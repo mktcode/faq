@@ -38,7 +38,7 @@ const { saveSettings, isSavingSettings } = useSettings()
         class="w-full"
       />
     </UFormField>
-    <AdminContentModalFormFields v-model:fields="$profile.settings.components.form.fields" />
+    <ProfileAdminContentModalFormFields v-model:fields="$profile.settings.components.form.fields" />
     <UButton
       label="Einstellungen speichern"
       variant="solid"

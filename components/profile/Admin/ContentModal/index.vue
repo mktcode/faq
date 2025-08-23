@@ -46,7 +46,7 @@ const showModal = useState('showContentModal', () => false)
           class="inline-block size-4 text-white align-top"
         />, die Sie nicht nutzen möchten.
       </DismissableAlert>
-      <AdminContentModalAccordion />
+      <ProfileAdminContentModalAccordion />
     </template>
   </UDrawer>
 </template>

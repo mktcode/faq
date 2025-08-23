@@ -28,5 +28,5 @@ const emit = defineEmits(['goToSubscription'])
     }"
     @click="emit('goToSubscription')"
   />
-  <AdminSettingsModalDomainExistingSetup />
+  <ProfileAdminSettingsModalDomainExistingSetup />
 </template>

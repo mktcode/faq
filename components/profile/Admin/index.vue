@@ -5,13 +5,13 @@ const subscriptionSuccess = !!route.query.subscriptionSuccess
 </script>
 
 <template>
-  <ProfileMainAdminNav />
-  <AdminDesignModal />
-  <AdminContentModal />
-  <AdminFeedbackModal />
-  <AdminEmailVerifiedModal v-if="emailVerified" />
-  <AdminSubscriptionSuccessModal v-if="subscriptionSuccess" />
+  <ProfileAdminNav />
+  <ProfileAdminDesignModal />
+  <ProfileAdminContentModal />
+  <ProfileAdminFeedbackModal />
+  <ProfileAdminEmailVerifiedModal v-if="emailVerified" />
+  <ProfileAdminSubscriptionSuccessModal v-if="subscriptionSuccess" />
   <ClientOnly>
-    <AdminWelcomeModal />
+    <ProfileAdminWelcomeModal />
   </ClientOnly>
 </template>

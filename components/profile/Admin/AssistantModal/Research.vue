@@ -258,8 +258,8 @@ async function generateResponse() {
         </div>
       </div>
 
-      <AdminAssistantModalContextSettings />
-      <AdminAssistantModalTips />
+      <ProfileAdminAssistantModalContextSettings />
+      <ProfileAdminAssistantModalTips />
     </template>
 
     <template #footer>
@@ -280,7 +280,7 @@ async function generateResponse() {
           <USwitch
             label="Ausführliche Recherche"
           />
-          <AdminAssistantModalRecordAudio
+          <ProfileAdminAssistantModalRecordAudio
             class="ml-auto"
             @transcript="transcript => userInput = transcript"
           />

@@ -36,7 +36,7 @@ async function createEmailAddresses() {
 
 <template>
   <div class="flex flex-col gap-4 p-4">
-    <AdminSettingsModalDomainEmailDetails
+    <ProfileAdminSettingsModalDomainEmailDetails
       v-for="email in mailboxes"
       :key="email.email_address"
       :email="email.email_address"

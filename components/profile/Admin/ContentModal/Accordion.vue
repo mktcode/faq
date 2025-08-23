@@ -98,19 +98,19 @@ function toggleVisibility(key: ComponentKey) {
       </div>
     </template>
     <template #gallery>
-      <AdminContentModalGallery />
+      <ProfileAdminContentModalGallery />
     </template>
     <template #offers>
-      <AdminContentModalOffer />
+      <ProfileAdminContentModalOffer />
     </template>
     <template #form>
-      <AdminContentModalForm />
+      <ProfileAdminContentModalForm />
     </template>
     <template #downloads>
-      <AdminContentModalDownloads />
+      <ProfileAdminContentModalDownloads />
     </template>
     <template #faq>
-      <AdminContentModalFAQ />
+      <ProfileAdminContentModalFAQ />
     </template>
   </UAccordion>
 </template>
