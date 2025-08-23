@@ -8,10 +8,10 @@ function saveSettings() {}
 const items = computed(() => {
   if (!$profile.settings) return []
 
-  return Object.keys($profile.settings.components)
+  return Object.keys($profile.settings.public.components)
     .sort((a, b) => {
-      const orderA = $profile.settings.components[a as ComponentKey].order || 0
-      const orderB = $profile.settings.components[b as ComponentKey].order || 0
+      const orderA = $profile.settings.public.components[a as ComponentKey].order || 0
+      const orderB = $profile.settings.public.components[b as ComponentKey].order || 0
       return orderA - orderB
     })
     .map(key => ({
@@ -23,25 +23,25 @@ const items = computed(() => {
 })
 
 function changeOrder(key: ComponentKey, direction: 'up' | 'down') {
-  const currentPosition = $profile.settings.components[key].order
+  const currentPosition = $profile.settings.public.components[key].order
   if (direction === 'up' && currentPosition <= 1) return
-  if (direction === 'down' && currentPosition >= Object.keys($profile.settings.components).length) return
+  if (direction === 'down' && currentPosition >= Object.keys($profile.settings.public.components).length) return
 
   const newPosition = direction === 'up' ? currentPosition - 1 : currentPosition + 1
-  const adjacentComponentKey = Object.keys($profile.settings.components).find(
-    key => $profile.settings.components[key as ComponentKey].order === newPosition,
+  const adjacentComponentKey = Object.keys($profile.settings.public.components).find(
+    key => $profile.settings.public.components[key as ComponentKey].order === newPosition,
   ) as ComponentKey | undefined
 
   if (adjacentComponentKey) {
-    $profile.settings.components[key].order = newPosition
-    $profile.settings.components[adjacentComponentKey].order = currentPosition
+    $profile.settings.public.components[key].order = newPosition
+    $profile.settings.public.components[adjacentComponentKey].order = currentPosition
   }
 
   saveSettings()
 }
 
 function toggleVisibility(key: ComponentKey) {
-  $profile.settings.components[key].visible = !$profile.settings.components[key].visible
+  $profile.settings.public.components[key].visible = !$profile.settings.public.components[key].visible
   saveSettings()
 }
 </script>
@@ -59,12 +59,12 @@ function toggleVisibility(key: ComponentKey) {
         <UButton
           variant="ghost"
           size="sm"
-          :color="$profile.settings.components[item.id as ComponentKey]?.visible ? 'primary' : 'neutral'"
-          :class="$profile.settings.components[item.id as ComponentKey]?.visible ? 'text-primary-600' : 'text-gray-300'"
+          :color="$profile.settings.public.components[item.id as ComponentKey]?.visible ? 'primary' : 'neutral'"
+          :class="$profile.settings.public.components[item.id as ComponentKey]?.visible ? 'text-primary-600' : 'text-gray-300'"
           @click.stop="toggleVisibility(item.id)"
         >
           <UIcon
-            :name="$profile.settings.components[item.id as ComponentKey]?.visible ? 'i-heroicons-eye' : 'i-heroicons-eye-slash'"
+            :name="$profile.settings.public.components[item.id as ComponentKey]?.visible ? 'i-heroicons-eye' : 'i-heroicons-eye-slash'"
             class="size-5"
           />
         </UButton>
