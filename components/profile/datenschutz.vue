@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const { settings } = await useProfile()
+const { $profile } = useProfile()
 const appConfig = useAppConfig()
-const font = computed(() => settings.value.design.font)
-appConfig.ui.colors.primary = settings.value.design.color
+const font = computed(() => $profile.settings.public.design.font)
+appConfig.ui.colors.primary = $profile.settings.public.design.color
 </script>
 
 <template>

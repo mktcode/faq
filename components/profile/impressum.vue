@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const { settings } = await useProfile()
+const { $profile } = useProfile()
 const appConfig = useAppConfig()
-const font = computed(() => settings.value.design.font)
-appConfig.ui.colors.primary = settings.value.design.color
+const font = computed(() => $profile.settings.public.design.font)
+appConfig.ui.colors.primary = $profile.settings.public.design.color
 </script>
 
 <template>
@@ -15,21 +15,21 @@ appConfig.ui.colors.primary = settings.value.design.color
         </h1>
 
         <p>
-          <strong>{{ settings?.company?.name || 'Dein Unternehmensname' }}</strong><br>
-          {{ settings?.company?.street || 'Deine Straße und Hausnummer' }}<br>
-          {{ settings?.company?.zip || 'Deine Postleitzahl' }} {{ settings?.company?.city || 'Deine Stadt' }}<br>
+          <strong>{{ $profile.settings.public.company.name || 'Dein Unternehmensname' }}</strong><br>
+          {{ $profile.settings.public.company.street || 'Deine Straße und Hausnummer' }}<br>
+          {{ $profile.settings.public.company.zip || 'Deine Postleitzahl' }} {{ $profile.settings.public.company.city || 'Deine Stadt' }}<br>
           <br>
-          <strong>Telefon:</strong> {{ settings?.company?.phone || 'Deine Telefonnummer' }}<br>
-          <strong>E-Mail:</strong> <a :href="`mailto:${settings?.company?.email || 'kontakt@beispiel.de'}`">
-            {{ settings?.company?.email || 'kontakt@beispiel.de' }}
+          <strong>Telefon:</strong> {{ $profile.settings.public.company.phone || 'Deine Telefonnummer' }}<br>
+          <strong>E-Mail:</strong> <a :href="`mailto:${$profile.settings.public.company.email || 'kontakt@beispiel.de'}`">
+            {{ $profile.settings.public.company.email || 'kontakt@beispiel.de' }}
           </a>
         </p>
 
         <p
-          v-if="settings?.company?.taxId"
+          v-if="$profile.settings.public.company.taxId"
           class="mt-2"
         >
-          Umsatzsteuer-ID: {{ settings?.company?.taxId }}
+          Umsatzsteuer-ID: {{ $profile.settings.public.company.taxId }}
         </p>
         <p
           v-else
