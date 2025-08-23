@@ -10,10 +10,14 @@ const existingDomainSetupOpen = ref(false)
 const existingDomain = ref('')
 const isACorrect = ref(false)
 const hasBeenChecked = ref(false)
+const isCheckingDns = ref(false)
 const domainConnectedSuccessfully = ref(false)
 const isUpdatingDomain = ref(false)
 
 async function checkDns() {
+  if (isCheckingDns.value) return
+  isCheckingDns.value = true
+
   existingDomain.value = existingDomain.value.replace(/^https?:\/\//, '').replace(/^www\./, '')
   const result = await $fetch('/api/domain/checkDns', {
     method: 'POST',
@@ -22,6 +26,7 @@ async function checkDns() {
 
   hasBeenChecked.value = true
   isACorrect.value = result.isACorrect
+  isCheckingDns.value = false
 }
 
 async function updateDomain() {
@@ -93,11 +98,10 @@ watchDebounced(existingDomain, checkDns, { debounce: 750 })
         label="Domain verbinden"
         @click="updateDomain"
       />
-      <UAlert
-        v-else-if="hasBeenChecked && !isACorrect"
-        title="Ihre Domain ist nicht korrekt konfiguriert."
-        color="warning"
-        variant="outline"
+      <ProfileAdminSettingsModalDomainDnsCheckFailed
+        v-if="hasBeenChecked && !isACorrect"
+        :is-checking-dns="isCheckingDns"
+        @check-dns="checkDns"
       />
 
       <Transition name="fade">

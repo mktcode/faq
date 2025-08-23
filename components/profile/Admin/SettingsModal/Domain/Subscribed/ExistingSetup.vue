@@ -107,18 +107,10 @@ watchDebounced(existingDomain, checkDns, { debounce: 750 })
         label="Domain verbinden"
         @click="updateDomain"
       />
-      <UAlert
-        v-else-if="hasBeenChecked && !isACorrect"
-        title="Ihre Domain ist nicht korrekt konfiguriert."
-        description="Bitte warten Sie einen Augenblick. Es kann manchmal ein paar Minuten dauern, bis die Einstellungen bei Ihrem Anbieter übernommen werden. Sollte das Problem weiterhin bestehen, überprüfen Sie bitte die DNS-Einstellungen nochmal oder kontaktieren Sie uns."
-        color="error"
-        variant="soft"
-        :actions="[{
-          label: 'DNS-Einstellungen überprüfen',
-          onClick: checkDns,
-          color: 'error',
-          loading: isCheckingDns,
-        }]"
+      <ProfileAdminSettingsModalDomainDnsCheckFailed
+        v-if="hasBeenChecked && !isACorrect"
+        :is-checking-dns="isCheckingDns"
+        @check-dns="checkDns"
       />
 
       <UAlert
