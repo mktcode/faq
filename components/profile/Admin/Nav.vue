@@ -97,25 +97,6 @@ async function signOut() {
         </template>
       </UButton>
 
-      <UButton
-        label="Recherche"
-        icon="i-lucide-search"
-        class="w-full rounded-none p-4 border-b border-gray-200"
-        variant="ghost"
-        color="neutral"
-        :disabled="!$profile.isSubscribed"
-        @click="showAssistantResearchModal = true"
-      >
-        <template #trailing>
-          <UBadge
-            v-if="!$profile.isSubscribed"
-            label="Premium"
-            variant="outline"
-            class="ml-auto"
-          />
-        </template>
-      </UButton>
-
       <ProfileAdminAssistantModal />
       <ProfileAdminAssistantModalResearch />
       <ProfileAdminSettingsModal />
