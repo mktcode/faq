@@ -31,7 +31,6 @@ const open = ref(false)
           color="error"
           variant="soft"
           icon="i-heroicons-trash"
-          @click="() => { $profile.mailboxes.splice($profile.mailboxes.indexOf(mailbox), 1) }"
         />
       </div>
     </template>
