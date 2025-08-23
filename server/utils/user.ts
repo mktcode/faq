@@ -45,6 +45,7 @@ export async function createUser({
       domain: null,
       domainIsExternal: false,
       settings: JSON.stringify(settings),
+      mailboxes: JSON.stringify([]),
     })
     .executeTakeFirstOrThrow()
 

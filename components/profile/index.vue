@@ -11,6 +11,9 @@ const { profile } = defineProps<{
     isSubscribed: boolean
     settings: SettingsForm
     canonicalUrl: string
+    domain: string | null
+    domainIsExternal: boolean
+    mailboxes: string[]
   }
 }>()
 
@@ -22,6 +25,9 @@ nuxtApp.provide('profile', {
   isSubscribed: profile.isSubscribed,
   settings: profile.settings,
   canonicalUrl: profile.canonicalUrl,
+  domain: profile.domain,
+  domainIsExternal: profile.domainIsExternal,
+  mailboxes: profile.mailboxes,
 })
 </script>
 

@@ -9,6 +9,11 @@ export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
   const db = await getDatabaseConnection()
 
+  const isACorrect = await checkDomainA(domain)
+  if (!isACorrect) {
+    throw createError({ statusCode: 400, statusMessage: 'Invalid A record' })
+  }
+
   await db
     .updateTable('users')
     .set({ domain, domainIsExternal: true })

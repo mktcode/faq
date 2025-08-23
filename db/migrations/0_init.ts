@@ -15,6 +15,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('domainIsExternal', 'boolean', col => col.notNull().defaultTo(false))
     .addColumn('domainContactId', 'integer')
     .addColumn('domainCode', 'varchar(100)')
+    .addColumn('mailboxes', 'json', col => col.notNull())
     .addColumn('stripeCustomerId', 'varchar(255)', col => col.unique())
     .addColumn('lastPaidAt', 'timestamp')
     .addColumn('settings', 'json', col => col.notNull())

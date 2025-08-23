@@ -12,6 +12,7 @@ export interface UsersTable {
   domainIsExternal: boolean
   domainContactId: number | null
   domainCode: string | null
+  mailboxes: string
   stripeCustomerId: string | null
   lastPaidAt: ColumnType<Date | null, Date | null, Date | null>
   settings: string

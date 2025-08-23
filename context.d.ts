@@ -10,6 +10,9 @@ declare module 'h3' {
       design: string
       settings: SettingsForm
       canonicalUrl: string
+      domain: string | null
+      domainIsExternal: boolean
+      mailboxes: string[]
     } | undefined
   }
 }

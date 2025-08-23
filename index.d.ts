@@ -7,6 +7,9 @@ type Profile = {
   isSubscribed: boolean
   settings: SettingsForm
   canonicalUrl: string
+  domain: string | null
+  domainIsExternal: boolean
+  mailboxes: string[]
 }
 
 declare module '#app' {

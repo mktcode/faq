@@ -13,6 +13,7 @@ interface TargetUser {
   published: boolean
   lastPaidAt: Date | null
   domain: string | null
+  mailboxes: string[]
 }
 
 function validateHostHeader(event: H3Event): string {
@@ -44,25 +45,27 @@ function determineHostType(event: H3Event): HostType {
   }
 }
 
-async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUser | undefined): Promise<void> {
+function redirectToRoot(event: H3Event): Promise<void> {
   const { public: { appHost } } = useRuntimeConfig()
+  return sendRedirect(event, `https://${appHost}`, 307)
+}
 
-  if (!targetUser) {
-    await sendRedirect(event, `https://${appHost}`, 307)
-    return
-  }
+function getCanonicalUrl(event: H3Event, targetUser: TargetUser): string {
+  const { public: { appHost } } = useRuntimeConfig()
+  return targetUser.domain ? `https://${targetUser.domain}${event.node.req.url}` : `https://${targetUser.userName}.${appHost}${event.node.req.url}`
+}
 
+async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUser): Promise<void> {
   const { user: loggedInUser } = await getUserSession(event)
   const isOwned = loggedInUser ? loggedInUser.userName === targetUser.userName : false
   const isPublic = targetUser.published
 
   if (!isPublic && !isOwned) {
-    await sendRedirect(event, `https://${appHost}`, 307)
+    await redirectToRoot(event)
     return
   }
 
   const settings = await getSettings(targetUser.userName)
-  const canonicalUrl = targetUser.domain ? `https://${targetUser.domain}${event.node.req.url}` : `https://${targetUser.userName}.${appHost}${event.node.req.url}`
 
   event.context.profile = {
     username: targetUser.userName,
@@ -71,7 +74,10 @@ async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUse
     isPublic,
     design: 'default',
     settings,
-    canonicalUrl,
+    canonicalUrl: getCanonicalUrl(event, targetUser),
+    domain: targetUser.domain,
+    domainIsExternal: targetUser.domain ? true : false,
+    mailboxes: targetUser.mailboxes,
   }
 }
 
@@ -83,11 +89,19 @@ async function handleCustomDomain(event: H3Event, domain: string): Promise<void>
   const db = await getDatabaseConnection()
 
   const targetUser = await db.selectFrom('users')
-    .select(['userName', 'published', 'lastPaidAt', 'domain'])
+    .select(['userName', 'published', 'lastPaidAt', 'domain', 'mailboxes'])
     .where('domain', '=', domain)
     .executeTakeFirst()
 
-  setProfileContextOrRedirect(event, targetUser)
+  if (!targetUser) {
+    await redirectToRoot(event)
+    return
+  }
+
+  setProfileContextOrRedirect(event, {
+    ...targetUser,
+    mailboxes: typeof targetUser.mailboxes === 'string' ? JSON.parse(targetUser.mailboxes) : []
+  })
 }
 
 async function handleSubdomain(event: H3Event, currentHost: string): Promise<void> {
@@ -95,11 +109,19 @@ async function handleSubdomain(event: H3Event, currentHost: string): Promise<voi
   const username = extractUsernameFromSubdomain(currentHost)
 
   const targetUser = await db.selectFrom('users')
-    .select(['userName', 'published', 'lastPaidAt', 'domain'])
+    .select(['userName', 'published', 'lastPaidAt', 'domain', 'mailboxes'])
     .where('userName', '=', username)
     .executeTakeFirst()
+  
+  if (!targetUser) {
+    await redirectToRoot(event)
+    return
+  }
 
-  setProfileContextOrRedirect(event, targetUser)
+  setProfileContextOrRedirect(event, {
+    ...targetUser,
+    mailboxes: typeof targetUser.mailboxes === 'string' ? JSON.parse(targetUser.mailboxes) : []
+  })
 }
 
 export default defineEventHandler(async (event) => {
