@@ -4,13 +4,20 @@ import { watchDebounced } from '@vueuse/core'
 const { appIp } = useRuntimeConfig().public
 const emit = defineEmits(['goToSubscription'])
 
+const { $profile } = useProfile()
+
 const existingDomainSetupOpen = ref(false)
 const existingDomain = ref('')
 const isACorrect = ref(false)
+const isCheckingDns = ref(false)
 const hasBeenChecked = ref(false)
 const domainConnectedSuccessfully = ref(false)
+const isUpdatingDomain = ref(false)
 
 async function checkDns() {
+  if (isCheckingDns.value) return
+  isCheckingDns.value = true
+
   existingDomain.value = existingDomain.value.replace(/^https?:\/\//, '').replace(/^www\./, '')
   const result = await $fetch('/api/domain/checkDns', {
     method: 'POST',
@@ -19,19 +26,26 @@ async function checkDns() {
 
   hasBeenChecked.value = true
   isACorrect.value = result.isACorrect
+  isCheckingDns.value = false
 }
 
 async function updateDomain() {
+  if (isUpdatingDomain.value) return
+  isUpdatingDomain.value = true
+
   const { success } = await $fetch('/api/user/updateExternalDomain', {
     method: 'POST',
     body: { domain: existingDomain.value },
   })
 
   if (success) {
+    $profile.domain = existingDomain.value
+    $profile.domainIsExternal = true
     domainConnectedSuccessfully.value = true
-    existingDomainSetupOpen.value = false
     existingDomain.value = ''
   }
+
+  isUpdatingDomain.value = false
 }
 
 watchDebounced(existingDomain, checkDns, { debounce: 750 })
@@ -96,8 +110,15 @@ watchDebounced(existingDomain, checkDns, { debounce: 750 })
       <UAlert
         v-else-if="hasBeenChecked && !isACorrect"
         title="Ihre Domain ist nicht korrekt konfiguriert."
-        color="warning"
-        variant="outline"
+        description="Bitte warten Sie einen Augenblick. Es kann manchmal ein paar Minuten dauern, bis die Einstellungen bei Ihrem Anbieter übernommen werden. Sollte das Problem weiterhin bestehen, überprüfen Sie bitte die DNS-Einstellungen nochmal oder kontaktieren Sie uns."
+        color="error"
+        variant="soft"
+        :actions="[{
+          label: 'DNS-Einstellungen überprüfen',
+          onClick: checkDns,
+          color: 'error',
+          loading: isCheckingDns,
+        }]"
       />
 
       <UAlert
