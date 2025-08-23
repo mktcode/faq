@@ -6,28 +6,12 @@ const emit = defineEmits(['goToSubscription'])
 
 const { $profile } = useProfile()
 
-const existingDomainSetupOpen = ref(false)
+const { isCheckingDns, hasBeenChecked, isACorrect, checkDns } = useDnsCheck()
+
 const existingDomain = ref('')
-const isACorrect = ref(false)
-const isCheckingDns = ref(false)
-const hasBeenChecked = ref(false)
+const existingDomainSetupOpen = ref(false)
 const domainConnectedSuccessfully = ref(false)
 const isUpdatingDomain = ref(false)
-
-async function checkDns() {
-  if (isCheckingDns.value) return
-  isCheckingDns.value = true
-
-  existingDomain.value = existingDomain.value.replace(/^https?:\/\//, '').replace(/^www\./, '')
-  const result = await $fetch('/api/domain/checkDns', {
-    method: 'POST',
-    body: { domain: existingDomain.value },
-  })
-
-  hasBeenChecked.value = true
-  isACorrect.value = result.isACorrect
-  isCheckingDns.value = false
-}
 
 async function updateDomain() {
   if (isUpdatingDomain.value) return
@@ -48,7 +32,7 @@ async function updateDomain() {
   isUpdatingDomain.value = false
 }
 
-watchDebounced(existingDomain, checkDns, { debounce: 750 })
+watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce: 750 })
 </script>
 
 <template>
@@ -110,7 +94,7 @@ watchDebounced(existingDomain, checkDns, { debounce: 750 })
       <ProfileAdminSettingsModalDomainDnsCheckFailed
         v-if="hasBeenChecked && !isACorrect"
         :is-checking-dns="isCheckingDns"
-        @check-dns="checkDns"
+        @check-dns="() => checkDns(existingDomain)"
       />
 
       <UAlert
