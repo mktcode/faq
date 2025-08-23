@@ -202,7 +202,9 @@ async function saveAndStartCheckout() {
           </div>
         </div>
         <p class="text-gray-600">
-          Ihre monatliche Rechnung erhalten Sie per E-Mail. Geben Sie dazu bitte eine vorhandene E-Mail-Adresse an und bestätigen Sie diese, in dem Sie auf den Link klicken, den wir Ihnen zusenden.
+          Ihre monatliche Rechnung erhalten Sie per E-Mail.
+          Geben Sie dazu bitte eine vorhandene E-Mail-Adresse an und bestätigen Sie diese, in dem Sie auf den Link klicken, den wir Ihnen zusenden.
+          Danach können Sie Ihr Paket auswählen.
         </p>
         <UInput
           v-model="emailToVerify"
