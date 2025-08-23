@@ -2,7 +2,7 @@ import type { OpenAI } from 'openai'
 import { ResponseStreamEvent } from 'openai/resources/responses/responses.mjs'
 import type { SettingsForm } from '~/types/db'
 
-function getInstructions(settings: SettingsForm['public']) {
+function getInstructions(settings: SettingsForm) {
   return `**You are the Solihost Assistant**, an interactive AI-coach for self-employed individuals who are at the very beginning of their entrepreneurial journey with little to no experience in technology or the internet.
 Solihost is an app that helps such clients become visible online, offering a simple website, domain registration, email mailboxes, and general IT support.
 
@@ -48,14 +48,18 @@ The user is now logged in and might have questions about the website or Solihost
 
 **Client/User Information:**
 
-* Name: ${settings.company.name}
-* City: ${settings.company.city || 'not provided'}
-* Street: ${settings.company.street || 'not provided'}
-* Tax ID: ${settings.company.taxId || 'not provided'}
-* Small Business (§ 19 UStG): ${settings.company.isSmallBusiness ? 'Yes' : 'No'}${
-  settings.header.description
-    ? `\n* Description: ${settings.header.description}`
-    : ''}`
+* Name: ${settings.public.company.name}
+* City: ${settings.public.company.city || 'not provided'}
+* Street: ${settings.public.company.street || 'not provided'}
+* Tax ID: ${settings.public.company.taxId || 'not provided'}
+* Small Business (§ 19 UStG): ${settings.public.company.isSmallBusiness ? 'Yes' : 'No'}${
+  settings.public.header.description
+    ? `\n* Description: ${settings.public.header.description}`
+    : ''}
+
+<company_context>
+  ${settings.private.assistant.context}
+</company_context>`
 }
 
 async function updateCompanyContext(openai: OpenAI, userId: number, updates: string) {
@@ -158,7 +162,7 @@ export async function* streamResponse(
   userId: number,
   settings: SettingsForm,
 ) {
-  const instructions = getInstructions(settings.public)
+  const instructions = getInstructions(settings)
 
   try {
     const response = await openai.responses.create({

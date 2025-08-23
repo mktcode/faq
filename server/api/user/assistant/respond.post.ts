@@ -21,13 +21,6 @@ export default defineEventHandler(async (event) => {
 
   const messages: OpenAI.Responses.ResponseInput = []
 
-  if (!responseId && settings.private.assistant.context) {
-    messages.push({
-      role: 'developer',
-      content: `<company_context>${settings.private.assistant.context}</company_context>`,
-    })
-  }
-
   messages.push({
     role: 'user',
     content: userInput,

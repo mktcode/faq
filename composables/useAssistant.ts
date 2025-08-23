@@ -34,8 +34,8 @@ export const useAssistant = () => {
         isGeneratingResponse.value = false
       })
     }
-    catch (error) {
-      console.error('Error generating response:', error)
+    catch (e) {
+      error.value = 'Ein unbekannter Fehler ist aufgetreten. Versuchen Sie es bitte später erneut oder kontaktieren Sie den Support.'
     }
     finally {
       isGeneratingResponse.value = false
