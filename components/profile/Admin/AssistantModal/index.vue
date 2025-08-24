@@ -9,7 +9,6 @@ const showAssistantContextModal = useState('showAssistantContextModal', () => fa
 
 const quota = useState('assistantQuota', () => 12)
 const userInput = ref('')
-const previousResponseId = ref<string | null>(null)
 const messagesContainer = ref<HTMLDivElement | null>(null)
 function scrollToBottom() {
   messagesContainer.value?.scrollTo(0, messagesContainer.value.scrollHeight)
@@ -20,83 +19,27 @@ const contentFormType = ref<'offer' | 'post' | 'other'>('offer')
 const contentFormContent = ref<string>('')
 const contentFormContentId = ref<string | null>(null)
 
-const { isGeneratingResponse, currentActivity, messages, nextMessageIndex, error, generateResponse } = useAssistant()
+const {
+  isGeneratingResponse,
+  currentActivity,
+  messages,
+  nextMessageIndex,
+  error,
+  previousResponseId,
+  parseActivity,
+  parseError,
+  parseResponseId,
+  parseNextMessageId,
+  parseMessageDelta,
+  generateResponse
+} = useAssistant()
 
 async function handleResponseEvents(event: ResponseStreamEvent) {
-  if (event.type === 'error') {
-    error.value = event.message || 'Unbekannter Fehler'
-  }
-  if (event.type === 'response.created') {
-    previousResponseId.value = event.response.id
-  }
-
-  if (event.type === 'response.output_item.added') {
-    if (event.item.type === 'reasoning') {
-      currentActivity.value = { label: 'Denke nach...' }
-    }
-    if (event.item.type === 'web_search_call') {
-      currentActivity.value = { label: 'Suche im Internet...' }
-    }
-    if (event.item.type === 'image_generation_call') {
-      currentActivity.value = { label: 'Generiere Bild...' }
-    }
-    if (event.item.type === 'function_call') {
-      if (event.item.name === 'delegate_to_agent') {
-        currentActivity.value = { label: 'Delegiere an Agenten...' }
-      }
-      if (event.item.name === 'update_company_context') {
-        currentActivity.value = { label: 'Aktualisiere Unternehmenskontext...' }
-      }
-      if (event.item.name === 'load_offers') {
-        currentActivity.value = { label: 'Lade Angebote...' }
-      }
-      if (event.item.name === 'render_rich_textfield') {
-        currentActivity.value = { label: 'Bereite Textfeld vor...' }
-      }
-      if (event.item.name === 'ask_solihost_manual_assistant') {
-        currentActivity.value = { label: 'Lese Solihost-Handbuch...' }
-      }
-      if (event.item.name === 'contact_support') {
-        currentActivity.value = { label: 'Kontaktiere Support...' }
-      }
-    }
-    if (event.item.type === 'message') {
-      currentActivity.value = null
-      messages.value.push({ role: 'assistant', content: '' })
-      nextMessageIndex.value = messages.value.length - 1
-    }
-  }
-
-  if (event.type === 'response.output_item.done') {
-    if (event.item.type === 'function_call') {
-      if (event.item.name === 'render_rich_textfield') {
-        let functionArguments: Record<string, any> = {}
-        try {
-          functionArguments = JSON.parse(event.item.arguments)
-          console.log(functionArguments)
-        } catch (error) {
-          console.error('Error parsing arguments:', error)
-        }
-
-        showContentForm.value = true
-        contentFormType.value = functionArguments.content_type || 'other'
-        contentFormContent.value = functionArguments.current_content || ''
-        contentFormContentId.value = functionArguments.content_id || null
-      }
-    }
-  }
-
-  if (event.type === 'response.output_text.delta') {
-    if (!nextMessageIndex.value) {
-      throw new Error('No next message index found. Event order may be incorrect.')
-    }
-
-    messages.value[nextMessageIndex.value].content += event.delta
-  }
-
-  if (event.type === 'response.web_search_call.in_progress') {
-    currentActivity.value = { label: 'Web-Suche läuft...' }
-  }
+  parseError(event)
+  parseResponseId(event)
+  parseActivity(event)
+  parseNextMessageId(event)
+  parseMessageDelta(event)
 
   scrollToBottom()
 }
