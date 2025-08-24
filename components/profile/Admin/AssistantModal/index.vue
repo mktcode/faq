@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { marked } from 'marked'
 import type { ResponseStreamEvent } from 'openai/resources/responses/responses.mjs'
-import sanitizeHtml from 'sanitize-html'
 
 const showModal = useState('showAssistantModal', () => false)
 const showAssistantTipsModal = useState('showAssistantTipsModal', () => false)
@@ -23,7 +21,6 @@ const {
   isGeneratingResponse,
   currentActivity,
   messages,
-  nextMessageIndex,
   error,
   previousResponseId,
   parseActivity,
@@ -126,106 +123,22 @@ function submit() {
         ref="messagesContainer"
         class="flex flex-col flex-1 overflow-y-auto"
       >
-        <div
+        <ProfileAdminAssistantModalMessage
           v-for="(message, index) in messages"
           :key="index"
-          class="border-b last:border-b-0 border-gray-200 p-4"
-        >
-          <div class="font-semibold flex mb-1">
-            <UIcon
-              :name="message.role === 'user' ? 'i-lucide-user' : 'i-lucide-bot'"
-              class="inline-block size-5 mr-2"
-            />
-            {{ message.role === 'user' ? 'Sie' : 'Assistent' }}
-          </div>
-          <div
-            class="prose-sm prose-gray"
-            v-html="sanitizeHtml(marked.parse(message.content, { async: false }))"
-          />
-        </div>
+          :message="message"
+        />
         <Transition name="fade">
-          <div
+          <ProfileAdminAssistantModalActivity
             v-if="currentActivity"
-            class="text-gray-400 flex items-center justify-center gap-2 p-4"
-          >
-            <UIcon
-              name="i-lucide-loader-circle"
-              class="inline-block size-5 animate-spin"
-            />
-            <span class="animate-pulse italic">{{ currentActivity.label }}</span>
-          </div>
+            :current-activity="currentActivity"
+          />
         </Transition>
         <Transition name="fade">
-          <div
+          <ProfileAdminAssistantModalInputSuggestions
             v-if="messages.length === 0"
-            class="p-4 flex flex-col gap-1 mt-auto"
-          >
-            <UButton
-              label="Befrage mich zu meinem Unternehmen."
-              color="neutral"
-              variant="outline"
-              class="w-full"
-              icon="i-lucide-message-circle-question-mark"
-              trailing-icon="i-lucide-arrow-down"
-              size="md"
-              :ui="{
-                trailingIcon: 'ml-auto opacity-40',
-              }"
-              @click="userInput = 'Befrage mich zu meinem Unternehmen und lass uns gemeinsam den Unternehmenskontext aufbauen.'"
-            />
-            <UButton
-              label="Erzähle mir einen Witz über Online-Marketing."
-              color="neutral"
-              variant="outline"
-              class="w-full"
-              icon="i-lucide-smile"
-              trailing-icon="i-lucide-arrow-down"
-              size="md"
-              :ui="{
-                trailingIcon: 'ml-auto opacity-40',
-              }"
-              @click="userInput = 'Erzähle mir einen Witz über Online-Marketing.'"
-            />
-            <UButton
-              label="Lass uns die Angebotstexte bearbeiten."
-              color="neutral"
-              variant="outline"
-              class="w-full"
-              icon="i-lucide-edit-2"
-              trailing-icon="i-lucide-arrow-down"
-              size="md"
-              :ui="{
-                trailingIcon: 'ml-auto opacity-40',
-              }"
-              @click="userInput = 'Lass uns die Angebotstexte bearbeiten.'"
-            />
-            <UButton
-              label="Erstelle einen Post für Social Media mit Bild."
-              color="neutral"
-              variant="outline"
-              class="w-full"
-              icon="i-lucide-image-plus"
-              trailing-icon="i-lucide-arrow-down"
-              size="md"
-              :ui="{
-                trailingIcon: 'ml-auto opacity-40',
-              }"
-              @click="userInput = 'Erstelle ein Bild für Social Media.'"
-            />
-            <UButton
-              label="Wie ändere ich das Bild oben?"
-              color="neutral"
-              variant="outline"
-              class="w-full"
-              icon="i-lucide-book-open-text"
-              trailing-icon="i-lucide-arrow-down"
-              size="md"
-              :ui="{
-                trailingIcon: 'ml-auto opacity-40',
-              }"
-              @click="userInput = 'Wie ändere ich das Bild oben?'"
-            />
-          </div>
+            @update:userInput="userInput = $event"
+          />
         </Transition>
       </div>
       <ProfileAdminAssistantModalContextSettings />
