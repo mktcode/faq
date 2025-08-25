@@ -3,7 +3,7 @@ import { useClipboard } from '@vueuse/core'
 
 const showModal = useState('showFeedbackModal', () => false)
 
-const feedbackEmail = ref(`feedback@solihost.de`)
+const feedbackEmail = ref(`feedback@solohost.de`)
 const { copy: copyEmail, copied: copiedEmail } = useClipboard()
 </script>
 

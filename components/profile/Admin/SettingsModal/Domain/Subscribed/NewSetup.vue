@@ -137,7 +137,7 @@ async function registerDomain() {
     <USwitch
       v-if="isDomainValid && !isCheckingDomain && isAvailable && newDomain && !isTyping"
       v-model="customerHasConfirmedDomain"
-      label="Ja, ich möchte diese Domain registrieren und mit meiner Solihost-Website verbinden."
+      label="Ja, ich möchte diese Domain registrieren und mit meiner Solohost-Website verbinden."
       :disabled="isRegisteringDomain"
     />
     <UButton
@@ -164,7 +164,7 @@ async function registerDomain() {
         v-else-if="!isRegisteringDomain && registeredSuccessfully"
         title="Domain erfolgreich registriert!"
         icon="i-heroicons-check"
-        :description="`Sie können Ihre Website jetzt über ${newDomain}.de erreichen. Ihre bisherige Subdomain ${$profile.username}.solihost.de leitet nun dorthin weiter.`"
+        :description="`Sie können Ihre Website jetzt über ${newDomain}.de erreichen. Ihre bisherige Subdomain ${$profile.username}.solohost.de leitet nun dorthin weiter.`"
         color="primary"
         close
         :ui="{

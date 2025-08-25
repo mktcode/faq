@@ -38,7 +38,7 @@ watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce:
           v-if="domainConnectedSuccessfully"
           title="Domain erfolgreich verbunden!"
           icon="i-heroicons-check"
-          :description="`Sie können Ihre Website jetzt über ${$profile.settings.private.domain} erreichen. Ihre bisherige Subdomain ${$profile.username}.solihost.de leitet nun dorthin weiter.`"
+          :description="`Sie können Ihre Website jetzt über ${$profile.settings.private.domain} erreichen. Ihre bisherige Subdomain ${$profile.username}.solohost.de leitet nun dorthin weiter.`"
           color="primary"
           close
           :ui="{
@@ -82,7 +82,7 @@ watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce:
         icon="i-lucide-headset"
       >
         <template #description>
-          Sie können uns jederzeit unter <strong>support@solihost.de</strong> oder über den Live-Chat unten rechts auf Ihrer Website erreichen.
+          Sie können uns jederzeit unter <strong>support@solohost.de</strong> oder über den Live-Chat unten rechts auf Ihrer Website erreichen.
         </template>
       </UAlert>
     </template>

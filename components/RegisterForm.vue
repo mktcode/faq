@@ -175,7 +175,7 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
             </template>
           </UInput>
           <div class="text-lg text-gray-600 border border-gray-100 rounded-lg rounded-l-none border-l-0 flex items-center justify-center px-4">
-            .solihost.de
+            .solohost.de
           </div>
         </div>
       </UFormField>

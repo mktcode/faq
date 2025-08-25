@@ -66,8 +66,8 @@ export async function createUser({
     .values({
       userId: newUserId,
       uuid: crypto.randomUUID(),
-      name: 'Solihost',
-      email: 'support@solihost.de',
+      name: 'Solohost',
+      email: 'support@solohost.de',
       phone: '0176 70 86 46 27',
       status: 'pending',
     })
@@ -83,7 +83,7 @@ export async function createUser({
     .insertInto('messages')
     .values({
       customerRequestId: newCustomerRequestId,
-      body: 'Willkommen bei Solihost! Wir freuen uns, dass Sie sich für unsere Plattform entschieden haben. Bei Fragen oder Anliegen können Sie uns jederzeit kontaktieren.',
+      body: 'Willkommen bei Solohost! Wir freuen uns, dass Sie sich für unsere Plattform entschieden haben. Bei Fragen oder Anliegen können Sie uns jederzeit kontaktieren.',
       isCustomer: true,
     })
     .execute()

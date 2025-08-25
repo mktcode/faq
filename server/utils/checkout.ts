@@ -42,7 +42,7 @@ export async function requireCompleteStripeCustomer(
       postal_code: settings.company.zip,
     },
     metadata: {
-      solihostUserId: userId.toString(),
+      solohostUserId: userId.toString(),
     },
     tax: {
       validate_location: 'immediately' as const,
@@ -51,7 +51,7 @@ export async function requireCompleteStripeCustomer(
 
   const customers = await stripe.customers.list({ email })
 
-  const existingCustomerByUserId = customers.data.find(c => c.metadata.solihostUserId === userId.toString())
+  const existingCustomerByUserId = customers.data.find(c => c.metadata.solohostUserId === userId.toString())
   const existingCustomerByOldest = customers.data.sort((a, b) => a.created - b.created)[0]
 
   const foundCustomer = existingCustomerByUserId || existingCustomerByOldest

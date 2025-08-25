@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const randomHash = Math.random().toString(36).substring(7)
-  const audioFilename = `/tmp/transcription-solihost-customerRequest-${randomHash}.ogg`
+  const audioFilename = `/tmp/transcription-solohost-customerRequest-${randomHash}.ogg`
 
   fs.writeFileSync(audioFilename, new Uint8Array(audioChunks[0].data))
 

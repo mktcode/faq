@@ -35,7 +35,7 @@ function close() {
           Für Fragen oder Feedback schreiben Sie uns gerne eine E-Mail an <a
             href="mailto:support@beispiel.de"
             class="italic"
-          >support@solihost.de</a>.
+          >support@solohost.de</a>.
         </p>
         <UButton
           label="Schließen"

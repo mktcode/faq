@@ -71,7 +71,7 @@ appConfig.ui.colors.primary = 'sky'
   >
     <header class="sticky top-0 z-50 backdrop-saturate-150 backdrop-blur bg-[linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,255,255,.65)_60%,rgba(255,255,255,0))] dark:bg-[linear-gradient(180deg,rgba(11,16,32,.9),rgba(11,16,32,.75)_60%,rgba(11,16,32,0))]">
       <div class="mx-auto w-[92vw] max-w-[1200px] flex items-center justify-between py-[14px]">
-        <SolihostLogo />
+        <SolohostLogo />
         <div class="flex items-center gap-2">
           <button
             type="button"
@@ -342,7 +342,7 @@ appConfig.ui.colors.primary = 'sky'
               class="text-sky-500"
               href="https://gemini.google.com"
               target="_blank"
-            >Google Gemini</a> (oder der Solihost Assistent) können Ihnen helfen,
+            >Google Gemini</a> (oder der Solohost Assistent) können Ihnen helfen,
             Klarheit zu gewinnen und professionelle Texte zu schreiben, z.B. für Kleinanzeigen oder Social Media Posts. Auch bei rechtlichen und steuerlichen Fragen können diese Tools eine gute erste Orientierung geben.
             Den Steuerberater können sie aktuell aber noch nicht ersetzen.
           </div>
@@ -424,7 +424,7 @@ appConfig.ui.colors.primary = 'sky'
             </div>
           </div>
           <div>
-            <strong class="text-slate-900 dark:text-white text-lg">Solihost</strong><br>
+            <strong class="text-slate-900 dark:text-white text-lg">Solohost</strong><br>
             Webhosting &amp; IT‑Beratung · <a
               class="text-[#0ea5e9]"
               href="tel:+4917670864627"

@@ -13,7 +13,7 @@
     icon="i-lucide-headset"
   >
     <template #description>
-      Sie können uns jederzeit unter <strong>support@solihost.de</strong> oder über den Live-Chat unten rechts auf Ihrer Website erreichen.
+      Sie können uns jederzeit unter <strong>support@solohost.de</strong> oder über den Live-Chat unten rechts auf Ihrer Website erreichen.
     </template>
   </UAlert>
 </template>

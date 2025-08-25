@@ -46,20 +46,19 @@ Plus-Features im Backend absichern.
 
 ## Sicherheit
 
-Implementieren von HTML-Sanitization für v-html Direktiven um XSS-Angriffe zu verhindern.  
+Implementieren von HTML-Sanitization für v-html Direktiven um XSS-Angriffe zu verhindern.
 Besonders wichtig für Email-Inhalte, die in v-html gerendert werden.
 
 ## Datenschutz
 
-Mich als Datenschutzbeauftragten bei der zuständigen Datenschutzbehörde anmelden.  
+Mich als Datenschutzbeauftragten bei der zuständigen Datenschutzbehörde anmelden.
 Domains: Handles, E-Mails an Hetzner.
 
 ## Qualitätssicherung (QA)
 
-Auflistung aller Features nach Priorität sortieren.  
-Einen Testplan erstellen.  
-Ein eigenes Postfach für den Domain-Robot einrichten (domains@solihost.de).  
-Alle Inhalte von markus-kottlaender.de auf solihost.de umstellen.
+Auflistung aller Features nach Priorität sortieren.
+Einen Testplan erstellen. 
+Alle Inhalte von markus-kottlaender.de auf solohost.de umstellen.
 
 ## DDOS Protection
 

@@ -11,7 +11,7 @@ if ($profile.isOwned && $profile.isSubscribed) {
 }
 
 useHead({
-  title: $profile.settings.public.meta.title || $profile.settings.public.header.title || $profile.settings.public.company.name || 'Solihost Website',
+  title: $profile.settings.public.meta.title || $profile.settings.public.header.title || $profile.settings.public.company.name || 'Solohost Website',
   meta: [
     { name: 'robots', content: $profile.isPublic ? 'index, follow' : 'noindex, nofollow' },
     { name: 'theme-color', content: $profile.settings.public.design.color },

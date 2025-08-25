@@ -22,7 +22,7 @@ appConfig.ui.colors.primary = 'sky'
 
 <template>
   <div class="font-poppins min-h-screen max-w-lg mx-auto flex flex-col gap-12 items-center justify-between py-12">
-    <SolihostLogo class="max-w-[150px]" />
+    <SolohostLogo class="max-w-[150px]" />
     <div class="bg-white p-4 max-w-sm w-full">
       <div class="flex flex-col gap-6">
         <form

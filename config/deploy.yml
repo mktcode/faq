@@ -1,5 +1,5 @@
-service: solihost
-image: mktcode/solihost
+service: solohost
+image: mktcode/solohost
 servers:
   web:
     - <%= `bin/terraform output -raw app-1_ip` %>

@@ -14,7 +14,7 @@ watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce:
 
 <template>
   <p class="text-gray-500">
-    Ihre Website ist aktuell unter <strong>{{ $profile.username }}.solihost.de</strong> erreichbar.
+    Ihre Website ist aktuell unter <strong>{{ $profile.username }}.solohost.de</strong> erreichbar.
     Wenn Sie bereits eine Domain besitzen, können Sie diese für Ihre Website bei uns nutzen.
     Eine neue Domain und bis zu 3 E-Mail-Postfächer sind im <strong>Premium-Paket</strong> inklusive.
   </p>
@@ -70,7 +70,7 @@ watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce:
           v-if="domainConnectedSuccessfully"
           title="Domain erfolgreich verbunden!"
           icon="i-heroicons-check"
-          :description="`Sie können Ihre Website jetzt über ${existingDomain} erreichen. Ihre bisherige Subdomain ${$profile.username}.solihost.de leitet nun dorthin weiter.`"
+          :description="`Sie können Ihre Website jetzt über ${existingDomain} erreichen. Ihre bisherige Subdomain ${$profile.username}.solohost.de leitet nun dorthin weiter.`"
           color="primary"
           close
           :ui="{
@@ -86,7 +86,7 @@ watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce:
         icon="i-lucide-headset"
       >
         <template #description>
-          Sie können uns jederzeit unter <strong>support@solihost.de</strong> erreichen.
+          Sie können uns jederzeit unter <strong>support@solohost.de</strong> erreichen.
         </template>
       </UAlert>
     </template>

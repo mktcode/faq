@@ -117,7 +117,7 @@ resource "hcloud_load_balancer_target" "app-1" {
 
 resource "hcloud_managed_certificate" "app" {
   name = "app"
-  domain_names = ["solihost.de", "*.solihost.de"]
+  domain_names = ["solohost.de", "*.solohost.de"]
 }
 
 resource "hcloud_load_balancer_service" "app-health" {
