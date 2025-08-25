@@ -52,8 +52,8 @@ const { saveSettings, isSavingSettings } = useProfile()
         variant="solid"
         color="primary"
         class="mt-4"
-        @click="saveSettings"
         :loading="isSavingSettings"
+        @click="saveSettings"
       />
     </template>
   </UModal>

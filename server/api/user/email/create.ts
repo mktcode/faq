@@ -5,7 +5,7 @@ import { z } from 'zod'
  * - create domain for mailboxes (qboxmail)
  * - add A record for domain id as subdomain (autodns)
  * - add MX records (autodns)
- * 
+ *
  * then:
  * - create mailbox (qboxmail)
  */

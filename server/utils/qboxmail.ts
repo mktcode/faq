@@ -16,7 +16,7 @@ function makeRequest<ResultType>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', endp
       'Content-Type': 'application/json',
     },
     body: data?.body,
-    query: data?.query
+    query: data?.query,
   })
 }
 
@@ -35,7 +35,7 @@ async function createDomainIfNotExists(domain: string) {
   const existingResultSchema = z.object({
     resources: z.array(z.object({
       code: z.string(),
-    }))
+    })),
   })
   type ExistingResultType = z.infer<typeof existingResultSchema>
 
@@ -63,7 +63,7 @@ async function createDomainIfNotExists(domain: string) {
       postmaster_password: postmasterPassword,
       postmaster_password_confirmation: postmasterPassword,
       max_email_accounts: 3,
-    }
+    },
   })
 
   const validatedResult = resultSchema.parse(result)
@@ -77,14 +77,15 @@ async function createDomainIfNotExists(domain: string) {
 async function listMailboxes(domainCode: string) {
   try {
     const result = await makeRequest<{ resources: {
-      code: string,
-      name: string,
-      email_address: string,
-      firstname: string,
-    }[]}>('GET', `domains/${domainCode}/email_accounts`)
-  
+      code: string
+      name: string
+      email_address: string
+      firstname: string
+    }[] }>('GET', `domains/${domainCode}/email_accounts`)
+
     return result.resources
-  } catch (error) {
+  }
+  catch (error) {
     // INFO: For some reason qboxmail returns a 404 for an empty list *shrug*
     return []
   }
@@ -98,7 +99,7 @@ async function createMailbox(mailbox: string, domainCode: string, companyName: s
       firstname: companyName,
       password: securePassword,
       password_confirmation: securePassword,
-    }
+    },
   })
 }
 
@@ -110,7 +111,8 @@ async function checkMxRecords(domainCode: string) {
   try {
     await makeRequest<unknown>('PUT', `domains/${domainCode}/dns`)
     return true
-  } catch (error) {
+  }
+  catch (error) {
     return false
   }
 }
@@ -119,7 +121,8 @@ async function checkDnsOwnership(domainCode: string) {
   try {
     await makeRequest<unknown>('PUT', `domains/${domainCode}/dns_ownership_check`)
     return true
-  } catch (error) {
+  }
+  catch (error) {
     return false
   }
 }

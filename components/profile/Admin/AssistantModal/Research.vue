@@ -89,7 +89,8 @@ async function generateResponse() {
             let functionArguments: Record<string, any> = {}
             try {
               functionArguments = JSON.parse(event.item.arguments)
-            } catch (error) {
+            }
+            catch (error) {
               console.error('Error parsing arguments:', error)
             }
 
@@ -278,8 +279,8 @@ async function generateResponse() {
         />
         <div class="p-2 flex items-center gap-2">
           <USwitch
-            label="Ausführliche Recherche"
             v-model="deepResearch"
+            label="Ausführliche Recherche"
           />
           <ProfileAdminAssistantModalRecordAudio
             class="ml-auto"

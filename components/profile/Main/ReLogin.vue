@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useLocalStorage } from '@vueuse/core';
+import { useLocalStorage } from '@vueuse/core'
 
 const { appHost } = useRuntimeConfig().public
 const ownedUserNames = useLocalStorage<string[]>('ownedUserNames', [])

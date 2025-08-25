@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SettingsForm } from '~/types/db';
+import type { SettingsForm } from '~/types/db'
 
 const path = useRoute().path
 

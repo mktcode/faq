@@ -56,8 +56,8 @@ watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce:
       <UButton
         v-if="hasBeenChecked && isACorrect"
         label="Domain verbinden"
-        @click="() => updateDomain(existingDomain)"
         :loading="isUpdatingDomain"
+        @click="() => updateDomain(existingDomain)"
       />
       <ProfileAdminSettingsModalDomainDnsCheckFailed
         v-if="hasBeenChecked && !isACorrect"

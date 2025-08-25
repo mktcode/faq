@@ -70,8 +70,8 @@ onMounted(() => {
         <UButton
           :icon="copiedPassword ? 'i-heroicons-check' : 'i-heroicons-clipboard'"
           :label="copiedPassword ? 'Kopiert!' : 'Kopieren'"
-          @click="copiedPassword ? null : copyPassword(password)"
           variant="soft"
+          @click="copiedPassword ? null : copyPassword(password)"
         />
         <UButton
           icon="i-heroicons-arrow-path"

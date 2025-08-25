@@ -1,4 +1,4 @@
-import type { ResponseStreamEvent } from "openai/resources/responses/responses.mjs"
+import type { ResponseStreamEvent } from 'openai/resources/responses/responses.mjs'
 
 export const useAssistant = () => {
   const isGeneratingResponse = ref(false)

@@ -290,7 +290,7 @@ appConfig.ui.colors.primary = 'sky'
           <textarea
             v-model="companyContext"
             class="w-full resize-none h-[200px] ring-sky-600 focus:ring-3 outline-0 rounded-[12px] p-4 bg-gray-100 dark:bg-[#0b1020] text-slate-900 dark:text-[#e7ecf4]"
-          ></textarea>
+          />
           <div class="flex flex-col sm:flex-row justify-between gap-4 mt-4">
             <LandingpageRecordAudio @transcript="companyContext = (companyContext || '') + $event" />
             <a
@@ -298,7 +298,10 @@ appConfig.ui.colors.primary = 'sky'
               :href="user ? `https://${user.userName}.${appHost}` : `/register?context=${encodeURIComponent(companyContext)}`"
             >
               Kostenlose Website erstellen
-              <UIcon name="i-heroicons-arrow-right" class="ml-auto" />
+              <UIcon
+                name="i-heroicons-arrow-right"
+                class="ml-auto"
+              />
             </a>
           </div>
         </div>

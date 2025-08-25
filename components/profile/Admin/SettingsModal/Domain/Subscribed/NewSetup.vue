@@ -147,7 +147,10 @@ async function registerDomain() {
       :loading="isRegisteringDomain"
       @click="registerDomain"
     />
-    <Transition name="fade" mode="out-in">
+    <Transition
+      name="fade"
+      mode="out-in"
+    >
       <UAlert
         v-if="isRegisteringDomain"
         title="Domain wird registriert!"

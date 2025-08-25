@@ -193,7 +193,10 @@ function click(editor: Editor) {
         Highlight
       </WysiwygEditorButton>
     </div>
-    <EditorContent :editor="editor" class="max-h-80 overflow-auto" />
+    <EditorContent
+      :editor="editor"
+      class="max-h-80 overflow-auto"
+    />
   </div>
 </template>
 

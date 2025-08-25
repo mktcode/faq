@@ -43,8 +43,8 @@ const { saveSettings, isSavingSettings } = useProfile()
       label="Einstellungen speichern"
       variant="solid"
       color="primary"
-      @click="saveSettings"
       :loading="isSavingSettings"
+      @click="saveSettings"
     />
   </div>
 </template>

@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
     .select(['domainCode'])
     .where('id', '=', user.id)
     .executeTakeFirstOrThrow()
-  
+
   if (!userInDb.domainCode) {
     return []
   }

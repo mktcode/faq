@@ -1,5 +1,5 @@
 import { OpenAI } from 'openai'
-import { ResponseStreamEvent } from 'openai/resources/responses/responses.mjs'
+import type { ResponseStreamEvent } from 'openai/resources/responses/responses.mjs'
 import type { SettingsForm } from '~/types/db'
 
 function getOpenAI() {
@@ -61,7 +61,8 @@ ${settings.private.assistant.context}`
 function parseFunctionCallArguments(args: string) {
   try {
     return JSON.parse(args)
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error parsing function call arguments:', error)
     return {}
   }
@@ -70,7 +71,8 @@ function parseFunctionCallArguments(args: string) {
 function createResponse(settings: SettingsForm, userInput: string, previousResponseId?: string) {
   if (previousResponseId) {
     return createContinueResponse(previousResponseId, userInput)
-  } else {
+  }
+  else {
     return createNewResponse(settings, userInput)
   }
 }
@@ -80,44 +82,44 @@ function createNewResponse(settings: SettingsForm, userInput: string) {
   const openai = getOpenAI()
 
   return openai.responses.create({
-      stream: true,
-      model: 'gpt-5-mini',
-      instructions,
-      input: [{
-        role: 'user',
-        content: userInput,
-      }],
-      reasoning: {
-        effort: 'low',
-      },
-      text: {
-        verbosity: 'low',
-      },
-      tools: [
-        {
-          type: 'function',
-          name: 'delegate_to_agent',
-          description: 'Delegate a task to a specific agent for further processing.',
-          parameters: {
-            type: 'object',
-            properties: {
-              agent: {
-                type: 'string',
-                enum: ['research', 'website', 'tax'],
-                description: 'The name of the agent.',
-              },
-              prompt: {
-                type: 'string',
-                description: 'The prompt to send to the agent.',
-              },
+    stream: true,
+    model: 'gpt-5-mini',
+    instructions,
+    input: [{
+      role: 'user',
+      content: userInput,
+    }],
+    reasoning: {
+      effort: 'low',
+    },
+    text: {
+      verbosity: 'low',
+    },
+    tools: [
+      {
+        type: 'function',
+        name: 'delegate_to_agent',
+        description: 'Delegate a task to a specific agent for further processing.',
+        parameters: {
+          type: 'object',
+          properties: {
+            agent: {
+              type: 'string',
+              enum: ['research', 'website', 'tax'],
+              description: 'The name of the agent.',
             },
-            required: ['agent', 'prompt'],
-            additionalProperties: false,
+            prompt: {
+              type: 'string',
+              description: 'The prompt to send to the agent.',
+            },
           },
-          strict: true,
+          required: ['agent', 'prompt'],
+          additionalProperties: false,
         },
-      ],
-    })
+        strict: true,
+      },
+    ],
+  })
 }
 
 function createContinueResponse(previousResponseId: string, userInput: string) {
@@ -207,19 +209,20 @@ async function* processResponse(response: AsyncIterable<ResponseStreamEvent>, se
 async function* streamResponse(
   userInput: string,
   settings: SettingsForm,
-  previousResponseId?: string
+  previousResponseId?: string,
 ) {
   try {
     const response = await createResponse(settings, userInput, previousResponseId)
     yield* processResponse(response, settings)
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error streaming assistant response:', error)
     const errorEvent: ResponseStreamEvent = {
       type: 'error',
       code: 'CUSTOM_ERROR_INITIATE_STREAM',
       message: 'Ein unbekannter Fehler ist aufgetreten. Versuchen Sie es bitte später erneut oder kontaktieren Sie den Support.',
       param: null,
-      sequence_number: -1
+      sequence_number: -1,
     }
     yield errorEvent
   }

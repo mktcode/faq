@@ -157,8 +157,8 @@ async function deleteDownload(index: number) {
     </div>
     <UButton
       label="Einstellungen speichern"
-      @click="saveSettings()"
       :loading="isSavingSettings"
+      @click="saveSettings()"
     />
   </div>
 </template>

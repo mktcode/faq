@@ -1,5 +1,5 @@
-import OpenAI from "openai"
-import { SettingsForm } from "~/types/db"
+import OpenAI from 'openai'
+import type { SettingsForm } from '~/types/db'
 
 function getInstructions(settings: SettingsForm) {
   return `You are the **Solohost Research Assistant**, an interactive AI partner for solo entrepreneurs and small business owners who are **not very tech-savvy** and often have little or no prior experience with technology.
@@ -11,7 +11,7 @@ Your mission is to simplify complex topics and deliver **clear, beginner-friendl
 - After all sub-questions are answered, combine the results into a clear, practical final synthesis.
 
 # Client Context
-- **Company:** ${settings.public.company.name}, ${settings.public.company.city }
+- **Company:** ${settings.public.company.name}, ${settings.public.company.city}
 - **Small Business (§ 19 UStG):** ${settings.public.company.isSmallBusiness ? 'Yes' : 'No'}
 - **About:** ${settings.private.assistant.context || '-'}
 
@@ -36,19 +36,19 @@ Your mission is to simplify complex topics and deliver **clear, beginner-friendl
 async function* streamResponse(
   settings: SettingsForm,
   userInput: string,
-  previousResponseId?: string
+  previousResponseId?: string,
 ) {
   const { openaiApiKey } = useRuntimeConfig()
   const openai = new OpenAI({
     apiKey: openaiApiKey,
   })
-  
+
   const instructions = getInstructions(settings)
 
   const messages: OpenAI.Responses.ResponseInput = []
   messages.push({
     role: 'user',
-    content: userInput
+    content: userInput,
   })
 
   const response = await openai.responses.create({
@@ -116,7 +116,8 @@ async function* streamResponse(
       let functionCallArguments: Record<string, any> = {}
       try {
         functionCallArguments = JSON.parse(functionCall.arguments)
-      } catch (error) {
+      }
+      catch (error) {
         console.error('Error parsing function call arguments:', error)
       }
       if (functionCall.name === 'break_down_research' && functionCallArguments.steps) {
@@ -159,21 +160,21 @@ async function* streamResponse(
           tools: [
             {
               type: 'web_search_preview',
-              search_context_size: "medium",
+              search_context_size: 'medium',
               user_location: {
                 type: 'approximate',
                 country: 'DE',
                 city: settings.public.company.city || undefined,
               },
             },
-          ]
+          ],
         })
 
         for await (const event of stepResponse) {
           if (event.type === 'response.completed') {
             lastResponseId = event.response.id
           }
-          
+
           yield event
         }
       }

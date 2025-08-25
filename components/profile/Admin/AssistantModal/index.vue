@@ -28,7 +28,7 @@ const {
   parseResponseId,
   parseNextMessageId,
   parseMessageDelta,
-  generateResponse
+  generateResponse,
 } = useAssistant()
 
 async function handleResponseEvents(event: ResponseStreamEvent) {
@@ -50,7 +50,7 @@ function submit() {
       userInput: userInput.value,
       responseId: previousResponseId.value || undefined,
     },
-    handleResponseEvents
+    handleResponseEvents,
   )
 }
 </script>
@@ -137,7 +137,7 @@ function submit() {
         <Transition name="fade">
           <ProfileAdminAssistantModalInputSuggestions
             v-if="messages.length === 0"
-            @update:userInput="userInput = $event"
+            @update:user-input="userInput = $event"
           />
         </Transition>
       </div>
@@ -154,7 +154,7 @@ function submit() {
           <UFormField
             :label="contentFormType === 'offer' ? 'Angebot' : contentFormType === 'post' ? 'Post' : 'Textbearbeitung'"
             :ui="{
-              label: 'px-4 pt-4'
+              label: 'px-4 pt-4',
             }"
           >
             <WysiwygEditor
@@ -163,7 +163,10 @@ function submit() {
               rounded="none"
             />
           </UFormField>
-          <div v-if="contentFormType === 'offer'" class="p-1 flex items-center gap-2 justify-end">
+          <div
+            v-if="contentFormType === 'offer'"
+            class="p-1 flex items-center gap-2 justify-end"
+          >
             <UButton
               :label="`Angebot ${contentFormContentId ? 'speichern' : 'erstellen'}`"
               size="md"

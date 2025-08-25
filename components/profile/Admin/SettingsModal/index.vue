@@ -44,7 +44,7 @@ const items: AccordionItem[] = [
     label: 'E-Mail',
     icon: 'i-heroicons-envelope',
     slot: 'email',
-    disabled: !$profile.isSubscribed
+    disabled: !$profile.isSubscribed,
   },
   {
     label: 'Abonnement',
@@ -120,7 +120,7 @@ const active = ref<string | undefined>(undefined)
               name="i-heroicons-chevron-down"
               class="inline-block size-5 opacity-50"
               :class="{
-                'rotate-180': open
+                'rotate-180': open,
               }"
             />
           </div>

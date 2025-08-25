@@ -100,7 +100,7 @@ async function handleCustomDomain(event: H3Event, domain: string): Promise<void>
 
   setProfileContextOrRedirect(event, {
     ...targetUser,
-    mailboxes: typeof targetUser.mailboxes === 'string' ? JSON.parse(targetUser.mailboxes) : []
+    mailboxes: typeof targetUser.mailboxes === 'string' ? JSON.parse(targetUser.mailboxes) : [],
   })
 }
 
@@ -112,7 +112,7 @@ async function handleSubdomain(event: H3Event, currentHost: string): Promise<voi
     .select(['userName', 'published', 'lastPaidAt', 'domain', 'mailboxes'])
     .where('userName', '=', username)
     .executeTakeFirst()
-  
+
   if (!targetUser) {
     await redirectToRoot(event)
     return
@@ -120,7 +120,7 @@ async function handleSubdomain(event: H3Event, currentHost: string): Promise<voi
 
   setProfileContextOrRedirect(event, {
     ...targetUser,
-    mailboxes: typeof targetUser.mailboxes === 'string' ? JSON.parse(targetUser.mailboxes) : []
+    mailboxes: typeof targetUser.mailboxes === 'string' ? JSON.parse(targetUser.mailboxes) : [],
   })
 }
 

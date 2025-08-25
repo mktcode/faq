@@ -1,4 +1,4 @@
-import { DomainRobot, DomainRobotModels } from "js-domainrobot-sdk";
+import { DomainRobot, DomainRobotModels } from 'js-domainrobot-sdk'
 
 const autodnsApiUrl = 'https://api.demo.autodns.com/v1'
 const autodnsApiUser = 'api@markus-kottlaender.de'
@@ -25,14 +25,14 @@ async function createDomainContact(contact: {
   country: string
 }) {
   const query = new DomainRobotModels.Contact({
-    type: "PERSON",
+    type: 'PERSON',
     fname: contact.firstname,
     lname: contact.lastname,
     address: [contact.street],
     city: contact.city,
     pcode: contact.postalCode,
     country: contact.country,
-  });
+  })
 
   const domainRobot = getDomainRobot()
   const domainContact = await domainRobot.contact().create(query)
@@ -57,11 +57,11 @@ async function registerDomainWithZone(domain: string, contactId: number) {
       origin: domain,
       resourceRecords: [
         {
-          type: "A",
+          type: 'A',
           value: appIp,
         },
       ],
-    }
+    },
   }))
 }
 
@@ -87,14 +87,14 @@ async function addMissingMailRecords(domain: string, mailDomainId: string, mailV
             value: mailVerifyIp,
           },
           {
-            type: "MX",
+            type: 'MX',
             value: 'mx01.qboxmail.com',
-            pref: 10
+            pref: 10,
           },
           {
-            type: "MX",
+            type: 'MX',
             value: 'mx02.qboxmail.com',
-            pref: 20
+            pref: 20,
           },
         ],
       }),

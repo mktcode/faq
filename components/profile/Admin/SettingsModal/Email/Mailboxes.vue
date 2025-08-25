@@ -4,7 +4,7 @@ defineProps<{ domain: string }>()
 const { $profile } = useProfile()
 
 // TODO: add validation
-const newMailboxes = ref<{ name: string; password: string; passwordBackedup: boolean }[]>([
+const newMailboxes = ref<{ name: string, password: string, passwordBackedup: boolean }[]>([
   { name: '', password: '', passwordBackedup: false },
   { name: '', password: '', passwordBackedup: false },
   { name: '', password: '', passwordBackedup: false },
@@ -32,9 +32,11 @@ async function createEmailAddresses() {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2000))
     $profile.mailboxes.push(...newMailboxes.value.filter(mailbox => mailbox.name.trim() !== '').map(mailbox => mailbox.name.trim()))
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error creating email addresses:', error)
-  } finally {
+  }
+  finally {
     emailAddressesConfirmed.value = false
     isCreatingEmailAddresses.value = false
     newMailboxes.value = []
@@ -44,7 +46,6 @@ async function createEmailAddresses() {
 
 <template>
   <div class="flex flex-col gap-4 p-4">
-    
     <div class="flex flex-col gap-2">
       <ProfileAdminSettingsModalEmailMailboxDetails
         v-for="mailbox in $profile.mailboxes"
@@ -54,10 +55,10 @@ async function createEmailAddresses() {
     </div>
     <ProfileAdminSettingsModalEmailMailboxForm
       v-for="index in 3 - $profile.mailboxes.length"
+      :key="index"
       v-model:mailbox="newMailboxes[index].name"
       v-model:password="newMailboxes[index].password"
       v-model:password-backedup="newMailboxes[index].passwordBackedup"
-      :key="index"
       :disabled="isCreatingEmailAddresses"
       :domain="domain"
       class="flex flex-col gap-2"

@@ -305,7 +305,7 @@ About: ${settings.private.assistant.context}`,
   const offersPrefill = offersResponse.output_parsed
 
   if (offersPrefill) {
-    settings.public.components.offers.items = offersPrefill.offers.map((offer) => ({
+    settings.public.components.offers.items = offersPrefill.offers.map(offer => ({
       title: offer.title,
       description: offer.description,
       slug: computeSlug(offer.title),
