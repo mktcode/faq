@@ -4,12 +4,12 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   app: {
     head: {
-  title: 'Solohost',
+      title: 'Solohost',
       meta: [
         { name: 'robots', content: 'noindex, nofollow' },
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' },
-  { name: 'description', content: 'Solohost - Online aus Leidenschaft' },
+        { name: 'description', content: 'Solohost - Online aus Leidenschaft' },
       ],
       link: [
         { rel: 'icon', href: '/favicon.png', type: 'image/png' },
@@ -47,8 +47,8 @@ export default defineNuxtConfig({
     session: {
       password: process.env.SESSION_PASSWORD || '',
       cookie: {
-  // Devnote: Set .de to .local for preview mode
-  domain: process.env.NODE_ENV === 'production' ? 'solohost.de' : 'solohost.local',
+        // Devnote: Set .de to .local for preview mode
+        domain: process.env.NODE_ENV === 'production' ? 'solohost.de' : 'solohost.local',
         sameSite: 'strict',
       },
     },
@@ -77,17 +77,17 @@ export default defineNuxtConfig({
     },
   },
   devServer: {
-  host: 'solohost.local',
+    host: 'solohost.local',
     https: {
-  key: '.localcert/solohost.local+1-key.pem',
-  cert: '.localcert/solohost.local+1.pem',
+      key: '.localcert/solohost.local+1-key.pem',
+      cert: '.localcert/solohost.local+1.pem',
     },
   },
   compatibilityDate: '2024-11-01',
   vite: {
     server: {
       allowedHosts: true,
-  hmr: { host: 'solohost.local' },
+      hmr: { host: 'solohost.local' },
     },
   },
   auth: {
