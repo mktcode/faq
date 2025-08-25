@@ -73,3 +73,64 @@ mkcert -key-file .localcert/solohost.local+1-key.pem \
 ```
 
 Or see: https://mkcert.dev
+
+### Database
+
+You need a MySQL database, remote or local.
+
+For local installation on Debian, including phpmyadmin:
+
+```sh
+sudo apt install apache2 php php-cgi php-mysqli php-pear php-mbstring libapache2-mod-php php-common php-phpseclib php-mysql mariadb-server -y
+sudo systemctl start apache2 && sudo systemctl enable apache2
+sudo systemctl start mariadb && sudo systemctl enable mariadb
+sudo mariadb-secure-installation
+```
+
+Create database and user:
+
+```sh
+sudo mysql
+```
+
+```sh
+CREATE USER 'YourUsername'@'localhost' IDENTIFIED BY 'YourStrongPassword';
+GRANT ALL PRIVILEGES ON *.* TO 'YourUsername'@'localhost' WITH GRANT OPTION;
+```
+
+Phpmyadmin:
+
+```sh
+sudo apt install phpmyadmin # choose apache during installation
+```
+
+Now open http://localhost/phpmyadmin and create a database named "solohost".
+
+### Environment Variables
+
+```sh
+cp .env.example .env.local
+```
+
+```sh
+DATABASE_URL=mysql://<user>:<password>@localhost:3306/solohost
+...
+```
+
+### Migrate Database
+
+```sh
+export DATABASE_URL=mysql://<user>:<password>@localhost:3306/solohost
+npm run migrate
+# migration "0_init" was executed successfully
+```
+
+### Done
+
+You can now open https://solohost.local:3000
+
+## Passkeys
+
+To register and login locally on Linux you currently need a passkey manager like KeePassXC: https://keepassxc.org/
+
+Install the browser extension too.
