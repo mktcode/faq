@@ -3,6 +3,7 @@ import { zodTextFormat } from 'openai/helpers/zod'
 import type { H3Event } from 'h3'
 import { settingsFormSchema, type SettingsForm } from '~/types/db'
 import z from 'zod'
+import sanitizeHtml from 'sanitize-html'
 
 function computeSlug(title: string) {
   return title.toLowerCase()
@@ -168,7 +169,16 @@ export async function requireProfileSubscription(username: string) {
 }
 
 export function getValidatedSettings(settings: string | Record<string, unknown>): SettingsForm {
-  return settingsFormSchema.parse(typeof settings === 'string' ? JSON.parse(settings) : settings)
+  const validatedSettings = settingsFormSchema.parse(typeof settings === 'string' ? JSON.parse(settings) : settings)
+
+  // sanitize html content
+  // TODO: make this more comprehensive and maybe move to saving instead of serving
+  validatedSettings.public.components.offers.items = validatedSettings.public.components.offers.items.map(offer => ({
+    ...offer,
+    description: sanitizeHtml(offer.description),
+  }))
+
+  return validatedSettings
 }
 
 export async function getSettings(userIdOrName: number | string) {
