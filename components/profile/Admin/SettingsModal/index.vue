@@ -1,37 +1,13 @@
 <script setup lang="ts">
 import type { AccordionItem } from '@nuxt/ui'
 
-const toast = useToast()
 const showModal = useState('showSettingsModal', () => false)
 
 const { $profile } = useProfile()
 
-const showLegalDataWarning = computed(() => {
-  return !$profile.settings.public.company.name || !$profile.settings.public.company.street || !$profile.settings.public.company.phone
-})
-
-async function togglePublished() {
-  const { published } = await $fetch('/api/user/togglePublished', { method: 'POST' })
-
-  if (published) {
-    toast.add({
-      title: 'Profil veröffentlicht',
-      description: `Dein Profil ist jetzt öffentlich zugänglich.`,
-      color: 'success',
-    })
-  }
-  else {
-    toast.add({
-      title: 'Profil nicht mehr veröffentlicht',
-      description: `Dein Profil ist jetzt privat.`,
-      color: 'warning',
-    })
-  }
-}
-
 const items: AccordionItem[] = [
   {
-    label: 'Anschrift und Rechtliches',
+    label: 'Unternehmensdaten',
     icon: 'i-heroicons-building-office-2',
     slot: 'company',
   },
@@ -80,27 +56,6 @@ const active = ref<string | undefined>(undefined)
     </template>
 
     <template #body>
-      <div class="p-4 border-b border-gray-200">
-        <USwitch
-          v-model="$profile.isPublic"
-          :disabled="showLegalDataWarning"
-          label="Veröffentlicht"
-          :description="$profile.isPublic ? 'Ihre Website ist öffentlich zugänglich.' : 'Nur Sie können Ihr Profil sehen, wenn Sie angemeldet sind.'"
-          @update:model-value="togglePublished"
-        />
-        <UAlert
-          v-if="showLegalDataWarning"
-          variant="soft"
-          title="Rechtliche Angaben fehlen"
-          icon="i-heroicons-exclamation-triangle"
-          class="mt-2"
-          color="error"
-        >
-          <template #description>
-            Bevor Sie Ihre Website veröffentlichen können, müssen Sie unter <strong>Anschrift und Rechtliches</strong> Ihre Unternehmensdaten angeben, damit diese im Impressum und in der Datenschutzerklärung aufgeführt werden.
-          </template>
-        </UAlert>
-      </div>
       <UAccordion
         v-model="active"
         :items="items"

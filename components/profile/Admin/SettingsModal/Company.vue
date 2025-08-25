@@ -4,20 +4,23 @@ const { saveSettings } = useProfile()
 
 <template>
   <div class="flex flex-col gap-4 p-6">
-    <DismissableAlert
-      title="Wichtige Information"
-      storage-key="company-info-dismissed"
-    >
-      Wir gehen davon aus, dass Sie am Anfang Ihrer Selbstständigkeit stehen.
-      Viele Anforderungen gelten erst aber einer bestimmten Mitarbeiterzahl.
-      Wenn Sie bereits mehr als 10 Mitarbeiter haben,
-      <a
-        href="https://markus-kottlaender.de"
-        target="_blank"
-        class="underline"
-      >kontaktieren Sie uns</a> für eine individuelle Beratung.
-    </DismissableAlert>
-
+    <div class="flex flex-col sm:flex-row gap-4">
+      <UFormField label="Vorname">
+        <UInput
+          v-model="$profile.settings.public.company.firstname"
+          placeholder="Vorname"
+        />
+      </UFormField>
+      <UFormField
+        label="Nachname"
+      >
+        <UInput
+          v-model="$profile.settings.public.company.lastname"
+          placeholder="Nachname"
+          class="w-full"
+        />
+      </UFormField>
+    </div>
     <UFormField label="Name Ihres Unternehmens">
       <UInput
         v-model="$profile.settings.public.company.name"
@@ -94,13 +97,22 @@ const { saveSettings } = useProfile()
       <UFormField
         v-if="!$profile.settings.public.company.isSmallBusiness"
         label="Umsatzsteuer-ID oder Wirtschafts-ID"
-        description="Geben Sie hier nicht Ihre persönliche Steuernummer (123/456/78901) an."
+        description="Lassen Sie das Feld leer, wenn Sie beides nicht haben. Ihre persönliche Steuernummer (123/456/78901) ist dann nur auf Rechnungen erforderlich, nicht aber im Impressum."
       >
-        <UInput
-          v-model="$profile.settings.public.company.taxId"
-          placeholder="DE123456789"
-          class="w-full"
-        />
+        <UButtonGroup>
+          <USelect
+            v-model="$profile.settings.public.company.taxIdType"
+            :items="[
+              { label: 'USt-IdNr.', value: 'ustid' },
+              { label: 'W-IdNr.', value: 'wid' },
+            ]"
+          />
+          <UInput
+            v-model="$profile.settings.public.company.taxId"
+            placeholder="DE123456789"
+            class="w-full"
+          />
+        </UButtonGroup>
       </UFormField>
     </Transition>
     <UButton

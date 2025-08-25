@@ -63,12 +63,15 @@ function getStaggeredAnimationClass(index: number) {
           <template v-if="$profile.isOwned && !$profile.isPublic">
             <UAlert class="max-w-sm">
               <template #description>
-                Ihre Website ist noch nicht veröffentlicht. Das können Sie in den Einstellungen
+                Ihre Website ist noch nicht veröffentlicht. Das können Sie in der
+                <UIcon
+                  name="i-heroicons-bars-3"
+                  class="inline-block size-5 align-middle"
+                /> Administration unter
                 <UIcon
                   name="i-heroicons-cog-6-tooth"
                   class="inline-block size-5 align-middle"
-                />
-                ändern.
+                /> Einstellungen ändern.
               </template>
             </UAlert>
           </template>

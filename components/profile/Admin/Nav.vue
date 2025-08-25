@@ -1,5 +1,8 @@
 <script setup lang="ts">
 const { clear } = useUserSession()
+const toast = useToast()
+
+const { $profile } = useProfile()
 
 const showMenu = ref(false)
 const showSettingsModal = useState('showSettingsModal', () => false)
@@ -7,7 +10,29 @@ const showDesignModal = useState('showDesignModal', () => false)
 const showContentModal = useState('showContentModal', () => false)
 const showFeedbackModal = useState('showFeedbackModal', () => false)
 const showAssistantModal = useState('showAssistantModal', () => false)
-const showAssistantResearchModal = useState('showAssistantResearchModal', () => false)
+
+const showLegalDataWarning = computed(() => {
+  return !$profile.settings.public.company.name || !$profile.settings.public.company.street || !$profile.settings.public.company.phone
+})
+
+async function togglePublished() {
+  const { published } = await $fetch('/api/user/togglePublished', { method: 'POST' })
+
+  if (published) {
+    toast.add({
+      title: 'Profil veröffentlicht',
+      description: `Dein Profil ist jetzt öffentlich zugänglich.`,
+      color: 'success',
+    })
+  }
+  else {
+    toast.add({
+      title: 'Profil nicht mehr veröffentlicht',
+      description: `Dein Profil ist jetzt privat.`,
+      color: 'warning',
+    })
+  }
+}
 
 function closeAndOpenDesign() {
   showMenu.value = false
@@ -51,6 +76,30 @@ async function signOut() {
     />
 
     <template #body>
+      <UAlert
+        v-if="showLegalDataWarning"
+        variant="soft"
+        title="Unternehmensdaten vervollständigen"
+        icon="i-heroicons-exclamation-triangle"
+        class="rounded-none"
+      >
+        <template #description>
+          Damit wir Ihre Website veröffentlichen können, benötigen wir noch einige Angaben für das Impressum und die Datenschutzerklärung. Bitte tragen Sie dazu Ihre
+          <UIcon
+            name="i-heroicons-building-office-2"
+            class="inline-block size-4 align-middle"
+          /> <strong>Unternehmensdaten</strong> vollständig ein.
+        </template>
+      </UAlert>
+      <div class="p-4 border-b border-gray-200">
+        <USwitch
+          v-model="$profile.isPublic"
+          :disabled="showLegalDataWarning"
+          label="Veröffentlicht"
+          :description="$profile.isPublic ? 'Ihre Website ist öffentlich zugänglich.' : 'Nur Sie können Ihr Profil sehen, wenn Sie angemeldet sind.'"
+          @update:model-value="togglePublished"
+        />
+      </div>
       <UButton
         label="Einstellungen"
         icon="i-heroicons-cog-6-tooth"
