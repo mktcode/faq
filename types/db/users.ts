@@ -72,6 +72,8 @@ export const settingsFormSchema = z.object({
       favicon: z.string(),
     }),
     company: z.object({
+      firstname: z.string(),
+      lastname: z.string(),
       name: z.string(),
       street: z.string(),
       zip: z.string(),
@@ -174,6 +176,8 @@ export const defaultSettings: SettingsForm = {
       favicon: '',
     },
     company: {
+      firstname: '',
+      lastname: '',
       name: '',
       street: '',
       zip: '',
