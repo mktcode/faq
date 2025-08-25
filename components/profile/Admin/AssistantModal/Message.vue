@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import sanitizeHtml from 'sanitize-html'
 import { marked } from 'marked'
 
 defineProps<{
@@ -21,7 +20,7 @@ defineProps<{
     </div>
     <div
       class="prose-sm prose-gray"
-      v-html="sanitizeHtml(marked.parse(message.content, { async: false }))"
+      v-html="marked.parse(message.content, { async: false })"
     />
   </div>
 </template>

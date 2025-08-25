@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { marked } from 'marked'
-import sanitizeHtml from 'sanitize-html'
 
 const showModal = useState('showAssistantResearchModal', () => false)
 const showAssistantTipsModal = useState('showAssistantTipsModal', () => false)
@@ -254,7 +253,7 @@ async function generateResponse() {
           </div>
           <div
             class="prose prose-sm prose-sky"
-            v-html="sanitizeHtml(marked.parse(report, { async: false }))"
+            v-html="marked.parse(report, { async: false })"
           />
         </div>
       </div>
