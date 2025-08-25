@@ -258,8 +258,8 @@ async function generateResponse() {
         </div>
       </div>
 
-      <ProfileAdminAssistantModalContextSettings />
-      <ProfileAdminAssistantModalTips />
+      <ProfileAdminAssistantContextSettings />
+      <ProfileAdminAssistantTips />
     </template>
 
     <template #footer>
@@ -281,7 +281,7 @@ async function generateResponse() {
             v-model="deepResearch"
             label="Ausführliche Recherche"
           />
-          <ProfileAdminAssistantModalRecordAudio
+          <ProfileAdminAssistantRecordAudio
             class="ml-auto"
             @transcript="transcript => userInput = transcript"
           />

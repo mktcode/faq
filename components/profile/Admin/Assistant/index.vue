@@ -123,26 +123,26 @@ function submit() {
         ref="messagesContainer"
         class="flex flex-col flex-1 overflow-y-auto"
       >
-        <ProfileAdminAssistantModalMessage
+        <ProfileAdminAssistantMessage
           v-for="(message, index) in messages"
           :key="index"
           :message="message"
         />
         <Transition name="fade">
-          <ProfileAdminAssistantModalActivity
+          <ProfileAdminAssistantActivity
             v-if="currentActivity"
             :current-activity="currentActivity"
           />
         </Transition>
         <Transition name="fade">
-          <ProfileAdminAssistantModalInputSuggestions
+          <ProfileAdminAssistantInputSuggestions
             v-if="messages.length === 0"
             @update:user-input="userInput = $event"
           />
         </Transition>
       </div>
-      <ProfileAdminAssistantModalContextSettings />
-      <ProfileAdminAssistantModalTips />
+      <ProfileAdminAssistantContextSettings />
+      <ProfileAdminAssistantTips />
     </template>
 
     <template #footer>
@@ -191,7 +191,7 @@ function submit() {
             variant="soft"
             :disabled="isGeneratingResponse"
           />
-          <ProfileAdminAssistantModalRecordAudio
+          <ProfileAdminAssistantRecordAudio
             class="ml-auto"
             @transcript="transcript => userInput = transcript"
           />

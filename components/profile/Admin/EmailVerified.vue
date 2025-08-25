@@ -27,14 +27,14 @@ async function saveAndStartCheckout() {
         <div class="flex flex-col gap-2">
           <UFormField label="Name Ihres Unternehmens">
             <UInput
-              v-model="$profile.settings.company.name"
+              v-model="$profile.settings.public.company.name"
               placeholder="Geben Sie den Titel Ihres Unternehmens ein"
               class="w-full"
             />
           </UFormField>
           <UFormField label="Straße und Hausnummer">
             <UInput
-              v-model="$profile.settings.company.street"
+              v-model="$profile.settings.public.company.street"
               placeholder="Geben Sie die Straße und Hausnummer ein"
               class="w-full"
             />
@@ -45,7 +45,7 @@ async function saveAndStartCheckout() {
               class="w-32"
             >
               <UInput
-                v-model="$profile.settings.company.zip"
+                v-model="$profile.settings.public.company.zip"
                 placeholder="Postleitzahl"
               />
             </UFormField>
@@ -54,7 +54,7 @@ async function saveAndStartCheckout() {
               class="flex-1"
             >
               <UInput
-                v-model="$profile.settings.company.city"
+                v-model="$profile.settings.public.company.city"
                 placeholder="Geben Sie die Stadt ein"
                 class="w-full"
               />

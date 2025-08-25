@@ -5,11 +5,14 @@ const toast = useToast()
 const { $profile } = useProfile()
 
 const showMenu = ref(false)
-const showSettingsModal = useState('showSettingsModal', () => false)
+const showCompanyModal = useState('showCompanyModal', () => false)
 const showDesignModal = useState('showDesignModal', () => false)
 const showContentModal = useState('showContentModal', () => false)
-const showFeedbackModal = useState('showFeedbackModal', () => false)
+const showDomainModal = useState('showDomainModal', () => false)
+const showEmailModal = useState('showEmailModal', () => false)
 const showAssistantModal = useState('showAssistantModal', () => false)
+const showSubscriptionModal = useState('showSubscriptionModal', () => false)
+const showFeedbackModal = useState('showFeedbackModal', () => false)
 
 const showLegalDataWarning = computed(() => {
   return !$profile.settings.public.company.name || !$profile.settings.public.company.street || !$profile.settings.public.company.phone
@@ -56,7 +59,6 @@ async function signOut() {
 <template>
   <USlideover
     v-model:open="showMenu"
-    title="Administration"
     side="left"
     :close="{
       size: 'md',
@@ -69,11 +71,21 @@ async function signOut() {
     }"
   >
     <UButton
-      icon="i-heroicons-bars-3"
+      icon="i-heroicons-cog-6-tooth"
       variant="ghost"
       class="bg-white/90 hover:bg-white fixed top-2 left-2 z-10"
-      label="Administration"
+      label="Einstellungen"
     />
+
+    <template #title>
+      <h3 class="text-lg font-semibold flex items-center gap-2">
+        <UIcon
+          name="i-heroicons-cog-6-tooth"
+          class="inline-block size-6 opacity-50"
+        />
+        Einstellungen
+      </h3>
+    </template>
 
     <template #body>
       <UAlert
@@ -101,12 +113,12 @@ async function signOut() {
         />
       </div>
       <UButton
-        label="Einstellungen"
-        icon="i-heroicons-cog-6-tooth"
+        label="Unternehmensdaten"
+        icon="i-heroicons-building-office-2"
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
-        @click="showSettingsModal = true"
+        @click="showCompanyModal = true"
       />
 
       <UButton
@@ -128,6 +140,34 @@ async function signOut() {
       />
 
       <UButton
+        label="Domain"
+        icon="i-heroicons-globe-alt"
+        class="w-full rounded-none p-4 border-b border-gray-200"
+        variant="ghost"
+        color="neutral"
+        @click="showDomainModal = true"
+      />
+
+      <UButton
+        label="E-Mail"
+        icon="i-lucide-mail"
+        class="w-full rounded-none p-4 border-b border-gray-200"
+        variant="ghost"
+        color="neutral"
+        :disabled="!$profile.isSubscribed"
+        @click="showEmailModal = true"
+      >
+        <template #trailing>
+          <UBadge
+            v-if="!$profile.isSubscribed"
+            label="Premium"
+            variant="outline"
+            class="ml-auto"
+          />
+        </template>
+      </UButton>
+
+      <UButton
         label="Assistent"
         icon="i-lucide-bot"
         class="w-full rounded-none p-4 border-b border-gray-200"
@@ -146,9 +186,29 @@ async function signOut() {
         </template>
       </UButton>
 
-      <ProfileAdminAssistantModal />
-      <ProfileAdminAssistantModalResearch />
-      <ProfileAdminSettingsModal />
+      <UButton
+        label="Premium Abonnement"
+        icon="i-heroicons-rocket-launch"
+        class="w-full rounded-none p-4 border-b border-gray-200"
+        variant="ghost"
+        color="neutral"
+        @click="showSubscriptionModal = true"
+      >
+        <template #trailing>
+          <UBadge
+            v-if="!$profile.isSubscribed"
+            label="Premium"
+            variant="outline"
+            class="ml-auto"
+          />
+        </template>
+      </UButton>
+
+      <ProfileAdminCompany />
+      <ProfileAdminDomain />
+      <ProfileAdminEmail />
+      <ProfileAdminAssistant />
+      <ProfileAdminSubscription />
     </template>
 
     <template #footer>
