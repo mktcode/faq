@@ -16,14 +16,13 @@ function close() {
 
 <template>
   <UModal
+    title="Willkommen bei Solohost!"
+    description="Website und IT-Kompetenz für Selbständige und kleine Unternehmen"
     v-model:open="showModal"
     :close="false"
   >
     <template #body>
       <div class="flex flex-col gap-4">
-        <h1 class="text-2xl font-bold">
-          Willkommen auf Ihrer Website!
-        </h1>
         <p class="text-gray-600">
           Aktuell ist Ihre Website nur für Sie sichtbar. Oben links finden Sie die
           <UIcon
