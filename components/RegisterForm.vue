@@ -17,6 +17,9 @@ const settings = ref(defaultSettings)
 if (typeof route.query.context === 'string') {
   settings.value.private.assistant.context = route.query.context
 }
+const firstAndLastName = computed(() => {
+  return settings.value.public.company.firstname + ' ' + settings.value.public.company.lastname
+})
 
 function sanitizeUserName(name: string) {
   userName.value = name.toLowerCase().replace(/[^a-z]/g, '')
@@ -65,6 +68,12 @@ async function checkUserNameAvailability() {
 }
 
 watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
+
+function onFocusNameInput() {
+  if (settings.value.public.company.name === '') {
+    settings.value.public.company.name = firstAndLastName.value
+  }
+}
 </script>
 
 <template>
@@ -86,6 +95,26 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
     </Transition>
     <div class="flex gap-4">
       <UFormField
+        label="Vorname"
+        class="flex-1"
+      >
+        <UInput
+          v-model="settings.public.company.firstname"
+          class="w-full"
+        />
+      </UFormField>
+      <UFormField
+        label="Nachname"
+        class="flex-1"
+      >
+        <UInput
+          v-model="settings.public.company.lastname"
+          class="w-full"
+        />
+      </UFormField>
+    </div>
+    <div class="flex gap-4">
+      <UFormField
         label="Firmenname"
         class="flex-1"
         help="Ihr Vor- und Nachname bzw. das, was Sie in der Gewerbeanmeldung eingetragen haben."
@@ -93,6 +122,7 @@ watchDebounced(userName, checkUserNameAvailability, { debounce: 300 })
         <UInput
           v-model="settings.public.company.name"
           class="w-full"
+          @focus="onFocusNameInput"
         />
       </UFormField>
       <UFormField
