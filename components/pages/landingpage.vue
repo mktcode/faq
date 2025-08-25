@@ -7,20 +7,7 @@ const { user } = useUserSession()
 
 const companyContext = ref('')
 
-// Lightweight color mode just for this page (no Nuxt color mode)
-const colorMode = ref<'dark' | 'light'>('dark')
-if (import.meta.client) {
-  const saved = localStorage.getItem('lp-color-mode') as 'dark' | 'light' | null
-  if (saved) {
-    colorMode.value = saved
-  }
-  else {
-    colorMode.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-  }
-}
-watch(colorMode, (v) => {
-  if (import.meta.client) localStorage.setItem('lp-color-mode', v)
-})
+const colorMode = ref<'dark' | 'light'>('light')
 const toggleColorMode = () => {
   colorMode.value = colorMode.value === 'dark' ? 'light' : 'dark'
 }
