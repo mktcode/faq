@@ -59,11 +59,11 @@ function getStaggeredAnimationClass(index: number) {
       />
 
       <template #content>
-        <div class="m-4 inline-flex flex-col gap-4 max-w-xl">
+        <div class="m-4 inline-flex flex-col gap-4 max-w-xs">
           <template v-if="$profile.isOwned && !$profile.isPublic">
             <UAlert class="max-w-sm">
               <template #description>
-                Dein Profil ist noch nicht veröffentlicht. Das kannst du in den Einstellungen
+                Ihre Website ist noch nicht veröffentlicht. Das können Sie in den Einstellungen
                 <UIcon
                   name="i-heroicons-cog-6-tooth"
                   class="inline-block size-5 align-middle"
@@ -72,7 +72,7 @@ function getStaggeredAnimationClass(index: number) {
               </template>
             </UAlert>
           </template>
-          <div class="text-gray-500 text-xl border border-gray-200 rounded-lg p-2 pl-4 flex items-center justify-between">
+          <div class="text-gray-600 text-lg border border-gray-200 rounded-lg p-2 pl-3 flex items-center justify-between">
             <span>
               {{ $profile.canonicalUrl.replace(/https?:\/\//, '').replace(/\/$/, '') }}
             </span>
