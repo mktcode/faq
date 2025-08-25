@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
 
+defineEmits(['goToSubscription'])
+
 const { appIp } = useRuntimeConfig().public
 
 const { isCheckingDns, hasBeenChecked, isACorrect, checkDns } = useDnsCheck()
