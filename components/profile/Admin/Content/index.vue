@@ -9,16 +9,17 @@ const { saveSettings, resetSettings, isSavingSettings, unsavedSettings } = usePr
     v-model:open="showModal"
     side="left"
     close-icon="i-heroicons-arrow-left"
+    handle-only
+    direction="left"
     :overlay="false"
     :close-threshold="0.85"
-    :ui="{
-      content: 'shadow-2xl shadow-black',
-      body: '!p-0',
-      container: 'max-w-lg mx-auto',
-      handle: '!bg-gray-400'
-    }"
     :close="{
       size: 'md',
+    }"
+    :ui="{
+      content: 'shadow-2xl shadow-black',
+      container: 'relative',
+      handle: '!bg-gray-400'
     }"
   >
     <template #header>
@@ -29,26 +30,26 @@ const { saveSettings, resetSettings, isSavingSettings, unsavedSettings } = usePr
           class="inline-block size-6 opacity-50"
         />
         Inhalt und Funktion
+        <Transition name="fade">
+          <div
+            v-if="unsavedSettings"
+            class="ml-auto"
+          >
+            <UButton
+              label="Zurücksetzen"
+              icon="i-heroicons-backward"
+              variant="ghost"
+              @click="resetSettings"
+            />
+            <UButton
+              label="Speichern"
+              icon="i-heroicons-check"
+              :loading="isSavingSettings"
+              @click="saveSettings"
+            />
+          </div>
+        </Transition>
       </h3>
-      <Transition name="fade">
-        <div
-          v-if="unsavedSettings"
-          class="ml-auto"
-        >
-          <UButton
-            label="Zurücksetzen"
-            icon="i-heroicons-backward"
-            variant="ghost"
-            @click="resetSettings"
-          />
-          <UButton
-            label="Speichern"
-            icon="i-heroicons-check"
-            :loading="isSavingSettings"
-            @click="saveSettings"
-          />
-        </div>
-      </Transition>
     </template>
 
     <template #body>
