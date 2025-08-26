@@ -214,59 +214,88 @@ appConfig.ui.colors.primary = 'sky'
         </div>
       </div>
       <div class="grid md:grid-cols-2 grid-cols-1 gap-[18px] mt-[18px]">
-        <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <span class="inline-block px-2 py-[.25rem] rounded-full text-[.8rem] bg-white border border-black/15 text-slate-600 dark:bg-white/10 dark:border-white/15 dark:text-[#b3bfd1]">Standard</span>
-          <div class="flex items-end gap-1 mt-3 mb-6">
-            <span class="text-[38px] font-extrabold leading-none">kostenlos</span>
+        <div class="md:col-span-2 border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
+          <span class="inline-block px-2 py-[.25rem] rounded-full text-[.8rem] bg-white border border-black/15 text-slate-600 dark:bg-white/10 dark:border-white/15 dark:text-[#b3bfd1]">Starter</span>
+          <div class="flex items-end gap-1 mt-3 mb-3">
+            <span class="text-[38px] font-extrabold leading-none">Kostenlos</span>
           </div>
-          <ul class="list-none p-0 m-0 mt-3 grid gap-2">
-            <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Standard-Website, visuell ansprechend
-            </li>
-            <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Kontaktformular, Impressum &amp; Datenschutzerklärung
-            </li>
-            <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Keine Cookie-Einwilligung nötig
-            </li>
-            <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Suchmaschinen-Basics &amp; Mobil-Optimierung
-            </li>
-            <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Support per E-Mail und je nach Verfügbarkeit
-            </li>
-            <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Nutzbar mit vorhandener Domain
-            </li>
-          </ul>
+          <p class="text-slate-600 dark:text-[#b3bfd1] mb-6">
+            Unsere Website-App ist kostenlos und deckt das Nötigste ab – nur eine Domain müssen Sie selber mitbringen.
+            Für mehr Funktionen, Gestaltungsmöglichkeiten und regelmäßigen IT-Support bieten wir zwei Premium-Pakete an.
+            Zwischen allen drei Varianten können Sie jederzeit wechseln.
+          </p>
+          <div class="grid md:grid-cols-2 grid-cols-1 gap-4">
+            <ul class="list-none p-0 m-0 grid gap-2">
+              <li class="flex gap-2 items-start">
+                <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Standard-Website, visuell ansprechend
+              </li>
+              <li class="flex gap-2 items-start">
+                <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Kontaktformular, Impressum &amp; Datenschutzerklärung
+              </li>
+              <li class="flex gap-2 items-start">
+                <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Suchmaschinen-Basics &amp; Mobil-Optimierung
+              </li>
+            </ul>
+            <ul class="list-none p-0 m-0 grid gap-2">
+              <li class="flex gap-2 items-start">
+                <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Keine Cookie-Einwilligung nötig
+              </li>
+              <li class="flex gap-2 items-start">
+                <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Leicht zu bedienen und sofort online
+              </li>
+              <li class="flex gap-2 items-start">
+                <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Nutzbar mit eigener Domain und E-Mail-Adresse
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Premium</span>
           <div class="flex items-end gap-1 mt-3 mb-6">
-            <span class="text-[38px] font-extrabold leading-none">49 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
+            <span class="text-[38px] font-extrabold leading-none">17,85 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> .de-Domain &amp; 3 E-Mail-Adressen inklusive
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> .de-Domain &amp; 1 E-Mail-Adresse inklusive
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Mehr Gestaltungsoptionen &amp; individuelle Anpassungen
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Mehr Gestaltungsoptionen
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Live-Chat und Fernwartung
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> IT-Support nach Verfügbarkeit, per E-Mail und Live-Chat
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Intelligentes FAQ für bessere Anfragen
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Intelligentes FAQ für bessere Anfragen
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> KI-Assistent für Recherche und Texterstellung
-            </li>
-            <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px]">✓</span> Monatlich kündbar, per Klick
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Monatlich kündbar, direkt in der App
             </li>
           </ul>
         </div>
-        <div class="col-span-2 border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
+        <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
+          <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Premium Plus</span>
+          <div class="flex items-end gap-1 mt-3 mb-6">
+            <span class="text-[38px] font-extrabold leading-none">59,50 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
+          </div>
+          <ul class="list-none p-0 m-0 mt-3 grid gap-2">
+            <li class="flex gap-2 items-start">
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> .de-Domain &amp; 3 E-Mail-Adressen inklusive
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Individuelle Anpassungen durch uns
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> mindestens 1 Std. IT-Support per Telefon und Fernwartung
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> KI-Assistent für Recherche und Texterstellung
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Monatlich kündbar, direkt in der App
+            </li>
+          </ul>
+        </div>
+        <div class="md:col-span-2 border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <div class="flex items-end gap-1 mt-3 mb-6">
             <span class="text-[38px] font-extrabold leading-none">Erzählen Sie von sich</span>
           </div>
