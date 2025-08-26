@@ -34,27 +34,6 @@ const { appHost } = useRuntimeConfig().public
             @click="$profile.settings.public.components.offers.items.splice(index, 1)"
           />
         </div>
-        <div class="flex items-center gap-2">
-          <UButtonGroup class="flex-1">
-            <label
-              :for="`offer-slug-${index}`"
-              class="flex"
-            >
-              <UBadge
-                color="neutral"
-                variant="soft"
-                size="sm"
-                :label="`https://${$profile.username}.${appHost}/`"
-              />
-            </label>
-          </UButtonGroup>
-          <UButton
-            icon="i-heroicons-clipboard"
-            variant="soft"
-            class="self-end"
-            size="sm"
-          />
-        </div>
       </div>
       <UFormField label="Beschreibung">
         <WysiwygEditor
