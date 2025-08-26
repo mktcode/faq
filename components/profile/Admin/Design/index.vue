@@ -189,22 +189,25 @@ async function deleteImage(image: 'logo' | 'header') {
           class="inline-block size-6 opacity-50"
         />
         Design &amp; Kopfbereich
-        <UButton
-          v-if="unsavedSettings"
-          label="Zurücksetzen"
-          icon="i-heroicons-backward"
-          variant="ghost"
-          class="ml-auto"
-          :loading="isSavingSettings"
-          @click="resetSettings"
-        />
-        <UButton
-          v-if="unsavedSettings"
-          label="Speichern"
-          icon="i-heroicons-check"
-          :loading="isSavingSettings"
-          @click="saveSettings"
-        />
+        <Transition name="fade">
+          <div
+            v-if="unsavedSettings"
+            class="ml-auto"
+          >
+            <UButton
+              label="Zurücksetzen"
+              icon="i-heroicons-backward"
+              variant="ghost"
+              @click="resetSettings"
+            />
+            <UButton
+              label="Speichern"
+              icon="i-heroicons-check"
+              :loading="isSavingSettings"
+              @click="saveSettings"
+            />
+          </div>
+        </Transition>
       </h3>
     </template>
 
