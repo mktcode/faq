@@ -107,6 +107,11 @@ const items = ref([
     value: 'i-lucide-link',
     icon: 'i-lucide-link',
   },
+  {
+    label: 'Rakete',
+    value: 'i-lucide-rocket',
+    icon: 'i-lucide-rocket',
+  },
 ] satisfies SelectMenuItem[])
 
 const value = ref(icon.value ? items.value.find(item => item.value === icon.value) : items.value[0])
