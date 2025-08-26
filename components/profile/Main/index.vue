@@ -38,7 +38,7 @@ useHead({
     },
     {
       rel: 'stylesheet',
-      href: `/api/css?userName=${$profile.username}`,
+      href: `/api/css`,
     },
   ],
   script: extraScripts,

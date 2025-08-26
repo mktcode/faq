@@ -4,15 +4,14 @@ function clampPercentage(value: number): number {
   return Math.min(100, Math.max(0, value))
 }
 
-const querySchema = z.object({
-  userName: z.string().min(3, 'Username must be at least 3 characters long'),
-})
-
 export default defineEventHandler(async (event) => {
   setHeader(event, 'Content-Type', 'text/css')
 
-  const { userName } = await getValidatedQuery(event, query => querySchema.parse(query))
-  const settings = await getPublicSettings(userName)
+  if (!event.context.profile) {
+    return
+  }
+
+  const settings = await getPublicSettings(event.context.profile.username)
 
   const match = settings.design.color.match(/hsl\(\s*([\d.]+),?\s+([\d.]+)%,?\s+([\d.]+)%\s*\)/)
 
