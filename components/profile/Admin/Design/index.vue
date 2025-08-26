@@ -2,7 +2,7 @@
 const showModal = useState('showDesignModal', () => false)
 const toast = useToast()
 
-const { $profile, saveSettings, isSavingSettings } = useProfile()
+const { $profile, saveSettings, resetSettings, isSavingSettings, unsavedSettings } = useProfile()
 
 const headerImageInput = ref<HTMLInputElement | null>(null)
 const headerVideoInput = ref<HTMLInputElement | null>(null)
@@ -176,16 +176,34 @@ async function deleteImage(image: 'logo' | 'header') {
     }"
     :ui="{
       content: 'shadow-2xl shadow-black',
-      container: 'max-w-lg mx-auto',
+      container: 'max-w-2xl mx-auto relative',
+      handle: '!bg-gray-400'
     }"
   >
-    <template #title>
+    <template #header>
+      <ProfileMainDrawerTip />
       <h3 class="text-lg font-semibold flex items-center gap-2">
         <UIcon
           name="i-heroicons-paint-brush"
           class="inline-block size-6 opacity-50"
         />
         Design &amp; Kopfbereich
+        <UButton
+          v-if="unsavedSettings"
+          label="Zurücksetzen"
+          icon="i-heroicons-backward"
+          variant="ghost"
+          class="ml-auto"
+          :loading="isSavingSettings"
+          @click="resetSettings"
+        />
+        <UButton
+          v-if="unsavedSettings"
+          label="Speichern"
+          icon="i-heroicons-check"
+          :loading="isSavingSettings"
+          @click="saveSettings"
+        />
       </h3>
     </template>
 
@@ -446,13 +464,6 @@ async function deleteImage(image: 'logo' | 'header') {
             />
           </template>
         </UCollapsible>
-        <UButton
-          label="Einstellungen speichern"
-          variant="solid"
-          color="primary"
-          :loading="isSavingSettings"
-          @click="saveSettings"
-        />
       </div>
       <UModal
         v-model:open="showUploadHeaderModal"

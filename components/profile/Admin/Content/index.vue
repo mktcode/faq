@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const showModal = useState('showContentModal', () => false)
+
+const { saveSettings, resetSettings, isSavingSettings, unsavedSettings } = useProfile()
 </script>
 
 <template>
@@ -13,12 +15,14 @@ const showModal = useState('showContentModal', () => false)
       content: 'shadow-2xl shadow-black',
       body: '!p-0',
       container: 'max-w-lg mx-auto',
+      handle: '!bg-gray-400'
     }"
     :close="{
       size: 'md',
     }"
   >
-    <template #title>
+    <template #header>
+      <ProfileMainDrawerTip />
       <h3 class="text-lg font-semibold flex items-center gap-2">
         <UIcon
           name="i-lucide-letter-text"
@@ -26,6 +30,22 @@ const showModal = useState('showContentModal', () => false)
         />
         Inhalt und Funktion
       </h3>
+      <UButton
+        v-if="unsavedSettings"
+        label="Zurücksetzen"
+        icon="i-heroicons-backward"
+        variant="ghost"
+        class="ml-auto"
+        :loading="isSavingSettings"
+        @click="resetSettings"
+      />
+      <UButton
+        v-if="unsavedSettings"
+        label="Speichern"
+        icon="i-heroicons-check"
+        :loading="isSavingSettings"
+        @click="saveSettings"
+      />
     </template>
 
     <template #body>
