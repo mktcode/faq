@@ -175,8 +175,9 @@ async function deleteImage(image: 'logo' | 'header') {
       size: 'md',
     }"
     :ui="{
-      content: 'shadow-2xl shadow-black',
-      container: 'max-w-2xl mx-auto relative',
+
+      content: 'max-w-7xl mx-auto shadow-2xl shadow-black',
+      container: 'relative',
       handle: '!bg-gray-400'
     }"
   >
@@ -208,262 +209,266 @@ async function deleteImage(image: 'logo' | 'header') {
     </template>
 
     <template #body>
-      <div class="flex flex-col gap-4 max-h-[60vh] overflow-y-auto">
-        <div class="flex gap-2">
-          <ColorPicker
-            v-model:color="$profile.settings.public.design.color"
-            label="Primäre Farbe"
-          />
-          <UFormField
-            label="Stil"
-            class="flex-1"
-          >
-            <USelect
-              v-model="$profile.settings.public.design.rounded"
-              class="w-full"
-              :items="[
-                { label: 'Eckig', value: 'none' },
-                { label: 'Rund', value: 'md' },
-                { label: 'Sehr rund', value: 'xl' },
-              ]"
-            />
-          </UFormField>
-        </div>
-        <UFormField label="Schriftart">
-          <FontPicker v-model:font="$profile.settings.public.design.font" />
-        </UFormField>
-        <div class="flex gap-2">
-          <UFormField
-            label="Titel"
-            class="flex-1 w-full"
-          >
-            <UInput
-              v-model="$profile.settings.public.header.title"
-              placeholder="Gib den Titel deines Unternehmens ein"
-              class="w-full"
-            />
-          </UFormField>
-          <UFormField
-            label="Schriftgröße"
-            class="w-28"
-          >
-            <UInputNumber
-              v-model="$profile.settings.public.header.titleFontSize"
-              size="xl"
-            />
-          </UFormField>
-          <div class="w-28">
-            <ColorPicker
-              v-model:color="$profile.settings.public.header.titleColor"
-              label="Farbe"
-            />
-          </div>
-        </div>
-        <div class="flex gap-2">
-          <UFormField
-            label="Willkommen / Slogan"
-            class="flex-1 w-full"
-          >
-            <UInput
-              v-model="$profile.settings.public.header.description"
-              placeholder="Gib eine kurze Beschreibung deines Unternehmens ein"
-              class="w-full"
-            />
-          </UFormField>
-          <UFormField
-            label="Schriftgröße"
-            class="w-28"
-          >
-            <UInputNumber
-              v-model="$profile.settings.public.header.descriptionFontSize"
-              size="xl"
-            />
-          </UFormField>
-          <div class="w-28">
-            <ColorPicker
-              v-model:color="$profile.settings.public.header.descriptionColor"
-              label="Farbe"
-            />
-          </div>
-        </div>
-        <div class="p-1 border border-gray-200 rounded-lg flex flex-col gap-2">
-          <div
-            class="@container group relative flex flex-col items-center justify-center w-full rounded-lg cursor-pointer transition-all overflow-hidden hover:bg-gray-100"
-          >
-            <video
-              v-if="$profile.settings.public.header.video"
-              class="absolute inset-0 z-0 w-full h-full object-cover object-center pointer-events-none"
-              :src="$profile.settings.public.header.video"
-              :poster="$profile.settings.public.header.image || undefined"
-              autoplay
-              muted
-              loop
-              playsinline
-              preload="auto"
-              aria-hidden="true"
-            />
-            <img
-              v-else-if="$profile.settings.public.header.image"
-              :src="$profile.settings.public.header.image"
-              alt="Header Image"
-              class="absolute w-full h-full object-cover z-0 group-hover:scale-105 transition-transform duration-300"
-            >
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex flex-col gap-4 max-h-[60vh] overflow-y-auto">
+          <div class="p-1 border border-gray-200 rounded-lg flex flex-col gap-2">
             <div
-              class="absolute inset-0 z-10"
-              :style="{
-                backgroundColor: $profile.settings.public.header.imageOverlay.color || 'transparent',
-                opacity: $profile.settings.public.header.imageOverlay.opacity / 100,
-              }"
-              @click.stop="showUploadHeaderModal = true"
-            />
-            <div class="flex flex-col items-center justify-center pt-5 p-6 z-10 pointer-events-none">
-              <UIcon
-                name="i-heroicons-camera"
-                class="size-8 text-black/10 absolute top-3 left-3 pointer-events-none"
+              class="@container group relative flex flex-col items-center justify-center w-full rounded-lg cursor-pointer transition-all overflow-hidden hover:bg-gray-100"
+            >
+              <video
+                v-if="$profile.settings.public.header.video"
+                class="absolute inset-0 z-0 w-full h-full object-cover object-center pointer-events-none"
+                :src="$profile.settings.public.header.video"
+                :poster="$profile.settings.public.header.image || undefined"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="auto"
+                aria-hidden="true"
               />
               <img
-                v-if="$profile.settings.public.company.logo"
-                :src="$profile.settings.public.company.logo"
-                class="w-full max-w-[32cqw] pointer-events-auto hover:scale-105 transition-transform duration-600"
-                @click.stop="clickLogoInput"
+                v-else-if="$profile.settings.public.header.image"
+                :src="$profile.settings.public.header.image"
+                alt="Header Image"
+                class="absolute w-full h-full object-cover z-0 group-hover:scale-105 transition-transform duration-300"
               >
-              <UButton
-                v-else
-                icon="i-heroicons-camera"
-                variant="solid"
-                color="neutral"
-                block
-                class="group/logo size-20 rounded-full mx-auto bg-black/30 hover:bg-black hover:text-gray-400 transition-all duration-600 pointer-events-auto"
-                :ui="{
-                  leadingIcon: 'group-hover/logo:scale-125 transition-transform duration-800',
+              <div
+                class="absolute inset-0 z-10"
+                :style="{
+                  backgroundColor: $profile.settings.public.header.imageOverlay.color || 'transparent',
+                  opacity: $profile.settings.public.header.imageOverlay.opacity / 100,
                 }"
-                @click.stop="clickLogoInput"
+                @click.stop="showUploadHeaderModal = true"
               />
-            </div>
-            <input
-              ref="headerImageInput"
-              type="file"
-              class="hidden"
-              accept="image/*"
-              @change="handleHeaderImageInputChange"
-            >
-            <input
-              ref="headerVideoInput"
-              type="file"
-              class="hidden"
-              accept="video/*"
-              @change="handleHeaderVideoInputChange"
-            >
-            <input
-              ref="logoInput"
-              type="file"
-              class="hidden"
-              @change="handleLogoInputChange"
-            >
-          </div>
-          <div
-            v-if="$profile.settings.public.header.image || $profile.settings.public.company.logo"
-            class="flex items-center justify-end gap-2"
-          >
-            <UButton
-              v-if="$profile.settings.public.company.logo"
-              label="Logo entfernen"
-              icon="i-heroicons-trash"
-              variant="ghost"
-              color="error"
-              size="sm"
-              @click="deleteImage('logo')"
-            />
-            <UButton
-              v-if="$profile.settings.public.header.image"
-              label="Bild entfernen"
-              icon="i-heroicons-trash"
-              variant="ghost"
-              color="error"
-              size="sm"
-              @click="deleteImage('header')"
-            />
-          </div>
-        </div>
-        <div class="flex gap-2">
-          <ColorPicker
-            v-model:color="$profile.settings.public.header.imageOverlay.color"
-            label="Hintergrund"
-          />
-          <UFormField
-            label="Deckkraft"
-            class="flex-1"
-          >
-            <USlider
-              v-model="$profile.settings.public.header.imageOverlay.opacity"
-              class="flex-1 mt-4"
-            />
-          </UFormField>
-        </div>
-        <UFormField
-          label="Höhe"
-        >
-          <USelect
-            v-model="$profile.settings.public.header.height"
-            :items="[
-              { label: 'Automatisch', value: 'auto' },
-              { label: 'Hälfte', value: 'half' },
-              { label: 'Voll', value: 'full' },
-            ]"
-            class="w-full"
-          />
-        </UFormField>
-        <UButton
-          label="Links bearbeiten"
-          @click="showLinksModal = true"
-        />
-        <UCollapsible
-          v-model:open="showCustomCss"
-          class="flex flex-col gap-2"
-          :ui="{
-            root: 'border border-gray-200 rounded-lg',
-            content: '',
-          }"
-        >
-          <UButton
-            icon="i-lucide-file-json-2"
-            label="Stylesheet bearbeiten"
-            color="neutral"
-            variant="link"
-            trailing-icon="i-heroicons-chevron-down"
-            :disabled="!$profile.isSubscribed"
-          >
-            <template #trailing>
-              <div class="ml-auto flex items-center gap-2">
-                <UBadge
-                  v-if="!$profile.isSubscribed"
-                  label="Premium"
-                  variant="outline"
-                />
+              <div class="flex flex-col items-center justify-center pt-5 p-6 z-10 pointer-events-none">
                 <UIcon
+                  name="i-heroicons-camera"
+                  class="size-8 text-black/10 absolute top-3 left-3 pointer-events-none"
+                />
+                <img
+                  v-if="$profile.settings.public.company.logo"
+                  :src="$profile.settings.public.company.logo"
+                  class="w-full max-w-[32cqw] pointer-events-auto hover:scale-105 transition-transform duration-600"
+                  @click.stop="clickLogoInput"
+                >
+                <UButton
                   v-else
-                  name="i-heroicons-chevron-down"
-                  class="transition-transform"
-                  :class="{ 'rotate-180': showCustomCss }"
+                  icon="i-heroicons-camera"
+                  variant="solid"
+                  color="neutral"
+                  block
+                  class="group/logo size-20 rounded-full mx-auto bg-black/30 hover:bg-black hover:text-gray-400 transition-all duration-600 pointer-events-auto"
+                  :ui="{
+                    leadingIcon: 'group-hover/logo:scale-125 transition-transform duration-800',
+                  }"
+                  @click.stop="clickLogoInput"
                 />
               </div>
-            </template>
-          </UButton>
-
-          <template #content>
-            <UTextarea
-              v-model="$profile.settings.public.css"
-              placeholder="CSS hier eingeben"
-              class="w-full"
-              autoresize
-              :rows="2"
-              :maxrows="15"
-              :ui="{
-                base: 'text-sm rounded-t-none',
-              }"
+              <input
+                ref="headerImageInput"
+                type="file"
+                class="hidden"
+                accept="image/*"
+                @change="handleHeaderImageInputChange"
+              >
+              <input
+                ref="headerVideoInput"
+                type="file"
+                class="hidden"
+                accept="video/*"
+                @change="handleHeaderVideoInputChange"
+              >
+              <input
+                ref="logoInput"
+                type="file"
+                class="hidden"
+                @change="handleLogoInputChange"
+              >
+            </div>
+            <div
+              v-if="$profile.settings.public.header.image || $profile.settings.public.company.logo"
+              class="flex items-center justify-end gap-2"
+            >
+              <UButton
+                v-if="$profile.settings.public.company.logo"
+                label="Logo entfernen"
+                icon="i-heroicons-trash"
+                variant="ghost"
+                color="error"
+                size="sm"
+                @click="deleteImage('logo')"
+              />
+              <UButton
+                v-if="$profile.settings.public.header.image"
+                label="Bild entfernen"
+                icon="i-heroicons-trash"
+                variant="ghost"
+                color="error"
+                size="sm"
+                @click="deleteImage('header')"
+              />
+            </div>
+          </div>
+          <div class="flex gap-2">
+            <ColorPicker
+              v-model:color="$profile.settings.public.header.imageOverlay.color"
+              label="Hintergrund"
             />
-          </template>
-        </UCollapsible>
+            <UFormField
+              label="Deckkraft"
+              class="flex-1 pr-1"
+            >
+              <USlider
+                v-model="$profile.settings.public.header.imageOverlay.opacity"
+                class="flex-1 mt-4"
+              />
+            </UFormField>
+          </div>
+          <UFormField
+            label="Höhe"
+          >
+            <USelect
+              v-model="$profile.settings.public.header.height"
+              :items="[
+                { label: 'Automatisch', value: 'auto' },
+                { label: 'Hälfte', value: 'half' },
+                { label: 'Voll', value: 'full' },
+              ]"
+              class="w-full"
+            />
+          </UFormField>
+          <UButton
+            label="Links bearbeiten"
+            @click="showLinksModal = true"
+          />
+          <UCollapsible
+            v-model:open="showCustomCss"
+            class="flex flex-col gap-2"
+            :ui="{
+              root: 'border border-gray-200 rounded-lg',
+              content: '',
+            }"
+          >
+            <UButton
+              icon="i-lucide-file-json-2"
+              label="Stylesheet bearbeiten"
+              color="neutral"
+              variant="link"
+              trailing-icon="i-heroicons-chevron-down"
+              :disabled="!$profile.isSubscribed"
+            >
+              <template #trailing>
+                <div class="ml-auto flex items-center gap-2">
+                  <UBadge
+                    v-if="!$profile.isSubscribed"
+                    label="Premium"
+                    variant="outline"
+                  />
+                  <UIcon
+                    v-else
+                    name="i-heroicons-chevron-down"
+                    class="transition-transform"
+                    :class="{ 'rotate-180': showCustomCss }"
+                  />
+                </div>
+              </template>
+            </UButton>
+  
+            <template #content>
+              <UTextarea
+                v-model="$profile.settings.public.css"
+                placeholder="CSS hier eingeben"
+                class="w-full"
+                autoresize
+                :rows="2"
+                :maxrows="15"
+                :ui="{
+                  base: 'text-sm rounded-t-none',
+                }"
+              />
+            </template>
+          </UCollapsible>
+        </div>
+        <div class="flex flex-col gap-4 max-h-[60vh] overflow-y-auto">
+          <div class="flex gap-2">
+            <ColorPicker
+              v-model:color="$profile.settings.public.design.color"
+              label="Primäre Farbe"
+            />
+            <UFormField
+              label="Stil"
+              class="flex-1"
+            >
+              <USelect
+                v-model="$profile.settings.public.design.rounded"
+                class="w-full"
+                :items="[
+                  { label: 'Eckig', value: 'none' },
+                  { label: 'Rund', value: 'md' },
+                  { label: 'Sehr rund', value: 'xl' },
+                ]"
+              />
+            </UFormField>
+          </div>
+          <UFormField label="Schriftart">
+            <FontPicker v-model:font="$profile.settings.public.design.font" />
+          </UFormField>
+          <div class="flex gap-2">
+            <UFormField
+              label="Titel"
+              class="flex-1 w-full"
+            >
+              <UInput
+                v-model="$profile.settings.public.header.title"
+                placeholder="Gib den Titel deines Unternehmens ein"
+                class="w-full"
+              />
+            </UFormField>
+            <UFormField
+              label="Schriftgröße"
+              class="w-28"
+            >
+              <UInputNumber
+                v-model="$profile.settings.public.header.titleFontSize"
+                size="xl"
+              />
+            </UFormField>
+            <div class="w-28">
+              <ColorPicker
+                v-model:color="$profile.settings.public.header.titleColor"
+                label="Farbe"
+              />
+            </div>
+          </div>
+          <div class="flex gap-2">
+            <UFormField
+              label="Willkommen / Slogan"
+              class="flex-1 w-full"
+            >
+              <UInput
+                v-model="$profile.settings.public.header.description"
+                placeholder="Gib eine kurze Beschreibung deines Unternehmens ein"
+                class="w-full"
+              />
+            </UFormField>
+            <UFormField
+              label="Schriftgröße"
+              class="w-28"
+            >
+              <UInputNumber
+                v-model="$profile.settings.public.header.descriptionFontSize"
+                size="xl"
+              />
+            </UFormField>
+            <div class="w-28">
+              <ColorPicker
+                v-model:color="$profile.settings.public.header.descriptionColor"
+                label="Farbe"
+              />
+            </div>
+          </div>
+        </div>
       </div>
       <UModal
         v-model:open="showUploadHeaderModal"
