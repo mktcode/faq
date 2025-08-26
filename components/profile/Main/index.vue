@@ -1,5 +1,12 @@
 <script setup lang="ts">
+const appConfig = useAppConfig()
 const $profile = useNuxtApp().$profile
+
+appConfig.ui.colors.primary = 'website'
+appConfig.ui.button.defaultVariants.rounded = $profile.settings.public.design.rounded
+appConfig.ui.input.defaultVariants.rounded = $profile.settings.public.design.rounded
+appConfig.ui.select.defaultVariants.rounded = $profile.settings.public.design.rounded
+appConfig.ui.textarea.defaultVariants.rounded = $profile.settings.public.design.rounded
 
 const extraScripts = []
 if ($profile.isOwned && $profile.isSubscribed) {

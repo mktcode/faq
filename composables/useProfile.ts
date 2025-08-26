@@ -1,7 +1,13 @@
 export const useProfile = () => {
   const toast = useToast()
+  const appConfig = useAppConfig()
   const $profile = useNuxtApp().$profile
   const isSavingSettings = ref(false)
+  const unsavedSettings = ref(false)
+
+  function resetSettings() {
+    // TODO: implement
+  }
 
   async function saveSettings() {
     if (isSavingSettings.value) return
@@ -17,11 +23,23 @@ export const useProfile = () => {
       color: 'primary',
     })
     isSavingSettings.value = false
+    unsavedSettings.value = false
   }
+
+  watch($profile.settings, () => {
+    unsavedSettings.value = true
+
+    appConfig.ui.button.defaultVariants.rounded = $profile.settings.public.design.rounded
+    appConfig.ui.input.defaultVariants.rounded = $profile.settings.public.design.rounded
+    appConfig.ui.select.defaultVariants.rounded = $profile.settings.public.design.rounded
+    appConfig.ui.textarea.defaultVariants.rounded = $profile.settings.public.design.rounded
+  })
 
   return {
     $profile,
     isSavingSettings,
+    resetSettings,
     saveSettings,
+    unsavedSettings,
   }
 }
