@@ -1,19 +1,17 @@
 export default defineEventHandler(async (event) => {
   setHeader(event, 'Content-Type', 'text/plain')
-  
-  const currentHost = router.getCurrentHost(event)
-  const user = await router.getUserFromHost(currentHost)
 
-  if (user) {
-    if (user.published) {
-        return `User-agent: *
-Allow: /`
-    } else {
-      return `User-agent: *
-Disallow: /`
-    }
+  if (event.context.profile) {
+    return `User-agent: *
+Allow: /
+
+Sitemap: ${event.context.profile.canonicalUri}/sitemap.xml`
   }
 
+  const { appHost } = useRuntimeConfig().public
+
   return `User-agent: *
-Disallow: /`
+Allow: /
+
+Sitemap: https://${appHost}/sitemap.xml`
 })

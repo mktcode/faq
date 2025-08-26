@@ -1,11 +1,8 @@
 export default defineEventHandler(async (event) => {
   setHeader(event, 'Content-Type', 'text/plain')
-  
-  const currentHost = router.getCurrentHost(event)
-  const user = await router.getUserFromHost(currentHost)
 
-  if (user) {
-    const settings = await getPublicSettings(user.userName)
+  if (event.context.profile) {
+    const settings = await getPublicSettings(event.context.profile.username)
     return `# ${settings.company.name}`
   }
 
