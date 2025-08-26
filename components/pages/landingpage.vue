@@ -79,12 +79,12 @@ appConfig.ui.colors.primary = 'sky'
             />
           </button>
           <a
-            class="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-3 rounded-[12px] font-semibold tracking-[.2px] border border-slate-900/10 bg-white/10 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
+            class="whitespace-nowrap inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-3 rounded-[12px] font-semibold tracking-[.2px] border border-slate-900/10 bg-white/10 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
             :href="user ? `https://${user.userName}.${appHost}` : '/login'"
             aria-label="Anmelden"
           >
             <span>
-              Anmelden
+              {{ user ? 'zur Website' : 'Anmelden' }}
             </span>
           </a>
         </div>
