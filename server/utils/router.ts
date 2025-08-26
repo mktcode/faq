@@ -44,9 +44,14 @@ function redirectToRoot(event: H3Event): Promise<void> {
   return sendRedirect(event, `https://${appHost}`, 307)
 }
 
-function getCanonicalUrl(event: H3Event, targetUser: TargetUser): string {
+function getCanonicalUri(targetUser: TargetUser): string {
   const { public: { appHost } } = useRuntimeConfig()
-  return targetUser.domain ? `https://${targetUser.domain}${event.node.req.url}` : `https://${targetUser.userName}.${appHost}${event.node.req.url}`
+  return targetUser.domain ? `https://${targetUser.domain}` : `https://${targetUser.userName}.${appHost}`
+}
+
+function getCanonicalUrl(event: H3Event, targetUser: TargetUser): string {
+  const canonicalUri = getCanonicalUri(targetUser)
+  return `${canonicalUri}${event.node.req.url}`
 }
 
 async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUser): Promise<void> {
@@ -69,6 +74,7 @@ async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUse
     design: 'default',
     settings,
     canonicalUrl: getCanonicalUrl(event, targetUser),
+    canonicalUri: getCanonicalUri(targetUser),
     domain: targetUser.domain,
     domainIsExternal: targetUser.domain ? true : false,
     mailboxes: targetUser.mailboxes,
