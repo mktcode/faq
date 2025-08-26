@@ -195,7 +195,7 @@ async function deleteImage(image: 'logo' | 'header') {
     </template>
 
     <template #body>
-      <div class="flex flex-col gap-4 max-h-[60vh] overflow-y-auto">
+      <div class="flex flex-col gap-4">
         <div class="p-1 border border-gray-200 rounded-lg flex flex-col gap-2">
           <div
             class="@container group relative flex flex-col items-center justify-center w-full rounded-lg cursor-pointer transition-all overflow-hidden hover:bg-gray-100"
@@ -327,53 +327,6 @@ async function deleteImage(image: 'logo' | 'header') {
           label="Links bearbeiten"
           @click="showLinksModal = true"
         />
-        <UCollapsible
-          v-model:open="showCustomCss"
-          class="flex flex-col gap-2"
-          :ui="{
-            root: 'border border-gray-200 rounded-lg',
-            content: '',
-          }"
-        >
-          <UButton
-            icon="i-lucide-file-json-2"
-            label="Stylesheet bearbeiten"
-            color="neutral"
-            variant="link"
-            trailing-icon="i-heroicons-chevron-down"
-            :disabled="!$profile.isSubscribed"
-          >
-            <template #trailing>
-              <div class="ml-auto flex items-center gap-2">
-                <UBadge
-                  v-if="!$profile.isSubscribed"
-                  label="Premium"
-                  variant="outline"
-                />
-                <UIcon
-                  v-else
-                  name="i-heroicons-chevron-down"
-                  class="transition-transform"
-                  :class="{ 'rotate-180': showCustomCss }"
-                />
-              </div>
-            </template>
-          </UButton>
-
-          <template #content>
-            <UTextarea
-              v-model="$profile.settings.public.css"
-              placeholder="CSS hier eingeben"
-              class="w-full"
-              autoresize
-              :rows="2"
-              :maxrows="15"
-              :ui="{
-                base: 'text-sm rounded-t-none',
-              }"
-            />
-          </template>
-        </UCollapsible>
         <div class="flex gap-2">
           <ColorPicker
             v-model:color="$profile.settings.public.design.color"
@@ -451,6 +404,53 @@ async function deleteImage(image: 'logo' | 'header') {
             />
           </div>
         </div>
+        <UCollapsible
+          v-model:open="showCustomCss"
+          class="flex flex-col gap-2"
+          :ui="{
+            root: 'border border-gray-200 rounded-lg',
+            content: '',
+          }"
+        >
+          <UButton
+            icon="i-lucide-file-json-2"
+            label="Stylesheet bearbeiten"
+            color="neutral"
+            variant="link"
+            trailing-icon="i-heroicons-chevron-down"
+            :disabled="!$profile.isSubscribed"
+          >
+            <template #trailing>
+              <div class="ml-auto flex items-center gap-2">
+                <UBadge
+                  v-if="!$profile.isSubscribed"
+                  label="Premium"
+                  variant="outline"
+                />
+                <UIcon
+                  v-else
+                  name="i-heroicons-chevron-down"
+                  class="transition-transform"
+                  :class="{ 'rotate-180': showCustomCss }"
+                />
+              </div>
+            </template>
+          </UButton>
+
+          <template #content>
+            <UTextarea
+              v-model="$profile.settings.public.css"
+              placeholder="CSS hier eingeben"
+              class="w-full"
+              autoresize
+              :rows="2"
+              :maxrows="15"
+              :ui="{
+                base: 'text-sm rounded-t-none',
+              }"
+            />
+          </template>
+        </UCollapsible>
       </div>
       <UModal
         v-model:open="showUploadHeaderModal"
