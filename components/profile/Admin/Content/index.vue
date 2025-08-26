@@ -1,7 +1,5 @@
 <script setup lang="ts">
 const showModal = useState('showContentModal', () => false)
-
-const { saveSettings, resetSettings, isSavingSettings, unsavedSettings } = useProfile()
 </script>
 
 <template>
@@ -18,37 +16,20 @@ const { saveSettings, resetSettings, isSavingSettings, unsavedSettings } = usePr
     }"
     :ui="{
       content: 'shadow-2xl shadow-black',
-      container: 'relative',
-      handle: '!bg-gray-400'
+      container: 'relative pl-0',
+      handle: '!bg-gray-400',
+      body: 'max-w-lg',
     }"
   >
     <template #header>
       <ProfileMainDrawerTip />
-      <h3 class="text-lg font-semibold flex items-center gap-2">
+      <h3 class="text-lg font-semibold flex items-center gap-2 pl-4">
         <UIcon
           name="i-lucide-letter-text"
           class="inline-block size-6 opacity-50"
         />
         Inhalt und Funktion
-        <Transition name="fade">
-          <div
-            v-if="unsavedSettings"
-            class="ml-auto"
-          >
-            <UButton
-              label="Zurücksetzen"
-              icon="i-heroicons-backward"
-              variant="ghost"
-              @click="resetSettings"
-            />
-            <UButton
-              label="Speichern"
-              icon="i-heroicons-check"
-              :loading="isSavingSettings"
-              @click="saveSettings"
-            />
-          </div>
-        </Transition>
+        <ProfileAdminSaveAndReset />
       </h3>
     </template>
 
@@ -57,7 +38,7 @@ const { saveSettings, resetSettings, isSavingSettings, unsavedSettings } = usePr
         title="Sichtbarkeit und Reihenfolge"
         icon="i-heroicons-light-bulb"
         storage-key="content-info-dismissed"
-        class="rounded-none"
+        class="rounded-none -mr-10"
       >
         Ihre Website besteht aus den unten aufgeführten Inhalten. Ändern Sie die Reihenfolge
         <UIcon

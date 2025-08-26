@@ -2,7 +2,7 @@
 const showModal = useState('showDesignModal', () => false)
 const toast = useToast()
 
-const { $profile, saveSettings, resetSettings, isSavingSettings, unsavedSettings } = useProfile()
+const { $profile, saveSettings } = useProfile()
 
 const headerImageInput = ref<HTMLInputElement | null>(null)
 const headerVideoInput = ref<HTMLInputElement | null>(null)
@@ -177,37 +177,20 @@ async function deleteImage(image: 'logo' | 'header') {
     }"
     :ui="{
       content: 'shadow-2xl shadow-black',
-      container: 'relative',
-      handle: '!bg-gray-400'
+      container: 'relative max-w-md',
+      handle: '!bg-gray-400',
+      header: 'h-10'
     }"
   >
     <template #header>
       <ProfileMainDrawerTip />
-      <h3 class="text-lg font-semibold flex items-center gap-2">
+      <h3 class="text-lg font-semibold flex gap-2">
         <UIcon
           name="i-heroicons-paint-brush"
           class="inline-block size-6 opacity-50"
         />
-        Design &amp; Kopfbereich
-        <Transition name="fade">
-          <div
-            v-if="unsavedSettings"
-            class="ml-auto"
-          >
-            <UButton
-              label="Zurücksetzen"
-              icon="i-heroicons-backward"
-              variant="ghost"
-              @click="resetSettings"
-            />
-            <UButton
-              label="Speichern"
-              icon="i-heroicons-check"
-              :loading="isSavingSettings"
-              @click="saveSettings"
-            />
-          </div>
-        </Transition>
+        Design und Kopfbereich
+        <ProfileAdminSaveAndReset />
       </h3>
     </template>
 

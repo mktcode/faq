@@ -7,6 +7,7 @@ export const useProfile = () => {
 
   function resetSettings() {
     // TODO: implement
+    unsavedSettings.value = false
   }
 
   async function saveSettings() {
