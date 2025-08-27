@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useLocalStorage } from '@vueuse/core';
+import { useLocalStorage } from '@vueuse/core'
 
-const showDrawerTip = useLocalStorage('showDrawerTip', true);
+const showDrawerTip = useLocalStorage('showDrawerTip', true)
 </script>
 
 <template>

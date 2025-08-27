@@ -16,7 +16,7 @@
         </p>
       </div>
     </div>
-    
+
     <PagesLandingpageFooter />
   </PagesLandingpageColorMode>
 </template>

@@ -49,7 +49,7 @@ appConfig.ui.colors.primary = 'sky'
 <template>
   <PagesLandingpageColorMode class="font-poppins text-[16px]/[1.6] bg-slate-50 text-slate-900 dark:bg-[#0b1020] dark:text-[#e7ecf4]">
     <PagesLandingpageHeader />
-    
+
     <div
       class="mx-auto w-[92vw] max-w-[1200px] relative rounded-[22px] overflow-hidden mt-[14px]"
       aria-label="Intro"

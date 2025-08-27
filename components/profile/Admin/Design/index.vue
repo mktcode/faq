@@ -179,7 +179,7 @@ async function deleteImage(image: 'logo' | 'header') {
       content: 'shadow-2xl shadow-black',
       container: 'relative max-w-md',
       handle: '!bg-gray-400',
-      header: 'h-10'
+      header: 'h-10',
     }"
   >
     <template #header>

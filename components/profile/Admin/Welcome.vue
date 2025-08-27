@@ -16,9 +16,9 @@ function close() {
 
 <template>
   <UModal
+    v-model:open="showModal"
     title="Willkommen bei Solohost!"
     description="Website und IT-Kompetenz für Selbständige und kleine Unternehmen"
-    v-model:open="showModal"
     :close="false"
   >
     <template #body>

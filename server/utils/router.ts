@@ -82,7 +82,7 @@ async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUse
 }
 
 async function getUserFromHost(currentHost: string): Promise<TargetUser | null> {
-  if (isRootDomain(currentHost)) return null;
+  if (isRootDomain(currentHost)) return null
 
   const db = await getDatabaseConnection()
 
