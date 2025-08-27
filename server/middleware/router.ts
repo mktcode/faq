@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
     await router.setProfileContextOrRedirect(event, user)
   }
   else if (!router.isRootDomain(currentHost)) {
+    console.error('Redirecting to root domain from', currentHost)
     await router.redirectToRoot(event)
     return
   }
