@@ -18,17 +18,7 @@ const { profile } = defineProps<{
 }>()
 
 const nuxtApp = useNuxtApp()
-nuxtApp.provide('profile', {
-  username: profile.username,
-  isOwned: profile.isOwned,
-  isPublic: profile.isPublic,
-  isSubscribed: profile.isSubscribed,
-  settings: profile.settings,
-  canonicalUrl: profile.canonicalUrl,
-  domain: profile.domain,
-  domainIsExternal: profile.domainIsExternal,
-  mailboxes: profile.mailboxes,
-})
+nuxtApp.provide('profile', profile)
 </script>
 
 <template>
