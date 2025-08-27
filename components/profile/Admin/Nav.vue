@@ -108,7 +108,7 @@ async function signOut() {
           v-model="$profile.isPublic"
           :disabled="showLegalDataWarning"
           label="Veröffentlicht"
-          :description="$profile.isPublic ? 'Ihre Website ist öffentlich zugänglich.' : 'Nur Sie können Ihr Profil sehen, wenn Sie angemeldet sind.'"
+          :description="$profile.isPublic ? 'Ihre Website ist öffentlich zugänglich.' : 'Nur Sie können Ihre Website sehen, wenn Sie angemeldet sind.'"
           @update:model-value="togglePublished"
         />
       </div>
