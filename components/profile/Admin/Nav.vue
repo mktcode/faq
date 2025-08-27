@@ -3,6 +3,7 @@ const { clear } = useUserSession()
 const toast = useToast()
 
 const { $profile } = useProfile()
+const { fetch: fetchUserSession } = useUserSession()
 
 const showMenu = ref(false)
 const showCompanyModal = useState('showCompanyModal', () => false)
@@ -52,7 +53,12 @@ function closeAndOpenContent() {
 }
 
 async function signOut() {
+  showMenu.value = false
+  $profile.isOwned = false
+  $profile.isSubscribed = false
+  $profile.mailboxes = []
   await clear()
+  fetchUserSession()
 }
 </script>
 

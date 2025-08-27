@@ -22,7 +22,7 @@ nuxtApp.provide('profile', profile)
 </script>
 
 <template>
-  <ProfileAdmin v-if="profile.isOwned" />
+  <ProfileAdmin v-if="$profile.isOwned" />
   <ProfileMain v-if="path === '/'" />
   <ProfileImpressum v-else-if="path === '/impressum'" />
   <ProfileDatenschutz v-else-if="path === '/datenschutz'" />
