@@ -40,7 +40,7 @@ const { copy, copied } = useClipboard({ source: config })
         size="xxl"
         trailing-icon="i-heroicons-arrow-down-tray"
         :ui="{
-          trailingIcon: 'ml-auto opacity-50 size-8'
+          trailingIcon: 'ml-auto opacity-50 size-8',
         }"
       >
         <template #leading>
@@ -67,7 +67,7 @@ const { copy, copied } = useClipboard({ source: config })
         size="xxl"
         trailing-icon="i-heroicons-arrow-down-tray"
         :ui="{
-          trailingIcon: 'ml-auto opacity-50 size-8'
+          trailingIcon: 'ml-auto opacity-50 size-8',
         }"
       >
         <template #leading>
@@ -96,14 +96,14 @@ const { copy, copied } = useClipboard({ source: config })
       </p>
       <UButton
         color="primary"
-        @click="copy(config)"
         size="xxl"
         icon="i-heroicons-cog-6-tooth"
         trailing-icon="i-heroicons-clipboard"
         :ui="{
           leadingIcon: 'mr-4 size-8 shrink-0',
-          trailingIcon: 'ml-auto opacity-50 size-8'
+          trailingIcon: 'ml-auto opacity-50 size-8',
         }"
+        @click="copy(config)"
       >
         {{ copied ? 'Konfiguration kopiert!' : 'Konfiguration kopieren' }}
       </UButton>
