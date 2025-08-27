@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { AccordionItem } from '@nuxt/ui'
+import ColorMode from './ColorMode.vue'
 
 const appConfig = useAppConfig()
 const { public: { appHost } } = useRuntimeConfig()
@@ -7,10 +8,7 @@ const { user } = useUserSession()
 
 const companyContext = ref('')
 
-const colorMode = ref<'dark' | 'light'>('light')
-const toggleColorMode = () => {
-  colorMode.value = colorMode.value === 'dark' ? 'light' : 'dark'
-}
+const { colorMode, toggleColorMode } = useColorMode()
 
 const acc1items = ref<AccordionItem[]>([
   {
@@ -52,10 +50,7 @@ appConfig.ui.colors.primary = 'sky'
 </script>
 
 <template>
-  <div
-    :class="[{ dark: colorMode === 'dark' }]"
-    class="font-poppins text-[16px]/[1.6] bg-slate-50 text-slate-900 dark:bg-[#0b1020] dark:text-[#e7ecf4]"
-  >
+  <ColorMode class="font-poppins text-[16px]/[1.6] bg-slate-50 text-slate-900 dark:bg-[#0b1020] dark:text-[#e7ecf4]">
     <header class="sticky top-0 z-50 backdrop-saturate-150 backdrop-blur bg-[linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,255,255,.65)_60%,rgba(255,255,255,0))] dark:bg-[linear-gradient(180deg,rgba(11,16,32,.9),rgba(11,16,32,.75)_60%,rgba(11,16,32,0))]">
       <div class="mx-auto w-[92vw] max-w-[1200px] flex items-center justify-between py-[14px]">
         <SolohostLogo />
@@ -472,7 +467,7 @@ appConfig.ui.colors.primary = 'sky'
         </div>
       </div>
     </footer>
-  </div>
+  </ColorMode>
 </template>
 
 <!-- No scoped CSS: Tailwind dark utilities handle theming -->
