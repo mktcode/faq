@@ -13,6 +13,7 @@ const { saveSettings, isSavingSettings } = useProfile()
       :items="[
         { label: 'Raster', value: 'grid' },
         { label: 'Liste', value: 'list' },
+        { label: 'Liste (breit)', value: 'list-wide' },
         { label: 'Karussell', value: 'carousel' },
       ]"
     />

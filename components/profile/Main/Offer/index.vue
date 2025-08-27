@@ -16,4 +16,12 @@ const items = computed(() => $profile.settings.public.components.offers.items.ma
     v-else-if="$profile.settings.public.components.offers.layout === 'grid'"
     :items="items"
   />
+  <ProfileMainOfferList
+    v-else-if="$profile.settings.public.components.offers.layout === 'list'"
+    :items="items"
+  />
+  <ProfileMainOfferListWide
+    v-else-if="$profile.settings.public.components.offers.layout === 'list-wide'"
+    :items="items"
+  />
 </template>

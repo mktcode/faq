@@ -8,7 +8,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="my-24 w-full">
+  <div class="my-24 w-full max-w-lg mx-auto">
     <UCarousel
       v-if="items.length > 1"
       v-slot="{ item }"

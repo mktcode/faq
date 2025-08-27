@@ -8,7 +8,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="my-24 w-full flex flex-wrap items-start justify-center gap-x-16 gap-y-24">
+  <div class="my-24 w-full flex flex-col gap-y-24 max-w-lg mx-auto">
     <ProfileMainOfferItem
       v-for="(item, index) in items"
       :key="index"
