@@ -1,11 +1,10 @@
 <script setup lang="ts">
-const nuxtApp = useNuxtApp()
-const { $profile } = nuxtApp
-
-const items = computed(() => $profile.settings.public.components.offers.items.map(offer => ({
-  title: offer.title,
-  description: offer.description,
-})) || [])
+defineProps<{
+  items: {
+    title: string
+    description: string
+  }[]
+}>()
 </script>
 
 <template>

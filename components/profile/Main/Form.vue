@@ -94,7 +94,7 @@ const disabled = computed(() => {
 </script>
 
 <template>
-  <div class="my-6 w-full">
+  <div class="my-6 w-full max-w-lg mx-auto">
     <ProfileMainFormHeader />
 
     <UTextarea

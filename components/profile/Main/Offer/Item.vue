@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
   <div>
-    <h2 class="text-3xl font-semibold mb-4">
+    <h2 class="text-3xl font-semibold mb-4 max-w-lg">
       {{ item.title }}
     </h2>
     <div

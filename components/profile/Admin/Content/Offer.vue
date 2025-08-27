@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const { saveSettings, isSavingSettings } = useProfile()
-const { appHost } = useRuntimeConfig().public
 </script>
 
 <template>
@@ -9,6 +8,14 @@ const { appHost } = useRuntimeConfig().public
       Fügen Sie hier Texte zu Ihren Angeboten und Dienstleistungen hinzu. Halten Sie sich kurz und prägnant, damit Ihre Kunden schnell verstehen, was Sie anbieten.
       Was unterscheidet Sie von anderen? Welche Vorteile hat der Kunde, kurz- wie langfristig?
     </p>
+    <USelect
+      v-model="$profile.settings.public.components.offers.layout"
+      :items="[
+        { label: 'Raster', value: 'grid' },
+        { label: 'Liste', value: 'list' },
+        { label: 'Karussell', value: 'carousel' },
+      ]"
+    />
     <div
       v-for="(offer, index) in $profile.settings.public.components.offers.items"
       :key="index"

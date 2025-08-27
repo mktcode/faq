@@ -62,7 +62,7 @@ useHead({
       <ProfileMainReLogin />
     </ClientOnly>
     <ProfileMainHeader />
-    <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
+    <div class="flex flex-col items-center justify-center gap-2 max-w-7xl mx-auto py-12 px-6">
       <ProfileMainComponentViewer
         v-for="index in 5"
         :key="index"
