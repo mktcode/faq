@@ -1,12 +1,12 @@
 <template>
   <FontWrapper
-    :font="$profile.settings.design.font"
+    :font="$profile.settings.public.design.font"
     class="relative"
   >
     <div class="flex flex-col items-center justify-center h-screen text-2xl">
       <img
-        v-if="$profile.settings.company.logo"
-        :src="$profile.settings.company.logo"
+        v-if="$profile.settings.public.company.logo"
+        :src="$profile.settings.public.company.logo"
         alt="Logo"
         class="max-w-3xs mb-12"
       >
