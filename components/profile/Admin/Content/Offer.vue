@@ -8,7 +8,7 @@
       Fügen Sie hier Texte zu Ihren Angeboten und Dienstleistungen hinzu. Halten Sie sich kurz und prägnant, damit Ihre Kunden schnell verstehen, was Sie anbieten.
       Was unterscheidet Sie von anderen? Welche Vorteile hat der Kunde, kurz- wie langfristig?
     </DismissableAlert>
-    <UFormField label="Angebotslayout">
+    <UFormField label="Layout">
       <USelect
         v-model="$profile.settings.public.components.offers.layout"
         :items="[
