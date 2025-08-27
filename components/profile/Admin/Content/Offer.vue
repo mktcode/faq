@@ -1,22 +1,25 @@
-<script setup lang="ts">
-const { saveSettings, isSavingSettings } = useProfile()
-</script>
-
 <template>
   <div class="flex flex-col gap-4 p-6">
-    <p class="text-gray-400">
+    <DismissableAlert
+      title="Beschreiben Sie Ihr Angebot"
+      description="Ihre Änderungen wurden erfolgreich gespeichert."
+      storage-key="offer-info-dismissed"
+    >
       Fügen Sie hier Texte zu Ihren Angeboten und Dienstleistungen hinzu. Halten Sie sich kurz und prägnant, damit Ihre Kunden schnell verstehen, was Sie anbieten.
       Was unterscheidet Sie von anderen? Welche Vorteile hat der Kunde, kurz- wie langfristig?
-    </p>
-    <USelect
-      v-model="$profile.settings.public.components.offers.layout"
-      :items="[
-        { label: 'Raster', value: 'grid' },
-        { label: 'Liste', value: 'list' },
-        { label: 'Liste (breit)', value: 'list-wide' },
-        { label: 'Karussell', value: 'carousel' },
-      ]"
-    />
+    </DismissableAlert>
+    <UFormField label="Angebotslayout">
+      <USelect
+        v-model="$profile.settings.public.components.offers.layout"
+        :items="[
+          { label: 'Raster', value: 'grid' },
+          { label: 'Liste', value: 'list' },
+          { label: 'Liste (breit)', value: 'list-wide' },
+          { label: 'Karussell', value: 'carousel' },
+        ]"
+        class="w-full"
+      />
+    </UFormField>
     <div
       v-for="(offer, index) in $profile.settings.public.components.offers.items"
       :key="index"
@@ -57,14 +60,6 @@ const { saveSettings, isSavingSettings } = useProfile()
       @click="$profile.settings.public.components.offers.items.push({ title: '', description: '' })"
     >
       Angebot hinzufügen
-    </UButton>
-    <UButton
-      variant="solid"
-      color="primary"
-      :loading="isSavingSettings"
-      @click="() => saveSettings()"
-    >
-      Einstellungen speichern
     </UButton>
   </div>
 </template>
