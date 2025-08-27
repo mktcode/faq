@@ -10,8 +10,9 @@ export default defineEventHandler(async (event) => {
   if (user) {
     await router.setProfileContextOrRedirect(event, user)
   }
-  else if (!router.isRootDomain(currentHost)) {
-    console.error('Redirecting to root domain from', currentHost)
+  // TODO: find more elegant way to solve the health check and docker problem
+  // When docker checks the running container it will be redirected because host is the container id, not the lb ip or a real domain.
+  else if (!router.isRootDomain(currentHost) && event.node.req.url !== '/up') {
     await router.redirectToRoot(event)
     return
   }
