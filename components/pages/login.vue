@@ -22,11 +22,11 @@ appConfig.ui.colors.primary = 'sky'
 
 <template>
   <div class="font-poppins min-h-screen max-w-lg mx-auto flex flex-col gap-12 items-center justify-between py-12">
-    <SolohostLogo class="max-w-[150px]" />
+    <SolohostLogo />
     <div class="bg-white p-4 max-w-sm w-full">
       <div class="flex flex-col gap-6">
         <form
-          class="flex flex-col gap-4"
+          class="flex flex-col gap-2"
           @submit.prevent="signIn"
         >
           <UFormField
@@ -58,28 +58,21 @@ appConfig.ui.colors.primary = 'sky'
           </div>
         </div>
 
-        <UButton
-          to="/register"
-          label="Neuen Zugang erstellen"
-          icon="i-heroicons-key"
-          class="gap-2"
-          size="xl"
-          block
-        />
-        <UButton
-          to="/"
-          variant="ghost"
-          color="neutral"
-          class="flex items-center gap-1 text-gray-400 hover:text-gray-600 mr-auto"
-        >
-          <UIcon
-            name="i-heroicons-arrow-left"
-            class="size-4 mr-1"
+        <div class="flex flex-col gap-2">
+          <UButton
+            to="/register"
+            label="Neuen Zugang erstellen"
+            icon="i-heroicons-key"
+            size="xl"
+            block
           />
-          <span class="leading-0">
-            Zurück zur Startseite
-          </span>
-        </UButton>
+          <UButton
+            to="/"
+            label="Zurück zur Startseite"
+            icon="i-heroicons-arrow-left"
+            variant="soft"
+          />
+        </div>
       </div>
     </div>
     <div />

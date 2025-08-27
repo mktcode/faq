@@ -214,12 +214,8 @@ function onFocusNameInput() {
       <UButton
         to="/"
         label="Zurück"
-        color="neutral"
         variant="soft"
         icon="i-heroicons-arrow-left"
-        :ui="{
-          leadingIcon: 'text-primary-500',
-        }"
       />
       <UButton
         type="submit"

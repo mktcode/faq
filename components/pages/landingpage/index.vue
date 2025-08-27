@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import type { AccordionItem } from '@nuxt/ui'
-import ColorMode from './ColorMode.vue'
 
 const appConfig = useAppConfig()
 const { public: { appHost } } = useRuntimeConfig()
 const { user } = useUserSession()
 
 const companyContext = ref('')
-
-const { colorMode, toggleColorMode } = useColorMode()
 
 const acc1items = ref<AccordionItem[]>([
   {
@@ -50,42 +47,9 @@ appConfig.ui.colors.primary = 'sky'
 </script>
 
 <template>
-  <ColorMode class="font-poppins text-[16px]/[1.6] bg-slate-50 text-slate-900 dark:bg-[#0b1020] dark:text-[#e7ecf4]">
-    <header class="sticky top-0 z-50 backdrop-saturate-150 backdrop-blur bg-[linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,255,255,.65)_60%,rgba(255,255,255,0))] dark:bg-[linear-gradient(180deg,rgba(11,16,32,.9),rgba(11,16,32,.75)_60%,rgba(11,16,32,0))]">
-      <div class="mx-auto w-[92vw] max-w-[1200px] flex items-center justify-between py-[14px]">
-        <SolohostLogo />
-        <div class="flex items-center gap-2">
-          <button
-            type="button"
-            class="opacity-50 hover:opacity-100 inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-3 rounded-[12px] font-semibold tracking-[.2px] text-slate-900 transition duration-200 dark:text-[#e7ecf4]"
-            aria-label="Farbschema wechseln"
-            :title="colorMode === 'dark' ? 'Tagmodus' : 'Nachtmodus'"
-            @click="toggleColorMode"
-          >
-            <UIcon
-              v-if="colorMode === 'dark'"
-              name="i-heroicons-sun"
-              size="20"
-            />
-            <UIcon
-              v-else
-              name="i-heroicons-moon"
-              size="20"
-            />
-          </button>
-          <a
-            class="whitespace-nowrap inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-3 rounded-[12px] font-semibold tracking-[.2px] border border-slate-900/10 bg-white/10 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
-            :href="user ? `https://${user.userName}.${appHost}` : '/login'"
-            aria-label="Anmelden"
-          >
-            <span>
-              {{ user ? 'zur Website' : 'Anmelden' }}
-            </span>
-          </a>
-        </div>
-      </div>
-    </header>
-
+  <PagesLandingpageColorMode class="font-poppins text-[16px]/[1.6] bg-slate-50 text-slate-900 dark:bg-[#0b1020] dark:text-[#e7ecf4]">
+    <PagesLandingpageHeader />
+    
     <div
       class="mx-auto w-[92vw] max-w-[1200px] relative rounded-[22px] overflow-hidden mt-[14px]"
       aria-label="Intro"
@@ -423,51 +387,6 @@ appConfig.ui.colors.primary = 'sky'
       </UAccordion>
     </section>
 
-    <footer class="py-[38px] pb-[58px] text-slate-600 dark:text-[#b3bfd1]">
-      <div class="mx-auto w-[92vw] max-w-[1200px] flex flex-wrap gap-5 justify-between items-center">
-        <div class="flex items-center gap-3">
-          <div
-            class="w-10 h-10 rounded-[13px] bg-[radial-gradient(100%_100%_at_30%_20%,#58d0ff_0%,#0ea5e9_40%,#04669e_100%)] grid place-items-center"
-            aria-hidden="true"
-          >
-            <div
-              class="w-10 h-10 font-bold text-2xl rounded-[13px] text-white bg-[radial-gradient(100%_100%_at_30%_20%,#58d0ff_0%,#0ea5e9_40%,#04669e_100%)] grid place-items-center shadow-[0_10px_18px_rgba(14,165,233,.35)]"
-              aria-hidden="true"
-            >
-              S
-            </div>
-          </div>
-          <div>
-            <strong class="text-slate-900 dark:text-white text-lg">Solohost</strong><br>
-            Webhosting &amp; IT‑Beratung · <a
-              class="text-[#0ea5e9]"
-              href="tel:+4917670864627"
-            >0176 70 86 46 27</a>
-          </div>
-        </div>
-        <div class="flex gap-[14px] flex-wrap">
-          <a
-            class="text-[#0ea5e9]"
-            href="https://markus-kottlaender.de/impressum"
-            rel="noopener"
-            target="_blank"
-          >Impressum</a>
-          <a
-            class="text-[#0ea5e9]"
-            href="https://markus-kottlaender.de/datenschutz"
-            rel="noopener"
-            target="_blank"
-          >Datenschutz</a>
-          <a
-            class="text-[#0ea5e9]"
-            href="https://markus-kottlaender.de/agb"
-            rel="noopener"
-            target="_blank"
-          >AGB</a>
-        </div>
-      </div>
-    </footer>
-  </ColorMode>
+    <PagesLandingpageFooter />
+  </PagesLandingpageColorMode>
 </template>
-
-<!-- No scoped CSS: Tailwind dark utilities handle theming -->
