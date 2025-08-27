@@ -113,8 +113,8 @@ async function signOut() {
         <USwitch
           v-model="$profile.isPublic"
           :disabled="showLegalDataWarning"
-          label="Veröffentlicht"
-          :description="$profile.isPublic ? 'Ihre Website ist öffentlich zugänglich.' : 'Nur Sie können Ihre Website sehen, wenn Sie angemeldet sind.'"
+          :label="$profile.isPublic ? 'Veröffentlicht' : 'Nicht veröffentlicht'"
+          :description="$profile.isPublic ? 'Ihre Website ist öffentlich zugänglich und darf von Suchmaschinen erfasst werden.' : 'Nur Sie können Ihre Website sehen und nur wenn Sie angemeldet sind.'"
           @update:model-value="togglePublished"
         />
       </div>
