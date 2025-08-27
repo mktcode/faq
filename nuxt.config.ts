@@ -57,7 +57,7 @@ export default defineNuxtConfig({
       stripeApiKey: process.env.STRIPE_API_KEY,
       stripePortalUrl: process.env.STRIPE_PORTAL_URL,
       appHost: process.env.APP_HOST || 'localhost:3000',
-      appIp: process.env.APP_IP || '127.0.0.1',
+      lbIp: process.env.LB_IP || '127.0.0.1',
     },
   },
 

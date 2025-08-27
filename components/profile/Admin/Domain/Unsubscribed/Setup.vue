@@ -3,7 +3,7 @@ import { watchDebounced } from '@vueuse/core'
 
 defineEmits(['goToSubscription'])
 
-const { appIp } = useRuntimeConfig().public
+const { lbIp } = useRuntimeConfig().public
 
 const { isCheckingDns, hasBeenChecked, isACorrect, checkDns } = useDnsCheck()
 const { updateDomain, isUpdatingDomain, domainConnectedSuccessfully } = useExternalDomain()
@@ -44,7 +44,7 @@ watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce:
       </p>
 
       <p class="text-gray-500">
-        Dort legen Sie einen Eintrag vom <strong>Typ A</strong> mit dem Wert <strong>{{ appIp }}</strong> an.
+        Dort legen Sie einen Eintrag vom <strong>Typ A</strong> mit dem Wert <strong>{{ lbIp }}</strong> an.
         Wenn Sie das getan haben, geben Sie hier Ihre Domain ein.
       </p>
 

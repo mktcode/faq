@@ -22,8 +22,8 @@ function getCurrentHost(event: H3Event): string {
 }
 
 function isRootDomain(currentHost: string): boolean {
-  const { public: { appHost, appIp } } = useRuntimeConfig()
-  return currentHost === appHost || currentHost === appIp
+  const { public: { appHost, lbIp } } = useRuntimeConfig()
+  return currentHost === appHost || currentHost === lbIp
 }
 
 function isSubdomain(currentHost: string): boolean {

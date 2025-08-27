@@ -2,7 +2,7 @@ service: solohost
 image: mktcode/solohost
 servers:
   web:
-    - <%= `bin/terraform output -raw app-1_ip` %>
+    - <%= `echo $APP1_IP` %>
 registry:
   username: mktcode
   password:
@@ -15,7 +15,7 @@ env:
     - MYSQL_ROOT_PASSWORD
     - NUXT_DATABASE_URL
     - NUXT_PUBLIC_APP_HOST
-    - NUXT_PUBLIC_APP_IP
+    - NUXT_PUBLIC_LB_IP
     - NUXT_SESSION_PASSWORD
     - NUXT_MAIL_HOST
     - NUXT_MAIL_USER
@@ -51,7 +51,7 @@ proxy:
 accessories:
   db:
     image: mysql:9.0
-    host: <%= `bin/terraform output -raw db_ip` %>
+    host: <%= `echo $DB_IP` %>
     port: 3306
     env:
       clear:
@@ -62,12 +62,3 @@ accessories:
       - db/init.sql:/docker-entrypoint-initdb.d/setup.sql
     directories:
       - data:/var/lib/mysql
-  node_exporter:
-    image: prom/node-exporter:latest
-    hosts:
-      - <%= `bin/terraform output -raw app-1_ip` %>
-      - <%= `bin/terraform output -raw db_ip` %>
-    port: 9100
-    cmd: "--path.rootfs=/host"
-    volumes:
-      - "/:/host:ro,rslave"

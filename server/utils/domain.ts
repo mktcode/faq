@@ -1,11 +1,11 @@
 import dns from 'dns/promises'
 
 export async function checkDomainA(domain: string) {
-  const { public: { appIp } } = useRuntimeConfig()
+  const { public: { lbIp } } = useRuntimeConfig()
 
   try {
     const addresses = await dns.resolve4(domain)
-    return addresses.includes(appIp)
+    return addresses.includes(lbIp)
   }
   catch (err) {
     return false

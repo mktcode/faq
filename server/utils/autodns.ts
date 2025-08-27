@@ -45,7 +45,7 @@ async function createDomainContact(contact: {
 }
 
 async function registerDomainWithZone(domain: string, contactId: number) {
-  const { appIp } = useRuntimeConfig().public
+  const { lbIp } = useRuntimeConfig().public
   const domainRobot = getDomainRobot()
 
   await domainRobot.domain().create(new DomainRobotModels.Domain({
@@ -58,7 +58,7 @@ async function registerDomainWithZone(domain: string, contactId: number) {
       resourceRecords: [
         {
           type: 'A',
-          value: appIp,
+          value: lbIp,
         },
       ],
     },
