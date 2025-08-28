@@ -92,17 +92,8 @@ function changeOrder(index: number, direction: 'up' | 'down') {
                 :label="offer.title"
                 variant="link"
                 color="neutral"
-                trailing-icon="i-lucide-chevron-down"
                 class="flex-1 truncate"
-              >
-                <template #trailing>
-                  <UIcon
-                    name="i-lucide-chevron-down"
-                    class="inline-block size-5 opacity-50 ml-auto transition-transform"
-                    :class="{ 'rotate-180': open }"
-                  />
-                </template>
-              </UButton>
+              />
               <UButton
                 variant="ghost"
                 size="sm"
