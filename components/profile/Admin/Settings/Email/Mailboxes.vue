@@ -47,13 +47,13 @@ async function createEmailAddresses() {
 <template>
   <div class="flex flex-col gap-4 p-4">
     <div class="flex flex-col gap-2">
-      <ProfileAdminEmailMailboxDetails
+      <ProfileAdminSettingsEmailMailboxDetails
         v-for="mailbox in $profile.mailboxes"
         :key="mailbox"
         :mailbox="mailbox"
       />
     </div>
-    <ProfileAdminEmailMailboxForm
+    <ProfileAdminSettingsEmailMailboxForm
       v-for="index in 2 - $profile.mailboxes.length"
       :key="index"
       v-model:mailbox="newMailboxes[index].name"

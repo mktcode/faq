@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const showModal = useState('showDomainModal', () => false)
+const { showDomainSettings } = useAdmin()
 </script>
 
 <template>
   <USlideover
-    v-model:open="showModal"
+    v-model:open="showDomainSettings"
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"
@@ -27,8 +27,8 @@ const showModal = useState('showDomainModal', () => false)
 
     <template #body>
       <div class="flex flex-col gap-4 p-4">
-        <ProfileAdminDomainSubscribed v-if="$profile.isSubscribed" />
-        <ProfileAdminDomainUnsubscribed
+        <ProfileAdminSettingsDomainSubscribed v-if="$profile.isSubscribed" />
+        <ProfileAdminSettingsDomainUnsubscribed
           v-else
           @go-to-subscription="$emit('goToSubscription')"
         />

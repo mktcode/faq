@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const showModal = useState('showAssistantTipsModal', () => false)
+const { showAssistantTips } = useAdmin()
 </script>
 
 <template>
   <USlideover
-    v-model:open="showModal"
+    v-model:open="showAssistantTips"
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"

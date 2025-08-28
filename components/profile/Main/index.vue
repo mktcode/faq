@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const appConfig = useAppConfig()
-const $profile = useNuxtApp().$profile
+const { $profile } = useProfile()
 
 appConfig.ui.colors.primary = 'website'
 appConfig.ui.button.defaultVariants.rounded = $profile.settings.public.design.rounded
@@ -57,17 +57,20 @@ useHead({
     id="main"
     :font="$profile.settings.public.design.font"
     class="relative"
+    :class="$profile.isOwned ? 'pt-[56px]' : ''"
   >
     <ClientOnly>
       <ProfileMainReLogin />
     </ClientOnly>
     <ProfileMainHeader />
     <div class="flex flex-col items-center justify-center gap-2 max-w-7xl mx-auto py-12 px-6">
-      <ProfileMainComponentViewer
-        v-for="index in 5"
-        :key="index"
-        :slot-index="index"
-      />
+      <TransitionGroup name="list">
+        <ProfileMainComponentViewer
+          v-for="index in 5"
+          :key="index"
+          :slot-index="index"
+        />
+      </TransitionGroup>
 
       <ProfileMainFooter />
     </div>

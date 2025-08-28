@@ -70,7 +70,7 @@ watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce:
         :loading="isUpdatingDomain"
         @click="() => updateDomain(existingDomain)"
       />
-      <ProfileAdminSettingsModalDomainDnsCheckFailed
+      <ProfileAdminSettingsDomainDnsCheckFailed
         v-if="hasBeenChecked && !isACorrect"
         :is-checking-dns="isCheckingDns"
         @check-dns="() => checkDns(existingDomain)"

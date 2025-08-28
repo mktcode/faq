@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import type { ResponseStreamEvent } from 'openai/resources/responses/responses.mjs'
 
-const showModal = useState('showAssistantModal', () => false)
-const showAssistantTipsModal = useState('showAssistantTipsModal', () => false)
-const showAssistantContextModal = useState('showAssistantContextModal', () => false)
+const { showAssistant, showAssistantTips, showAssistantContextSettings } = useAdmin()
+
 
 const quota = useState('assistantQuota', () => 12)
 const userInput = ref('')
@@ -57,7 +56,7 @@ function submit() {
 
 <template>
   <USlideover
-    v-model:open="showModal"
+    v-model:open="showAssistant"
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"
@@ -83,14 +82,14 @@ function submit() {
         variant="ghost"
         class="ml-auto"
         size="md"
-        @click="showAssistantContextModal = !showAssistantContextModal"
+        @click="showAssistantContextSettings = true"
       />
       <UButton
         icon="i-lucide-lightbulb"
         color="neutral"
         variant="ghost"
         size="md"
-        @click="showAssistantTipsModal = !showAssistantTipsModal"
+        @click="showAssistantTips = true"
       />
     </template>
 

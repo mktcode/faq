@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const showModal = useState('showDesignModal', () => false)
+const show = useState('showDesignSettings', () => false)
 const toast = useToast()
 
 const { $profile, saveSettings } = useProfile()
@@ -165,7 +165,7 @@ async function deleteImage(image: 'logo' | 'header') {
 
 <template>
   <UDrawer
-    v-model:open="showModal"
+    v-model:open="show"
     side="left"
     close-icon="i-heroicons-arrow-left"
     handle-only
@@ -177,7 +177,7 @@ async function deleteImage(image: 'logo' | 'header') {
     }"
     :ui="{
       content: 'shadow-2xl shadow-black',
-      container: 'relative max-w-md',
+      container: 'relative max-w-md no-scrollbar',
       handle: '!bg-gray-400',
       header: 'h-10',
     }"
@@ -404,6 +404,7 @@ async function deleteImage(image: 'logo' | 'header') {
             />
           </div>
         </div>
+        <ProfileAdminWebsiteDesignComponentOrder />
         <UCollapsible
           v-model:open="showCustomCss"
           class="flex flex-col gap-2"
@@ -506,7 +507,7 @@ async function deleteImage(image: 'logo' | 'header') {
           </UButton>
         </template>
       </UModal>
-      <ProfileAdminDesignLinksModal />
+      <ProfileAdminWebsiteDesignLinksModal />
     </template>
   </UDrawer>
 </template>

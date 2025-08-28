@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const showModal = useState('showAssistantContextModal', () => false)
+const { showAssistantContextSettings } = useAdmin()
 
 const { $profile, isSavingSettings, saveSettings } = useProfile()
 </script>
 
 <template>
   <USlideover
-    v-model:open="showModal"
+    v-model:open="showAssistantContextSettings"
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
 
-const showModal = useState('showFeedbackModal', () => false)
+const { showFeedback } = useAdmin()
 
 const feedbackEmail = ref(`feedback@solohost.de`)
 const { copy: copyEmail, copied: copiedEmail } = useClipboard()
@@ -9,7 +9,7 @@ const { copy: copyEmail, copied: copiedEmail } = useClipboard()
 
 <template>
   <UModal
-    v-model:open="showModal"
+    v-model:open="showFeedback"
     :ui="{
       body: 'flex flex-col gap-4 text-gray-500',
     }"

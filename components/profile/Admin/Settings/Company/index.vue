@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const showModal = useState('showCompanyModal', () => false)
+const { showCompanySettings } = useAdmin()
 
 const { saveSettings } = useProfile()
 </script>
 
 <template>
   <USlideover
-    v-model:open="showModal"
+    v-model:open="showCompanySettings"
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"

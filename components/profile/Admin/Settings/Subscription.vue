@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const showModal = useState('showSubscriptionModal', () => false)
+const { showSubscriptionSettings } = useAdmin()
 
 const { stripePortalUrl } = useRuntimeConfig().public
 const { isStartingCheckout, startCheckoutSession } = useCheckoutSession()
@@ -31,7 +31,7 @@ async function saveAndStartCheckout() {
 
 <template>
   <USlideover
-    v-model:open="showModal"
+    v-model:open="showSubscriptionSettings"
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const showModal = useState('showEmailModal', () => false)
+const { showEmailSettings } = useAdmin()
 </script>
 
 <template>
   <USlideover
-    v-model:open="showModal"
+    v-model:open="showEmailSettings"
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"
@@ -34,7 +34,7 @@ const showModal = useState('showEmailModal', () => false)
         variant="soft"
         class="rounded-none"
       />
-      <ProfileAdminEmailMailboxes
+      <ProfileAdminSettingsEmailMailboxes
         v-else
         :domain="$profile.domain"
       />

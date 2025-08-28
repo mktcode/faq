@@ -100,7 +100,7 @@ const fieldTypes = [{
               size="sm"
             />
           </UFormField>
-          <ProfileAdminContentFormFieldOptions v-model:options="field.options" />
+          <ProfileAdminWebsiteFormFieldOptions v-model:options="field.options" />
           <div class="flex items-start justify-between gap-2">
             <div>
               <UCheckbox

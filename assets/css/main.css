@@ -55,6 +55,22 @@ button,
   opacity: 0;
 }
 
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.list-leave-active {
+  position: absolute;
+}
+
 mark {
   @apply bg-primary-200 text-primary-900 py-px px-1;
 }

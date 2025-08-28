@@ -6,8 +6,15 @@ const subscriptionSuccess = !!route.query.subscriptionSuccess
 
 <template>
   <ProfileAdminNav />
-  <ProfileAdminDesign />
-  <ProfileAdminContent />
+  <ProfileAdminSettings />
+  <ProfileAdminWebsite />
+  <ProfileAdminWebsiteDesign />
+  <ProfileAdminWebsiteOffering />
+  <ProfileAdminWebsiteForm />
+  <ProfileAdminWebsiteGallery />
+  <ProfileAdminWebsiteFaq />
+  <ProfileAdminWebsiteDownloads />
+  <ProfileAdminAssistant />
   <ProfileAdminFeedback />
   <ProfileAdminEmailVerified v-if="emailVerified" />
   <ProfileAdminSubscriptionSuccess v-if="subscriptionSuccess" />
