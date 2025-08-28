@@ -87,7 +87,7 @@ appConfig.ui.colors.primary = 'sky'
             :href="user ? `https://${user.userName}.${appHost}` : '/register'"
           >
             <UIcon
-              name="i-heroicons-computer-desktop"
+              name="i-lucide-monitor-smartphone"
               size="20"
             />
             Website erstellen
