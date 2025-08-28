@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const toast = useToast()
 
-const { showGallerySettings } = useAdmin()
+const { showGallerySettings, showWebsiteSettings, showDelayed } = useAdmin()
 
 const { $profile, saveSettings, isSavingSettings } = useProfile()
 
@@ -124,6 +124,7 @@ async function deleteImage(index: number) {
       handle: '!bg-gray-400',
       header: 'h-10',
     }"
+    @close="showDelayed(() => showWebsiteSettings = true)"
   >
     <template #header>
       <ProfileMainDrawerTip />

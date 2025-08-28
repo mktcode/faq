@@ -3,6 +3,7 @@ const show = useState('showDesignSettings', () => false)
 const toast = useToast()
 
 const { $profile, saveSettings } = useProfile()
+const { showDelayed, showWebsiteSettings } = useAdmin()
 
 const headerImageInput = ref<HTMLInputElement | null>(null)
 const headerVideoInput = ref<HTMLInputElement | null>(null)
@@ -181,6 +182,7 @@ async function deleteImage(image: 'logo' | 'header') {
       handle: '!bg-gray-400',
       header: 'h-10',
     }"
+    @close="showDelayed(() => showWebsiteSettings = true)"
   >
     <template #header>
       <ProfileMainDrawerTip />

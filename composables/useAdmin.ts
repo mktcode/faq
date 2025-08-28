@@ -19,6 +19,10 @@ export default function useAdmin() {
 
   const showFeedback = useState('showFeedback', () => false)
 
+  function showDelayed(fn: () => void) {
+    setTimeout(fn, 300)
+  }
+
   return {
     showMainSettings,
     showCompanySettings,
@@ -35,6 +39,7 @@ export default function useAdmin() {
     showAssistant,
     showAssistantTips,
     showAssistantContextSettings,
-    showFeedback
+    showFeedback,
+    showDelayed,
   }
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { showOfferingSettings } = useAdmin()
+const { showOfferingSettings, showWebsiteSettings, showDelayed } = useAdmin()
 </script>
 
 <template>
@@ -21,6 +21,7 @@ const { showOfferingSettings } = useAdmin()
       header: 'h-10',
       body: 'flex flex-col gap-2',
     }"
+    @close="showDelayed(() => showWebsiteSettings = true)"
   >
     <template #header>
       <ProfileMainDrawerTip />

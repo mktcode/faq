@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { showFaqSettings } = useAdmin()
+const { showFaqSettings, showWebsiteSettings, showDelayed } = useAdmin()
 
 const { data: qanda, refresh: refreshQanda } = await useFetch('/api/user/qanda')
 
@@ -67,6 +67,7 @@ async function saveQanda() {
       handle: '!bg-gray-400',
       header: 'h-10',
     }"
+    @close="showDelayed(() => showWebsiteSettings = true)"
   >
     <template #header>
       <ProfileMainDrawerTip />

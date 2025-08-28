@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const toast = useToast()
 
-const { showDownloadsSettings } = useAdmin()
+const { showDownloadsSettings, showWebsiteSettings, showDelayed } = useAdmin()
 
 const { $profile, saveSettings, isSavingSettings } = useProfile()
 
@@ -106,6 +106,7 @@ async function deleteDownload(index: number) {
       handle: '!bg-gray-400',
       header: 'h-10',
     }"
+    @close="showDelayed(() => showWebsiteSettings = true)"
   >
     <template #header>
       <ProfileMainDrawerTip />
