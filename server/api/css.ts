@@ -75,7 +75,7 @@ export default defineEventHandler(async (event) => {
 
   const oklchBlock = `@supports (color: oklch(60% 0.1 180)) {\n:root {\n${oklchLines.join('\n')}\n  --color-website: var(--color-website-500);\n}\n}`
 
-  const css = `${hslFallback}\n\n${oklchBlock}\n\n.woot-widget-bubble {\n  background-color: var(--color-website) !important;\n}\n\n${settings.css}`
+  const css = `${hslFallback}\n\n${oklchBlock}\n\n${settings.css}`
 
   return css
 })
