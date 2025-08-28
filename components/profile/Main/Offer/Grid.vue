@@ -9,10 +9,12 @@ defineProps<{
 
 <template>
   <div class="my-24 w-full flex flex-wrap items-start justify-center gap-x-16 gap-y-24">
-    <ProfileMainOfferItem
-      v-for="(item, index) in items"
-      :key="index"
-      :item="item"
-    />
+    <TransitionGroup name="list">
+      <ProfileMainOfferItem
+        v-for="item in items"
+        :key="item.title"
+        :item="item"
+      />
+    </TransitionGroup>
   </div>
 </template>

@@ -1,5 +1,20 @@
 <script setup lang="ts">
 const { showOfferingSettings, showWebsiteSettings, showDelayed } = useAdmin()
+
+const { $profile } = useProfile()
+
+function changeOrder(index: number, direction: 'up' | 'down') {
+  const items = $profile.settings.public.components.offers.items
+  if (direction === 'up' && index > 0) {
+    const temp = items[index - 1]
+    items[index - 1] = items[index]
+    items[index] = temp
+  } else if (direction === 'down' && index < items.length - 1) {
+    const temp = items[index + 1]
+    items[index + 1] = items[index]
+    items[index] = temp
+  }
+}
 </script>
 
 <template>
@@ -64,52 +79,79 @@ const { showOfferingSettings, showWebsiteSettings, showDelayed } = useAdmin()
       >
         Angebot hinzufügen
       </UButton>
-      <UCollapsible
-        v-for="(offer, index) in $profile.settings.public.components.offers.items"
-        class="flex flex-col border border-gray-200 rounded-md"
-        :unmount-on-hide="false"
-      >
-        <template #default="{ open }">
-          <UButtonGroup>
-            <UButton
-              :label="offer.title"
-              variant="link"
-              color="neutral"
-              trailing-icon="i-lucide-chevron-down"
-              class="flex-1 truncate"
-            >
-              <template #trailing>
+      <TransitionGroup name="list">
+        <UCollapsible
+          v-for="(offer, index) in $profile.settings.public.components.offers.items"
+          :key="offer.title"
+          class="flex flex-col border border-gray-200 rounded-md"
+          :unmount-on-hide="false"
+        >
+          <template #default="{ open }">
+            <UButtonGroup>
+              <UButton
+                :label="offer.title"
+                variant="link"
+                color="neutral"
+                trailing-icon="i-lucide-chevron-down"
+                class="flex-1 truncate"
+              >
+                <template #trailing>
+                  <UIcon
+                    name="i-lucide-chevron-down"
+                    class="inline-block size-5 opacity-50 ml-auto transition-transform"
+                    :class="{ 'rotate-180': open }"
+                  />
+                </template>
+              </UButton>
+              <UButton
+                variant="ghost"
+                size="sm"
+                @click.stop="changeOrder(index, 'up')"
+                :disabled="index === 0"
+                class="disabled:text-gray-400"
+              >
                 <UIcon
-                  name="i-lucide-chevron-down"
-                  class="inline-block size-5 opacity-50 ml-auto transition-transform"
-                  :class="{ 'rotate-180': open }"
+                  name="i-heroicons-arrow-up"
+                  class="size-5"
                 />
-              </template>
-            </UButton>
-            <UButton
-              icon="i-heroicons-trash"
-              variant="soft"
-              color="error"
-              @click="$profile.settings.public.components.offers.items.splice(index, 1)"
-              class="rounded-none"
+              </UButton>
+              <UButton
+                variant="ghost"
+                size="sm"
+                @click.stop="changeOrder(index, 'down')"
+                :disabled="index >= $profile.settings.public.components.offers.items.length - 1"
+                class="disabled:text-gray-400"
+              >
+                <UIcon
+                  name="i-heroicons-arrow-down"
+                  class="size-5"
+                />
+              </UButton>
+              <UButton
+                icon="i-heroicons-trash"
+                variant="soft"
+                color="error"
+                @click="$profile.settings.public.components.offers.items.splice(index, 1)"
+                class="rounded-none"
+              />
+            </UButtonGroup>
+          </template>
+  
+          <template #content>
+            <UInput
+              v-model="offer.title"
+              placeholder="Website erstellen"
+              class="w-full"
+              :ui="{ base: 'rounded-none' }"
             />
-          </UButtonGroup>
-        </template>
-
-        <template #content>
-          <UInput
-            v-model="offer.title"
-            placeholder="Website erstellen"
-            class="w-full"
-            :ui="{ base: 'rounded-none' }"
-          />
-          <WysiwygEditor
-            v-model="offer.description"
-            placeholder="Hier kannst du deinen Willkommenstext eingeben..."
-            rounded="none"
-          />
-        </template>
-      </UCollapsible>
+            <WysiwygEditor
+              v-model="offer.description"
+              placeholder="Hier kannst du deinen Willkommenstext eingeben..."
+              rounded="none"
+            />
+          </template>
+        </UCollapsible>
+      </TransitionGroup>
     </template>
   </UDrawer>
 </template>
