@@ -59,7 +59,7 @@ function closeAndOpen(fn: () => void) {
     <template #title>
       <h3 class="text-lg font-semibold flex items-center gap-2">
         <UIcon
-          name="i-heroicons-globe-alt"
+          name="i-lucide-monitor-smartphone"
           class="inline-block size-6 opacity-50"
         />
         Website

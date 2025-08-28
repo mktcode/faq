@@ -21,7 +21,7 @@ const showReLoginButton = computed(() => {
       v-if="showReLoginButton"
       variant="ghost"
       class="bg-white/90 hover:bg-white fixed top-2 left-2 z-30"
-      label="Anmelden"
+      label="Wieder Anmelden"
       :href="`https://${appHost}/login?username=${encodeURIComponent($profile.username)}`"
     />
   </div>

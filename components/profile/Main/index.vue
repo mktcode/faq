@@ -57,20 +57,18 @@ useHead({
     id="main"
     :font="$profile.settings.public.design.font"
     class="relative"
-    :class="$profile.isOwned ? 'pt-[56px]' : ''"
+    :class="$profile.isOwned ? 'pb-[56px] md:pb-0 md:pt-[56px]' : ''"
   >
     <ClientOnly>
       <ProfileMainReLogin />
     </ClientOnly>
     <ProfileMainHeader />
     <div class="flex flex-col items-center justify-center gap-2 max-w-7xl mx-auto py-12 px-6">
-      <TransitionGroup name="list">
-        <ProfileMainComponentViewer
-          v-for="index in 5"
-          :key="index"
-          :slot-index="index"
-        />
-      </TransitionGroup>
+      <ProfileMainComponentViewer
+        v-for="index in 5"
+        :key="index"
+        :slot-index="index"
+      />
 
       <ProfileMainFooter />
     </div>

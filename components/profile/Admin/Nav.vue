@@ -17,24 +17,33 @@ async function signOut() {
 </script>
 
 <template>
-  <div class="fixed w-full top-0 z-20 bg-white p-2 flex gap-1">
+  <div class="fixed w-full bottom-0 md:bottom-auto md:top-0 z-20 bg-white/90 saturate-150 backdrop-blur-lg p-2 flex gap-1 shadow-[0_0_15px_rgba(0,0,0,0.2)]">
     <UButton
       icon="i-heroicons-cog-6-tooth"
       variant="ghost"
       label="Einstellungen"
       @click="showMainSettings = true"
+      :ui="{
+        label: 'hidden md:inline-block'
+      }"
     />
     <UButton
-      icon="i-heroicons-globe-alt"
+      icon="i-lucide-monitor-smartphone"
       variant="ghost"
       label="Website"
       @click="showWebsiteSettings = true"
+      :ui="{
+        label: 'hidden md:inline-block'
+      }"
     />
     <UButton
       icon="i-lucide-bot"
       variant="ghost"
       label="Assistent"
       @click="showAssistant = true"
+      :ui="{
+        label: 'hidden md:inline-block'
+      }"
     />
     <UButton
       label="Feedback"
@@ -42,12 +51,18 @@ async function signOut() {
       variant="ghost"
       class="ml-auto"
       @click="showFeedback = true"
+      :ui="{
+        label: 'hidden md:inline-block'
+      }"
     />
     <UButton
       label="Abmelden"
       icon="i-heroicons-power"
       variant="ghost"
       @click="signOut"
+      :ui="{
+        label: 'hidden md:inline-block'
+      }"
     />
   </div>
 </template>

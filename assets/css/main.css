@@ -89,3 +89,7 @@ mark {
 #cw-bubble-holder {
   @apply z-0 absolute;
 }
+
+.woot-widget-bubble {
+  display: none !important;
+}
