@@ -37,10 +37,10 @@ const editor = useEditor({
   ],
   editorProps: {
     attributes: {
-      class: `${roundedClass.value} p-3 bg-gray-100 border-0 prose-sm focus:outline-none max-w-full focus:ring-2 focus:ring-sky-500`,
+      class: `${roundedClass.value} p-3 bg-gray-100 border-0 prose-sm focus:outline-none max-w-full`,
     },
   },
-  content: model.value || '<p>Beschreibung. 🎉</p>',
+  content: model.value || 'Ihr Angebotstext...',
   onUpdate({ editor }) {
     model.value = editor.getHTML()
   },
