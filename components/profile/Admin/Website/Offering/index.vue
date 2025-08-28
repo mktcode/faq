@@ -75,73 +75,18 @@ function changeOrder(index: number, direction: 'up' | 'down') {
         icon="i-heroicons-plus"
         variant="soft"
         class="w-full"
-        @click="$profile.settings.public.components.offers.items.push({ title: 'Neues Angebot', description: '' })"
+        @click="$profile.settings.public.components.offers.items.unshift({ id: Date.now(), title: 'Neues Angebot', description: '' })"
       >
         Angebot hinzufügen
       </UButton>
       <TransitionGroup name="list">
-        <UCollapsible
-          v-for="(offer, index) in $profile.settings.public.components.offers.items"
-          :key="offer.title"
-          class="flex flex-col border border-gray-200 rounded-md"
-          :unmount-on-hide="false"
-        >
-          <template #default="{ open }">
-            <UButtonGroup>
-              <UButton
-                :label="offer.title"
-                variant="link"
-                color="neutral"
-                class="flex-1 truncate"
-              />
-              <UButton
-                variant="ghost"
-                size="sm"
-                @click.stop="changeOrder(index, 'up')"
-                :disabled="index === 0"
-                class="disabled:text-gray-400"
-              >
-                <UIcon
-                  name="i-heroicons-arrow-up"
-                  class="size-5"
-                />
-              </UButton>
-              <UButton
-                variant="ghost"
-                size="sm"
-                @click.stop="changeOrder(index, 'down')"
-                :disabled="index >= $profile.settings.public.components.offers.items.length - 1"
-                class="disabled:text-gray-400"
-              >
-                <UIcon
-                  name="i-heroicons-arrow-down"
-                  class="size-5"
-                />
-              </UButton>
-              <UButton
-                icon="i-heroicons-trash"
-                variant="soft"
-                color="error"
-                @click="$profile.settings.public.components.offers.items.splice(index, 1)"
-                class="rounded-none"
-              />
-            </UButtonGroup>
-          </template>
-  
-          <template #content>
-            <UInput
-              v-model="offer.title"
-              placeholder="Website erstellen"
-              class="w-full"
-              :ui="{ base: 'rounded-none' }"
-            />
-            <WysiwygEditor
-              v-model="offer.description"
-              placeholder="Hier kannst du deinen Willkommenstext eingeben..."
-              rounded="none"
-            />
-          </template>
-        </UCollapsible>
+        <ProfileAdminWebsiteOfferingItem
+          v-for="(offering, index) in $profile.settings.public.components.offers.items"
+          :key="offering.id"
+          v-model:offering="$profile.settings.public.components.offers.items[index]"
+          :index="index"
+          @change-order="changeOrder(index, $event)"
+        />
       </TransitionGroup>
     </template>
   </UDrawer>
