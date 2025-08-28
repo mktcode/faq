@@ -59,7 +59,6 @@ function submit() {
     v-model:open="showAssistant"
     side="left"
     close-icon="i-heroicons-arrow-left"
-    :overlay="false"
     :ui="{
       body: '!p-0 flex flex-col overflow-y-hidden',
       footer: '!p-0 flex-col',
