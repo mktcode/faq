@@ -84,13 +84,13 @@ function onFocusNameInput() {
     <Transition name="fade">
       <div
         v-if="isRegistering"
-        class="fixed inset-0 flex flex-col items-center justify-center bg-white/30 backdrop-blur-lg text-xl z-50"
+        class="fixed inset-0 flex flex-col items-center justify-center bg-white/30 backdrop-blur-lg text-xl z-50 p-6"
       >
         <UIcon
           name="i-lucide-loader-2"
           class="animate-spin size-10 text-sky-500 mb-2"
         />
-        <span>Ihre Website wird eingerichtet. Das kann einen Moment dauern...</span>
+        <span class="text-center">Ihre Website wird eingerichtet. Das kann einen Moment dauern...</span>
       </div>
     </Transition>
     <div class="flex gap-4">
