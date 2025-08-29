@@ -138,13 +138,13 @@ onBeforeUnmount(() => {
           <div
             v-for="message in conversation.messages"
             :key="message.id"
-            class="p-2 m-2 rounded-lg max-w-[90%] break-words"
+            class="p-2 m-2 rounded-lg break-words"
             :class="{
-              'bg-gray-50 text-primary-950': message.sender.type === 'user',
+              'bg-primary-600 text-primary-100': message.sender.type === 'user',
             }"
           >
-            <div class="text-xs opacity-50 mb-1">
-              {{ message.sender.type === 'contact' ? 'Sie' : 'Support' }} - {{ new Date(message.created_at).toLocaleString() }}
+            <div class="text-sm opacity-70 mb-1">
+              {{ message.sender.type === 'contact' ? 'Sie' : 'Support' }} - {{ new Date(message.created_at * 1000).toLocaleString('de-DE', { dateStyle: 'short', timeStyle: 'short' }) }}
             </div>
             {{ message.content }}
           </div>

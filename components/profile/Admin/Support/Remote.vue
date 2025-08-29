@@ -39,7 +39,8 @@ const { copy, copied } = useClipboard({ source: config })
         Die Informationen, die dabei übertragen werden (also das, was Ihr Bildschirm anzeigt), sind außer Ihnen und uns
         niemandem zugänglich. Mehr dazu finden Sie in unserer <a
           href="/datenschutz"
-          class="text-sky-500 hover:underline"
+          target="_blank"
+          class="text-primary-500 hover:underline"
         >Datenschutzerklärung</a>.
       </p>
       <p class="mt-4 mb-4">

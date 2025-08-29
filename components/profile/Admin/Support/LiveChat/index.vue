@@ -43,7 +43,18 @@ async function submit() {
   }
 }
 
-onMounted(fetchConversations)
+const fetchConversationsInterval = ref<NodeJS.Timeout | null>(null)
+
+onMounted(() => {
+  fetchConversations()
+  fetchConversationsInterval.value = setInterval(fetchConversations, 60000)
+})
+
+onBeforeUnmount(() => {
+  if (fetchConversationsInterval.value) {
+    clearInterval(fetchConversationsInterval.value)
+  }
+})
 
 watch(showSupportLiveChatConversation, (newValue, oldValue) => {
   if (oldValue === true && newValue === false) {
@@ -78,6 +89,9 @@ watch(showSupportLiveChatConversation, (newValue, oldValue) => {
     </template>
 
     <template #body>
+      <div v-if="conversations.length === 0" class="p-4 text-center text-gray-500">
+        Keine bisherigen Konversationen.
+      </div>
       <UButton
         v-for="conversation in conversations"
         :key="conversation.id"
