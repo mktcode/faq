@@ -16,6 +16,7 @@ const supportPhone = '+49 123 4567890'
   <USlideover
     v-model:open="showSupportPhoneMail"
     side="right"
+    :overlay="false"
     close-icon="i-heroicons-arrow-left"
     :close="{
       size: 'md',

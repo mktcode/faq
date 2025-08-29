@@ -11,6 +11,7 @@ const { copy, copied } = useClipboard({ source: config })
   <USlideover
     v-model:open="showSupportRemote"
     side="right"
+    :overlay="false"
     close-icon="i-heroicons-arrow-left"
     :close="{
       size: 'md',

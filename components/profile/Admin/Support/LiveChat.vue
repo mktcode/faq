@@ -6,6 +6,7 @@ const { showSupportLiveChat } = useAdmin()
   <USlideover
     v-model:open="showSupportLiveChat"
     side="right"
+    :overlay="false"
     close-icon="i-heroicons-arrow-left"
     :close="{
       size: 'md',
