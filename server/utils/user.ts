@@ -5,14 +5,6 @@ import { settingsFormSchema, type SettingsForm } from '~/types/db'
 import z from 'zod'
 import sanitizeHtml from 'sanitize-html'
 
-function computeSlug(title: string) {
-  return title.toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w-]+/g, '')
-    .replace(/--+/g, '-')
-    .replace(/^-+|-+$/g, '')
-}
-
 export function makeUsername(name: string): string {
   // TODO: check for uniqueness in the database
   return name
@@ -266,6 +258,8 @@ Font: ${settings.public.design.font}`,
 
   const designPrefill = designResponse.output_parsed
 
+  console.log('Design Prefill:', designPrefill)
+
   if (designPrefill) {
     settings.public.design.color = designPrefill.primary_color
     settings.public.header = {
@@ -314,12 +308,13 @@ About: ${settings.private.assistant.context}`,
 
   const offersPrefill = offersResponse.output_parsed
 
+  console.log('Offers Prefill:', offersPrefill)
+
   if (offersPrefill) {
     settings.public.components.offers.items = offersPrefill.offers.map((offer, index) => ({
       id: index + 1,
       title: offer.title,
       description: offer.description,
-      slug: computeSlug(offer.title),
     }))
   }
 
