@@ -323,14 +323,14 @@ async function deleteImage(image: 'logo' | 'header') {
           </UFormField>
         </div>
         <UFormField
-          label="Höhe"
+          label="Variante"
         >
           <USelect
             v-model="$profile.settings.public.header.height"
             :items="[
-              { label: 'Automatisch', value: 'auto' },
-              { label: 'Hälfte', value: 'half' },
-              { label: 'Voll', value: 'full' },
+              { label: 'Vollbild', value: 'full' },
+              { label: 'halber Bildschirm', value: 'half' },
+              { label: 'automatische Höhe', value: 'auto' },
               { label: 'Box', value: 'boxed' },
             ]"
             class="w-full"
