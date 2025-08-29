@@ -35,6 +35,7 @@ async function submit() {
     })
     userInput.value = ''
     selectConversation(conversationId)
+    fetchConversations()
   } catch (error) {
     console.error('Error sending message:', error)
   } finally {

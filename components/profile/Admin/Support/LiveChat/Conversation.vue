@@ -9,7 +9,11 @@ const conversation = ref<WootConversation | null>(null)
 
 const { currentConversationId } = useLiveChat()
 
+const fetchInterval = ref<NodeJS.Timeout | null>(null)
+
 async function fetchConversation() {
+  if (currentConversationId.value === null) return
+  
   const { conversation: fetchedConversation } = await $fetch(`/api/user/livechat/conversation/${currentConversationId.value}`)
   conversation.value = fetchedConversation
 }
@@ -38,6 +42,17 @@ async function submit() {
 watch(currentConversationId, (newId) => {
   if (newId !== null) {
     fetchConversation()
+  }
+})
+
+onMounted(() => {
+  fetchConversation()
+  fetchInterval.value = setInterval(fetchConversation, 15000)
+})
+
+onBeforeUnmount(() => {
+  if (fetchInterval.value) {
+    clearInterval(fetchInterval.value)
   }
 })
 </script>
