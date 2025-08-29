@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
   const files = await readMultipartFormData(event)
 
-  const uploadedFiles: SettingsForm['components']['downloads']['items'] = []
+  const uploadedFiles: SettingsForm['public']['components']['downloads']['items'] = []
 
   if (!files) {
     return { success: false, message: 'No files found', uploadedFiles }
