@@ -4,7 +4,7 @@ const { clear } = useUserSession()
 const { $profile } = useProfile()
 const { fetch: fetchUserSession } = useUserSession()
 
-const { showMainSettings, showWebsiteSettings, showAssistant, showFeedback } = useAdmin()
+const { showMainSettings, showWebsiteSettings, showAssistant } = useAdmin()
 
 async function signOut() {
   showMainSettings.value = false
@@ -68,15 +68,6 @@ function toggleSupportChat() {
           label: 'hidden md:inline-block',
         }"
         @click="toggleSupportChat"
-      />
-      <UButton
-        label="Feedback"
-        icon="i-lucide-message-circle-warning"
-        variant="ghost"
-        :ui="{
-          label: 'hidden md:inline-block',
-        }"
-        @click="showFeedback = true"
       />
       <UButton
         label="Abmelden"

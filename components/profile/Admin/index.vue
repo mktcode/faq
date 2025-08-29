@@ -15,7 +15,6 @@ const subscriptionSuccess = !!route.query.subscriptionSuccess
   <ProfileAdminWebsiteFaq />
   <ProfileAdminWebsiteDownloads />
   <ProfileAdminAssistant />
-  <ProfileAdminFeedback />
   <ProfileAdminEmailVerified v-if="emailVerified" />
   <ProfileAdminSubscriptionSuccess v-if="subscriptionSuccess" />
   <ClientOnly>

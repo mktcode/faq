@@ -17,8 +17,6 @@ export default function useAdmin() {
   const showAssistantTips = useState('showAssistantTips', () => false)
   const showAssistantContextSettings = useState('showAssistantContextSettings', () => false)
 
-  const showFeedback = useState('showFeedback', () => false)
-
   return {
     showMainSettings,
     showCompanySettings,
@@ -35,6 +33,5 @@ export default function useAdmin() {
     showAssistant,
     showAssistantTips,
     showAssistantContextSettings,
-    showFeedback,
   }
 }
