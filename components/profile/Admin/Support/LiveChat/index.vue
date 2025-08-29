@@ -100,7 +100,7 @@ onMounted(fetchConversations)
       <div class="flex flex-col w-full">
         <UTextarea
           v-model="userInput"
-          placeholder="Wie können wir Ihnen helfen?"
+          placeholder="Ihre Nachricht..."
           class="w-full"
           autoresize
           :disabled="isSendingResponse"

@@ -89,11 +89,14 @@ onBeforeUnmount(() => {
           <div
             v-for="message in conversation.messages"
             :key="message.id"
+            class="p-2 m-2 rounded-lg max-w-[90%] break-words"
             :class="{
-              'bg-gray-300 text-gray-800': message.sender.type === 'user',
+              'bg-gray-50 text-primary-950': message.sender.type === 'user',
             }"
           >
-            {{ message.sender.type === 'user' ? 'Sie' : 'Support' }} - {{ new Date(message.created_at).toLocaleString() }}
+            <div class="text-xs opacity-50 mb-1">
+              {{ message.sender.type === 'contact' ? 'Sie' : 'Support' }} - {{ new Date(message.created_at).toLocaleString() }}
+            </div>
             {{ message.content }}
           </div>
         </TransitionGroup>
@@ -112,7 +115,7 @@ onBeforeUnmount(() => {
       <div class="flex flex-col w-full">
         <UTextarea
           v-model="userInput"
-          placeholder="Wie können wir Ihnen helfen?"
+          placeholder="Ihre Nachricht..."
           class="w-full"
           autoresize
           :disabled="isSendingResponse"
