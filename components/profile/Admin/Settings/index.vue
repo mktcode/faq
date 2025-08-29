@@ -5,7 +5,7 @@ const {
   showCompanySettings,
   showDomainSettings,
   showEmailSettings,
-  showSubscriptionSettings
+  showSubscriptionSettings,
 } = useAdmin()
 </script>
 
@@ -40,11 +40,11 @@ const {
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
-        @click="showCompanySettings = true"
         trailing-icon="i-heroicons-chevron-right"
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
+        @click="showCompanySettings = true"
       />
 
       <UButton
@@ -53,11 +53,11 @@ const {
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
-        @click="showDomainSettings = true"
         trailing-icon="i-heroicons-chevron-right"
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
+        @click="showDomainSettings = true"
       />
 
       <UButton
@@ -89,11 +89,11 @@ const {
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
-        @click="showSubscriptionSettings = true"
         trailing-icon="i-heroicons-chevron-right"
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
+        @click="showSubscriptionSettings = true"
       />
 
       <ProfileAdminSettingsCompany />

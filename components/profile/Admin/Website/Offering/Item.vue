@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const offering = defineModel('offering', {
-  type: Object as () => { title: string; description: string },
+  type: Object as () => { title: string, description: string },
   required: true,
 })
 
@@ -17,9 +17,9 @@ const isOpen = ref(false)
 
 <template>
   <UCollapsible
+    v-model:open="isOpen"
     class="flex flex-col border border-gray-200 rounded-lg bg-white"
     :unmount-on-hide="false"
-    v-model:open="isOpen"
   >
     <UButtonGroup>
       <UButton
@@ -33,28 +33,28 @@ const isOpen = ref(false)
         variant="ghost"
         icon="i-heroicons-arrow-up"
         size="xxl"
-        @click.stop="$emit('changeOrder', 'up')"
         :disabled="index === 0"
         class="disabled:text-gray-400"
+        @click.stop="$emit('changeOrder', 'up')"
       />
       <UButton
         variant="ghost"
         icon="i-heroicons-arrow-down"
         size="xxl"
-        @click.stop="$emit('changeOrder', 'down')"
         :disabled="index >= $profile.settings.public.components.offers.items.length - 1"
         class="disabled:text-gray-400"
+        @click.stop="$emit('changeOrder', 'down')"
       />
       <UButton
         icon="i-heroicons-trash"
         variant="soft"
         color="error"
         size="xxl"
-        @click.stop="$profile.settings.public.components.offers.items.splice(index, 1)"
         class="rounded-none"
+        @click.stop="$profile.settings.public.components.offers.items.splice(index, 1)"
       />
     </UButtonGroup>
-    
+
     <template #content>
       <UInput
         v-model="offering.title"

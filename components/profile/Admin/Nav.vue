@@ -36,56 +36,56 @@ function toggleSupportChat() {
         icon="i-heroicons-cog-6-tooth"
         variant="ghost"
         label="Einstellungen"
-        @click="showMainSettings = true"
         :ui="{
-          label: 'hidden md:inline-block'
+          label: 'hidden md:inline-block',
         }"
+        @click="showMainSettings = true"
       />
       <UButton
         icon="i-lucide-monitor-smartphone"
         variant="ghost"
         label="Website"
-        @click="showWebsiteSettings = true"
         :ui="{
-          label: 'hidden md:inline-block'
+          label: 'hidden md:inline-block',
         }"
+        @click="showWebsiteSettings = true"
       />
       <UButton
         icon="i-lucide-bot"
         variant="ghost"
         label="Assistent"
-        @click="showAssistant = true"
         :ui="{
-          label: 'hidden md:inline-block'
+          label: 'hidden md:inline-block',
         }"
+        @click="showAssistant = true"
       />
       <UButton
         :label="isSupportChatOpen ? 'Hilfe schließen' : 'Hilfe'"
         :icon="isSupportChatOpen ? 'i-heroicons-x-mark' : 'i-lucide-message-circle-question-mark'"
         variant="ghost"
         class="ml-auto"
-        @click="toggleSupportChat"
         :ui="{
-          label: 'hidden md:inline-block'
+          label: 'hidden md:inline-block',
         }"
+        @click="toggleSupportChat"
       />
       <UButton
         label="Feedback"
         icon="i-lucide-message-circle-warning"
         variant="ghost"
-        @click="showFeedback = true"
         :ui="{
-          label: 'hidden md:inline-block'
+          label: 'hidden md:inline-block',
         }"
+        @click="showFeedback = true"
       />
       <UButton
         label="Abmelden"
         icon="i-heroicons-power"
         variant="ghost"
-        @click="signOut"
         :ui="{
-          label: 'hidden md:inline-block'
+          label: 'hidden md:inline-block',
         }"
+        @click="signOut"
       />
     </div>
   </ClientOnly>

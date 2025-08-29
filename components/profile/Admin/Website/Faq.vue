@@ -197,7 +197,7 @@ async function saveQanda() {
                 }"
               />
             </div>
-  
+
             <template #content>
               <WysiwygEditor
                 v-model="item.answer"

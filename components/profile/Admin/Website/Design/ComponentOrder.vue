@@ -75,9 +75,9 @@ function toggleVisibility(key: ComponentKey) {
           <UButton
             variant="ghost"
             size="sm"
-            @click.stop="changeOrder(item.id, 'up')"
             :disabled="index === 0"
             class="disabled:text-gray-400"
+            @click.stop="changeOrder(item.id, 'up')"
           >
             <UIcon
               name="i-heroicons-arrow-up"
@@ -87,9 +87,9 @@ function toggleVisibility(key: ComponentKey) {
           <UButton
             variant="ghost"
             size="sm"
-            @click.stop="changeOrder(item.id, 'down')"
             :disabled="index >= items.length - 1"
             class="disabled:text-gray-400"
+            @click.stop="changeOrder(item.id, 'down')"
           >
             <UIcon
               name="i-heroicons-arrow-down"

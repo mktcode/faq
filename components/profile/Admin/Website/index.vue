@@ -10,7 +10,7 @@ const {
   showContactFormSettings,
   showGallerySettings,
   showFaqSettings,
-  showDownloadsSettings
+  showDownloadsSettings,
 } = useAdmin()
 
 const showLegalDataWarning = computed(() => {
@@ -91,18 +91,18 @@ function closeAndOpen(fn: () => void) {
           @update:model-value="togglePublished"
         />
       </div>
-      
+
       <UButton
         label="Design & Kopfbereich"
         icon="i-heroicons-paint-brush"
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
-        @click="closeAndOpen(() => showDesignSettings = true)"
         trailing-icon="i-heroicons-chevron-right"
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
+        @click="closeAndOpen(() => showDesignSettings = true)"
       />
 
       <UButton
@@ -111,11 +111,11 @@ function closeAndOpen(fn: () => void) {
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
-        @click="closeAndOpen(() => showOfferingSettings = true)"
         trailing-icon="i-heroicons-chevron-right"
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
+        @click="closeAndOpen(() => showOfferingSettings = true)"
       />
 
       <UButton
@@ -124,11 +124,11 @@ function closeAndOpen(fn: () => void) {
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
-        @click="closeAndOpen(() => showContactFormSettings = true)"
         trailing-icon="i-heroicons-chevron-right"
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
+        @click="closeAndOpen(() => showContactFormSettings = true)"
       />
 
       <UButton
@@ -137,11 +137,11 @@ function closeAndOpen(fn: () => void) {
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
-        @click="closeAndOpen(() => showGallerySettings = true)"
         trailing-icon="i-heroicons-chevron-right"
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
+        @click="closeAndOpen(() => showGallerySettings = true)"
       />
 
       <UButton
@@ -150,11 +150,11 @@ function closeAndOpen(fn: () => void) {
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
-        @click="closeAndOpen(() => showFaqSettings = true)"
         trailing-icon="i-heroicons-chevron-right"
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
+        @click="closeAndOpen(() => showFaqSettings = true)"
       />
 
       <UButton
@@ -163,11 +163,11 @@ function closeAndOpen(fn: () => void) {
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
-        @click="closeAndOpen(() => showDownloadsSettings = true)"
         trailing-icon="i-heroicons-chevron-right"
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
+        @click="closeAndOpen(() => showDownloadsSettings = true)"
       />
     </template>
   </USlideover>

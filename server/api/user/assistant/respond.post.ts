@@ -1,4 +1,3 @@
-import OpenAI from 'openai'
 import { getSettings } from '~/server/utils/user'
 import z from 'zod'
 

@@ -13,14 +13,14 @@ type Profile = {
 }
 
 type AdminState = {
-  showMainSettings: boolean,
-  showCompanySettings: boolean,
-  showDomainSettings: boolean,
-  showEmailSettings: boolean,
-  showSubscriptionSettings: boolean,
-  showWebsiteSettings: boolean,
-  showDesignSettings: boolean,
-  showOfferingSettings: boolean,
+  showMainSettings: boolean
+  showCompanySettings: boolean
+  showDomainSettings: boolean
+  showEmailSettings: boolean
+  showSubscriptionSettings: boolean
+  showWebsiteSettings: boolean
+  showDesignSettings: boolean
+  showOfferingSettings: boolean
   showAssistant: boolean
 }
 

@@ -3,7 +3,6 @@ import type { ResponseStreamEvent } from 'openai/resources/responses/responses.m
 
 const { showAssistant, showAssistantTips, showAssistantContextSettings } = useAdmin()
 
-
 const quota = useState('assistantQuota', () => 12)
 const userInput = ref('')
 const messagesContainer = ref<HTMLDivElement | null>(null)

@@ -9,7 +9,8 @@ function changeOrder(index: number, direction: 'up' | 'down') {
     const temp = items[index - 1]
     items[index - 1] = items[index]
     items[index] = temp
-  } else if (direction === 'down' && index < items.length - 1) {
+  }
+  else if (direction === 'down' && index < items.length - 1) {
     const temp = items[index + 1]
     items[index + 1] = items[index]
     items[index] = temp

@@ -14,14 +14,14 @@
         </div>
       </div>
       <p class="mt-8 text-lg/8 text-gray-600">
-        Markus Kottländer<br />
-        Gertrudenstraße 23a<br />
-        49074 Osnabrück<br />
-        <br />
-        Telefon: +49 176 70 86 46 27<br />
-        E-Mail: kontakt@markus-kottlaender.de<br />
-        <br />
-        Einzelunternehmen<br />
+        Markus Kottländer<br>
+        Gertrudenstraße 23a<br>
+        49074 Osnabrück<br>
+        <br>
+        Telefon: +49 176 70 86 46 27<br>
+        E-Mail: kontakt@markus-kottlaender.de<br>
+        <br>
+        Einzelunternehmen<br>
         USt-IdNr.: DE452287618
       </p>
 
