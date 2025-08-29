@@ -20,6 +20,7 @@ export default function useAdmin() {
   const showSupport = useState('showSupport', () => false)
   const showSupportPhoneMail = useState('showSupportPhoneMail', () => false)
   const showSupportLiveChat = useState('showSupportLiveChat', () => false)
+  const showSupportLiveChatConversation = useState('showSupportLiveChatConversation', () => false)
   const showSupportRemote = useState('showSupportRemote', () => false)
 
   return {
@@ -41,6 +42,7 @@ export default function useAdmin() {
     showSupport,
     showSupportPhoneMail,
     showSupportLiveChat,
+    showSupportLiveChatConversation,
     showSupportRemote,
   }
 }

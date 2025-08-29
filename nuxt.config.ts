@@ -45,6 +45,7 @@ export default defineNuxtConfig({
     autodnsApiKey: process.env.AUTODNS_API_KEY,
     qboxmailApiKey: process.env.QBOXMAIL_API_KEY,
     chatwootInboxId: process.env.CHATWOOT_INBOX_ID,
+    chatwootHmacSecret: process.env.CHATWOOT_HMAC_SECRET,
     session: {
       password: process.env.SESSION_PASSWORD || '',
       cookie: {
