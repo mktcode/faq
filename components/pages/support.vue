@@ -10,26 +10,34 @@ const { copy, copied } = useClipboard({ source: config })
     <PagesLandingpageHeader />
 
     <div class="mx-auto flex flex-col justify-center py-16 lg:py-24 max-w-7xl px-6 lg:px-8">
-      <div class="flex items-center gap-6">
-        <div>
-          <h1 class="text-4xl font-bold tracking-tight text-pretty text-gray-900 sm:text-4xl">
-            IT-Support &amp; Fernwartung
-          </h1>
-        </div>
-      </div>
+      <h1 class="text-4xl font-bold tracking-tight text-pretty text-gray-900 sm:text-4xl">
+        Persönlicher IT-Support
+      </h1>
       <p class="mt-8 text-lg/8 text-gray-600">
-        Um Ihnen schnell und effizient bei technischen Problemen zu helfen, können Sie mir einen Fernwartungszugriff auf
+        Bei allgemeinen Computerproblemen, technischen Fragen oder der Einrichtung von E-Mail-Programmen und Online-Profilen lassen wir Sie nicht allein.
+        Unser IT-Support richtet sich speziell an Selbstständige, die wenig oder gar keine technische Vorerfahrung haben und unkomplizierte Hilfe im Arbeitsalltag brauchen.
+        Statt Fachchinesisch gibt es bei uns klare Lösungen – per E-Mail, Live-Chat oder direkt am Telefon und per Fernwartung auf Ihrem Bildschirm.
+      </p>
+      <p class="mt-8 text-lg/8 text-gray-600">
+        Dabei schauen wir nicht auf die Uhr – zumindest nicht so genau. Wenn Sie monatlich bezahlen, achten wir darauf, dass Ihnen ein Mindestkontingent an Supportstunden zur Verfügung steht.
+        Für alle anderen gilt: Wir helfen Ihnen so gut wir können und Sie zahlen so viel, wie Sie für angemessen halten.
+        Wir möchten die richtige Lösung für Sie finden und nicht nur eine, die ins Zeitfenster passt.
+      </p>
+      <h2 class="mt-8 text-2xl font-bold tracking-tight text-pretty text-gray-900 sm:text-3xl">
+        Fernwartung
+      </h2>
+      <p class="mt-8 text-lg/8 text-gray-600">
+        Um Ihnen schnell und effizient bei technischen Problemen zu helfen, können Sie uns einen Fernwartungszugriff auf
         Ihren Computer gewähren.
-        Die Informationen, die dabei übertragen werden (also das, was Ihr Bildschirm anzeigt), sind außer mir und Ihnen
-        niemandem zugänglich. Außer für den initialen Verbindungsaufbau, sind keine dritten Parteien beteiligt.
-        Mehr dazu finden Sie in meiner <a
+        Die Informationen, die dabei übertragen werden (also das, was Ihr Bildschirm anzeigt), sind außer Ihnen und uns
+        niemandem zugänglich. Mehr dazu finden Sie in unserer <a
           href="/datenschutz"
           class="text-sky-500 hover:underline"
         >Datenschutzerklärung</a>.
       </p>
       <p class="mt-8 mb-8 text-lg/8 text-gray-600">
         Laden Sie dazu bitte die Fernwartungssoftware über einen der Buttons unten herunter und starten Sie sie, durch
-        einen Doppelklick auf die heruntergeladene Datei.
+        einen Doppelklick auf die heruntergeladene Datei. Die Software nennt sich <img src="/rustdesk.png" alt="Rust Desk Logo" class="inline-block size-6 rounded-full border border-gray-200 align-bottom mb-1" /> <em>Rust Desk</em> und ist <em>Freie Software</em>, die wir selbst betreiben.
       </p>
       <UButton
         href="https://github.com/rustdesk/rustdesk/releases/download/1.4.0/rustdesk-1.4.0-x86_64.exe"
@@ -86,8 +94,8 @@ const { copy, copied } = useClipboard({ source: config })
       </UButton>
       <p class="mt-8 text-lg/8 text-gray-600">
         Nach dem Start der Software, wird Ihnen eine ID und ein Einmalpasswort angezeigt. Tauschen Sie diese
-        Informationen bitte nur telefonisch mit mir aus und behandeln Sie sie vertraulich.
-        Sobald Sie die Software wieder schließen, ist der Zugriff auf Ihren Computer nicht mehr möglich.
+        Informationen bitte nur telefonisch mit uns aus und behandeln Sie sie vertraulich.
+        Sobald Sie das Programm wieder schließen, ist der Zugriff auf Ihren Computer nicht mehr möglich.
       </p>
       <p class="mt-8 mb-8 text-lg/8 text-gray-600">
         Um eine Verbindung herzustellen, müssen Sie außerdem einmalig eine Einstellung vornehmen.
