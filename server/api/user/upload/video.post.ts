@@ -1,4 +1,3 @@
-import sharp from 'sharp'
 import { PutObjectCommand } from '@aws-sdk/client-s3'
 
 export default defineEventHandler(async (event) => {
@@ -9,7 +8,7 @@ export default defineEventHandler(async (event) => {
   let videoUrl: string = ''
 
   if (!files || files.length === 0) {
-    return { success: false, message: 'No files found', videoUrl }
+    return { success: false, message: 'Es wurden keine Dateien übertragen.', videoUrl }
   }
 
   const file = files[0]
@@ -21,7 +20,7 @@ export default defineEventHandler(async (event) => {
   const isVideoMp4 = file.type?.startsWith('video/mp4')
 
   if (!isVideoMp4) {
-    return { success: false, message: 'Only MP4 videos are allowed', videoUrl }
+    return { success: false, message: 'Nur MP4-Dateien sind erlaubt', videoUrl }
   }
 
   const fileName = file.filename || Math.random().toString(36).substring(7)
@@ -31,7 +30,7 @@ export default defineEventHandler(async (event) => {
   const fileSize = file.data.length
 
   if (fileSize > 10e6) {
-    return { success: false, message: 'File is too large', videoUrl }
+    return { success: false, message: 'Die Videodatei darf maximal 10 MB groß sein.', videoUrl }
   }
 
   const command = new PutObjectCommand({
@@ -47,5 +46,5 @@ export default defineEventHandler(async (event) => {
 
   videoUrl = `${s3Endpoint}/${s3BucketName}/${filePath}`
 
-  return { success: true, videoUrl }
+  return { success: true, videoUrl, message: null }
 })

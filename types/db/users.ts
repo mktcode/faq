@@ -99,7 +99,7 @@ export const settingsFormSchema = z.object({
         color: z.string(),
         opacity: z.number().min(0).max(100),
       }),
-      height: z.enum(['auto', 'half', 'full']),
+      height: z.enum(['auto', 'half', 'full', 'boxed']),
       titleFontSize: z.number(),
       titleColor: z.string(),
       descriptionFontSize: z.number(),

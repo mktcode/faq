@@ -55,26 +55,38 @@ const uploadHeaderVideo = async (files: FileList | null) => {
   }
 
   try {
-    const { videoUrl } = await $fetch('/api/user/upload/video', {
+    const { success, videoUrl, message } = await $fetch('/api/user/upload/video', {
       method: 'POST',
       body: formData,
     })
 
-    $profile.settings.public.header.video = videoUrl || ''
-
-    if ($profile.settings.public.header.imageOverlay.opacity > 90) {
-      $profile.settings.public.header.imageOverlay.opacity = 90
-    }
-
-    await saveSettings()
-
-    // Clear the input to allow selecting the same file again
-    if (headerVideoInput.value) {
-      headerVideoInput.value.value = ''
+    if (success && videoUrl) {
+      $profile.settings.public.header.video = videoUrl || ''
+  
+      if ($profile.settings.public.header.imageOverlay.opacity > 90) {
+        $profile.settings.public.header.imageOverlay.opacity = 90
+      }
+  
+      await saveSettings()
+  
+      // Clear the input to allow selecting the same file again
+      if (headerVideoInput.value) {
+        headerVideoInput.value.value = ''
+      }
+    } else {
+      toast.add({
+        title: 'Fehler',
+        description: message || 'Das Video konnte nicht hochgeladen werden.',
+        color: 'error',
+      })
     }
   }
   catch (error) {
-    console.error('Error uploading files:', error)
+    toast.add({
+      title: 'Unbekannter Fehler',
+      description: 'Das Video konnte nicht hochgeladen werden.',
+      color: 'error',
+    })
   }
 }
 
@@ -321,6 +333,7 @@ async function deleteImage(image: 'logo' | 'header') {
               { label: 'Automatisch', value: 'auto' },
               { label: 'Hälfte', value: 'half' },
               { label: 'Voll', value: 'full' },
+              { label: 'Box', value: 'boxed' },
             ]"
             class="w-full"
           />
