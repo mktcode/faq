@@ -13,7 +13,7 @@ const userNameAvailable = ref(true)
 const checkingUserNameAvailability = ref(false)
 const isRegistering = ref(false)
 
-const settings = ref(defaultSettings)
+const settings = ref(defaultSettings())
 if (typeof route.query.context === 'string') {
   settings.value.private.assistant.context = route.query.context
 }

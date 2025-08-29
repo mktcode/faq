@@ -168,7 +168,7 @@ export const settingsFormSchema = z.object({
 export type SettingsForm = z.infer<typeof settingsFormSchema>
 export type ComponentKey = keyof SettingsForm['public']['components']
 
-export const defaultSettings: SettingsForm = {
+export const defaultSettings = (): SettingsForm => ({
   public: {
     css: '',
     meta: {
@@ -262,4 +262,4 @@ export const defaultSettings: SettingsForm = {
     domain: null,
     mailboxes: [],
   },
-}
+})
