@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { saveSettings, isSavingSettings } = useProfile()
-const { showContactFormSettings, showWebsiteSettings, showDelayed } = useAdmin()
+const { showContactFormSettings } = useAdmin()
 </script>
 
 <template>
@@ -22,7 +22,6 @@ const { showContactFormSettings, showWebsiteSettings, showDelayed } = useAdmin()
       header: 'h-10',
       body: 'flex flex-col gap-4',
     }"
-    @close="showDelayed(() => showWebsiteSettings = true)"
   >
     <template #header>
       <ProfileMainDrawerTip />

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { showFaqSettings, showWebsiteSettings, showDelayed } = useAdmin()
+const { showFaqSettings, } = useAdmin()
 
 const { data: qanda, refresh: refreshQanda } = await useFetch('/api/user/qanda')
 
@@ -13,20 +13,6 @@ const suggestions = ref<{
     answer: string
   } | null
 }[]>([])
-
-const isIntegrating = ref(false)
-
-async function integrate() {
-  if (isIntegrating.value) return
-  isIntegrating.value = true
-
-  const response = await $fetch('/api/user/qanda/integrate', {
-    method: 'POST',
-  })
-
-  isIntegrating.value = false
-  suggestions.value = response || []
-}
 
 const showNewForm = ref(false)
 const newQuestion = ref('')
@@ -68,7 +54,6 @@ async function saveQanda() {
       header: 'h-10',
       body: 'flex flex-col gap-4',
     }"
-    @close="showDelayed(() => showWebsiteSettings = true)"
   >
     <template #header>
       <ProfileMainDrawerTip />

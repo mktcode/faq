@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { showOfferingSettings, showWebsiteSettings, showDelayed } = useAdmin()
+const { showOfferingSettings } = useAdmin()
 
 const { $profile } = useProfile()
 
@@ -37,7 +37,6 @@ function changeOrder(index: number, direction: 'up' | 'down') {
       header: 'h-10',
       body: 'flex flex-col gap-2',
     }"
-    @close="showDelayed(() => showWebsiteSettings = true)"
   >
     <template #header>
       <ProfileMainDrawerTip />

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const toast = useToast()
 
-const { showDownloadsSettings, showWebsiteSettings, showDelayed } = useAdmin()
+const { showDownloadsSettings } = useAdmin()
 
-const { $profile, saveSettings, isSavingSettings } = useProfile()
+const { $profile, saveSettings } = useProfile()
 
 const fileInput = ref<HTMLInputElement | null>(null)
 const isDragging = ref(false)
@@ -107,7 +107,6 @@ async function deleteDownload(index: number) {
       header: 'h-10',
       body: 'flex flex-col gap-4',
     }"
-    @close="showDelayed(() => showWebsiteSettings = true)"
   >
     <template #header>
       <ProfileMainDrawerTip />
