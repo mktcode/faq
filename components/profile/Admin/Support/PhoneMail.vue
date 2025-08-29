@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core';
 
-const { showSupport } = useAdmin()
+const { showSupportPhoneMail } = useAdmin()
+
 const { user } = useUserSession()
 const { copy: copySupportId, copied: copiedSupportId } = useClipboard()
 const { copy: copyEmail, copied: copiedEmail } = useClipboard()
@@ -13,8 +14,9 @@ const supportPhone = '+49 123 4567890'
 
 <template>
   <USlideover
-    v-model:open="showSupport"
+    v-model:open="showSupportPhoneMail"
     side="right"
+    close-icon="i-heroicons-arrow-left"
     :close="{
       size: 'md',
     }"
@@ -27,10 +29,10 @@ const supportPhone = '+49 123 4567890'
     <template #title>
       <h3 class="text-lg font-semibold flex items-center gap-2">
         <UIcon
-          name="i-lucide-message-circle-question-mark"
+          name="i-lucide-phone"
           class="inline-block size-6 opacity-50"
         />
-        Hilfe
+        Telefon &amp; E-Mail
       </h3>
     </template>
 
@@ -58,27 +60,6 @@ const supportPhone = '+49 123 4567890'
       <div class="mt-6 border border-gray-200 rounded-xl p-2">
         <div class="mb-4 font-semibold text-xl text-center flex items-center justify-center">
           <UIcon
-            name="i-heroicons-envelope"
-            class="inline-block size-6 opacity-50 mr-2"
-          />
-          {{ supportEmail }}
-        </div>
-        <div class="flex gap-2">
-          <UButton
-            variant="soft"
-            :label="copiedEmail ? 'Kopiert!' : 'Kopieren'"
-            @click="copyEmail(supportEmail)"
-          />
-          <UButton
-            label="Mein E-Mail-Programm öffnen"
-            :href="`mailto:${supportEmail}`"
-            block
-          />
-        </div>
-      </div>
-      <div class="mt-6 border border-gray-200 rounded-xl p-2">
-        <div class="mb-4 font-semibold text-xl text-center flex items-center justify-center">
-          <UIcon
             name="i-heroicons-phone"
             class="inline-block size-6 opacity-50 mr-2"
           />
@@ -93,6 +74,27 @@ const supportPhone = '+49 123 4567890'
           <UButton
             label="Anrufen"
             :href="`tel:${supportPhone.replaceAll(' ', '')}`"
+            block
+          />
+        </div>
+      </div>
+      <div class="mt-6 border border-gray-200 rounded-xl p-2">
+        <div class="mb-4 font-semibold text-xl text-center flex items-center justify-center">
+          <UIcon
+            name="i-heroicons-envelope"
+            class="inline-block size-6 opacity-50 mr-2"
+          />
+          {{ supportEmail }}
+        </div>
+        <div class="flex gap-2">
+          <UButton
+            variant="soft"
+            :label="copiedEmail ? 'Kopiert!' : 'Kopieren'"
+            @click="copyEmail(supportEmail)"
+          />
+          <UButton
+            label="Mein E-Mail-Programm öffnen"
+            :href="`mailto:${supportEmail}`"
             block
           />
         </div>

@@ -18,6 +18,9 @@ export default function useAdmin() {
   const showAssistantContextSettings = useState('showAssistantContextSettings', () => false)
 
   const showSupport = useState('showSupport', () => false)
+  const showSupportPhoneMail = useState('showSupportPhoneMail', () => false)
+  const showSupportLiveChat = useState('showSupportLiveChat', () => false)
+  const showSupportRemote = useState('showSupportRemote', () => false)
 
   return {
     showMainSettings,
@@ -36,5 +39,8 @@ export default function useAdmin() {
     showAssistantTips,
     showAssistantContextSettings,
     showSupport,
+    showSupportPhoneMail,
+    showSupportLiveChat,
+    showSupportRemote,
   }
 }
