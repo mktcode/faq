@@ -9,6 +9,11 @@ const emit = defineEmits<{
   (e: 'transcript', transcript: string): void
 }>()
 
+const isRunning = defineModel('isRunning', {
+  type: Boolean,
+  default: false,
+})
+
 const { transcript, volumeHistory, isRecordingAudio, isTranscribingAudio, startRecordingAudio, stopRecordingAudio } = useAudioRecorder(75)
 
 const maxRecordingTime = 30
@@ -17,6 +22,7 @@ const remainingInterval = ref<NodeJS.Timeout | null>(null)
 
 watch(isRecordingAudio, (newValue) => {
   if (newValue) {
+    isRunning.value = true
     remainingRecordingTime.value = maxRecordingTime
     remainingInterval.value = setInterval(() => {
       if (remainingRecordingTime.value > 0) {
@@ -29,6 +35,12 @@ watch(isRecordingAudio, (newValue) => {
       clearInterval(remainingInterval.value)
     }
     remainingRecordingTime.value = maxRecordingTime
+  }
+})
+
+watch(isTranscribingAudio, (newValue) => {
+  if (!newValue) {
+    isRunning.value = false
   }
 })
 

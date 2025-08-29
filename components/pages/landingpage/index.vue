@@ -6,6 +6,7 @@ const { public: { appHost } } = useRuntimeConfig()
 const { user } = useUserSession()
 
 const companyContext = ref('')
+const isRecordingAudio = ref(false)
 
 const acc1items = ref<AccordionItem[]>([
   {
@@ -267,8 +268,12 @@ appConfig.ui.colors.primary = 'sky'
             class="w-full resize-none h-[200px] ring-sky-600 focus:ring-3 outline-0 rounded-[12px] p-4 bg-gray-100 dark:bg-[#0b1020] text-slate-900 dark:text-[#e7ecf4]"
           />
           <div class="flex flex-col sm:flex-row justify-between gap-4 mt-4">
-            <LandingpageRecordAudio @transcript="companyContext = (companyContext || '') + $event" />
+            <LandingpageRecordAudio
+              v-model:is-running="isRecordingAudio"
+              @transcript="companyContext = (companyContext || '') + $event"
+            />
             <a
+              v-if="!isRecordingAudio"
               class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-sky-500/80 hover:bg-sky-500 border border-sky-300/40 text-white transition duration-200"
               :href="user ? `https://${user.userName}.${appHost}` : `/register?context=${encodeURIComponent(companyContext)}`"
             >
