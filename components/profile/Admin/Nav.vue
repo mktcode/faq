@@ -4,7 +4,7 @@ const { clear } = useUserSession()
 const { $profile } = useProfile()
 const { fetch: fetchUserSession } = useUserSession()
 
-const { showMainSettings, showWebsiteSettings, showAssistant } = useAdmin()
+const { showMainSettings, showWebsiteSettings, showAssistant, showSupport } = useAdmin()
 
 async function signOut() {
   showMainSettings.value = false
@@ -13,19 +13,6 @@ async function signOut() {
   $profile.mailboxes = []
   await clear()
   fetchUserSession()
-}
-
-const isSupportChatOpen = ref(false)
-
-function toggleSupportChat() {
-  const bubble = document.querySelector('.woot-widget-bubble')
-  if (bubble instanceof HTMLElement) {
-    bubble.click()
-    const holder = document.querySelector('#cw-widget-holder')
-    if (holder instanceof HTMLElement) {
-      isSupportChatOpen.value = !holder.classList.contains('woot--hide')
-    }
-  }
 }
 </script>
 
@@ -60,14 +47,14 @@ function toggleSupportChat() {
         @click="showAssistant = true"
       />
       <UButton
-        :label="isSupportChatOpen ? 'Hilfe schließen' : 'Hilfe'"
-        :icon="isSupportChatOpen ? 'i-heroicons-x-mark' : 'i-lucide-message-circle-question-mark'"
+        label="Hilfe"
+        icon="i-lucide-message-circle-question-mark"
         variant="ghost"
         class="ml-auto"
         :ui="{
           label: 'hidden md:inline-block',
         }"
-        @click="toggleSupportChat"
+        @click="showSupport = true"
       />
       <UButton
         label="Abmelden"
