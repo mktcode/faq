@@ -18,6 +18,9 @@ async function createContact(userId: number, name: string) {
       identifier: userId,
       identifier_hash: hmacHash,
       name,
+      custom_attributes: {
+        userId
+      }
     },
   })
 

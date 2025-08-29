@@ -36,6 +36,7 @@ env:
     - NUXT_QBOXMAIL_API_KEY
     - NUXT_CHATWOOT_INBOX_ID
     - NUXT_CHATWOOT_HMAC_SECRET
+    - NUXT_CHATWOOT_API_KEY
 aliases:
   shell: app exec --interactive --reuse "bash"
   logs: app logs -f

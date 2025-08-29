@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import type { WootConversation } from '~/types/chatwoot'
 
+const toast = useToast()
+
 const { showSupportLiveChatConversation } = useAdmin()
 
 const userInput = ref('')
 const isSendingResponse = ref(false)
 const conversation = ref<WootConversation | null>(null)
+const showDeleteModal = ref(false)
 
 const { currentConversationId } = useLiveChat()
 
@@ -34,8 +37,38 @@ async function submit() {
     userInput.value = ''
   } catch (error) {
     console.error('Error sending message:', error)
+    toast.add({
+      title: 'Fehler',
+      description: 'Nachricht konnte nicht gesendet werden.',
+      color: 'error',
+    })
   } finally {
     isSendingResponse.value = false
+  }
+}
+
+async function deleteConversation() {
+  if (currentConversationId.value === null) return
+
+  try {
+    await $fetch(`/api/user/livechat/conversation/${currentConversationId.value}/delete`, {
+      method: 'POST',
+    })
+    conversation.value = null
+    currentConversationId.value = null
+    showSupportLiveChatConversation.value = false
+    showDeleteModal.value = false
+    toast.add({
+      title: 'Erfolg',
+      description: 'Unterhaltung wurde erfolgreich gelöscht.',
+    })
+  } catch (error) {
+    console.error('Error deleting conversation:', error)
+    toast.add({
+      title: 'Fehler',
+      description: 'Unterhaltung konnte nicht gelöscht werden.',
+      color: 'error',
+    })
   }
 }
 
@@ -67,9 +100,10 @@ onBeforeUnmount(() => {
       size: 'md',
     }"
     :ui="{
-      wrapper: 'z-40',
-      footer: '!p-0 flex-col',
+      header: '*:first:flex-1 *:first:pr-8',
+      title: 'flex items-center gap-2 flex-1',
       body: '!p-0',
+      footer: '!p-0 flex-col',
     }"
     @after:leave="conversation = null; currentConversationId = null"
   >
@@ -81,6 +115,21 @@ onBeforeUnmount(() => {
         />
         Unterhaltung
       </h3>
+      <UButton
+        icon="i-heroicons-trash"
+        variant="ghost"
+        color="neutral"
+        class="ml-auto"
+        size="md"
+        :disabled="!conversation"
+        @click="showDeleteModal = true"
+      />
+      <ProfileAdminSupportLiveChatConversationDelete
+        v-if="conversation"
+        v-model:open="showDeleteModal"
+        @delete="deleteConversation"
+        :conversation="conversation"
+      />
     </template>
 
     <template #body>

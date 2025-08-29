@@ -44,6 +44,12 @@ async function submit() {
 }
 
 onMounted(fetchConversations)
+
+watch(showSupportLiveChatConversation, (newValue, oldValue) => {
+  if (oldValue === true && newValue === false) {
+    fetchConversations()
+  }
+})
 </script>
 
 <template>

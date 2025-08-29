@@ -3,6 +3,11 @@ export type WootConversation = {
   status: string
   inbox_id: number
   messages: WootMessage[]
+  contact: WootContactCreated & {
+    custom_attributes: {
+      userId: number
+    }
+  }
 }
 
 export type WootMessage = {
@@ -22,7 +27,7 @@ export type WootMessage = {
   sender_type: string
   sender_id: number
   external_source_ids: Record<string, any>
-  additional_attributes: Record<string, any>
+  custom_attributes: Record<string, any>
   processed_message_content: string
   sentiment: Record<string, any>
   conversation: Record<string, any>
