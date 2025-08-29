@@ -32,7 +32,7 @@ function getStaggeredAnimationClass(index: number) {
 <template>
   <div
     id="links"
-    class="max-w-xs sm:max-w-none w-full flex flex-col sm:flex-row items-center justify-center gap-2 mb-4"
+    class="max-w-xs sm:max-w-none w-full flex flex-col sm:flex-row flex-wrap items-center justify-center gap-2 mb-4"
   >
     <template v-if="$profile.settings.public.header.links && $profile.settings.public.header.links.length > 0">
       <UButton
