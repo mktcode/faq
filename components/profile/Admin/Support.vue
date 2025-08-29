@@ -4,6 +4,11 @@ import { useClipboard } from '@vueuse/core';
 const { showSupport } = useAdmin()
 const { user } = useUserSession()
 const { copy: copySupportId, copied: copiedSupportId } = useClipboard()
+const { copy: copyEmail, copied: copiedEmail } = useClipboard()
+const { copy: copyPhone, copied: copiedPhone } = useClipboard()
+
+const supportEmail = 'support@solohost.de'
+const supportPhone = '+49 123 4567890'
 </script>
 
 <template>
@@ -49,6 +54,48 @@ const { copy: copySupportId, copied: copiedSupportId } = useClipboard()
         >
           {{ copiedSupportId ? 'Kopiert!' : 'Kopieren' }}
         </UButton>
+      </div>
+      <div class="mt-6 border border-gray-200 rounded-xl p-2">
+        <div class="mb-4 font-semibold text-xl text-center flex items-center justify-center">
+          <UIcon
+            name="i-heroicons-envelope"
+            class="inline-block size-6 opacity-50 mr-2"
+          />
+          {{ supportEmail }}
+        </div>
+        <div class="flex gap-2">
+          <UButton
+            variant="soft"
+            :label="copiedEmail ? 'Kopiert!' : 'Kopieren'"
+            @click="copyEmail(supportEmail)"
+          />
+          <UButton
+            label="Mein E-Mail-Programm öffnen"
+            :href="`mailto:${supportEmail}`"
+            block
+          />
+        </div>
+      </div>
+      <div class="mt-6 border border-gray-200 rounded-xl p-2">
+        <div class="mb-4 font-semibold text-xl text-center flex items-center justify-center">
+          <UIcon
+            name="i-heroicons-phone"
+            class="inline-block size-6 opacity-50 mr-2"
+          />
+          {{ supportPhone }}
+        </div>
+        <div class="flex gap-2">
+          <UButton
+            variant="soft"
+            :label="copiedPhone ? 'Kopiert!' : 'Kopieren'"
+            @click="copyPhone(supportPhone)"
+          />
+          <UButton
+            label="Anrufen"
+            :href="`tel:${supportPhone.replaceAll(' ', '')}`"
+            block
+          />
+        </div>
       </div>
     </template>
   </USlideover>
