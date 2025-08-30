@@ -77,7 +77,7 @@ export async function requireCompleteStripeCustomer(
 }
 
 export async function createCheckoutSession(customerId: string, userName: string) {
-  const { stripeApiSecretKey, stripePriceId, public: { appHost } } = useRuntimeConfig()
+  const { stripeApiSecretKey, stripePriceSId, public: { appHost } } = useRuntimeConfig()
   const stripe = new Stripe(stripeApiSecretKey)
 
   return await stripe.checkout.sessions.create({
@@ -86,7 +86,7 @@ export async function createCheckoutSession(customerId: string, userName: string
 
     line_items: [
       {
-        price: stripePriceId,
+        price: stripePriceSId,
         quantity: 1,
       },
     ],
