@@ -167,7 +167,7 @@ function onFocusNameInput() {
         label="Schriftart"
         class="w-full flex-1"
       />
-      <ColorPicker
+      <HslPicker
         v-model:color="settings.public.design.color"
         label="Primäre Farbe"
       />

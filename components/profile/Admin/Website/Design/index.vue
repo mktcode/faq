@@ -308,7 +308,7 @@ async function deleteImage(image: 'logo' | 'header') {
           </div>
         </div>
         <div class="flex gap-2">
-          <ColorPicker
+          <HslPicker
             v-model:color="$profile.settings.public.header.imageOverlay.color"
             label="Hintergrund"
           />
@@ -341,7 +341,7 @@ async function deleteImage(image: 'logo' | 'header') {
           @click="showLinksModal = true"
         />
         <div class="flex gap-2">
-          <ColorPicker
+          <HslPicker
             v-model:color="$profile.settings.public.design.color"
             label="Primäre Farbe"
           />
@@ -384,7 +384,7 @@ async function deleteImage(image: 'logo' | 'header') {
             />
           </UFormField>
           <div class="w-28">
-            <ColorPicker
+            <HslPicker
               v-model:color="$profile.settings.public.header.titleColor"
               label="Farbe"
             />
@@ -411,7 +411,7 @@ async function deleteImage(image: 'logo' | 'header') {
             />
           </UFormField>
           <div class="w-28">
-            <ColorPicker
+            <HslPicker
               v-model:color="$profile.settings.public.header.descriptionColor"
               label="Farbe"
             />
