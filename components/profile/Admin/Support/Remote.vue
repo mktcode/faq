@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core';
+import { CalendarDate } from '@internationalized/date'
 
 const { showSupportRemote } = useAdmin()
+const tomorrow = new Date()
+tomorrow.setDate(tomorrow.getDate() + 1)
+
+const minDate = new CalendarDate(tomorrow.getFullYear(), tomorrow.getMonth() + 1, tomorrow.getDate())
 
 const config = ref('=0nI9UUYQpURKZXSmBnVkNFZykzNthnVL9GMkZFSzhncx4Ucyk2aDhkd1BHbUNnI6ISeltmIsIiI6ISawFmIsIiI6ISehxWZyJCLiYTMxEjM6UGZuIXZk5WZhxGd092atMXdrJXYt5Cdy9GcwV3ciojI0N3boJye')
 const { copy, copied } = useClipboard({ source: config })
@@ -33,6 +38,39 @@ const { copy, copied } = useClipboard({ source: config })
     </template>
 
     <template #body>
+      <UFormField label="Termin wählen" class="mb-8">
+        <UCalendar size="xl" :min-value="minDate" />
+      </UFormField>
+      <div class="flex items-end gap-2">
+        <UFormField label="Uhrzeit">
+          <USelect
+            placeholder="Bitte wählen"
+            class="mb-8"
+            :items="[
+              { label: '09:00', value: '09:00' },
+              { label: '09:30', value: '09:30' },
+              { label: '10:00', value: '10:00' },
+              { label: '10:30', value: '10:30' },
+              { label: '11:00', value: '11:00' },
+              { label: '11:30', value: '11:30' },
+              { label: '12:00', value: '12:00' },
+              { label: '12:30', value: '12:30' },
+              { label: '13:00', value: '13:00' },
+              { label: '13:30', value: '13:30' },
+              { label: '14:00', value: '14:00' },
+              { label: '14:30', value: '14:30' },
+              { label: '15:00', value: '15:00' },
+              { label: '15:30', value: '15:30' },
+              { label: '16:00', value: '16:00' },
+              { label: '16:30', value: '16:30' },
+            ]"
+          />
+        </UFormField>
+        <UButton
+          label="Termin reservieren"
+          class="mb-8"
+        />
+      </div>
       <p>
         Um Ihnen schnell und effizient bei technischen Problemen zu helfen, können Sie uns einen Fernwartungszugriff auf
         Ihren Computer gewähren.
