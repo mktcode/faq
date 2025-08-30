@@ -1,4 +1,3 @@
-import { createCheckoutSession, requireCompleteStripeCustomer, requireNoStripeCustomerId, requireNoSubscription, requireVerifiedEmail } from '~/server/utils/checkout'
 import { settingsFormSchema } from '~/types/db'
 
 export default defineEventHandler(async (event) => {
@@ -14,19 +13,19 @@ export default defineEventHandler(async (event) => {
   requireNoSubscription(userInDb.lastPaidAt)
   requireNoStripeCustomerId(userInDb.stripeCustomerId)
 
-  const userWithVerifiedEmail = requireVerifiedEmail(userInDb)
+  const userWithVerifiedEmail = stripe.requireVerifiedEmail(userInDb)
 
   const settings = settingsFormSchema.parse(
     typeof userWithVerifiedEmail.settings === 'string' ? JSON.parse(userWithVerifiedEmail.settings) : userWithVerifiedEmail.settings,
   )
 
-  const stripeCustomerId = await requireCompleteStripeCustomer(
+  const stripeCustomerId = await stripe.requireCompleteStripeCustomer(
     userWithVerifiedEmail.id,
     userWithVerifiedEmail.email,
     settings,
   )
 
-  const checkoutSession = await createCheckoutSession(stripeCustomerId, userWithVerifiedEmail.userName)
+  const checkoutSession = await stripe.createCheckoutSession(stripeCustomerId, userWithVerifiedEmail.userName)
 
   return { success: true, url: checkoutSession.url }
 })

@@ -11,7 +11,7 @@ export type UserWithVerifiedEmail<TUser> = TUser & {
   emailConfirmationToken: null
 }
 
-export function requireVerifiedEmail<TUser>(
+function requireVerifiedEmail<TUser>(
   user: HasEmailFields<TUser>,
 ): UserWithVerifiedEmail<TUser> {
   if (user.email && user.emailConfirmationToken === null) {
@@ -24,7 +24,7 @@ export function requireVerifiedEmail<TUser>(
   })
 }
 
-export async function requireCompleteStripeCustomer(
+async function requireCompleteStripeCustomer(
   userId: number,
   email: string,
   settings: SettingsForm,
@@ -76,7 +76,7 @@ export async function requireCompleteStripeCustomer(
   return finalCustomerId
 }
 
-export async function createCheckoutSession(customerId: string, userName: string) {
+async function createCheckoutSession(customerId: string, userName: string) {
   const { stripeApiSecretKey, stripePriceSId, public: { appHost } } = useRuntimeConfig()
   const stripe = new Stripe(stripeApiSecretKey)
 
@@ -97,7 +97,7 @@ export async function createCheckoutSession(customerId: string, userName: string
   })
 }
 
-export function requireNoSubscription(lastPaidAt: Date | null): void {
+function requireNoSubscription(lastPaidAt: Date | null): void {
   if (checkSubscriptionStatus(lastPaidAt)) {
     throw createError({
       statusCode: 400,
@@ -106,11 +106,19 @@ export function requireNoSubscription(lastPaidAt: Date | null): void {
   }
 }
 
-export function requireNoStripeCustomerId(stripeCustomerId: string | null): void {
+function requireNoStripeCustomerId(stripeCustomerId: string | null): void {
   if (stripeCustomerId) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Bad Request: User already has a Stripe customer ID',
     })
   }
+}
+
+export const stripe = {
+  requireVerifiedEmail,
+  requireCompleteStripeCustomer,
+  createCheckoutSession,
+  requireNoSubscription,
+  requireNoStripeCustomerId
 }
