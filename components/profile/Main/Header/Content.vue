@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { toHslString } from "~/shared/color"
+</script>
+
 <template>
   <div
     class="@container w-full flex flex-col items-center justify-center gap-2 max-w-xl mx-auto py-24 px-6 relative z-10"
@@ -17,7 +21,7 @@
       <h1
         class="text-center text-shadow-lg font-bold mb-4 leading-none opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.5s_forwards]"
         :style="{
-          'color': $profile.settings.public.header.titleColor || 'black',
+          'color': toHslString($profile.settings.public.header.titleColor),
           'font-size': ($profile.settings.public.header.titleFontSize || '10') + 'cqw',
         }"
       >
@@ -28,7 +32,7 @@
       v-if="$profile.settings.public.header.description"
       class="text-center text-shadow-md mb-4 opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.8s_forwards]"
       :style="{
-        'color': $profile.settings.public.header.descriptionColor || 'black',
+        'color': toHslString($profile.settings.public.header.descriptionColor),
         'font-size': ($profile.settings.public.header.descriptionFontSize || '6') + 'cqw',
       }"
     >

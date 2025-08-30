@@ -168,7 +168,9 @@ function onFocusNameInput() {
         class="w-full flex-1"
       />
       <HslPicker
-        v-model:color="settings.public.design.color"
+        v-model:h="settings.public.design.color.h"
+        v-model:s="settings.public.design.color.s"
+        v-model:l="settings.public.design.color.l"
         label="Primäre Farbe"
       />
     </div>

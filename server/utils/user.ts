@@ -1,7 +1,7 @@
 import OpenAI from 'openai'
 import { zodTextFormat } from 'openai/helpers/zod'
 import type { H3Event } from 'h3'
-import { settingsFormSchema, type SettingsForm } from '~/types/db'
+import { colorSchema, settingsFormSchema, type SettingsForm } from '~/types/db'
 import z from 'zod'
 import sanitizeHtml from 'sanitize-html'
 
@@ -234,13 +234,13 @@ export async function prefillSettings(settings: SettingsForm): Promise<SettingsF
 
   // Design
   const designPrefillSchema = z.object({
-    primary_color: z.string(),
+    primary_color: colorSchema,
     title: z.string(),
-    title_color: z.string(),
+    title_color: colorSchema,
     tagline: z.string(),
-    tagline_color: z.string(),
+    tagline_color: colorSchema,
     background: z.object({
-      color: z.string(),
+      color: colorSchema,
       opacity: z.number().min(0).max(100),
     }),
   })
@@ -271,8 +271,6 @@ Font: ${settings.public.design.font}`,
   })
 
   const designPrefill = designResponse.output_parsed
-
-  console.log('Design Prefill:', designPrefill)
 
   if (designPrefill) {
     settings.public.design.color = designPrefill.primary_color
@@ -321,8 +319,6 @@ About: ${settings.private.assistant.context}`,
   })
 
   const offersPrefill = offersResponse.output_parsed
-
-  console.log('Offers Prefill:', offersPrefill)
 
   if (offersPrefill) {
     settings.public.components.offers.items = offersPrefill.offers.map((offer, index) => ({

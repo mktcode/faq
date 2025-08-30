@@ -3,22 +3,22 @@ defineProps<{
   label?: string
 }>()
 
-// TODO: change settings schema for all colors  to hsl objects
-
-const color = defineModel('color', {
-  type: String,
-  default: 'hsl(199, 100%, 48%)',
+const h = defineModel('h', {
+  type: Number,
+  default: 199
 })
 
-const hue = ref(199)
-const saturation = ref(100)
-const lightness = ref(48)
-
-const style = computed(() => ({ backgroundColor: `hsl(${hue.value}, ${saturation.value}%, ${lightness.value}%) !important` }))
-
-watch([hue, saturation, lightness], ([newHue, newSaturation, newLightness]) => {
-  color.value = `hsl(${newHue}, ${newSaturation}%, ${newLightness}%)`
+const s = defineModel('s', {
+  type: Number,
+  default: 100
 })
+
+const l = defineModel('l', {
+  type: Number,
+  default: 48
+})
+
+const style = computed(() => ({ backgroundColor: `hsl(${h.value}, ${s.value}%, ${l.value}%) !important` }))
 </script>
 
 <template>
@@ -39,19 +39,19 @@ watch([hue, saturation, lightness], ([newHue, newSaturation, newLightness]) => {
         <div class="flex flex-col gap-2 p-2 w-48">
           <div class="flex items-center">
             <span class="text-sm text-gray-500 mr-2">Farbton</span>
-            <span class="text-sm font-semibold">{{ hue }}</span>
+            <span class="text-sm font-semibold">{{ h }}</span>
           </div>
-          <USlider v-model="hue" :min="0" :max="360" :step="1" size="xl" />
+          <USlider v-model="h" :min="0" :max="360" :step="1" size="xl" />
           <div class="flex items-center">
             <span class="text-sm text-gray-500 mr-2">Sättigung</span>
-            <span class="text-sm font-semibold">{{ saturation }}</span>
+            <span class="text-sm font-semibold">{{ s }}</span>
           </div>
-          <USlider v-model="saturation" :min="0" :max="100" :step="1" size="xl" />
+          <USlider v-model="s" :min="0" :max="100" :step="1" size="xl" />
           <div class="flex items-center">
             <span class="text-sm text-gray-500 mr-2">Helligkeit</span>
-            <span class="text-sm font-semibold">{{ lightness }}</span>
+            <span class="text-sm font-semibold">{{ l }}</span>
           </div>
-          <USlider v-model="lightness" :min="0" :max="100" :step="1" size="xl" />
+          <USlider v-model="l" :min="0" :max="100" :step="1" size="xl" />
         </div>
       </template>
     </UPopover>

@@ -62,6 +62,13 @@ const componentSettingsBaseSchema = z.object({
   visible: z.boolean(),
   order: z.number(),
 })
+
+export const colorSchema = z.object({
+  h: z.number(),
+  s: z.number(),
+  l: z.number(),
+})
+
 export const settingsFormSchema = z.object({
   public: z.object({
     css: z.string(),
@@ -88,7 +95,7 @@ export const settingsFormSchema = z.object({
     }),
     design: z.object({
       font: z.string(),
-      color: z.string(),
+      color: colorSchema,
       rounded: z.string(),
     }),
     header: z.object({
@@ -97,14 +104,14 @@ export const settingsFormSchema = z.object({
       video: z.string(),
       image: z.string(),
       imageOverlay: z.object({
-        color: z.string(),
+        color: colorSchema,
         opacity: z.number().min(0).max(100),
       }),
       height: z.enum(['auto', 'half', 'full', 'boxed']),
       titleFontSize: z.number(),
-      titleColor: z.string(),
+      titleColor: colorSchema,
       descriptionFontSize: z.number(),
-      descriptionColor: z.string(),
+      descriptionColor: colorSchema,
       showShareButton: z.boolean(),
       links: z.array(
         z.object({
@@ -195,21 +202,37 @@ export const defaultSettings = (): SettingsForm => ({
     },
     design: {
       font: 'montserrat',
-      color: 'hsl(199, 100%, 48%)',
+      color: {
+        h: 199,
+        s: 100,
+        l: 48,
+      },
       rounded: 'md',
     },
     header: {
       title: 'Herzlich Willkommen',
       description: 'Auf Ihrer neuen Website von Solohost.de',
       height: 'full',
-      titleColor: 'black',
+      titleColor: {
+        h: 0,
+        s: 0,
+        l: 0,
+      },
       titleFontSize: 12,
-      descriptionColor: 'black',
+      descriptionColor: {
+        h: 0,
+        s: 0,
+        l: 0,
+      },
       descriptionFontSize: 8,
       video: '',
       image: '',
       imageOverlay: {
-        color: 'black',
+        color: {
+          h: 0,
+          s: 0,
+          l: 0,
+        },
         opacity: 4,
       },
       showShareButton: true,

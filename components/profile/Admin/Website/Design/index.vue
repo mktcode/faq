@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { toHslString } from "~/shared/color"
+
 const show = useState('showDesignSettings', () => false)
 const toast = useToast()
 
@@ -233,7 +235,7 @@ async function deleteImage(image: 'logo' | 'header') {
             <div
               class="absolute inset-0 z-10"
               :style="{
-                backgroundColor: $profile.settings.public.header.imageOverlay.color || 'transparent',
+                backgroundColor: toHslString($profile.settings.public.header.imageOverlay.color),
                 opacity: $profile.settings.public.header.imageOverlay.opacity / 100,
               }"
               @click.stop="showUploadHeaderModal = true"
@@ -309,7 +311,9 @@ async function deleteImage(image: 'logo' | 'header') {
         </div>
         <div class="flex gap-2">
           <HslPicker
-            v-model:color="$profile.settings.public.header.imageOverlay.color"
+            v-model:h="$profile.settings.public.header.imageOverlay.color.h"
+            v-model:s="$profile.settings.public.header.imageOverlay.color.s"
+            v-model:l="$profile.settings.public.header.imageOverlay.color.l"
             label="Hintergrund"
           />
           <UFormField
@@ -342,7 +346,9 @@ async function deleteImage(image: 'logo' | 'header') {
         />
         <div class="flex gap-2">
           <HslPicker
-            v-model:color="$profile.settings.public.design.color"
+            v-model:h="$profile.settings.public.design.color.h"
+            v-model:s="$profile.settings.public.design.color.s"
+            v-model:l="$profile.settings.public.design.color.l"
             label="Primäre Farbe"
           />
           <UFormField
@@ -385,7 +391,9 @@ async function deleteImage(image: 'logo' | 'header') {
           </UFormField>
           <div class="w-28">
             <HslPicker
-              v-model:color="$profile.settings.public.header.titleColor"
+              v-model:h="$profile.settings.public.header.titleColor.h"
+              v-model:s="$profile.settings.public.header.titleColor.s"
+              v-model:l="$profile.settings.public.header.titleColor.l"
               label="Farbe"
             />
           </div>
@@ -412,7 +420,9 @@ async function deleteImage(image: 'logo' | 'header') {
           </UFormField>
           <div class="w-28">
             <HslPicker
-              v-model:color="$profile.settings.public.header.descriptionColor"
+              v-model:h="$profile.settings.public.header.descriptionColor.h"
+              v-model:s="$profile.settings.public.header.descriptionColor.s"
+              v-model:l="$profile.settings.public.header.descriptionColor.l"
               label="Farbe"
             />
           </div>
