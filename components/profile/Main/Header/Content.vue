@@ -30,7 +30,7 @@ import { toHslString } from "~/shared/color"
     </a>
     <p
       v-if="$profile.settings.public.header.description"
-      class="text-center text-shadow-md mb-4 opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.8s_forwards]"
+      class="text-center leading-snug text-shadow-md mb-4 opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.8s_forwards]"
       :style="{
         'color': toHslString($profile.settings.public.header.descriptionColor),
         'font-size': ($profile.settings.public.header.descriptionFontSize || '6') + 'cqw',
