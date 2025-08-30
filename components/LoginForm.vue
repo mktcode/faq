@@ -7,7 +7,7 @@ const { authenticate } = useWebAuthn({
 const { fetch: fetchUserSession } = useUserSession()
 const { appHost } = useRuntimeConfig().public
 
-const { ownedUserNames, removeOwnedUserName } = useOwnedUsernames()
+const { ownedUserNames, addOwnedUserName, removeOwnedUserName } = useOwnedUserNames()
 
 const userNameFromQuery = ref(Array.isArray(route.query.username) ? (route.query.username[0] || '') : route.query.username || '')
 const userName = ref<string>(userNameFromQuery.value || ownedUserNames.value[0] || '')
@@ -15,7 +15,7 @@ const ownedUserNamesPopoverOpen = ref(false)
 
 async function signIn() {
   await authenticate(userName.value)
-  ownedUserNames.value.push(userName.value)
+  addOwnedUserName(userName.value)
   await fetchUserSession()
   await navigateTo(`https://${userName.value}.${appHost}`, { external: true })
 }

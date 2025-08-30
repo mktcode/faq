@@ -1,11 +1,11 @@
 <script setup lang="ts">
 const { appHost } = useRuntimeConfig().public
-const { ownedUserNames } = useOwnedUsernames()
+const { ownedUserNames, addOwnedUserName } = useOwnedUserNames()
 const $profile = useNuxtApp().$profile
 const { loggedIn } = useUserSession()
 
-if ($profile.isOwned && !ownedUserNames.value.includes($profile.username)) {
-  ownedUserNames.value.push($profile.username)
+if ($profile.isOwned) {
+  addOwnedUserName($profile.username)
 }
 
 const showReLoginButton = computed(() => {
