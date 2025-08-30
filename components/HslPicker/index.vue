@@ -19,11 +19,25 @@ const l = defineModel('l', {
 })
 
 const style = computed(() => ({ backgroundColor: `hsl(${h.value}, ${s.value}%, ${l.value}%) !important` }))
+
+const { addColor } = useLastUsedColors();
+
+function setColorFromUsedColors(color: { h: number; s: number; l: number }) {
+  h.value = color.h
+  s.value = color.s
+  l.value = color.l
+}
+
+function onClose(open: boolean) {
+  if (!open) {
+    addColor({ h: h.value, s: s.value, l: l.value })
+  }
+}
 </script>
 
 <template>
   <UFormField :label="label">
-    <UPopover>
+    <UPopover @update:open="onClose">
       <UButton
         color="neutral"
         variant="outline"
@@ -53,6 +67,9 @@ const style = computed(() => ({ backgroundColor: `hsl(${h.value}, ${s.value}%, $
           </div>
           <USlider v-model="l" :min="0" :max="100" :step="1" size="xl" />
         </div>
+        <ClientOnly>
+          <HslPickerLastUsed @color-selected="setColorFromUsedColors" />
+        </ClientOnly>
       </template>
     </UPopover>
   </UFormField>
