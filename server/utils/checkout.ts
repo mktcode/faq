@@ -34,12 +34,12 @@ export async function requireCompleteStripeCustomer(
   const stripe = new Stripe(stripeApiSecretKey)
 
   const stripeCustomerData: Stripe.CustomerCreateParams = {
-    name: settings.company.name,
+    name: settings.public.company.name,
     address: {
-      city: settings.company.city,
-      line1: settings.company.street,
+      city: settings.public.company.city,
+      line1: settings.public.company.street,
       country: 'DE',
-      postal_code: settings.company.zip,
+      postal_code: settings.public.company.zip,
     },
     metadata: {
       solohostUserId: userId.toString(),
