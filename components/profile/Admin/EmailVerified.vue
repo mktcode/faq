@@ -2,8 +2,7 @@
 const isOpen = ref(true)
 const { isStartingCheckout, startCheckoutSession } = useCheckoutSession()
 
-function saveSettings() {}
-const isSavingSettings = ref(false)
+const { isSavingSettings, saveSettings } = useProfile()
 
 async function saveAndStartCheckout() {
   await saveSettings()

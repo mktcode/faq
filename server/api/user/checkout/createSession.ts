@@ -10,8 +10,8 @@ export default defineEventHandler(async (event) => {
     .where('id', '=', user.id)
     .executeTakeFirstOrThrow()
 
-  requireNoSubscription(userInDb.lastPaidAt)
-  requireNoStripeCustomerId(userInDb.stripeCustomerId)
+  stripe.requireNoSubscription(userInDb.lastPaidAt)
+  stripe.requireNoStripeCustomerId(userInDb.stripeCustomerId)
 
   const userWithVerifiedEmail = stripe.requireVerifiedEmail(userInDb)
 

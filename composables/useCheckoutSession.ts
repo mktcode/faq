@@ -5,7 +5,7 @@ export default function useCheckoutSession() {
     if (isStartingCheckout.value) return
     isStartingCheckout.value = true
 
-    const { url } = await $fetch('/api/user/createCheckoutSession', {
+    const { url } = await $fetch('/api/user/checkout/createSession', {
       method: 'POST',
     })
 
