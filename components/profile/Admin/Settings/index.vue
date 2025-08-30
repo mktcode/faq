@@ -70,16 +70,17 @@ const {
         @click="showEmailSettings = true"
       >
         <template #trailing>
-          <UBadge
-            v-if="!$profile.isSubscribed"
-            label="Premium"
-            variant="outline"
-            class="ml-auto"
-          />
-          <UIcon
-            name="i-heroicons-chevron-right"
-            class="size-6 ml-auto opacity-30"
-          />
+          <div class="ml-auto flex items-center gap-2">
+            <UBadge
+              v-if="!$profile.isSubscribed"
+              label="Premium"
+              variant="outline"
+            />
+            <UIcon
+              name="i-heroicons-chevron-right"
+              class="size-6 opacity-30"
+            />
+          </div>
         </template>
       </UButton>
 
