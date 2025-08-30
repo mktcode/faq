@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { useLocalStorage } from '@vueuse/core'
-
 const { appHost } = useRuntimeConfig().public
-const ownedUserNames = useLocalStorage<string[]>('ownedUserNames', [])
+const { ownedUserNames } = useOwnedUsernames()
 const $profile = useNuxtApp().$profile
 const { loggedIn } = useUserSession()
 
