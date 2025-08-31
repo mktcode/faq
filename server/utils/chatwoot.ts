@@ -19,7 +19,8 @@ async function createContact(userId: number, name: string) {
       identifier_hash: hmacHash,
       name,
       custom_attributes: {
-        userId
+        userId,
+        subscription: null // TODO: update when subscription changes
       }
     },
   })

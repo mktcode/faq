@@ -6,6 +6,7 @@ export type WootConversation = {
   contact: WootContactCreated & {
     custom_attributes: {
       userId: number
+      subscription: 'S' | 'L' | null
     }
   }
 }
