@@ -1,7 +1,7 @@
 import Stripe from 'stripe'
 
 export default defineEventHandler(async (event) => {
-  const { stripeApiSecretKey, stripeWebhookSecret } = useRuntimeConfig()
+  const { stripeApiSecretKey, stripeWebhookSecret, stripePriceSId, stripePriceLId } = useRuntimeConfig()
 
   const stripeSignature = getHeader(event, 'stripe-signature')
   if (!stripeSignature) {
@@ -27,17 +27,41 @@ export default defineEventHandler(async (event) => {
     stripeWebhookSecret,
   )
 
-  // TODO: Need to differentiate between those events and restrict e.g. domain registration until payment is confirmed
-  if (stripeEvent.type === 'invoice.paid' || stripeEvent.type === 'customer.subscription.created') {
-    const paidInvoiceOrCreatedSubscription = stripeEvent.data.object
-    const customerId = paidInvoiceOrCreatedSubscription.customer as string
-    const timestamp = new Date(paidInvoiceOrCreatedSubscription.created * 1000)
+  // TODO: [CRITICAL] Restrict e.g. domain registration until payment is confirmed (invoice.paid)
+
+  if (stripeEvent.type === 'customer.subscription.created') {
+    const createdSubscription = stripeEvent.data.object
+    const customerId = createdSubscription.customer as string
+    const timestamp = new Date(createdSubscription.created * 1000)
+    
+    const priceId = createdSubscription.items.data[0].price.id
+    console.log('subscription created for price:', priceId)
 
     const db = await getDatabaseConnection()
     await db
       .updateTable('users')
       .set({
         lastPaidAt: timestamp,
+        subscription: priceId === stripePriceSId ? 'S' : priceId === stripePriceLId ? 'L' : null,
+      })
+      .where('stripeCustomerId', '=', customerId)
+      .execute()
+  }
+
+  if (stripeEvent.type === 'invoice.paid') {
+    const paidInvoice = stripeEvent.data.object
+    const customerId = paidInvoice.customer as string
+    const timestamp = new Date(paidInvoice.created * 1000)
+    
+    const priceId = paidInvoice.lines.data[0].pricing?.price_details?.price
+    console.log('invoice paid for price:', priceId)
+
+    const db = await getDatabaseConnection()
+    await db
+      .updateTable('users')
+      .set({
+        lastPaidAt: timestamp,
+        subscription: priceId === stripePriceSId ? 'S' : priceId === stripePriceLId ? 'L' : null,
       })
       .where('stripeCustomerId', '=', customerId)
       .execute()

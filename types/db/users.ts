@@ -14,6 +14,7 @@ export interface UsersTable {
   domainCode: string | null
   mailboxes: string
   stripeCustomerId: string | null
+  subscription: 'S' | 'L' | null
   chatwootSourceId: string | null
   lastPaidAt: ColumnType<Date | null, Date | null, Date | null>
   settings: string
