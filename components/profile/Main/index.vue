@@ -10,15 +10,6 @@ appConfig.ui.input.defaultVariants.rounded = $profile.settings.public.design.rou
 appConfig.ui.select.defaultVariants.rounded = $profile.settings.public.design.rounded
 appConfig.ui.textarea.defaultVariants.rounded = $profile.settings.public.design.rounded
 
-const extraScripts = []
-if ($profile.isOwned && $profile.isSubscribed) {
-  extraScripts.push({
-    src: '/chatwoot.js',
-    defer: true,
-    async: true,
-  })
-}
-
 useHead({
   title: $profile.settings.public.meta.title || $profile.settings.public.header.title || $profile.settings.public.company.name || 'Solohost Website',
   meta: [
@@ -50,7 +41,6 @@ useHead({
       href: `/api/css`,
     },
   ],
-  script: extraScripts,
 })
 </script>
 
