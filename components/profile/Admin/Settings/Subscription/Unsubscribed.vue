@@ -1,3 +1,13 @@
+<script setup lang="ts">
+const { showSubscriptionVerification } = useAdmin()
+const selectedSubscription = useState<'S' | 'L' | null>('selectedSubscription', () => null)
+
+function selectSubscription(plan: 'S' | 'L') {
+  selectedSubscription.value = plan
+  showSubscriptionVerification.value = true
+}
+</script>
+
 <template>
   <div class="text-center border border-gray-200 p-4 rounded-xl">
     <UBadge
@@ -43,11 +53,12 @@
       </div>
     </div>
     <UButton
-      label="Abonnement abschließen"
+      label="Auswählen"
       class="w-full mt-4"
       size="xxl"
       trailing-icon="i-heroicons-arrow-right"
       block
+      @click="selectSubscription('S')"
     />
   </div>
   <div class="text-center border border-gray-200 p-4 rounded-xl">
@@ -101,11 +112,13 @@
       </div>
     </div>
     <UButton
-      label="Abonnement abschließen"
+      label="Auswählen"
       class="w-full mt-4"
       size="xxl"
       trailing-icon="i-heroicons-arrow-right"
       block
+      @click="selectSubscription('L')"
     />
   </div>
+  <ProfileAdminSettingsSubscriptionVerification />
 </template>

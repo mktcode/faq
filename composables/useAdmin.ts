@@ -4,6 +4,7 @@ export default function useAdmin() {
   const showDomainSettings = useState('showDomainSettings', () => false)
   const showEmailSettings = useState('showEmailSettings', () => false)
   const showSubscriptionSettings = useState('showSubscriptionSettings', () => false)
+  const showSubscriptionVerification = useState('showSubscriptionVerification', () => false)
 
   const showWebsiteSettings = useState('showWebsiteSettings', () => false)
   const showDesignSettings = useState('showDesignSettings', () => false)
@@ -29,6 +30,7 @@ export default function useAdmin() {
     showDomainSettings,
     showEmailSettings,
     showSubscriptionSettings,
+    showSubscriptionVerification,
     showWebsiteSettings,
     showDesignSettings,
     showOfferingSettings,

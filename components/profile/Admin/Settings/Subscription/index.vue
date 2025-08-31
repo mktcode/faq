@@ -70,10 +70,7 @@ async function saveAndStartCheckout() {
             class="w-full"
           />
         </template>
-        <template v-else>
-          <ProfileAdminSettingsSubscriptionVerification v-if="!user?.email" />
-          <ProfileAdminSettingsSubscriptionUnsubscribed v-else />
-        </template>
+        <ProfileAdminSettingsSubscriptionUnsubscribed v-else />
       </div>
     </template>
   </USlideover>
