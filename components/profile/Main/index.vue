@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { toHslString } from '~/shared/color'
+
 const appConfig = useAppConfig()
 const { $profile } = useProfile()
 
@@ -21,7 +23,7 @@ useHead({
   title: $profile.settings.public.meta.title || $profile.settings.public.header.title || $profile.settings.public.company.name || 'Solohost Website',
   meta: [
     { name: 'robots', content: $profile.isPublic ? 'index, follow' : 'noindex, nofollow' },
-    { name: 'theme-color', content: $profile.settings.public.design.color },
+    { name: 'theme-color', content: toHslString($profile.settings.public.design.color) },
     { property: 'og:url', content: $profile.canonicalUrl },
     { property: 'og:image', content: $profile.settings.public.meta.ogimage || $profile.settings.public.header.image || '' },
     {
