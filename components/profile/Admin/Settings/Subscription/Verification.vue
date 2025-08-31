@@ -9,10 +9,10 @@ const emailToVerify = ref(user.value?.email || '')
 const isUpdatingEmail = ref(false)
 const showEmailVerificationHint = ref(false)
 
-async function updateEmail() {
+async function startVerification() {
   isUpdatingEmail.value = true
 
-  await $fetch('/api/user/updateEmail', {
+  await $fetch('/api/user/startVerification', {
     method: 'POST',
     body: {
       email: emailToVerify.value,
@@ -109,7 +109,7 @@ async function updateEmail() {
         :label="showEmailVerificationHint ? `Bestätigungs-E-Mail erneut senden` : `Bestätigungs-E-Mail senden`"
         class="w-full"
         :loading="isUpdatingEmail"
-        @click="updateEmail"
+        @click="startVerification"
       />
     </template>
   </USlideover>

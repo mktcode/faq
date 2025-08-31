@@ -335,10 +335,10 @@ function baseTemplate(title: string, content: string) {
   </html>`
 }
 
-function verificationEmail(token: string, subscription: 'S' | 'L') {
+function verificationEmail(userId: number, token: string, subscription: 'S' | 'L') {
   const { appHost } = useRuntimeConfig().public
 
-  const verifyUrl = `https://${appHost}/api/verify/${token}/${subscription}`
+  const verifyUrl = `https://${appHost}/api/verify/${userId}/${token}/${subscription}`
 
   return {
     html: baseTemplate('Solohost Bestätigungs-E-Mail', `<h2>Willkommen bei Solohost!</h2>

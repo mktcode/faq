@@ -11,19 +11,6 @@ export type UserWithVerifiedEmail<TUser> = TUser & {
   emailConfirmationToken: null
 }
 
-function requireVerifiedEmail<TUser>(
-  user: HasEmailFields<TUser>,
-): UserWithVerifiedEmail<TUser> {
-  if (user.email && user.emailConfirmationToken === null) {
-    return user as UserWithVerifiedEmail<TUser>
-  }
-
-  throw createError({
-    statusCode: 400,
-    statusMessage: 'Bad Request: User does not have a verified email address',
-  })
-}
-
 async function requireCompleteStripeCustomer(
   userId: number,
   email: string,
@@ -116,7 +103,6 @@ function requireNoStripeCustomerId(stripeCustomerId: string | null): void {
 }
 
 export const stripe = {
-  requireVerifiedEmail,
   requireCompleteStripeCustomer,
   createCheckoutSession,
   requireNoSubscription,

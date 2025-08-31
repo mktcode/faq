@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const route = useRoute()
-const emailVerified = !!route.query.emailVerified
 const subscriptionSuccess = !!route.query.subscriptionSuccess
 </script>
 
@@ -16,7 +15,6 @@ const subscriptionSuccess = !!route.query.subscriptionSuccess
   <ProfileAdminWebsiteDownloads />
   <ProfileAdminAssistant />
   <ProfileAdminSupport />
-  <ProfileAdminEmailVerified v-if="emailVerified" />
   <ProfileAdminSubscriptionSuccess v-if="subscriptionSuccess" />
   <ClientOnly>
     <ProfileAdminWelcome />

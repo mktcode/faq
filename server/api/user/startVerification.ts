@@ -27,21 +27,14 @@ export default defineEventHandler(async (event) => {
   await db
     .updateTable('users')
     .set({
+      email,
+      emailConfirmationToken,
       settings: JSON.stringify(settings),
     })
     .where('id', '=', user.id)
     .execute()
-
-  await db
-    .updateTable('users')
-    .set({
-      email,
-      emailConfirmationToken,
-    })
-    .where('id', '=', user.id)
-    .execute()
   
-  const mailTemplate = mailTemplates.verificationEmail(emailConfirmationToken, subscription)
+  const mailTemplate = mailTemplates.verificationEmail(user.id, emailConfirmationToken, subscription)
 
   await sendEmail({
     to: email,
