@@ -30,9 +30,14 @@ const { user } = useUserSession()
 
     <template #body>
       <div class="flex flex-col gap-4 p-6">
-        <template v-if="$profile.isSubscribed">
+        <template v-if="$profile.subscription.checkoutPending">
           <p class="text-gray-600">
-            Sie sind bereits für das Abonnement angemeldet. Vielen Dank für Ihre Unterstützung!
+            Ihr Abonnement wird gerade verarbeitet.
+          </p>
+        </template>
+        <template v-else-if="$profile.subscription.plan">
+          <p class="text-gray-600">
+            Aktuelles Paket: {{ $profile.subscription.plan }}
           </p>
           <p class="text-gray-600">
             Um Ihr Abonnement zu verwalten, werden Sie zu unserem Zahlungsdienstleister Stripe weitergeleitet.

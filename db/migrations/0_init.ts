@@ -18,7 +18,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('mailboxes', 'json', col => col.notNull())
     .addColumn('stripeCustomerId', 'varchar(255)', col => col.unique())
     .addColumn('stripeCheckoutSessionId', 'varchar(255)', col => col.unique())
-    .addColumn('subscription', 'varchar(10)')
+    .addColumn('plan', 'varchar(10)')
     .addColumn('chatwootSourceId', 'varchar(150)')
     .addColumn('lastPaidAt', 'timestamp')
     .addColumn('settings', 'json', col => col.notNull())

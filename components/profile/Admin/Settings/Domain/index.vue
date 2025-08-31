@@ -27,7 +27,7 @@ const { showDomainSettings } = useAdmin()
 
     <template #body>
       <div class="flex flex-col gap-4 p-4">
-        <ProfileAdminSettingsDomainSubscribed v-if="$profile.isSubscribed" />
+        <ProfileAdminSettingsDomainSubscribed v-if="$profile.subscription.plan" />
         <ProfileAdminSettingsDomainUnsubscribed
           v-else
           @go-to-subscription="$emit('goToSubscription')"

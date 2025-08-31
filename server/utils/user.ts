@@ -85,7 +85,7 @@ export async function createUser({
 }
 
 // TODO: Should be checked on database level
-export function checkSubscriptionStatus(lastPaidAt: Date | string | null): boolean {
+export function checkLastPayment(lastPaidAt: Date | string | null): boolean {
   if (!lastPaidAt) {
     return false
   }
@@ -111,12 +111,7 @@ export async function getMe(event: H3Event) {
     return null
   }
 
-  const isSubscribed = checkSubscriptionStatus(userInDb.lastPaidAt)
-
-  return {
-    ...userInDb,
-    isSubscribed,
-  }
+  return userInDb
 }
 
 export async function requireMe(event: H3Event) {
@@ -131,47 +126,6 @@ export async function requireMe(event: H3Event) {
   }
 
   return user
-}
-
-export async function requireSubscription(event: H3Event) {
-  const user = await getMe(event)
-
-  if (!user) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: 'Unauthorized',
-      message: 'You must be logged in to access this resource.',
-    })
-  }
-
-  if (!user.isSubscribed) {
-    throw createError({
-      statusCode: 403,
-      statusMessage: 'Forbidden',
-      message: 'You must have an active subscription to access this resource.',
-    })
-  }
-
-  return user
-}
-
-export async function requireProfileSubscription(username: string) {
-  const db = await getDatabaseConnection()
-  const user = await db
-    .selectFrom('users')
-    .select(['lastPaidAt'])
-    .where('userName', '=', username)
-    .executeTakeFirst()
-
-  const isSubscribed = checkSubscriptionStatus(user?.lastPaidAt || null) || false
-
-  if (!isSubscribed) {
-    throw createError({
-      statusCode: 403,
-      statusMessage: 'Forbidden',
-      message: 'The profile is not subscribed.',
-    })
-  }
 }
 
 export function getValidatedSettings(settings: string | Record<string, unknown>): SettingsForm {

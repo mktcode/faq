@@ -8,7 +8,13 @@ const querySchema = z.object({
 export default defineEventHandler(async (event) => {
   const { message, username } = await getValidatedQuery(event, query => querySchema.parse(query))
 
-  await requireProfileSubscription(username)
+  if (!event.context.profile?.subscription.plan) {
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Forbidden',
+      message: 'You must have an active subscription to access this resource.',
+    })
+  }
 
   const openai = createOpenAIClient()
   const embedding = await openai.embeddings.create({

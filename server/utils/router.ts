@@ -6,6 +6,8 @@ interface TargetUser {
   lastPaidAt: Date | null
   domain: string | null
   mailboxes: string[]
+  plan: 'S' | 'L' | null
+  stripeCheckoutSessionId: string | null
 }
 
 function getCurrentHost(event: H3Event): string {
@@ -68,7 +70,11 @@ async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUse
 
   event.context.profile = {
     username: targetUser.userName,
-    isSubscribed: checkSubscriptionStatus(targetUser.lastPaidAt),
+    subscription: {
+      checkoutPending: !!targetUser.stripeCheckoutSessionId,
+      plan: targetUser.plan,
+      paid: checkLastPayment(targetUser.lastPaidAt),
+    },
     isOwned,
     isPublic,
     design: 'default',
@@ -88,7 +94,7 @@ async function getUserFromHost(currentHost: string): Promise<TargetUser | null> 
 
   if (isCustomDomain(currentHost)) {
     const user = await db.selectFrom('users')
-      .select(['userName', 'published', 'lastPaidAt', 'domain', 'mailboxes'])
+      .select(['userName', 'published', 'lastPaidAt', 'domain', 'mailboxes', 'plan', 'stripeCheckoutSessionId'])
       .where('domain', '=', currentHost)
       .executeTakeFirst() || null
 
@@ -103,7 +109,7 @@ async function getUserFromHost(currentHost: string): Promise<TargetUser | null> 
     const username = extractUsernameFromSubdomain(currentHost)
     const user = await db
       .selectFrom('users')
-      .select(['userName', 'published', 'lastPaidAt', 'domain', 'mailboxes'])
+      .select(['userName', 'published', 'lastPaidAt', 'domain', 'mailboxes', 'plan', 'stripeCheckoutSessionId'])
       .where('userName', '=', username)
       .executeTakeFirst() || null
 

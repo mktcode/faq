@@ -27,8 +27,6 @@ export default defineEventHandler(async (event) => {
     stripeWebhookSecret,
   )
 
-  // TODO: [CRITICAL] Restrict e.g. domain registration until payment is confirmed (invoice.paid)
-
   if (stripeEvent.type === 'customer.subscription.created') {
     const createdSubscription = stripeEvent.data.object
     const customerId = createdSubscription.customer as string
@@ -41,7 +39,7 @@ export default defineEventHandler(async (event) => {
       .updateTable('users')
       .set({
         stripeCheckoutSessionId: null,
-        subscription: priceId === stripePriceSId ? 'S' : priceId === stripePriceLId ? 'L' : null,
+        plan: priceId === stripePriceSId ? 'S' : priceId === stripePriceLId ? 'L' : null,
       })
       .where('stripeCustomerId', '=', customerId)
       .execute()
@@ -60,7 +58,7 @@ export default defineEventHandler(async (event) => {
       .updateTable('users')
       .set({
         lastPaidAt: timestamp,
-        subscription: priceId === stripePriceSId ? 'S' : priceId === stripePriceLId ? 'L' : null,
+        plan: priceId === stripePriceSId ? 'S' : priceId === stripePriceLId ? 'L' : null,
       })
       .where('stripeCustomerId', '=', customerId)
       .execute()

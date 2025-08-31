@@ -3,7 +3,6 @@ import { qandaFormSchema } from '~/types/db/qanda'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
-  const me = await getMe(event)
   const body = await readValidatedBody(event, body => qandaFormSchema.parse(body))
   const { answer, question } = body
   let { id } = body
@@ -37,7 +36,7 @@ export default defineEventHandler(async (event) => {
     id = Number(insertResult.insertId)
   }
 
-  if (me?.isSubscribed) {
+  if (event.context.profile?.subscription.plan) {
     const openai = createOpenAIClient()
     const embedding = await openai.embeddings.create({
       model: 'text-embedding-3-small',

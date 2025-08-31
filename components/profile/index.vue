@@ -8,7 +8,11 @@ const { profile } = defineProps<{
     username: string
     isOwned: boolean
     isPublic: boolean
-    isSubscribed: boolean
+    subscription: {
+      plan: 'S' | 'L' | null
+      checkoutPending: boolean
+      paid: boolean
+    }
     settings: SettingsForm
     canonicalUrl: string
     domain: string | null

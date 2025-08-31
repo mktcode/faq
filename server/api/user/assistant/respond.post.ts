@@ -9,7 +9,14 @@ const bodySchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
-  await requireProfileSubscription(user.userName)
+
+  if (!event.context.profile?.subscription.plan) {
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Forbidden',
+      message: 'You must have an active subscription to access this resource.',
+    })
+  }
 
   const settings = await getSettings(user.id)
   const { userInput, responseId } = await readValidatedBody(event, body => bodySchema.parse(body))

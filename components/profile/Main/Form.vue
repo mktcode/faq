@@ -53,7 +53,7 @@ async function saveCustomerRequest() {
 }
 
 async function getEmbedding() {
-  if (!messageLongEnough.value || !$profile.isSubscribed) {
+  if (!messageLongEnough.value || !$profile.subscription.plan) {
     return
   }
 
@@ -89,7 +89,7 @@ const disabled = computed(() => {
   return isSavingRequest.value
     || !name.value
     || (!phone.value && !email.value)
-    || ($profile.isSubscribed && !messageEmbedding.value)
+    || (!!$profile.subscription.plan && !messageEmbedding.value)
 })
 </script>
 
@@ -126,7 +126,7 @@ const disabled = computed(() => {
         </div>
       </Transition>
       <ProfileMainRecordAudio
-        v-if="$profile.isSubscribed"
+        v-if="$profile.subscription.plan"
         class="ml-auto"
         :disabled="false"
         @text="(text) => { message = text }"

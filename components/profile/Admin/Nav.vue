@@ -9,7 +9,9 @@ const { showMainSettings, showWebsiteSettings, showAssistant, showSupport } = us
 async function signOut() {
   showMainSettings.value = false
   $profile.isOwned = false
-  $profile.isSubscribed = false
+  $profile.subscription.plan = null
+  $profile.subscription.checkoutPending = false
+  $profile.subscription.paid = false
   $profile.mailboxes = []
   await clear()
   fetchUserSession()

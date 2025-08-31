@@ -442,12 +442,12 @@ async function deleteImage(image: 'logo' | 'header') {
             color="neutral"
             variant="link"
             trailing-icon="i-heroicons-chevron-down"
-            :disabled="!$profile.isSubscribed"
+            :disabled="!$profile.subscription.plan"
           >
             <template #trailing>
               <div class="ml-auto flex items-center gap-2">
                 <UBadge
-                  v-if="!$profile.isSubscribed"
+                  v-if="!$profile.subscription.plan"
                   label="Premium"
                   variant="outline"
                 />
@@ -499,11 +499,11 @@ async function deleteImage(image: 'logo' | 'header') {
             class="w-full rounded-none p-4 border-b border-gray-200"
             variant="ghost"
             color="neutral"
-            :disabled="!$profile.isSubscribed"
+            :disabled="!$profile.subscription.plan"
           >
             <template #trailing>
               <UBadge
-                v-if="!$profile.isSubscribed"
+                v-if="!$profile.subscription.plan"
                 label="Premium"
                 variant="outline"
                 class="ml-auto"
@@ -516,12 +516,12 @@ async function deleteImage(image: 'logo' | 'header') {
             class="w-full rounded-none p-4"
             variant="ghost"
             color="neutral"
-            :disabled="!$profile.isSubscribed"
+            :disabled="!$profile.subscription.plan"
             @click="clickHeaderVideoInput"
           >
             <template #trailing>
               <UBadge
-                v-if="!$profile.isSubscribed"
+                v-if="!$profile.subscription.plan"
                 label="Premium"
                 variant="outline"
                 class="ml-auto"

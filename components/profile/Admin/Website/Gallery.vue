@@ -17,7 +17,7 @@ const galleryTypes = ref([
   {
     label: 'Mauerwerk',
     value: 'masonry',
-    disabled: !$profile.isSubscribed,
+    disabled: !$profile.subscription.plan,
   },
 ])
 
