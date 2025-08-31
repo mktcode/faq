@@ -71,7 +71,7 @@ async function createCheckoutSession(customerId: string, userName: string, subsc
 
   return await stripe.checkout.sessions.create({
     customer: customerId,
-    success_url: `https://${userName}.${appHost}?subscriptionSuccess=1`,
+    success_url: `https://${appHost}/danke`,
 
     line_items: [
       {

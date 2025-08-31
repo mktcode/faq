@@ -2,6 +2,7 @@ export const useProfile = () => {
   const toast = useToast()
   const appConfig = useAppConfig()
   const $profile = useNuxtApp().$profile
+  const isUpdatingProfile = ref(false)
   const isSavingSettings = ref(false)
   const unsavedSettings = ref(false)
 
@@ -27,6 +28,28 @@ export const useProfile = () => {
     unsavedSettings.value = false
   }
 
+  async function updateProfile() {
+    isUpdatingProfile.value = true
+
+    // wait 1 sec (This is not debugging, this is intentional for UX)
+    await new Promise(resolve => setTimeout(resolve, 1000))
+
+    const { profile } = await $fetch('/api/user/profile')
+
+    if (profile) {
+      $profile.canonicalUrl = profile.canonicalUrl
+      $profile.domain = profile.domain
+      $profile.domainIsExternal = profile.domainIsExternal
+      $profile.isOwned = profile.isOwned
+      $profile.isPublic = profile.isPublic
+      $profile.mailboxes = profile.mailboxes
+      $profile.settings = profile.settings
+      $profile.subscription = profile.subscription
+      $profile.username = profile.username
+    }
+    isUpdatingProfile.value = false
+  }
+
   watch($profile.settings, () => {
     unsavedSettings.value = true
 
@@ -42,5 +65,7 @@ export const useProfile = () => {
     resetSettings,
     saveSettings,
     unsavedSettings,
+    updateProfile,
+    isUpdatingProfile,
   }
 }

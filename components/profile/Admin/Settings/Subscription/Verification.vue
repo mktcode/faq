@@ -1,16 +1,18 @@
 <script setup lang="ts">
 const { user } = useUserSession()
 
-const { $profile } = useProfile()
+const { $profile, updateProfile } = useProfile()
 const { showSubscriptionVerification } = useAdmin()
 const selectedSubscription = useState<'S' | 'L' | null>('selectedSubscription', () => null)
 
 const emailToVerify = ref(user.value?.email || '')
-const isUpdatingEmail = ref(false)
+const isStartingVerification = ref(false)
 const showEmailVerificationHint = ref(false)
 
+const cooldown = ref(0)
+
 async function startVerification() {
-  isUpdatingEmail.value = true
+  isStartingVerification.value = true
 
   await $fetch('/api/user/startVerification', {
     method: 'POST',
@@ -22,8 +24,29 @@ async function startVerification() {
   })
 
   showEmailVerificationHint.value = true
-  isUpdatingEmail.value = false
+  isStartingVerification.value = false
+
+  cooldown.value = 30
+  const interval = setInterval(() => {
+    cooldown.value -= 1
+    if (cooldown.value <= 0) {
+      clearInterval(interval)
+    }
+  }, 1000)
 }
+
+const updateProfileInterval = ref<NodeJS.Timeout | null>(null)
+onMounted(() => {
+  updateProfileInterval.value = setInterval(async () => {
+    await updateProfile()
+  }, 5000)
+})
+
+onBeforeUnmount(() => {
+  if (updateProfileInterval.value) {
+    clearInterval(updateProfileInterval.value)
+  }
+})
 </script>
 
 <template>
@@ -102,13 +125,18 @@ async function startVerification() {
       />
       <UAlert
         v-if="showEmailVerificationHint"
-        title="Bestätigen Sie Ihre E-Mail-Adresse"
-        description="Ihre E-Mail-Adresse wurde aktualisiert. Wir haben Ihnen eine E-Mail mit einem Bestätigungslink gesendet. Bitte klicken Sie auf den Link, um Ihre E-Mail-Adresse zu verifizieren."
+        icon="i-lucide-loader-circle"
+        title="Öffnen Sie Ihr E-Mail-Postfach"
+        description="Sie haben eine E-Mail erhalten, um Ihr Abonnement zu bestätigen. Lassen Sie dieses Fenster geöffnet und kehren Sie nach der Zahlung zurück."
+        :ui="{
+          icon: 'animate-spin',
+        }"
       />
       <UButton
-        :label="showEmailVerificationHint ? `Bestätigungs-E-Mail erneut senden` : `Bestätigungs-E-Mail senden`"
+        :label="showEmailVerificationHint ? `Bestätigungs-E-Mail erneut senden${cooldown > 0 ? ` (${cooldown})` : ''}` : `Bestätigungs-E-Mail senden`"
         class="w-full"
-        :loading="isUpdatingEmail"
+        :loading="isStartingVerification"
+        :disabled="isStartingVerification || cooldown > 0"
         @click="startVerification"
       />
     </template>

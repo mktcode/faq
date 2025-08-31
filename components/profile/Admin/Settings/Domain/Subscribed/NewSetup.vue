@@ -8,7 +8,7 @@ watchDebounced(newDomain, checkDomainAvailability, { debounce: 500 })
 
 const toast = useToast()
 
-const { $profile } = useProfile()
+const { $profile, updateProfile, isUpdatingProfile } = useProfile()
 
 // TODO: improve domain validation
 const isDomainValid = computed(() => /^[A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9]$/.test(newDomain.value)) // without tld!
@@ -89,7 +89,7 @@ async function registerDomain() {
           placeholder="ihre-domain"
           class="w-full"
           size="xxl"
-          :disabled="isCheckingDomain || isRegisteringDomain"
+          :disabled="isCheckingDomain || isRegisteringDomain || registeredSuccessfully || !$profile.subscription.paid"
         />
         <UBadge
           label=".de"
@@ -140,10 +140,29 @@ async function registerDomain() {
       label="Ja, ich möchte diese Domain registrieren und mit meiner Solohost-Website verbinden."
       :disabled="isRegisteringDomain"
     />
+    <Transition name="fade">
+      <UAlert
+        v-if="!$profile.subscription.paid"
+        title="Zahlung ausstehend"
+        icon="i-heroicons-exclamation-triangle"
+        description="Ihre erste Abonnement-Zahlung ist noch nicht bestätigt. Während andere Funktionen Ihnen bereits zur Verfügung stehen, können Domainregistrierungen erst nach erfolgreichem Zahlungseingang durchgeführt werden. Haben Sie per SEPA-Lastschriftverfahren bezahlt, kann dies mehrere Tage dauern."
+        :actions="[
+          {
+            label: 'Status prüfen',
+            color: 'neutral',
+            variant: 'soft',
+            size: 'lg',
+            block: true,
+            loading: isUpdatingProfile,
+            onClick: updateProfile,
+          }
+        ]"
+      />
+    </Transition>
     <UButton
-      v-if="!isRegisteringDomain && !registeredSuccessfully"
+      v-if="$profile.subscription.paid && !isRegisteringDomain && !registeredSuccessfully"
       label="Domain registrieren"
-      :disabled="!isDomainValid || isCheckingDomain || isRegisteringDomain || !isAvailable || !customerHasConfirmedDomain"
+      :disabled="!isDomainValid || isCheckingDomain || isRegisteringDomain || !isAvailable || !customerHasConfirmedDomain || !$profile.subscription.paid"
       :loading="isRegisteringDomain"
       @click="registerDomain"
     />
