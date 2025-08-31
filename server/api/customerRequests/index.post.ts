@@ -63,7 +63,8 @@ export default defineEventHandler(async (event) => {
     await sendEmail({
       to: toEmail,
       subject: `Neue Anfrage über Ihre Website`,
-      body: `Sie haben eine neue Anfrage von ${name} erhalten.\n\nNachricht: ${message}\n\n`,
+      text: `Sie haben eine neue Anfrage von ${name} erhalten.\n\nNachricht: ${message}\n\n`,
+      html: `<p>Sie haben eine neue Anfrage von <strong>${name}</strong> erhalten.</p><p><strong>Nachricht:</strong><br/>${message.replace(/\n/g, '<br/>')}</p>`,
       replyTo: email || undefined,
     })
   }

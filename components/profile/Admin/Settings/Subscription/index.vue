@@ -2,31 +2,7 @@
 const { showSubscriptionSettings } = useAdmin()
 
 const { stripePortalUrl } = useRuntimeConfig().public
-const { isStartingCheckout, startCheckoutSession } = useCheckoutSession()
 const { user } = useUserSession()
-
-const { saveSettings, isSavingSettings } = useProfile()
-
-const emailToVerify = ref(user.value?.email || '')
-const isUpdatingEmail = ref(false)
-const showEmailVerificationHint = ref(false)
-
-async function updateEmail() {
-  isUpdatingEmail.value = true
-
-  await $fetch('/api/user/updateEmail', {
-    method: 'POST',
-    body: { email: emailToVerify.value },
-  })
-
-  showEmailVerificationHint.value = true
-  isUpdatingEmail.value = false
-}
-
-async function saveAndStartCheckout() {
-  await saveSettings()
-  startCheckoutSession()
-}
 </script>
 
 <template>

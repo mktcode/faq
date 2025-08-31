@@ -3,12 +3,14 @@ import nodemailer, { type SendMailOptions } from 'nodemailer'
 export async function sendEmail({
   to,
   subject,
-  body,
+  html,
+  text,
   replyTo = undefined,
 }: {
   to: string
   subject: string
-  body: string
+  html: string
+  text: string
   replyTo?: string
 }) {
   const { mailHost, mailUser, mailPass, mailFrom } = useRuntimeConfig()
@@ -27,7 +29,8 @@ export async function sendEmail({
     from: mailFrom,
     to,
     subject,
-    text: body,
+    text,
+    html,
   }
 
   if (replyTo) {

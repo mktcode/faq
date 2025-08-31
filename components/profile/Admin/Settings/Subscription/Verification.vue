@@ -17,7 +17,7 @@ async function updateEmail() {
     body: {
       email: emailToVerify.value,
       company: $profile.settings.public.company,
-      selectedSubscription: selectedSubscription.value,
+      subscription: selectedSubscription.value,
     },
   })
 
@@ -106,7 +106,7 @@ async function updateEmail() {
         description="Ihre E-Mail-Adresse wurde aktualisiert. Wir haben Ihnen eine E-Mail mit einem Bestätigungslink gesendet. Bitte klicken Sie auf den Link, um Ihre E-Mail-Adresse zu verifizieren."
       />
       <UButton
-        label="Bestätigungs-E-Mail senden"
+        :label="showEmailVerificationHint ? `Bestätigungs-E-Mail erneut senden` : `Bestätigungs-E-Mail senden`"
         class="w-full"
         :loading="isUpdatingEmail"
         @click="updateEmail"
