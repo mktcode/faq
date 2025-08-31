@@ -63,9 +63,11 @@ async function requireCompleteStripeCustomer(
   return finalCustomerId
 }
 
-async function createCheckoutSession(customerId: string, userName: string) {
-  const { stripeApiSecretKey, stripePriceSId, public: { appHost } } = useRuntimeConfig()
+async function createCheckoutSession(customerId: string, userName: string, subscription: 'S' | 'L') {
+  const { stripeApiSecretKey, stripePriceSId, stripePriceLId, public: { appHost } } = useRuntimeConfig()
   const stripe = new Stripe(stripeApiSecretKey)
+
+  const priceId = subscription === 'S' ? stripePriceSId : stripePriceLId
 
   return await stripe.checkout.sessions.create({
     customer: customerId,
@@ -73,7 +75,7 @@ async function createCheckoutSession(customerId: string, userName: string) {
 
     line_items: [
       {
-        price: stripePriceSId,
+        price: priceId,
         quantity: 1,
       },
     ],
@@ -84,8 +86,8 @@ async function createCheckoutSession(customerId: string, userName: string) {
   })
 }
 
-function requireNoSubscription(lastPaidAt: Date | null): void {
-  if (checkSubscriptionStatus(lastPaidAt)) {
+function requireNoPriorSubscription(lastPaidAt: Date | null): void {
+  if (lastPaidAt !== null) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Bad Request: User has an active subscription',
@@ -105,6 +107,6 @@ function requireNoStripeCustomerId(stripeCustomerId: string | null): void {
 export const stripe = {
   requireCompleteStripeCustomer,
   createCheckoutSession,
-  requireNoSubscription,
+  requireNoPriorSubscription,
   requireNoStripeCustomerId
 }
