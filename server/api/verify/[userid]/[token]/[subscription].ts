@@ -39,7 +39,13 @@ export default defineEventHandler(async (event) => {
 
     const checkoutSession = await stripe.createCheckoutSession(stripeCustomerId, user.userName, subscription)
 
-    if (checkoutSession.url) {
+    if (checkoutSession.id && checkoutSession.url) {
+      await db
+        .updateTable('users')
+        .set({ stripeCheckoutSessionId: checkoutSession.id })
+        .where('id', '=', user.id)
+        .execute()
+      
       return sendRedirect(event, checkoutSession.url, 302)
     }
 
@@ -48,4 +54,9 @@ export default defineEventHandler(async (event) => {
       statusMessage: 'Bad Request: Failed to create checkout session',
     })
   }
+
+  throw createError({
+    statusCode: 400,
+    statusMessage: 'Bad Request: Failed to confirm email',
+  })
 })

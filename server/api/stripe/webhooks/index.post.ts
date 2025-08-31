@@ -32,7 +32,6 @@ export default defineEventHandler(async (event) => {
   if (stripeEvent.type === 'customer.subscription.created') {
     const createdSubscription = stripeEvent.data.object
     const customerId = createdSubscription.customer as string
-    const timestamp = new Date(createdSubscription.created * 1000)
     
     const priceId = createdSubscription.items.data[0].price.id
     console.log('subscription created for price:', priceId)
@@ -41,7 +40,7 @@ export default defineEventHandler(async (event) => {
     await db
       .updateTable('users')
       .set({
-        lastPaidAt: timestamp,
+        stripeCheckoutSessionId: null,
         subscription: priceId === stripePriceSId ? 'S' : priceId === stripePriceLId ? 'L' : null,
       })
       .where('stripeCustomerId', '=', customerId)
