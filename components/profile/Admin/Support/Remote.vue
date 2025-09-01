@@ -82,24 +82,22 @@ const { copy, copied } = useClipboard({ source: config })
       </div>
       <p>
         Um Ihnen schnell und effizient bei technischen Problemen zu helfen, können Sie uns einen Fernwartungszugriff auf
-        Ihren Computer gewähren.
-        Die Informationen, die dabei übertragen werden (also das, was Ihr Bildschirm anzeigt), sind außer Ihnen und uns
-        niemandem zugänglich. Mehr dazu finden Sie in unserer <a
+        Ihren Computer gewähren. Mehr dazu finden Sie in unserer <a
           href="/datenschutz"
           target="_blank"
           class="text-primary-500 hover:underline"
         >Datenschutzerklärung</a>.
       </p>
       <p class="mt-4 mb-4">
-        Laden Sie dazu bitte die Fernwartungssoftware über einen der Buttons unten herunter und starten Sie sie, durch
-        einen Doppelklick auf die heruntergeladene Datei. Die Software nennt sich <img
+        Laden Sie dazu bitte die Fernwartungssoftware <img
           src="/rustdesk.png"
           alt="Rust Desk Logo"
           class="inline-block size-6 rounded-full border border-gray-200 align-bottom mb-1"
-        > <em>Rust Desk</em> und ist <em>Freie Software</em>, die wir selbst betreiben.
+        > <em>Rust Desk</em> herunter und starten Sie sie, durch
+        einen Doppelklick auf die heruntergeladene Datei.
       </p>
       <UButton
-        href="https://github.com/rustdesk/rustdesk/releases/download/1.4.0/rustdesk-1.4.0-x86_64.exe"
+        href="https://solohost.de/rustdesk-1.4.1.exe"
         target="_blank"
         rel="noopener noreferrer"
         download
@@ -126,7 +124,7 @@ const { copy, copied } = useClipboard({ source: config })
         für Windows herunterladen
       </UButton>
       <UButton
-        href="https://github.com/rustdesk/rustdesk/releases/download/1.4.0/rustdesk-1.4.0-x86_64.dmg"
+        href="https://solohost.de/rustdesk-1.4.1.dmg"
         target="_blank"
         rel="noopener noreferrer"
         download
