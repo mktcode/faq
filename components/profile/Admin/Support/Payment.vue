@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import { useClipboard } from '@vueuse/core'
-
 const { showSupportPayment, go } = useAdmin()
-
-const config = ref('=0nI9UUYQpURKZXSmBnVkNFZykzNthnVL9GMkZFSzhncx4Ucyk2aDhkd1BHbUNnI6ISeltmIsIiI6ISawFmIsIiI6ISehxWZyJCLiYTMxEjM6UGZuIXZk5WZhxGd092atMXdrJXYt5Cdy9GcwV3ciojI0N3boJye')
-const { copy, copied } = useClipboard({ source: config })
 </script>
 
 <template>
