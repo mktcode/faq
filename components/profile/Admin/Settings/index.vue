@@ -2,19 +2,19 @@
 const { $profile } = useProfile()
 const {
   showMainSettings,
-  showCompanySettings,
-  showDomainSettings,
-  showEmailSettings,
-  showSubscriptionSettings,
+  go,
 } = useAdmin()
 </script>
 
 <template>
   <USlideover
-    v-model:open="showMainSettings"
+    :open="showMainSettings"
     side="left"
     :close="{
       size: 'md',
+      onClick: () => {
+        go('')
+      }
     }"
     :ui="{
       wrapper: 'z-40',

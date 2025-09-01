@@ -1,8 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
 const subscriptionSuccess = !!route.query.subscriptionSuccess
-
-useAdminHashNav()
 </script>
 
 <template>

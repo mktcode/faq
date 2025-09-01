@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
 
-defineEmits(['goToSubscription'])
+const { go } = useAdmin()
 
 const { lbIp } = useRuntimeConfig().public
 
@@ -100,6 +100,6 @@ watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce:
     :ui="{
       trailingIcon: 'ml-auto',
     }"
-    @click="$emit('goToSubscription')"
+    @click="go('#settings/subscription')"
   />
 </template>

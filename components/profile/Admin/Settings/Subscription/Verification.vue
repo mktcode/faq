@@ -2,7 +2,7 @@
 const { user } = useUserSession()
 
 const { $profile, updateProfile } = useProfile()
-const { showSubscriptionVerification } = useAdmin()
+const { showSubscriptionVerification, go } = useAdmin()
 const selectedSubscription = useState<'S' | 'L' | null>('selectedSubscription', () => null)
 
 const emailToVerify = ref(user.value?.email || '')
@@ -50,7 +50,7 @@ onBeforeUnmount(() => {
 
 <template>
   <USlideover
-    v-model:open="showSubscriptionVerification"
+    :open="showSubscriptionVerification"
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"
@@ -59,6 +59,9 @@ onBeforeUnmount(() => {
     }"
     :close="{
       size: 'md',
+      onClick: () => {
+        go('#settings/subscription')
+      }
     }"
   >
     <template #title>

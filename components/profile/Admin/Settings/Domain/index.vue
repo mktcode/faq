@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const { showDomainSettings } = useAdmin()
+const { showDomainSettings, go } = useAdmin()
 </script>
 
 <template>
   <USlideover
-    v-model:open="showDomainSettings"
+    :open="showDomainSettings"
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"
@@ -13,6 +13,9 @@ const { showDomainSettings } = useAdmin()
     }"
     :close="{
       size: 'md',
+      onClick: () => {
+        go('#settings')
+      }
     }"
   >
     <template #title>
@@ -28,10 +31,7 @@ const { showDomainSettings } = useAdmin()
     <template #body>
       <div class="flex flex-col gap-4 p-4">
         <ProfileAdminSettingsDomainSubscribed v-if="$profile.subscription.plan" />
-        <ProfileAdminSettingsDomainUnsubscribed
-          v-else
-          @go-to-subscription="$emit('goToSubscription')"
-        />
+        <ProfileAdminSettingsDomainUnsubscribed v-else />
       </div>
     </template>
   </USlideover>

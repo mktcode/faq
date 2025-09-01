@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const { showSubscriptionVerification } = useAdmin()
+const { go } = useAdmin()
 const selectedSubscription = useState<'S' | 'L' | null>('selectedSubscription', () => null)
 
 function selectSubscription(plan: 'S' | 'L') {
   selectedSubscription.value = plan
-  showSubscriptionVerification.value = true
+  go('#settings/subscription/verification')
 }
 </script>
 

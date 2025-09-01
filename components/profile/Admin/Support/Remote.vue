@@ -2,7 +2,7 @@
 import { useClipboard } from '@vueuse/core'
 import { CalendarDate } from '@internationalized/date'
 
-const { showSupportRemote } = useAdmin()
+const { showSupportRemote, go } = useAdmin()
 const tomorrow = new Date()
 tomorrow.setDate(tomorrow.getDate() + 1)
 
@@ -14,12 +14,15 @@ const { copy, copied } = useClipboard({ source: config })
 
 <template>
   <USlideover
-    v-model:open="showSupportRemote"
+    :open="showSupportRemote"
     side="right"
     :overlay="false"
     close-icon="i-heroicons-arrow-left"
     :close="{
       size: 'md',
+      onClick: () => {
+        go('#support')
+      }
     }"
     :ui="{
       wrapper: 'z-40',

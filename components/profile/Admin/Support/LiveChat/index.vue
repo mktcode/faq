@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import type { WootConversation } from '~/types/chatwoot'
 
-// TODO: create contact on first launch
-
-const { showSupportLiveChat, showSupportLiveChatConversation } = useAdmin()
+const { showSupportLiveChat, showSupportLiveChatConversation, go } = useAdmin()
 const router = useRouter()
 
 const userInput = ref('')
@@ -68,12 +66,15 @@ watch(showSupportLiveChatConversation, (newValue, oldValue) => {
 
 <template>
   <USlideover
-    v-model:open="showSupportLiveChat"
+    :open="showSupportLiveChat"
     side="right"
     :overlay="false"
     close-icon="i-heroicons-arrow-left"
     :close="{
       size: 'md',
+      onClick: () => {
+        go('#support')
+      }
     }"
     :ui="{
       wrapper: 'z-40',

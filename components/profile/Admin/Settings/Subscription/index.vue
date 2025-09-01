@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { showSubscriptionSettings } = useAdmin()
+const { showSubscriptionSettings, go } = useAdmin()
 
 const { stripePortalUrl } = useRuntimeConfig().public
 const { user } = useUserSession()
@@ -7,7 +7,7 @@ const { user } = useUserSession()
 
 <template>
   <USlideover
-    v-model:open="showSubscriptionSettings"
+    :open="showSubscriptionSettings"
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"
@@ -16,6 +16,9 @@ const { user } = useUserSession()
     }"
     :close="{
       size: 'md',
+      onClick: () => {
+        go('#settings')
+      }
     }"
   >
     <template #title>

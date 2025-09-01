@@ -3,7 +3,7 @@ import type { WootConversation } from '~/types/chatwoot'
 
 const toast = useToast()
 
-const { showSupportLiveChatConversation } = useAdmin()
+const { showSupportLiveChatConversation, go } = useAdmin()
 
 const userInput = ref('')
 const isSendingResponse = ref(false)
@@ -58,7 +58,7 @@ async function deleteConversation() {
     })
     conversation.value = null
     currentConversationId.value = null
-    showSupportLiveChatConversation.value = false
+    go('#support/livechat')
     showDeleteModal.value = false
     toast.add({
       title: 'Erfolg',
@@ -95,12 +95,15 @@ onBeforeUnmount(() => {
 
 <template>
   <USlideover
-    v-model:open="showSupportLiveChatConversation"
+    :open="showSupportLiveChatConversation"
     side="right"
     :overlay="false"
     close-icon="i-heroicons-arrow-left"
     :close="{
       size: 'md',
+      onClick: () => {
+        go('#support/livechat')
+      }
     }"
     :ui="{
       header: '*:first:flex-1 *:first:pr-8',

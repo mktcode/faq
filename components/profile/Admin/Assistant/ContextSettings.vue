@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const { showAssistantContextSettings } = useAdmin()
+const { showAssistantContextSettings, go } = useAdmin()
 
 const { $profile, isSavingSettings, saveSettings } = useProfile()
 </script>
 
 <template>
   <USlideover
-    v-model:open="showAssistantContextSettings"
+    :open="showAssistantContextSettings"
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"
@@ -15,6 +15,9 @@ const { $profile, isSavingSettings, saveSettings } = useProfile()
     }"
     :close="{
       size: 'md',
+      onClick: () => {
+        go('#assistant')
+      }
     }"
   >
     <template #title>

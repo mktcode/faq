@@ -1,14 +1,17 @@
 <script setup lang="ts">
-const { showSupport } = useAdmin()
+const { showSupport, go } = useAdmin()
 const router = useRouter()
 </script>
 
 <template>
   <USlideover
-    v-model:open="showSupport"
+    :open="showSupport"
     side="right"
     :close="{
       size: 'md',
+      onClick: () => {
+        go('')
+      },
     }"
     :ui="{
       wrapper: 'z-40',

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
 
-const { showSupportPhoneMail } = useAdmin()
+const { showSupportPhoneMail, go } = useAdmin()
 
 const { user } = useUserSession()
 const { copy: copySupportId, copied: copiedSupportId } = useClipboard()
@@ -14,12 +14,15 @@ const supportPhone = '+49 123 4567890'
 
 <template>
   <USlideover
-    v-model:open="showSupportPhoneMail"
+    :open="showSupportPhoneMail"
     side="right"
     :overlay="false"
     close-icon="i-heroicons-arrow-left"
     :close="{
       size: 'md',
+      onClick: () => {
+        go('#support')
+      }
     }"
     :ui="{
       wrapper: 'z-40',

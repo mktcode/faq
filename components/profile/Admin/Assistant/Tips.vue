@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const { showAssistantTips } = useAdmin()
+const { showAssistantTips, go } = useAdmin()
 </script>
 
 <template>
   <USlideover
-    v-model:open="showAssistantTips"
+    :open="showAssistantTips"
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"
@@ -13,6 +13,9 @@ const { showAssistantTips } = useAdmin()
     }"
     :close="{
       size: 'md',
+      onClick: () => {
+        go('#assistant')
+      }
     }"
   >
     <template #title>

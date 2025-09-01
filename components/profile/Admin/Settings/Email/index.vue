@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const { showEmailSettings } = useAdmin()
+const { showEmailSettings, go } = useAdmin()
 </script>
 
 <template>
   <USlideover
-    v-model:open="showEmailSettings"
+    :open="showEmailSettings"
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"
@@ -13,6 +13,9 @@ const { showEmailSettings } = useAdmin()
     }"
     :close="{
       size: 'md',
+      onClick: () => {
+        go('#settings')
+      }
     }"
   >
     <template #title>

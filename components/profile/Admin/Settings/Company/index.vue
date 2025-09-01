@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const { showCompanySettings } = useAdmin()
+const { showCompanySettings, go } = useAdmin()
 
 const { saveSettings } = useProfile()
 </script>
 
 <template>
   <USlideover
-    v-model:open="showCompanySettings"
+    :open="showCompanySettings"
     side="left"
     close-icon="i-heroicons-arrow-left"
     :overlay="false"
@@ -15,6 +15,9 @@ const { saveSettings } = useProfile()
     }"
     :close="{
       size: 'md',
+      onClick: () => {
+        go('#settings')
+      }
     }"
   >
     <template #title>

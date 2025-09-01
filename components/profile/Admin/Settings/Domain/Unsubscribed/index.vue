@@ -1,10 +1,4 @@
 <template>
-  <ProfileAdminSettingsDomainUnsubscribedDetails
-    v-if="$profile.domain"
-    @go-to-subscription="$emit('goToSubscription')"
-  />
-  <ProfileAdminSettingsDomainUnsubscribedSetup
-    v-else
-    @go-to-subscription="$emit('goToSubscription')"
-  />
+  <ProfileAdminSettingsDomainUnsubscribedDetails v-if="$profile.domain" />
+  <ProfileAdminSettingsDomainUnsubscribedSetup v-else />
 </template>

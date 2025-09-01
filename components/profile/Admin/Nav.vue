@@ -4,15 +4,10 @@ const { clear } = useUserSession()
 const { $profile } = useProfile()
 const { fetch: fetchUserSession } = useUserSession()
 
-const { showMainSettings } = useAdmin()
-const router = useRouter()
-
-function go(hash: string) {
-  router.push({ hash })
-}
+const { go } = useAdmin()
 
 async function signOut() {
-  showMainSettings.value = false
+  go('#')
   $profile.isOwned = false
   $profile.subscription.plan = null
   $profile.subscription.checkoutPending = false

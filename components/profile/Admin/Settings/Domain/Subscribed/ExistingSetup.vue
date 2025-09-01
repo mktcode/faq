@@ -2,7 +2,6 @@
 import { watchDebounced } from '@vueuse/core'
 
 const { lbIp } = useRuntimeConfig().public
-const emit = defineEmits(['goToSubscription'])
 
 const { isCheckingDns, hasBeenChecked, isACorrect, checkDns } = useDnsCheck()
 const { updateDomain, isUpdatingDomain, domainConnectedSuccessfully } = useExternalDomain()

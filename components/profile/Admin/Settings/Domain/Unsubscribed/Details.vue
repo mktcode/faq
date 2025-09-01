@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const { go } = useAdmin()
+</script>
+
 <template>
   <p class="text-gray-500">
     Ihre Website ist unter <strong>{{ $profile.domain }}</strong> erreichbar.
@@ -10,6 +14,6 @@
     :ui="{
       trailingIcon: 'ml-auto',
     }"
-    @click="$emit('goToSubscription')"
+    @click="go('#settings/subscription')"
   />
 </template>

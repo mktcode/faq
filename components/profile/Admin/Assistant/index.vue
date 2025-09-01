@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ResponseStreamEvent } from 'openai/resources/responses/responses.mjs'
 
-const { showAssistant } = useAdmin()
+const { showAssistant, go } = useAdmin()
 const router = useRouter()
 
 const quota = useState('assistantQuota', () => 12)
@@ -56,7 +56,7 @@ function submit() {
 
 <template>
   <USlideover
-    v-model:open="showAssistant"
+    :open="showAssistant"
     side="left"
     close-icon="i-heroicons-arrow-left"
     :ui="{
@@ -67,6 +67,9 @@ function submit() {
     }"
     :close="{
       size: 'md',
+      onClick: () => {
+        go('')
+      }
     }"
   >
     <template #title>

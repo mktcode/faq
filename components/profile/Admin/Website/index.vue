@@ -3,8 +3,7 @@ const toast = useToast()
 
 const { $profile } = useProfile()
 
-const { showWebsiteSettings } = useAdmin()
-const router = useRouter()
+const { showWebsiteSettings, go } = useAdmin()
 
 const showLegalDataWarning = computed(() => {
   return !$profile.settings.public.company.name || !$profile.settings.public.company.street || !$profile.settings.public.company.phone
@@ -28,18 +27,17 @@ async function togglePublished() {
     })
   }
 }
-
-function go(sub: string) {
-  router.push({ hash: `#website/${sub}` })
-}
 </script>
 
 <template>
   <USlideover
-    v-model:open="showWebsiteSettings"
+    :open="showWebsiteSettings"
     side="left"
     :close="{
       size: 'md',
+      onClick: () => {
+        go('')
+      }
     }"
     :ui="{
       wrapper: 'z-40',
@@ -94,7 +92,7 @@ function go(sub: string) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="go('design')"
+        @click="go('#website/design')"
       />
 
       <UButton
@@ -107,7 +105,7 @@ function go(sub: string) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="go('offering')"
+        @click="go('#website/offering')"
       />
 
       <UButton
@@ -120,7 +118,7 @@ function go(sub: string) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="go('contact')"
+        @click="go('#website/contact-form')"
       />
 
       <UButton
@@ -133,7 +131,7 @@ function go(sub: string) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="go('gallery')"
+        @click="go('#website/gallery')"
       />
 
       <UButton
@@ -146,7 +144,7 @@ function go(sub: string) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="go('faq')"
+        @click="go('#website/faq')"
       />
 
       <UButton
@@ -159,7 +157,7 @@ function go(sub: string) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="go('downloads')"
+        @click="go('#website/downloads')"
       />
     </template>
   </USlideover>
