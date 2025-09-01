@@ -80,12 +80,13 @@ const router = useRouter()
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="router.push({ hash: '#support/livechat' })"
+        @click="router.push({ hash: '#support/payment' })"
       />
 
       <ProfileAdminSupportPhoneMail />
       <ProfileAdminSupportRemote />
       <ProfileAdminSupportLiveChat />
+      <ProfileAdminSupportPayment />
     </template>
   </USlideover>
 </template>
