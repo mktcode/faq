@@ -36,6 +36,14 @@ const { showEmailSettings, go } = useAdmin()
         icon="i-heroicons-globe-alt"
         variant="soft"
         class="rounded-none"
+        :actions="[
+          {
+            label: 'Domain einrichten',
+            icon: 'i-heroicons-globe-alt',
+            to: '#settings/domain',
+            size: 'xl',
+          }
+        ]"
       />
       <ProfileAdminSettingsEmailMailboxes
         v-else

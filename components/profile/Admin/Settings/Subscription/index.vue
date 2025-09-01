@@ -2,7 +2,6 @@
 const { showSubscriptionSettings, go } = useAdmin()
 
 const { stripePortalUrl } = useRuntimeConfig().public
-const { user } = useUserSession()
 </script>
 
 <template>
@@ -33,26 +32,54 @@ const { user } = useUserSession()
 
     <template #body>
       <div class="flex flex-col gap-4 p-6">
-        <template v-if="$profile.subscription.checkoutPending">
-          <p class="text-gray-600">
-            Ihr Abonnement wird gerade verarbeitet.
-          </p>
-        </template>
+        <ProfileAdminSettingsSubscriptionCheckoutPending v-if="$profile.subscription.checkoutPending" />
         <template v-else-if="$profile.subscription.plan">
-          <p class="text-gray-600">
-            Aktuelles Paket: {{ $profile.subscription.plan }}
-          </p>
-          <p class="text-gray-600">
-            Um Ihr Abonnement zu verwalten, werden Sie zu unserem Zahlungsdienstleister Stripe weitergeleitet.
-            Geben Sie dort Ihre E-Mail-Adresse ({{ user?.email }}) ein, um einen Zugangscode zu erhalten.
-            Aus Sicherheitsgründen ist dieser Code nur einmalig gültig.
-          </p>
-          <UButton
-            :to="stripePortalUrl"
-            label="Abonnement verwalten"
-            icon="i-heroicons-pencil-square"
-            class="w-full"
-          />
+          <div class="flex flex-col items-center">
+            <div class="text-gray-600 text-sm">
+              Ihr Abonnement:
+            </div>
+            <div class="text-4xl">
+              Paket {{ $profile.subscription.plan }}
+            </div>
+          </div>
+          <div class="flex flex-col gap-2">
+            <UButton
+              :to="stripePortalUrl"
+              label="Zahlungsdetails ändern"
+              icon="i-heroicons-pencil-square"
+              class="w-full"
+              trailing-icon="i-heroicons-arrow-right"
+              :ui="{
+                trailingIcon: 'ml-auto opacity-50',
+              }"
+            />
+            <UButton
+              v-if="$profile.subscription.plan === 'S'"
+              label="Zu Paket L wechseln"
+              icon="i-lucide-chevrons-up"
+              trailing-icon="i-heroicons-arrow-right"
+              :ui="{
+                trailingIcon: 'ml-auto opacity-50',
+              }"
+            />
+            <UButton
+              v-if="$profile.subscription.plan === 'L'"
+              label="Zu Paket S wechseln"
+              icon="i-lucide-chevrons-down"
+              trailing-icon="i-heroicons-arrow-right"
+              :ui="{
+                trailingIcon: 'ml-auto opacity-50',
+              }"
+            />
+            <UButton
+              label="Premium-Abonnement beenden"
+              icon="i-heroicons-x-circle"
+              trailing-icon="i-heroicons-arrow-right"
+              :ui="{
+                trailingIcon: 'ml-auto opacity-50',
+              }"
+            />
+          </div>
         </template>
         <ProfileAdminSettingsSubscriptionUnsubscribed v-else />
       </div>

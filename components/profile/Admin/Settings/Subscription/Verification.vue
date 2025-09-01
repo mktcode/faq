@@ -46,6 +46,16 @@ onBeforeUnmount(() => {
     clearInterval(updateProfileInterval.value)
   }
 })
+
+const formFilled = computed(() => {
+  return (
+    emailToVerify.value.trim().length > 0 &&
+    $profile.settings.public.company.name.trim().length > 0 &&
+    $profile.settings.public.company.street.trim().length > 0 &&
+    $profile.settings.public.company.zip.trim().length > 0 &&
+    $profile.settings.public.company.city.trim().length > 0
+  )
+})
 </script>
 
 <template>
@@ -139,11 +149,19 @@ onBeforeUnmount(() => {
         }"
       />
       <UButton
+        v-if="formFilled"
         :label="showEmailVerificationHint ? `Bestätigungs-E-Mail erneut senden${cooldown > 0 ? ` (${cooldown})` : ''}` : `Bestätigungs-E-Mail senden`"
         class="w-full"
         :loading="isStartingVerification"
         :disabled="isStartingVerification || cooldown > 0"
         @click="startVerification"
+      />
+      <UAlert
+        v-else
+        icon="i-lucide-alert-triangle"
+        title="Bitte füllen Sie alle Felder aus."
+        variant="soft"
+        description="Für ein Abonnement benötigen wir Ihre Unternehmensdaten und eine E-Mail-Adresse."
       />
     </template>
   </USlideover>
