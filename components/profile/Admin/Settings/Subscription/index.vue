@@ -3,20 +3,6 @@ const { showSubscriptionSettings } = useAdmin()
 
 const { stripePortalUrl } = useRuntimeConfig().public
 const { user } = useUserSession()
-const { updateProfile } = useProfile()
-
-const updateProfileInterval = ref<NodeJS.Timeout | null>(null)
-onMounted(() => {
-  updateProfileInterval.value = setInterval(async () => {
-    await updateProfile()
-  }, 5000)
-})
-
-onBeforeUnmount(() => {
-  if (updateProfileInterval.value) {
-    clearInterval(updateProfileInterval.value)
-  }
-})
 </script>
 
 <template>

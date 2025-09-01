@@ -11,6 +11,8 @@ const showEmailVerificationHint = ref(false)
 
 const cooldown = ref(0)
 
+const updateProfileInterval = ref<NodeJS.Timeout | null>(null)
+
 async function startVerification() {
   isStartingVerification.value = true
 
@@ -33,14 +35,11 @@ async function startVerification() {
       clearInterval(interval)
     }
   }, 1000)
-}
 
-const updateProfileInterval = ref<NodeJS.Timeout | null>(null)
-onMounted(() => {
   updateProfileInterval.value = setInterval(async () => {
     await updateProfile()
   }, 5000)
-})
+}
 
 onBeforeUnmount(() => {
   if (updateProfileInterval.value) {
