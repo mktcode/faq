@@ -32,6 +32,19 @@ const router = useRouter()
 
     <template #body>
       <UButton
+        label="Termin buchen"
+        class="w-full rounded-none p-4 border-b border-gray-200"
+        variant="ghost"
+        color="neutral"
+        icon="i-lucide-calendar-check"
+        trailing-icon="i-heroicons-chevron-right"
+        :ui="{
+          trailingIcon: 'ml-auto opacity-30',
+        }"
+        @click="router.push({ hash: '#support/book' })"
+      />
+
+      <UButton
         label="Telefon & E-Mail"
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
@@ -85,6 +98,7 @@ const router = useRouter()
 
       <ProfileAdminSupportPhoneMail />
       <ProfileAdminSupportRemote />
+      <ProfileAdminSupportBook />
       <ProfileAdminSupportLiveChat />
       <ProfileAdminSupportPayment />
     </template>

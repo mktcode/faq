@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { CalendarDate } from '@internationalized/date'
 
-const { showSupportRemoteBook, go } = useAdmin()
+const { showSupportBook, go } = useAdmin()
 const tomorrow = new Date()
 tomorrow.setDate(tomorrow.getDate() + 1)
 
@@ -10,14 +10,14 @@ const minDate = new CalendarDate(tomorrow.getFullYear(), tomorrow.getMonth() + 1
 
 <template>
   <USlideover
-    :open="showSupportRemoteBook"
+    :open="showSupportBook"
     side="right"
     :overlay="false"
     close-icon="i-heroicons-arrow-left"
     :close="{
       size: 'md',
       onClick: () => {
-        go('#support/remote')
+        go('#support')
       },
     }"
     :ui="{
@@ -29,10 +29,10 @@ const minDate = new CalendarDate(tomorrow.getFullYear(), tomorrow.getMonth() + 1
     <template #title>
       <h3 class="text-lg font-semibold flex items-center gap-2">
         <UIcon
-          name="i-lucide-laptop-minimal-check"
+          name="i-lucide-message-circle-question-mark"
           class="inline-block size-6 opacity-50"
         />
-        Fernwartung: Termin reservieren
+        Termin reservieren
       </h3>
     </template>
 
