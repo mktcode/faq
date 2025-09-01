@@ -25,7 +25,6 @@ export default function useAdmin() {
   const showSupportLiveChat = computed(() => router.currentRoute.value.hash.startsWith('#support/livechat'))
   const showSupportLiveChatConversation = computed(() => router.currentRoute.value.hash === '#support/livechat/conversation')
   const showSupportRemote = computed(() => router.currentRoute.value.hash.startsWith('#support/remote'))
-  const showSupportRemotePrepare = computed(() => router.currentRoute.value.hash === '#support/remote/prepare')
   const showSupportBook = computed(() => router.currentRoute.value.hash === '#support/book')
   const showSupportPayment = computed(() => router.currentRoute.value.hash === '#support/payment')
 
@@ -55,7 +54,6 @@ export default function useAdmin() {
     showSupportLiveChat,
     showSupportLiveChatConversation,
     showSupportRemote,
-    showSupportRemotePrepare,
     showSupportBook,
     showSupportPayment,
     go,
