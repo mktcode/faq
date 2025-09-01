@@ -8,7 +8,7 @@ export default function useAdmin() {
   const showSubscriptionSettings = computed(() => router.currentRoute.value.hash.startsWith('#settings/subscription'))
   const showSubscriptionVerification = computed(() => router.currentRoute.value.hash === '#settings/subscription/verification')
 
-  const showWebsiteSettings = computed(() => router.currentRoute.value.hash.startsWith('#website'))
+  const showWebsiteSettings = computed(() => router.currentRoute.value.hash === '#website')
   const showWebsiteDesignSettings = computed(() => router.currentRoute.value.hash === '#website/design')
   const showWebsiteOfferingSettings = computed(() => router.currentRoute.value.hash === '#website/offering')
   const showWebsiteContactFormSettings = computed(() => router.currentRoute.value.hash === '#website/contact-form')

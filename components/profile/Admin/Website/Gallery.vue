@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { useMediaQuery } from '@vueuse/core'
+
 const toast = useToast()
 
 const { showWebsiteGallerySettings, go } = useAdmin()
+
+const isDesktop = useMediaQuery('(min-width: 640px)')
 
 const { $profile, saveSettings } = useProfile()
 
@@ -109,10 +113,9 @@ async function deleteImage(index: number) {
 <template>
   <UDrawer
     :open="showWebsiteGallerySettings"
-    side="left"
+    :direction="isDesktop ? 'left' : 'bottom'"
     close-icon="i-heroicons-arrow-left"
     handle-only
-    direction="left"
     :overlay="false"
     :close-threshold="0.85"
     @close="() => go('#website')"

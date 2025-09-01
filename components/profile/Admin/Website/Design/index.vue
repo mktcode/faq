@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { useMediaQuery } from '@vueuse/core'
 import { toHslString } from '~/shared/color'
 
 const { showWebsiteDesignSettings, go } = useAdmin()
 const toast = useToast()
 
 const { $profile, saveSettings } = useProfile()
+
+const isDesktop = useMediaQuery('(min-width: 640px)')
 
 const headerImageInput = ref<HTMLInputElement | null>(null)
 const headerVideoInput = ref<HTMLInputElement | null>(null)
@@ -181,10 +184,9 @@ async function deleteImage(image: 'logo' | 'header') {
 <template>
   <UDrawer
     :open="showWebsiteDesignSettings"
-    side="left"
+    :direction="isDesktop ? 'left' : 'bottom'"
     close-icon="i-heroicons-arrow-left"
     handle-only
-    direction="left"
     :overlay="false"
     :close-threshold="0.85"
     @close="() => go('#website')"

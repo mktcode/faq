@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { useMediaQuery } from '@vueuse/core'
+
 const toast = useToast()
+
+const isDesktop = useMediaQuery('(min-width: 640px)')
 
 const { showWebsiteDownloadsSettings, go } = useAdmin()
 
@@ -91,10 +95,9 @@ async function deleteDownload(index: number) {
 <template>
   <UDrawer
     v-model:open="showWebsiteDownloadsSettings"
-    side="left"
+    :direction="isDesktop ? 'left' : 'bottom'"
     close-icon="i-heroicons-arrow-left"
     handle-only
-    direction="left"
     :overlay="false"
     :close-threshold="0.85"
     @close="() => go('#website')"

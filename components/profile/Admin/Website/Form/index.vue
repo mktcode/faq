@@ -1,15 +1,17 @@
 <script setup lang="ts">
+import { useMediaQuery } from '@vueuse/core';
+
 const { saveSettings, isSavingSettings } = useProfile()
 const { showWebsiteContactFormSettings, go } = useAdmin()
+const isDesktop = useMediaQuery('(min-width: 640px)')
 </script>
 
 <template>
   <UDrawer
     :open="showWebsiteContactFormSettings"
-    side="left"
+    :direction="isDesktop ? 'left' : 'bottom'"
     close-icon="i-heroicons-arrow-left"
     handle-only
-    direction="left"
     :overlay="false"
     :close-threshold="0.85"
     @close="() => go('#website')"

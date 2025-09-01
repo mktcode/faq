@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { useMediaQuery } from '@vueuse/core'
+
 const { showWebsiteOfferingSettings, go } = useAdmin()
 
 const { $profile } = useProfile()
+
+const isDesktop = useMediaQuery('(min-width: 640px)')
 
 function changeOrder(index: number, direction: 'up' | 'down') {
   const items = $profile.settings.public.components.offers.items
@@ -21,10 +25,9 @@ function changeOrder(index: number, direction: 'up' | 'down') {
 <template>
   <UDrawer
     v-model:open="showWebsiteOfferingSettings"
-    side="left"
+    :direction="isDesktop ? 'left' : 'bottom'"
     close-icon="i-heroicons-arrow-left"
     handle-only
-    direction="left"
     :overlay="false"
     :close-threshold="0.85"
     @close="() => go('#website')"

@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { useMediaQuery } from '@vueuse/core'
+
 const { showWebsiteFaqSettings, go } = useAdmin()
+
+const isDesktop = useMediaQuery('(min-width: 640px)')
 
 const { data: qanda, refresh: refreshQanda } = await useFetch('/api/user/qanda')
 
@@ -38,10 +42,9 @@ async function saveQanda() {
 <template>
   <UDrawer
     :open="showWebsiteFaqSettings"
-    side="left"
+    :direction="isDesktop ? 'left' : 'bottom'"
     close-icon="i-heroicons-arrow-left"
     handle-only
-    direction="left"
     :overlay="false"
     :close-threshold="0.85"
     @close="() => go('#website')"
