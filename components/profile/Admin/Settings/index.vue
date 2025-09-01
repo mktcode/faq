@@ -78,8 +78,7 @@ async function signOut() {
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
-        :disabled="!$profile.subscription.plan"
-        @click="$router.push({ hash: '#settings/email' })"
+        @click="$profile.subscription.plan ? $router.push({ hash: '#settings/email' }) : $router.push({ hash: '#settings/subscription' })"
       >
         <template #trailing>
           <div class="ml-auto flex items-center gap-2">

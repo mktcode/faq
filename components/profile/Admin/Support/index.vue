@@ -41,8 +41,22 @@ const router = useRouter()
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="router.push({ hash: '#support/book' })"
-      />
+        @click="$profile.subscription.plan ? go('#support/book') : go('#settings/subscription')"
+      >
+        <template #trailing>
+          <div class="ml-auto flex items-center gap-2">
+            <UBadge
+              v-if="!$profile.subscription.plan"
+              label="Premium"
+              variant="outline"
+            />
+            <UIcon
+              name="i-heroicons-chevron-right"
+              class="size-6 opacity-30"
+            />
+          </div>
+        </template>
+      </UButton>
 
       <UButton
         label="Telefon & E-Mail"
