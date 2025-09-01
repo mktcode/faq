@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { WootConversation } from '~/types/chatwoot';
+import type { WootConversation } from '~/types/chatwoot'
 
 const open = defineModel('open', {
   type: Boolean,
@@ -8,11 +8,11 @@ const open = defineModel('open', {
 
 defineEmits<{
   (e: 'delete'): void
-}>();
+}>()
 
 defineProps<{
   conversation: WootConversation
-}>();
+}>()
 </script>
 
 <template>

@@ -1,4 +1,4 @@
-import { useLocalStorage } from "@vueuse/core"
+import { useLocalStorage } from '@vueuse/core'
 
 export default function useOwnedUserNames() {
   const ownedUserNames = useLocalStorage<string[]>('ownedUserNames', [])
@@ -16,6 +16,6 @@ export default function useOwnedUserNames() {
   return {
     ownedUserNames,
     addOwnedUserName,
-    removeOwnedUserName
+    removeOwnedUserName,
   }
 }

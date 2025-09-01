@@ -43,7 +43,7 @@ async function signIn() {
             :content="{
               align: 'end',
               side: 'bottom',
-              sideOffset: 8
+              sideOffset: 8,
             }"
           >
             <UButton
@@ -59,20 +59,20 @@ async function signIn() {
                 >
                   <UButton
                     variant="ghost"
-                    @click="userName = ownedUserName; ownedUserNamesPopoverOpen = false"
                     :label="ownedUserName"
                     size="xxl"
                     class="flex-1"
+                    @click="userName = ownedUserName; ownedUserNamesPopoverOpen = false"
                   />
                   <UButton
                     variant="ghost"
                     icon="i-heroicons-trash"
                     color="neutral"
                     size="xxl"
-                    @click="removeOwnedUserName(ownedUserName)"
                     :ui="{
-                      leadingIcon: 'opacity-50'
+                      leadingIcon: 'opacity-50',
                     }"
+                    @click="removeOwnedUserName(ownedUserName)"
                   />
                 </UButtonGroup>
               </div>

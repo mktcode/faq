@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { toHslString } from "~/shared/color"
+import { toHslString } from '~/shared/color'
 
 const show = useState('showDesignSettings', () => false)
 const toast = useToast()
@@ -63,18 +63,19 @@ const uploadHeaderVideo = async (files: FileList | null) => {
 
     if (success && videoUrl) {
       $profile.settings.public.header.video = videoUrl || ''
-  
+
       if ($profile.settings.public.header.imageOverlay.opacity > 90) {
         $profile.settings.public.header.imageOverlay.opacity = 90
       }
-  
+
       await saveSettings()
-  
+
       // Clear the input to allow selecting the same file again
       if (headerVideoInput.value) {
         headerVideoInput.value.value = ''
       }
-    } else {
+    }
+    else {
       toast.add({
         title: 'Fehler',
         description: message || 'Das Video konnte nicht hochgeladen werden.',

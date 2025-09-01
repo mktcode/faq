@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useClipboard } from '@vueuse/core';
+import { useClipboard } from '@vueuse/core'
 import { CalendarDate } from '@internationalized/date'
 
 const { showSupportRemote } = useAdmin()
@@ -38,8 +38,14 @@ const { copy, copied } = useClipboard({ source: config })
     </template>
 
     <template #body>
-      <UFormField label="Termin wählen" class="mb-8">
-        <UCalendar size="xl" :min-value="minDate" />
+      <UFormField
+        label="Termin wählen"
+        class="mb-8"
+      >
+        <UCalendar
+          size="xl"
+          :min-value="minDate"
+        />
       </UFormField>
       <div class="flex items-end gap-2">
         <UFormField label="Uhrzeit">
@@ -83,7 +89,11 @@ const { copy, copied } = useClipboard({ source: config })
       </p>
       <p class="mt-4 mb-4">
         Laden Sie dazu bitte die Fernwartungssoftware über einen der Buttons unten herunter und starten Sie sie, durch
-        einen Doppelklick auf die heruntergeladene Datei. Die Software nennt sich <img src="/rustdesk.png" alt="Rust Desk Logo" class="inline-block size-6 rounded-full border border-gray-200 align-bottom mb-1" /> <em>Rust Desk</em> und ist <em>Freie Software</em>, die wir selbst betreiben.
+        einen Doppelklick auf die heruntergeladene Datei. Die Software nennt sich <img
+          src="/rustdesk.png"
+          alt="Rust Desk Logo"
+          class="inline-block size-6 rounded-full border border-gray-200 align-bottom mb-1"
+        > <em>Rust Desk</em> und ist <em>Freie Software</em>, die wir selbst betreiben.
       </p>
       <UButton
         href="https://github.com/rustdesk/rustdesk/releases/download/1.4.0/rustdesk-1.4.0-x86_64.exe"
@@ -156,8 +166,8 @@ const { copy, copied } = useClipboard({ source: config })
           leadingIcon: 'size-6 shrink-0',
           trailingIcon: 'ml-auto opacity-50 size-6',
         }"
-        @click="copy(config)"
         block
+        @click="copy(config)"
       >
         {{ copied ? 'Konfiguration kopiert!' : 'Konfiguration kopieren' }}
       </UButton>

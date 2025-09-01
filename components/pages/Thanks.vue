@@ -17,7 +17,7 @@ setTimeout(() => {
         class="size-20 transition-colors duration-1000"
         :class="{
           'text-gray-200': !animatedGreen,
-          'text-green-600': animatedGreen
+          'text-green-600': animatedGreen,
         }"
       />
       <p class="max-w-xl mx-auto p-6 text-center text-xl">

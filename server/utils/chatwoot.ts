@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import { WootContactCreated } from '~/types/chatwoot';
+import type { WootContactCreated } from '~/types/chatwoot'
 
 const apiUrl = 'https://chat.markus-kottlaender.de'
 
@@ -7,10 +7,10 @@ async function createContact(userId: number, name: string) {
   const { chatwootInboxId, chatwootHmacSecret } = useRuntimeConfig()
   const db = await getDatabaseConnection()
 
-  const hmacHash =  crypto
-    .createHmac("sha256", chatwootHmacSecret)
+  const hmacHash = crypto
+    .createHmac('sha256', chatwootHmacSecret)
     .update(userId.toString())
-    .digest("hex");
+    .digest('hex')
 
   const contact = await $fetch<WootContactCreated>(`${apiUrl}/public/api/v1/inboxes/${chatwootInboxId}/contacts`, {
     method: 'POST',
@@ -20,8 +20,8 @@ async function createContact(userId: number, name: string) {
       name,
       custom_attributes: {
         userId,
-        subscription: null // TODO: update when subscription changes
-      }
+        subscription: null, // TODO: update when subscription changes
+      },
     },
   })
 

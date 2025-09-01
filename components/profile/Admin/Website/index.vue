@@ -94,7 +94,7 @@ function go(sub: string) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-  @click="go('design')"
+        @click="go('design')"
       />
 
       <UButton
@@ -107,7 +107,7 @@ function go(sub: string) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-  @click="go('offering')"
+        @click="go('offering')"
       />
 
       <UButton
@@ -120,7 +120,7 @@ function go(sub: string) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-  @click="go('contact')"
+        @click="go('contact')"
       />
 
       <UButton
@@ -133,7 +133,7 @@ function go(sub: string) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-  @click="go('gallery')"
+        @click="go('gallery')"
       />
 
       <UButton
@@ -146,7 +146,7 @@ function go(sub: string) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-  @click="go('faq')"
+        @click="go('faq')"
       />
 
       <UButton
@@ -159,7 +159,7 @@ function go(sub: string) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-  @click="go('downloads')"
+        @click="go('downloads')"
       />
     </template>
   </USlideover>

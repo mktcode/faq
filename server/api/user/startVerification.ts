@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
     })
     .where('id', '=', user.id)
     .execute()
-  
+
   const mailTemplate = mailTemplates.verificationEmail(user.id, emailConfirmationToken, subscription)
 
   await sendEmail({

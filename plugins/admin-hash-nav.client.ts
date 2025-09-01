@@ -7,7 +7,7 @@ type RootKey = 'settings' | 'website' | 'assistant' | 'support'
 
 export default defineNuxtPlugin(() => {
   // Only run in browser
-  if (process.server) return
+  if (import.meta.server) return
 
   const router = useRouter()
   const route = useRoute()
@@ -112,22 +112,26 @@ export default defineNuxtPlugin(() => {
         admin.showSubscriptionSettings.value = true
         if (sub2 === 'verification') admin.showSubscriptionVerification.value = true
       }
-    } else if (root === 'website') {
+    }
+    else if (root === 'website') {
       if (sub === 'design') admin.showDesignSettings.value = true
       else if (sub === 'offering') admin.showOfferingSettings.value = true
       else if (sub === 'contact') admin.showContactFormSettings.value = true
       else if (sub === 'gallery') admin.showGallerySettings.value = true
       else if (sub === 'faq') admin.showFaqSettings.value = true
       else if (sub === 'downloads') admin.showDownloadsSettings.value = true
-    } else if (root === 'assistant') {
+    }
+    else if (root === 'assistant') {
       if (sub === 'tips') admin.showAssistantTips.value = true
       else if (sub === 'context') admin.showAssistantContextSettings.value = true
-    } else if (root === 'support') {
+    }
+    else if (root === 'support') {
       if (sub === 'phone-mail') admin.showSupportPhoneMail.value = true
       else if (sub === 'livechat') {
         admin.showSupportLiveChat.value = true
         if (sub2 === 'conversation') admin.showSupportLiveChatConversation.value = true
-      } else if (sub === 'remote') admin.showSupportRemote.value = true
+      }
+      else if (sub === 'remote') admin.showSupportRemote.value = true
     }
   }
 
@@ -174,7 +178,7 @@ export default defineNuxtPlugin(() => {
       // Keep the guard active until nextTick so state->hash sync doesn't create extra history entries
       nextTick(() => { updatingFromHash = false })
     },
-    { immediate: true, flush: 'sync' }
+    { immediate: true, flush: 'sync' },
   )
 
   // When all root panels are closed, ensure the URL hash is cleared without adding history
@@ -186,6 +190,6 @@ export default defineNuxtPlugin(() => {
         router.replace({ hash: '' }) // clears the fragment
       }
     },
-    { flush: 'post' }
+    { flush: 'post' },
   )
 })

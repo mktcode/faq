@@ -155,7 +155,7 @@ async function registerDomain() {
             block: true,
             loading: isUpdatingProfile,
             onClick: updateProfile,
-          }
+          },
         ]"
       />
     </Transition>

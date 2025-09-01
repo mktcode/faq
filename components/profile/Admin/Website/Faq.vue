@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { showFaqSettings, } = useAdmin()
+const { showFaqSettings } = useAdmin()
 
 const { data: qanda, refresh: refreshQanda } = await useFetch('/api/user/qanda')
 

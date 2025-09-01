@@ -81,14 +81,14 @@ function submit() {
         variant="ghost"
         class="ml-auto"
         size="md"
-  @click="router.push({ hash: '#assistant/context' })"
+        @click="router.push({ hash: '#assistant/context' })"
       />
       <UButton
         icon="i-lucide-lightbulb"
         color="neutral"
         variant="ghost"
         size="md"
-  @click="router.push({ hash: '#assistant/tips' })"
+        @click="router.push({ hash: '#assistant/tips' })"
       />
     </template>
 

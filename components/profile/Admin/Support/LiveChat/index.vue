@@ -37,9 +37,11 @@ async function submit() {
     userInput.value = ''
     selectConversation(conversationId)
     fetchConversations()
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error sending message:', error)
-  } finally {
+  }
+  finally {
     isSendingResponse.value = false
   }
 }
@@ -90,7 +92,10 @@ watch(showSupportLiveChatConversation, (newValue, oldValue) => {
     </template>
 
     <template #body>
-      <div v-if="conversations.length === 0" class="p-4 text-center text-gray-500">
+      <div
+        v-if="conversations.length === 0"
+        class="p-4 text-center text-gray-500"
+      >
         Keine bisherigen Konversationen.
       </div>
       <UButton
@@ -111,7 +116,7 @@ watch(showSupportLiveChatConversation, (newValue, oldValue) => {
             <div class="text-gray-500 text-xs">
               {{ new Date(conversation.messages[conversation.messages.length - 1].created_at * 1000).toLocaleString('de-DE', { dateStyle: 'short', timeStyle: 'short' }) }}
             </div>
-            {{ conversation.messages[conversation.messages.length - 1].content }}<br />
+            {{ conversation.messages[conversation.messages.length - 1].content }}<br>
           </div>
         </template>
       </UButton>

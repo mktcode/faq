@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { toHslString } from "~/shared/color"
+import { toHslString } from '~/shared/color'
 
-const { lastUsedColors } = useLastUsedColors();
+const { lastUsedColors } = useLastUsedColors()
 
 defineEmits<{
-  (e: 'colorSelected', color: { h: number; s: number; l: number }): void
+  (e: 'colorSelected', color: { h: number, s: number, l: number }): void
 }>()
 </script>
 

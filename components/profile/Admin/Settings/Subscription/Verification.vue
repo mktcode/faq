@@ -73,7 +73,10 @@ onBeforeUnmount(() => {
 
     <template #body>
       <p class="text-gray-600">
-        Ihre <UIcon name="i-heroicons-building-office-2" class="inline-block size-4 align-middle" /> Unternehmensdaten werden als Rechnungsadresse verwendet.
+        Ihre <UIcon
+          name="i-heroicons-building-office-2"
+          class="inline-block size-4 align-middle"
+        /> Unternehmensdaten werden als Rechnungsadresse verwendet.
         Sind Ihre Angaben korrekt?
       </p>
       <UFormField label="Name Ihres Unternehmens">

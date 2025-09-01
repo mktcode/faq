@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
   if (stripeEvent.type === 'customer.subscription.created') {
     const createdSubscription = stripeEvent.data.object
     const customerId = createdSubscription.customer as string
-    
+
     const priceId = createdSubscription.items.data[0].price.id
     console.log('subscription created for price:', priceId)
 
@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
     const paidInvoice = stripeEvent.data.object
     const customerId = paidInvoice.customer as string
     const timestamp = new Date(paidInvoice.created * 1000)
-    
+
     const priceId = paidInvoice.lines.data[0].pricing?.price_details?.price
     console.log('invoice paid for price:', priceId)
 

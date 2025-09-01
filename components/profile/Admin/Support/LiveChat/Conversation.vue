@@ -16,7 +16,7 @@ const fetchInterval = ref<NodeJS.Timeout | null>(null)
 
 async function fetchConversation() {
   if (currentConversationId.value === null) return
-  
+
   const { conversation: fetchedConversation } = await $fetch(`/api/user/livechat/conversation/${currentConversationId.value}`)
   conversation.value = fetchedConversation
 }
@@ -35,14 +35,16 @@ async function submit() {
     })
     fetchConversation()
     userInput.value = ''
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error sending message:', error)
     toast.add({
       title: 'Fehler',
       description: 'Nachricht konnte nicht gesendet werden.',
       color: 'error',
     })
-  } finally {
+  }
+  finally {
     isSendingResponse.value = false
   }
 }
@@ -62,7 +64,8 @@ async function deleteConversation() {
       title: 'Erfolg',
       description: 'Unterhaltung wurde erfolgreich gelöscht.',
     })
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error deleting conversation:', error)
     toast.add({
       title: 'Fehler',
@@ -127,8 +130,8 @@ onBeforeUnmount(() => {
       <ProfileAdminSupportLiveChatConversationDelete
         v-if="conversation"
         v-model:open="showDeleteModal"
-        @delete="deleteConversation"
         :conversation="conversation"
+        @delete="deleteConversation"
       />
     </template>
 

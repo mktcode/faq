@@ -1,4 +1,4 @@
-import { toHslString } from "~/shared/color"
+import { toHslString } from '~/shared/color'
 
 function clampPercentage(value: number): number {
   return Math.min(100, Math.max(0, value))

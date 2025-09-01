@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { toHslString } from "~/shared/color"
+import { toHslString } from '~/shared/color'
 </script>
 
 <template>

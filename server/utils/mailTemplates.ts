@@ -348,10 +348,10 @@ function verificationEmail(userId: number, token: string, subscription: 'S' | 'L
   </p>
   <p>Vielen Dank für Ihr Vertrauen!<br>Ihr Solohost-Team</p>
 </div>`),
-    text: `Willkommen bei Solohost!\n\nBitte bestätigen Sie Ihr Abonnement, indem Sie den folgenden Link klicken:\n\n${verifyUrl}\n\nVielen Dank für Ihr Vertrauen!\nIhr Solohost-Team`
+    text: `Willkommen bei Solohost!\n\nBitte bestätigen Sie Ihr Abonnement, indem Sie den folgenden Link klicken:\n\n${verifyUrl}\n\nVielen Dank für Ihr Vertrauen!\nIhr Solohost-Team`,
   }
 }
 
 export const mailTemplates = {
-  verificationEmail
+  verificationEmail,
 }

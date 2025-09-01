@@ -108,5 +108,5 @@ export const stripe = {
   requireCompleteStripeCustomer,
   createCheckoutSession,
   requireNoPriorSubscription,
-  requireNoStripeCustomerId
+  requireNoStripeCustomerId,
 }

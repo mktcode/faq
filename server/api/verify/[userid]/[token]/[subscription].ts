@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
         .set({ stripeCheckoutSessionId: checkoutSession.id })
         .where('id', '=', user.id)
         .execute()
-      
+
       return sendRedirect(event, checkoutSession.url, 302)
     }
 

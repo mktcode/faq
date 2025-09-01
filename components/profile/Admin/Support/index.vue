@@ -38,7 +38,7 @@ const router = useRouter()
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-  @click="router.push({ hash: '#support/phone-mail' })"
+        @click="router.push({ hash: '#support/phone-mail' })"
       />
 
       <UButton
@@ -51,7 +51,7 @@ const router = useRouter()
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-  @click="router.push({ hash: '#support/remote' })"
+        @click="router.push({ hash: '#support/remote' })"
       />
 
       <UButton
@@ -64,7 +64,7 @@ const router = useRouter()
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-  @click="router.push({ hash: '#support/livechat' })"
+        @click="router.push({ hash: '#support/livechat' })"
       />
 
       <UButton
@@ -77,7 +77,7 @@ const router = useRouter()
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-  @click="router.push({ hash: '#support/livechat' })"
+        @click="router.push({ hash: '#support/livechat' })"
       />
 
       <ProfileAdminSupportPhoneMail />

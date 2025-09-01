@@ -1,5 +1,5 @@
-import z from "zod"
-import { WootConversation } from "~/types/chatwoot"
+import z from 'zod'
+import type { WootConversation } from '~/types/chatwoot'
 
 const apiUrl = 'https://chat.markus-kottlaender.de'
 
@@ -17,8 +17,8 @@ export default defineEventHandler(async (event) => {
     method: 'POST',
     body: {
       content: message,
-      echo_id: id
-    }
+      echo_id: id,
+    },
   })
 
   return { success: true }
