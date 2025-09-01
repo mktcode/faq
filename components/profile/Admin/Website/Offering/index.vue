@@ -24,7 +24,7 @@ function changeOrder(index: number, direction: 'up' | 'down') {
 
 <template>
   <UDrawer
-    v-model:open="showWebsiteOfferingSettings"
+    :open="showWebsiteOfferingSettings"
     :direction="isDesktop ? 'left' : 'bottom'"
     close-icon="i-heroicons-arrow-left"
     handle-only

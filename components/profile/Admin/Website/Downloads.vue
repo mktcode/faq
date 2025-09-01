@@ -94,7 +94,7 @@ async function deleteDownload(index: number) {
 
 <template>
   <UDrawer
-    v-model:open="showWebsiteDownloadsSettings"
+    :open="showWebsiteDownloadsSettings"
     :direction="isDesktop ? 'left' : 'bottom'"
     close-icon="i-heroicons-arrow-left"
     handle-only
