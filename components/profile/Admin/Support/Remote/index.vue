@@ -36,6 +36,12 @@ const { copy, copied } = useClipboard({ source: config })
     </template>
 
     <template #body>
+      <UAlert
+        title="Nicht für Smartphones verfügbar."
+        description="Laden Sie die Fernwartungssoftware bitte auf Ihrem Computer herunter. Auf Smartphones können wir aktuell leider keine Fernwartung anbieten. Wir unterstützen Sie aber natürlich gerne telefonisch oder im Live-Chat."
+        variant="soft"
+        class="mb-4 sm:hidden"
+      />
       <p>
         Um Ihnen schnell und effizient bei technischen Problemen zu helfen, können Sie uns einen Fernwartungszugriff auf
         Ihren Computer gewähren.
@@ -102,8 +108,8 @@ const { copy, copied } = useClipboard({ source: config })
         für macOS herunterladen
       </UButton>
       <p class="mt-4">
-        Nach dem Start der Software, wird Ihnen eine ID und ein Einmalpasswort angezeigt. Tauschen Sie diese
-        Informationen bitte nur telefonisch mit uns aus und behandeln Sie sie vertraulich.
+        Nach dem Start der Software, wird Ihnen eine ID und ein Einmalpasswort angezeigt.
+        <strong>Tauschen Sie diese Informationen bitte nur telefonisch mit uns aus und behandeln Sie sie vertraulich.</strong>
         Sobald Sie das Programm wieder schließen, ist der Zugriff auf Ihren Computer nicht mehr möglich.
       </p>
       <p class="mt-4 mb-4">
