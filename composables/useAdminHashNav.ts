@@ -1,6 +1,3 @@
-// Initialize hash-based navigation for Admin panels when called.
-import { nextTick } from 'vue'
-
 type RootKey = 'settings' | 'website' | 'assistant' | 'support'
 
 export function useAdminHashNav() {
