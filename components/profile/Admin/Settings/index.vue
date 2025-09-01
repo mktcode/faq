@@ -44,7 +44,7 @@ const {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="showCompanySettings = true"
+  @click="$router.push({ hash: '#settings/company' })"
       />
 
       <UButton
@@ -57,7 +57,7 @@ const {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="showDomainSettings = true"
+  @click="$router.push({ hash: '#settings/domain' })"
       />
 
       <UButton
@@ -67,7 +67,7 @@ const {
         variant="ghost"
         color="neutral"
         :disabled="!$profile.subscription.plan"
-        @click="showEmailSettings = true"
+  @click="$router.push({ hash: '#settings/email' })"
       >
         <template #trailing>
           <div class="ml-auto flex items-center gap-2">
@@ -94,7 +94,7 @@ const {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="showSubscriptionSettings = true"
+  @click="$router.push({ hash: '#settings/subscription' })"
       />
 
       <ProfileAdminSettingsCompany />

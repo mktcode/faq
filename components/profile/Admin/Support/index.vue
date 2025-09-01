@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { showSupport, showSupportPhoneMail, showSupportLiveChat, showSupportRemote } = useAdmin()
+const { showSupport } = useAdmin()
+const router = useRouter()
 </script>
 
 <template>
@@ -37,7 +38,7 @@ const { showSupport, showSupportPhoneMail, showSupportLiveChat, showSupportRemot
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="showSupportPhoneMail = true"
+  @click="router.push({ hash: '#support/phone-mail' })"
       />
 
       <UButton
@@ -50,7 +51,7 @@ const { showSupport, showSupportPhoneMail, showSupportLiveChat, showSupportRemot
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="showSupportRemote = true"
+  @click="router.push({ hash: '#support/remote' })"
       />
 
       <UButton
@@ -63,7 +64,7 @@ const { showSupport, showSupportPhoneMail, showSupportLiveChat, showSupportRemot
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="showSupportLiveChat = true"
+  @click="router.push({ hash: '#support/livechat' })"
       />
 
       <UButton
@@ -76,7 +77,7 @@ const { showSupport, showSupportPhoneMail, showSupportLiveChat, showSupportRemot
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="showSupportLiveChat = true"
+  @click="router.push({ hash: '#support/livechat' })"
       />
 
       <ProfileAdminSupportPhoneMail />

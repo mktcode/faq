@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { ResponseStreamEvent } from 'openai/resources/responses/responses.mjs'
 
-const { showAssistant, showAssistantTips, showAssistantContextSettings } = useAdmin()
+const { showAssistant } = useAdmin()
+const router = useRouter()
 
 const quota = useState('assistantQuota', () => 12)
 const userInput = ref('')
@@ -80,14 +81,14 @@ function submit() {
         variant="ghost"
         class="ml-auto"
         size="md"
-        @click="showAssistantContextSettings = true"
+  @click="router.push({ hash: '#assistant/context' })"
       />
       <UButton
         icon="i-lucide-lightbulb"
         color="neutral"
         variant="ghost"
         size="md"
-        @click="showAssistantTips = true"
+  @click="router.push({ hash: '#assistant/tips' })"
       />
     </template>
 

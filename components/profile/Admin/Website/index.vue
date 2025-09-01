@@ -3,15 +3,8 @@ const toast = useToast()
 
 const { $profile } = useProfile()
 
-const {
-  showWebsiteSettings,
-  showDesignSettings,
-  showOfferingSettings,
-  showContactFormSettings,
-  showGallerySettings,
-  showFaqSettings,
-  showDownloadsSettings,
-} = useAdmin()
+const { showWebsiteSettings } = useAdmin()
+const router = useRouter()
 
 const showLegalDataWarning = computed(() => {
   return !$profile.settings.public.company.name || !$profile.settings.public.company.street || !$profile.settings.public.company.phone
@@ -36,9 +29,8 @@ async function togglePublished() {
   }
 }
 
-function closeAndOpen(fn: () => void) {
-  showWebsiteSettings.value = false
-  setTimeout(fn, 500)
+function go(sub: string) {
+  router.push({ hash: `#website/${sub}` })
 }
 </script>
 
@@ -102,7 +94,7 @@ function closeAndOpen(fn: () => void) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="closeAndOpen(() => showDesignSettings = true)"
+  @click="go('design')"
       />
 
       <UButton
@@ -115,7 +107,7 @@ function closeAndOpen(fn: () => void) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="closeAndOpen(() => showOfferingSettings = true)"
+  @click="go('offering')"
       />
 
       <UButton
@@ -128,7 +120,7 @@ function closeAndOpen(fn: () => void) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="closeAndOpen(() => showContactFormSettings = true)"
+  @click="go('contact')"
       />
 
       <UButton
@@ -141,7 +133,7 @@ function closeAndOpen(fn: () => void) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="closeAndOpen(() => showGallerySettings = true)"
+  @click="go('gallery')"
       />
 
       <UButton
@@ -154,7 +146,7 @@ function closeAndOpen(fn: () => void) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="closeAndOpen(() => showFaqSettings = true)"
+  @click="go('faq')"
       />
 
       <UButton
@@ -167,7 +159,7 @@ function closeAndOpen(fn: () => void) {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="closeAndOpen(() => showDownloadsSettings = true)"
+  @click="go('downloads')"
       />
     </template>
   </USlideover>

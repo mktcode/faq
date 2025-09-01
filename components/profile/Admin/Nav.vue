@@ -4,7 +4,12 @@ const { clear } = useUserSession()
 const { $profile } = useProfile()
 const { fetch: fetchUserSession } = useUserSession()
 
-const { showMainSettings, showWebsiteSettings, showAssistant, showSupport } = useAdmin()
+const { showMainSettings } = useAdmin()
+const router = useRouter()
+
+function go(hash: string) {
+  router.push({ hash })
+}
 
 async function signOut() {
   showMainSettings.value = false
@@ -28,7 +33,7 @@ async function signOut() {
         :ui="{
           label: 'hidden md:inline-block',
         }"
-        @click="showMainSettings = true"
+        @click="go('#settings')"
       />
       <UButton
         icon="i-lucide-monitor-smartphone"
@@ -37,7 +42,7 @@ async function signOut() {
         :ui="{
           label: 'hidden md:inline-block',
         }"
-        @click="showWebsiteSettings = true"
+        @click="go('#website')"
       />
       <UButton
         icon="i-lucide-bot"
@@ -46,7 +51,7 @@ async function signOut() {
         :ui="{
           label: 'hidden md:inline-block',
         }"
-        @click="showAssistant = true"
+        @click="go('#assistant')"
       />
       <UButton
         label="Hilfe"
@@ -56,7 +61,7 @@ async function signOut() {
         :ui="{
           label: 'hidden md:inline-block',
         }"
-        @click="showSupport = true"
+        @click="go('#support')"
       />
       <UButton
         label="Abmelden"

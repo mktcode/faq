@@ -4,6 +4,7 @@ import type { WootConversation } from '~/types/chatwoot'
 // TODO: create contact on first launch
 
 const { showSupportLiveChat, showSupportLiveChatConversation } = useAdmin()
+const router = useRouter()
 
 const userInput = ref('')
 const isSendingResponse = ref(false)
@@ -18,7 +19,7 @@ async function fetchConversations() {
 
 function selectConversation(conversationId: number) {
   currentConversationId.value = conversationId
-  showSupportLiveChatConversation.value = true
+  router.push({ hash: '#support/livechat/conversation' })
 }
 
 async function submit() {
