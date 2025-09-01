@@ -1,8 +1,6 @@
 <script setup lang="ts">
 const { $profile } = useProfile()
-const appConfig = useAppConfig()
 const font = computed(() => $profile.settings.public.design.font)
-appConfig.ui.colors.primary = $profile.settings.public.design.color
 </script>
 
 <template>

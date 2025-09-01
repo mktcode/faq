@@ -16,7 +16,5 @@ const subscriptionSuccess = !!route.query.subscriptionSuccess
   <ProfileAdminAssistant />
   <ProfileAdminSupport />
   <ProfileAdminSubscriptionSuccess v-if="subscriptionSuccess" />
-  <ClientOnly>
-    <ProfileAdminWelcome />
-  </ClientOnly>
+  <ProfileAdminWelcome />
 </template>
