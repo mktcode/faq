@@ -99,8 +99,10 @@ async function deleteImage(index: number) {
   if (!success) {
     toast.add({
       title: 'Fehler',
+      icon: 'i-heroicons-exclamation-circle',
       description: 'Die Datei konnte nicht gelöscht werden.',
       color: 'error',
+      progress: false
     })
     return
   }

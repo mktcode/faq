@@ -40,8 +40,10 @@ async function submit() {
     console.error('Error sending message:', error)
     toast.add({
       title: 'Fehler',
+      icon: 'i-heroicons-exclamation-circle',
       description: 'Nachricht konnte nicht gesendet werden.',
       color: 'error',
+      progress: false
     })
   }
   finally {
@@ -62,15 +64,19 @@ async function deleteConversation() {
     showDeleteModal.value = false
     toast.add({
       title: 'Erfolg',
+      icon: 'i-heroicons-check',
       description: 'Unterhaltung wurde erfolgreich gelöscht.',
+      progress: false
     })
   }
   catch (error) {
     console.error('Error deleting conversation:', error)
     toast.add({
       title: 'Fehler',
+      icon: 'i-heroicons-exclamation-circle',
       description: 'Unterhaltung konnte nicht gelöscht werden.',
       color: 'error',
+      progress: false
     })
   }
 }

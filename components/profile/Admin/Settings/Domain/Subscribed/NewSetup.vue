@@ -39,8 +39,10 @@ async function checkDomainAvailability() {
   catch (error) {
     toast.add({
       title: 'Unbekannter Fehler',
+      icon: 'i-heroicons-exclamation-circle',
       description: 'Die Verfügbarkeit der Domain konnte nicht überprüft werden. Bitte kontaktieren Sie uns.',
       color: 'error',
+      progress: false
     })
     isAvailable.value = false
   }
@@ -70,8 +72,10 @@ async function registerDomain() {
   catch (error) {
     toast.add({
       title: 'Unbekannter Fehler',
+      icon: 'i-heroicons-exclamation-circle',
       description: 'Die Domain konnte nicht registriert werden. Bitte kontaktieren Sie uns.',
       color: 'error',
+      progress: false
     })
   }
   finally {

@@ -81,16 +81,20 @@ const uploadHeaderVideo = async (files: FileList | null) => {
     else {
       toast.add({
         title: 'Fehler',
+        icon: 'i-heroicons-exclamation-circle',
         description: message || 'Das Video konnte nicht hochgeladen werden.',
         color: 'error',
+        progress: false
       })
     }
   }
   catch (error) {
     toast.add({
       title: 'Unbekannter Fehler',
+      icon: 'i-heroicons-exclamation-circle',
       description: 'Das Video konnte nicht hochgeladen werden.',
       color: 'error',
+      progress: false
     })
   }
 }
@@ -164,8 +168,10 @@ async function deleteImage(image: 'logo' | 'header') {
   if (!success) {
     toast.add({
       title: 'Fehler',
+      icon: 'i-heroicons-exclamation-circle',
       description: 'Die Datei konnte nicht gelöscht werden.',
       color: 'error',
+      progress: false
     })
     return
   }

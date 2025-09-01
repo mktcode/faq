@@ -14,16 +14,20 @@ async function togglePublished() {
 
   if (published) {
     toast.add({
-      title: 'Profil veröffentlicht',
-      description: `Dein Profil ist jetzt öffentlich zugänglich.`,
+      title: 'Website veröffentlicht',
+      icon: 'i-lucide-check',
+      description: `Ihre Website ist jetzt öffentlich zugänglich.`,
       color: 'success',
+      progress: false
     })
   }
   else {
     toast.add({
-      title: 'Profil nicht mehr veröffentlicht',
-      description: `Dein Profil ist jetzt privat.`,
+      title: 'Website nicht mehr öffentlich',
+      icon: 'i-heroicons-eye-slash',
+      description: `Ihre Website ist jetzt privat.`,
       color: 'warning',
+      progress: false
     })
   }
 }

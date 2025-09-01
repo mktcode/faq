@@ -40,15 +40,19 @@ async function signUp() {
     if (error instanceof Error) {
       toast.add({
         title: 'Registrierung fehlgeschlagen',
+        icon: 'i-heroicons-exclamation-circle',
         description: error.message,
         color: 'error',
+        progress: false
       })
     }
     else {
       toast.add({
         title: 'Registrierung fehlgeschlagen',
+        icon: 'i-heroicons-exclamation-circle',
         description: 'Ein unbekannter Fehler ist aufgetreten.',
         color: 'error',
+        progress: false
       })
     }
   }
