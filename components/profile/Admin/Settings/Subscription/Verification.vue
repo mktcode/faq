@@ -123,6 +123,7 @@ onBeforeUnmount(() => {
         placeholder="Ihre E-Mail-Adresse"
         class="w-full"
       />
+      <!-- TODO: Height needs to be fixed on mobile -->
       <UAlert
         v-if="showEmailVerificationHint"
         icon="i-lucide-loader-circle"
