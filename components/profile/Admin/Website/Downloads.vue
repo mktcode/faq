@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const toast = useToast()
 
-const { showDownloadsSettings } = useAdmin()
+const { showWebsiteDownloadsSettings, go } = useAdmin()
 
 const { $profile, saveSettings } = useProfile()
 
@@ -90,16 +90,14 @@ async function deleteDownload(index: number) {
 
 <template>
   <UDrawer
-    v-model:open="showDownloadsSettings"
+    v-model:open="showWebsiteDownloadsSettings"
     side="left"
     close-icon="i-heroicons-arrow-left"
     handle-only
     direction="left"
     :overlay="false"
     :close-threshold="0.85"
-    :close="{
-      size: 'md',
-    }"
+    @close="() => go('#website')"
     :ui="{
       content: 'shadow-2xl shadow-black',
       container: 'relative max-w-md no-scrollbar',
@@ -116,7 +114,16 @@ async function deleteDownload(index: number) {
           class="inline-block size-6 opacity-50"
         />
         Downloads
-        <ProfileAdminSaveAndReset />
+        <div class="flex items-center gap-2 ml-auto">
+          <ProfileAdminSaveAndReset />
+          <UButton
+            icon="i-heroicons-arrow-left"
+            variant="ghost"
+            color="neutral"
+            size="md"
+            @click="go('#website')"
+          />
+        </div>
       </h3>
     </template>
 

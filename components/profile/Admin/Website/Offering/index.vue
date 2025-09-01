@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { showOfferingSettings } = useAdmin()
+const { showWebsiteOfferingSettings, go } = useAdmin()
 
 const { $profile } = useProfile()
 
@@ -20,16 +20,14 @@ function changeOrder(index: number, direction: 'up' | 'down') {
 
 <template>
   <UDrawer
-    v-model:open="showOfferingSettings"
+    v-model:open="showWebsiteOfferingSettings"
     side="left"
     close-icon="i-heroicons-arrow-left"
     handle-only
     direction="left"
     :overlay="false"
     :close-threshold="0.85"
-    :close="{
-      size: 'md',
-    }"
+    @close="() => go('#website')"
     :ui="{
       content: 'shadow-2xl shadow-black',
       container: 'relative max-w-md no-scrollbar',
@@ -46,7 +44,16 @@ function changeOrder(index: number, direction: 'up' | 'down') {
           class="inline-block size-6 opacity-50"
         />
         Ihr Angebot
-        <ProfileAdminSaveAndReset />
+        <div class="flex items-center gap-2 ml-auto">
+          <ProfileAdminSaveAndReset />
+          <UButton
+            icon="i-heroicons-arrow-left"
+            variant="ghost"
+            color="neutral"
+            size="md"
+            @click="go('#website')"
+          />
+        </div>
       </h3>
     </template>
 

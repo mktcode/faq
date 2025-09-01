@@ -9,12 +9,12 @@ export default function useAdmin() {
   const showSubscriptionVerification = computed(() => router.currentRoute.value.hash === '#settings/subscription/verification')
 
   const showWebsiteSettings = computed(() => router.currentRoute.value.hash.startsWith('#website'))
-  const showDesignSettings = computed(() => router.currentRoute.value.hash === '#website/design')
-  const showOfferingSettings = computed(() => router.currentRoute.value.hash === '#website/offering')
-  const showContactFormSettings = computed(() => router.currentRoute.value.hash === '#website/contact-form')
-  const showGallerySettings = computed(() => router.currentRoute.value.hash === '#website/gallery')
-  const showFaqSettings = computed(() => router.currentRoute.value.hash === '#website/faq')
-  const showDownloadsSettings = computed(() => router.currentRoute.value.hash === '#website/downloads')
+  const showWebsiteDesignSettings = computed(() => router.currentRoute.value.hash === '#website/design')
+  const showWebsiteOfferingSettings = computed(() => router.currentRoute.value.hash === '#website/offering')
+  const showWebsiteContactFormSettings = computed(() => router.currentRoute.value.hash === '#website/contact-form')
+  const showWebsiteGallerySettings = computed(() => router.currentRoute.value.hash === '#website/gallery')
+  const showWebsiteFaqSettings = computed(() => router.currentRoute.value.hash === '#website/faq')
+  const showWebsiteDownloadsSettings = computed(() => router.currentRoute.value.hash === '#website/downloads')
 
   const showAssistant = computed(() => router.currentRoute.value.hash.startsWith('#assistant'))
   const showAssistantTips = computed(() => router.currentRoute.value.hash === '#assistant/tips')
@@ -38,12 +38,12 @@ export default function useAdmin() {
     showSubscriptionSettings,
     showSubscriptionVerification,
     showWebsiteSettings,
-    showDesignSettings,
-    showOfferingSettings,
-    showContactFormSettings,
-    showGallerySettings,
-    showFaqSettings,
-    showDownloadsSettings,
+    showWebsiteDesignSettings,
+    showWebsiteOfferingSettings,
+    showWebsiteContactFormSettings,
+    showWebsiteGallerySettings,
+    showWebsiteFaqSettings,
+    showWebsiteDownloadsSettings,
     showAssistant,
     showAssistantTips,
     showAssistantContextSettings,

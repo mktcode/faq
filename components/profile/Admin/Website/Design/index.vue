@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { toHslString } from '~/shared/color'
 
-const show = useState('showDesignSettings', () => false)
+const { showWebsiteDesignSettings, go } = useAdmin()
 const toast = useToast()
 
 const { $profile, saveSettings } = useProfile()
@@ -180,16 +180,14 @@ async function deleteImage(image: 'logo' | 'header') {
 
 <template>
   <UDrawer
-    v-model:open="show"
+    :open="showWebsiteDesignSettings"
     side="left"
     close-icon="i-heroicons-arrow-left"
     handle-only
     direction="left"
     :overlay="false"
     :close-threshold="0.85"
-    :close="{
-      size: 'md',
-    }"
+    @close="() => go('#website')"
     :ui="{
       content: 'shadow-2xl shadow-black',
       container: 'relative max-w-md no-scrollbar',
@@ -199,13 +197,22 @@ async function deleteImage(image: 'logo' | 'header') {
   >
     <template #header>
       <ProfileMainDrawerTip />
-      <h3 class="text-lg font-semibold flex gap-2">
+      <h3 class="text-lg font-semibold flex gap-2 relative">
         <UIcon
           name="i-heroicons-paint-brush"
           class="inline-block size-6 opacity-50"
         />
         Design und Kopfbereich
-        <ProfileAdminSaveAndReset />
+        <div class="flex items-center gap-2 ml-auto">
+          <ProfileAdminSaveAndReset />
+          <UButton
+            icon="i-heroicons-arrow-left"
+            variant="ghost"
+            color="neutral"
+            size="md"
+            @click="go('#website')"
+          />
+        </div>
       </h3>
     </template>
 

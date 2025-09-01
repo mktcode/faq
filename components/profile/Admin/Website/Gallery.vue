@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const toast = useToast()
 
-const { showGallerySettings } = useAdmin()
+const { showWebsiteGallerySettings, go } = useAdmin()
 
 const { $profile, saveSettings } = useProfile()
 
@@ -108,16 +108,14 @@ async function deleteImage(index: number) {
 
 <template>
   <UDrawer
-    v-model:open="showGallerySettings"
+    :open="showWebsiteGallerySettings"
     side="left"
     close-icon="i-heroicons-arrow-left"
     handle-only
     direction="left"
     :overlay="false"
     :close-threshold="0.85"
-    :close="{
-      size: 'md',
-    }"
+    @close="() => go('#website')"
     :ui="{
       content: 'shadow-2xl shadow-black',
       container: 'relative max-w-md no-scrollbar',
@@ -134,7 +132,16 @@ async function deleteImage(index: number) {
           class="inline-block size-6 opacity-50"
         />
         Gallerie
-        <ProfileAdminSaveAndReset />
+        <div class="flex items-center gap-2 ml-auto">
+          <ProfileAdminSaveAndReset />
+          <UButton
+            icon="i-heroicons-arrow-left"
+            variant="ghost"
+            color="neutral"
+            size="md"
+            @click="go('#website')"
+          />
+        </div>
       </h3>
     </template>
 

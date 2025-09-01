@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { showFaqSettings } = useAdmin()
+const { showWebsiteFaqSettings, go } = useAdmin()
 
 const { data: qanda, refresh: refreshQanda } = await useFetch('/api/user/qanda')
 
@@ -37,16 +37,14 @@ async function saveQanda() {
 
 <template>
   <UDrawer
-    v-model:open="showFaqSettings"
+    :open="showWebsiteFaqSettings"
     side="left"
     close-icon="i-heroicons-arrow-left"
     handle-only
     direction="left"
     :overlay="false"
     :close-threshold="0.85"
-    :close="{
-      size: 'md',
-    }"
+    @close="() => go('#website')"
     :ui="{
       content: 'shadow-2xl shadow-black',
       container: 'relative max-w-md no-scrollbar',
@@ -63,7 +61,16 @@ async function saveQanda() {
           class="inline-block size-6 opacity-50"
         />
         Häufige Fragen
-        <ProfileAdminSaveAndReset />
+        <div class="flex items-center gap-2 ml-auto">
+          <ProfileAdminSaveAndReset />
+          <UButton
+            icon="i-heroicons-arrow-left"
+            variant="ghost"
+            color="neutral"
+            size="md"
+            @click="go('#website')"
+          />
+        </div>
       </h3>
     </template>
 
