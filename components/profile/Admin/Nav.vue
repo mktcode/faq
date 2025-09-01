@@ -7,7 +7,7 @@ const { fetch: fetchUserSession } = useUserSession()
 const { go } = useAdmin()
 
 async function signOut() {
-  go('#')
+  go('')
   $profile.isOwned = false
   $profile.subscription.plan = null
   $profile.subscription.checkoutPending = false
