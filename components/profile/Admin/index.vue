@@ -2,7 +2,6 @@
 const route = useRoute()
 const subscriptionSuccess = !!route.query.subscriptionSuccess
 
-// Initialize admin hash navigation only while Admin is mounted
 useAdminHashNav()
 </script>
 
