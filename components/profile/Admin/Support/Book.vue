@@ -16,6 +16,7 @@ const selectedTime = ref<string>()
 const selectedRemote = ref(false)
 
 const { data: supportBookings } = await useFetch('/api/supportBookings')
+const { data: userSupportBookings } = await useFetch(`/api/user/supportBookings`)
 
 function isDateDisabled(date: DateValue) {
   const dateObj = date.toDate('UTC')
@@ -68,6 +69,28 @@ function isDateUnavailable(date: DateValue) {
     </template>
 
     <template #body>
+      <div class="flex flex-col gap-2 mb-4">
+        <div
+          v-for="booking in userSupportBookings"
+          :key="booking.id"
+          class="flex items-start justify-between gap-2 bg-primary-100 rounded-lg p-4"
+        >
+          <div class="text-primary-900">
+            <div class="opacity-50 text-xs">
+              Ihr Termin:
+            </div>
+            <div class="font-semibold">
+              Am {{ new Date(booking.date).toLocaleDateString('de-DE') }}
+            </div>
+            <div class="font-semibold opacity-50 text-sm">
+              um {{ new Date(booking.date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) }} Uhr
+            </div>
+          </div>
+          <UButton
+            label="absagen"
+          />
+        </div>
+      </div>
       <UCalendar
         v-model="selectedDate"
         size="xl"
