@@ -74,7 +74,7 @@ watch(showSupportLiveChatConversation, (newValue, oldValue) => {
       size: 'md',
       onClick: () => {
         go('#support')
-      }
+      },
     }"
     :ui="{
       wrapper: 'z-40',

@@ -42,7 +42,7 @@ async function checkDomainAvailability() {
       icon: 'i-heroicons-exclamation-circle',
       description: 'Die Verfügbarkeit der Domain konnte nicht überprüft werden. Bitte kontaktieren Sie uns.',
       color: 'error',
-      progress: false
+      progress: false,
     })
     isAvailable.value = false
   }
@@ -75,7 +75,7 @@ async function registerDomain() {
       icon: 'i-heroicons-exclamation-circle',
       description: 'Die Domain konnte nicht registriert werden. Bitte kontaktieren Sie uns.',
       color: 'error',
-      progress: false
+      progress: false,
     })
   }
   finally {

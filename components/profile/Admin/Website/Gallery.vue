@@ -102,7 +102,7 @@ async function deleteImage(index: number) {
       icon: 'i-heroicons-exclamation-circle',
       description: 'Die Datei konnte nicht gelöscht werden.',
       color: 'error',
-      progress: false
+      progress: false,
     })
     return
   }
@@ -120,7 +120,6 @@ async function deleteImage(index: number) {
     handle-only
     :overlay="false"
     :close-threshold="0.85"
-    @close="() => go('#website')"
     :ui="{
       content: 'shadow-2xl shadow-black',
       container: 'relative max-w-md no-scrollbar',
@@ -128,6 +127,7 @@ async function deleteImage(index: number) {
       header: 'h-10',
       body: 'flex flex-col gap-4',
     }"
+    @close="() => go('#website')"
   >
     <template #header>
       <ProfileMainDrawerTip />

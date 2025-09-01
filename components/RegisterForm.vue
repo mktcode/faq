@@ -43,7 +43,7 @@ async function signUp() {
         icon: 'i-heroicons-exclamation-circle',
         description: error.message,
         color: 'error',
-        progress: false
+        progress: false,
       })
     }
     else {
@@ -52,7 +52,7 @@ async function signUp() {
         icon: 'i-heroicons-exclamation-circle',
         description: 'Ein unbekannter Fehler ist aufgetreten.',
         color: 'error',
-        progress: false
+        progress: false,
       })
     }
   }

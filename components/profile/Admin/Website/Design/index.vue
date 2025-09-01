@@ -84,7 +84,7 @@ const uploadHeaderVideo = async (files: FileList | null) => {
         icon: 'i-heroicons-exclamation-circle',
         description: message || 'Das Video konnte nicht hochgeladen werden.',
         color: 'error',
-        progress: false
+        progress: false,
       })
     }
   }
@@ -94,7 +94,7 @@ const uploadHeaderVideo = async (files: FileList | null) => {
       icon: 'i-heroicons-exclamation-circle',
       description: 'Das Video konnte nicht hochgeladen werden.',
       color: 'error',
-      progress: false
+      progress: false,
     })
   }
 }
@@ -171,7 +171,7 @@ async function deleteImage(image: 'logo' | 'header') {
       icon: 'i-heroicons-exclamation-circle',
       description: 'Die Datei konnte nicht gelöscht werden.',
       color: 'error',
-      progress: false
+      progress: false,
     })
     return
   }
@@ -195,13 +195,13 @@ async function deleteImage(image: 'logo' | 'header') {
     handle-only
     :overlay="false"
     :close-threshold="0.85"
-    @close="() => go('#website')"
     :ui="{
       content: 'shadow-2xl shadow-black',
       container: 'relative max-w-md no-scrollbar',
       handle: '!bg-gray-400',
       header: 'h-10',
     }"
+    @close="() => go('#website')"
   >
     <template #header>
       <ProfileMainDrawerTip />

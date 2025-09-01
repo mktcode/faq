@@ -15,7 +15,7 @@ const { showAssistantTips, go } = useAdmin()
       size: 'md',
       onClick: () => {
         go('#assistant')
-      }
+      },
     }"
   >
     <template #title>

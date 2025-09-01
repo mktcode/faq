@@ -15,7 +15,7 @@ const { showEmailSettings, go } = useAdmin()
       size: 'md',
       onClick: () => {
         go('#settings')
-      }
+      },
     }"
   >
     <template #title>
@@ -42,7 +42,7 @@ const { showEmailSettings, go } = useAdmin()
             icon: 'i-heroicons-globe-alt',
             to: '#settings/domain',
             size: 'xl',
-          }
+          },
         ]"
       />
       <ProfileAdminSettingsEmailMailboxes

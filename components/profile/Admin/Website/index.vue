@@ -18,7 +18,7 @@ async function togglePublished() {
       icon: 'i-lucide-check',
       description: `Ihre Website ist jetzt öffentlich zugänglich.`,
       color: 'success',
-      progress: false
+      progress: false,
     })
   }
   else {
@@ -27,7 +27,7 @@ async function togglePublished() {
       icon: 'i-heroicons-eye-slash',
       description: `Ihre Website ist jetzt privat.`,
       color: 'warning',
-      progress: false
+      progress: false,
     })
   }
 }
@@ -41,7 +41,7 @@ async function togglePublished() {
       size: 'md',
       onClick: () => {
         go('')
-      }
+      },
     }"
     :ui="{
       wrapper: 'z-40',

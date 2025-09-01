@@ -15,7 +15,7 @@ const { showDomainSettings, go } = useAdmin()
       size: 'md',
       onClick: () => {
         go('#settings')
-      }
+      },
     }"
   >
     <template #title>

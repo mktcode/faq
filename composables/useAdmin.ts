@@ -29,7 +29,6 @@ export default function useAdmin() {
   const showSupportRemoteBook = computed(() => router.currentRoute.value.hash === '#support/remote/book')
   const showSupportPayment = computed(() => router.currentRoute.value.hash === '#support/payment')
 
-
   function go(hash: string) {
     router.push({ hash })
   }

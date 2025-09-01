@@ -30,7 +30,6 @@ function changeOrder(index: number, direction: 'up' | 'down') {
     handle-only
     :overlay="false"
     :close-threshold="0.85"
-    @close="() => go('#website')"
     :ui="{
       content: 'shadow-2xl shadow-black',
       container: 'relative max-w-md no-scrollbar',
@@ -38,6 +37,7 @@ function changeOrder(index: number, direction: 'up' | 'down') {
       header: 'h-10',
       body: 'flex flex-col gap-2',
     }"
+    @close="() => go('#website')"
   >
     <template #header>
       <ProfileMainDrawerTip />

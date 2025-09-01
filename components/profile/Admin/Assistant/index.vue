@@ -69,7 +69,7 @@ function submit() {
       size: 'md',
       onClick: () => {
         go('')
-      }
+      },
     }"
   >
     <template #title>

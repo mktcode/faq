@@ -43,7 +43,7 @@ async function submit() {
       icon: 'i-heroicons-exclamation-circle',
       description: 'Nachricht konnte nicht gesendet werden.',
       color: 'error',
-      progress: false
+      progress: false,
     })
   }
   finally {
@@ -66,7 +66,7 @@ async function deleteConversation() {
       title: 'Erfolg',
       icon: 'i-heroicons-check',
       description: 'Unterhaltung wurde erfolgreich gelöscht.',
-      progress: false
+      progress: false,
     })
   }
   catch (error) {
@@ -76,7 +76,7 @@ async function deleteConversation() {
       icon: 'i-heroicons-exclamation-circle',
       description: 'Unterhaltung konnte nicht gelöscht werden.',
       color: 'error',
-      progress: false
+      progress: false,
     })
   }
 }
@@ -109,7 +109,7 @@ onBeforeUnmount(() => {
       size: 'md',
       onClick: () => {
         go('#support/livechat')
-      }
+      },
     }"
     :ui="{
       header: '*:first:flex-1 *:first:pr-8',

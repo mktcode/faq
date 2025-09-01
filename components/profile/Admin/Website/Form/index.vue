@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMediaQuery } from '@vueuse/core';
+import { useMediaQuery } from '@vueuse/core'
 
 const { saveSettings, isSavingSettings } = useProfile()
 const { showWebsiteContactFormSettings, go } = useAdmin()
@@ -14,7 +14,6 @@ const isDesktop = useMediaQuery('(min-width: 640px)')
     handle-only
     :overlay="false"
     :close-threshold="0.85"
-    @close="() => go('#website')"
     :ui="{
       content: 'shadow-2xl shadow-black',
       container: 'relative max-w-md no-scrollbar',
@@ -22,6 +21,7 @@ const isDesktop = useMediaQuery('(min-width: 640px)')
       header: 'h-10',
       body: 'flex flex-col gap-4',
     }"
+    @close="() => go('#website')"
   >
     <template #header>
       <ProfileMainDrawerTip />

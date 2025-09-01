@@ -12,7 +12,7 @@ const { showSupportPayment, go } = useAdmin()
       size: 'md',
       onClick: () => {
         go('#support')
-      }
+      },
     }"
     :ui="{
       wrapper: 'z-40',
@@ -47,7 +47,7 @@ const { showSupportPayment, go } = useAdmin()
           }"
           block
         />
-  
+
         <UButton
           target="_blank"
           rel="noopener noreferrer"

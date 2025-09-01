@@ -17,7 +17,7 @@ const { stripePortalUrl } = useRuntimeConfig().public
       size: 'md',
       onClick: () => {
         go('#settings')
-      }
+      },
     }"
   >
     <template #title>

@@ -22,7 +22,7 @@ const supportPhone = '+49 123 4567890'
       size: 'md',
       onClick: () => {
         go('#support')
-      }
+      },
     }"
     :ui="{
       wrapper: 'z-40',

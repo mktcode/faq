@@ -12,13 +12,13 @@ const { showSupportRemote, go } = useAdmin()
       size: 'md',
       onClick: () => {
         go('#support')
-      }
+      },
     }"
     :ui="{
       wrapper: 'z-40',
       overlay: 'backdrop-blur-xs',
       footer: 'justify-between',
-      body: '!p-0'
+      body: '!p-0',
     }"
   >
     <template #title>

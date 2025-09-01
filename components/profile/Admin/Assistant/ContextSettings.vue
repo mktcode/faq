@@ -17,7 +17,7 @@ const { $profile, isSavingSettings, saveSettings } = useProfile()
       size: 'md',
       onClick: () => {
         go('#assistant')
-      }
+      },
     }"
   >
     <template #title>

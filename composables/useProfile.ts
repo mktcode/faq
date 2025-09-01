@@ -23,7 +23,7 @@ export const useProfile = () => {
       title: 'Einstellungen gespeichert',
       description: 'Deine Einstellungen wurden erfolgreich gespeichert.',
       color: 'primary',
-      progress: false
+      progress: false,
     })
     isSavingSettings.value = false
     unsavedSettings.value = false

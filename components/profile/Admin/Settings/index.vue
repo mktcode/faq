@@ -26,7 +26,7 @@ async function signOut() {
       size: 'md',
       onClick: () => {
         go('')
-      }
+      },
     }"
     :ui="{
       wrapper: 'z-40',

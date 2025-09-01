@@ -18,7 +18,7 @@ const minDate = new CalendarDate(tomorrow.getFullYear(), tomorrow.getMonth() + 1
       size: 'md',
       onClick: () => {
         go('#support/remote')
-      }
+      },
     }"
     :ui="{
       wrapper: 'z-40',

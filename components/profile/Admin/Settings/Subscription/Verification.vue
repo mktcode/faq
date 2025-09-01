@@ -49,11 +49,11 @@ onBeforeUnmount(() => {
 
 const formFilled = computed(() => {
   return (
-    emailToVerify.value.trim().length > 0 &&
-    $profile.settings.public.company.name.trim().length > 0 &&
-    $profile.settings.public.company.street.trim().length > 0 &&
-    $profile.settings.public.company.zip.trim().length > 0 &&
-    $profile.settings.public.company.city.trim().length > 0
+    emailToVerify.value.trim().length > 0
+    && $profile.settings.public.company.name.trim().length > 0
+    && $profile.settings.public.company.street.trim().length > 0
+    && $profile.settings.public.company.zip.trim().length > 0
+    && $profile.settings.public.company.city.trim().length > 0
   )
 })
 </script>
@@ -71,7 +71,7 @@ const formFilled = computed(() => {
       size: 'md',
       onClick: () => {
         go('#settings/subscription')
-      }
+      },
     }"
   >
     <template #title>

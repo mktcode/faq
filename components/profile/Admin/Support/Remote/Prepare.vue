@@ -17,7 +17,7 @@ const { copy, copied } = useClipboard({ source: config })
       size: 'md',
       onClick: () => {
         go('#support/remote')
-      }
+      },
     }"
     :ui="{
       wrapper: 'z-40',

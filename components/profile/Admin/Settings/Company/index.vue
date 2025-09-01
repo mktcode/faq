@@ -17,7 +17,7 @@ const { saveSettings } = useProfile()
       size: 'md',
       onClick: () => {
         go('#settings')
-      }
+      },
     }"
   >
     <template #title>
