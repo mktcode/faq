@@ -26,7 +26,7 @@ const router = useRouter()
           name="i-lucide-message-circle-question-mark"
           class="inline-block size-6 opacity-50"
         />
-        Hilfe
+        IT-Support
       </h3>
     </template>
 
