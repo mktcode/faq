@@ -32,7 +32,7 @@ const router = useRouter()
 
     <template #body>
       <UButton
-        label="Termin buchen"
+        label="Termin reservieren"
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"

@@ -76,6 +76,16 @@ export async function up(db: Kysely<any>): Promise<void> {
   // Add embedding vector(1536) column
   await sql`ALTER TABLE messages ADD COLUMN embedding vector(1536)`
     .execute(db)
+  
+
+  await db.schema
+    .createTable('supportBookings')
+    .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
+    .addColumn('userId', 'integer', col => col.notNull())
+    .addColumn('date', 'date', col => col.notNull())
+    .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
+    .execute()
+    
 }
 
 export async function down(db: Kysely<any>): Promise<void> {
@@ -86,5 +96,6 @@ export async function down(db: Kysely<any>): Promise<void> {
   await db.schema.dropTable('qanda').execute()
   await db.schema.dropTable('customerRequests').execute()
   await db.schema.dropTable('messages').execute()
+  await db.schema.dropTable('supportBookings').execute()
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
