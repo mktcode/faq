@@ -11,7 +11,8 @@ theDayInThreeMonths.setMonth(theDayInThreeMonths.getMonth() + 3)
 const minDate = new CalendarDate(theDayAfterTomorrow.getFullYear(), theDayAfterTomorrow.getMonth() + 1, theDayAfterTomorrow.getDate())
 const maxDate = new CalendarDate(theDayInThreeMonths.getFullYear(), theDayInThreeMonths.getMonth() + 1, theDayInThreeMonths.getDate())
 
-const selectedDate = ref<CalendarDate | null>(null)
+const selectedDate = ref<CalendarDate>()
+const selectedTime = ref<string>()
 const selectedRemote = ref(false)
 
 const { data: supportBookings } = await useFetch('/api/supportBookings')
@@ -80,6 +81,7 @@ function isDateUnavailable(date: DateValue) {
       />
       <UFormField label="Uhrzeit" class="mt-8">
         <USelect
+          v-model="selectedTime"
           placeholder="Bitte wählen"
           class="w-full"
           size="xl"
@@ -114,11 +116,27 @@ function isDateUnavailable(date: DateValue) {
         class="mt-4"
       />
       <UButton
-        label="Termin reservieren"
-        icon="i-heroicons-check"
+        trailing-icon="i-heroicons-check"
         class="mt-4"
         block
-      />
+        :disabled="!selectedDate || !selectedTime"
+        :ui="{
+          leadingIcon: 'mr-auto',
+        }"
+      >
+        <div class="flex flex-col items-start">
+          <div>
+            Termin reservieren
+          </div>
+          <div
+            v-if="selectedDate && selectedTime"
+            class="opacity-50"
+          >
+            am {{ selectedDate?.toDate('UTC').toLocaleDateString('de-DE', { year: 'numeric', month: '2-digit', day: '2-digit' }) }} um
+            {{ selectedTime }}
+          </div>
+        </div>
+      </UButton>
     </template>
   </USlideover>
 </template>
