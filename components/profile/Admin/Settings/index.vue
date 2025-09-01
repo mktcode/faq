@@ -1,9 +1,21 @@
 <script setup lang="ts">
 const { $profile } = useProfile()
-const {
-  showMainSettings,
-  go,
-} = useAdmin()
+const { showMainSettings, go } = useAdmin()
+
+const { clear } = useUserSession()
+
+const { fetch: fetchUserSession } = useUserSession()
+
+async function signOut() {
+  go('')
+  $profile.isOwned = false
+  $profile.subscription.plan = null
+  $profile.subscription.checkoutPending = false
+  $profile.subscription.paid = false
+  $profile.mailboxes = []
+  await clear()
+  fetchUserSession()
+}
 </script>
 
 <template>
@@ -101,6 +113,18 @@ const {
       <ProfileAdminSettingsDomain />
       <ProfileAdminSettingsEmail />
       <ProfileAdminSettingsSubscription />
+    </template>
+
+    <template #footer>
+      <UButton
+        label="Abmelden"
+        icon="i-heroicons-power"
+        variant="ghost"
+        :ui="{
+          base: 'ml-auto',
+        }"
+        @click="signOut"
+      />
     </template>
   </USlideover>
 </template>
