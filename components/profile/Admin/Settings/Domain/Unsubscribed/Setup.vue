@@ -94,12 +94,20 @@ watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce:
     </template>
   </UCollapsible>
   <UButton
-    label="Premium buchen und Domain registrieren"
+    label="Domain registrieren"
     trailing-icon="i-heroicons-rocket-launch"
     color="primary"
     :ui="{
       trailingIcon: 'ml-auto',
     }"
     @click="go('#settings/subscription')"
-  />
+  >
+    <template #trailing>
+      <UBadge
+        label="Premium"
+        size="sm"
+        class="ml-auto border border-primary-200 bg-transparent"
+      />
+    </template>
+  </UButton>
 </template>
