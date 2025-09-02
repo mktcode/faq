@@ -257,10 +257,10 @@ appConfig.ui.colors.primary = 'sky'
         </div>
         <div class="md:col-span-2 border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <div class="flex items-end gap-1 mt-3 mb-6">
-            <span class="text-[38px] font-extrabold leading-none">Erzählen Sie von sich</span>
+            <span class="text-[38px] font-extrabold leading-none">Erster Schritt: Erzählen Sie von sich</span>
           </div>
           <p class="text-slate-600 dark:text-[#b3bfd1] mb-3">
-            Wer ist Ihre Zielgruppe und was bieten Sie an? Was macht Sie besonders?
+            In welcher Branche arbeiten Sie? Wer ist Ihre Zielgruppe und was bieten Sie an? Was macht Sie besonders?
             Erzählen Sie in Stichpunkten oder ganz natürlich per Sprachaufnahme von Ihrem Unternehmen. Seien Sie so ausführlich, wie Sie möchten. Wir bekommen dadurch einen ersten Eindruck und Ihre Website wird gleich mit passenden Inhalten gefüllt.
           </p>
           <textarea

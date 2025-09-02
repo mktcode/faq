@@ -186,78 +186,38 @@ export async function prefillSettings(settings: SettingsForm): Promise<SettingsF
     apiKey: openaiApiKey,
   })
 
-  // Design
-  const designPrefillSchema = z.object({
+  const prefillSchema = z.object({
     primary_color: colorSchema,
     title: z.string(),
-    title_color: colorSchema,
+    title_text_color: colorSchema,
     tagline: z.string(),
-    tagline_color: colorSchema,
-    background: z.object({
-      color: colorSchema,
-      opacity: z.number().min(0).max(100),
-    }),
-  })
-
-  const designResponse = await openai.responses.parse({
-    model: 'gpt-5-mini',
-    instructions: `You’ll receive only minimal information about the company and its design preferences. Your task is to propose a modern website header and complete all required fields.
-
-* Use HSL notation for all colors, matching the format used for the primary color.
-* Adjust the primary color only if necessary—for example, if it’s too bright and hurts readability.
-* Choose colors and a background opacity (0–100) that are visually appealing and provide strong contrast.
-* The tagline should be a short, professional slogan that sits under the company name. It must not include product details, prices, promotions, or specific offers — only a concise reflection of the company's mission and values.`,
-    input: [
-      {
-        role: 'user',
-        content: `Company Name: ${settings.public.company.name}
-Small Business: ${settings.public.company.isSmallBusiness ? 'Yes' : 'No'}
-City: ${settings.public.company.city}
-About: ${settings.private.assistant.context}
-
-Primary Color: ${settings.public.design.color}
-Font: ${settings.public.design.font}`,
-      },
-    ],
-    text: {
-      format: zodTextFormat(designPrefillSchema, 'header_settings'),
-    },
-  })
-
-  const designPrefill = designResponse.output_parsed
-
-  if (designPrefill) {
-    settings.public.design.color = designPrefill.primary_color
-    settings.public.header = {
-      ...settings.public.header,
-      title: designPrefill.title,
-      titleColor: designPrefill.title_color,
-      description: designPrefill.tagline,
-      descriptionColor: designPrefill.tagline_color,
-      imageOverlay: {
-        color: designPrefill.background.color,
-        opacity: designPrefill.background.opacity,
-      },
-    }
-  }
-
-  // Offers
-  const offersPrefillSchema = z.object({
-    offers: z.array(z.object({
+    tagline_text_color: colorSchema,
+    header_background_color: colorSchema,
+    offerings: z.array(z.object({
       title: z.string(),
       description: z.string(),
     })),
   })
 
-  const offersResponse = await openai.responses.parse({
+  const response = await openai.responses.parse({
     model: 'gpt-5-mini',
-    instructions: `Your task is to create compelling marketing copy that highlights the unique selling points of the company's offerings.
+    instructions: `You’ll receive only minimal information about the company.
+Your task is to **guess suitable design preferences and content** from the limited company information and propose:
+1. A modern website header configuration.
+2. A coherent color scheme defined in the given output structure.
+3. A suitable tagline for the company.
+4. Up to three marketing texts for the company's offerings on their website.
 
-* Based on the company details provided below, create up to three marketing texts for the company's offerings on their website.
-* Each marketing text should be concise (no more than 100 words) and focus on the key benefits of the offering.
-* Titles should be attention-grabbing, professional, and relevant to the offering.
-* If insufficient information is provided, write at least one generic marketing text suitable for a small business in the given industry.
-* You may use simple HTML markup without any attributes. Allowed tags are <p>, <strong>, <em>, <u>, <mark>, <ul>, <ol>, and <li>.`,
+* Use HSL notation for all colors.
+* Define a coherent color scheme with the background image in mind.
+* The tagline must be a short, professional slogan under the company name.
+  - It must not include product details, prices, promotions, or specific offers.
+  - Instead, it must reflect the company’s mission and values concisely.
+  - The text color must have good contrast with the background image and overlay.
+* The marketing texts must be concise (no more than 100 words each) and focus on the key benefits of the offerings.
+  - If no information is provided, write at least one generic marketing text suitable for a small business in the given industry.
+  - You may use simple HTML markup without any attributes. Allowed tags are <p>, <strong>, <em>, <u>, <mark>, <ul>, <ol>, and <li>.
+* All written text must be in German.`,
     input: [
       {
         role: 'user',
@@ -268,17 +228,29 @@ About: ${settings.private.assistant.context}`,
       },
     ],
     text: {
-      format: zodTextFormat(offersPrefillSchema, 'offers'),
+      format: zodTextFormat(prefillSchema, 'website_settings'),
     },
   })
 
-  const offersPrefill = offersResponse.output_parsed
+  const prefill = response.output_parsed
 
-  if (offersPrefill) {
-    settings.public.components.offers.items = offersPrefill.offers.map((offer, index) => ({
+  if (prefill) {
+    settings.public.design.color = prefill.primary_color
+    settings.public.header = {
+      ...settings.public.header,
+      title: prefill.title,
+      titleColor: prefill.title_text_color,
+      description: prefill.tagline,
+      descriptionColor: prefill.tagline_text_color,
+      imageOverlay: {
+        color: prefill.header_background_color,
+        opacity: 100,
+      },
+    }
+    settings.public.components.offers.items = prefill.offerings.map((offering, index) => ({
       id: index + 1,
-      title: offer.title,
-      description: offer.description,
+      title: offering.title,
+      description: offering.description,
     }))
   }
 

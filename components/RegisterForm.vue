@@ -142,7 +142,7 @@ function onFocusNameInput() {
     <UFormField
       label="Über Ihr Unternehmen"
       hint="(optional)"
-      help="Was bieten Sie an? Wer ist Ihre Zielgruppe? Beschreiben Sie Ihr Unternehmen stichpunktartig oder in zwei bis drei kurzen Sätzen, über Ihre Tastatur oder per Spracheingabe."
+      help="In welcher Branche sind Sie tätig? Was bieten Sie an? Wer ist Ihre Zielgruppe? Beschreiben Sie Ihr Unternehmen stichpunktartig oder in zwei bis drei kurzen Sätzen, über Ihre Tastatur oder frei heraus per Spracheingabe."
     >
       <UTextarea
         v-model="settings.private.assistant.context"
@@ -165,19 +165,6 @@ function onFocusNameInput() {
       v-model="settings.public.company.isSmallBusiness"
       label="Ich nutze die Kleinunternehmer-Regelung."
     />
-    <div class="flex gap-4">
-      <FontPicker
-        v-model:font="settings.public.design.font"
-        label="Schriftart"
-        class="w-full flex-1"
-      />
-      <HslPicker
-        v-model:h="settings.public.design.color.h"
-        v-model:s="settings.public.design.color.s"
-        v-model:l="settings.public.design.color.l"
-        label="Primäre Farbe"
-      />
-    </div>
     <div>
       <UFormField
         label="Benutzername"
@@ -191,7 +178,7 @@ function onFocusNameInput() {
         <div class="flex">
           <UInput
             :value="userName"
-            maxlength="15"
+            maxlength="25"
             size="xxl"
             class="w-full"
             :ui="{
