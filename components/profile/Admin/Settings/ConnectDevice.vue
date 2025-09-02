@@ -12,7 +12,7 @@ function generateOneTimePassword() {
 
 const { showConnectDevice, go } = useAdmin()
 
-const { data: devices } = await useFetch('/api/user/devices')
+const { data: devices, refresh: refreshDevices } = await useFetch('/api/user/devices')
 const { data: currentOtp, refresh: refreshCurrentOtp } = await useFetch('/api/user/connect/otp')
 
 const oneTimePassword = ref(currentOtp.value?.otp || generateOneTimePassword())
@@ -66,6 +66,7 @@ onMounted(() => {
   refreshInterval.value = setInterval(() => {
     if (currentOtp.value?.otp) {
       refreshCurrentOtp()
+      refreshDevices()
     }
   }, 5000)
 })
@@ -113,16 +114,16 @@ onBeforeUnmount(() => {
         storage-key="otp-info-dismissed"
         class="rounded-none"
       >
-        Um sich auf einem anderen Gerät anzumelden, müssen Sie dieses zunächst über ein Einmal-Passwort verknüpfen. Klicken Sie dazu auf "Verknüpfte Geräte", um ein neues Einmal-Passwort zu generieren. Melden Sie sich anschließend innerhalb der nächsten 15 Minuten auf dem neuen Gerät mit Ihrem Benutzernamen und dem Ein
+        Um sich auf einem anderen Gerät anzumelden, müssen Sie dieses zunächst über ein Einmal-Passwort verknüpfen. Klicken Sie dazu auf "Gerät verknüpfen", um ein neues Einmal-Passwort zu generieren. Melden Sie sich anschließend innerhalb der nächsten 15 Minuten auf dem neuen Gerät mit Ihrem Benutzernamen und dem Einmal-Passwort an.
       </DismissableAlert>
       <div class="mb-4">
         <div
           v-for="device in devices"
           :key="device.credentialId"
-          class="text-lg text-neutral-500 border-b border-neutral-200 p-4 flex gap-2 items-start"
+          class="text-lg text-neutral-500 border-b border-neutral-200 p-4 flex gap-2 items-center"
         >
           <div class="flex flex-col gap-1 flex-1">
-            <span class="text-sm">{{ device.credentialId.slice(-4) }}</span>
+            <span class="text-xs">Erste Anmeldung:</span>
             <span class="text-sm font-semibold">
               {{ new Date(device.createdAt).toLocaleDateString('de-DE', {
                 year: 'numeric',
@@ -138,6 +139,7 @@ onBeforeUnmount(() => {
             color="neutral"
             variant="soft"
             class="whitespace-nowrap"
+            size="xl"
           >
             dieses Gerät
           </UBadge>
