@@ -83,6 +83,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
     .addColumn('userId', 'integer', col => col.notNull())
     .addColumn('date', 'date', col => col.notNull())
+    .addColumn('notes', 'text', col => col.notNull())
     .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
     .execute()
     

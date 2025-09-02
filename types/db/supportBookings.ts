@@ -4,6 +4,7 @@ export interface SupportBookingsTable {
   id: Generated<number>
   userId: number
   date: ColumnType<Date, string | undefined, never>
+  notes: string
   createdAt: ColumnType<Date, string | undefined, never>
 }
 
