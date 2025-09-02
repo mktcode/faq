@@ -8,7 +8,7 @@ appConfig.ui.colors.primary = 'sky'
   <div class="font-poppins min-h-screen max-w-lg mx-auto flex flex-col gap-12 items-center justify-between py-12">
     <SolohostLogo />
     <div class="bg-white p-4 max-w-sm w-full">
-      <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-2">
         <LoginForm />
 
         <div class="relative">

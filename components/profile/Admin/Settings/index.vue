@@ -116,12 +116,17 @@ async function signOut() {
 
     <template #footer>
       <UButton
-        label="Abmelden"
-        icon="i-heroicons-power"
+        label="Gerät verknüpfen"
+        icon="i-heroicons-finger-print"
         variant="ghost"
         :ui="{
           base: 'ml-auto',
         }"
+      />
+      <UButton
+        label="Abmelden"
+        icon="i-heroicons-power"
+        variant="ghost"
         @click="signOut"
       />
     </template>
