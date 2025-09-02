@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const route = useRoute()
 const toast = useToast()
-const { authenticate, isPlatformAvailable } = useWebAuthn({
+const { authenticate, register, isPlatformAvailable } = useWebAuthn({
   registerEndpoint: '/api/webauthn/register',
   authenticateEndpoint: '/api/webauthn/authenticate',
 })
@@ -20,10 +20,20 @@ const hasRequestedConnect = ref(false)
 
 async function signIn() {
   try {
-    await authenticate(userName.value)
-    addOwnedUserName(userName.value)
-    await fetchUserSession()
-    await navigateTo(`https://${userName.value}.${appHost}`, { external: true })
+    if (oneTimePassword.value && hasRequestedConnect.value) {
+      await register({
+        userName: userName.value,
+        otp: oneTimePassword.value,
+      })
+      addOwnedUserName(userName.value)
+      await fetchUserSession()
+      await navigateTo(`https://${userName.value}.${appHost}`, { external: true })
+    } else {
+      await authenticate(userName.value)
+      addOwnedUserName(userName.value)
+      await fetchUserSession()
+      await navigateTo(`https://${userName.value}.${appHost}`, { external: true })
+    }
   } catch (error) {
     toast.add({
       title: 'Anmeldung fehlgeschlagen',
