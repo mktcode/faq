@@ -108,6 +108,8 @@ export default defineWebAuthnRegisterEventHandler({
           transports: credential.transports ? JSON.stringify(credential.transports) : null,
         })
         .execute()
+    } else {
+      throw createError({ statusCode: 400, message: 'Invalid registration attempt' })
     }
   },
 })

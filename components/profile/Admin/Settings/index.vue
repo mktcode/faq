@@ -117,7 +117,7 @@ async function signOut() {
 
     <template #footer>
       <UButton
-        label="Gerät verknüpfen"
+        label="Verknüpfte Geräte"
         icon="i-heroicons-finger-print"
         variant="ghost"
         :ui="{

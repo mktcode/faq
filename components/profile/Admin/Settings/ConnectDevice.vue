@@ -12,10 +12,7 @@ function generateOneTimePassword() {
 
 const { showConnectDevice, go } = useAdmin()
 
-const devices = ref<{ label: string; id: string }[]>([
-  { label: 'Smartphone', id: 'device-1' },
-])
-
+const { data: devices } = await useFetch('/api/user/devices')
 const { data: currentOtp, refresh: refreshCurrentOtp } = await useFetch('/api/user/connect/otp')
 
 const oneTimePassword = ref(currentOtp.value?.otp || generateOneTimePassword())
@@ -105,7 +102,7 @@ onBeforeUnmount(() => {
           name="i-heroicons-finger-print"
           class="inline-block size-6 opacity-50"
         />
-        Gerät verknüpfen
+        Verknüpfte Geräte
       </h3>
     </template>
 
@@ -116,18 +113,40 @@ onBeforeUnmount(() => {
         storage-key="otp-info-dismissed"
         class="rounded-none"
       >
-        Um sich auf einem anderen Gerät anzumelden, müssen Sie dieses zunächst über ein Einmal-Passwort verknüpfen. Klicken Sie dazu auf "Gerät verknüpfen", um ein neues Einmal-Passwort zu generieren. Melden Sie sich anschließend innerhalb der nächsten 15 Minuten auf dem neuen Gerät mit Ihrem Benutzernamen und dem Ein
+        Um sich auf einem anderen Gerät anzumelden, müssen Sie dieses zunächst über ein Einmal-Passwort verknüpfen. Klicken Sie dazu auf "Verknüpfte Geräte", um ein neues Einmal-Passwort zu generieren. Melden Sie sich anschließend innerhalb der nächsten 15 Minuten auf dem neuen Gerät mit Ihrem Benutzernamen und dem Ein
       </DismissableAlert>
       <div class="mb-4">
         <div
           v-for="device in devices"
-          :key="device.id"
-          class="text-lg text-neutral-500 border-b border-neutral-200 p-4 mb-2 flex gap-2"
+          :key="device.credentialId"
+          class="text-lg text-neutral-500 border-b border-neutral-200 p-4 flex gap-2 items-start"
         >
-          {{ device.label }}
-          <span class="text-neutral-400 font-semibold ml-auto">
+          <div class="flex flex-col gap-1 flex-1">
+            <span class="text-sm">{{ device.credentialId.slice(-4) }}</span>
+            <span class="text-sm font-semibold">
+              {{ new Date(device.createdAt).toLocaleDateString('de-DE', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+              }) }}
+            </span>
+          </div>
+          <UBadge
+            v-if="device.credentialId.endsWith('k')"
+            color="neutral"
+            variant="soft"
+            class="whitespace-nowrap"
+          >
             dieses Gerät
-          </span>
+          </UBadge>
+          <UButton
+            v-else
+            icon="i-heroicons-trash"
+            variant="soft"
+            color="error"
+          />
         </div>
       </div>
       <div class="flex flex-col gap-2 p-4">

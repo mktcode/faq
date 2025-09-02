@@ -65,7 +65,7 @@ onMounted(async () => {
       >
         <UAlert
           title="Versuchen Sie sich an einem neuen Gerät anzumelden?"
-          description="Dafür melden Sie sich bitte auf dem ursprünglichen Gerät an und gehen in den Einstellungen unten auf 'Gerät verknüpfen'. Dort legen Sie ein Einmal-Passwort fest, dass Sie hier eingeben können."
+          description="Dafür melden Sie sich bitte auf dem ursprünglichen Gerät an und gehen in den Einstellungen unten auf 'Verknüpfte Geräte'. Dort legen Sie ein Einmal-Passwort fest, dass Sie hier eingeben können."
           variant="soft"
         />
         <UInput
