@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
+const toast = useToast()
 const { authenticate, isPlatformAvailable } = useWebAuthn({
   registerEndpoint: '/api/webauthn/register',
   authenticateEndpoint: '/api/webauthn/authenticate',
@@ -15,6 +16,7 @@ const userName = ref<string>(userNameFromQuery.value || ownedUserNames.value[0] 
 const ownedUserNamesPopoverOpen = ref(false)
 const showConnectInfo = ref(false)
 const oneTimePassword = ref('')
+const hasRequestedConnect = ref(false)
 
 async function signIn() {
   try {
@@ -23,7 +25,11 @@ async function signIn() {
     await fetchUserSession()
     await navigateTo(`https://${userName.value}.${appHost}`, { external: true })
   } catch (error) {
-    showConnectInfo.value = true
+    toast.add({
+      title: 'Anmeldung fehlgeschlagen',
+      description: 'Die Anmeldung ist fehlgeschlagen. Bitte versuchen Sie es erneut.',
+      color: 'error',
+    })
   }
 }
 
@@ -63,66 +69,75 @@ onMounted(async () => {
         class="flex flex-col gap-2"
         @submit.prevent="signIn"
       >
-        <UFormField
-          name="userName"
-        >
-          <UButtonGroup>
-            <UInput
-              v-model="userName"
-              placeholder="Benutzername"
-              size="xxl"
-              class="w-full"
+        <UButtonGroup>
+          <UInput
+            v-model="userName"
+            placeholder="Benutzername"
+            size="xxl"
+            class="w-full"
+          />
+          <UPopover
+            v-if="ownedUserNames.length > 0"
+            v-model:open="ownedUserNamesPopoverOpen"
+            :content="{
+              align: 'end',
+              side: 'bottom',
+              sideOffset: 8,
+            }"
+          >
+            <UButton
+              icon="i-heroicons-chevron-down"
+              variant="soft"
             />
-            <UPopover
-              v-if="ownedUserNames.length > 0"
-              v-model:open="ownedUserNamesPopoverOpen"
-              :content="{
-                align: 'end',
-                side: 'bottom',
-                sideOffset: 8,
-              }"
-            >
-              <UButton
-                icon="i-heroicons-chevron-down"
-                variant="soft"
-              />
-  
-              <template #content>
-                <div class="p-1 flex flex-col gap-1">
-                  <UButtonGroup
-                    v-for="ownedUserName in ownedUserNames"
-                    :key="ownedUserName"
-                  >
-                    <UButton
-                      variant="ghost"
-                      :label="ownedUserName"
-                      size="xxl"
-                      class="flex-1"
-                      @click="userName = ownedUserName; ownedUserNamesPopoverOpen = false"
-                    />
-                    <UButton
-                      variant="ghost"
-                      icon="i-heroicons-trash"
-                      color="neutral"
-                      size="xxl"
-                      :ui="{
-                        leadingIcon: 'opacity-50',
-                      }"
-                      @click="removeOwnedUserName(ownedUserName)"
-                    />
-                  </UButtonGroup>
-                </div>
-              </template>
-            </UPopover>
-          </UButtonGroup>
-        </UFormField>
+
+            <template #content>
+              <div class="p-1 flex flex-col gap-1">
+                <UButtonGroup
+                  v-for="ownedUserName in ownedUserNames"
+                  :key="ownedUserName"
+                >
+                  <UButton
+                    variant="ghost"
+                    :label="ownedUserName"
+                    size="xxl"
+                    class="flex-1"
+                    @click="userName = ownedUserName; ownedUserNamesPopoverOpen = false"
+                  />
+                  <UButton
+                    variant="ghost"
+                    icon="i-heroicons-trash"
+                    color="neutral"
+                    size="xxl"
+                    :ui="{
+                      leadingIcon: 'opacity-50',
+                    }"
+                    @click="removeOwnedUserName(ownedUserName)"
+                  />
+                </UButtonGroup>
+              </div>
+            </template>
+          </UPopover>
+        </UButtonGroup>
+        <Transition name="fade">
+          <UInput
+            v-if="hasRequestedConnect"
+            v-model="oneTimePassword"
+            placeholder="Einmal-Passwort"
+            size="xxl"
+            class="w-full"
+          />
+        </Transition>
+        <USwitch
+          v-model="hasRequestedConnect"
+          label="Mit Einmal-Passwort anmelden"
+        />
         <UButton
           type="submit"
-          label="Anmelden"
+          :label="hasRequestedConnect ? 'Gerät verknüpfen' : 'Anmelden'"
+          :icon="hasRequestedConnect ? 'i-heroicons-finger-print' : 'i-heroicons-arrow-right-on-rectangle'"
           color="primary"
-          icon="i-heroicons-arrow-right-on-rectangle"
           size="xl"
-          block
+          class="mt-8"
         />
       </form>
     </template>

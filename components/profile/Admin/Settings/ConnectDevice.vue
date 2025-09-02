@@ -95,6 +95,9 @@ onBeforeUnmount(() => {
         go('#settings')
       },
     }"
+    :ui="{
+      body: '!p-0',
+    }"
   >
     <template #title>
       <h3 class="text-lg font-semibold flex items-center gap-2">
@@ -107,11 +110,19 @@ onBeforeUnmount(() => {
     </template>
 
     <template #body>
+      <DismissableAlert
+        title="Auf einem anderen Gerät anmelden"
+        icon="i-lucide-info"
+        storage-key="otp-info-dismissed"
+        class="rounded-none"
+      >
+        Um sich auf einem anderen Gerät anzumelden, müssen Sie dieses zunächst über ein Einmal-Passwort verknüpfen. Klicken Sie dazu auf "Gerät verknüpfen", um ein neues Einmal-Passwort zu generieren. Melden Sie sich anschließend innerhalb der nächsten 15 Minuten auf dem neuen Gerät mit Ihrem Benutzernamen und dem Ein
+      </DismissableAlert>
       <div class="mb-4">
         <div
           v-for="device in devices"
           :key="device.id"
-          class="text-sm text-neutral-500 border border-neutral-200 rounded p-2 mb-2 flex gap-2"
+          class="text-lg text-neutral-500 border-b border-neutral-200 p-4 mb-2 flex gap-2"
         >
           {{ device.label }}
           <span class="text-neutral-400 font-semibold ml-auto">
@@ -119,8 +130,8 @@ onBeforeUnmount(() => {
           </span>
         </div>
       </div>
-      <div class="flex flex-col gap-2">
-        <UButtonGroup>
+      <div class="flex flex-col gap-2 p-4">
+        <UButtonGroup v-if="currentOtp?.otp">
           <UBadge
             :label="oneTimePassword"
             variant="soft"
@@ -129,25 +140,17 @@ onBeforeUnmount(() => {
             class="flex-1 font-mono text-2xl p-4 justify-center"
           />
           <UBadge
-            v-if="currentOtp?.otp"
             :label="countdownLabel"
             variant="soft"
             color="neutral"
             size="xl"
-          />
-          <UButton
-            v-if="!currentOtp?.otp"
-            icon="i-heroicons-arrow-path"
-            variant="soft"
-            @click="oneTimePassword = generateOneTimePassword()"
-            class="px-4"
           />
         </UButtonGroup>
         <UAlert
           v-if="currentOtp?.otp"
           icon="i-lucide-loader-circle"
           title="Gerät verknüpfen"
-          :description="`Melden Sie sich nun innerhalb der nächsten 15 Minuten auf dem neuen Gerät mit Ihrem Benutzernamen '${$profile.username}' an und geben Sie das Einmalpasswort ein.`"
+          :description="`Melden Sie sich nun innerhalb der nächsten 15 Minuten auf dem neuen Gerät mit Ihrem Benutzernamen '${$profile.username}' und dem Einmalpasswort an.`"
           variant="soft"
           :ui="{
             icon: 'animate-spin',
