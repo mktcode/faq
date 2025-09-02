@@ -19,6 +19,8 @@ async function create(userId: number, day: string, time: string, notes: string) 
 
   const date = `${day} ${time}`
 
+  // TODO: Send email to me
+
   return await db.insertInto('supportBookings').values({
     userId,
     date,
