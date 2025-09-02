@@ -14,9 +14,10 @@ const maxDate = new CalendarDate(theDayInThreeMonths.getFullYear(), theDayInThre
 const selectedDate = ref<CalendarDate>()
 const selectedTime = ref<string>()
 const selectedRemote = ref(false)
+const notes = ref('')
 
-const { data: supportBookings } = await useFetch('/api/supportBookings')
-const { data: userSupportBookings } = await useFetch(`/api/user/supportBookings`)
+const { data: supportBookings, refresh: refreshSupportBookings } = await useFetch('/api/supportBookings')
+const { data: userSupportBookings, refresh: refreshUserSupportBookings } = await useFetch(`/api/user/supportBookings`)
 
 function isDateDisabled(date: DateValue) {
   const dateObj = date.toDate('UTC')
@@ -37,6 +38,33 @@ function isDateUnavailable(date: DateValue) {
   }) ?? false
 
   return isFree
+}
+
+async function cancelBooking(bookingId: number) {
+  await $fetch(`/api/user/supportBookings/${bookingId}/delete`, { method: 'POST' })
+  refreshSupportBookings()
+  refreshUserSupportBookings()
+}
+
+async function createBooking() {
+  if (!selectedDate.value || !selectedTime.value) return
+
+  await $fetch(`/api/user/supportBookings`, {
+    method: 'POST',
+    body: {
+      day: selectedDate.value?.toString(),
+      time: selectedTime.value,
+      notes: notes.value + (selectedRemote.value ? '\n\n(Fernwartung gewünscht)' : '')
+    }
+  })
+
+  selectedDate.value = undefined
+  selectedTime.value = undefined
+  selectedRemote.value = false
+  notes.value = ''
+
+  refreshSupportBookings()
+  refreshUserSupportBookings()
 }
 </script>
 
@@ -69,97 +97,129 @@ function isDateUnavailable(date: DateValue) {
     </template>
 
     <template #body>
-      <div class="flex flex-col gap-2 mb-4">
-        <div
-          v-for="booking in userSupportBookings"
-          :key="booking.id"
-          class="flex items-start justify-between gap-2 bg-primary-100 rounded-lg p-4"
-        >
-          <div class="text-primary-900">
-            <div class="opacity-50 text-xs">
-              Ihr Termin:
-            </div>
-            <div class="font-semibold">
-              Am {{ new Date(booking.date).toLocaleDateString('de-DE') }}
-            </div>
-            <div class="font-semibold opacity-50 text-sm">
-              um {{ new Date(booking.date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) }} Uhr
-            </div>
-          </div>
-          <UButton
-            label="absagen"
-          />
-        </div>
-      </div>
-      <UCalendar
-        v-model="selectedDate"
-        size="xl"
-        :min-value="minDate"
-        :max-value="maxDate"
-        :is-date-disabled="isDateDisabled"
-        :is-date-unavailable="isDateUnavailable"
-        :ui="{
-          cellTrigger: 'text-xl border border-gray-200 font-bold data-disabled:opacity-20 data-disabled:!cursor-default data-disabled:hover:bg-transparent data-unavailable:font-light data-unavailable:opacity-50',
-        }"
-      />
-      <UFormField label="Uhrzeit" class="mt-8">
-        <USelect
-          v-model="selectedTime"
-          placeholder="Bitte wählen"
-          class="w-full"
-          size="xl"
-          :items="[
-            { label: '09:00', value: '09:00' },
-            { label: '09:30', value: '09:30' },
-            { label: '10:00', value: '10:00' },
-            { label: '10:30', value: '10:30' },
-            { label: '11:00', value: '11:00' },
-            { label: '11:30', value: '11:30' },
-            { label: '12:00', value: '12:00' },
-            { label: '12:30', value: '12:30' },
-            { label: '13:00', value: '13:00' },
-            { label: '13:30', value: '13:30' },
-            { label: '14:00', value: '14:00' },
-            { label: '14:30', value: '14:30' },
-            { label: '15:00', value: '15:00' },
-            { label: '15:30', value: '15:30' },
-            { label: '16:00', value: '16:00' },
-            { label: '16:30', value: '16:30' },
-            { label: '17:00', value: '17:00' },
-            { label: '17:30', value: '17:30' },
-            { label: '18:00', value: '18:00' },
-            { label: '18:30', value: '18:30' },
-            { label: '19:00', value: '19:00' },
-          ]"
-        />
-      </UFormField>
-      <USwitch
-        v-model="selectedRemote"
-        label="Fernwartung gewünscht"
-        class="mt-4"
-      />
-      <UButton
-        trailing-icon="i-heroicons-check"
-        class="mt-4"
-        block
-        :disabled="!selectedDate || !selectedTime"
-        :ui="{
-          leadingIcon: 'mr-auto',
-        }"
-      >
-        <div class="flex flex-col items-start">
-          <div>
-            Termin reservieren
-          </div>
+      <div class="flex flex-col gap-2 mb-2">
+        <TransitionGroup name="list">
           <div
-            v-if="selectedDate && selectedTime"
-            class="opacity-50"
+            v-for="booking in userSupportBookings"
+            :key="booking.id"
+            class="w-full gap-2 bg-primary-100 rounded-lg p-4"
           >
-            am {{ selectedDate?.toDate('UTC').toLocaleDateString('de-DE', { year: 'numeric', month: '2-digit', day: '2-digit' }) }} um
-            {{ selectedTime }}
+            <div class="w-full flex items-start justify-between gap-2">
+              <div class="text-primary-900">
+                <div class="opacity-50 text-xs">
+                  Ihr Termin:
+                </div>
+                <div class="font-semibold">
+                  Am {{ new Date(booking.date).toLocaleDateString('de-DE') }}
+                </div>
+                <div class="font-semibold opacity-50 text-sm">
+                  um {{ new Date(booking.date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) }} Uhr
+                </div>
+              </div>
+              <UButton
+                label="absagen"
+                @click="cancelBooking(booking.id)"
+              />
+            </div>
+            <div
+              v-if="booking.notes"
+              class="mt-2 text-sm text-primary-900/50 line-clamp-2"
+            >
+              {{ booking.notes }}
+            </div>
           </div>
-        </div>
-      </UButton>
+        </TransitionGroup>
+      </div>
+      <UAlert v-if="userSupportBookings && userSupportBookings.length == 2"
+        title="Hinweis"
+        description="Es sind maximal 2 gleichzeitige Buchungen erlaubt. Der Buchungskalender wird nach Ihrem nächsten Termin wieder angezeigt."
+        variant="soft"
+      />
+      <div v-else>
+        <UCalendar
+          v-model="selectedDate"
+          size="xl"
+          :min-value="minDate"
+          :max-value="maxDate"
+          :is-date-disabled="isDateDisabled"
+          :is-date-unavailable="isDateUnavailable"
+          :ui="{
+            cellTrigger: 'text-xl border border-gray-200 font-bold data-disabled:opacity-20 data-disabled:!cursor-default data-disabled:hover:bg-transparent data-unavailable:font-light data-unavailable:opacity-50',
+          }"
+        />
+        <UFormField label="Uhrzeit" class="mt-8">
+          <USelect
+            v-model="selectedTime"
+            placeholder="Bitte wählen"
+            class="w-full"
+            size="xl"
+            :items="[
+              { label: '09:00', value: '09:00' },
+              { label: '09:30', value: '09:30' },
+              { label: '10:00', value: '10:00' },
+              { label: '10:30', value: '10:30' },
+              { label: '11:00', value: '11:00' },
+              { label: '11:30', value: '11:30' },
+              { label: '12:00', value: '12:00' },
+              { label: '12:30', value: '12:30' },
+              { label: '13:00', value: '13:00' },
+              { label: '13:30', value: '13:30' },
+              { label: '14:00', value: '14:00' },
+              { label: '14:30', value: '14:30' },
+              { label: '15:00', value: '15:00' },
+              { label: '15:30', value: '15:30' },
+              { label: '16:00', value: '16:00' },
+              { label: '16:30', value: '16:30' },
+              { label: '17:00', value: '17:00' },
+              { label: '17:30', value: '17:30' },
+              { label: '18:00', value: '18:00' },
+              { label: '18:30', value: '18:30' },
+              { label: '19:00', value: '19:00' },
+            ]"
+          />
+        </UFormField>
+        <UFormField
+          label="Worum geht es?"
+          description="Geben Sie uns vorab bitte eine kurze Beschreibung Ihres Anliegens."
+          class="mt-4"
+        >
+          <UTextarea
+            v-model="notes"
+            placeholder="Ich brauche Hilfe bei..."
+            class="w-full"
+            size="xl"
+          />
+        </UFormField>
+        <USwitch
+          v-model="selectedRemote"
+          label="Fernwartung gewünscht"
+          description="Ich möchte, dass ein Support-Mitarbeiter per Fernwartung auf meinen Computer zugreift."
+          class="mt-4"
+        />
+        <UButton
+          trailing-icon="i-heroicons-check"
+          class="mt-4"
+          block
+          :disabled="!selectedDate || !selectedTime"
+          :ui="{
+            leadingIcon: 'mr-auto',
+          }"
+          @click="createBooking"
+        >
+          <div class="flex flex-col items-start">
+            <div>
+              Termin reservieren
+            </div>
+            <div
+              v-if="selectedDate && selectedTime"
+              class="opacity-50"
+            >
+              am {{ selectedDate?.toDate('UTC').toLocaleDateString('de-DE', { year: 'numeric', month: '2-digit', day: '2-digit' }) }} um
+              {{ selectedTime }}
+            </div>
+          </div>
+        </UButton>
+      </div>
     </template>
   </USlideover>
 </template>

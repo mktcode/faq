@@ -14,7 +14,20 @@ async function listForUser(userId: number) {
     .execute()
 }
 
+async function create(userId: number, day: string, time: string, notes: string) {
+  const db = await getDatabaseConnection()
+
+  const date = `${day} ${time}`
+
+  return await db.insertInto('supportBookings').values({
+    userId,
+    date,
+    notes
+  }).execute()
+}
+
 export const supportBookingsUtils = {
   list,
-  listForUser
+  listForUser,
+  create
 }
