@@ -22,6 +22,8 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('chatwootSourceId', 'varchar(150)')
     .addColumn('lastPaidAt', 'timestamp')
     .addColumn('settings', 'json', col => col.notNull())
+    .addColumn('oneTimePassword', 'varchar(20)')
+    .addColumn('oneTimePasswordCreatedAt', 'timestamp')
     .addColumn('createdAt', 'timestamp', col => col.notNull().defaultTo(sql`NOW()`))
     .execute()
 

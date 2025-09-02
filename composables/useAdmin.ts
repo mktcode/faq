@@ -7,6 +7,7 @@ export default function useAdmin() {
   const showEmailSettings = computed(() => router.currentRoute.value.hash === '#settings/email')
   const showSubscriptionSettings = computed(() => router.currentRoute.value.hash.startsWith('#settings/subscription'))
   const showSubscriptionVerification = computed(() => router.currentRoute.value.hash === '#settings/subscription/verification')
+  const showConnectDevice = computed(() => router.currentRoute.value.hash === '#settings/connect-device')
 
   const showWebsiteSettings = computed(() => router.currentRoute.value.hash === '#website')
   const showWebsiteDesignSettings = computed(() => router.currentRoute.value.hash === '#website/design')
@@ -56,6 +57,7 @@ export default function useAdmin() {
     showSupportRemote,
     showSupportBook,
     showSupportPayment,
+    showConnectDevice,
     go,
   }
 }

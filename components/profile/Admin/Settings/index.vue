@@ -112,6 +112,7 @@ async function signOut() {
       <ProfileAdminSettingsDomain />
       <ProfileAdminSettingsEmail />
       <ProfileAdminSettingsSubscription />
+      <ProfileAdminSettingsConnectDevice />
     </template>
 
     <template #footer>
@@ -122,6 +123,7 @@ async function signOut() {
         :ui="{
           base: 'ml-auto',
         }"
+        @click="go('#settings/connect-device')"
       />
       <UButton
         label="Abmelden"
