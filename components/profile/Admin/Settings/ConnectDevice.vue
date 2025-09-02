@@ -1,46 +1,86 @@
 <script setup lang="ts">
-const { showConnectDevice, go } = useAdmin()
+const refreshInterval = ref<NodeJS.Timeout | null>(null)
+const countdownInterval = ref<NodeJS.Timeout | null>(null)
 
-const oneTimePassword = ref('')
-const oneTimePasswordCharacters = '2346789ABCDEFGHJKLMNPQRTUVWXYabcdefghijkmnpqrstuvwxyz'
-const oneTimePasswordSet = ref(false)
-const isSettingOneTimePassword = ref(false)
-const countdown = ref(15 * 60)
-const countdownLabel = computed(() => {
-  const minutes = Math.floor(countdown.value / 60)
-  const seconds = countdown.value % 60
-  return `${minutes}:${seconds.toString().padStart(2, '0')}`
-})
+function generateOneTimePassword() {
+  const oneTimePasswordCharacters = '2346789ABCDEFGHJKLMNPQRTUVWXYabcdefghijkmnpqrstuvwxyz'
+
+  return Array.from({ length: 8 }, () =>
+    oneTimePasswordCharacters.charAt(Math.floor(Math.random() * oneTimePasswordCharacters.length))
+  ).join('')
+}
+
+const { showConnectDevice, go } = useAdmin()
 
 const devices = ref<{ label: string; id: string }[]>([
   { label: 'Smartphone', id: 'device-1' },
 ])
 
-function generateOneTimePassword() {
-  oneTimePassword.value = Array.from({ length: 8 }, () =>
-    oneTimePasswordCharacters.charAt(Math.floor(Math.random() * oneTimePasswordCharacters.length))
-  ).join('')
+const { data: currentOtp, refresh: refreshCurrentOtp } = await useFetch('/api/user/connect/otp')
+
+const oneTimePassword = ref(currentOtp.value?.otp || generateOneTimePassword())
+const secondsLeft = ref(currentOtp.value?.secondsLeft || 0)
+const countdownLabel = computed(() => {
+  const minutes = Math.floor(secondsLeft.value / 60)
+  const seconds = secondsLeft.value % 60
+  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+})
+
+const isSettingOneTimePassword = ref(false)
+async function setOneTimePassword() {
+  isSettingOneTimePassword.value = true
+
+  await $fetch('/api/user/connect/otp', {
+    method: 'POST',
+    body: {
+      otp: oneTimePassword.value
+    }
+  })
+
+  await refreshCurrentOtp()
+  stopCountdown()
+  secondsLeft.value = currentOtp.value?.secondsLeft || 0
+  startCountdown()
+
+  isSettingOneTimePassword.value = false
 }
 
 function startCountdown() {
-  countdown.value = 15 * 60
-  const interval = setInterval(() => {
-    countdown.value--
-    if (countdown.value <= 0) {
-      clearInterval(interval)
+  countdownInterval.value = setInterval(() => {
+    if (secondsLeft.value > 0) {
+      secondsLeft.value--
+    } else {
+      stopCountdown()
     }
   }, 1000)
 }
 
-async function setOneTimePassword() {
-  isSettingOneTimePassword.value = true
-  await new Promise(resolve => setTimeout(resolve, 1000))
-  oneTimePasswordSet.value = true
-  isSettingOneTimePassword.value = false
-  startCountdown()
+function stopCountdown() {
+  if (countdownInterval.value) {
+    clearInterval(countdownInterval.value)
+  }
 }
 
-onMounted(generateOneTimePassword)
+onMounted(() => {
+  if (currentOtp.value?.secondsLeft) {
+    startCountdown()
+  }
+
+  refreshInterval.value = setInterval(() => {
+    if (currentOtp.value?.otp) {
+      refreshCurrentOtp()
+    }
+  }, 5000)
+})
+
+onBeforeUnmount(() => {
+  if (refreshInterval.value) {
+    clearInterval(refreshInterval.value)
+  }
+  if (countdownInterval.value) {
+    clearInterval(countdownInterval.value)
+  }
+})
 </script>
 
 <template>
@@ -89,22 +129,22 @@ onMounted(generateOneTimePassword)
             class="flex-1 font-mono text-2xl p-4 justify-center"
           />
           <UBadge
-            v-if="oneTimePasswordSet"
+            v-if="currentOtp?.otp"
             :label="countdownLabel"
             variant="soft"
             color="neutral"
             size="xl"
           />
           <UButton
-            v-if="!oneTimePasswordSet"
+            v-if="!currentOtp?.otp"
             icon="i-heroicons-arrow-path"
             variant="soft"
-            @click="generateOneTimePassword"
+            @click="oneTimePassword = generateOneTimePassword()"
             class="px-4"
           />
         </UButtonGroup>
         <UAlert
-          v-if="oneTimePasswordSet"
+          v-if="currentOtp?.otp"
           icon="i-lucide-loader-circle"
           title="Gerät verknüpfen"
           :description="`Melden Sie sich nun innerhalb der nächsten 15 Minuten auf dem neuen Gerät mit Ihrem Benutzernamen '${$profile.username}' an und geben Sie das Einmalpasswort ein.`"
@@ -114,7 +154,7 @@ onMounted(generateOneTimePassword)
           }"
         />
         <UButton
-          v-if="!oneTimePasswordSet"
+          v-if="!currentOtp?.otp"
           label="Gerät verknüpfen"
           icon="i-lucide-unplug"
           variant="solid"
