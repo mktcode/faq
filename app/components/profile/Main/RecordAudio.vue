@@ -4,14 +4,14 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'text', text: string): void
+  transcript: [text: string]
 }>()
 
 const { transcript, volumeHistory, isRecordingAudio, isTranscribingAudio, startRecordingAudio, stopRecordingAudio } = useAudioRecorder()
 
 watch(transcript, (newTranscript) => {
   if (newTranscript) {
-    emit('text', newTranscript)
+    emit('transcript', newTranscript)
   }
 })
 </script>

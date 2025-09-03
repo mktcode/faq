@@ -283,7 +283,7 @@ async function generateResponse() {
           />
           <ProfileAdminAssistantRecordAudio
             class="ml-auto"
-            @transcript="transcript => userInput = transcript"
+            @transcript="(transcript: string) => userInput = transcript"
           />
           <UButton
             icon="i-lucide-send-horizontal"

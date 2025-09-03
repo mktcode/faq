@@ -127,7 +127,7 @@ const disabled = computed(() => {
         v-if="$profile.subscription.plan"
         class="ml-auto"
         :disabled="false"
-        @text="(text) => { message = text }"
+        @transcript="(text: string) => { message = text }"
       />
     </div>
     <Transition name="fade">

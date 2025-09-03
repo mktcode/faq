@@ -266,7 +266,7 @@ appConfig.ui.colors.primary = 'sky'
           <div class="flex flex-col sm:flex-row justify-between gap-4 mt-4">
             <LandingpageRecordAudio
               v-model:is-running="isRecordingAudio"
-              @transcript="companyContext = (companyContext || '') + $event"
+              @transcript="(text: string) => companyContext = (companyContext || '') + text"
             />
             <a
               v-if="!isRecordingAudio"

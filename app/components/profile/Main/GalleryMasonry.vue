@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineEmits<{
-  (e: 'open-modal', index: number): void
+  'open-modal': [index: number]
 }>()
 </script>
 

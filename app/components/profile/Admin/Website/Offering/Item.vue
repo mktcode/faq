@@ -5,7 +5,7 @@ const offering = defineModel('offering', {
 })
 
 defineEmits<{
-  (e: 'changeOrder', value: 'up' | 'down'): void
+  changeOrder: [value: 'up' | 'down']
 }>()
 
 defineProps<{

@@ -7,7 +7,7 @@ const open = defineModel('open', {
 })
 
 defineEmits<{
-  (e: 'delete'): void
+  delete: []
 }>()
 
 defineProps<{

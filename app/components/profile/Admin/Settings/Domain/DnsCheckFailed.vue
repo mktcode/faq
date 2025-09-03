@@ -1,5 +1,7 @@
 <script setup lang="ts">
-defineEmits(['checkDns'])
+defineEmits<{
+  checkDns: []
+}>()
 defineProps<{
   isCheckingDns: boolean
 }>()

@@ -2,7 +2,7 @@
 const { lastUsedColors } = useLastUsedColors()
 
 defineEmits<{
-  (e: 'colorSelected', color: { h: number, s: number, l: number }): void
+  colorSelected: [color: { h: number, s: number, l: number }]
 }>()
 </script>
 

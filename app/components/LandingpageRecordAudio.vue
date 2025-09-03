@@ -6,7 +6,7 @@ withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  (e: 'transcript', transcript: string): void
+  transcript: [text: string]
 }>()
 
 const isRunning = defineModel('isRunning', {

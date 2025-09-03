@@ -1,5 +1,7 @@
 <script setup lang="ts">
-defineEmits(['update:userInput'])
+defineEmits<{
+  'update:userInput': [value: string]
+}>()
 </script>
 
 <template>
