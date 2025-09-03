@@ -60,14 +60,26 @@ async function registerDomain() {
   const domainToRegister = newDomain.value + '.de'
 
   try {
-    await $fetch('/api/user/registerDomain', {
+    const { error } = await $fetch('/api/user/domain/register', {
       method: 'POST',
       body: { domain: domainToRegister },
     })
 
-    $profile.domain = domainToRegister
-    $profile.domainIsExternal = false
-    registeredSuccessfully.value = true
+    if (!error) {
+      $profile.domain = domainToRegister
+      $profile.domainIsExternal = false
+      registeredSuccessfully.value = true
+    } else {
+      console.error(error)
+      toast.add({
+        title: 'Fehler bei der Registrierung',
+        icon: 'i-heroicons-exclamation-circle',
+        description: `Die Domain konnte nicht registriert werden.`,
+        color: 'error',
+        progress: false,
+      })
+    }
+
   }
   catch (error) {
     toast.add({
