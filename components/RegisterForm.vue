@@ -141,7 +141,6 @@ function onFocusNameInput() {
     </div>
     <UFormField
       label="Über Ihr Unternehmen"
-      hint="(optional)"
       help="In welcher Branche sind Sie tätig? Was bieten Sie an? Wer ist Ihre Zielgruppe? Beschreiben Sie Ihr Unternehmen stichpunktartig oder in zwei bis drei kurzen Sätzen, über Ihre Tastatur oder frei heraus per Spracheingabe."
     >
       <UTextarea
@@ -216,7 +215,7 @@ function onFocusNameInput() {
         label="Zugang erstellen"
         icon="i-heroicons-key"
         size="xl"
-        :disabled="isRegistering || !userNameAvailable || !settings.public.company.name"
+        :disabled="isRegistering || !userNameAvailable || !settings.public.company.name || !settings.public.company.firstname || !settings.public.company.lastname || userName.length < 3 || settings.private.assistant.context.length < 10"
         :loading="isRegistering"
         :ui="{
           leadingIcon: 'text-primary-300',

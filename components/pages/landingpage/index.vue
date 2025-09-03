@@ -10,7 +10,7 @@ const isRecordingAudio = ref(false)
 
 const acc1items = ref<AccordionItem[]>([
   {
-    label: 'Klarheit: Ist Ihr Angebot in einem Satz erklärbar? Wer (genau!) ist Ihre Zielgruppe?',
+    label: 'Klarheit schaffen: Ist Ihr Angebot in einem Satz erklärbar? Wer ist Ihre Zielgruppe?',
     slot: 'slot1',
   },
   {
@@ -26,12 +26,8 @@ const acc1items = ref<AccordionItem[]>([
     slot: 'slot4',
   },
   {
-    label: 'Zeigen Sie sich: Bilder sagen mehr als tausend Worte.',
+    label: 'Künstliche Intelligenz: Nutzen Sie die neuen Möglichkeiten.',
     slot: 'slot5',
-  },
-  {
-    label: 'Rechtliches: Impressum und Datenschutzerklärung',
-    slot: 'slot6',
   },
 ])
 const acc1active = ref<string | undefined>(undefined)
@@ -169,7 +165,7 @@ appConfig.ui.colors.primary = 'sky'
           </h3>
           <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
             Wir stehen Ihnen persönlich zur Seite und unterstützen Sie bei technischen Fragen,
-            per Live-Chat, am Telefon oder per Fernwartung, direkt auf Ihrem Bildschirm.
+            per Live-Chat, am Telefon und per Fernwartung, direkt auf Ihrem Bildschirm.
           </p>
         </div>
       </div>
@@ -290,8 +286,12 @@ appConfig.ui.colors.primary = 'sky'
 
     <section class="mx-auto w-[92vw] max-w-[1200px] py-16">
       <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-6">
-        So werden Sie sichtbar
+        Was Sie tun können
       </h2>
+      <p class="my-4 text-slate-600 dark:text-[#b3bfd1]">
+        Wenn Sie gerne möglichst viel selbst in die Hand nehmen wollen, aber gar nicht wissen, wo Sie anfangen sollen, helfen Ihnen vielleicht die folgenden Tipps weiter.
+        Vieles können Sie auch ohne große Vorkenntnisse und ohne Geld auszugeben umsetzen. Wenn Sie Fragen haben oder bei dem ein oder anderen Punkt Unterstützung brauchen, melden Sie sich gerne bei uns.
+      </p>
       <UAccordion
         v-model="acc1active"
         :items="acc1items"
@@ -317,17 +317,6 @@ appConfig.ui.colors.primary = 'sky'
           <div class="p-4">
             Beim heutigen Konsumverhalten hilft es, wenn Sie in Überschriftenlänge oder maximal zwei bis drei kurzen Sätzen erklären können, was Sie anbieten, für wen und welche Vorteile Kunden bei Ihnen haben.
             Je präziser Ihre Zielgruppe definiert ist, desto gezielter können Sie diese ansprechen.
-            Kostenlose KI-Tools wie <a
-              class="text-sky-500"
-              href="https://chat.openai.com/"
-              target="_blank"
-            >ChatGPT</a> oder <a
-              class="text-sky-500"
-              href="https://gemini.google.com"
-              target="_blank"
-            >Google Gemini</a> (oder der Solohost Assistent) können Ihnen helfen,
-            Klarheit zu gewinnen und professionelle Texte zu schreiben, z.B. für Kleinanzeigen oder Social Media Posts. Auch bei rechtlichen und steuerlichen Fragen können diese Tools eine gute erste Orientierung geben.
-            Den Steuerberater können sie aktuell aber noch nicht ersetzen.
           </div>
         </template>
         <template #slot2>
@@ -347,7 +336,9 @@ appConfig.ui.colors.primary = 'sky'
         <template #slot3>
           <div class="p-4">
             Kleinanzeigen.de, nebenan.de, Instagram, Facebook oder TikTok – Es gibt viele kostenlose Plattformen, auf denen Sie aktiv werben und Kunden gewinnen können.
-            Nutzen Sie diese Kanäle und kommen Sie mit Ihrer Zielgruppe in Kontakt.
+            Nutzen Sie diese Kanäle, um sich zu zeigen und mit Ihrer Zielgruppe in Kontakt zu treten.
+            Smartphones machen heutzutage gute Fotos und können diese auch gleich bearbeiten und optimieren.
+            Es spricht auch nichts gegen ein Video, wenn Sie sich damit wohlfühlen. Zeigen Sie sich und Ihre Arbeit!
           </div>
         </template>
         <template #slot4>
@@ -364,29 +355,17 @@ appConfig.ui.colors.primary = 'sky'
         </template>
         <template #slot5>
           <div class="p-4">
-            Smartphones machen heutzutage gute Fotos und können diese auch gleich bearbeiten und optimieren.
-            Achten Sie ein wenig auf gute Beleuchtung und gut sichtbare Motive und sparen Sie sich den teuren Fotografen, erstmal zumindest.
-            Es spricht auch nichts gegen ein Video, wenn Sie sich damit wohlfühlen. Zeigen Sie sich und Ihre Arbeit!
-          </div>
-        </template>
-        <template #slot6>
-          <div class="p-4">
-            Da Sie gewerblich tätig sind, ist ein Impressum auf der Website Pflicht und auch um eine Datenschutzerklärung kommen Sie nicht herum.
-            Für beides gibt es online <a
+            Kostenlose KI-Tools wie <a
               class="text-sky-500"
-              href="https://www.e-recht24.de/impressum-generator.html"
+              href="https://chat.openai.com/"
               target="_blank"
-            >Generatoren</a>.
-            Leider liegt der Teufel hier im Detail - wer hätte das gedacht?
-            Sie können nicht einfach ein YouTube-Video auf Ihrer Website anzeigen, ohne den Besucher um Erlaubnis zu bitten.
-            Haben Sie ein Kontaktformular? Was passiert mit den Daten, die dort eingegeben werden?
-            Sogar die verwendete Schriftart oder eingefügte Bilder können Auswirkungen haben, wenn Sie technisch nicht korrekt implementiert sind.
-            Viele nutzen daher vorgefertigte Lösungen, die dann haufenweise Paragraphen enthalten, die sie gar nicht betreffen und dazu führen, dass es wirklich niemand mehr liest, außer den Abmahnanwälten.
-            Dabei sollte eine Datenschutzerklärung eigentlich einen Zweck erfüllen: Vertrauen schaffen. Lesen Sie doch mal <a
+            >ChatGPT</a> oder <a
               class="text-sky-500"
-              href="/datenschutz"
+              href="https://gemini.google.com"
               target="_blank"
-            >unsere</a>.
+            >Google Gemini</a> (oder der Solohost Assistent) können Ihnen helfen,
+            Klarheit zu gewinnen und professionelle Texte zu schreiben, z.B. für Kleinanzeigen oder Social Media Posts. Auch bei rechtlichen und steuerlichen Fragen können diese Tools eine gute erste Orientierung geben.
+            Den Steuerberater können sie aktuell aber noch nicht ersetzen.
           </div>
         </template>
       </UAccordion>

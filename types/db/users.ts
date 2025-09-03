@@ -170,7 +170,7 @@ export const settingsFormSchema = z.object({
   }),
   private: z.object({
     assistant: z.object({
-      context: z.string().nullable(),
+      context: z.string(),
     }),
     domain: z.string().nullable(),
     mailboxes: z.string().array(),
@@ -285,7 +285,7 @@ export const defaultSettings = (): SettingsForm => ({
   },
   private: {
     assistant: {
-      context: null,
+      context: '',
     },
     domain: null,
     mailboxes: [],
