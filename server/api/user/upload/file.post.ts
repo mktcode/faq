@@ -1,5 +1,5 @@
 import { PutObjectCommand } from '@aws-sdk/client-s3'
-import type { SettingsForm } from '~/types/db'
+import type { SettingsForm } from '~~/types/db'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)

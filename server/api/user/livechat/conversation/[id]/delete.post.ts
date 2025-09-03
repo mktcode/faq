@@ -1,4 +1,4 @@
-import type { WootConversation } from '~/types/chatwoot'
+import type { WootConversation } from '~~/types/chatwoot'
 
 const apiUrl = 'https://chat.markus-kottlaender.de'
 

@@ -1,5 +1,5 @@
 import { sql } from 'kysely'
-import { qandaFormSchema } from '~/types/db/qanda'
+import { qandaFormSchema } from '~~/types/db/qanda'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)

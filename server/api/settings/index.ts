@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { getPublicSettings } from '~/server/utils/user'
+import { getPublicSettings } from '~~/server/utils/user'
 
 const querySchema = z.object({
   username: z.string(),

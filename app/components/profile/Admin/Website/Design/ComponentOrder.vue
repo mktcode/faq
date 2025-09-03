@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { availableComponents, type ComponentKey } from '~/types/db'
+import { availableComponents, type ComponentKey } from '~~/types/db'
 
 const { $profile } = useProfile()
 

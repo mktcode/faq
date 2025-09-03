@@ -1,6 +1,6 @@
 import { OpenAI } from 'openai'
 import type { ResponseStreamEvent } from 'openai/resources/responses/responses.mjs'
-import type { SettingsForm } from '~/types/db'
+import type { SettingsForm } from '~~/types/db'
 
 function getOpenAI() {
   const { openaiApiKey } = useRuntimeConfig()

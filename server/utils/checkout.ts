@@ -1,5 +1,5 @@
 import Stripe from 'stripe'
-import type { SettingsForm } from '~/types/db'
+import type { SettingsForm } from '~~/types/db'
 
 export type HasEmailFields<TUser> = TUser & {
   email: string | null

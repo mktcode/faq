@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import type { WootContactCreated } from '~/types/chatwoot'
+import type { WootContactCreated } from '~~/types/chatwoot'
 
 const apiUrl = 'https://chat.markus-kottlaender.de'
 

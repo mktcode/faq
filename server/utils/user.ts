@@ -1,7 +1,7 @@
 import OpenAI from 'openai'
 import { zodTextFormat } from 'openai/helpers/zod'
 import type { H3Event } from 'h3'
-import { colorSchema, settingsFormSchema, type SettingsForm } from '~/types/db'
+import { colorSchema, settingsFormSchema, type SettingsForm } from '~~/types/db'
 import z from 'zod'
 import sanitizeHtml from 'sanitize-html'
 

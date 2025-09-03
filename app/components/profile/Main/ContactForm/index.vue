@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
-import type { SimilarQuestion } from '~/server/api/qanda/similarQuestions.post'
+import type { SimilarQuestion } from '~~/server/api/qanda/similarQuestions.post'
 
 const nuxtApp = useNuxtApp()
 const { $profile } = nuxtApp

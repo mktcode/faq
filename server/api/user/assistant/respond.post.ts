@@ -1,4 +1,4 @@
-import { getSettings } from '~/server/utils/user'
+import { getSettings } from '~~/server/utils/user'
 import z from 'zod'
 
 const bodySchema = z.object({

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { WootConversation } from '~/types/chatwoot'
+import type { WootConversation } from '~~/types/chatwoot'
 
 const open = defineModel('open', {
   type: Boolean,

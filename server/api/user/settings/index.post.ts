@@ -1,4 +1,4 @@
-import { settingsFormSchema } from '~/types/db'
+import { settingsFormSchema } from '~~/types/db'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)

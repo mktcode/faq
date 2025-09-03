@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { toHslString } from '~/shared/color'
-
 const { lastUsedColors } = useLastUsedColors()
 
 defineEmits<{

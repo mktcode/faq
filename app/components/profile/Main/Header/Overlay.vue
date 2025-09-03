@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import { toHslString } from '~/shared/color'
-</script>
-
 <template>
   <div
     class="absolute inset-0 z-10"

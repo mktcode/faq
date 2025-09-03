@@ -1,6 +1,6 @@
 import { sql } from 'kysely'
 import { z } from 'zod'
-import type { SettingsForm } from '~/types/db'
+import type { SettingsForm } from '~~/types/db'
 
 const inputSchema = z.object({
   username: z.string().min(1, 'Username is required'),

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useMediaQuery } from '@vueuse/core'
-import { toHslString } from '~/shared/color'
 
 const { showWebsiteDesignSettings, go } = useAdmin()
 const toast = useToast()

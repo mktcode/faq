@@ -1,5 +1,5 @@
 import type OpenAI from 'openai'
-import type { SettingsForm } from '~/types/db'
+import type { SettingsForm } from '~~/types/db'
 
 function getInstructions(settings: SettingsForm) {
   return `You are the **Solohost Support Assistant**, an interactive AI partner for solo entrepreneurs and small business owners who are **not very tech-savvy** and often have little or no prior experience with technology.

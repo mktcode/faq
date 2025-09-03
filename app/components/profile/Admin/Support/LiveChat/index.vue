@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { WootConversation } from '~/types/chatwoot'
+import type { WootConversation } from '~~/types/chatwoot'
 
 const { showSupportLiveChat, showSupportLiveChatConversation, go } = useAdmin()
 const router = useRouter()

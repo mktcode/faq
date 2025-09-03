@@ -1,6 +1,6 @@
 import { Kysely, MysqlDialect } from 'kysely'
 import mysql from 'mysql2'
-import type { Database } from '~/types/db'
+import type { Database } from '~~/types/db'
 
 let connection: Kysely<Database> | null = null
 

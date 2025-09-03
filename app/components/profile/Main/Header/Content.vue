@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import { toHslString } from '~/shared/color'
-</script>
-
 <template>
   <div
     class="@container w-full flex flex-col items-center justify-center gap-2 max-w-xl mx-auto py-24 px-6 relative z-10"

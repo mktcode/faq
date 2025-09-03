@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { settingsFormSchema } from '~/types/db'
+import { settingsFormSchema } from '~~/types/db'
 
 export default defineWebAuthnRegisterEventHandler({
   async storeChallenge(_event, challenge, attemptId) {
