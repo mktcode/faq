@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useMediaQuery } from '@vueuse/core'
 
-const { saveSettings, isSavingSettings } = useProfile()
 const { showWebsiteContactFormSettings, go } = useAdmin()
 const isDesktop = useMediaQuery('(min-width: 640px)')
 </script>
@@ -80,13 +79,6 @@ const isDesktop = useMediaQuery('(min-width: 640px)')
         />
       </UFormField>
       <ProfileAdminWebsiteFormFields v-model:fields="$profile.settings.public.components.form.fields" />
-      <UButton
-        label="Einstellungen speichern"
-        variant="solid"
-        color="primary"
-        :loading="isSavingSettings"
-        @click="saveSettings"
-      />
     </template>
   </UDrawer>
 </template>

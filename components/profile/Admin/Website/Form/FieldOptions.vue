@@ -19,13 +19,11 @@ const options = defineModel('options', {
         v-model="option.label"
         placeholder="Option"
         class="w-full"
-        size="sm"
       />
       <UButton
         variant="soft"
         color="error"
         icon="i-heroicons-trash"
-        size="sm"
         @click="options.splice(index, 1)"
       />
     </div>
@@ -34,7 +32,7 @@ const options = defineModel('options', {
       variant="soft"
       color="primary"
       icon="i-heroicons-plus"
-      @click="options.push({ label: '' })"
+      @click="options.push({ label: `Option ${options.length + 1}` })"
     />
   </div>
 </template>

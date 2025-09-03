@@ -92,15 +92,17 @@ const fieldTypes = [{
               />
             </UFormField>
           </div>
-          <UFormField label="Hilfstext (optional)">
+          <UFormField label="Hilfstext" hint="(optional)">
             <UInput
               v-model="field.help"
               placeholder="Wie ist dieses Feld zu verstehen/auszufüllen?"
               class="w-full"
-              size="sm"
             />
           </UFormField>
-          <ProfileAdminWebsiteFormFieldOptions v-model:options="field.options" />
+          <ProfileAdminWebsiteFormFieldOptions
+            v-if="field.type === 'select'"
+            v-model:options="field.options"
+          />
           <div class="flex items-start justify-between gap-2">
             <div>
               <UCheckbox
