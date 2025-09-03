@@ -1,12 +1,11 @@
 import z from 'zod'
 
-const qboxmailApiUrl = 'https://api.qboxmail.com/api'
 // TODO: move to env
 // TODO: check if this is the same for all domains at qboxmail
 const subdomainVerifyIp = '185.97.217.16'
 
 function makeRequest<ResultType>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', endpoint: string, data?: { body?: Record<string, any>, query?: Record<string, any> }) {
-  const { qboxmailApiKey } = useRuntimeConfig()
+  const { qboxmailApiKey, qboxmailApiUrl } = useRuntimeConfig()
 
   return $fetch<ResultType>(`${qboxmailApiUrl}/${endpoint}`, {
     method,
