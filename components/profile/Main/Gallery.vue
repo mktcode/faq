@@ -19,7 +19,6 @@ function scrollTo() {
 <template>
   <div
     v-if="$profile.settings.public.components.gallery.items.length"
-    class="my-6 w-full"
   >
     <ProfileMainGalleryGrid
       v-if="$profile.settings.public.components.gallery.type === 'grid'"

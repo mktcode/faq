@@ -12,7 +12,4 @@ const { $profile } = useProfile()
   <ProfileMainOfferList
     v-else-if="$profile.settings.public.components.offers.layout === 'list'"
   />
-  <ProfileMainOfferListWide
-    v-else-if="$profile.settings.public.components.offers.layout === 'list-wide'"
-  />
 </template>

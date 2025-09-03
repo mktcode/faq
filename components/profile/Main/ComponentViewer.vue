@@ -30,6 +30,6 @@ function isComponentDisplayed(componentKey: ComponentKey, index: number): boolea
   <ProfileMainOffer v-if="isComponentDisplayed('offers', slotIndex)" />
   <ProfileMainGallery v-else-if="isComponentDisplayed('gallery', slotIndex)" />
   <ProfileMainDownloads v-else-if="isComponentDisplayed('downloads', slotIndex)" />
-  <ProfileMainForm v-else-if="isComponentDisplayed('form', slotIndex)" />
+  <ProfileMainContactForm v-else-if="isComponentDisplayed('form', slotIndex)" />
   <ProfileMainFAQ v-else-if="isComponentDisplayed('faq', slotIndex)" />
 </template>

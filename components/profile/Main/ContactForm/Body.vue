@@ -94,9 +94,7 @@ const disabled = computed(() => {
 </script>
 
 <template>
-  <div class="my-6 w-full max-w-lg mx-auto">
-    <ProfileMainFormHeader />
-
+  <div class="">
     <UTextarea
       v-model="message"
       placeholder="Ihr Anliegen oder Ihre Fragen"
@@ -264,6 +262,7 @@ const disabled = computed(() => {
         block
         :disabled="disabled"
         :loading="isSavingRequest"
+        size="xxl"
         @click="saveCustomerRequest"
       />
     </div>

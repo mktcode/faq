@@ -75,7 +75,6 @@ function changeOrder(index: number, direction: 'up' | 'down') {
           :items="[
             { label: 'Raster', value: 'grid' },
             { label: 'Liste', value: 'list' },
-            { label: 'Liste (breit)', value: 'list-wide' },
             { label: 'Karussell', value: 'carousel' },
           ]"
           class="w-full"

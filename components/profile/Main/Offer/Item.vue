@@ -8,12 +8,12 @@ defineProps<{
 </script>
 
 <template>
-  <div class="max-w-lg">
+  <div>
     <h2 class="text-3xl font-semibold mb-4">
       {{ item.title }}
     </h2>
     <div
-      class="mb-4 prose max-w-none"
+      class="prose max-w-none"
       v-html="item.description"
     />
   </div>

@@ -127,7 +127,7 @@ export const settingsFormSchema = z.object({
     }),
     components: z.object({
       offers: componentSettingsBaseSchema.extend({
-        layout: z.enum(['grid', 'list', 'list-wide', 'carousel']),
+        layout: z.enum(['grid', 'list', 'carousel']),
         items: z.array(z.object({
           id: z.number(),
           title: z.string(),

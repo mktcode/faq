@@ -1,5 +1,5 @@
 <template>
-  <div class="my-24 w-full flex flex-wrap items-start justify-center gap-x-16 gap-y-24">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-24">
     <TransitionGroup name="list">
       <ProfileMainOfferItem
         v-for="item in $profile.settings.public.components.offers.items"

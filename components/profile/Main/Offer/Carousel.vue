@@ -1,5 +1,5 @@
 <template>
-  <div class="my-24 w-full max-w-lg mx-auto">
+  <div>
     <UCarousel
       v-if="$profile.settings.public.components.offers.items.length > 1"
       v-slot="{ item }"
