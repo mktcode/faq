@@ -1,17 +1,14 @@
 import { DomainRobot, DomainRobotModels } from 'js-domainrobot-sdk'
 
-const autodnsApiUrl = 'https://api.demo.autodns.com/v1'
-const autodnsApiUser = '2025_08_28_KOTTLAENDER_JH'
-
 function getDomainRobot() {
-  const { autodnsApiKey } = useRuntimeConfig()
+  const { autodnsApiContext, autodnsApiUrl, autodnsApiUser, autodnsApiPass } = useRuntimeConfig()
 
   return new DomainRobot({
     url: autodnsApiUrl,
     auth: {
       user: autodnsApiUser,
-      password: autodnsApiKey,
-      context: 1,
+      password: autodnsApiPass,
+      context: Number(autodnsApiContext),
     },
   })
 }
@@ -55,18 +52,19 @@ async function createDomainContact(contact: {
 }
 
 async function registerDomainWithZone(domain: string, contactId: number) {
+  const { autodnsNs1, autodnsNs2 } = useRuntimeConfig()
   const { lbIp } = useRuntimeConfig().public
   const domainRobot = getDomainRobot()
 
   try {
-    const result = await domainRobot.domain().create(new DomainRobotModels.Domain({
+    await domainRobot.domain().create(new DomainRobotModels.Domain({
       name: domain,
       nameServers: [
         new DomainRobotModels.NameServer({
-          name: "a.demo.autodns.com"
+          name: autodnsNs1
         }),
         new DomainRobotModels.NameServer({
-          name: "b.demo.autodns.com"
+          name: autodnsNs2
         })
       ],
       ownerc: {
@@ -87,8 +85,6 @@ async function registerDomainWithZone(domain: string, contactId: number) {
         ],
       },
     }))
-
-    console.log(JSON.stringify(result, null, 2))
 
     return { error: null }
   } catch (error) {
