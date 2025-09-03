@@ -5,6 +5,7 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "typecheck": "nuxt prepare && vue-tsc -b --noEmit",
     "build": "nuxt build",
     "dev": "nuxt dev --host --dotenv .env.local",
     "preview": "NITRO_HOST=solohost.local NITRO_SSL_CERT=\"$(cat .localcert/solohost.local+1.pem)\" NITRO_SSL_KEY=\"$(cat .localcert/solohost.local+1-key.pem)\" node .output/server/index.mjs",
@@ -70,7 +71,8 @@
     "playwright-core": "^1.55.0",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "vue-tsc": "^3.0.6"
   },
   "engines": {
     "node": ">=20"
