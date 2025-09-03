@@ -26,13 +26,13 @@ const isOpen = ref(false)
         :label="offering.title || 'Neues Angebot'"
         variant="ghost"
         color="neutral"
-        size="xxl"
+        size="xl"
         class="truncate flex-1 rounded-none"
       />
       <UButton
         variant="ghost"
         icon="i-heroicons-arrow-up"
-        size="xxl"
+        size="xl"
         :disabled="index === 0"
         class="disabled:text-gray-400"
         @click.stop="$emit('changeOrder', 'up')"
@@ -40,7 +40,7 @@ const isOpen = ref(false)
       <UButton
         variant="ghost"
         icon="i-heroicons-arrow-down"
-        size="xxl"
+        size="xl"
         :disabled="index >= $profile.settings.public.components.offers.items.length - 1"
         class="disabled:text-gray-400"
         @click.stop="$emit('changeOrder', 'down')"
@@ -49,7 +49,7 @@ const isOpen = ref(false)
         icon="i-heroicons-trash"
         variant="soft"
         color="error"
-        size="xxl"
+        size="xl"
         class="rounded-none"
         @click.stop="$profile.settings.public.components.offers.items.splice(index, 1)"
       />
