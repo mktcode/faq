@@ -248,7 +248,7 @@ export const defaultSettings = (): SettingsForm => ({
         order: 1,
         title: '',
         description: '',
-        layout: 'carousel',
+        layout: 'list',
         items: [],
       },
       gallery: {
