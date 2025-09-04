@@ -91,7 +91,7 @@ appConfig.ui.colors.primary = 'sky'
           </a>
           <a
             class="w-full sm:w-auto inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-white/20 bg-white/10 text-white backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.6s_forwards]"
-            href="/register?target=it-support"
+            :href="user ? `https://${user.userName}.${appHost}` : '/register?target=it-support'"
           >
             <UIcon
               name="i-lucide-headset"
