@@ -192,7 +192,7 @@ function onFocusNameInput() {
                 aria-live="polite"
                 role="status"
               >
-                {{ userName.length }}/{{ 15 }}
+                {{ userName.length }}/{{ 25 }}
               </div>
             </template>
           </UInput>

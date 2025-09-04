@@ -36,12 +36,6 @@ function getRootSitemap() {
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://${appHost}/support</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
     <loc>https://${appHost}/impressum</loc>
     <lastmod>${today}</lastmod>
     <changefreq>yearly</changefreq>

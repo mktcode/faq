@@ -14,7 +14,6 @@ const profile = useState('profile', () => nuxtApp.ssrContext?.event.context.prof
     />
     <template v-else>
       <PagesLandingpage v-if="path === '/'" />
-      <PagesSupport v-else-if="path === '/support'" />
       <PagesLogin v-else-if="path === '/login'" />
       <PagesRegister v-else-if="path === '/register'" />
       <PagesImpressum v-else-if="path === '/impressum'" />
