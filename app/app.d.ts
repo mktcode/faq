@@ -1,4 +1,4 @@
-import type { SettingsForm } from './types/db'
+import type { SettingsForm } from '~~/types/db'
 
 type Profile = {
   username: string
