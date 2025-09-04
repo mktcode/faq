@@ -15,7 +15,7 @@
     "test": "vitest",
     "stripe:listen": "stripe listen --forward-to https://solohost.local:3000/api/stripe/webhooks",
     "stripe:trigger": "stripe trigger customer.subscription.created",
-    "todo": "grep -Rn --exclude-dir=node_modules --exclude-dir=.git --exclude=package.json \"TODO:\" ."
+    "todo": "grep -Rn --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=.nuxt --exclude-dir=.output --exclude=package.json \"TODO:\" ."
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.873.0",
