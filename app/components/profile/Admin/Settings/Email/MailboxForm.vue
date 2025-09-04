@@ -5,17 +5,14 @@ const { $profile } = useProfile()
 const { copy: copyPassword, copied: copiedPassword } = useClipboard()
 
 // TODO: add validation
-const newMailbox = ref<{ name: string, password: string, passwordBackedup: boolean }>({
+const newMailbox = ref<{ name: string, password: string }>({
   name: '',
   password: '',
-  passwordBackedup: false
 })
 
 const emailAddressesConfirmed = ref(false)
 const isCreatingEmailAddresses = ref(false)
-const passwordBackupConfirmed = computed(() => {
-  return newMailbox.value.passwordBackedup
-})
+const passwordBackupConfirmed = ref(false)
 
 const mailboxNamesIsValid = computed(() => {
   const emailRegex = /^[a-zA-Z0-9._-]+$/
@@ -46,10 +43,10 @@ async function createEmailAddresses() {
   finally {
     emailAddressesConfirmed.value = false
     isCreatingEmailAddresses.value = false
+    passwordBackupConfirmed.value = false
     newMailbox.value = {
       name: '',
-      password: '',
-      passwordBackedup: false
+      password: generatePassword(),
     }
   }
 }
