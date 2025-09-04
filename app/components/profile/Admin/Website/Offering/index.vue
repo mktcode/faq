@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useMediaQuery } from '@vueuse/core'
+import { moveArrayElement } from '@vueuse/integrations/useSortable'
 
 const { showWebsiteOfferingSettings, go } = useAdmin()
 
@@ -8,17 +9,10 @@ const { $profile } = useProfile()
 const isDesktop = useMediaQuery('(min-width: 640px)')
 
 function changeOrder(index: number, direction: 'up' | 'down') {
-  const items = $profile.settings.public.components.offers.items
-  if (direction === 'up' && index > 0) {
-    const temp = items[index - 1]
-    items[index - 1] = items[index]
-    items[index] = temp
-  }
-  else if (direction === 'down' && index < items.length - 1) {
-    const temp = items[index + 1]
-    items[index + 1] = items[index]
-    items[index] = temp
-  }
+  const from = index
+  const to = direction === 'up' ? index - 1 : index + 1
+
+  moveArrayElement($profile.settings.public.components.offers.items, from, to)
 }
 </script>
 

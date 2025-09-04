@@ -90,7 +90,9 @@ const onDrop = async (e: DragEvent) => {
 }
 
 async function deleteImage(index: number) {
-  const url = $profile.settings.public.components.gallery.items[index].url
+  const url = $profile.settings.public.components.gallery.items[index]?.url
+  if (!url) return
+
   const { success } = await $fetch('/api/user/upload/delete', {
     method: 'POST',
     body: JSON.stringify({ url }),

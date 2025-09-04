@@ -72,7 +72,9 @@ const onDrop = async (e: DragEvent) => {
 }
 
 async function deleteDownload(index: number) {
-  const url = $profile.settings.public.components.downloads.items[index].url
+  const url = $profile.settings.public.components.downloads.items[index]?.url
+  if (!url) return
+  
   const { success } = await $fetch('/api/user/upload/delete', {
     method: 'POST',
     body: JSON.stringify({ url }),
