@@ -71,6 +71,7 @@ const open = ref(false)
       <div class="flex items-center">
         <UButton
           label="Neues Postfach anlegen"
+          icon="i-heroicons-plus"
           class="w-full rounded-none p-4"
           variant="ghost"
           color="neutral"
