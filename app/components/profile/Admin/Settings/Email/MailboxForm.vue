@@ -54,67 +54,95 @@ async function createEmailAddresses() {
 onMounted(() => {
   newMailbox.value.password = generatePassword()
 })
+
+const open = ref(false)
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
-    <UButtonGroup class="w-full">
-      <UInput
-        v-model="newMailbox.name"
-        placeholder="z.B. kontakt oder info"
-        class="w-full"
-        size="xl"
-        :disabled="isCreatingEmailAddresses"
-      />
-      <UBadge
-        :label="`@${$profile.domain}`"
-        color="neutral"
-        variant="soft"
-        size="xl"
-        :ui="{
-          base: 'px-4',
-        }"
-      />
-    </UButtonGroup>
-    <UFormField label="Passwort">
-      <UButtonGroup class="w-full">
-        <UBadge
-          :label="newMailbox.password"
-          class="w-full"
-          variant="soft"
-          size="lg"
+  <UCollapsible
+    v-model:open="open"
+    class="flex flex-col gap-2"
+    :ui="{
+      root: 'border-b border-gray-200',
+      content: 'flex flex-col gap-2 p-2',
+    }"
+  >
+    <template #default>
+      <div class="flex items-center">
+        <UButton
+          label="Neues Postfach anlegen"
+          class="w-full rounded-none p-4"
+          variant="ghost"
+          color="neutral"
+          trailing-icon="i-heroicons-chevron-down"
+          :ui="{
+            trailingIcon: `ml-auto transition-transform ${open ? 'rotate-180' : ''}`,
+          }"
+        />
+      </div>
+    </template>
+
+    <template #content>
+      <div class="flex flex-col gap-2">
+        <UButtonGroup class="w-full">
+          <UInput
+            v-model="newMailbox.name"
+            placeholder="z.B. kontakt oder info"
+            class="w-full"
+            size="xl"
+            :disabled="isCreatingEmailAddresses"
+          />
+          <UBadge
+            :label="`@${$profile.domain}`"
+            color="neutral"
+            variant="soft"
+            size="xl"
+            :ui="{
+              base: 'px-4',
+            }"
+          />
+        </UButtonGroup>
+        <UFormField label="Passwort">
+          <UButtonGroup class="w-full">
+            <UBadge
+              :label="newMailbox.password"
+              class="w-full"
+              variant="soft"
+              size="lg"
+            />
+            <UButton
+              :icon="copiedPassword ? 'i-heroicons-check' : 'i-heroicons-clipboard'"
+              :label="copiedPassword ? 'Kopiert!' : 'Kopieren'"
+              variant="soft"
+              @click="copiedPassword ? null : copyPassword(newMailbox.password)"
+            />
+            <UButton
+              icon="i-heroicons-arrow-path"
+              color="primary"
+              variant="soft"
+              size="xl"
+              @click="newMailbox.password = generatePassword()"
+            />
+          </UButtonGroup>
+        </UFormField>
+        <USwitch
+          v-model="passwordBackupConfirmed"
+          label="Ich habe mir das Passwort notiert."
+        />
+        <USwitch
+          v-if="mailboxNamesIsValid"
+          v-model="emailAddressesConfirmed"
+          :label="`Ja, ich möchte die E-Mail-Adresse ${newMailbox.name}@$${$profile.domain} anlegen.`"
+          :disabled="isCreatingEmailAddresses"
         />
         <UButton
-          :icon="copiedPassword ? 'i-heroicons-check' : 'i-heroicons-clipboard'"
-          :label="copiedPassword ? 'Kopiert!' : 'Kopieren'"
-          variant="soft"
-          @click="copiedPassword ? null : copyPassword(newMailbox.password)"
+          v-if="$profile.mailboxes.length < 3"
+          label="E-Mail-Adresse anlegen"
+          :disabled="isCreatingEmailAddresses || !emailAddressesConfirmed || !passwordBackupConfirmed"
+          :loading="isCreatingEmailAddresses"
+          @click="createEmailAddresses"
         />
-        <UButton
-          icon="i-heroicons-arrow-path"
-          color="primary"
-          variant="soft"
-          size="xl"
-          @click="newMailbox.password = generatePassword()"
-        />
-      </UButtonGroup>
-    </UFormField>
-    <USwitch
-      v-model="passwordBackupConfirmed"
-      label="Ich habe mir das Passwort notiert."
-    />
-    <USwitch
-      v-if="mailboxNamesIsValid"
-      v-model="emailAddressesConfirmed"
-      :label="`Ja, ich möchte die E-Mail-Adresse ${newMailbox.name}@$${$profile.domain} anlegen.`"
-      :disabled="isCreatingEmailAddresses"
-    />
-    <UButton
-      v-if="$profile.mailboxes.length < 3"
-      label="E-Mail-Adresse anlegen"
-      :disabled="isCreatingEmailAddresses || !emailAddressesConfirmed || !passwordBackupConfirmed"
-      :loading="isCreatingEmailAddresses"
-      @click="createEmailAddresses"
-    />
-  </div>
+      </div>
+    </template>
+  </UCollapsible>
 </template>

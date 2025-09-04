@@ -1,12 +1,12 @@
 <template>
-  <div class="flex flex-col gap-4 p-4">
-    <div class="flex flex-col gap-2">
+  <div class="flex flex-col">
+    <TransitionGroup name="list">
       <ProfileAdminSettingsEmailMailboxDetails
         v-for="mailbox in $profile.mailboxes"
         :key="mailbox"
         :mailbox="mailbox"
       />
-    </div>
+    </TransitionGroup>
     <ProfileAdminSettingsEmailMailboxForm />
   </div>
 </template>

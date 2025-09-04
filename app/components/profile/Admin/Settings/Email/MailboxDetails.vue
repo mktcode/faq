@@ -11,69 +11,86 @@ const open = ref(false)
     v-model:open="open"
     class="flex flex-col gap-2"
     :ui="{
-      root: 'border border-primary-600/20 rounded-lg',
-      content: 'flex flex-col gap-2 px-3 pb-3',
+      root: 'border-b border-gray-200',
+      content: 'flex flex-col gap-2 p-2',
     }"
   >
     <template #default>
       <div class="flex items-center">
         <UButton
           :label="`${mailbox}@${$profile.domain}`"
-          color="primary"
-          variant="link"
+          class="w-full rounded-none p-4"
+          variant="ghost"
+          color="neutral"
           trailing-icon="i-heroicons-chevron-down"
-          class="flex-1"
           :ui="{
             trailingIcon: `ml-auto transition-transform ${open ? 'rotate-180' : ''}`,
           }"
-        />
-        <UButton
-          color="error"
-          variant="soft"
-          icon="i-heroicons-trash"
         />
       </div>
     </template>
 
     <template #content>
       <UButton
-        label="Zum Webmail"
+        label="zum Postfach"
+        trailing-icon="i-heroicons-arrow-top-right-on-square"
+        to="https://webmail.qboxmail.com"
+        target="_blank"
+        :ui="{
+          trailingIcon: 'ml-auto opacity-50',
+        }"
       />
-      <p class="text-gray-500">
-        Richten Sie Ihr E-Mail-Postfach in Ihrem bevorzugten E-Mail-Client ein, indem Sie die folgenden Einstellungen verwenden:
-      </p>
-      <table>
-        <tbody class="[&>tr>td:first-child]:font-bold">
-          <tr>
-            <td>Benutzername</td>
-            <td>{{ mailbox }}@{{ $profile.domain }}</td>
-          </tr>
-          <tr>
-            <td>Passwort</td>
-            <td>
-              Ihr Passwort
-              <UButton
-                label="ändern"
-                size="sm"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Mailserver</td>
-            <td>m01.qboxmail.com</td>
-          </tr>
-        </tbody>
-      </table>
+      <UAlert
+        variant="soft"
+      >
+        <template #description>
+          <table class="w-full">
+            <tbody class="[&>tr>td:first-child]:font-bold">
+              <tr>
+                <td>Benutzername</td>
+                <td class="text-right">{{ mailbox }}@{{ $profile.domain }}</td>
+              </tr>
+              <tr>
+                <td>Passwort</td>
+                <td class="text-right">
+                  Ihr Passwort
+                  <UButton
+                    label="ändern"
+                    size="sm"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Mailserver</td>
+                <td class="text-right">m01.qboxmail.com</td>
+              </tr>
+            </tbody>
+          </table>
+        </template>
+      </UAlert>
 
       <UAlert
         title="Benötigen Sie Hilfe?"
         variant="soft"
         icon="i-lucide-headset"
+        :actions="[
+          {
+            label: 'Support kontaktieren',
+            to: '#support',
+            size: 'lg',
+          },
+        ]"
       >
         <template #description>
-          Sie können uns jederzeit unter <strong>support@solohost.de</strong> oder über den Live-Chat unten rechts auf Ihrer Website erreichen.
+          Möchten Sie z.B. ein externes E-Mail-Programm einrichten oder haben Sie sonstige Fragen?
         </template>
       </UAlert>
+      <UButton
+        label="Postfach löschen"
+        color="error"
+        variant="soft"
+        icon="i-heroicons-trash"
+      />
     </template>
   </UCollapsible>
 </template>
