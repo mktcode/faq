@@ -74,7 +74,13 @@ async function getLoadBalancer() {
 
   const validatedResult = resultSchema.parse(result)
 
-  return validatedResult.load_balancers[0]
+  const loadBalancer = validatedResult.load_balancers[0]
+
+  if (!loadBalancer) {
+    throw new Error('Load balancer not found')
+  }
+
+  return loadBalancer
 }
 
 async function addNewCertToLoadBalancer(domain: string) {
@@ -83,6 +89,10 @@ async function addNewCertToLoadBalancer(domain: string) {
   const newCertId = await createCertificate(domain)
   const loadBalancer = await getLoadBalancer()
   const currentService = loadBalancer.services[0]
+
+  if (!currentService) {
+    throw new Error('Load balancer has no service configured')
+  }
 
   const resultSchema = z.object({
     action: z.object({

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { WootConversation } from '~~/types/chatwoot'
+import ConversationListItem from './ConversationListItem.vue'
 
 const { showSupportLiveChat, showSupportLiveChatConversation, go } = useAdmin()
 const router = useRouter()
@@ -62,6 +63,13 @@ watch(showSupportLiveChatConversation, (newValue, oldValue) => {
     fetchConversations()
   }
 })
+
+function renderDate(dateString: string | undefined) {
+  if (!dateString) return ''
+
+  const date = new Date(dateString)
+  return date.toLocaleString('de-DE', { dateStyle: 'short', timeStyle: 'short' })
+}
 </script>
 
 <template>
@@ -99,28 +107,11 @@ watch(showSupportLiveChatConversation, (newValue, oldValue) => {
       >
         Keine bisherigen Konversationen.
       </div>
-      <UButton
+      <ProfileAdminSupportLiveChatConversationListItem
         v-for="conversation in conversations"
         :key="conversation.id"
-        :label="conversation.messages[conversation.messages.length - 1].content"
-        class="w-full rounded-none p-4 border-b border-gray-200"
-        variant="ghost"
-        color="neutral"
-        trailing-icon="i-heroicons-chevron-right"
-        :ui="{
-          trailingIcon: 'ml-auto opacity-30',
-        }"
-        @click="selectConversation(conversation.id)"
-      >
-        <template #default>
-          <div class="truncate text-left">
-            <div class="text-gray-500 text-xs">
-              {{ new Date(conversation.messages[conversation.messages.length - 1].created_at * 1000).toLocaleString('de-DE', { dateStyle: 'short', timeStyle: 'short' }) }}
-            </div>
-            {{ conversation.messages[conversation.messages.length - 1].content }}<br>
-          </div>
-        </template>
-      </UButton>
+        :conversation="conversation"
+      />
     </template>
 
     <template #footer>

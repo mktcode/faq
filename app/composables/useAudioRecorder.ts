@@ -23,7 +23,7 @@ export default function useAudioRecorder(maxBars: number = 20) {
 
     let sum = 0
     for (let i = 0; i < bufferLength; i++) {
-      sum += dataArray[i]
+      sum += dataArray[i] || 0
     }
     const average = sum / bufferLength
     volumeLevel.value = Math.min(100, (average / 255) * 100)

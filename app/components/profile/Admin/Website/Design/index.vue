@@ -20,8 +20,8 @@ const uploadHeaderImage = async (files: FileList | null) => {
 
   const formData = new FormData()
 
-  for (let i = 0; i < files.length; i++) {
-    formData.append('files', files[i])
+  for (const file of Array.from(files)) {
+    formData.append('files', file)
   }
 
   try {
@@ -53,8 +53,8 @@ const uploadHeaderVideo = async (files: FileList | null) => {
 
   const formData = new FormData()
 
-  for (let i = 0; i < files.length; i++) {
-    formData.append('files', files[i])
+  for (const file of Array.from(files)) {
+    formData.append('files', file)
   }
 
   try {
@@ -135,7 +135,11 @@ const handleHeaderVideoInputChange = () => {
 }
 
 const handleLogoInputChange = () => {
-  uploadLogo(logoInput.value?.files ? logoInput.value.files[0] : null)
+  if (logoInput.value?.files) {
+    for (const file of Array.from(logoInput.value.files)) {
+      uploadLogo(file)
+    }
+  }
 }
 
 const clickHeaderImageInput = () => {

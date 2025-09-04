@@ -23,5 +23,5 @@ export default defineEventHandler(async (event) => {
     encoding_format: 'float',
   })
 
-  return embedding.data[0].embedding
+  return embedding.data[0]?.embedding || null
 })

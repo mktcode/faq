@@ -17,8 +17,8 @@ const uploadFile = async (files: FileList | null) => {
 
   const formData = new FormData()
 
-  for (let i = 0; i < files.length; i++) {
-    formData.append('files', files[i])
+  for (const file of Array.from(files)) {
+    formData.append('files', file)
   }
 
   try {

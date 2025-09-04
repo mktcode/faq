@@ -37,7 +37,8 @@ export default defineEventHandler(async (event) => {
     await sendEmail({
       to: customerRequest.email,
       subject: `${user.userName}: Antwort auf Ihre Anfrage`,
-      body: replyMessage,
+      text: replyMessage,
+      html: `<p>${replyMessage.replace(/\n/g, '<br>')}</p>`,
     })
   }
 })

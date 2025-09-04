@@ -4,23 +4,19 @@ defineProps<{ domain: string }>()
 const { $profile } = useProfile()
 
 // TODO: add validation
-const newMailboxes = ref<{ name: string, password: string, passwordBackedup: boolean }[]>([
-  { name: '', password: '', passwordBackedup: false },
-  { name: '', password: '', passwordBackedup: false },
-  { name: '', password: '', passwordBackedup: false },
-])
-
-const filledEmailFields = computed(() => {
-  return newMailboxes.value.filter(mailbox => mailbox.name.trim() !== '').length
+const newMailbox = ref<{ name: string, password: string, passwordBackedup: boolean }>({
+  name: '',
+  password: '',
+  passwordBackedup: false
 })
 
-const mailboxNamesAreValid = computed(() => {
+const mailboxNamesIsValid = computed(() => {
   const emailRegex = /^[a-zA-Z0-9._-]+$/
-  return newMailboxes.value.filter(mailbox => mailbox.name.trim() !== '').every(mailbox => emailRegex.test(mailbox.name.trim()))
+  return newMailbox.value.name.trim() !== '' && emailRegex.test(newMailbox.value.name.trim())
 })
 
-const passwordsBackupsConfirmed = computed(() => {
-  return newMailboxes.value.filter(mailbox => mailbox.passwordBackedup).length === filledEmailFields.value
+const passwordBackupConfirmed = computed(() => {
+  return newMailbox.value.passwordBackedup
 })
 
 const emailAddressesConfirmed = ref(false)
@@ -31,7 +27,7 @@ async function createEmailAddresses() {
   try {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2000))
-    $profile.mailboxes.push(...newMailboxes.value.filter(mailbox => mailbox.name.trim() !== '').map(mailbox => mailbox.name.trim()))
+    $profile.mailboxes.push(newMailbox.value.name.trim())
   }
   catch (error) {
     console.error('Error creating email addresses:', error)
@@ -39,7 +35,11 @@ async function createEmailAddresses() {
   finally {
     emailAddressesConfirmed.value = false
     isCreatingEmailAddresses.value = false
-    newMailboxes.value = []
+    newMailbox.value = {
+      name: '',
+      password: '',
+      passwordBackedup: false
+    }
   }
 }
 </script>
@@ -54,25 +54,23 @@ async function createEmailAddresses() {
       />
     </div>
     <ProfileAdminSettingsEmailMailboxForm
-      v-for="index in 2 - $profile.mailboxes.length"
-      :key="index"
-      v-model:mailbox="newMailboxes[index].name"
-      v-model:password="newMailboxes[index].password"
-      v-model:password-backedup="newMailboxes[index].passwordBackedup"
+      v-model:mailbox="newMailbox.name"
+      v-model:password="newMailbox.password"
+      v-model:password-backedup="newMailbox.passwordBackedup"
       :disabled="isCreatingEmailAddresses"
       :domain="domain"
       class="flex flex-col gap-2"
     />
     <USwitch
-      v-if="mailboxNamesAreValid && filledEmailFields > 0"
+      v-if="mailboxNamesIsValid"
       v-model="emailAddressesConfirmed"
-      label="Ja, ich möchte diese E-Mail-Adressen anlegen."
+      label="Ja, ich möchte diese E-Mail-Adresse anlegen."
       :disabled="isCreatingEmailAddresses"
     />
     <UButton
       v-if="$profile.mailboxes.length < 3"
-      :label="`${filledEmailFields} E-Mail-Adresse${filledEmailFields === 1 ? '' : 'n'} anlegen`"
-      :disabled="filledEmailFields === 0 || !mailboxNamesAreValid || isCreatingEmailAddresses || !emailAddressesConfirmed || !passwordsBackupsConfirmed"
+      label="E-Mail-Adresse anlegen"
+      :disabled="isCreatingEmailAddresses || !emailAddressesConfirmed || !passwordBackupConfirmed"
       :loading="isCreatingEmailAddresses"
       @click="createEmailAddresses"
     />

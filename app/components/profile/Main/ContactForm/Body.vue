@@ -130,9 +130,10 @@ const disabled = computed(() => {
         @transcript="(text: string) => { message = text }"
       />
     </div>
-    <Transition name="fade">
+    <TransitionGroup name="fade">
       <div
-        v-if="similarQuestions.length > 0 && messageLongEnough"
+        v-for="question in similarQuestions"
+        :key="question.id"
         class="w-full flex flex-col text-gray-800 mt-2 border border-gray-200 p-4"
         :class="{
           'rounded-none': $profile.settings.public.design.rounded === 'none',
@@ -141,11 +142,11 @@ const disabled = computed(() => {
         }"
       >
         <div class="text-sm text-sky-900/60 mb-2">
-          {{ similarQuestions[0].question }}
+          {{ question.question }}
         </div>
-        <div v-html="similarQuestions[0].answer" />
+        <div v-html="question.answer" />
       </div>
-    </Transition>
+    </TransitionGroup>
     <div class="flex flex-col gap-2 mt-2 w-full">
       <UFormField label="Name">
         <UInput
@@ -169,7 +170,7 @@ const disabled = computed(() => {
         />
       </UFormField>
       <div
-        v-for="(field, index) in $profile.settings.public.components.form.fields || []"
+        v-for="(field, index) in $profile.settings.public.components.form.fields"
         :key="index"
       >
         <UFormField

@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
     .where('userName', '=', username)
     .executeTakeFirstOrThrow()
 
-  const settings: SettingsForm = typeof user.settings === 'string' ? JSON.parse(user.settings) : user.settings
+  const settings = await getPublicSettings(user.id)
 
   const uuid = crypto.randomUUID()
 
@@ -57,7 +57,7 @@ export default defineEventHandler(async (event) => {
       .execute()
   }
 
-  const toEmail = settings?.company?.email || user.email
+  const toEmail = settings.company.email || user.email
 
   if (toEmail) {
     await sendEmail({

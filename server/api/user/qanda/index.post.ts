@@ -38,14 +38,18 @@ export default defineEventHandler(async (event) => {
 
   if (event.context.profile?.subscription.plan) {
     const openai = createOpenAIClient()
-    const embedding = await openai.embeddings.create({
+    const result = await openai.embeddings.create({
       model: 'text-embedding-3-small',
       input: question,
       encoding_format: 'float',
     })
 
-    await sql`UPDATE qanda SET embedding = VEC_FromText(${JSON.stringify(embedding.data[0].embedding)}) WHERE id = ${id} AND userId = ${user.id}`
-      .execute(db)
+    const embedding = result.data[0]?.embedding
+
+    if (embedding) {
+      await sql`UPDATE qanda SET embedding = VEC_FromText(${JSON.stringify(embedding)}) WHERE id = ${id} AND userId = ${user.id}`
+        .execute(db)
+    }
   }
   else {
     await db.updateTable('qanda')

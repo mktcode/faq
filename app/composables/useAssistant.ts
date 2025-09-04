@@ -4,7 +4,6 @@ export const useAssistant = () => {
   const isGeneratingResponse = ref(false)
   const currentActivity = ref<{ label: string, details?: string } | null>(null)
   const messages = ref<{ role: 'user' | 'assistant', content: string }[]>([])
-  const nextMessageIndex = ref<number | null>(null)
   const error = ref<string | null>(null)
   const previousResponseId = ref<string | null>(null)
 
@@ -77,17 +76,21 @@ export const useAssistant = () => {
   function parseNextMessageId(event: ResponseStreamEvent) {
     if (event.type === 'response.output_item.added' && event.item.type === 'message') {
       messages.value.push({ role: 'assistant', content: '' })
-      nextMessageIndex.value = messages.value.length - 1
     }
+  }
+
+  function addDeltaToMessage(delta: string) {
+    const message = messages.value[messages.value.length - 1]
+    if (!message) {
+      throw new Error('No message found to add delta.')
+    }
+    message.content += delta
+    messages.value[messages.value.length - 1] = message
   }
 
   function parseMessageDelta(event: ResponseStreamEvent) {
     if (event.type === 'response.output_text.delta') {
-      if (!nextMessageIndex.value) {
-        throw new Error('No next message index found. Event order may be incorrect.')
-      }
-
-      messages.value[nextMessageIndex.value].content += event.delta
+      addDeltaToMessage(event.delta)
     }
   }
 
@@ -95,7 +98,6 @@ export const useAssistant = () => {
     isGeneratingResponse,
     currentActivity,
     messages,
-    nextMessageIndex,
     error,
     previousResponseId,
     parseActivity,

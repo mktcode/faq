@@ -37,8 +37,8 @@ function isCustomDomain(currentHost: string): boolean {
   return !isRootDomain(currentHost) && !isSubdomain(currentHost)
 }
 
-function extractUsernameFromSubdomain(currentHost: string): string {
-  return currentHost.split('.')[0]
+function extractUsernameFromSubdomain(currentHost: string) {
+  return currentHost.split('.')[0] || null
 }
 
 function redirectToRoot(event: H3Event): Promise<void> {
@@ -107,6 +107,8 @@ async function getUserFromHost(currentHost: string): Promise<TargetUser | null> 
   }
   else if (isSubdomain(currentHost)) {
     const username = extractUsernameFromSubdomain(currentHost)
+    if (!username) return null
+
     const user = await db
       .selectFrom('users')
       .select(['userName', 'published', 'lastPaidAt', 'domain', 'mailboxes', 'plan', 'stripeCheckoutSessionId'])

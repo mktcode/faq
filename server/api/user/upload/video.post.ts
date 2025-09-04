@@ -13,6 +13,10 @@ export default defineEventHandler(async (event) => {
 
   const file = files[0]
 
+  if (!file) {
+    return { success: false, message: 'Es wurde keine Datei übertragen.', videoUrl }
+  }
+
   const { s3BucketName, public: { s3Endpoint } } = useRuntimeConfig()
 
   const s3 = createS3Client()

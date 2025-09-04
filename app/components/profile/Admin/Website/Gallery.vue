@@ -33,9 +33,9 @@ const uploadFile = async (files: FileList | null) => {
   isUploading.value = true
   let uploadedFiles = 0
 
-  for (let i = 0; i < files.length; i++) {
+  for (const file of Array.from(files)) {
     const formData = new FormData()
-    formData.append('files', files[i])
+    formData.append('files', file)
     try {
       const { imageUrls } = await $fetch('/api/user/upload/image', {
         method: 'POST',

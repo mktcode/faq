@@ -40,7 +40,7 @@ async function createDomainContact(contact: {
   const domainRobot = getDomainRobot()
   try {
     const domainContact = await domainRobot.contact().create(query)
-    const domainContactId = domainContact.result.data[0].id
+    const domainContactId = domainContact.result.data[0]?.id
     if (!domainContactId) {
       throw new Error('Failed to create domain contact')
     }
@@ -106,11 +106,11 @@ async function domainInfo(domain: string) {
 }
 
 async function addMissingMailRecords(domain: string, mailDomainId: string, mailVerifyIp: string) {
+  const { autodnsNs1 } = useRuntimeConfig()
   const domainRobot = getDomainRobot()
 
-  const records = await domainRobot.zone().info(domain, 'a.ns14.net')
-  const zone = records.result.data[0]
-  const resourceRecords = zone.resourceRecords || []
+  const records = await domainRobot.zone().info(domain, autodnsNs1)
+  const resourceRecords = records.result.data[0]?.resourceRecords || []
 
   const hasARecord = resourceRecords.some(record => record.type === 'A' && record.name === mailDomainId && record.value === mailVerifyIp)
   const hasMXRecord1 = resourceRecords.some(record => record.type === 'MX' && record.value === 'mx01.qboxmail.com')
@@ -138,7 +138,7 @@ async function addMissingMailRecords(domain: string, mailDomainId: string, mailV
           },
         ],
       }),
-      'a.ns14.net',
+      autodnsNs1,
     )
   }
 }

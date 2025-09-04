@@ -12,6 +12,10 @@ export default defineEventHandler(async (event) => {
 
   const file = files[0]
 
+  if (!file) {
+    return { success: false, message: 'No file found', imageUrl: null }
+  }
+
   const { s3BucketName, public: { s3Endpoint } } = useRuntimeConfig()
 
   const s3 = createS3Client()

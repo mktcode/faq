@@ -31,8 +31,14 @@ export default defineEventHandler(async (event) => {
     const createdSubscription = stripeEvent.data.object
     const customerId = createdSubscription.customer as string
 
-    const priceId = createdSubscription.items.data[0].price.id
-    console.log('subscription created for price:', priceId)
+    const priceId = createdSubscription.items.data[0]?.price.id
+
+    if (!priceId) {
+      return {
+        success: false,
+        error: 'Price ID not found',
+      }
+    }
 
     const db = await getDatabaseConnection()
     await db
@@ -50,8 +56,14 @@ export default defineEventHandler(async (event) => {
     const customerId = paidInvoice.customer as string
     const timestamp = new Date(paidInvoice.created * 1000)
 
-    const priceId = paidInvoice.lines.data[0].pricing?.price_details?.price
-    console.log('invoice paid for price:', priceId)
+    const priceId = paidInvoice.lines.data[0]?.pricing?.price_details?.price
+
+    if (!priceId) {
+      return {
+        success: false,
+        error: 'Price ID not found',
+      }
+    }
 
     const db = await getDatabaseConnection()
     await db
