@@ -51,6 +51,7 @@ async function signUp() {
     await register({
       userName: userName.value,
       settings: settings.value,
+      target: targetITSupport.value ? 'it-support' : 'website',
     })
     await fetchUserSession()
     navigateTo(`https://${userName.value}.${appHost}`, { external: true })
@@ -120,7 +121,8 @@ function onFocusNameInput() {
               name="i-lucide-loader-2"
               class="animate-spin size-10 text-sky-500 mb-2"
             />
-            <span class="text-center">Ihre Website wird eingerichtet. Das kann einen Moment dauern...</span>
+            <span class="text-center" v-if="targetITSupport">Ihr Zugang wird eingerichtet. Das kann einen Moment dauern...</span>
+            <span class="text-center" v-else>Ihre Website wird eingerichtet. Das kann einen Moment dauern...</span>
           </div>
         </Transition>
         <div class="flex gap-4">

@@ -22,6 +22,7 @@ export default defineWebAuthnRegisterEventHandler({
       userName: z.string().min(3).max(25),
       settings: settingsFormSchema.optional(),
       otp: z.string().optional(),
+      target: z.enum(['it-support', 'website']).optional(),
     }).parse(userBody)
   },
   async onSuccess(event, { credential, user }) {
@@ -76,7 +77,7 @@ export default defineWebAuthnRegisterEventHandler({
       }
     }
     else if (user.settings && !existingUser) {
-      if (user.settings.private.assistant.context) {
+      if (user.settings.private.assistant.context && user.target === 'website') {
         user.settings = await prefillSettings(user.settings)
       }
 
