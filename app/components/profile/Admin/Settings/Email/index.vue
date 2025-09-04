@@ -45,10 +45,7 @@ const { showEmailSettings, go } = useAdmin()
           },
         ]"
       />
-      <ProfileAdminSettingsEmailMailboxes
-        v-else
-        :domain="$profile.domain"
-      />
+      <ProfileAdminSettingsEmailMailboxes v-else />
     </template>
   </USlideover>
 </template>
