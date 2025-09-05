@@ -68,19 +68,10 @@ async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUse
   }
 
   const settings = await getSettings(targetUser.userName)
-  let checkoutSession: Stripe.Checkout.Session | null = null
-  if (targetUser.stripeCheckoutSessionId) {
-    try {
-      checkoutSession = await stripe.getCheckoutSession(targetUser.stripeCheckoutSessionId)
-    } catch (error) {
-      console.error('Failed to retrieve Stripe checkout session:', error)
-    }
-  }
 
   event.context.profile = {
     username: targetUser.userName,
     subscription: {
-      checkoutSession,
       plan: targetUser.plan,
       paid: checkLastPayment(targetUser.lastPaidAt),
     },

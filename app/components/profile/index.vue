@@ -11,7 +11,6 @@ const { profile } = defineProps<{
     isPublic: boolean
     subscription: {
       plan: 'S' | 'L' | null
-      checkoutSession: Stripe.Checkout.Session | null
       paid: boolean
     }
     settings: SettingsForm

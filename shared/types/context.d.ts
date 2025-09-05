@@ -6,7 +6,6 @@ declare module 'h3' {
     profile: {
       username: string
       subscription: {
-        checkoutSession: Stripe.Checkout.Session | null
         plan: 'S' | 'L' | null
         paid: boolean
       }

@@ -10,7 +10,6 @@ async function signOut() {
   go('')
   $profile.isOwned = false
   $profile.subscription.plan = null
-  $profile.subscription.checkoutSession = null
   $profile.subscription.paid = false
   $profile.mailboxes = []
   await clear()

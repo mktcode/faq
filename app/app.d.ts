@@ -6,7 +6,6 @@ type Profile = {
   isOwned: boolean
   isPublic: boolean
   subscription: {
-    checkoutSession: Stripe.Checkout.Session | null
     plan: 'S' | 'L' | null
     paid: boolean
   }

@@ -1,7 +1,7 @@
 import Stripe from 'stripe'
 
 export default defineEventHandler(async (event) => {
-  const { stripeApiSecretKey, stripeWebhookSecret, stripePriceSId, stripePriceLId } = useRuntimeConfig()
+  const { stripeApiSecretKey, stripeWebhookSecret } = useRuntimeConfig()
 
   const stripeSignature = getHeader(event, 'stripe-signature')
   if (!stripeSignature) {
@@ -27,72 +27,22 @@ export default defineEventHandler(async (event) => {
     stripeWebhookSecret,
   )
 
-  if (stripeEvent.type === 'customer.subscription.created') {
-    const createdSubscription = stripeEvent.data.object
-    const customerId = createdSubscription.customer as string
-
-    const priceId = createdSubscription.items.data[0]?.price.id
-
-    if (!priceId) {
-      return {
-        success: false,
-        error: 'Price ID not found',
-      }
-    }
-
-    const db = await getDatabaseConnection()
-    await db
-      .updateTable('users')
-      .set({
-        stripeCheckoutSessionId: null,
-        stripeSubscriptionId: createdSubscription.id,
-        plan: priceId === stripePriceSId ? 'S' : priceId === stripePriceLId ? 'L' : null,
-      })
-      .where('stripeCustomerId', '=', customerId)
-      .execute()
+  
+  if (stripeEvent.type === 'checkout.session.completed') {
+    await stripehooks.checkoutSessionCompleted(stripeEvent)
   }
 
-  if (stripeEvent.type === 'invoice.paid') {
-    const paidInvoice = stripeEvent.data.object
-    const customerId = paidInvoice.customer as string
-    const timestamp = new Date(paidInvoice.created * 1000)
+  if (stripeEvent.type === 'customer.subscription.created') {
+    await stripehooks.customerSubscriptionCreated(stripeEvent)
+  }
 
-    const priceId = paidInvoice.lines.data[0]?.pricing?.price_details?.price
-
-    if (!priceId) {
-      return {
-        success: false,
-        error: 'Price ID not found',
-      }
-    }
-
-    const db = await getDatabaseConnection()
-    await db
-      .updateTable('users')
-      .set({
-        lastPaidAt: timestamp,
-        plan: priceId === stripePriceSId ? 'S' : priceId === stripePriceLId ? 'L' : null,
-      })
-      .where('stripeCustomerId', '=', customerId)
-      .execute()
+  if (stripeEvent.type === 'customer.subscription.updated') {
+    await stripehooks.customerSubscriptionUpdated(stripeEvent)
   }
 
   if (stripeEvent.type === 'customer.subscription.deleted') {
-    const deletedSubscription = stripeEvent.data.object
-    const customerId = deletedSubscription.customer as string
-
-    const db = await getDatabaseConnection()
-    await db
-      .updateTable('users')
-      .set({
-        stripeSubscriptionId: null,
-        plan: null,
-      })
-      .where('stripeCustomerId', '=', customerId)
-      .execute()
+    await stripehooks.customerSubscriptionDeleted(stripeEvent)
   }
-
-  console.log(stripeEvent.type)
   
   return {
     success: true,

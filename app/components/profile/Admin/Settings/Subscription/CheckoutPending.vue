@@ -2,6 +2,10 @@
 const updateProfileInterval = ref<NodeJS.Timeout | null>(null)
 const { updateProfile } = useProfile()
 
+defineProps<{
+  url: string
+}>()
+
 onMounted(() => {
   updateProfileInterval.value = setInterval(async () => {
     await updateProfile()
@@ -26,7 +30,7 @@ onBeforeUnmount(() => {
       :ui="{
         trailingIcon: 'ml-auto',
       }"
-      :to="$profile.subscription.checkoutSession?.url"
+      :to="url"
       target="_blank"
     />
     <UButton

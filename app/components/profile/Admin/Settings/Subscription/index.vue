@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const { showSubscriptionSettings, go } = useAdmin()
+
+const { data: stripeCheckoutSession } = await useFetch('/api/user/activeCheckout')
 </script>
 
 <template>
@@ -29,7 +31,7 @@ const { showSubscriptionSettings, go } = useAdmin()
     </template>
 
     <template #body>
-      <ProfileAdminSettingsSubscriptionCheckoutPending v-if="$profile.subscription.checkoutSession" />
+      <ProfileAdminSettingsSubscriptionCheckoutPending v-if="stripeCheckoutSession" :url="stripeCheckoutSession.url" />
       <ProfileAdminSettingsSubscriptionSubscribed v-else-if="$profile.subscription.plan" />
       <ProfileAdminSettingsSubscriptionUnsubscribed v-else />
     </template>
