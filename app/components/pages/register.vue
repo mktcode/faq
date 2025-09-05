@@ -54,7 +54,7 @@ async function signUp() {
       target: targetITSupport.value ? 'it-support' : 'website',
     })
     await fetchUserSession()
-    navigateTo(`https://${userName.value}.${appHost}`, { external: true })
+    navigateTo(`https://${userName.value}.${appHost}${targetITSupport.value ? '#support' : ''}`, { external: true })
   }
   catch (error) {
     isRegistering.value = false
