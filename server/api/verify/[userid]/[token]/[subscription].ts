@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
       settings,
     )
 
-    const checkoutSession = await stripe.createCheckoutSession(stripeCustomerId, user.userName, subscription)
+    const checkoutSession = await stripe.createCheckoutSession(stripeCustomerId, subscription)
 
     if (checkoutSession.id && checkoutSession.url) {
       await db

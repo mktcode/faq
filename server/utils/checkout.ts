@@ -63,7 +63,7 @@ async function requireCompleteStripeCustomer(
   return finalCustomerId
 }
 
-async function createCheckoutSession(customerId: string, userName: string, subscription: 'S' | 'L') {
+async function createCheckoutSession(customerId: string, subscription: 'S' | 'L') {
   const { stripeApiSecretKey, stripePriceSId, stripePriceLId, public: { appHost } } = useRuntimeConfig()
   const stripe = new Stripe(stripeApiSecretKey)
 
