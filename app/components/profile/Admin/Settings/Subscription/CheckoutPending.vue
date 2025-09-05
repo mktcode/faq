@@ -16,21 +16,23 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <p class="text-gray-600">
-    Sie befinden sich gerade im Zahlungsprozess. Schließen Sie Ihre Zahlung bitte ab.
-  </p>
-  <UButton
-    label="Zahlung fortsetzen"
-    trailing-icon="i-heroicons-arrow-right"
-    :ui="{
-      trailingIcon: 'ml-auto',
-    }"
-    :to="$profile.subscription.checkoutSession?.url"
-    target="_blank"
-  />
-  <UButton
-    label="Vorgang abbrechen"
-    icon="i-heroicons-x-mark"
-    variant="soft"
-  />
+  <div class="p-4 flex flex-col gap-2">
+    <p class="text-gray-600">
+      Sie befinden sich gerade im Zahlungsprozess. Schließen Sie Ihre Zahlung bitte ab.
+    </p>
+    <UButton
+      label="Zahlung fortsetzen"
+      trailing-icon="i-heroicons-arrow-right"
+      :ui="{
+        trailingIcon: 'ml-auto',
+      }"
+      :to="$profile.subscription.checkoutSession?.url"
+      target="_blank"
+    />
+    <UButton
+      label="Vorgang abbrechen"
+      icon="i-heroicons-x-mark"
+      variant="soft"
+    />
+  </div>
 </template>
