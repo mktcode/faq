@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const isCreatingPortalSession = ref(false)
 const isCreatingCancelSession = ref(false)
+const isCreatingSwitchSession = ref(false)
 
 async function goToPortalSession() {
   isCreatingPortalSession.value = true
@@ -22,6 +23,17 @@ async function goToCancelSession() {
     await navigateTo(stripeCancelSession.url, { external: true } )
   }
   isCreatingCancelSession.value = false
+}
+
+async function goToSwitchSession() {
+  isCreatingSwitchSession.value = true
+  const stripeSwitchSession = await $fetch('/api/user/stripe/switch', {
+    method: 'POST',
+  })
+  if (stripeSwitchSession && stripeSwitchSession.url) {
+    await navigateTo(stripeSwitchSession.url, { external: true } )
+  }
+  isCreatingSwitchSession.value = false
 }
 </script>
 
@@ -60,6 +72,8 @@ async function goToCancelSession() {
       :ui="{
         trailingIcon: 'ml-auto opacity-30',
       }"
+      @click="goToSwitchSession"
+      :loading="isCreatingSwitchSession"
     />
     <UButton
       v-if="$profile.subscription.plan === 'L'"
@@ -72,6 +86,8 @@ async function goToCancelSession() {
       :ui="{
         trailingIcon: 'ml-auto opacity-30',
       }"
+      @click="goToSwitchSession"
+      :loading="isCreatingSwitchSession"
     />
     <UButton
       label="Abonnement beenden"

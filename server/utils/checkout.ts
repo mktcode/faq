@@ -123,6 +123,37 @@ async function createPortalCancelSubscriptionSession(customerId: string, subscri
   })
 }
 
+async function createPortalSwitchSubscriptionSession(customerId: string, subscriptionId: string, userName: string) {
+  const { stripeApiSecretKey, stripePriceSId, stripePriceLId } = useRuntimeConfig()
+  const stripe = new Stripe(stripeApiSecretKey)
+
+  const subscription = await stripe.subscriptions.retrieve(subscriptionId)
+
+  const items = subscription.items.data.map(item => ({
+    id: item.id,
+    price: item.price.id === stripePriceSId ? stripePriceLId : stripePriceSId,
+    quantity: item.quantity,
+  }))
+
+  return await stripe.billingPortal.sessions.create({
+    customer: customerId,
+    return_url: returnUrl(userName),
+    flow_data: {
+      type: 'subscription_update_confirm',
+      subscription_update_confirm: {
+        subscription: subscriptionId,
+        items,
+      },
+      after_completion: {
+        type: 'redirect',
+        redirect: {
+          return_url: returnUrl(userName),
+        },
+      },
+    },
+  })
+}
+
 async function getCheckoutSession(sessionId: string) {
   const { stripeApiSecretKey } = useRuntimeConfig()
   const stripe = new Stripe(stripeApiSecretKey)
@@ -154,6 +185,7 @@ export const stripe = {
   getCheckoutSession,
   createPortalSession,
   createPortalCancelSubscriptionSession,
+  createPortalSwitchSubscriptionSession,
   requireNoPriorSubscription,
   requireNoStripeCustomerId,
 }
