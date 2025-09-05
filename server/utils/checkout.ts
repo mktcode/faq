@@ -86,6 +86,16 @@ async function createCheckoutSession(customerId: string, subscription: 'S' | 'L'
   })
 }
 
+async function createCustomerPortalSession(customerId: string, userName: string) {
+  const { stripeApiSecretKey, public: { appHost } } = useRuntimeConfig()
+  const stripe = new Stripe(stripeApiSecretKey)
+
+  return await stripe.billingPortal.sessions.create({
+    customer: customerId,
+    return_url: `https://${userName}.${appHost}/#settings/subscription`,
+  })
+}
+
 async function getCheckoutSession(sessionId: string) {
   const { stripeApiSecretKey } = useRuntimeConfig()
   const stripe = new Stripe(stripeApiSecretKey)
@@ -115,6 +125,7 @@ export const stripe = {
   requireCompleteStripeCustomer,
   createCheckoutSession,
   getCheckoutSession,
+  createCustomerPortalSession,
   requireNoPriorSubscription,
   requireNoStripeCustomerId,
 }

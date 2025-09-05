@@ -1,7 +1,9 @@
 <script setup lang="ts">
 const { showSubscriptionSettings, go } = useAdmin()
 
-const { stripePortalUrl } = useRuntimeConfig().public
+const { data: stripePortalSession } = await useFetch('/api/user/stripe/portal', {
+  method: 'POST',
+})
 </script>
 
 <template>
@@ -44,9 +46,10 @@ const { stripePortalUrl } = useRuntimeConfig().public
           </div>
           <div class="flex flex-col gap-2">
             <UButton
-              :to="stripePortalUrl"
+              v-if="stripePortalSession && stripePortalSession.url"
+              :to="stripePortalSession.url"
               target="_blank"
-              label="Zahlungsdetails ändern"
+              label="Abonnement verwalten"
               icon="i-heroicons-pencil-square"
               class="w-full"
               trailing-icon="i-heroicons-arrow-right"
