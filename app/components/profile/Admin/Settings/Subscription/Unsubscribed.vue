@@ -9,7 +9,7 @@ function selectSubscription(plan: 'S' | 'L') {
 </script>
 
 <template>
-  <div class="text-center border border-gray-200 p-4 rounded-xl">
+  <div class="text-center p-4">
     <UBadge
       label="Paket S"
       variant="soft"
@@ -52,16 +52,16 @@ function selectSubscription(plan: 'S' | 'L') {
         monatlich kündbar
       </div>
     </div>
-    <UButton
-      label="Auswählen"
-      class="w-full mt-4"
-      size="xxl"
-      trailing-icon="i-heroicons-arrow-right"
-      block
-      @click="selectSubscription('S')"
-    />
   </div>
-  <div class="text-center border border-gray-200 p-4 rounded-xl">
+  <UButton
+    label="Paket S auswählen"
+    class="w-full mt-4 rounded-none"
+    size="xxl"
+    trailing-icon="i-heroicons-arrow-right"
+    block
+    @click="selectSubscription('S')"
+  />
+  <div class="text-center p-4 mt-8">
     <UBadge
       label="Paket L"
       variant="soft"
@@ -111,14 +111,14 @@ function selectSubscription(plan: 'S' | 'L') {
         monatlich kündbar oder zurück auf Premium
       </div>
     </div>
-    <UButton
-      label="Auswählen"
-      class="w-full mt-4"
-      size="xxl"
-      trailing-icon="i-heroicons-arrow-right"
-      block
-      @click="selectSubscription('L')"
-    />
   </div>
+  <UButton
+    label="Paket L auswählen"
+    class="w-full mt-4 rounded-none"
+    size="xxl"
+    trailing-icon="i-heroicons-arrow-right"
+    block
+    @click="selectSubscription('L')"
+  />
   <ProfileAdminSettingsSubscriptionVerification />
 </template>
