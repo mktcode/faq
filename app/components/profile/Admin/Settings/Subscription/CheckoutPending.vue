@@ -25,6 +25,8 @@ onBeforeUnmount(() => {
     :ui="{
       trailingIcon: 'ml-auto',
     }"
+    :to="$profile.subscription.checkoutSession?.url"
+    target="_blank"
   />
   <UButton
     label="Vorgang abbrechen"

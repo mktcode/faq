@@ -32,7 +32,7 @@ const { stripePortalUrl } = useRuntimeConfig().public
 
     <template #body>
       <div class="flex flex-col gap-4 p-6">
-        <ProfileAdminSettingsSubscriptionCheckoutPending v-if="$profile.subscription.checkoutPending" />
+        <ProfileAdminSettingsSubscriptionCheckoutPending v-if="$profile.subscription.checkoutSession" />
         <template v-else-if="$profile.subscription.plan">
           <div class="flex flex-col items-center">
             <div class="text-gray-600 text-sm">
@@ -45,6 +45,7 @@ const { stripePortalUrl } = useRuntimeConfig().public
           <div class="flex flex-col gap-2">
             <UButton
               :to="stripePortalUrl"
+              target="_blank"
               label="Zahlungsdetails ändern"
               icon="i-heroicons-pencil-square"
               class="w-full"

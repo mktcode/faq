@@ -1,11 +1,12 @@
 import type { SettingsForm } from '~~/types/db'
+import Stripe from 'stripe'
 
 declare module 'h3' {
   interface H3EventContext {
     profile: {
       username: string
       subscription: {
-        checkoutPending: boolean
+        checkoutSession: Stripe.Checkout.Session | null
         plan: 'S' | 'L' | null
         paid: boolean
       }

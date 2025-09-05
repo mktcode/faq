@@ -1,11 +1,12 @@
 import type { SettingsForm } from '~~/types/db'
+import Stripe from 'stripe'
 
 type Profile = {
   username: string
   isOwned: boolean
   isPublic: boolean
   subscription: {
-    checkoutPending: boolean
+    checkoutSession: Stripe.Checkout.Session | null
     plan: 'S' | 'L' | null
     paid: boolean
   }

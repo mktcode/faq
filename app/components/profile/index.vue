@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type Stripe from 'stripe';
 import type { SettingsForm } from '~~/types/db'
 
 const path = useRoute().path
@@ -10,7 +11,7 @@ const { profile } = defineProps<{
     isPublic: boolean
     subscription: {
       plan: 'S' | 'L' | null
-      checkoutPending: boolean
+      checkoutSession: Stripe.Checkout.Session | null
       paid: boolean
     }
     settings: SettingsForm

@@ -86,6 +86,13 @@ async function createCheckoutSession(customerId: string, subscription: 'S' | 'L'
   })
 }
 
+async function getCheckoutSession(sessionId: string) {
+  const { stripeApiSecretKey } = useRuntimeConfig()
+  const stripe = new Stripe(stripeApiSecretKey)
+
+  return await stripe.checkout.sessions.retrieve(sessionId)
+}
+
 function requireNoPriorSubscription(lastPaidAt: Date | null): void {
   if (lastPaidAt !== null) {
     throw createError({
@@ -107,6 +114,7 @@ function requireNoStripeCustomerId(stripeCustomerId: string | null): void {
 export const stripe = {
   requireCompleteStripeCustomer,
   createCheckoutSession,
+  getCheckoutSession,
   requireNoPriorSubscription,
   requireNoStripeCustomerId,
 }
