@@ -45,6 +45,7 @@ export default defineEventHandler(async (event) => {
       .updateTable('users')
       .set({
         stripeCheckoutSessionId: null,
+        stripeSubscriptionId: createdSubscription.id,
         plan: priceId === stripePriceSId ? 'S' : priceId === stripePriceLId ? 'L' : null,
       })
       .where('stripeCustomerId', '=', customerId)
@@ -76,6 +77,23 @@ export default defineEventHandler(async (event) => {
       .execute()
   }
 
+  if (stripeEvent.type === 'customer.subscription.deleted') {
+    const deletedSubscription = stripeEvent.data.object
+    const customerId = deletedSubscription.customer as string
+
+    const db = await getDatabaseConnection()
+    await db
+      .updateTable('users')
+      .set({
+        stripeSubscriptionId: null,
+        plan: null,
+      })
+      .where('stripeCustomerId', '=', customerId)
+      .execute()
+  }
+
+  console.log(stripeEvent.type)
+  
   return {
     success: true,
     error: null,

@@ -59,7 +59,7 @@ export default defineNuxtConfig({
       cookie: {
         // Devnote: Set .de to .local for preview mode
         domain: process.env.NODE_ENV === 'production' ? 'solohost.de' : 'solohost.local',
-        sameSite: 'strict',
+        sameSite: 'lax',
       },
     },
     public: {

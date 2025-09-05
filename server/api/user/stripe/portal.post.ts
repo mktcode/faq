@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const portalSession = await stripe.createCustomerPortalSession(me.stripeCustomerId, me.userName)
+  const portalSession = await stripe.createPortalSession(me.stripeCustomerId, me.userName)
 
   return portalSession
 })

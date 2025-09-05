@@ -1,7 +1,28 @@
 <script setup lang="ts">
-const { data: stripePortalSession } = await useFetch('/api/user/stripe/portal', {
-  method: 'POST',
-})
+const isCreatingPortalSession = ref(false)
+const isCreatingCancelSession = ref(false)
+
+async function goToPortalSession() {
+  isCreatingPortalSession.value = true
+  const stripePortalSession = await $fetch('/api/user/stripe/portal', {
+    method: 'POST',
+  })
+  if (stripePortalSession && stripePortalSession.url) {
+    await navigateTo(stripePortalSession.url, { external: true } )
+  }
+  isCreatingPortalSession.value = false
+}
+
+async function goToCancelSession() {
+  isCreatingCancelSession.value = true
+  const stripeCancelSession = await $fetch('/api/user/stripe/cancel', {
+    method: 'POST',
+  })
+  if (stripeCancelSession && stripeCancelSession.url) {
+    await navigateTo(stripeCancelSession.url, { external: true } )
+  }
+  isCreatingCancelSession.value = false
+}
 </script>
 
 <template>
@@ -15,8 +36,7 @@ const { data: stripePortalSession } = await useFetch('/api/user/stripe/portal', 
   </div>
   <div class="flex flex-col">
     <UButton
-      v-if="stripePortalSession && stripePortalSession.url"
-      :to="stripePortalSession.url"
+      @click="goToPortalSession"
       target="_blank"
       label="Abonnement verwalten"
       icon="i-heroicons-pencil-square"
@@ -24,6 +44,7 @@ const { data: stripePortalSession } = await useFetch('/api/user/stripe/portal', 
       variant="ghost"
       color="neutral"
       trailing-icon="i-heroicons-chevron-right"
+      :loading="isCreatingPortalSession"
       :ui="{
         trailingIcon: 'ml-auto opacity-30',
       }"
@@ -53,12 +74,14 @@ const { data: stripePortalSession } = await useFetch('/api/user/stripe/portal', 
       }"
     />
     <UButton
-      label="Premium-Abonnement beenden"
-      icon="i-heroicons-x-circle"
+      label="Abonnement beenden"
+      icon="i-lucide-octagon-x"
       class="w-full rounded-none p-4 border-b border-gray-200"
       variant="ghost"
       color="neutral"
       trailing-icon="i-heroicons-chevron-right"
+      @click="goToCancelSession"
+      :loading="isCreatingCancelSession"
       :ui="{
         trailingIcon: 'ml-auto opacity-30',
       }"

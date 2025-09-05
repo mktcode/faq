@@ -86,13 +86,40 @@ async function createCheckoutSession(customerId: string, subscription: 'S' | 'L'
   })
 }
 
-async function createCustomerPortalSession(customerId: string, userName: string) {
-  const { stripeApiSecretKey, public: { appHost } } = useRuntimeConfig()
+function returnUrl(userName: string) {
+  const { public: { appHost } } = useRuntimeConfig()
+  return `https://${userName}.${appHost}/#settings/subscription`
+}
+
+async function createPortalSession(customerId: string, userName: string) {
+  const { stripeApiSecretKey } = useRuntimeConfig()
   const stripe = new Stripe(stripeApiSecretKey)
 
   return await stripe.billingPortal.sessions.create({
     customer: customerId,
-    return_url: `https://${userName}.${appHost}/#settings/subscription`,
+    return_url: returnUrl(userName),
+  })
+}
+
+async function createPortalCancelSubscriptionSession(customerId: string, subscriptionId: string, userName: string) {
+  const { stripeApiSecretKey } = useRuntimeConfig()
+  const stripe = new Stripe(stripeApiSecretKey)
+
+  return await stripe.billingPortal.sessions.create({
+    customer: customerId,
+    return_url: returnUrl(userName),
+    flow_data: {
+      type: 'subscription_cancel',
+      subscription_cancel: {
+        subscription: subscriptionId,
+      },
+      after_completion: {
+        type: 'redirect',
+        redirect: {
+          return_url: returnUrl(userName),
+        },
+      },
+    },
   })
 }
 
@@ -125,7 +152,8 @@ export const stripe = {
   requireCompleteStripeCustomer,
   createCheckoutSession,
   getCheckoutSession,
-  createCustomerPortalSession,
+  createPortalSession,
+  createPortalCancelSubscriptionSession,
   requireNoPriorSubscription,
   requireNoStripeCustomerId,
 }
