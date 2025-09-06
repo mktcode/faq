@@ -136,7 +136,7 @@ async function getSubscriptionSchedule(subscriptionId: string) {
 
   const subscription = await stripe.subscriptions.retrieve(subscriptionId)
   if (!subscription.schedule) {
-    return null
+    return { subscription, schedule: null }
   }
   if (typeof subscription.schedule !== 'string') {
     throw new Error('Unexpected subscription schedule format')
@@ -144,11 +144,7 @@ async function getSubscriptionSchedule(subscriptionId: string) {
 
   const schedule = await stripe.subscriptionSchedules.retrieve(subscription.schedule)
 
-  if (schedule.status === 'active') {
-    return schedule
-  }
-
-  return null
+  return { subscription, schedule }
 }
 
 function requireNoPriorSubscription(lastPaidAt: Date | null): void {

@@ -4,9 +4,15 @@ const isCreatingCancelSession = ref(false)
 
 const { data: subscriptionSchedule } = await useFetch('/api/user/subscriptionSchedule')
 const switchDate = computed(() => {
-  if (subscriptionSchedule.value && subscriptionSchedule.value.phases) {
-    const endDate = subscriptionSchedule.value.phases[0]?.end_date
+  if (subscriptionSchedule.value?.schedule && subscriptionSchedule.value.schedule.phases) {
+    const endDate = subscriptionSchedule.value.schedule.phases[0]?.end_date
     return endDate ? new Date(endDate * 1000) : null
+  }
+  return null
+})
+const cancelDate = computed(() => {
+  if (subscriptionSchedule.value?.subscription && subscriptionSchedule.value.subscription.cancel_at) {
+    return new Date(subscriptionSchedule.value.subscription.cancel_at * 1000)
   }
   return null
 })
@@ -44,6 +50,9 @@ async function goToCancelSession() {
     </div>
     <div v-if="switchDate" class="text-gray-600 text-sm">
       {{ `Paket S ab ${switchDate.toLocaleDateString()}` }}
+    </div>
+    <div v-if="cancelDate" class="text-gray-600 text-sm">
+      {{ `Endet am ${cancelDate.toLocaleDateString()}` }}
     </div>
   </div>
   <div class="flex flex-col">
