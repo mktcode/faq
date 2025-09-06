@@ -8,6 +8,8 @@ const { user } = useUserSession()
 const companyContext = ref('')
 const isRecordingAudio = ref(false)
 
+const lexwareLink = 'https://office.lexware.de/preise?pid=nPH1xfzsql&pdata=O4XolHNCc0&cid=1777&utm_medium=affiliate&utm_source=recommend-nPH1xfzsql&utm_campaign=kunden-werben-kunden&couponCode=LXOK4YWK'
+
 const acc1items = ref<AccordionItem[]>([
   {
     label: 'Klarheit schaffen: Ist Ihr Angebot in einem Satz erklärbar? Wer ist Ihre Zielgruppe?',
@@ -28,6 +30,10 @@ const acc1items = ref<AccordionItem[]>([
   {
     label: 'Künstliche Intelligenz: Nutzen Sie die neuen Möglichkeiten.',
     slot: 'slot5',
+  },
+  {
+    label: 'Unsere Buchhaltungsempfehlung: Lexware Office',
+    slot: 'slot6',
   },
 ])
 const acc1active = ref<string | undefined>(undefined)
@@ -366,6 +372,29 @@ appConfig.ui.colors.primary = 'sky'
             >Google Gemini</a> (oder der Solohost Assistent) können Ihnen helfen,
             Klarheit zu gewinnen und professionelle Texte zu schreiben, z.B. für Kleinanzeigen oder Social Media Posts. Auch bei rechtlichen und steuerlichen Fragen können diese Tools eine gute erste Orientierung geben.
             Den Steuerberater können sie aktuell aber noch nicht ersetzen.
+          </div>
+        </template>
+        <template #slot6>
+          <div class="p-4">
+            Haben Sie schon eine Lösung für Ihre Buchhaltung? Rechnungen schreiben, Belege erfassen, Umsatzsteuervoranmeldung an das Finanzamt übermitteln? Das geht mit Lexware Office ganz einfach.
+            Mit dem Geschäftskonto von Lexware erhalten Sie zudem eine Visa Business Kreditkarte und Ihre Umsätze werden automatisch in der Buchhaltung erfasst.
+            Wir nutzen Lexware Office selbst und sind sehr zufrieden. Bei der Einrichtung helfen wir Ihnen gerne.
+          </div>
+          <div class="flex flex-col sm:flex-row items-center justify-end p-4 pt-0">
+            <a
+              :href="lexwareLink"
+              target="_blank"
+              class="flex flex-col gap-4"
+            >
+              <img src="/lexware-logo.png" alt="Lexware Office" class="inline-block shrink-0 h-22" />
+            </a>
+            <UButton
+              :to="lexwareLink"
+              target="_blank"
+              label="Mehr erfahren"
+              color="error"
+              trailing-icon="i-heroicons-arrow-top-right-on-square"
+            />
           </div>
         </template>
       </UAccordion>
