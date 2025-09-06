@@ -1,9 +1,26 @@
 <script setup lang="ts">
+import { availableComponents } from '~~/types/db'
+
 const toast = useToast()
 
 const { $profile } = useProfile()
 
 const { showWebsiteSettings, go } = useAdmin()
+
+const showAddComponent = ref(false)
+const components = computed(() => {
+  return $profile.settings.public.components
+    .sort((a, b) => {
+      return a.order - b.order
+    })
+    .map((component) => {
+      const found = availableComponents.find(c => c.key === component.key)
+      return {
+        ...component,
+        icon: found?.icon || 'i-heroicons-cube',
+      }
+    })
+})
 
 const showLegalDataWarning = computed(() => {
   return !$profile.settings.public.company.name || !$profile.settings.public.company.street || !$profile.settings.public.company.phone
@@ -163,6 +180,40 @@ async function togglePublished() {
         }"
         @click="go('#website/downloads')"
       />
+
+      <template
+        v-for="(component, index) in components"
+        :key="component.key + index"
+      >
+        <UButton
+          :label="component.title"
+          :icon="component.icon"
+          class="w-full rounded-none p-4 border-b border-gray-200"
+          variant="ghost"
+          color="neutral"
+          trailing-icon="i-heroicons-chevron-right"
+          :ui="{
+            trailingIcon: 'ml-auto opacity-30',
+          }"
+          @click="go(`#website/component/${component.key}/${index}`)"
+        />
+
+      </template>
+
+      <UButton
+        label="Sektion hinzufügen"
+        icon="i-heroicons-plus"
+        class="w-full rounded-none p-4 border-b border-gray-200"
+        variant="ghost"
+        color="neutral"
+        trailing-icon="i-heroicons-chevron-right"
+        :ui="{
+          trailingIcon: 'ml-auto opacity-30',
+        }"
+        @click="showAddComponent = true"
+      />
+
+      <ProfileAdminWebsiteAddComponent v-model:open="showAddComponent" />
     </template>
   </USlideover>
 </template>

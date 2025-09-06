@@ -6,10 +6,12 @@ const offering = defineModel('offering', {
 
 defineEmits<{
   changeOrder: [value: 'up' | 'down']
+  remove: [index: number]
 }>()
 
 defineProps<{
   index: number
+  itemsLength: number
 }>()
 
 const isOpen = ref(false)
@@ -41,7 +43,7 @@ const isOpen = ref(false)
         variant="ghost"
         icon="i-heroicons-arrow-down"
         size="xl"
-        :disabled="index >= $profile.settings.public.components.offers.items.length - 1"
+        :disabled="index >= itemsLength - 1"
         class="disabled:text-gray-400"
         @click.stop="$emit('changeOrder', 'down')"
       />
@@ -51,7 +53,7 @@ const isOpen = ref(false)
         color="error"
         size="xl"
         class="rounded-none"
-        @click.stop="$profile.settings.public.components.offers.items.splice(index, 1)"
+        @click.stop="$emit('remove', index)"
       />
     </UButtonGroup>
 

@@ -1,43 +1,33 @@
 <script setup lang="ts">
-import { availableComponents, type ComponentKey } from '~~/types/db'
+import { availableComponents } from '~~/types/db'
+import { moveArrayElement } from '@vueuse/integrations/useSortable'
 
 const { $profile } = useProfile()
 
 const items = computed(() => {
-  if (!$profile.settings) return []
-
-  return Object.keys($profile.settings.public.components)
+  return $profile.settings.public.components
     .sort((a, b) => {
-      const orderA = $profile.settings.public.components[a as ComponentKey].order || 0
-      const orderB = $profile.settings.public.components[b as ComponentKey].order || 0
-      return orderA - orderB
+      return a.order - b.order
     })
-    .map(key => ({
-      id: key as ComponentKey,
-      label: availableComponents.find(component => component.key === key)?.title || '',
-      icon: availableComponents.find(component => component.key === key)?.icon || '',
-      slot: key,
-    }))
+    .map((component) => {
+      const found = availableComponents.find(c => c.key === component.key)
+      return {
+        ...component,
+        icon: found?.icon || 'i-heroicons-cube',
+      }
+    })
 })
 
-function changeOrder(key: ComponentKey, direction: 'up' | 'down') {
-  const currentPosition = $profile.settings.public.components[key].order
-  if (direction === 'up' && currentPosition <= 1) return
-  if (direction === 'down' && currentPosition >= Object.keys($profile.settings.public.components).length) return
+function changeOrder(index: number, direction: 'up' | 'down') {
+  const to = direction === 'up' ? index - 1 : index + 1
 
-  const newPosition = direction === 'up' ? currentPosition - 1 : currentPosition + 1
-  const adjacentComponentKey = Object.keys($profile.settings.public.components).find(
-    key => $profile.settings.public.components[key as ComponentKey].order === newPosition,
-  ) as ComponentKey | undefined
-
-  if (adjacentComponentKey) {
-    $profile.settings.public.components[key].order = newPosition
-    $profile.settings.public.components[adjacentComponentKey].order = currentPosition
-  }
+  moveArrayElement($profile.settings.public.components, index, to)
 }
 
-function toggleVisibility(key: ComponentKey) {
-  $profile.settings.public.components[key].visible = !$profile.settings.public.components[key].visible
+function toggleVisibility(index: number) {
+  if (!$profile.settings.public.components[index]) return
+  
+  $profile.settings.public.components[index].visible = !$profile.settings.public.components[index].visible
 }
 </script>
 
@@ -51,24 +41,24 @@ function toggleVisibility(key: ComponentKey) {
     <TransitionGroup name="list">
       <div
         v-for="(item, index) in items"
-        :key="item.id"
+        :key="item.key + index"
         class="flex items-center"
       >
         <UIcon
           :name="item.icon"
           class="text-gray-500 size-5 mr-3"
         />
-        {{ item.label }}
+        {{ item.title }}
         <div class="ml-auto flex items-center">
           <UButton
             variant="ghost"
             size="sm"
-            :color="$profile.settings.public.components[item.id as ComponentKey]?.visible ? 'primary' : 'neutral'"
-            :class="$profile.settings.public.components[item.id as ComponentKey]?.visible ? 'text-primary-600' : 'text-gray-300'"
-            @click.stop="toggleVisibility(item.id)"
+            :color="item.visible ? 'primary' : 'neutral'"
+            :class="item.visible ? 'text-primary-600' : 'text-gray-300'"
+            @click.stop="toggleVisibility(index)"
           >
             <UIcon
-              :name="$profile.settings.public.components[item.id as ComponentKey]?.visible ? 'i-heroicons-eye' : 'i-heroicons-eye-slash'"
+              :name="item.visible ? 'i-heroicons-eye' : 'i-heroicons-eye-slash'"
               class="size-5"
             />
           </UButton>
@@ -77,7 +67,7 @@ function toggleVisibility(key: ComponentKey) {
             size="sm"
             :disabled="index === 0"
             class="disabled:text-gray-400"
-            @click.stop="changeOrder(item.id, 'up')"
+            @click.stop="changeOrder(index, 'up')"
           >
             <UIcon
               name="i-heroicons-arrow-up"
@@ -89,7 +79,7 @@ function toggleVisibility(key: ComponentKey) {
             size="sm"
             :disabled="index >= items.length - 1"
             class="disabled:text-gray-400"
-            @click.stop="changeOrder(item.id, 'down')"
+            @click.stop="changeOrder(index, 'down')"
           >
             <UIcon
               name="i-heroicons-arrow-down"

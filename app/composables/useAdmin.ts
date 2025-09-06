@@ -16,6 +16,7 @@ export default function useAdmin() {
   const showWebsiteGallerySettings = computed(() => router.currentRoute.value.hash === '#website/gallery')
   const showWebsiteFaqSettings = computed(() => router.currentRoute.value.hash === '#website/faq')
   const showWebsiteDownloadsSettings = computed(() => router.currentRoute.value.hash === '#website/downloads')
+  const showWebsiteComponentSettings = computed(() => router.currentRoute.value.hash.startsWith('#website/component/'))
 
   const showAssistant = computed(() => router.currentRoute.value.hash.startsWith('#assistant'))
   const showAssistantTips = computed(() => router.currentRoute.value.hash === '#assistant/tips')
@@ -47,6 +48,7 @@ export default function useAdmin() {
     showWebsiteGallerySettings,
     showWebsiteFaqSettings,
     showWebsiteDownloadsSettings,
+    showWebsiteComponentSettings,
     showAssistant,
     showAssistantTips,
     showAssistantContextSettings,
@@ -59,5 +61,6 @@ export default function useAdmin() {
     showSupportPayment,
     showConnectDevice,
     go,
+    hash: router.currentRoute.value.hash,
   }
 }

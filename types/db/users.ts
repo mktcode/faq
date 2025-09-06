@@ -30,7 +30,7 @@ export type UserUpdate = Updateable<UsersTable>
 
 export const availableComponents = [
   {
-    key: 'offers',
+    key: 'offerings',
     title: 'Angebote',
     description: 'Hier können Sie Ihre Angebote mit Bild und Text präsentieren.',
     icon: 'i-heroicons-megaphone',
@@ -62,11 +62,68 @@ export const availableComponents = [
 ] as const
 
 const componentSettingsBaseSchema = z.object({
+  key: z.string(),
   title: z.string(),
   description: z.string(),
   visible: z.boolean(),
   order: z.number(),
 })
+
+const offeringsComponentSchema = componentSettingsBaseSchema.extend({
+  key: z.literal('offerings'),
+  layout: z.enum(['grid', 'list', 'carousel']),
+  items: z.array(z.object({
+    id: z.number(),
+    title: z.string(),
+    description: z.string(),
+  })),
+})
+export type OfferingComponentSchema = z.infer<typeof offeringsComponentSchema>
+
+const galleryComponentSchema = componentSettingsBaseSchema.extend({
+  key: z.literal('gallery'),
+  type: z.enum(['grid', 'masonry']),
+  items: z.array(z.object({
+    url: z.string(),
+    description: z.string(),
+    title: z.string(),
+  })),
+})
+export type GalleryComponentSchema = z.infer<typeof galleryComponentSchema>
+
+const formComponentSchema = componentSettingsBaseSchema.extend({
+  key: z.literal('form'),
+  successMessage: z.string(),
+  errorMessage: z.string(),
+  fields: z.array(z.object({
+    label: z.string(),
+    help: z.string(),
+    name: z.string(),
+    type: z.enum(['text', 'email', 'tel', 'date', 'datetime', 'textarea', 'select', 'checkbox']),
+    required: z.boolean(),
+    options: z.array(z.object({
+      label: z.string(),
+    })),
+    multiple: z.boolean(),
+  })),
+})
+export type FormComponentSchema = z.infer<typeof formComponentSchema>
+
+const faqComponentSchema = componentSettingsBaseSchema.extend({
+  key: z.literal('faq'),
+})
+export type FaqComponentSchema = z.infer<typeof faqComponentSchema>
+
+const downloadsComponentSchema = componentSettingsBaseSchema.extend({
+  key: z.literal('downloads'),
+  items: z.array(z.object({
+    title: z.string(),
+    description: z.string(),
+    url: z.string().url(),
+    type: z.string(),
+  })),
+})
+export type DownloadsComponentSchema = z.infer<typeof downloadsComponentSchema>
 
 export const colorSchema = z.object({
   h: z.number(),
@@ -126,48 +183,13 @@ export const settingsFormSchema = z.object({
         }),
       ),
     }),
-    components: z.object({
-      offers: componentSettingsBaseSchema.extend({
-        layout: z.enum(['grid', 'list', 'carousel']),
-        items: z.array(z.object({
-          id: z.number(),
-          title: z.string(),
-          description: z.string(),
-        })),
-      }),
-      gallery: componentSettingsBaseSchema.extend({
-        type: z.enum(['grid', 'masonry']),
-        items: z.array(z.object({
-          url: z.string(),
-          description: z.string(),
-          title: z.string(),
-        })),
-      }),
-      form: componentSettingsBaseSchema.extend({
-        successMessage: z.string(),
-        errorMessage: z.string(),
-        fields: z.array(z.object({
-          label: z.string(),
-          help: z.string(),
-          name: z.string(),
-          type: z.enum(['text', 'email', 'tel', 'date', 'datetime', 'textarea', 'select', 'checkbox']),
-          required: z.boolean(),
-          options: z.array(z.object({
-            label: z.string(),
-          })),
-          multiple: z.boolean(),
-        })),
-      }),
-      faq: componentSettingsBaseSchema,
-      downloads: componentSettingsBaseSchema.extend({
-        items: z.array(z.object({
-          title: z.string(),
-          description: z.string(),
-          url: z.string().url(),
-          type: z.string(),
-        })),
-      }),
-    }),
+    components: z.array(z.union([
+      offeringsComponentSchema,
+      galleryComponentSchema,
+      formComponentSchema,
+      faqComponentSchema,
+      downloadsComponentSchema,
+    ])),
   }),
   private: z.object({
     assistant: z.object({
@@ -179,7 +201,6 @@ export const settingsFormSchema = z.object({
 })
 
 export type SettingsForm = z.infer<typeof settingsFormSchema>
-export type ComponentKey = keyof SettingsForm['public']['components']
 
 export const defaultSettings = (): SettingsForm => ({
   public: {
@@ -243,46 +264,51 @@ export const defaultSettings = (): SettingsForm => ({
       showShareButton: true,
       links: [],
     },
-    components: {
-      offers: {
+    components: [
+      {
+        key: 'offerings',
+        title: 'Angebote',
+        description: 'Hier können Sie Ihre Angebote mit Bild und Text präsentieren.',
         visible: true,
         order: 1,
-        title: '',
-        description: '',
         layout: 'list',
         items: [],
       },
-      gallery: {
-        type: 'grid',
-        visible: true,
-        order: 2,
-        title: '',
-        description: '',
-        items: [],
-      },
-      faq: {
-        visible: true,
-        order: 3,
-        title: 'Häufig gestellte Fragen',
-        description: '',
-      },
-      downloads: {
-        visible: true,
-        order: 4,
-        title: 'Downloads',
-        description: '',
-        items: [],
-      },
-      form: {
-        visible: true,
-        order: 5,
-        title: 'Anfrage',
-        description: 'Wir freuen uns auf Ihre Nachricht!',
-        successMessage: 'Vielen Dank für Ihre Anfrage! Wir werden uns so schnell wie möglich bei Ihnen melden.',
-        errorMessage: 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.',
-        fields: [],
-      },
-    },
+      // {
+      //   key: 'gallery',
+      //   title: 'Galerie',
+      //   description: 'Hier können Sie Bilder und Videos hochladen, um Ihre Produkte oder Dienstleistungen zu präsentieren.',
+      //   visible: true,
+      //   order: 2,
+      //   type: 'grid',
+      //   items: [],
+      // },
+      // {
+      //   key: 'faq',
+      //   title: 'Häufig gestellte Fragen',
+      //   description: 'Hier können Sie häufig gestellte Fragen beantworten, um Ihren Kunden zu helfen.',
+      //   visible: true,
+      //   order: 3,
+      // },
+      // {
+      //   key: 'downloads',
+      //   title: 'Downloads',
+      //   description: 'Hier können Sie Dateien zum Download anbieten, z.B. Broschüren oder Preislisten.',
+      //   visible: true,
+      //   order: 4,
+      //   items: [],
+      // },
+      // {
+      //   key: 'form',
+      //   title: 'Anfrage',
+      //   description: 'Wir freuen uns auf Ihre Nachricht!',
+      //   visible: true,
+      //   order: 5,
+      //   successMessage: 'Vielen Dank für Ihre Anfrage! Wir werden uns so schnell wie möglich bei Ihnen melden.',
+      //   errorMessage: 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.',
+      //   fields: [],
+      // },
+    ],
   },
   private: {
     assistant: {

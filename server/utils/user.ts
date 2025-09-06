@@ -133,10 +133,15 @@ export function getValidatedSettings(settings: string | Record<string, unknown>)
 
   // sanitize html content
   // TODO: make this more comprehensive and maybe move to saving instead of serving
-  validatedSettings.public.components.offers.items = validatedSettings.public.components.offers.items.map(offer => ({
-    ...offer,
-    description: sanitizeHtml(offer.description),
-  }))
+  validatedSettings.public.components = validatedSettings.public.components.map(component => {
+    if (component.key === 'offerings') {
+      component.items = component.items.map(offer => ({
+        ...offer,
+        description: sanitizeHtml(offer.description),
+      }))
+    }
+    return component
+  })
 
   return validatedSettings
 }
@@ -247,11 +252,19 @@ About: ${settings.private.assistant.context}`,
         opacity: 100,
       },
     }
-    settings.public.components.offers.items = prefill.offerings.map((offering, index) => ({
-      id: index + 1,
-      title: offering.title,
-      description: offering.description,
-    }))
+    settings.public.components.push({
+      key: 'offerings',
+      title: 'Unsere Leistungen',
+      description: 'Entdecken Sie unsere vielfältigen Angebote, die speziell auf Ihre Bedürfnisse zugeschnitten sind.',
+      visible: true,
+      order: 2,
+      layout: 'list',
+      items: prefill.offerings.map((offering, index) => ({
+        id: index + 1,
+        title: offering.title,
+        description: offering.description,
+      })),
+    })
   }
 
   return settings

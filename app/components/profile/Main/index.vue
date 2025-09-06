@@ -54,11 +54,16 @@ useHead({
     </ClientOnly>
     <ProfileMainHeader />
     <div class="flex flex-col items-center justify-center gap-24 max-w-5xl mx-auto py-24 px-6">
-      <ProfileMainComponentViewer
-        v-for="index in 5"
-        :key="index"
-        :slot-index="index"
-      />
+      <template
+        v-for="(component, index) in $profile.settings.public.components"
+        :key="component.key + index"
+      >
+        <ProfileMainOfferings v-if="component.key === 'offerings'" :component="component" />
+        <ProfileMainGallery v-else-if="component.key === 'gallery'" />
+        <ProfileMainDownloads v-else-if="component.key === 'downloads'" />
+        <ProfileMainContactForm v-else-if="component.key === 'form'" />
+        <ProfileMainFAQ v-else-if="component.key === 'faq'" />
+      </template>
 
       <ProfileMainFooter />
     </div>
