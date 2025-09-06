@@ -123,42 +123,32 @@ async function createPortalCancelSubscriptionSession(customerId: string, subscri
   })
 }
 
-async function createPortalSwitchSubscriptionSession(customerId: string, subscriptionId: string, userName: string) {
-  const { stripeApiSecretKey, stripePriceSId, stripePriceLId } = useRuntimeConfig()
-  const stripe = new Stripe(stripeApiSecretKey)
-
-  const subscription = await stripe.subscriptions.retrieve(subscriptionId)
-
-  const items = subscription.items.data.map(item => ({
-    id: item.id,
-    price: item.price.id === stripePriceSId ? stripePriceLId : stripePriceSId,
-    quantity: item.quantity,
-  }))
-
-  return await stripe.billingPortal.sessions.create({
-    customer: customerId,
-    return_url: returnUrl(userName),
-    flow_data: {
-      type: 'subscription_update_confirm',
-      subscription_update_confirm: {
-        subscription: subscriptionId,
-        items,
-      },
-      after_completion: {
-        type: 'redirect',
-        redirect: {
-          return_url: returnUrl(userName),
-        },
-      },
-    },
-  })
-}
-
 async function getCheckoutSession(sessionId: string) {
   const { stripeApiSecretKey } = useRuntimeConfig()
   const stripe = new Stripe(stripeApiSecretKey)
 
   return await stripe.checkout.sessions.retrieve(sessionId)
+}
+
+async function getSubscriptionSchedule(subscriptionId: string) {
+  const { stripeApiSecretKey } = useRuntimeConfig()
+  const stripe = new Stripe(stripeApiSecretKey)
+
+  const subscription = await stripe.subscriptions.retrieve(subscriptionId)
+  if (!subscription.schedule) {
+    return null
+  }
+  if (typeof subscription.schedule !== 'string') {
+    throw new Error('Unexpected subscription schedule format')
+  }
+
+  const schedule = await stripe.subscriptionSchedules.retrieve(subscription.schedule)
+
+  if (schedule.status === 'active') {
+    return schedule
+  }
+
+  return null
 }
 
 function requireNoPriorSubscription(lastPaidAt: Date | null): void {
@@ -183,9 +173,9 @@ export const stripe = {
   requireCompleteStripeCustomer,
   createCheckoutSession,
   getCheckoutSession,
+  getSubscriptionSchedule,
   createPortalSession,
   createPortalCancelSubscriptionSession,
-  createPortalSwitchSubscriptionSession,
   requireNoPriorSubscription,
   requireNoStripeCustomerId,
 }

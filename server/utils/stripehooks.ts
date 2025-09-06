@@ -14,14 +14,23 @@ async function checkoutSessionCompleted(event: Stripe.CheckoutSessionCompletedEv
 }
 
 async function customerSubscriptionCreated(event: Stripe.CustomerSubscriptionCreatedEvent) {
+  const { stripePriceSId, stripePriceLId } = useRuntimeConfig()
+
   const subscription = event.data.object
   const customerId = subscription.customer as string
+  const priceId = subscription.items.data[0]?.price.id
+  const plan = priceId === stripePriceSId ? 'S' : priceId === stripePriceLId ? 'L' : null
+
+  if (!plan) {
+    throw new Error('Unknown price ID in subscription')
+  }
 
   const db = await getDatabaseConnection()
   await db
     .updateTable('users')
     .set({
       stripeSubscriptionId: subscription.id,
+      plan,
     })
     .where('stripeCustomerId', '=', customerId)
     .execute()
@@ -33,19 +42,17 @@ async function customerSubscriptionUpdated(event: Stripe.CustomerSubscriptionUpd
   const customerId = updatedSubscription.customer as string
 
   const priceId = updatedSubscription.items.data[0]?.price.id
+  const plan = priceId === stripePriceSId ? 'S' : priceId === stripePriceLId ? 'L' : null
 
-  if (!priceId) {
-    return {
-      success: false,
-      error: 'Price ID not found',
-    }
+  if (!plan) {
+    throw new Error('Unknown price ID in subscription')
   }
 
   const db = await getDatabaseConnection()
   await db
     .updateTable('users')
     .set({
-      plan: priceId === stripePriceSId ? 'S' : priceId === stripePriceLId ? 'L' : null,
+      plan,
     })
     .where('stripeCustomerId', '=', customerId)
     .execute()

@@ -1,7 +1,15 @@
 <script setup lang="ts">
 const isCreatingPortalSession = ref(false)
 const isCreatingCancelSession = ref(false)
-const isCreatingSwitchSession = ref(false)
+
+const { data: subscriptionSchedule } = await useFetch('/api/user/subscriptionSchedule')
+const switchDate = computed(() => {
+  if (subscriptionSchedule.value && subscriptionSchedule.value.phases) {
+    const endDate = subscriptionSchedule.value.phases[0]?.end_date
+    return endDate ? new Date(endDate * 1000) : null
+  }
+  return null
+})
 
 async function goToPortalSession() {
   isCreatingPortalSession.value = true
@@ -24,17 +32,6 @@ async function goToCancelSession() {
   }
   isCreatingCancelSession.value = false
 }
-
-async function goToSwitchSession() {
-  isCreatingSwitchSession.value = true
-  const stripeSwitchSession = await $fetch('/api/user/stripe/switch', {
-    method: 'POST',
-  })
-  if (stripeSwitchSession && stripeSwitchSession.url) {
-    await navigateTo(stripeSwitchSession.url, { external: true } )
-  }
-  isCreatingSwitchSession.value = false
-}
 </script>
 
 <template>
@@ -44,6 +41,9 @@ async function goToSwitchSession() {
     </div>
     <div class="text-4xl">
       Paket {{ $profile.subscription.plan }}
+    </div>
+    <div v-if="switchDate" class="text-gray-600 text-sm">
+      {{ `Paket S ab ${switchDate.toLocaleDateString()}` }}
     </div>
   </div>
   <div class="flex flex-col">
@@ -60,34 +60,6 @@ async function goToSwitchSession() {
       :ui="{
         trailingIcon: 'ml-auto opacity-30',
       }"
-    />
-    <UButton
-      v-if="$profile.subscription.plan === 'S'"
-      label="Zu Paket L wechseln"
-      icon="i-lucide-chevrons-up"
-      class="w-full rounded-none p-4 border-b border-gray-200"
-      variant="ghost"
-      color="neutral"
-      trailing-icon="i-heroicons-chevron-right"
-      :ui="{
-        trailingIcon: 'ml-auto opacity-30',
-      }"
-      @click="goToSwitchSession"
-      :loading="isCreatingSwitchSession"
-    />
-    <UButton
-      v-if="$profile.subscription.plan === 'L'"
-      label="Zu Paket S wechseln"
-      icon="i-lucide-chevrons-down"
-      class="w-full rounded-none p-4 border-b border-gray-200"
-      variant="ghost"
-      color="neutral"
-      trailing-icon="i-heroicons-chevron-right"
-      :ui="{
-        trailingIcon: 'ml-auto opacity-30',
-      }"
-      @click="goToSwitchSession"
-      :loading="isCreatingSwitchSession"
     />
     <UButton
       label="Abonnement beenden"

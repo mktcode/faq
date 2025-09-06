@@ -27,7 +27,6 @@ export default defineEventHandler(async (event) => {
     stripeWebhookSecret,
   )
 
-  
   if (stripeEvent.type === 'checkout.session.completed') {
     await stripehooks.checkoutSessionCompleted(stripeEvent)
   }
@@ -42,6 +41,10 @@ export default defineEventHandler(async (event) => {
 
   if (stripeEvent.type === 'customer.subscription.deleted') {
     await stripehooks.customerSubscriptionDeleted(stripeEvent)
+  }
+
+  if (stripeEvent.type === 'invoice.paid') {
+    await stripehooks.invoicePaid(stripeEvent)
   }
   
   return {
