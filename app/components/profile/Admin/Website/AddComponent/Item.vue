@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import type { SettingsForm } from '~~/types/db';
+
 defineProps<{
-  component: { title: string; description: string };
+  component: SettingsForm['public']['components'][0]
 }>()
 
 defineEmits<{
-  add: [component: { title: string; description: string }];
+  add: [component: SettingsForm['public']['components'][0]];
 }>()
 </script>
 
@@ -30,7 +32,15 @@ defineEmits<{
       <UButton
         label="Hinzufügen"
         icon="i-heroicons-plus"
-        @click="$emit('add', component)"
+        @click="$emit('add', {
+          key: 'offerings',
+          title: component.title,
+          description: component.description,
+          items: [],
+          layout: 'grid',
+          order: 1,
+          visible: true,
+        })"
       />
     </div>
   </div>

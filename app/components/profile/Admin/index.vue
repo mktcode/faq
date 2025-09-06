@@ -8,8 +8,8 @@ const subscriptionSuccess = !!route.query.subscriptionSuccess
   <ProfileAdminSettings />
   <ProfileAdminWebsite />
   <ProfileAdminWebsiteEditComponent />
-  <!-- <ProfileAdminWebsiteDesign />
-  <ProfileAdminWebsiteOffering />
+  <ProfileAdminWebsiteDesign />
+  <!-- <ProfileAdminWebsiteOffering />
   <ProfileAdminWebsiteForm />
   <ProfileAdminWebsiteGallery />
   <ProfileAdminWebsiteFaq />

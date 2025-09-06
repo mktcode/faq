@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { availableComponents } from '~~/types/db';
+import { availableComponents, type SettingsForm } from '~~/types/db';
 
 const open = defineModel('open', {
   type: Boolean,
@@ -8,8 +8,8 @@ const open = defineModel('open', {
 
 const { $profile } = useProfile()
 
-function addComponent(component: { title: string; description: string }) {
-  // $profile.settings.public.components.push(component)
+function addComponent(component: SettingsForm['public']['components'][0]) {
+  $profile.settings.public.components.push(component)
   open.value = false
 }
 </script>
@@ -27,10 +27,10 @@ function addComponent(component: { title: string; description: string }) {
     <template #body>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <ProfileAdminWebsiteAddComponentItem
-          v-for="component in availableComponents"
-          :key="component.title"
-          :component="component"
-          @add="addComponent(component)"
+          v-for="availableComponent in availableComponents"
+          :key="availableComponent.title"
+          :component="availableComponent"
+          @add="addComponent($event)"
         />
       </div>
     </template>

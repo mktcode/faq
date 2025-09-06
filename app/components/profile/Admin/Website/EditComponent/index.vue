@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import { useMediaQuery } from '@vueuse/core'
 
-const { showWebsiteComponentSettings, go, hash } = useAdmin()
+const { showWebsiteComponentSettings, websiteSettingsComponentIndex, websiteSettingsComponentKey, go } = useAdmin()
 
 const isDesktop = useMediaQuery('(min-width: 640px)')
-
-const hashParts = hash.split('/')
-const componentKey = hashParts[2] || null
-const componentIndex = parseInt(hashParts[3] || '0')
 </script>
 
 <template>
@@ -34,7 +30,7 @@ const componentIndex = parseInt(hashParts[3] || '0')
           name="i-heroicons-megaphone"
           class="inline-block size-6 opacity-50"
         />
-        {{ $profile.settings.public.components[componentIndex]?.title }}
+        {{ $profile.settings.public.components[websiteSettingsComponentIndex]?.title }}
         <div class="flex items-center gap-2 ml-auto">
           <ProfileAdminSaveAndReset />
           <UButton
@@ -50,8 +46,9 @@ const componentIndex = parseInt(hashParts[3] || '0')
 
     <template #body>
       <ProfileAdminWebsiteOffering
-        v-if="$profile.settings.public.components[componentIndex]?.key === 'offerings'"
-        v-model:component="$profile.settings.public.components[componentIndex]"
+        :key="websiteSettingsComponentIndex"
+        v-if="$profile.settings.public.components[websiteSettingsComponentIndex]?.key === 'offerings'"
+        v-model:component="$profile.settings.public.components[websiteSettingsComponentIndex]"
       />
       <!-- <ProfileAdminWebsiteGallery v-else-if="component.key === 'gallery'" />
       <ProfileAdminWebsiteDownloads v-else-if="component.key === 'downloads'" />
