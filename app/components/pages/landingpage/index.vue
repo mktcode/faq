@@ -377,7 +377,7 @@ appConfig.ui.colors.primary = 'sky'
         <template #slot6>
           <div class="p-4">
             Haben Sie schon eine Lösung für Ihre Buchhaltung? Rechnungen schreiben, Belege erfassen, Umsatzsteuervoranmeldung an das Finanzamt übermitteln? Das geht mit Lexware Office ganz einfach.
-            Mit dem Geschäftskonto von Lexware erhalten Sie zudem eine Visa Business Kreditkarte und Ihre Umsätze werden automatisch in der Buchhaltung erfasst.
+            Mit dem <strong>Geschäftskonto von Lexware</strong> erhalten Sie zudem eine Visa Business Kreditkarte und Ihre Umsätze werden automatisch in der Buchhaltung erfasst.
             Wir nutzen Lexware Office selbst und sind sehr zufrieden. Bei der Einrichtung helfen wir Ihnen gerne.
           </div>
           <div class="flex flex-col sm:flex-row items-center justify-end p-4 pt-0">
