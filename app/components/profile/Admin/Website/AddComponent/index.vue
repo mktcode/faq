@@ -34,7 +34,11 @@ function addComponent(component: ComponentUnionSchema) {
           :key="availableComponent.title"
           :component="availableComponent"
           @add="addComponent(availableComponent.defaults)"
-        />
+        >
+          <template #preview>
+            <ProfileAdminWebsiteOfferingPreview v-if="availableComponent.key === 'offerings'" />
+          </template>
+        </ProfileAdminWebsiteAddComponentItem>
       </div>
     </template>
   </UModal>
