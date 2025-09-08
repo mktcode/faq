@@ -93,10 +93,12 @@ function deleteComponent() {
         <template #footer>
           <UButton
             label="Abbrechen"
+            variant="soft"
             @click="showDeleteModal = false"
           />
           <UButton
             label="Löschen"
+            color="error"
             @click="deleteComponent()"
           />
         </template>

@@ -67,6 +67,7 @@ const showAddComponent = ref(false)
         }"
         :ui="{
           wrapper: 'z-50',
+          footer: 'justify-between',
         }"
       >
         <template #header>
@@ -88,10 +89,12 @@ const showAddComponent = ref(false)
         <template #footer>
           <UButton
             label="Abbrechen"
+            variant="soft"
             @click="showDeleteModal = false"
           />
           <UButton
             label="Löschen"
+            color="error"
             @click="deletePage()"
           />
         </template>
@@ -99,7 +102,7 @@ const showAddComponent = ref(false)
     </template>
 
     <template #body>
-      <div class="p-4 border-b border-gray-200">
+      <div class="p-4 border-b border-gray-200 flex flex-col gap-4">
         <UFormField label="Seitentitel">
           <UInput
             v-model="page.title"
@@ -108,7 +111,7 @@ const showAddComponent = ref(false)
             class="w-full"
           />
         </UFormField>
-        <UFormField label="Beschreibung" class="mt-4">
+        <UFormField label="Beschreibung">
           <UInput
             v-model="page.description"
             label="Beschreibung"
@@ -116,7 +119,10 @@ const showAddComponent = ref(false)
             class="w-full"
           />
         </UFormField>
-        <UFormField label="Addresse" class="mt-4">
+        <UFormField
+          v-if="page.id !== 0"
+          label="Addresse"
+        >
           <UButtonGroup class="w-full">
             <UBadge
               label="www.meine-domain.de"
