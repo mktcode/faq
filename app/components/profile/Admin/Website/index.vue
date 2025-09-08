@@ -31,6 +31,19 @@ async function togglePublished() {
     })
   }
 }
+
+function addPage() {
+  const newPage = {
+    id: new Date().getTime(),
+    title: 'Neue Seite',
+    description: 'Meine Unterseite über...',
+    path: `/seite-${$profile.settings.public.pages.length + 1}`,
+    components: [],
+  }
+
+  $profile.settings.public.pages.push(newPage)
+}
+
 </script>
 
 <template>
@@ -132,6 +145,7 @@ async function togglePublished() {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
+        @click="addPage()"
       />
     </template>
   </USlideover>

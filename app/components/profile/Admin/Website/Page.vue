@@ -1,19 +1,17 @@
 <script setup lang="ts">
-const { websiteSelectedPage, go } = useAdmin()
+const { page, component, go } = useAdmin()
 
 const { $profile } = useProfile()
 
-const page = computed(() => {
-  return $profile.settings.public.pages.find(page => page.id === websiteSelectedPage.value?.pageId)
-})
+const showDeleteModal = ref(false)
 
-const component = computed(() => {
-  if (!websiteSelectedPage.value || websiteSelectedPage.value.componentId === null) {
-    return null
-  }
+function deletePage() {
+  $profile.settings.public.pages = $profile.settings.public.pages.filter(p => p.id !== page.value?.id)
+  showDeleteModal.value = false
+  go('#website')
+}
 
-  return $profile.settings.public.pages.find(page => page.id === websiteSelectedPage.value?.pageId)?.components[websiteSelectedPage.value.componentId]
-})
+const showAddComponent = ref(false)
 </script>
 
 <template>
@@ -42,14 +40,62 @@ const component = computed(() => {
         />
         {{ page.title }}
       </h3>
-      <UButton
-        icon="i-heroicons-x-mark"
-        variant="ghost"
-        color="neutral"
-        size="md"
-        class="ml-auto"
-        @click="go('#website')"
-      />
+      <div class="flex items-center gap-2 ml-auto">
+        <UButton
+          v-if="page.path !== '/'"
+          icon="i-heroicons-trash"
+          variant="ghost"
+          color="neutral"
+          size="md"
+          @click="showDeleteModal = true"
+        />
+        <UButton
+          icon="i-heroicons-arrow-left"
+          variant="ghost"
+          color="neutral"
+          size="md"
+          @click="go('#website')"
+        />
+      </div>
+      <UModal
+        :open="showDeleteModal"
+        :close="{
+          size: 'md',
+          onClick: () => {
+            showDeleteModal = false
+          },
+        }"
+        :ui="{
+          wrapper: 'z-50',
+        }"
+      >
+        <template #header>
+          <h3 class="text-lg font-semibold flex items-center gap-2">
+            <UIcon
+              name="i-heroicons-trash"
+              class="inline-block size-6 opacity-50"
+            />
+            Seite löschen
+          </h3>
+        </template>
+
+        <template #body>
+          <p class="text-gray-700">
+            Sind Sie sicher, dass Sie diese Seite ({{ page.title }}) löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.
+          </p>
+        </template>
+
+        <template #footer>
+          <UButton
+            label="Abbrechen"
+            @click="showDeleteModal = false"
+          />
+          <UButton
+            label="Löschen"
+            @click="deletePage()"
+          />
+        </template>
+      </UModal>
     </template>
 
     <template #body>
@@ -66,6 +112,23 @@ const component = computed(() => {
           trailingIcon: 'ml-auto opacity-30',
         }"
         @click="go(`#website/page/${page.id}/component/${index}`)"
+      />
+
+      <UButton
+        label="Komponente hinzufügen"
+        icon="i-heroicons-plus"
+        class="w-full rounded-none p-4 border-b border-gray-200"
+        variant="ghost"
+        color="neutral"
+        trailing-icon="i-heroicons-chevron-right"
+        :ui="{
+          trailingIcon: 'ml-auto opacity-30',
+        }"
+        @click="showAddComponent = true"
+      />
+
+      <ProfileAdminWebsiteAddComponent
+        v-model:open="showAddComponent"
       />
     </template>
   </USlideover>

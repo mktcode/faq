@@ -28,6 +28,18 @@ export default function useAdmin() {
     return { pageId, componentId }
   })
 
+  const page = computed(() => {
+    return $profile.settings.public.pages.find(page => page.id === websiteSelectedPage.value?.pageId)
+  })
+  
+  const component = computed(() => {
+    if (!websiteSelectedPage.value || websiteSelectedPage.value.componentId === null) {
+      return null
+    }
+  
+    return $profile.settings.public.pages.find(page => page.id === websiteSelectedPage.value?.pageId)?.components[websiteSelectedPage.value.componentId]
+  })
+
   const showAssistant = computed(() => router.currentRoute.value.hash.startsWith('#assistant'))
   const showAssistantTips = computed(() => router.currentRoute.value.hash === '#assistant/tips')
   const showAssistantContextSettings = computed(() => router.currentRoute.value.hash === '#assistant/context')
@@ -54,6 +66,8 @@ export default function useAdmin() {
     showWebsiteSettings,
     showWebsiteDesignSettings,
     websiteSelectedPage,
+    page,
+    component,
     showAssistant,
     showAssistantTips,
     showAssistantContextSettings,

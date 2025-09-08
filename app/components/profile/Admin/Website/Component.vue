@@ -1,23 +1,9 @@
 <script setup lang="ts">
 import { useMediaQuery } from '@vueuse/core'
 
-const { websiteSelectedPage, go } = useAdmin()
-
-const { $profile } = useProfile()
+const { page, component, go } = useAdmin()
 
 const isDesktop = useMediaQuery('(min-width: 640px)')
-
-const page = computed(() => {
-  return $profile.settings.public.pages.find(page => page.id === websiteSelectedPage.value?.pageId)
-})
-
-const component = computed(() => {
-  if (!websiteSelectedPage.value || websiteSelectedPage.value.componentId === null) {
-    return null
-  }
-
-  return $profile.settings.public.pages.find(page => page.id === websiteSelectedPage.value?.pageId)?.components[websiteSelectedPage.value.componentId]
-})
 </script>
 
 <template>
