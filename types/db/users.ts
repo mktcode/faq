@@ -190,14 +190,14 @@ type AvailableComponent = {
 export const availableComponents: AvailableComponent[] = [
   {
     key: 'offerings',
-    title: 'Angebote',
-    description: 'Hier können Sie Ihre Angebote mit Bild und Text präsentieren.',
+    title: 'Liste mit Texten und Bildern',
+    description: 'Hier können Sie beliebige Texte und Bilder in einer Liste, einem Raster oder Karussell anzeigen.',
     icon: 'i-heroicons-megaphone',
     defaults: {
       id: 1,
       key: 'offerings',
       title: 'Angebote',
-      description: 'Hier können Sie Ihre Angebote mit Bild und Text präsentieren.',
+      description: 'Unsere Angebote für Sie im Überblick',
       visible: true,
       order: 1,
       layout: 'list',
