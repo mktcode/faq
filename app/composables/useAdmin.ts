@@ -1,5 +1,7 @@
 export default function useAdmin() {
   const router = useRouter()
+  const { path } = usePath()
+  const { $profile } = useProfile()
 
   const showMainSettings = computed(() => router.currentRoute.value.hash.startsWith('#settings'))
   const showCompanySettings = computed(() => router.currentRoute.value.hash === '#settings/company')
@@ -14,7 +16,16 @@ export default function useAdmin() {
 
   const websiteSelectedPage = computed(() => {
     const match = router.currentRoute.value.hash.match(/^#website\/page\/(\d+)(?:\/component\/(\d+))?$/)
-    return match ? { id: Number(match[1]), componentId: match[2] ? Number(match[2]) : null } : null
+
+    const pageId = match ? Number(match[1]) : null
+    const componentId = match && match[2] ? Number(match[2]) : null
+
+    const page = $profile.settings.public.pages.find(p => p.id === pageId)
+    if (page) {
+      path.value = page.path
+    }
+
+    return { pageId, componentId }
   })
 
   const showAssistant = computed(() => router.currentRoute.value.hash.startsWith('#assistant'))

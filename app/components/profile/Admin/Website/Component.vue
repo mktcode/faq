@@ -8,7 +8,7 @@ const { $profile } = useProfile()
 const isDesktop = useMediaQuery('(min-width: 640px)')
 
 const page = computed(() => {
-  return $profile.settings.public.pages.find(page => page.id === websiteSelectedPage.value?.id)
+  return $profile.settings.public.pages.find(page => page.id === websiteSelectedPage.value?.pageId)
 })
 
 const component = computed(() => {
@@ -16,7 +16,7 @@ const component = computed(() => {
     return null
   }
 
-  return $profile.settings.public.pages.find(page => page.id === websiteSelectedPage.value?.id)?.components[websiteSelectedPage.value.componentId]
+  return $profile.settings.public.pages.find(page => page.id === websiteSelectedPage.value?.pageId)?.components[websiteSelectedPage.value.componentId]
 })
 </script>
 

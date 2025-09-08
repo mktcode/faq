@@ -2,10 +2,10 @@
 const appConfig = useAppConfig()
 const { $profile } = useProfile()
 
-const path = useRoute().path
+const { path } = usePath()
 
 const page = computed(() => {
-  return $profile.settings.public.pages.find(page => page.path === path)
+  return $profile.settings.public.pages.find(page => page.path === path.value)
 })
 
 if (!page.value) {
