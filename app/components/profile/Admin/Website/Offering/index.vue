@@ -20,42 +20,36 @@ function removeItem(index: number) {
 </script>
 
 <template>
-  <DismissableAlert
-    title="Beschreiben Sie Ihr Angebot"
-    description="Ihre Änderungen wurden erfolgreich gespeichert."
-    storage-key="offer-info-dismissed"
-  >
-    Fügen Sie hier Texte zu Ihren Angeboten und Dienstleistungen hinzu. Halten Sie sich kurz und prägnant, damit Ihre Kunden schnell verstehen, was Sie anbieten.
-    Was unterscheidet Sie von anderen? Welche Vorteile hat der Kunde, kurz- wie langfristig?
-  </DismissableAlert>
-  <UFormField label="Anordnung">
-    <USelect
-      v-model="component.layout"
-      :items="[
-        { label: 'Raster', value: 'grid' },
-        { label: 'Liste', value: 'list' },
-        { label: 'Karussell', value: 'carousel' },
-      ]"
+  <div class="flex flex-col gap-4 w-full">
+    <UFormField label="Anordnung der Inhalte">
+      <USelect
+        v-model="component.layout"
+        :items="[
+          { label: 'Raster', value: 'grid' },
+          { label: 'Liste', value: 'list' },
+          { label: 'Karussell', value: 'carousel' },
+        ]"
+        class="w-full"
+      />
+    </UFormField>
+    <UButton
+      icon="i-heroicons-plus"
+      variant="soft"
       class="w-full"
-    />
-  </UFormField>
-  <UButton
-    icon="i-heroicons-plus"
-    variant="soft"
-    class="w-full"
-    @click="component.items.unshift({ id: Date.now(), title: 'Neues Angebot', description: '' })"
-  >
-    Angebot hinzufügen
-  </UButton>
-  <TransitionGroup name="list">
-    <ProfileAdminWebsiteOfferingItem
-      v-for="(offering, index) in component.items"
-      :key="offering.id"
-      v-model:offering="component.items[index]"
-      :index="index"
-      :items-length="component.items.length"
-      @change-order="changeOrder(index, $event)"
-      @remove="removeItem(index)"
-    />
-  </TransitionGroup>
+      @click="component.items.unshift({ id: Date.now(), title: 'Neuer Inhalt', description: '' })"
+    >
+      Inhalt hinzufügen
+    </UButton>
+    <TransitionGroup name="list">
+      <ProfileAdminWebsiteOfferingItem
+        v-for="(offering, index) in component.items"
+        :key="offering.id"
+        v-model:offering="component.items[index]"
+        :index="index"
+        :items-length="component.items.length"
+        @change-order="changeOrder(index, $event)"
+        @remove="removeItem(index)"
+      />
+    </TransitionGroup>
+  </div>
 </template>

@@ -9,6 +9,7 @@ defineProps<{
 <template>
   <div class="mb-8">
     <a
+      v-if="component.showTitle"
       id="anfrage"
       href="#anfrage"
       class="block text-2xl font-semibold cursor-pointer relative before:content-['#'] before:absolute before:-left-6 before:text-gray-200 before:opacity-0 before:transition-opacity hover:before:opacity-100"
@@ -16,9 +17,11 @@ defineProps<{
       {{ component.title || 'Anfrage' }}
     </a>
 
-    <p class="text-gray-500 mt-3">
-      {{ component.description || 'Beschreiben Sie Ihr Anliegen. Wir melden uns zeitnah bei Ihnen.' }}
-    </p>
+    <p
+      v-if="component.description"
+      class="text-gray-500 mt-3"
+      v-html="component.description"
+    />
 
     <div class="flex flex-col gap-3 mt-6 leading-none">
       <div class="flex gap-2">
