@@ -4,7 +4,7 @@ export const useProfile = () => {
   const $profile = useNuxtApp().$profile
   const isUpdatingProfile = ref(false)
   const isSavingSettings = ref(false)
-  const unsavedSettings = ref(false)
+  const unsavedSettings = useState('unsavedSettings', () => false)
 
   function resetSettings() {
     // TODO: implement

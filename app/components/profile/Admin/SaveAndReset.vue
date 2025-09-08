@@ -6,17 +6,19 @@ const { saveSettings, resetSettings, isSavingSettings, unsavedSettings } = usePr
   <Transition name="fade">
     <div
       v-if="unsavedSettings"
-      class="ml-auto flex items-end gap-2"
+      class="flex w-full"
     >
       <UButton
+        class="rounded-none p-4"
+        label="Zurücksetzen"
         icon="i-heroicons-backward"
-        size="md"
-        variant="ghost"
+        variant="soft"
         @click="resetSettings"
       />
       <UButton
+        class="w-full rounded-none p-4"
+        label="Änderungen Speichern"
         icon="i-heroicons-check"
-        size="md"
         :loading="isSavingSettings"
         @click="saveSettings"
       />

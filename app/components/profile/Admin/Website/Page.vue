@@ -81,7 +81,7 @@ const showAddComponent = ref(false)
 
         <template #body>
           <p class="text-gray-700">
-            Sind Sie sicher, dass Sie diese Seite ({{ page.title }}) löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.
+            Sind Sie sicher, dass Sie diese Seite ({{ page.title }}) löschen möchten?
           </p>
         </template>
 
@@ -99,6 +99,40 @@ const showAddComponent = ref(false)
     </template>
 
     <template #body>
+      <div class="p-4 border-b border-gray-200">
+        <UFormField label="Seitentitel">
+          <UInput
+            v-model="page.title"
+            label="Titel"
+            placeholder="Startseite"
+            class="w-full"
+          />
+        </UFormField>
+        <UFormField label="Beschreibung" class="mt-4">
+          <UInput
+            v-model="page.description"
+            label="Beschreibung"
+            placeholder="Willkommen auf meiner Website"
+            class="w-full"
+          />
+        </UFormField>
+        <UFormField label="Addresse" class="mt-4">
+          <UButtonGroup class="w-full">
+            <UBadge
+              label="www.meine-domain.de"
+              variant="outline"
+              color="neutral"
+            />
+            <UInput
+              v-model="page.path"
+              label="Seitenpfad"
+              placeholder="/"
+              class="flex-1"
+            />
+          </UButtonGroup>
+        </UFormField>
+      </div>
+
       <UButton
         v-for="(component, index) in page.components"
         :key="component.key + index"

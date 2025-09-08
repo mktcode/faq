@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { go } = useAdmin()
+const { unsavedSettings } = useProfile()
 </script>
 
 <template>
@@ -18,10 +19,17 @@ const { go } = useAdmin()
       variant="ghost"
       label="Website"
       :ui="{
-        base: 'flex-col md:flex-row text-sm md:text-base font-light rounded-none md:rounded-lg',
+        base: 'flex-col md:flex-row text-sm md:text-base font-light rounded-none md:rounded-lg relative',
       }"
       @click="go('#website')"
-    />
+    >
+      Website
+      <UChip
+        v-if="unsavedSettings"
+        class="absolute top-5 md:left-6 animate-ping"
+        size="xl"
+      />
+    </UButton>
     <UButton
       icon="i-lucide-bot"
       variant="ghost"

@@ -215,7 +215,6 @@ async function deleteImage(image: 'logo' | 'header') {
         />
         Design und Kopfbereich
         <div class="flex items-center gap-2 ml-auto">
-          <ProfileAdminSaveAndReset />
           <UButton
             icon="i-heroicons-arrow-left"
             variant="ghost"

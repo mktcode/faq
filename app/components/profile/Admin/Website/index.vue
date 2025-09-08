@@ -58,9 +58,9 @@ function addPage() {
     }"
     :ui="{
       wrapper: 'z-40',
-      body: '!p-0',
+      body: '!p-0 border-none',
       overlay: 'backdrop-blur-xs',
-      footer: 'justify-between',
+      footer: '!p-0',
     }"
   >
     <template #header>
@@ -88,13 +88,17 @@ function addPage() {
         title="Unternehmensdaten vervollständigen"
         icon="i-heroicons-exclamation-triangle"
         class="rounded-none"
+        :actions="[{
+          label: 'Daten vervollständigen',
+          icon: 'i-heroicons-building-office-2',
+          size: 'lg',
+          onClick: () => {
+            go('#settings/company')
+          },
+        }]"
       >
         <template #description>
-          Damit wir Ihre Website veröffentlichen können, benötigen wir noch einige Angaben für das Impressum und die Datenschutzerklärung. Bitte tragen Sie dazu Ihre
-          <UIcon
-            name="i-heroicons-building-office-2"
-            class="inline-block size-4 align-middle"
-          /> <strong>Unternehmensdaten</strong> vollständig ein.
+          Damit Sie Ihre Website veröffentlichen können, benötigen wir noch ein paar Angaben für das Impressum und die Datenschutzerklärung.
         </template>
       </UAlert>
       <div class="p-4 border-b border-gray-200">
@@ -147,6 +151,10 @@ function addPage() {
         }"
         @click="addPage()"
       />
+    </template>
+
+    <template #footer>
+      <ProfileAdminSaveAndReset />
     </template>
   </USlideover>
 </template>

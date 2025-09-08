@@ -1,9 +1,25 @@
 <script setup lang="ts">
 import { useMediaQuery } from '@vueuse/core'
 
+const { $profile } = useProfile()
+
 const { page, component, go } = useAdmin()
 
 const isDesktop = useMediaQuery('(min-width: 640px)')
+
+const showDeleteModal = ref(false)
+
+function deleteComponent() {
+  $profile.settings.public.pages = $profile.settings.public.pages.map(p => {
+    if (p.id === page.value?.id) {
+      p.components = p.components.filter(c => c.id !== component.value?.id)
+    }
+    return p
+  })
+
+  showDeleteModal.value = false
+  go(`#website/page/${page.value?.id}`)
+}
 </script>
 
 <template>
@@ -30,7 +46,13 @@ const isDesktop = useMediaQuery('(min-width: 640px)')
         />
         {{ component.title }}
         <div class="flex items-center gap-2 ml-auto">
-          <ProfileAdminSaveAndReset />
+          <UButton
+            icon="i-heroicons-trash"
+            variant="ghost"
+            color="neutral"
+            size="md"
+            @click="showDeleteModal = true"
+          />
           <UButton
             icon="i-heroicons-arrow-left"
             variant="ghost"
@@ -40,6 +62,45 @@ const isDesktop = useMediaQuery('(min-width: 640px)')
           />
         </div>
       </h3>
+      <UModal
+        :open="showDeleteModal"
+        :close="{
+          size: 'md',
+          onClick: () => {
+            showDeleteModal = false
+          },
+        }"
+        :ui="{
+          wrapper: 'z-50',
+        }"
+      >
+        <template #header>
+          <h3 class="text-lg font-semibold flex items-center gap-2">
+            <UIcon
+              name="i-heroicons-trash"
+              class="inline-block size-6 opacity-50"
+            />
+            Sektion löschen
+          </h3>
+        </template>
+
+        <template #body>
+          <p class="text-gray-700">
+            Sind Sie sicher, dass Sie diese Sektion ({{ component.title }}) löschen möchten?
+          </p>
+        </template>
+
+        <template #footer>
+          <UButton
+            label="Abbrechen"
+            @click="showDeleteModal = false"
+          />
+          <UButton
+            label="Löschen"
+            @click="deleteComponent()"
+          />
+        </template>
+      </UModal>
     </template>
 
     <template #body>

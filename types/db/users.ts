@@ -62,6 +62,7 @@ export const availableComponents = [
 ] as const
 
 const componentSettingsBaseSchema = z.object({
+  id: z.number(),
   key: z.string(),
   title: z.string(),
   description: z.string(),
@@ -278,6 +279,7 @@ export const defaultSettings = (): SettingsForm => ({
         description: 'Die Startseite Ihrer Website',
         components: [
           {
+            id: 1,
             key: 'offerings',
             title: 'Angebote',
             description: 'Hier können Sie Ihre Angebote mit Bild und Text präsentieren.',

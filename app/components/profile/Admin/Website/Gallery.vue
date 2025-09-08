@@ -140,7 +140,6 @@ async function deleteImage(index: number) {
         />
         Gallerie
         <div class="flex items-center gap-2 ml-auto">
-          <ProfileAdminSaveAndReset />
           <UButton
             icon="i-heroicons-arrow-left"
             variant="ghost"
