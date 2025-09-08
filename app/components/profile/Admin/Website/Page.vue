@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { availableComponents } from '~~/types/db';
 const { page, component, go } = useAdmin()
 
 const { $profile } = useProfile()
@@ -143,7 +144,7 @@ const showAddComponent = ref(false)
         v-for="(component, index) in page.components"
         :key="component.key + index"
         :label="component.title"
-        icon="i-heroicons-paint-brush"
+        :icon="availableComponents.find(c => c.key === component.key)?.icon || 'i-heroicons-cube-transparent'"
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
