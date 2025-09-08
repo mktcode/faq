@@ -11,19 +11,10 @@ export default function useAdmin() {
 
   const showWebsiteSettings = computed(() => router.currentRoute.value.hash === '#website')
   const showWebsiteDesignSettings = computed(() => router.currentRoute.value.hash === '#website/design')
-  const showWebsiteOfferingSettings = computed(() => router.currentRoute.value.hash === '#website/offering')
-  const showWebsiteContactFormSettings = computed(() => router.currentRoute.value.hash === '#website/contact-form')
-  const showWebsiteGallerySettings = computed(() => router.currentRoute.value.hash === '#website/gallery')
-  const showWebsiteFaqSettings = computed(() => router.currentRoute.value.hash === '#website/faq')
-  const showWebsiteDownloadsSettings = computed(() => router.currentRoute.value.hash === '#website/downloads')
-  const showWebsiteComponentSettings = computed(() => router.currentRoute.value.hash.startsWith('#website/component/'))
-  const websiteSettingsComponentKey = computed(() => {
-    const parts = router.currentRoute.value.hash.split('/')
-    return parts[2] || null
-  })
-  const websiteSettingsComponentIndex = computed(() => {
-    const parts = router.currentRoute.value.hash.split('/')
-    return parseInt(parts[3] || '0')
+
+  const websiteSelectedPage = computed(() => {
+    const match = router.currentRoute.value.hash.match(/^#website\/page\/(\d+)(?:\/component\/(\d+))?$/)
+    return match ? { id: Number(match[1]), componentId: match[2] ? Number(match[2]) : null } : null
   })
 
   const showAssistant = computed(() => router.currentRoute.value.hash.startsWith('#assistant'))
@@ -51,14 +42,7 @@ export default function useAdmin() {
     showSubscriptionVerification,
     showWebsiteSettings,
     showWebsiteDesignSettings,
-    showWebsiteOfferingSettings,
-    showWebsiteContactFormSettings,
-    showWebsiteGallerySettings,
-    showWebsiteFaqSettings,
-    showWebsiteDownloadsSettings,
-    showWebsiteComponentSettings,
-    websiteSettingsComponentKey,
-    websiteSettingsComponentIndex,
+    websiteSelectedPage,
     showAssistant,
     showAssistantTips,
     showAssistantContextSettings,

@@ -1,16 +1,22 @@
 <script setup lang="ts">
 import { availableComponents, type SettingsForm } from '~~/types/db';
 
+const { go } = useAdmin()
+
 const open = defineModel('open', {
   type: Boolean,
   required: true,
 })
 
-const { $profile } = useProfile()
+const page = defineModel('page', {
+  type: Object as () => SettingsForm['public']['pages'][0],
+  required: true,
+})
 
-function addComponent(component: SettingsForm['public']['components'][0]) {
-  $profile.settings.public.components.push(component)
+function addComponent(component: SettingsForm['public']['pages'][0]['components'][0]) {
+  page.value.components.push(component)
   open.value = false
+  go(`#website/component/${component.key}/${page.value.components.length - 1}`)
 }
 </script>
 

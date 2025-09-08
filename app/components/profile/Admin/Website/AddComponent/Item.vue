@@ -2,11 +2,11 @@
 import type { SettingsForm } from '~~/types/db';
 
 defineProps<{
-  component: SettingsForm['public']['components'][0]
+  component: SettingsForm['public']['pages'][0]['components'][0]
 }>()
 
 defineEmits<{
-  add: [component: SettingsForm['public']['components'][0]];
+  add: [component: SettingsForm['public']['pages'][0]['components'][0]];
 }>()
 </script>
 

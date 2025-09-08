@@ -183,13 +183,19 @@ export const settingsFormSchema = z.object({
         }),
       ),
     }),
-    components: z.array(z.union([
-      offeringsComponentSchema,
-      galleryComponentSchema,
-      formComponentSchema,
-      faqComponentSchema,
-      downloadsComponentSchema,
-    ])),
+    pages: z.array(z.object({
+      id: z.number(),
+      path: z.string(),
+      title: z.string(),
+      description: z.string(),
+      components: z.array(z.union([
+        offeringsComponentSchema,
+        galleryComponentSchema,
+        formComponentSchema,
+        faqComponentSchema,
+        downloadsComponentSchema,
+      ])),
+    })),
   }),
   private: z.object({
     assistant: z.object({
@@ -264,50 +270,30 @@ export const defaultSettings = (): SettingsForm => ({
       showShareButton: true,
       links: [],
     },
-    components: [
+    pages: [
       {
-        key: 'offerings',
-        title: 'Angebote',
-        description: 'Hier können Sie Ihre Angebote mit Bild und Text präsentieren.',
-        visible: true,
-        order: 1,
-        layout: 'list',
-        items: [],
+        id: 1,
+        path: '/',
+        title: 'Startseite',
+        description: 'Die Startseite Ihrer Website',
+        components: [
+          {
+            key: 'offerings',
+            title: 'Angebote',
+            description: 'Hier können Sie Ihre Angebote mit Bild und Text präsentieren.',
+            visible: true,
+            order: 1,
+            layout: 'list',
+            items: [
+              {
+                id: 1,
+                title: 'Mein erstes Angebot',
+                description: 'Beschreibung meines ersten Angebots',
+              }
+            ],
+          },
+        ],
       },
-      // {
-      //   key: 'gallery',
-      //   title: 'Galerie',
-      //   description: 'Hier können Sie Bilder und Videos hochladen, um Ihre Produkte oder Dienstleistungen zu präsentieren.',
-      //   visible: true,
-      //   order: 2,
-      //   type: 'grid',
-      //   items: [],
-      // },
-      // {
-      //   key: 'faq',
-      //   title: 'Häufig gestellte Fragen',
-      //   description: 'Hier können Sie häufig gestellte Fragen beantworten, um Ihren Kunden zu helfen.',
-      //   visible: true,
-      //   order: 3,
-      // },
-      // {
-      //   key: 'downloads',
-      //   title: 'Downloads',
-      //   description: 'Hier können Sie Dateien zum Download anbieten, z.B. Broschüren oder Preislisten.',
-      //   visible: true,
-      //   order: 4,
-      //   items: [],
-      // },
-      // {
-      //   key: 'form',
-      //   title: 'Anfrage',
-      //   description: 'Wir freuen uns auf Ihre Nachricht!',
-      //   visible: true,
-      //   order: 5,
-      //   successMessage: 'Vielen Dank für Ihre Anfrage! Wir werden uns so schnell wie möglich bei Ihnen melden.',
-      //   errorMessage: 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.',
-      //   fields: [],
-      // },
     ],
   },
   private: {

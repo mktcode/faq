@@ -1,26 +1,9 @@
 <script setup lang="ts">
-import { availableComponents } from '~~/types/db'
-
 const toast = useToast()
 
 const { $profile } = useProfile()
 
 const { showWebsiteSettings, go } = useAdmin()
-
-const showAddComponent = ref(false)
-const components = computed(() => {
-  return $profile.settings.public.components
-    .sort((a, b) => {
-      return a.order - b.order
-    })
-    .map((component) => {
-      const found = availableComponents.find(c => c.key === component.key)
-      return {
-        ...component,
-        icon: found?.icon || 'i-heroicons-cube',
-      }
-    })
-})
 
 const showLegalDataWarning = computed(() => {
   return !$profile.settings.public.company.name || !$profile.settings.public.company.street || !$profile.settings.public.company.phone
@@ -67,7 +50,7 @@ async function togglePublished() {
       footer: 'justify-between',
     }"
   >
-    <template #title>
+    <template #header>
       <h3 class="text-lg font-semibold flex items-center gap-2">
         <UIcon
           name="i-lucide-monitor-smartphone"
@@ -75,6 +58,14 @@ async function togglePublished() {
         />
         Website
       </h3>
+      <UButton
+        icon="i-heroicons-x-mark"
+        variant="ghost"
+        color="neutral"
+        size="md"
+        class="ml-auto"
+        @click="go('')"
+      />
     </template>
 
     <template #body>
@@ -104,7 +95,7 @@ async function togglePublished() {
       </div>
 
       <UButton
-        label="Design & Kopfbereich"
+        label="Design"
         icon="i-heroicons-paint-brush"
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
@@ -117,8 +108,10 @@ async function togglePublished() {
       />
 
       <UButton
-        label="Angebote"
-        icon="i-heroicons-megaphone"
+        v-for="(page, index) in $profile.settings.public.pages.sort((a, b) => a.path.localeCompare(b.path))"
+        :key="page.path"
+        :label="page.title || `Seite ${index + 1}`"
+        :icon="page.path === '/' ? 'i-heroicons-home' : 'i-heroicons-document-text'"
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
         color="neutral"
@@ -126,82 +119,11 @@ async function togglePublished() {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="go('#website/offering')"
+        @click="go(`#website/page/${page.id}`)"
       />
 
       <UButton
-        label="Kontaktformular"
-        icon="i-heroicons-envelope"
-        class="w-full rounded-none p-4 border-b border-gray-200"
-        variant="ghost"
-        color="neutral"
-        trailing-icon="i-heroicons-chevron-right"
-        :ui="{
-          trailingIcon: 'ml-auto opacity-30',
-        }"
-        @click="go('#website/contact-form')"
-      />
-
-      <UButton
-        label="Gallerie"
-        icon="i-heroicons-photo"
-        class="w-full rounded-none p-4 border-b border-gray-200"
-        variant="ghost"
-        color="neutral"
-        trailing-icon="i-heroicons-chevron-right"
-        :ui="{
-          trailingIcon: 'ml-auto opacity-30',
-        }"
-        @click="go('#website/gallery')"
-      />
-
-      <UButton
-        label="Häufige Fragen"
-        icon="i-heroicons-question-mark-circle"
-        class="w-full rounded-none p-4 border-b border-gray-200"
-        variant="ghost"
-        color="neutral"
-        trailing-icon="i-heroicons-chevron-right"
-        :ui="{
-          trailingIcon: 'ml-auto opacity-30',
-        }"
-        @click="go('#website/faq')"
-      />
-
-      <UButton
-        label="Downloads"
-        icon="i-heroicons-arrow-down-tray"
-        class="w-full rounded-none p-4 border-b border-gray-200"
-        variant="ghost"
-        color="neutral"
-        trailing-icon="i-heroicons-chevron-right"
-        :ui="{
-          trailingIcon: 'ml-auto opacity-30',
-        }"
-        @click="go('#website/downloads')"
-      />
-
-      <template
-        v-for="(component, index) in components"
-        :key="component.key + index"
-      >
-        <UButton
-          :label="component.title"
-          :icon="component.icon"
-          class="w-full rounded-none p-4 border-b border-gray-200"
-          variant="ghost"
-          color="neutral"
-          trailing-icon="i-heroicons-chevron-right"
-          :ui="{
-            trailingIcon: 'ml-auto opacity-30',
-          }"
-          @click="go(`#website/component/${component.key}/${index}`)"
-        />
-
-      </template>
-
-      <UButton
-        label="Sektion hinzufügen"
+        label="Unterseite hinzufügen"
         icon="i-heroicons-plus"
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
@@ -210,10 +132,7 @@ async function togglePublished() {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="showAddComponent = true"
       />
-
-      <ProfileAdminWebsiteAddComponent v-model:open="showAddComponent" />
     </template>
   </USlideover>
 </template>

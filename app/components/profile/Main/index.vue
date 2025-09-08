@@ -2,6 +2,24 @@
 const appConfig = useAppConfig()
 const { $profile } = useProfile()
 
+const path = useRoute().path
+
+const page = computed(() => {
+  return $profile.settings.public.pages.find(page => page.path === path)
+})
+
+if (!page.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Page not found' })
+}
+
+const components = computed(() => {
+  if (!page.value) {
+    return []
+  }
+
+  return page.value.components.filter(c => c.visible)
+})
+
 appConfig.ui.colors.primary = 'website'
 appConfig.ui.button.defaultVariants.rounded = $profile.settings.public.design.rounded
 appConfig.ui.input.defaultVariants.rounded = $profile.settings.public.design.rounded
@@ -9,7 +27,7 @@ appConfig.ui.select.defaultVariants.rounded = $profile.settings.public.design.ro
 appConfig.ui.textarea.defaultVariants.rounded = $profile.settings.public.design.rounded
 
 useHead({
-  title: $profile.settings.public.meta.title || $profile.settings.public.header.title || $profile.settings.public.company.name || 'Solohost Website',
+  title: page.value.title,
   meta: [
     { name: 'robots', content: $profile.isPublic ? 'index, follow' : 'noindex, nofollow' },
     { name: 'theme-color', content: toHslString($profile.settings.public.design.color) },
@@ -17,7 +35,7 @@ useHead({
     { property: 'og:image', content: $profile.settings.public.meta.ogimage || $profile.settings.public.header.image || '' },
     {
       name: 'description',
-      content: $profile.settings.public.meta.description || $profile.settings.public.header.description || '',
+      content: page.value.description,
     },
     {
       name: 'keywords',
@@ -55,7 +73,7 @@ useHead({
     <ProfileMainHeader />
     <div class="flex flex-col items-center justify-center gap-24 max-w-5xl mx-auto py-24 px-6">
       <template
-        v-for="(component, index) in $profile.settings.public.components"
+        v-for="(component, index) in components"
         :key="component.key + index"
       >
         <ProfileMainOfferings v-if="component.key === 'offerings'" :component="component" />

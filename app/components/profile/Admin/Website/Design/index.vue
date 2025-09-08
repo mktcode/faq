@@ -446,7 +446,7 @@ async function deleteImage(image: 'logo' | 'header') {
             />
           </div>
         </div>
-        <ProfileAdminWebsiteDesignComponentOrder />
+        <!-- <ProfileAdminWebsiteDesignComponentOrder /> -->
         <UCollapsible
           v-model:open="showCustomCss"
           class="flex flex-col gap-2"

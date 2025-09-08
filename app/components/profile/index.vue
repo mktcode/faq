@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type Stripe from 'stripe';
 import type { SettingsForm } from '~~/types/db'
 
 const path = useRoute().path
@@ -29,7 +28,7 @@ nuxtApp.provide('profile', profile)
   <ClientOnly>
     <ProfileAdmin v-if="$profile.isOwned" />
   </ClientOnly>
-  <ProfileMain v-if="path === '/'" />
+  <ProfileMain v-if="$profile.settings.public.pages.map(page => page.path).includes(path)" />
   <ProfileImpressum v-else-if="path === '/impressum'" />
   <ProfileDatenschutz v-else-if="path === '/datenschutz'" />
   <Profile404 v-else />

@@ -7,13 +7,9 @@ const subscriptionSuccess = !!route.query.subscriptionSuccess
   <ProfileAdminNav />
   <ProfileAdminSettings />
   <ProfileAdminWebsite />
-  <ProfileAdminWebsiteEditComponent />
   <ProfileAdminWebsiteDesign />
-  <!-- <ProfileAdminWebsiteOffering />
-  <ProfileAdminWebsiteForm />
-  <ProfileAdminWebsiteGallery />
-  <ProfileAdminWebsiteFaq />
-  <ProfileAdminWebsiteDownloads /> -->
+  <ProfileAdminWebsitePage />
+  <ProfileAdminWebsiteComponent />
   <ProfileAdminAssistant />
   <ProfileAdminSupport />
   <ProfileAdminSubscriptionSuccess v-if="subscriptionSuccess" />
