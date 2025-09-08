@@ -39,6 +39,42 @@ const componentSettingsBaseSchema = z.object({
 })
 export type ComponentSettingsBaseSchema = z.infer<typeof componentSettingsBaseSchema>
 
+const headerComponentSchema = componentSettingsBaseSchema.extend({
+  key: z.literal('header'),
+  titleFontSize: z.number(),
+  titleColor: z.object({
+    h: z.number(),
+    s: z.number(),
+    l: z.number(),
+  }),
+  descriptionFontSize: z.number(),
+  descriptionColor: z.object({
+    h: z.number(),
+    s: z.number(),
+    l: z.number(),
+  }),
+  video: z.string(),
+  image: z.string(),
+  imageOverlay: z.object({
+    color: z.object({
+      h: z.number(),
+      s: z.number(),
+      l: z.number(),
+    }),
+    opacity: z.number().min(0).max(100),
+  }),
+  height: z.enum(['auto', 'half', 'full', 'boxed']),
+  showShareButton: z.boolean(),
+  links: z.array(
+    z.object({
+      title: z.string(),
+      url: z.string().url(),
+      icon: z.string(),
+    }),
+  ),
+})
+export type HeaderComponentSchema = z.infer<typeof headerComponentSchema>
+
 const offeringsComponentSchema = componentSettingsBaseSchema.extend({
   key: z.literal('offerings'),
   layout: z.enum(['grid', 'list', 'carousel']),
@@ -96,6 +132,7 @@ const downloadsComponentSchema = componentSettingsBaseSchema.extend({
 export type DownloadsComponentSchema = z.infer<typeof downloadsComponentSchema>
 
 const componentUnionSchema = z.union([
+  headerComponentSchema,
   offeringsComponentSchema,
   galleryComponentSchema,
   formComponentSchema,
@@ -190,6 +227,46 @@ type AvailableComponent = {
 }
 
 export const availableComponents: AvailableComponent[] = [
+  {
+    key: 'header',
+    title: 'Begrüßungsbereich',
+    description: 'Hier können Sie einen Begrüßungsbereich mit Titel, Beschreibung, Hintergrundbild oder Video einfügen.',
+    icon: 'i-heroicons-hand-raised',
+    defaults: {
+      id: 1,
+      key: 'header',
+      title: 'Herzlich Willkommen',
+      showTitle: false,
+      description: 'Auf Ihrer neuen Website von Solohost.de',
+      visible: true,
+      order: 1,
+      titleFontSize: 12,
+      titleColor: {
+        h: 0,
+        s: 0,
+        l: 0,
+      },
+      descriptionFontSize: 8,
+      descriptionColor: {
+        h: 0,
+        s: 0,
+        l: 0,
+      },
+      video: '',
+      image: '',
+      imageOverlay: {
+        color: {
+          h: 0,
+          s: 0,
+          l: 0,
+        },
+        opacity: 4,
+      },
+      height: 'full',
+      showShareButton: true,
+      links: [],
+    },
+  },
   {
     key: 'offerings',
     title: 'Liste mit Texten und Bildern',
@@ -346,6 +423,40 @@ export const defaultSettings = (): SettingsForm => ({
         components: [
           {
             id: 1,
+            key: 'header',
+            title: 'Herzlich Willkommen',
+            showTitle: false,
+            description: 'Auf Ihrer neuen Website von Solohost.de',
+            visible: true,
+            order: 1,
+            titleFontSize: 12,
+            titleColor: {
+              h: 0,
+              s: 0,
+              l: 0,
+            },
+            descriptionFontSize: 8,
+            descriptionColor: {
+              h: 0,
+              s: 0,
+              l: 0,
+            },
+            video: '',
+            image: '',
+            imageOverlay: {
+              color: {
+                h: 0,
+                s: 0,
+                l: 0,
+              },
+              opacity: 4,
+            },
+            height: 'full',
+            showShareButton: true,
+            links: [],
+          },
+          {
+            id: 2,
             key: 'offerings',
             title: 'Angebote',
             showTitle: true,

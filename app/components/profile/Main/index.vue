@@ -75,11 +75,15 @@ function openAdmin(componentId: number) {
     <ClientOnly>
       <ProfileMainReLogin />
     </ClientOnly>
-    <ProfileMainHeader />
     <template
       v-for="(component, index) in components"
       :key="component.key + index"
     >
+      <ProfileMainHeader
+        v-if="component.key === 'header'"
+        :component="component"
+        @edit="openAdmin(component.id)"
+      />
       <ProfileMainOfferings
         v-if="component.key === 'offerings'"
         :component="component"
