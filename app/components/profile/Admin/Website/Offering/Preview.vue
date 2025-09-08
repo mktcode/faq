@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 w-full">
-    <div v-for="i in 6" :key="i" class="flex flex-col gap-3">
+    <div v-for="i in 3" :key="i" class="flex flex-col gap-3">
       <!-- Headline -->
       <div class="bg-gray-200 rounded-lg h-8 w-3/4" />
 
