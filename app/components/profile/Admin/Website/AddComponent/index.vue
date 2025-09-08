@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { availableComponents, type SettingsForm } from '~~/types/db';
+import { availableComponents, type ComponentUnionSchema } from '~~/types/db';
 
 const { page, go } = useAdmin()
 
@@ -8,7 +8,7 @@ const open = defineModel('open', {
   required: true,
 })
 
-function addComponent(component: SettingsForm['public']['pages'][0]['components'][0]) {
+function addComponent(component: ComponentUnionSchema) {
   if (!page.value) return
 
   page.value.components.push(component)
@@ -33,7 +33,7 @@ function addComponent(component: SettingsForm['public']['pages'][0]['components'
           v-for="availableComponent in availableComponents"
           :key="availableComponent.title"
           :component="availableComponent"
-          @add="addComponent($event)"
+          @add="addComponent(availableComponent.defaults)"
         />
       </div>
     </template>

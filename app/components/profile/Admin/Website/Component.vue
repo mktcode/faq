@@ -32,7 +32,7 @@ function deleteComponent() {
     :overlay="false"
     :close-threshold="0.85"
     :ui="{
-      content: 'shadow-2xl shadow-black',
+      content: 'shadow-2xl shadow-black min-w-sm',
       container: 'relative max-w-md no-scrollbar',
       handle: '!bg-gray-400',
       header: 'h-10',
@@ -108,6 +108,10 @@ function deleteComponent() {
     <template #body>
       <ProfileAdminWebsiteOffering
         v-if="component.key === 'offerings'"
+        v-model:component="component"
+      />
+      <ProfileAdminWebsiteGallery
+        v-else-if="component.key === 'gallery'"
         v-model:component="component"
       />
     </template>

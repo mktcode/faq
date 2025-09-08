@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { useMediaQuery } from '@vueuse/core'
+import type { GalleryComponentSchema } from '~~/types/db'
 
 const toast = useToast()
 
-const { showWebsiteGallerySettings, go } = useAdmin()
-
-const isDesktop = useMediaQuery('(min-width: 640px)')
+const component = defineModel('component', {
+  type: Object as () => GalleryComponentSchema,
+  required: true,
+})
 
 const { $profile, saveSettings } = useProfile()
 
@@ -25,8 +26,6 @@ const galleryTypes = ref([
   },
 ])
 
-watch(() => $profile.settings.public.components.gallery.type, saveSettings)
-
 const uploadFile = async (files: FileList | null) => {
   if (!files || files.length === 0) return
 
@@ -42,12 +41,10 @@ const uploadFile = async (files: FileList | null) => {
         body: formData,
       })
 
-      $profile.settings.public.components.gallery.items = [
-        ...$profile.settings.public.components.gallery.items,
+      component.value.items = [
+        ...component.value.items,
         ...imageUrls.map((url: string) => ({ url, title: '', description: '' })),
       ]
-
-      await saveSettings()
 
       uploadedFiles++
       uploadProgress.value = Math.round((uploadedFiles / files.length) * 100)
@@ -90,7 +87,7 @@ const onDrop = async (e: DragEvent) => {
 }
 
 async function deleteImage(index: number) {
-  const url = $profile.settings.public.components.gallery.items[index]?.url
+  const url = component.value.items[index]?.url
   if (!url) return
 
   const { success } = await $fetch('/api/user/upload/delete', {
@@ -109,131 +106,92 @@ async function deleteImage(index: number) {
     return
   }
 
-  $profile.settings.public.components.gallery.items.splice(index, 1)
+  component.value.items.splice(index, 1)
   saveSettings()
 }
 </script>
 
 <template>
-  <UDrawer
-    :open="showWebsiteGallerySettings"
-    :direction="isDesktop ? 'left' : 'bottom'"
-    close-icon="i-heroicons-arrow-left"
-    handle-only
-    :overlay="false"
-    :close-threshold="0.85"
-    :ui="{
-      content: 'shadow-2xl shadow-black',
-      container: 'relative max-w-md no-scrollbar',
-      handle: '!bg-gray-400',
-      header: 'h-10',
-      body: 'flex flex-col gap-4',
-    }"
-    @close="() => go('#website')"
+  <UFormField label="Darstellung">
+    <USelect
+      v-model="component.type"
+      :items="galleryTypes"
+      label="Galerie Layout"
+      class="w-full"
+    >
+      <template #item-trailing="{ item }">
+        <UBadge
+          v-if="item.disabled"
+          label="Premium"
+          variant="outline"
+        />
+      </template>
+    </USelect>
+  </UFormField>
+  <div
+    :class="`relative flex flex-col items-center justify-center w-full h-auto border-2 ${isDragging ? 'border-primary-500' : 'border-gray-300'} border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100`"
+    @dragenter="onDragEnter"
+    @dragleave="onDragLeave"
+    @dragover="onDragOver"
+    @drop="onDrop"
   >
-    <template #header>
-      <ProfileMainDrawerTip />
-      <h3 class="text-lg font-semibold flex gap-2">
-        <UIcon
-          name="i-heroicons-photo"
-          class="inline-block size-6 opacity-50"
-        />
-        Gallerie
-        <div class="flex items-center gap-2 ml-auto">
-          <UButton
-            icon="i-heroicons-arrow-left"
-            variant="ghost"
-            color="neutral"
-            size="md"
-            @click="go('#website')"
-          />
-        </div>
-      </h3>
-    </template>
-
-    <template #body>
-      <UFormField label="Darstellung">
-        <USelect
-          v-model="$profile.settings.public.components.gallery.type"
-          :items="galleryTypes"
-          label="Galerie Layout"
-          class="w-full"
-        >
-          <template #item-trailing="{ item }">
-            <UBadge
-              v-if="item.disabled"
-              label="Premium"
-              variant="outline"
-            />
-          </template>
-        </USelect>
-      </UFormField>
-      <div
-        :class="`relative flex flex-col items-center justify-center w-full h-auto border-2 ${isDragging ? 'border-primary-500' : 'border-gray-300'} border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100`"
-        @dragenter="onDragEnter"
-        @dragleave="onDragLeave"
-        @dragover="onDragOver"
-        @drop="onDrop"
-      >
-        <div class="flex flex-col items-center justify-center pt-5 p-4">
-          <UIcon
-            :class="`mb-2 size-12 text-gray-200`"
-            name="i-heroicons-plus"
-          />
-          <p :class="`mb-1 text-xs text-gray-500`">
-            <span class="font-semibold">Klicken</span> oder Bilder hierhin ziehen (JPG, PNG, GIF, max. 5 MB)
-          </p>
-        </div>
-        <input
-          id="image-dropzone"
-          ref="fileInput"
-          type="file"
-          class="hidden"
-          multiple
-          @change="handleInputChange"
-        >
-        <label
-          for="image-dropzone"
-          class="w-full h-full absolute top-0 left-0 cursor-pointer"
-        />
-      </div>
-      <UProgress
-        v-if="isUploading"
-        v-model="uploadProgress"
+    <div class="flex flex-col items-center justify-center pt-5 p-4">
+      <UIcon
+        :class="`mb-2 size-12 text-gray-200`"
+        name="i-heroicons-plus"
       />
-      <div class="flex flex-col gap-2">
-        <TransitionGroup name="fade">
-          <div
-            v-for="(image, index) in $profile.settings.public.components.gallery.items"
-            :key="index"
-            class="flex items-center justify-center w-full gap-2"
-          >
-            <img
-              :src="image.url"
-              class="w-32 object-cover aspect-square rounded-lg"
-            >
-            <div class="flex flex-col gap-2 w-full">
-              <div class="flex gap-2">
-                <UInput
-                  v-model="image.title"
-                  placeholder="Bildtitel"
-                  class="flex-1"
-                />
-                <UButton
-                  icon="i-heroicons-trash"
-                  variant="soft"
-                  color="error"
-                  @click="deleteImage(index)"
-                />
-              </div>
-              <UTextarea
-                v-model="image.description"
-                placeholder="Bildbeschreibung"
-              />
-            </div>
+      <p :class="`mb-1 text-xs text-gray-500`">
+        <span class="font-semibold">Klicken</span> oder Bilder hierhin ziehen (JPG, PNG, GIF, max. 5 MB)
+      </p>
+    </div>
+    <input
+      id="image-dropzone"
+      ref="fileInput"
+      type="file"
+      class="hidden"
+      multiple
+      @change="handleInputChange"
+    >
+    <label
+      for="image-dropzone"
+      class="w-full h-full absolute top-0 left-0 cursor-pointer"
+    />
+  </div>
+  <UProgress
+    v-if="isUploading"
+    v-model="uploadProgress"
+  />
+  <div class="flex flex-col gap-2">
+    <TransitionGroup name="fade">
+      <div
+        v-for="(image, index) in component.items"
+        :key="index"
+        class="flex items-center justify-center w-full gap-2"
+      >
+        <img
+          :src="image.url"
+          class="w-32 object-cover aspect-square rounded-lg"
+        >
+        <div class="flex flex-col gap-2 w-full">
+          <div class="flex gap-2">
+            <UInput
+              v-model="image.title"
+              placeholder="Bildtitel"
+              class="flex-1"
+            />
+            <UButton
+              icon="i-heroicons-trash"
+              variant="soft"
+              color="error"
+              @click="deleteImage(index)"
+            />
           </div>
-        </TransitionGroup>
+          <UTextarea
+            v-model="image.description"
+            placeholder="Bildbeschreibung"
+          />
+        </div>
       </div>
-    </template>
-  </UDrawer>
+    </TransitionGroup>
+  </div>
 </template>

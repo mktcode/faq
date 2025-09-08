@@ -28,39 +28,6 @@ export type User = Selectable<UsersTable>
 export type NewUser = Insertable<UsersTable>
 export type UserUpdate = Updateable<UsersTable>
 
-export const availableComponents = [
-  {
-    key: 'offerings',
-    title: 'Angebote',
-    description: 'Hier können Sie Ihre Angebote mit Bild und Text präsentieren.',
-    icon: 'i-heroicons-megaphone',
-  },
-  {
-    key: 'gallery',
-    title: 'Galerie',
-    description: 'Hier können Sie Bilder und Videos hochladen, um Ihre Produkte oder Dienstleistungen zu präsentieren.',
-    icon: 'i-heroicons-photo',
-  },
-  {
-    key: 'form',
-    title: 'Kontaktformular',
-    description: 'Hier können Sie ein Kontaktformular einfügen, damit Interessenten Sie direkt kontaktieren können.',
-    icon: 'i-heroicons-envelope',
-  },
-  {
-    key: 'faq',
-    title: 'Häufig gestellte Fragen',
-    description: 'Hier können Sie häufig gestellte Fragen beantworten, um Ihren Kunden zu helfen.',
-    icon: 'i-heroicons-question-mark-circle',
-  },
-  {
-    key: 'downloads',
-    title: 'Downloads',
-    description: 'Hier können Sie Dateien zum Download anbieten, z.B. Broschüren oder Preislisten.',
-    icon: 'i-heroicons-arrow-down-tray',
-  },
-] as const
-
 const componentSettingsBaseSchema = z.object({
   id: z.number(),
   key: z.string(),
@@ -126,6 +93,15 @@ const downloadsComponentSchema = componentSettingsBaseSchema.extend({
 })
 export type DownloadsComponentSchema = z.infer<typeof downloadsComponentSchema>
 
+const componentUnionSchema = z.union([
+  offeringsComponentSchema,
+  galleryComponentSchema,
+  formComponentSchema,
+  faqComponentSchema,
+  downloadsComponentSchema,
+])
+export type ComponentUnionSchema = z.infer<typeof componentUnionSchema>
+
 export const colorSchema = z.object({
   h: z.number(),
   s: z.number(),
@@ -189,13 +165,7 @@ export const settingsFormSchema = z.object({
       path: z.string(),
       title: z.string(),
       description: z.string(),
-      components: z.array(z.union([
-        offeringsComponentSchema,
-        galleryComponentSchema,
-        formComponentSchema,
-        faqComponentSchema,
-        downloadsComponentSchema,
-      ])),
+      components: z.array(componentUnionSchema),
     })),
   }),
   private: z.object({
@@ -208,6 +178,95 @@ export const settingsFormSchema = z.object({
 })
 
 export type SettingsForm = z.infer<typeof settingsFormSchema>
+
+type AvailableComponent = {
+  key: ComponentUnionSchema['key']
+  title: string
+  description: string
+  icon: string
+  defaults: ComponentUnionSchema
+}
+
+export const availableComponents: AvailableComponent[] = [
+  {
+    key: 'offerings',
+    title: 'Angebote',
+    description: 'Hier können Sie Ihre Angebote mit Bild und Text präsentieren.',
+    icon: 'i-heroicons-megaphone',
+    defaults: {
+      id: 1,
+      key: 'offerings',
+      title: 'Angebote',
+      description: 'Hier können Sie Ihre Angebote mit Bild und Text präsentieren.',
+      visible: true,
+      order: 1,
+      layout: 'list',
+      items: [],
+    },
+  },
+  {
+    key: 'gallery',
+    title: 'Galerie',
+    description: 'Hier können Sie Bilder und Videos hochladen, um Ihre Produkte oder Dienstleistungen zu präsentieren.',
+    icon: 'i-heroicons-photo',
+    defaults: {
+      id: 1,
+      key: 'gallery',
+      title: 'Galerie',
+      description: 'Hier können Sie Bilder und Videos hochladen, um Ihre Produkte oder Dienstleistungen zu präsentieren.',
+      visible: true,
+      order: 1,
+      type: 'grid',
+      items: [],
+    },
+  },
+  {
+    key: 'form',
+    title: 'Kontaktformular',
+    description: 'Hier können Sie ein Kontaktformular einfügen, damit Interessenten Sie direkt kontaktieren können.',
+    icon: 'i-heroicons-envelope',
+    defaults: {
+      id: 1,
+      key: 'form',
+      title: 'Kontaktformular',
+      description: 'Hier können Sie ein Kontaktformular einfügen, damit Interessenten Sie direkt kontaktieren können.',
+      visible: true,
+      order: 1,
+      successMessage: 'Vielen Dank für Ihre Nachricht! Wir werden uns so schnell wie möglich bei Ihnen melden.',
+      errorMessage: 'Beim Senden Ihrer Nachricht ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal.',
+      fields: [],
+    },
+  },
+  {
+    key: 'faq',
+    title: 'Häufig gestellte Fragen',
+    description: 'Hier können Sie häufig gestellte Fragen beantworten, um Ihren Kunden zu helfen.',
+    icon: 'i-heroicons-question-mark-circle',
+    defaults: {
+      id: 1,
+      key: 'faq',
+      title: 'Häufig gestellte Fragen',
+      description: 'Hier können Sie häufig gestellte Fragen beantworten, um Ihren Kunden zu helfen.',
+      visible: true,
+      order: 1,
+    },
+  },
+  {
+    key: 'downloads',
+    title: 'Downloads',
+    description: 'Hier können Sie Dateien zum Download anbieten, z.B. Broschüren oder Preislisten.',
+    icon: 'i-heroicons-arrow-down-tray',
+    defaults: {
+      id: 1,
+      key: 'downloads',
+      title: 'Downloads',
+      description: 'Hier können Sie Dateien zum Download anbieten, z.B. Broschüren oder Preislisten.',
+      visible: true,
+      order: 1,
+      items: [],
+    },
+  },
+] as const
 
 export const defaultSettings = (): SettingsForm => ({
   public: {

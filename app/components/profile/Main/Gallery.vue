@@ -1,6 +1,12 @@
 <script setup lang="ts">
+import type { GalleryComponentSchema } from '~~/types/db';
+
 const nuxtApp = useNuxtApp()
 const { $profile } = nuxtApp
+
+defineProps<{
+  component: GalleryComponentSchema;
+}>()
 
 const showModal = ref(false)
 const carousel = useTemplateRef('carousel')
@@ -18,15 +24,17 @@ function scrollTo() {
 
 <template>
   <div
-    v-if="$profile.settings.public.components.gallery.items.length"
+    v-if="component.items.length"
   >
     <ProfileMainGalleryGrid
-      v-if="$profile.settings.public.components.gallery.type === 'grid'"
+      v-if="component.type === 'grid'"
       @open-modal="openModal"
+      :component="component"
     />
     <ProfileMainGalleryMasonry
-      v-if="$profile.settings.public.components.gallery.type === 'masonry'"
+      v-if="component.type === 'masonry'"
       @open-modal="openModal"
+      :component="component"
     />
     <UModal
       v-model:open="showModal"
@@ -44,7 +52,7 @@ function scrollTo() {
         </h2>
         <div class="flex items-center gap-0.5 overflow-x-scroll">
           <img
-            v-for="(item, index) in $profile.settings.public.components.gallery.items"
+            v-for="(item, index) in component.items"
             :key="index"
             :src="item?.url"
             class="size-10 object-cover shrink-0 cursor-pointer transition-all border-2"
@@ -75,7 +83,7 @@ function scrollTo() {
         <UCarousel
           ref="carousel"
           v-slot="{ item }"
-          :items="$profile.settings.public.components.gallery.items"
+          :items="component.items"
           :ui="{
             root: 'h-full',
             viewport: 'h-full',

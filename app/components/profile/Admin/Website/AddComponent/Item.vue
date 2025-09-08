@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { SettingsForm } from '~~/types/db';
+import type { ComponentUnionSchema } from '~~/types/db';
 
 defineProps<{
-  component: SettingsForm['public']['pages'][0]['components'][0]
+  component: ComponentUnionSchema
 }>()
 
 defineEmits<{
-  add: [component: SettingsForm['public']['pages'][0]['components'][0]];
+  add: []
 }>()
 </script>
 
@@ -32,15 +32,7 @@ defineEmits<{
       <UButton
         label="Hinzufügen"
         icon="i-heroicons-plus"
-        @click="$emit('add', {
-          key: 'offerings',
-          title: component.title,
-          description: component.description,
-          items: [],
-          layout: 'grid',
-          order: 1,
-          visible: true,
-        })"
+        @click="$emit('add')"
       />
     </div>
   </div>

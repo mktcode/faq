@@ -1,13 +1,19 @@
 <script setup lang="ts">
+import type { GalleryComponentSchema } from '~~/types/db';
+
 defineEmits<{
   'open-modal': [index: number]
+}>()
+
+defineProps<{
+  component: GalleryComponentSchema;
 }>()
 </script>
 
 <template>
   <div class="columns-2 lg:columns-3 gap-x-2">
     <div
-      v-for="(image, index) in $profile.settings.public.components.gallery.items.slice(0, 7)"
+      v-for="(image, index) in component.items.slice(0, 7)"
       :key="index"
       class="relative mb-2 w-full overflow-hidden break-inside-avoid cursor-pointer"
       :class="{
@@ -23,10 +29,10 @@ defineEmits<{
         preload
       />
       <div
-        v-if="index === 6 && $profile.settings.public.components.gallery.items.length > 7"
+        v-if="index === 6 && component.items.length > 7"
         class="absolute inset-0 flex items-center justify-center bg-black/30 text-white/80 text-3xl font-semibold pointer-events-none"
       >
-        +{{ $profile.settings.public.components.gallery.items.length - 7 }}
+        +{{ component.items.length - 7 }}
       </div>
     </div>
   </div>
