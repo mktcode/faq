@@ -37,7 +37,7 @@ export default function useAdmin() {
       return null
     }
   
-    return $profile.settings.public.pages.find(page => page.id === websiteSelectedPage.value?.pageId)?.components[websiteSelectedPage.value.componentId]
+    return $profile.settings.public.pages.find(page => page.id === websiteSelectedPage.value?.pageId)?.components.find(c => c.id === websiteSelectedPage.value?.componentId) || null
   })
 
   const showAssistant = computed(() => router.currentRoute.value.hash.startsWith('#assistant'))

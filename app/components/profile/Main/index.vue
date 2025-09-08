@@ -58,6 +58,11 @@ useHead({
     },
   ],
 })
+
+function openAdmin(componentId: number) {
+  navigateTo(`#website/page/${page.value?.id}/component/${componentId}`)
+}
+
 </script>
 
 <template>
@@ -71,19 +76,36 @@ useHead({
       <ProfileMainReLogin />
     </ClientOnly>
     <ProfileMainHeader />
-    <div class="flex flex-col items-center justify-center gap-24 max-w-5xl mx-auto py-24 px-6">
-      <template
-        v-for="(component, index) in components"
-        :key="component.key + index"
-      >
-        <ProfileMainOfferings v-if="component.key === 'offerings'" :component="component" />
-        <ProfileMainGallery v-else-if="component.key === 'gallery'" :component="component" />
-        <ProfileMainDownloads v-else-if="component.key === 'downloads'" :component="component" />
-        <ProfileMainContactForm v-else-if="component.key === 'form'" :component="component" />
-        <ProfileMainFAQ v-else-if="component.key === 'faq'" :component="component" />
-      </template>
-
-      <ProfileMainFooter />
-    </div>
+    <template
+      v-for="(component, index) in components"
+      :key="component.key + index"
+    >
+      <ProfileMainOfferings
+        v-if="component.key === 'offerings'"
+        :component="component"
+        @edit="openAdmin(component.id)"
+      />
+      <ProfileMainGallery
+        v-else-if="component.key === 'gallery'"
+        :component="component"
+        @edit="openAdmin(component.id)"
+      />
+      <ProfileMainDownloads
+        v-else-if="component.key === 'downloads'"
+        :component="component"
+        @edit="openAdmin(component.id)"
+      />
+      <ProfileMainContactForm
+        v-else-if="component.key === 'form'"
+        :component="component"
+        @edit="openAdmin(component.id)"
+      />
+      <ProfileMainFAQ
+        v-else-if="component.key === 'faq'"
+        :component="component"
+        @edit="openAdmin(component.id)"
+      />
+    </template>
+    <ProfileMainFooter />
   </FontWrapper>
 </template>
