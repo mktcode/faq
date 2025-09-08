@@ -118,6 +118,10 @@ function deleteComponent() {
         v-else-if="component.key === 'downloads'"
         v-model:component="component"
       />
+      <ProfileAdminWebsiteContactForm
+        v-else-if="component.key === 'form'"
+        v-model:component="component"
+      />
     </template>
   </UDrawer>
 </template>

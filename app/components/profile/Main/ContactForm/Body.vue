@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
 import type { SimilarQuestion } from '~~/server/api/qanda/similarQuestions.post'
+import type { FormComponentSchema } from '~~/types/db';
 
 const nuxtApp = useNuxtApp()
 const { $profile } = nuxtApp
+
+defineProps<{
+  component: FormComponentSchema;
+}>()
 
 const message = ref('')
 const messageLongEnough = computed(() => message.value.trim().length >= 5)
@@ -170,7 +175,7 @@ const disabled = computed(() => {
         />
       </UFormField>
       <div
-        v-for="(field, index) in $profile.settings.public.components.form.fields"
+        v-for="(field, index) in component.fields"
         :key="index"
       >
         <UFormField
@@ -275,7 +280,7 @@ const disabled = computed(() => {
         variant="soft"
         icon="i-heroicons-check"
         title="Ihre Anfrage wurde gesendet."
-        :description="$profile.settings.public.components.form.successMessage || 'Vielen Dank für Ihre Anfrage. Wir melden uns zeitnah bei Ihnen.'"
+        :description="component.successMessage || 'Vielen Dank für Ihre Anfrage. Wir melden uns zeitnah bei Ihnen.'"
         :close="{
           color: 'primary',
         }"
@@ -290,7 +295,7 @@ const disabled = computed(() => {
         variant="soft"
         icon="i-heroicons-exclamation-triangle"
         title="Ihre Anfrage konnte nicht gesendet werden."
-        :description="$profile.settings.public.components.form.errorMessage || `Beim Senden Ihrer Anfrage ist ein Fehler aufgetreten. Versuchen Sie es bitte später erneut oder per Telefon oder E-Mail.`"
+        :description="component.errorMessage || `Beim Senden Ihrer Anfrage ist ein Fehler aufgetreten. Versuchen Sie es bitte später erneut oder per Telefon oder E-Mail.`"
         :actions="[
           {
             label: 'zum Impressum',

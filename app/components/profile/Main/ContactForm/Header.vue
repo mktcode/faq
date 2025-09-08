@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import type { FormComponentSchema } from '~~/types/db';
+
+defineProps<{
+  component: FormComponentSchema;
+}>()
+</script>
+
 <template>
   <div class="mb-8">
     <a
@@ -5,11 +13,11 @@
       href="#anfrage"
       class="block text-2xl font-semibold cursor-pointer relative before:content-['#'] before:absolute before:-left-6 before:text-gray-200 before:opacity-0 before:transition-opacity hover:before:opacity-100"
     >
-      {{ $profile.settings.public.components.form.title || 'Anfrage' }}
+      {{ component.title || 'Anfrage' }}
     </a>
 
     <p class="text-gray-500 mt-3">
-      {{ $profile.settings.public.components.form.description || 'Beschreiben Sie Ihr Anliegen. Wir melden uns zeitnah bei Ihnen.' }}
+      {{ component.description || 'Beschreiben Sie Ihr Anliegen. Wir melden uns zeitnah bei Ihnen.' }}
     </p>
 
     <div class="flex flex-col gap-3 mt-6 leading-none">

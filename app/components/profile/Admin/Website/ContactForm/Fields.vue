@@ -99,7 +99,7 @@ const fieldTypes = [{
               class="w-full"
             />
           </UFormField>
-          <ProfileAdminWebsiteFormFieldOptions
+          <ProfileAdminWebsiteContactFormFieldOptions
             v-if="field.type === 'select'"
             v-model:options="field.options"
           />
