@@ -122,6 +122,10 @@ function deleteComponent() {
         v-else-if="component.key === 'form'"
         v-model:component="component"
       />
+      <ProfileAdminWebsiteFaq
+        v-else-if="component.key === 'faq'"
+        v-model:component="component"
+      />
     </template>
   </UDrawer>
 </template>
