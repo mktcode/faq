@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import type { DownloadsComponentSchema } from '~~/types/db';
 
-const nuxtApp = useNuxtApp()
-const { $profile } = nuxtApp
-
 defineProps<{
   component: DownloadsComponentSchema;
 }>()
