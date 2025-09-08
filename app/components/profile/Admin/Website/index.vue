@@ -141,11 +141,10 @@ function addPage() {
 
       <UButton
         label="Unterseite hinzufügen"
-        icon="i-heroicons-plus"
-        class="w-full rounded-none p-4 border-b border-gray-200"
-        variant="ghost"
-        color="neutral"
-        trailing-icon="i-heroicons-chevron-right"
+        icon="i-heroicons-document-text"
+        class="w-full rounded-none p-4 border-b border-primary-200"
+        variant="soft"
+        trailing-icon="i-heroicons-plus"
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"

@@ -141,7 +141,7 @@ const showAddComponent = ref(false)
       </div>
 
       <UButton
-        v-for="(component, index) in page.components"
+        v-for="(component, index) in page.components.sort((a, b) => a.order - b.order)"
         :key="component.key + index"
         :label="component.title"
         :icon="availableComponents.find(c => c.key === component.key)?.icon || 'i-heroicons-cube-transparent'"
@@ -156,12 +156,11 @@ const showAddComponent = ref(false)
       />
 
       <UButton
-        label="Komponente hinzufügen"
-        icon="i-heroicons-plus"
-        class="w-full rounded-none p-4 border-b border-gray-200"
-        variant="ghost"
-        color="neutral"
-        trailing-icon="i-heroicons-chevron-right"
+        label="Sektion hinzufügen"
+        icon="i-lucide-between-horizontal-start"
+        class="w-full rounded-none p-4 border-b border-primary-200"
+        variant="soft"
+        trailing-icon="i-heroicons-plus"
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"

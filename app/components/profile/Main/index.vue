@@ -17,7 +17,7 @@ const components = computed(() => {
     return []
   }
 
-  return page.value.components.filter(c => c.visible)
+  return page.value.components.filter(c => c.visible).sort((a, b) => a.order - b.order)
 })
 
 appConfig.ui.colors.primary = 'website'

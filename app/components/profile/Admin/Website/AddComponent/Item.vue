@@ -21,7 +21,7 @@ defineEmits<{
       </div>
     </div>
     <div class="flex gap-2 flex-1">
-      <div class="border-8 p-12 border-gray-300 rounded-xl aspect-[16/9] w-full flex items-center justify-center text-gray-600">
+      <div class="border-8 p-4 border-gray-300 rounded-xl aspect-[16/9] w-full flex items-center justify-center text-gray-600">
         <slot name="preview">Vorschau</slot>
       </div>
     </div>
