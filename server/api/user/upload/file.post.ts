@@ -1,12 +1,12 @@
 import { PutObjectCommand } from '@aws-sdk/client-s3'
-import type { SettingsForm } from '~~/types/db'
+import type { DownloadsComponentSchema } from '~~/types/db'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
 
   const files = await readMultipartFormData(event)
 
-  const uploadedFiles: SettingsForm['public']['components']['downloads']['items'] = []
+  const uploadedFiles: DownloadsComponentSchema['items'] = []
 
   if (!files) {
     return { success: false, message: 'No files found', uploadedFiles }

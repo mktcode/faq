@@ -78,9 +78,9 @@ useHead({
       >
         <ProfileMainOfferings v-if="component.key === 'offerings'" :component="component" />
         <ProfileMainGallery v-else-if="component.key === 'gallery'" :component="component" />
-        <!-- <ProfileMainDownloads v-else-if="component.key === 'downloads'" :component="component" />
+        <ProfileMainDownloads v-else-if="component.key === 'downloads'" :component="component" />
         <ProfileMainContactForm v-else-if="component.key === 'form'" :component="component" />
-        <ProfileMainFAQ v-else-if="component.key === 'faq'" :component="component" /> -->
+        <ProfileMainFAQ v-else-if="component.key === 'faq'" :component="component" />
       </template>
 
       <ProfileMainFooter />

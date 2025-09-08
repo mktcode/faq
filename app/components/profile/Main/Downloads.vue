@@ -1,15 +1,21 @@
 <script setup lang="ts">
+import type { DownloadsComponentSchema } from '~~/types/db';
+
 const nuxtApp = useNuxtApp()
 const { $profile } = nuxtApp
+
+defineProps<{
+  component: DownloadsComponentSchema;
+}>()
 </script>
 
 <template>
   <div
-    v-if="$profile.settings.public.components.downloads.items.length"
+    v-if="component.items.length"
     class="w-full flex flex-col gap-2"
   >
     <div
-      v-for="download in $profile.settings.public.components.downloads.items"
+      v-for="download in component.items"
       :key="download.url"
       class="p-4 border border-gray-200"
       :class="{

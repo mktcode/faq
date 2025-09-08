@@ -114,6 +114,10 @@ function deleteComponent() {
         v-else-if="component.key === 'gallery'"
         v-model:component="component"
       />
+      <ProfileAdminWebsiteDownloads
+        v-else-if="component.key === 'downloads'"
+        v-model:component="component"
+      />
     </template>
   </UDrawer>
 </template>
