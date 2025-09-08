@@ -152,7 +152,7 @@ const showAddComponent = ref(false)
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="go(`#website/page/${page.id}/component/${index}`)"
+        @click="go(`#website/page/${page.id}/component/${component.id}`)"
       />
 
       <UButton

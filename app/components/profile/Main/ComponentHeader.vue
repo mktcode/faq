@@ -13,7 +13,7 @@ defineProps<{
   >
     {{ component.title }}
   </h2>
-  <p
+  <div
     v-if="component.description"
     class="mb-6 text-gray-600"
     v-html="component.description"

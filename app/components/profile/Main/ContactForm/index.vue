@@ -54,22 +54,13 @@ watchDebounced(message, getEmbedding, { debounce: 2000 })
 </script>
 
 <template>
-  <div class="w-full relative">
-    <UButton
-      v-if="$profile.isOwned"
-      label="Sektion bearbeiten"
-      trailing-icon="i-heroicons-pencil-square"
-      variant="outline"
-      size="xl"
-      class="absolute top-4 -left-44 hover:-left-4 pl-5 transition-all rounded-full z-10"
-      @click="$emit('edit', component.id)"
-    />
-
-    <div class="max-w-5xl mx-auto py-24 px-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
-        <ProfileMainContactFormHeader :component="component" />
-        <ProfileMainContactFormBody :component="component" />
-      </div>
+  <ProfileMainSection
+    :component-id="component.id"
+    @edit="$emit('edit', $event)"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
+      <ProfileMainContactFormHeader :component="component" />
+      <ProfileMainContactFormBody :component="component" />
     </div>
-  </div>
+  </ProfileMainSection>
 </template>
