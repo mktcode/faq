@@ -344,20 +344,6 @@ async function deleteImage(image: 'logo' | 'header') {
             />
           </UFormField>
         </div>
-        <UFormField
-          label="Variante"
-        >
-          <USelect
-            v-model="$profile.settings.public.header.height"
-            :items="[
-              { label: 'Vollbild', value: 'full' },
-              { label: 'halber Bildschirm', value: 'half' },
-              { label: 'automatische Höhe', value: 'auto' },
-              { label: 'Box', value: 'boxed' },
-            ]"
-            class="w-full"
-          />
-        </UFormField>
         <UButton
           label="Links bearbeiten"
           @click="showLinksModal = true"

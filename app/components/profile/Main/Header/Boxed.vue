@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="max-w-xl mx-auto pt-4 px-4 sm:pt-8 sm:px-8 overflow-hidden">
+  <div class="max-w-5xl mx-auto pt-4 px-4 sm:pt-8 sm:px-8 overflow-hidden">
     <ProfileMainHeaderVideo v-if="component.video">
       <ProfileMainHeaderContent />
     </ProfileMainHeaderVideo>

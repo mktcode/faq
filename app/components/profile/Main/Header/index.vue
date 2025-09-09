@@ -21,9 +21,9 @@ defineEmits<{
       class="absolute top-8 -left-48 hover:-left-4 pl-8 transition-all rounded-full z-10"
       @click="$emit('edit', component.id)"
     />
-    <ProfileMainHeaderFullscreen v-if="$profile.settings.public.header.height === 'full'" :component="component" />
-    <ProfileMainHeaderHalfscreen v-else-if="$profile.settings.public.header.height === 'half'" :component="component" />
-    <ProfileMainHeaderAutoheight v-else-if="$profile.settings.public.header.height === 'auto'" :component="component" />
-    <ProfileMainHeaderBoxed v-else-if="$profile.settings.public.header.height === 'boxed'" :component="component" />
+    <ProfileMainHeaderFullscreen v-if="component.height === 'full'" :component="component" />
+    <ProfileMainHeaderHalfscreen v-else-if="component.height === 'half'" :component="component" />
+    <ProfileMainHeaderAutoheight v-else-if="component.height === 'auto'" :component="component" />
+    <ProfileMainHeaderBoxed v-else-if="component.height === 'boxed'" :component="component" />
   </div>
 </template>

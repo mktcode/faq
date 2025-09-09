@@ -131,6 +131,11 @@ function deleteComponent() {
         </UFormField>
       </div>
 
+      <ProfileAdminWebsiteHeader
+        v-if="component.key === 'header'"
+        v-model:component="component"
+      />
+
       <ProfileAdminWebsiteOffering
         v-if="component.key === 'offerings'"
         v-model:component="component"
