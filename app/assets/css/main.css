@@ -85,17 +85,3 @@ mark {
     transform: translateY(0);
   }
 }
-
-#cw-widget-holder {
-  @apply top-20;
-}
-
-@media (width < 48rem) {
-  #cw-widget-holder {
-    @apply bottom-0 top-auto;
-  }
-}
-
-.woot-widget-bubble {
-  display: none !important;
-}
