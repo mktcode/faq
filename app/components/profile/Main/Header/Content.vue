@@ -21,7 +21,10 @@ defineProps<{
         />
       </a>
     </div>
-    <a href="/">
+    <a
+      v-if="component.showTitle"
+      href="/"
+    >
       <h1
         class="text-center text-shadow-lg font-bold mb-4 leading-none opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.5s_forwards]"
         :style="{

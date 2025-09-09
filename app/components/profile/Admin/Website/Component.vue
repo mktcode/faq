@@ -126,7 +126,7 @@ function deleteComponent() {
           </UFormField>
         </div>
   
-        <UFormField label="Text oberhalb der Sektion" hint="(optional)">
+        <UFormField label="Beschreibung" hint="(optional)">
           <WysiwygEditor v-model="component.description" />
         </UFormField>
       </div>
