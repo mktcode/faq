@@ -6,10 +6,32 @@ const { $profile } = useProfile()
 
 const showDeleteModal = ref(false)
 
+const sortedComponents = computed(() => {
+  if (!page.value) return []
+  return page.value.components.sort((a, b) => a.order - b.order)
+})
+
 function deletePage() {
   $profile.settings.public.pages = $profile.settings.public.pages.filter(p => p.id !== page.value?.id)
   showDeleteModal.value = false
   go('#website')
+}
+
+function moveComponent(id: number, direction: 'up' | 'down') {
+  if (!page.value) return
+
+  const comp = sortedComponents.value.find(c => c.id === id)
+  if (!comp) return
+
+  const neighbour = direction === 'up'
+    ? sortedComponents.value[sortedComponents.value.indexOf(comp) - 1]
+    : sortedComponents.value[sortedComponents.value.indexOf(comp) + 1]
+
+  if (!neighbour) return
+
+  const temp = comp.order
+  comp.order = neighbour.order
+  neighbour.order = temp
 }
 
 const showAddComponent = ref(false)
@@ -140,20 +162,44 @@ const showAddComponent = ref(false)
         </UFormField>
       </div>
 
-      <UButton
-        v-for="(component, index) in page.components.sort((a, b) => a.order - b.order)"
-        :key="component.key + index"
-        :label="component.title"
-        :icon="availableComponents.find(c => c.key === component.key)?.icon || 'i-heroicons-cube-transparent'"
-        class="w-full rounded-none p-4 border-b border-gray-200"
-        variant="ghost"
-        color="neutral"
-        trailing-icon="i-heroicons-chevron-right"
-        :ui="{
-          trailingIcon: 'ml-auto opacity-30',
-        }"
-        @click="go(`#website/page/${page.id}/component/${component.id}`)"
-      />
+      <TransitionGroup name="list">
+        <div
+          v-for="(comp, index) in sortedComponents"
+          :key="comp.id"
+        >
+          <UButton
+            :label="comp.title"
+            :icon="availableComponents.find(c => c.key === comp.key)?.icon || 'i-heroicons-cube-transparent'"
+            class="w-full rounded-none p-4 border-b border-gray-200"
+            variant="ghost"
+            color="neutral"
+            @click="go(`#website/page/${page.id}/component/${comp.id}`)"
+          >
+            <template #trailing>
+              <div class="ml-auto whitespace-nowrap">
+                <UButton
+                  icon="i-heroicons-arrow-up"
+                  variant="ghost"
+                  class="disabled:text-gray-300"
+                  :disabled="index === 0"
+                  @click.stop="moveComponent(comp.id, 'up')"
+                />
+                <UButton
+                  :disabled="index === page.components.length - 1"
+                  icon="i-heroicons-arrow-down"
+                  variant="ghost"
+                  class="disabled:text-gray-300"
+                  @click.stop="moveComponent(comp.id, 'down')"
+                />
+                <UIcon
+                  name="i-heroicons-chevron-right"
+                  class="size-6 opacity-30 ml-2"
+                />
+              </div>
+            </template>
+          </UButton>
+        </div>
+      </TransitionGroup>
 
       <UButton
         label="Sektion hinzufügen"
