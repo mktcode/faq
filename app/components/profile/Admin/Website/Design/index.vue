@@ -12,7 +12,6 @@ const headerImageInput = ref<HTMLInputElement | null>(null)
 const headerVideoInput = ref<HTMLInputElement | null>(null)
 const logoInput = ref<HTMLInputElement | null>(null)
 const showUploadHeaderModal = ref(false)
-const showLinksModal = useState('showLinksModal', () => false)
 const showCustomCss = ref(false)
 
 const uploadHeaderImage = async (files: FileList | null) => {
@@ -213,7 +212,7 @@ async function deleteImage(image: 'logo' | 'header') {
           name="i-heroicons-paint-brush"
           class="inline-block size-6 opacity-50"
         />
-        Design und Kopfbereich
+        Design
         <div class="flex items-center gap-2 ml-auto">
           <UButton
             icon="i-heroicons-arrow-left"
@@ -327,27 +326,7 @@ async function deleteImage(image: 'logo' | 'header') {
             />
           </div>
         </div>
-        <div class="flex gap-2">
-          <HslPicker
-            v-model:h="$profile.settings.public.header.imageOverlay.color.h"
-            v-model:s="$profile.settings.public.header.imageOverlay.color.s"
-            v-model:l="$profile.settings.public.header.imageOverlay.color.l"
-            label="Hintergrund"
-          />
-          <UFormField
-            label="Deckkraft"
-            class="flex-1 pr-1"
-          >
-            <USlider
-              v-model="$profile.settings.public.header.imageOverlay.opacity"
-              class="flex-1 mt-4"
-            />
-          </UFormField>
-        </div>
-        <UButton
-          label="Links bearbeiten"
-          @click="showLinksModal = true"
-        />
+        
         <div class="flex gap-2">
           <HslPicker
             v-model:h="$profile.settings.public.design.color.h"
@@ -533,7 +512,6 @@ async function deleteImage(image: 'logo' | 'header') {
           </UButton>
         </template>
       </UModal>
-      <ProfileAdminWebsiteDesignLinksModal />
     </template>
   </UDrawer>
 </template>

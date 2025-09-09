@@ -41,6 +41,6 @@ defineProps<{
       }"
       v-html="component.description"
     />
-    <ProfileMainLinks />
+    <ProfileMainHeaderLinks :component="component" />
   </div>
 </template>

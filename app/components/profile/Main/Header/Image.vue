@@ -12,7 +12,7 @@ defineProps<{
     :style="{ backgroundImage: component.image ? `url(${component.image})` : 'none' }"
     :component="component"
   >
-    <ProfileMainHeaderOverlay />
+    <ProfileMainHeaderOverlay :component="component" />
     <slot />
   </ProfileMainHeaderBase>
 </template>

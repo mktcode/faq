@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
+import type { HeaderComponentSchema } from '~~/types/db';
+
+defineProps<{
+  component: HeaderComponentSchema;
+}>()
 
 const $profile = useNuxtApp().$profile
 
@@ -34,9 +39,9 @@ function getStaggeredAnimationClass(index: number) {
     id="links"
     class="max-w-xs sm:max-w-none w-full flex flex-col sm:flex-row flex-wrap items-center justify-center gap-2 mb-4"
   >
-    <template v-if="$profile.settings.public.header.links && $profile.settings.public.header.links.length > 0">
+    <template v-if="component.links && component.links.length > 0">
       <UButton
-        v-for="(link, index) in $profile.settings.public.header.links"
+        v-for="(link, index) in component.links"
         :key="index"
         :label="link.title"
         :icon="link.icon === 'none' ? undefined : link.icon"
@@ -48,13 +53,13 @@ function getStaggeredAnimationClass(index: number) {
     </template>
 
     <UPopover
-      v-if="$profile.settings.public.header.showShareButton"
+      v-if="component.showShareButton"
       class="mb-auto"
     >
       <UButton
         label="Teilen"
         icon="i-heroicons-share"
-        :class="getStaggeredAnimationClass($profile.settings.public.header.links ? $profile.settings.public.header.links.length : 0)"
+        :class="getStaggeredAnimationClass(component.links ? component.links.length : 0)"
         class="header-link shadow-sm hover:shadow-lg transition-all w-full sm:w-auto"
       />
 

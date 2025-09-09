@@ -19,7 +19,7 @@ defineProps<{
       preload="auto"
       aria-hidden="true"
     />
-    <ProfileMainHeaderOverlay />
+    <ProfileMainHeaderOverlay :component="component" />
     <slot />
   </ProfileMainHeaderBase>
 </template>
