@@ -2,9 +2,29 @@
 import { useMediaQuery } from '@vueuse/core'
 
 const { showWebsiteDesignSettings, go } = useAdmin()
+const { $profile } = useProfile()
 
 const isDesktop = useMediaQuery('(min-width: 640px)')
 const showCustomCss = ref(false)
+
+watch(
+  () => $profile.settings.public.design.color,
+  () => {
+    const root = document.documentElement
+    root.style.setProperty('--ui-color-primary-50', `color-mix(in oklch, white 94%, ${toHslString($profile.settings.public.design.color)} 6%)`)
+    root.style.setProperty('--ui-color-primary-100', `color-mix(in oklch, white 88%, ${toHslString($profile.settings.public.design.color)} 12%)`)
+    root.style.setProperty('--ui-color-primary-200', `color-mix(in oklch, white 78%, ${toHslString($profile.settings.public.design.color)} 22%)`)
+    root.style.setProperty('--ui-color-primary-300', `color-mix(in oklch, white 62%, ${toHslString($profile.settings.public.design.color)} 38%)`)
+    root.style.setProperty('--ui-color-primary-400', `color-mix(in oklch, white 46%, ${toHslString($profile.settings.public.design.color)} 54%)`)
+    root.style.setProperty('--ui-color-primary-500', toHslString($profile.settings.public.design.color))
+    root.style.setProperty('--ui-color-primary-600', `color-mix(in oklch, black 7%, ${toHslString($profile.settings.public.design.color)} 93%`)
+    root.style.setProperty('--ui-color-primary-700', `color-mix(in oklch, black 16%, ${toHslString($profile.settings.public.design.color)} 84%`)
+    root.style.setProperty('--ui-color-primary-800', `color-mix(in oklch, black 30%, ${toHslString($profile.settings.public.design.color)} 70%`)
+    root.style.setProperty('--ui-color-primary-900', `color-mix(in oklch, black 46%, ${toHslString($profile.settings.public.design.color)} 54%`)
+    root.style.setProperty('--ui-color-primary-950', `color-mix(in oklch, black 60%, ${toHslString($profile.settings.public.design.color)} 40%`)
+  },
+  { immediate: true, deep: true },
+)
 </script>
 
 <template>
