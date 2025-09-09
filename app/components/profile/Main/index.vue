@@ -76,8 +76,8 @@ function openAdmin(componentId: number) {
       <ProfileMainReLogin />
     </ClientOnly>
     <template
-      v-for="(component, index) in components"
-      :key="component.key + index"
+      v-for="component in components"
+      :key="component.id"
     >
       <ProfileMainHeader
         v-if="component.key === 'header'"
