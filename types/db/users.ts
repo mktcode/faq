@@ -55,7 +55,8 @@ const headerComponentSchema = componentSettingsBaseSchema.extend({
   }),
   video: z.string(),
   image: z.string(),
-  imageOverlay: z.object({
+  logo: z.string(),
+  overlay: z.object({
     color: z.object({
       h: z.number(),
       s: z.number(),
@@ -169,35 +170,11 @@ export const settingsFormSchema = z.object({
       taxId: z.string(),
       taxIdType: z.enum(['ustid', 'wid']),
       isSmallBusiness: z.boolean(),
-      logo: z.string(),
     }),
     design: z.object({
       font: z.string(),
       color: colorSchema,
       rounded: z.string(),
-    }),
-    header: z.object({
-      title: z.string(),
-      description: z.string(),
-      video: z.string(),
-      image: z.string(),
-      imageOverlay: z.object({
-        color: colorSchema,
-        opacity: z.number().min(0).max(100),
-      }),
-      height: z.enum(['auto', 'half', 'full', 'boxed']),
-      titleFontSize: z.number(),
-      titleColor: colorSchema,
-      descriptionFontSize: z.number(),
-      descriptionColor: colorSchema,
-      showShareButton: z.boolean(),
-      links: z.array(
-        z.object({
-          title: z.string(),
-          url: z.string().url(),
-          icon: z.string(),
-        }),
-      ),
     }),
     pages: z.array(z.object({
       id: z.number(),
@@ -254,7 +231,8 @@ export const availableComponents: AvailableComponent[] = [
       },
       video: '',
       image: '',
-      imageOverlay: {
+      logo: '',
+      overlay: {
         color: {
           h: 0,
           s: 0,
@@ -374,7 +352,6 @@ export const defaultSettings = (): SettingsForm => ({
       taxId: '',
       taxIdType: 'ustid',
       isSmallBusiness: true,
-      logo: '',
     },
     design: {
       font: 'montserrat',
@@ -384,35 +361,6 @@ export const defaultSettings = (): SettingsForm => ({
         l: 48,
       },
       rounded: 'md',
-    },
-    header: {
-      title: 'Herzlich Willkommen',
-      description: 'Auf Ihrer neuen Website von Solohost.de',
-      height: 'full',
-      titleColor: {
-        h: 0,
-        s: 0,
-        l: 0,
-      },
-      titleFontSize: 12,
-      descriptionColor: {
-        h: 0,
-        s: 0,
-        l: 0,
-      },
-      descriptionFontSize: 8,
-      video: '',
-      image: '',
-      imageOverlay: {
-        color: {
-          h: 0,
-          s: 0,
-          l: 0,
-        },
-        opacity: 4,
-      },
-      showShareButton: true,
-      links: [],
     },
     pages: [
       {
@@ -443,7 +391,8 @@ export const defaultSettings = (): SettingsForm => ({
             },
             video: '',
             image: '',
-            imageOverlay: {
+            logo: '',
+            overlay: {
               color: {
                 h: 0,
                 s: 0,

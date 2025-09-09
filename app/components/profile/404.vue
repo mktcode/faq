@@ -4,12 +4,6 @@
     class="relative"
   >
     <div class="flex flex-col items-center justify-center h-screen text-2xl">
-      <img
-        v-if="$profile.settings.public.company.logo"
-        :src="$profile.settings.public.company.logo"
-        alt="Logo"
-        class="max-w-3xs mb-12"
-      >
       <p>
         Dieses Seite existiert nicht.
       </p>

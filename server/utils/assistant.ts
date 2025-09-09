@@ -53,7 +53,7 @@ Du bist im Administrationsbereich der Solohost-App integriert. Der Kunde ist jet
 * Straße: ${settings.public.company.street || 'k.A.'}
 * Steuer-ID: ${settings.public.company.taxId || 'k.A.'}
 * Kleinunternehmer (§ 19 UStG): ${settings.public.company.isSmallBusiness ? 'Ja' : 'Nein'}
-* Kurzbeschreibung: ${settings.public.header.description || 'k.A.'}
+* Kurzbeschreibung: ${settings.private.assistant.context || 'k.A.'}
 
 ${settings.private.assistant.context}`
 }

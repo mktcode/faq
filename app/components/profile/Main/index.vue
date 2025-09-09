@@ -32,7 +32,7 @@ useHead({
     { name: 'robots', content: $profile.isPublic ? 'index, follow' : 'noindex, nofollow' },
     { name: 'theme-color', content: toHslString($profile.settings.public.design.color) },
     { property: 'og:url', content: $profile.canonicalUrl },
-    { property: 'og:image', content: $profile.settings.public.meta.ogimage || $profile.settings.public.header.image || '' },
+    { property: 'og:image', content: $profile.settings.public.meta.ogimage || '' },
     {
       name: 'description',
       content: page.value.description,
@@ -50,7 +50,7 @@ useHead({
     {
       rel: 'icon',
       type: 'image/png',
-      href: $profile.settings.public.meta.favicon || $profile.settings.public.company.logo || '',
+      href: $profile.settings.public.meta.favicon || '',
     },
     {
       rel: 'stylesheet',

@@ -244,30 +244,46 @@ About: ${settings.private.assistant.context}`,
 
   if (prefill) {
     settings.public.design.color = prefill.primary_color
-    settings.public.header = {
-      ...settings.public.header,
-      title: prefill.title,
-      titleColor: prefill.title_text_color,
-      description: prefill.tagline,
-      descriptionColor: prefill.tagline_text_color,
-      imageOverlay: {
-        color: prefill.header_background_color,
-        opacity: 100,
+    settings.public.pages[0].components.push(
+      {
+        id: new Date().getTime() + 1,
+        key: 'header',
+        title: prefill.title,
+        titleColor: prefill.title_text_color,
+        description: prefill.tagline,
+        descriptionColor: prefill.tagline_text_color,
+        image: '',
+        logo: '',
+        overlay: {
+          color: prefill.header_background_color,
+          opacity: 100,
+        },
+        showTitle: true,
+        height: 'auto',
+        visible: true,
+        order: 1,
+        showShareButton: true,
+        descriptionFontSize: 8,
+        titleFontSize: 24,
+        links: [],
+        video: '',
       },
-    }
-    settings.public.pages[0].components.push({
-      key: 'offerings',
-      title: 'Unsere Leistungen',
-      description: 'Entdecken Sie unsere vielfältigen Angebote, die speziell auf Ihre Bedürfnisse zugeschnitten sind.',
-      visible: true,
-      order: 2,
-      layout: 'list',
-      items: prefill.offerings.map((offering, index) => ({
-        id: index + 1,
-        title: offering.title,
-        description: offering.description,
-      })),
-    })
+      {
+        id: new Date().getTime(),
+        key: 'offerings',
+        title: 'Unsere Leistungen',
+        showTitle: true,
+        description: 'Entdecken Sie unsere vielfältigen Angebote, die speziell auf Ihre Bedürfnisse zugeschnitten sind.',
+        visible: true,
+        order: 2,
+        layout: 'list',
+        items: prefill.offerings.map((offering, index) => ({
+          id: index + 1,
+          title: offering.title,
+          description: offering.description,
+        })),
+      },
+    )
   }
 
   return settings

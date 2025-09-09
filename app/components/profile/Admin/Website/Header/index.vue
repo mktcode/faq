@@ -30,8 +30,8 @@ const uploadHeaderImage = async (files: FileList | null) => {
 
     component.value.image = imageUrls[0] || ''
 
-    if (component.value.imageOverlay.opacity > 90) {
-      component.value.imageOverlay.opacity = 90
+    if (component.value.overlay.opacity > 90) {
+      component.value.overlay.opacity = 90
     }
 
     if (headerImageInput.value) {
@@ -61,8 +61,8 @@ const uploadHeaderVideo = async (files: FileList | null) => {
     if (success && videoUrl) {
       component.value.video = videoUrl || ''
 
-      if (component.value.imageOverlay.opacity > 90) {
-        component.value.imageOverlay.opacity = 90
+      if (component.value.overlay.opacity > 90) {
+        component.value.overlay.opacity = 90
       }
 
       if (headerVideoInput.value) {
@@ -205,8 +205,8 @@ async function deleteImage(image: 'logo' | 'header') {
         <div
           class="absolute inset-0 z-10"
           :style="{
-            backgroundColor: toHslString(component.imageOverlay.color),
-            opacity: component.imageOverlay.opacity / 100,
+            backgroundColor: toHslString(component.overlay.color),
+            opacity: component.overlay.opacity / 100,
           }"
           @click.stop="showUploadHeaderModal = true"
         />
@@ -256,11 +256,11 @@ async function deleteImage(image: 'logo' | 'header') {
         >
       </div>
       <div
-        v-if="$profile.settings.public.header.image || $profile.settings.public.company.logo"
+        v-if="component.image || component.logo"
         class="flex items-center justify-end gap-2"
       >
         <UButton
-          v-if="$profile.settings.public.company.logo"
+          v-if="component.logo"
           label="Logo entfernen"
           icon="i-heroicons-trash"
           variant="ghost"
@@ -269,7 +269,7 @@ async function deleteImage(image: 'logo' | 'header') {
           @click="deleteImage('logo')"
         />
         <UButton
-          v-if="$profile.settings.public.header.image"
+          v-if="component.image"
           label="Bild entfernen"
           icon="i-heroicons-trash"
           variant="ghost"
@@ -332,9 +332,9 @@ async function deleteImage(image: 'logo' | 'header') {
 
     <div class="flex gap-2">
       <HslPicker
-        v-model:h="component.imageOverlay.color.h"
-        v-model:s="component.imageOverlay.color.s"
-        v-model:l="component.imageOverlay.color.l"
+        v-model:h="component.overlay.color.h"
+        v-model:s="component.overlay.color.s"
+        v-model:l="component.overlay.color.l"
         label="Hintergrund"
       />
       <UFormField
@@ -342,7 +342,7 @@ async function deleteImage(image: 'logo' | 'header') {
         class="flex-1 pr-1"
       >
         <USlider
-          v-model="component.imageOverlay.opacity"
+          v-model="component.overlay.opacity"
           class="flex-1 mt-4"
         />
       </UFormField>

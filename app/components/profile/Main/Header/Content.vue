@@ -11,11 +11,11 @@ defineProps<{
     class="@container w-full flex flex-col items-center justify-center gap-2 max-w-xl mx-auto py-24 px-6 relative z-10"
   >
     <div
-      v-if="$profile.settings.public.company.logo"
+      v-if="component.logo"
     >
       <a href="/">
         <NuxtImg
-          :src="$profile.settings.public.company.logo"
+          :src="component.logo"
           alt="Logo"
           class="w-32 mb-4"
         />
