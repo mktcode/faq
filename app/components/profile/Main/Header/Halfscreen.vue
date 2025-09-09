@@ -10,13 +10,15 @@ defineProps<{
   <ProfileMainHeaderVideo
     v-if="component.video"
     class="h-[50vh]"
+    :component="component"
   >
-    <ProfileMainHeaderContent />
+    <ProfileMainHeaderContent :component="component" />
   </ProfileMainHeaderVideo>
   <ProfileMainHeaderImage
     v-else
     class="h-[50vh]"
+    :component="component"
   >
-    <ProfileMainHeaderContent />
+    <ProfileMainHeaderContent :component="component" />
   </ProfileMainHeaderImage>
 </template>

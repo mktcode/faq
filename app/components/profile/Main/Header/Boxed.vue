@@ -8,11 +8,17 @@ defineProps<{
 
 <template>
   <div class="max-w-5xl mx-auto pt-4 px-4 sm:pt-8 sm:px-8 overflow-hidden">
-    <ProfileMainHeaderVideo v-if="component.video">
-      <ProfileMainHeaderContent />
+    <ProfileMainHeaderVideo
+      v-if="component.video"
+      :component="component"
+    >
+      <ProfileMainHeaderContent :component="component" />
     </ProfileMainHeaderVideo>
-    <ProfileMainHeaderImage v-else>
-      <ProfileMainHeaderContent />
+    <ProfileMainHeaderImage
+      v-else
+      :component="component"
+    >
+      <ProfileMainHeaderContent :component="component" />
     </ProfileMainHeaderImage>
   </div>
 </template>

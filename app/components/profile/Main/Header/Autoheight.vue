@@ -7,10 +7,16 @@ defineProps<{
 </script>
 
 <template>
-  <ProfileMainHeaderVideo v-if="component.video">
-    <ProfileMainHeaderContent />
+  <ProfileMainHeaderVideo
+    v-if="component.video"
+    :component="component"
+  >
+    <ProfileMainHeaderContent :component="component" />
   </ProfileMainHeaderVideo>
-  <ProfileMainHeaderImage v-else>
-    <ProfileMainHeaderContent />
+  <ProfileMainHeaderImage
+    v-else
+    :component="component"
+  >
+    <ProfileMainHeaderContent :component="component" />
   </ProfileMainHeaderImage>
 </template>

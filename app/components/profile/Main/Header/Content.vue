@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import type { HeaderComponentSchema } from '~~/types/db';
+
+defineProps<{
+  component: HeaderComponentSchema;
+}>()
+</script>
+
 <template>
   <div
     class="@container w-full flex flex-col items-center justify-center gap-2 max-w-xl mx-auto py-24 px-6 relative z-10"
@@ -17,23 +25,22 @@
       <h1
         class="text-center text-shadow-lg font-bold mb-4 leading-none opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.5s_forwards]"
         :style="{
-          'color': toHslString($profile.settings.public.header.titleColor),
-          'font-size': ($profile.settings.public.header.titleFontSize || '10') + 'cqw',
+          'color': toHslString(component.titleColor),
+          'font-size': (component.titleFontSize || '10') + 'cqw',
         }"
       >
-        {{ $profile.settings.public.header.title }}
+        {{ component.title }}
       </h1>
     </a>
-    <p
-      v-if="$profile.settings.public.header.description"
+    <div
+      v-if="component.description"
       class="text-center leading-snug text-shadow-md mb-4 opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.8s_forwards]"
       :style="{
-        'color': toHslString($profile.settings.public.header.descriptionColor),
-        'font-size': ($profile.settings.public.header.descriptionFontSize || '6') + 'cqw',
+        'color': toHslString(component.descriptionColor),
+        'font-size': (component.descriptionFontSize || '6') + 'cqw',
       }"
-    >
-      {{ $profile.settings.public.header.description }}
-    </p>
+      v-html="component.description"
+    />
     <ProfileMainLinks />
   </div>
 </template>

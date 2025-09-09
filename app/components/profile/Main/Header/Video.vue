@@ -1,9 +1,17 @@
+<script setup lang="ts">
+import type { HeaderComponentSchema } from '~~/types/db';
+
+defineProps<{
+  component: HeaderComponentSchema;
+}>()
+</script>
+
 <template>
-  <ProfileMainHeaderBase>
+  <ProfileMainHeaderBase :component="component">
     <video
       class="absolute inset-0 z-0 w-full h-full object-cover object-center pointer-events-none"
-      :src="$profile.settings.public.header.video"
-      :poster="$profile.settings.public.header.image || undefined"
+      :src="component.video"
+      :poster="component.image || undefined"
       autoplay
       muted
       loop
