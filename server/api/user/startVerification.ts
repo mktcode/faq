@@ -7,6 +7,7 @@ const bodySchema = z.object({
     street: z.string().min(2).max(200),
     zip: z.string().min(2).max(20),
     city: z.string().min(2).max(100),
+    phone: z.string().min(5).max(20),
   }),
   subscription: z.enum(['S', 'L']),
 })
@@ -23,6 +24,8 @@ export default defineEventHandler(async (event) => {
   settings.public.company.street = company.street
   settings.public.company.zip = company.zip
   settings.public.company.city = company.city
+  settings.public.company.phone = company.phone
+  settings.public.company.email = email
 
   await db
     .updateTable('users')

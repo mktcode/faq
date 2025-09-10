@@ -127,10 +127,19 @@ const formFilled = computed(() => {
           />
         </UFormField>
       </div>
-      <p class="text-gray-600">
-        Geben Sie bitte eine bereits vorhandene E-Mail-Adresse an, z.B. @gmail.com oder @web.de. Wir senden Ihnen eine Bestätigungs-E-Mail zu, in der Sie einen Button "Abonnement abschließen" finden. Darüber gelangen Sie zu unserem Zahlungsdienstleister Stripe und können Ihre Zahlungsinformationen hinterlegen und das Abonnement abschließen.
-        Ihre monatliche Rechnung erhalten Sie an diese E-Mail-Adresse.
-      </p>
+      <UFormField label="Telefon">
+        <UInput
+          v-model="$profile.settings.public.company.phone"
+          placeholder="Geben Sie Ihre Telefonnummer an"
+          class="w-full"
+        />
+      </UFormField>
+      <UAlert
+        icon="i-heroicons-envelope"
+        title="E-Mail-Adresse für das Abonnement"
+        variant="soft"
+        description="Geben Sie bitte eine bereits vorhandene E-Mail-Adresse an, z.B. @gmail.com oder @web.de. Wir senden Ihnen eine Bestätigungs-E-Mail zu, in der Sie einen Button 'Abonnement abschließen' finden. Darüber gelangen Sie zu unserem Zahlungsdienstleister Stripe und können Ihre Zahlungsinformationen hinterlegen und das Abonnement abschließen. Ihre monatliche Rechnung erhalten Sie an diese E-Mail-Adresse."
+      />
       <UInput
         v-model="emailToVerify"
         label="E-Mail-Adresse"
