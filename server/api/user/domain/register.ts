@@ -6,6 +6,29 @@ const bodySchema = z.object({
   domain: z.string().regex(/^[a-z0-9-]{1,63}\.de$/, 'Invalid domain'),
 })
 
+const createCertWhenDomainReady = async (domain: string, retryCount: number = 0) => {
+  if (retryCount >= 20) { // Stop after 5 minutes (20 * 15s)
+    console.log(`Max retries reached for ${domain}. Giving up.`);
+    return;
+  }
+
+  console.log(`Checking domain status for ${domain}...`);
+
+  const { info, error } = await autodns.domainInfo(domain);
+
+  // Stop when there is an error
+  if (error) {
+    console.error('Error fetching domain info:', error);
+    return
+  }
+
+  if (info && info.status === 200) {
+    await hetzner.addNewCertToLoadBalancer(domain)
+  } else {
+    setTimeout(() => createCertWhenDomainReady(domain, retryCount + 1), 15_000);
+  }
+};
+
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
   const db = await getDatabaseConnection()
@@ -58,10 +81,8 @@ export default defineEventHandler(async (event) => {
     .set({ domain, domainIsExternal: false })
     .where('id', '=', user.id)
     .execute()
+
+  event.waitUntil(createCertWhenDomainReady(domain));
   
   return { error: null }
-
-
-  // // TODO: surely we need to wait a bit here
-  // await hetzner.addNewCertToLoadBalancer(domain)
 })
