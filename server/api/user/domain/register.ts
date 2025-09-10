@@ -14,13 +14,7 @@ const createCertWhenDomainReady = async (domain: string, retryCount: number = 0)
 
   console.log(`Checking domain status for ${domain}...`);
 
-  const { info, error } = await autodns.domainInfo(domain);
-
-  // Stop when there is an error
-  if (error) {
-    console.error('Error fetching domain info:', error);
-    return
-  }
+  const { info } = await autodns.domainInfo(domain);
 
   if (info && info.status === 200) {
     await hetzner.addNewCertToLoadBalancer(domain)
