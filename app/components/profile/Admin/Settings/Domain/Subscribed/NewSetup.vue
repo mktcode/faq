@@ -8,7 +8,7 @@ watchDebounced(newDomain, checkDomainAvailability, { debounce: 500 })
 
 const toast = useToast()
 
-const { $profile, updateProfile, isUpdatingProfile } = useProfile()
+const { $profile } = useProfile()
 
 // TODO: improve domain validation
 const isDomainValid = computed(() => /^[A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9]$/.test(newDomain.value)) // without tld!
@@ -17,7 +17,6 @@ const isAvailable = ref(false)
 const isTyping = ref(false)
 const customerHasConfirmedDomain = ref(false)
 const isRegisteringDomain = ref(false)
-const registeredSuccessfully = ref(false)
 
 async function checkDomainAvailability() {
   isAvailable.value = false
@@ -67,7 +66,6 @@ async function registerDomain() {
 
     $profile.domain = domainToRegister
     $profile.domainIsExternal = false
-    registeredSuccessfully.value = true
   }
   catch (error) {
     checkDomainAvailability()
@@ -94,7 +92,7 @@ async function registerDomain() {
           placeholder="ihre-domain"
           class="w-full"
           size="xxl"
-          :disabled="isCheckingDomain || isRegisteringDomain || registeredSuccessfully"
+          :disabled="isCheckingDomain || isRegisteringDomain"
         />
         <UBadge
           label=".de"
@@ -146,40 +144,11 @@ async function registerDomain() {
       :disabled="isRegisteringDomain"
     />
     <UButton
-      v-if="!isRegisteringDomain && !registeredSuccessfully"
+      v-if="!isRegisteringDomain"
       label="Domain registrieren"
       :disabled="!isDomainValid || isCheckingDomain || isRegisteringDomain || !isAvailable || !customerHasConfirmedDomain"
       :loading="isRegisteringDomain"
       @click="registerDomain"
     />
-    <Transition
-      name="fade"
-      mode="out-in"
-    >
-      <UAlert
-        v-if="isRegisteringDomain"
-        title="Domain wird registriert!"
-        icon="i-lucide-loader-2"
-        description="Das kann einen Moment dauern. Bitte schließen Sie dieses Fenster nicht."
-        color="primary"
-        close
-        :ui="{
-          close: 'text-white/50 hover:text-white active:text-white',
-          icon: 'animate-spin',
-        }"
-      />
-      <UAlert
-        v-else-if="!isRegisteringDomain && registeredSuccessfully"
-        title="Domain erfolgreich registriert!"
-        icon="i-heroicons-check"
-        :description="`Sie können Ihre Website jetzt über ${newDomain}.de erreichen. Ihre bisherige Subdomain ${$profile.username}.solohost.de leitet nun dorthin weiter.`"
-        color="primary"
-        close
-        :ui="{
-          close: 'text-white/50 hover:text-white active:text-white',
-        }"
-        @update:open="registeredSuccessfully = false"
-      />
-    </Transition>
   </div>
 </template>

@@ -16,9 +16,8 @@ watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce:
 
 <template>
   <p class="text-gray-500">
-    Ihre Website ist aktuell unter <strong>{{ $profile.username }}.solohost.de</strong> erreichbar.
     Wenn Sie bereits eine Domain besitzen, können Sie diese für Ihre Website bei uns nutzen.
-    Eine neue Domain und bis zu 3 E-Mail-Postfächer sind im <strong>Premium-Paket</strong> inklusive.
+    Eine neue Domain und bis zu 3 E-Mail-Postfächer sind in unseren <strong>Premium-Paketen</strong> inklusive.
   </p>
   <UCollapsible
     v-model:open="existingDomainSetupOpen"

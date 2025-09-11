@@ -22,7 +22,7 @@ watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce:
     }"
   >
     <UButton
-      :label="$profile.settings.private.domain ? 'Domain ändern' : 'Existierende Domain verbinden'"
+      :label="$profile.settings.private.domain ? 'Domain ändern' : 'Vorhandene Domain verbinden'"
       color="primary"
       variant="link"
       trailing-icon="i-heroicons-chevron-down"

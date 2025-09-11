@@ -2,11 +2,12 @@
   <ProfileAdminSettingsDomainSubscribedDetails v-if="$profile.domain" />
   <template v-else>
     <p class="text-gray-500">
-      Ihre Website ist aktuell unter <strong>{{ $profile.username }}.solohost.de</strong> erreichbar.
-      Wenn Sie bereits eine Domain besitzen, können Sie diese für Ihre Website bei uns nutzen.
-      Ansonsten können Sie jetzt eine neue Domain registrieren, die dann auch automatisch richtig konfiguriert ist.
+      Wenn Sie bereits eine eigene Domain besitzen, können Sie diese für Ihre Website und E-Mail-Postfächer bei uns nutzen.
+    </p>
+    <ProfileAdminSettingsDomainSubscribedExistingSetup />
+    <p class="text-gray-500">
+      Alternativ können Sie eine neue Domain direkt über uns registrieren.
     </p>
     <ProfileAdminSettingsDomainSubscribedNewSetup />
-    <ProfileAdminSettingsDomainSubscribedExistingSetup />
   </template>
 </template>

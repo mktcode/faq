@@ -87,6 +87,13 @@ function selectSubscription(plan: 'S' | 'L') {
           name="i-heroicons-check"
           class="text-green-600"
         />
+        2 weitere E-Mail-Postfächer
+      </div>
+      <div>
+        <UIcon
+          name="i-heroicons-check"
+          class="text-green-600"
+        />
         priorisierter IT-Support
       </div>
       <div>
@@ -108,7 +115,7 @@ function selectSubscription(plan: 'S' | 'L') {
           name="i-heroicons-check"
           class="text-green-600"
         />
-        monatlich kündbar oder zurück auf Premium
+        monatlich kündbar oder zurück auf Paket S
       </div>
     </div>
   </div>
