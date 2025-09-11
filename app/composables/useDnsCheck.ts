@@ -7,6 +7,9 @@ export default function useDnsCheck() {
     if (isCheckingDns.value) return
     isCheckingDns.value = true
 
+    // sleep for UX purposes
+    await new Promise(resolve => setTimeout(resolve, 500))
+
     domain = domain.replace(/^https?:\/\//, '').replace(/^www\./, '')
     const result = await $fetch('/api/user/domain/checkDns', {
       method: 'POST',

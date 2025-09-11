@@ -109,6 +109,8 @@ async function signOut() {
 
       <ProfileAdminSettingsCompany />
       <ProfileAdminSettingsDomain />
+      <ProfileAdminSettingsDomainConnect />
+      <ProfileAdminSettingsDomainRegister />
       <ProfileAdminSettingsEmail />
       <ProfileAdminSettingsSubscription />
       <ProfileAdminSettingsConnectDevice />

@@ -15,8 +15,10 @@ defineProps<{
     variant="soft"
     :actions="[{
       label: 'DNS-Einstellungen überprüfen',
+      icon: 'i-heroicons-arrow-path',
       onClick: () => $emit('checkDns'),
       color: 'error',
+      size: 'xl',
       loading: isCheckingDns,
     }]"
   />

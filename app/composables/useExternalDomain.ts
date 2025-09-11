@@ -1,8 +1,8 @@
 export default function useExternalDDomain() {
   const { $profile } = useProfile()
+  const { go } = useAdmin()
 
   const isUpdatingDomain = ref(false)
-  const domainConnectedSuccessfully = ref(false)
 
   async function updateDomain(domain: string) {
     if (isUpdatingDomain.value) return
@@ -16,11 +16,10 @@ export default function useExternalDDomain() {
   
       $profile.domain = domain
       $profile.domainIsExternal = true
-      domainConnectedSuccessfully.value = true
+      go('#settings/domain')
     }
     catch (error) {
       console.error('Error updating external domain:', error)
-      domainConnectedSuccessfully.value = false
     }
     finally {
       isUpdatingDomain.value = false
@@ -29,7 +28,6 @@ export default function useExternalDDomain() {
 
   return {
     isUpdatingDomain,
-    domainConnectedSuccessfully,
     updateDomain,
   }
 }

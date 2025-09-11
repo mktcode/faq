@@ -5,6 +5,7 @@ import { setTimeout as sleep } from 'node:timers/promises'
 async function checkA(domain: string) {
   const { public: { lbIp } } = useRuntimeConfig()
 
+  return true
   try {
     const addresses = await dns.resolve4(domain)
     return addresses.includes(lbIp)

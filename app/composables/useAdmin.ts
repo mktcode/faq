@@ -5,7 +5,10 @@ export default function useAdmin() {
 
   const showMainSettings = computed(() => router.currentRoute.value.hash.startsWith('#settings'))
   const showCompanySettings = computed(() => router.currentRoute.value.hash === '#settings/company')
-  const showDomainSettings = computed(() => router.currentRoute.value.hash === '#settings/domain')
+  const showDomainSettings = computed(() => router.currentRoute.value.hash.startsWith('#settings/domain'))
+  const showDomainConnect = computed(() => router.currentRoute.value.hash === '#settings/domain/connect')
+  const showDomainRegister = computed(() => router.currentRoute.value.hash === '#settings/domain/register')
+
   const showEmailSettings = computed(() => router.currentRoute.value.hash === '#settings/email')
   const showSubscriptionSettings = computed(() => router.currentRoute.value.hash.startsWith('#settings/subscription'))
   const showSubscriptionVerification = computed(() => router.currentRoute.value.hash === '#settings/subscription/verification')
@@ -60,6 +63,8 @@ export default function useAdmin() {
     showMainSettings,
     showCompanySettings,
     showDomainSettings,
+    showDomainConnect,
+    showDomainRegister,
     showEmailSettings,
     showSubscriptionSettings,
     showSubscriptionVerification,
