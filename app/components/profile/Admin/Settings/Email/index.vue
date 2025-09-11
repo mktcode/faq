@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const { data: domainInfo } = await useFetch('/api/user/domain/info')
 const { showEmailSettings, go } = useAdmin()
 </script>
 
@@ -31,7 +30,7 @@ const { showEmailSettings, go } = useAdmin()
 
     <template #body>
       <UAlert
-        v-if="!domainInfo.domainIsActive"
+        v-if="!$profile.domain"
         title="Domain erforderlich"
         description="Bitte verbinden Sie eine Domain, um E-Mail-Adressen zu erstellen."
         icon="i-heroicons-globe-alt"

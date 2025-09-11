@@ -20,7 +20,7 @@ const mailboxNamesIsValid = computed(() => {
 })
 
 function generatePassword() {
-  const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+'
+  const charset = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789!#%'
   const passwordLength = 16
   let password = ''
   for (let i = 0; i < passwordLength; i++) {
@@ -133,7 +133,7 @@ const open = ref(false)
         <USwitch
           v-if="mailboxNamesIsValid"
           v-model="emailAddressesConfirmed"
-          :label="`Ja, ich möchte die E-Mail-Adresse ${newMailbox.name}@$${$profile.domain} anlegen.`"
+          :label="`Ja, ich möchte die E-Mail-Adresse ${newMailbox.name}@${$profile.domain} anlegen.`"
           :disabled="isCreatingEmailAddresses"
         />
         <UButton
