@@ -8,5 +8,5 @@ export default defineEventHandler(async (event) => {
     .where('id', '=', user.id)
     .executeTakeFirstOrThrow()
 
-  return { domainIsActive: !(domain && domainContactId) }
+  return { domainIsActive: !!(domain && domainContactId) }
 })

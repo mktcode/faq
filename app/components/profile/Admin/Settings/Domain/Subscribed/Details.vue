@@ -1,10 +1,11 @@
 <script setup lang="ts">
-const { data: domainIsActive } = await useFetch('/api/user/domain/info')
+const { data: info } = await useFetch('/api/user/domain/info')
+const { go } = useAdmin()
 </script>
 
 <template>
   <UAlert
-    v-if="domainIsActive"
+    v-if="info.domainIsActive"
     title="Domain verbunden"
     icon="i-lucide-check"
   >
@@ -14,23 +15,29 @@ const { data: domainIsActive } = await useFetch('/api/user/domain/info')
   </UAlert>
   <UAlert
     v-else
-    title="Domain wird verbunden"
+    title="Domain wird registriert"
     icon="i-lucide-loader-2"
     :ui="{
       icon: 'animate-spin',
     }"
   >
     <template #description>
-      Ihre Domain <strong>{{ $profile.domain }}</strong> wird gerade verbunden. Haben Sie bitte noch einen Moment Geduld.
+      Ihre Domain <strong>{{ $profile.domain }}</strong> befindet sich im Registrierungsprozess. Dies kann bis zu 24 Stunden dauern.
     </template>
   </UAlert>
   <UAlert
     title="Fragen zur Domainverwaltung?"
     variant="soft"
-    icon="i-lucide-headset"
-  >
-    <template #description>
-      Sie können uns jederzeit unter <strong>support@solohost.de</strong> oder über den Live-Chat unten rechts auf Ihrer Website erreichen.
-    </template>
-  </UAlert>
+    :actions="[
+      {
+        label: 'Support kontaktieren',
+        icon: 'i-lucide-headset',
+        size: 'xl',
+        class: 'w-full',
+        onClick: () => {
+          go('#support')
+        },
+      }
+    ]"
+  />
 </template>
