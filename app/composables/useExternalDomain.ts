@@ -8,19 +8,23 @@ export default function useExternalDDomain() {
     if (isUpdatingDomain.value) return
     isUpdatingDomain.value = true
 
-    // TODO: catch errors in all these situations
-    const { success } = await $fetch('/api/user/updateExternalDomain', {
-      method: 'POST',
-      body: { domain },
-    })
-
-    if (success) {
+    try {
+      await $fetch('/api/user/updateExternalDomain', {
+        method: 'POST',
+        body: { domain },
+      })
+  
       $profile.domain = domain
       $profile.domainIsExternal = true
       domainConnectedSuccessfully.value = true
     }
-
-    isUpdatingDomain.value = false
+    catch (error) {
+      console.error('Error updating external domain:', error)
+      domainConnectedSuccessfully.value = false
+    }
+    finally {
+      isUpdatingDomain.value = false
+    }
   }
 
   return {

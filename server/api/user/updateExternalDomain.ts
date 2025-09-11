@@ -20,5 +20,5 @@ export default defineEventHandler(async (event) => {
     .where('id', '=', user.id)
     .execute()
 
-  return { success: true }
+  setResponseStatus(event, 204)
 })

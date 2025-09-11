@@ -60,28 +60,17 @@ async function registerDomain() {
   const domainToRegister = newDomain.value + '.de'
 
   try {
-    const { error } = await $fetch('/api/user/domain/register', {
+    await $fetch('/api/user/domain/register', {
       method: 'POST',
       body: { domain: domainToRegister },
     })
 
-    if (!error) {
-      $profile.domain = domainToRegister
-      $profile.domainIsExternal = false
-      registeredSuccessfully.value = true
-    } else {
-      console.error(error)
-      toast.add({
-        title: 'Fehler bei der Registrierung',
-        icon: 'i-heroicons-exclamation-circle',
-        description: `Die Domain konnte nicht registriert werden.`,
-        color: 'error',
-        progress: false,
-      })
-    }
-
+    $profile.domain = domainToRegister
+    $profile.domainIsExternal = false
+    registeredSuccessfully.value = true
   }
   catch (error) {
+    checkDomainAvailability()
     toast.add({
       title: 'Unbekannter Fehler',
       icon: 'i-heroicons-exclamation-circle',
@@ -105,7 +94,7 @@ async function registerDomain() {
           placeholder="ihre-domain"
           class="w-full"
           size="xxl"
-          :disabled="isCheckingDomain || isRegisteringDomain || registeredSuccessfully || !$profile.subscription.paid"
+          :disabled="isCheckingDomain || isRegisteringDomain || registeredSuccessfully"
         />
         <UBadge
           label=".de"
@@ -161,7 +150,7 @@ async function registerDomain() {
         v-if="!$profile.subscription.paid"
         title="Zahlung ausstehend"
         icon="i-heroicons-exclamation-triangle"
-        description="Ihre erste Abonnement-Zahlung ist noch nicht bestätigt. Während andere Funktionen Ihnen bereits zur Verfügung stehen, können Domainregistrierungen erst nach erfolgreichem Zahlungseingang durchgeführt werden. Haben Sie per SEPA-Lastschriftverfahren bezahlt, kann dies mehrere Tage dauern."
+        description="Ihre erste Abonnement-Zahlung ist noch nicht bestätigt. Sie können eine Domain vormerken, aber die Registrierung findet erst nach Zahlungseingang statt. Haben Sie per SEPA-Lastschriftverfahren bezahlt, kann dies mehrere Tage dauern."
         :actions="[
           {
             label: 'Status prüfen',
@@ -176,9 +165,9 @@ async function registerDomain() {
       />
     </Transition>
     <UButton
-      v-if="$profile.subscription.paid && !isRegisteringDomain && !registeredSuccessfully"
+      v-if="!isRegisteringDomain && !registeredSuccessfully"
       label="Domain registrieren"
-      :disabled="!isDomainValid || isCheckingDomain || isRegisteringDomain || !isAvailable || !customerHasConfirmedDomain || !$profile.subscription.paid"
+      :disabled="!isDomainValid || isCheckingDomain || isRegisteringDomain || !isAvailable || !customerHasConfirmedDomain"
       :loading="isRegisteringDomain"
       @click="registerDomain"
     />
