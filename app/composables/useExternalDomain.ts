@@ -9,7 +9,7 @@ export default function useExternalDDomain() {
     isUpdatingDomain.value = true
 
     try {
-      await $fetch('/api/user/updateExternalDomain', {
+      await $fetch('/api/user/domain/updateExternal', {
         method: 'POST',
         body: { domain },
       })

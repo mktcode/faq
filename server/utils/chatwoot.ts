@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import type { WootContactCreated } from '~~/types/chatwoot'
+import type { WootContactCreated, WootConversation } from '~~/types/chatwoot'
 
 const apiUrl = 'https://chat.markus-kottlaender.de'
 
@@ -20,7 +20,6 @@ async function createContact(userId: number, name: string) {
       name,
       custom_attributes: {
         userId,
-        subscription: null, // TODO: update when subscription changes
       },
     },
   })
@@ -35,6 +34,65 @@ async function createContact(userId: number, name: string) {
   return contact
 }
 
+async function listConversations(sourceId: string) {
+  const { chatwootInboxId } = useRuntimeConfig()
+
+  return await $fetch<WootConversation[]>(`${apiUrl}/public/api/v1/inboxes/${chatwootInboxId}/contacts/${sourceId}/conversations`)
+}
+
+async function startConversation(sourceId: string, message: string) {
+  const { chatwootInboxId } = useRuntimeConfig()
+
+  const newConversation = await $fetch<WootConversation>(`${apiUrl}/public/api/v1/inboxes/${chatwootInboxId}/contacts/${sourceId}/conversations`, {
+    method: 'POST',
+  })
+
+  await $fetch<WootConversation>(`${apiUrl}/public/api/v1/inboxes/${chatwootInboxId}/contacts/${sourceId}/conversations/${newConversation.id}/messages`, {
+    method: 'POST',
+    body: {
+      content: message,
+      echo_id: newConversation.id,
+    },
+  })
+
+  return newConversation
+}
+
+async function deleteConversation(id: string) {
+  const { chatwootApiKey } = useRuntimeConfig()
+
+  await $fetch<WootConversation>(`${apiUrl}/api/v1/accounts/1/conversations/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'api_access_token': chatwootApiKey,
+    },
+  })
+}
+
+async function getConversation(id: string, sourceId: string) {
+  const { chatwootInboxId } = useRuntimeConfig()
+
+  return await $fetch<WootConversation>(`${apiUrl}/public/api/v1/inboxes/${chatwootInboxId}/contacts/${sourceId}/conversations/${id}`)
+}
+
+async function addMessage(conversationId: string, sourceId: string, message: string) {
+  const { chatwootInboxId } = useRuntimeConfig()
+
+  await $fetch<WootConversation>(`${apiUrl}/public/api/v1/inboxes/${chatwootInboxId}/contacts/${sourceId}/conversations/${conversationId}/messages`, {
+    method: 'POST',
+    body: {
+      content: message,
+      echo_id: conversationId,
+    },
+  })
+}
+
 export const chatwoot = {
   createContact,
+  listConversations,
+  startConversation,
+  deleteConversation,
+  getConversation,
+  addMessage,
 }

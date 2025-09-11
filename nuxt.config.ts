@@ -42,15 +42,6 @@ export default defineNuxtConfig({
     stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
     stripePriceSId: process.env.STRIPE_PRICE_S_ID,
     stripePriceLId: process.env.STRIPE_PRICE_L_ID,
-    hetznerApiKey: process.env.HETZNER_API_KEY,
-    autodnsApiContext: process.env.AUTODNS_API_CONTEXT,
-    autodnsApiUrl: process.env.AUTODNS_API_URL,
-    autodnsApiUser: process.env.AUTODNS_API_USER,
-    autodnsApiPass: process.env.AUTODNS_API_PASS,
-    autodnsNs1: process.env.AUTODNS_NS_1,
-    autodnsNs2: process.env.AUTODNS_NS_2,
-    qboxmailApiUrl: process.env.QBOXMAIL_API_URL,
-    qboxmailApiKey: process.env.QBOXMAIL_API_KEY,
     chatwootInboxId: process.env.CHATWOOT_INBOX_ID,
     chatwootHmacSecret: process.env.CHATWOOT_HMAC_SECRET,
     chatwootApiKey: process.env.CHATWOOT_API_KEY,
@@ -91,14 +82,6 @@ export default defineNuxtConfig({
     https: {
       key: '.localcert/solohost.local+1-key.pem',
       cert: '.localcert/solohost.local+1.pem',
-    },
-  },
-  nitro: {
-    experimental: {
-      tasks: true
-    },
-    scheduledTasks: {
-      '* * * * *': ['confirmDomainContacts'],
     },
   },
   compatibilityDate: '2024-11-01',

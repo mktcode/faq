@@ -8,7 +8,7 @@ export default function useDnsCheck() {
     isCheckingDns.value = true
 
     domain = domain.replace(/^https?:\/\//, '').replace(/^www\./, '')
-    const result = await $fetch('/api/domain/checkDns', {
+    const result = await $fetch('/api/user/domain/checkDns', {
       method: 'POST',
       body: { domain },
     })

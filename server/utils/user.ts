@@ -54,32 +54,7 @@ export async function createUser({
     .where('id', '=', newUserId)
     .executeTakeFirstOrThrow()
 
-  const customerRequestInsertResult = await db
-    .insertInto('customerRequests')
-    .values({
-      userId: newUserId,
-      uuid: crypto.randomUUID(),
-      name: 'Solohost',
-      email: 'support@solohost.de',
-      phone: '0176 70 86 46 27',
-      status: 'pending',
-    })
-    .executeTakeFirstOrThrow()
-
-  if (!customerRequestInsertResult.insertId) {
-    throw new Error('Failed to insert customer request')
-  }
-
-  const newCustomerRequestId = Number(customerRequestInsertResult.insertId.toString())
-
-  await db
-    .insertInto('messages')
-    .values({
-      customerRequestId: newCustomerRequestId,
-      body: 'Willkommen bei Solohost! Wir freuen uns, dass Sie sich für unsere Plattform entschieden haben. Bei Fragen oder Anliegen können Sie uns jederzeit kontaktieren.',
-      isCustomer: true,
-    })
-    .execute()
+  await chatwoot.createContact(newUser.id, newUser.userName)
 
   return newUser
 }

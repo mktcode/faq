@@ -16,7 +16,7 @@ const selectedTime = ref<string>()
 const selectedRemote = ref(false)
 const notes = ref('')
 
-const { data: supportBookings, refresh: refreshSupportBookings } = await useFetch('/api/supportBookings')
+const { data: supportBookings, refresh: refreshSupportBookings } = await useFetch('/api/user/supportBookings/all')
 const { data: userSupportBookings, refresh: refreshUserSupportBookings } = await useFetch(`/api/user/supportBookings`)
 
 function isDateDisabled(date: DateValue) {

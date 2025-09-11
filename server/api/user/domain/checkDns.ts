@@ -5,10 +5,10 @@ const inputSchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
+  await requireUserSession(event)
   const { domain } = await readValidatedBody(event, body => inputSchema.parse(body))
 
-  const isACorrect = await checkDomainA(domain)
-  const isMxCorrect = await checkDomainMx(domain, `mail.solohost.de`)
+  const isACorrect = await domainUtils.checkA(domain)
 
-  return { isACorrect, isMxCorrect }
+  return { isACorrect }
 })

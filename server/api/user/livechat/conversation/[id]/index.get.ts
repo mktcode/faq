@@ -1,13 +1,16 @@
-import type { WootConversation } from '~~/types/chatwoot'
-
-const apiUrl = 'https://chat.markus-kottlaender.de'
-
 export default defineEventHandler(async (event) => {
   const me = await requireMe(event)
   const id = getRouterParam(event, 'id')
-  const { chatwootInboxId } = useRuntimeConfig()
+  
+  if (!me.chatwootSourceId) {
+    throw createError({ statusCode: 400, statusMessage: 'No Chatwoot contact associated with this user' })
+  }
 
-  const conversation = await $fetch<WootConversation>(`${apiUrl}/public/api/v1/inboxes/${chatwootInboxId}/contacts/${me.chatwootSourceId}/conversations/${id}`)
+  if (!id) {
+    throw createError({ statusCode: 400, statusMessage: 'No conversation ID provided' })
+  }
+
+  const conversation = await chatwoot.getConversation(id, me.chatwootSourceId)
 
   return { conversation }
 })

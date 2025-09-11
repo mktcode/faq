@@ -95,12 +95,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('id', 'integer', col => col.primaryKey().autoIncrement())
     .addColumn('taskName', 'varchar(100)', col => col.notNull().unique())
     .addColumn('lastRunAt', 'timestamp', col => col.notNull())
-    .execute()
-  
-  await db.insertInto('taskRotation').values([
-    { taskName: 'confirmDomainContacts', lastRunAt: new Date() },
-  ]).execute()
-    
+    .execute() 
 }
 
 export async function down(db: Kysely<any>): Promise<void> {
@@ -112,6 +107,5 @@ export async function down(db: Kysely<any>): Promise<void> {
   await db.schema.dropTable('customerRequests').execute()
   await db.schema.dropTable('messages').execute()
   await db.schema.dropTable('supportBookings').execute()
-  await db.schema.dropTable('taskRotation').execute()
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */

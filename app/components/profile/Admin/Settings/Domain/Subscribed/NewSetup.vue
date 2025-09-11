@@ -28,7 +28,7 @@ async function checkDomainAvailability() {
   isCheckingDomain.value = true
 
   try {
-    const checkResult = await $fetch('/api/user/checkDomainAvailability', {
+    const checkResult = await $fetch('/api/user/domain/checkAvailability', {
       method: 'POST',
       body: { domain: newDomain.value + '.de' },
     })

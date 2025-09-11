@@ -1,33 +1,37 @@
 import { z } from 'zod'
+import { WootConversation } from '~~/types/chatwoot'
 
-// allow only .de domains
+const onlyDeDomainSchema = z.string().regex(/^[a-z0-9-]{1,63}\.de$/, 'Invalid domain')
 const bodySchema = z.object({
-  // TODO: improve domain validation
-  domain: z.string().regex(/^[a-z0-9-]{1,63}\.de$/, 'Invalid domain'),
+  domain: onlyDeDomainSchema,
+  mailboxes: z.array(z.string()),
 })
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const me = await requireMe(event)
+
+  if (!me.chatwootSourceId) {
+    throw createError({ statusCode: 400, statusMessage: 'No chatwoot source ID set' })
+  }
+
   const db = await getDatabaseConnection()
-  const { domain } = await readValidatedBody(event, body => bodySchema.parse(body))
+  const { domain, mailboxes } = await readValidatedBody(event, body => bodySchema.parse(body))
 
-  const currentDomainInfo = await db
-    .selectFrom('users')
-    .select(['domain', 'domainContactId'])
-    .where('id', '=', user.id)
-    .executeTakeFirstOrThrow()
-
-  if (currentDomainInfo.domain) {
+  if (me.domain) {
     throw createError({ statusCode: 409, statusMessage: 'A domain is already set.' })
   }
 
-  await requireDomainAvailability(domain)
+  await domainUtils.requireAvailability(domain)
 
   await db
     .updateTable('users')
     .set({ domain, domainIsExternal: false })
-    .where('id', '=', user.id)
+    .where('id', '=', me.id)
     .execute()
   
+  const supportMessage = `Domainregistrierung: ${domain}\n\nMailboxes:\n${mailboxes.map(mb => `- ${mb}`).join('\n')}`
+
+  await chatwoot.startConversation(me.chatwootSourceId, supportMessage)
+
   setResponseStatus(event, 204)
 })
