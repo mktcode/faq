@@ -373,7 +373,7 @@ export const defaultSettings = (): SettingsForm => ({
             id: 1,
             key: 'header',
             title: 'Herzlich Willkommen',
-            showTitle: false,
+            showTitle: true,
             description: 'Auf Ihrer neuen Website von Solohost.de',
             visible: true,
             order: 1,
