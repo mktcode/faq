@@ -93,6 +93,14 @@ export default defineNuxtConfig({
       cert: '.localcert/solohost.local+1.pem',
     },
   },
+  nitro: {
+    experimental: {
+      tasks: true
+    },
+    scheduledTasks: {
+      '* * * * *': ['confirmDomainContacts'],
+    },
+  },
   compatibilityDate: '2024-11-01',
   vite: {
     server: {
