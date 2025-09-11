@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
   const conversation = await chatwoot.getConversation(id, me.chatwootSourceId)
 
   if (conversation.contact.custom_attributes.userId === me.id) {
-    chatwoot.deleteConversation(conversation.id.toString())
+    await chatwoot.deleteConversation(conversation.id.toString())
 
     return { success: true }
   }

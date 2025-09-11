@@ -16,10 +16,6 @@ const { go } = useAdmin()
   <UAlert
     v-else
     title="Domain wird registriert"
-    icon="i-lucide-loader-2"
-    :ui="{
-      icon: 'animate-spin',
-    }"
   >
     <template #description>
       Ihre Domain <strong>{{ $profile.domain }}</strong> befindet sich im Registrierungsprozess. Dies kann bis zu 24 Stunden dauern.

@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'No chatwoot source ID set' })
   }
 
-  const conversations = chatwoot.listConversations(me.chatwootSourceId)
+  const conversations = await chatwoot.listConversations(me.chatwootSourceId)
 
   return { conversations }
 })

@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { WootConversation } from '~~/types/chatwoot'
 
 const onlyDeDomainSchema = z.string().regex(/^[a-z0-9-]{1,63}\.de$/, 'Invalid domain')
 const bodySchema = z.object({
@@ -10,6 +9,10 @@ const bodySchema = z.object({
 export default defineEventHandler(async (event) => {
   const me = await requireMe(event)
 
+  if (me.domain) {
+    throw createError({ statusCode: 409, statusMessage: 'A domain is already set.' })
+  }
+
   if (!me.chatwootSourceId) {
     throw createError({ statusCode: 400, statusMessage: 'No chatwoot source ID set' })
   }
@@ -17,19 +20,15 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
   const { domain, mailboxes } = await readValidatedBody(event, body => bodySchema.parse(body))
 
-  if (me.domain) {
-    throw createError({ statusCode: 409, statusMessage: 'A domain is already set.' })
-  }
-
   await domainUtils.requireAvailability(domain)
 
   await db
     .updateTable('users')
-    .set({ domain, domainIsExternal: false })
+    .set({ domain, domainIsExternal: false, mailboxes: JSON.stringify(mailboxes) })
     .where('id', '=', me.id)
     .execute()
-  
-  const supportMessage = `Domainregistrierung: ${domain}\n\nMailboxes:\n${mailboxes.map(mb => `- ${mb}`).join('\n')}`
+
+  const supportMessage = `Domainregistrierung: ${domain}\nPostfächer:\n${mailboxes.length ? mailboxes.map(mb => `- ${mb}`).join('\n') : 'keine'}`
 
   await chatwoot.startConversation(me.chatwootSourceId, supportMessage)
 

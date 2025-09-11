@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { WootConversation } from '~~/types/chatwoot'
-import ConversationListItem from './ConversationListItem.vue'
 
 const { showSupportLiveChat, showSupportLiveChatConversation, go } = useAdmin()
 const router = useRouter()
@@ -63,13 +62,6 @@ watch(showSupportLiveChatConversation, (newValue, oldValue) => {
     fetchConversations()
   }
 })
-
-function renderDate(dateString: string | undefined) {
-  if (!dateString) return ''
-
-  const date = new Date(dateString)
-  return date.toLocaleString('de-DE', { dateStyle: 'short', timeStyle: 'short' })
-}
 </script>
 
 <template>

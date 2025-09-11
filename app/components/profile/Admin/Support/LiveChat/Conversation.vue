@@ -158,7 +158,9 @@ onBeforeUnmount(() => {
             <div class="text-sm opacity-70 mb-1">
               {{ message.sender.type === 'contact' ? 'Sie' : 'Support' }} - {{ new Date(message.created_at * 1000).toLocaleString('de-DE', { dateStyle: 'short', timeStyle: 'short' }) }}
             </div>
-            {{ message.content }}
+            <div class="whitespace-pre-line">
+              {{ message.content }}
+            </div>
           </div>
         </TransitionGroup>
       </template>

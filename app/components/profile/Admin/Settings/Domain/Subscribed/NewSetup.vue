@@ -62,7 +62,7 @@ async function registerDomain() {
   try {
     await $fetch('/api/user/domain/register', {
       method: 'POST',
-      body: { domain: domainToRegister },
+      body: { domain: domainToRegister, mailboxes: [] },
     })
 
     $profile.domain = domainToRegister
@@ -145,25 +145,6 @@ async function registerDomain() {
       label="Ja, ich möchte diese Domain registrieren und mit meiner Solohost-Website verbinden."
       :disabled="isRegisteringDomain"
     />
-    <Transition name="fade">
-      <UAlert
-        v-if="!$profile.subscription.paid"
-        title="Zahlung ausstehend"
-        icon="i-heroicons-exclamation-triangle"
-        description="Ihre erste Abonnement-Zahlung ist noch nicht bestätigt. Sie können eine Domain vormerken, aber die Registrierung findet erst nach Zahlungseingang statt. Haben Sie per SEPA-Lastschriftverfahren bezahlt, kann dies mehrere Tage dauern."
-        :actions="[
-          {
-            label: 'Status prüfen',
-            color: 'neutral',
-            variant: 'soft',
-            size: 'lg',
-            block: true,
-            loading: isUpdatingProfile,
-            onClick: updateProfile,
-          },
-        ]"
-      />
-    </Transition>
     <UButton
       v-if="!isRegisteringDomain && !registeredSuccessfully"
       label="Domain registrieren"
