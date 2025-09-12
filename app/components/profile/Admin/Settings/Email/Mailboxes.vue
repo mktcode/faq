@@ -21,6 +21,7 @@ const hasFreeMailboxSlots = computed(() => {
       />
     </TransitionGroup>
     <UButton
+      v-if="hasFreeMailboxSlots"
       label="Neues Postfach anlegen"
       icon="i-heroicons-plus"
       class="w-full rounded-none p-4 border-b border-gray-200"

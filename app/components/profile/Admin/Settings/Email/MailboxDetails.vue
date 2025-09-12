@@ -34,7 +34,7 @@ const open = ref(false)
       <UButton
         label="zum Postfach"
         trailing-icon="i-heroicons-arrow-top-right-on-square"
-        to="https://webmail.qboxmail.com"
+        to="https://login.mailbox.org/"
         target="_blank"
         :ui="{
           trailingIcon: 'ml-auto opacity-50',
@@ -62,7 +62,7 @@ const open = ref(false)
               </tr>
               <tr>
                 <td>Mailserver</td>
-                <td class="text-right">m01.qboxmail.com</td>
+                <td class="text-right">mailbox.org</td>
               </tr>
             </tbody>
           </table>
@@ -72,10 +72,10 @@ const open = ref(false)
       <UAlert
         title="Benötigen Sie Hilfe?"
         variant="soft"
-        icon="i-lucide-headset"
         :actions="[
           {
             label: 'Support kontaktieren',
+            icon: 'i-lucide-headset',
             to: '#support',
             size: 'lg',
           },
@@ -85,12 +85,6 @@ const open = ref(false)
           Möchten Sie z.B. ein externes E-Mail-Programm einrichten oder haben Sie sonstige Fragen?
         </template>
       </UAlert>
-      <UButton
-        label="Postfach löschen"
-        color="error"
-        variant="soft"
-        icon="i-heroicons-trash"
-      />
     </template>
   </UCollapsible>
 </template>

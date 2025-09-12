@@ -144,7 +144,7 @@ onMounted(() => {
             placeholder="Passwort zur Bestätigung eingeben"
             class="w-full"
             size="xl"
-            @paste.prevent
+            
           />
           <UBadge
             v-if="passwordConfirmationInput !== ''"
