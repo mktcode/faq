@@ -2,6 +2,7 @@
 import { useClipboard } from '@vueuse/core'
 
 const { $profile } = useProfile()
+const { showEmailNew, go } = useAdmin()
 const { copy: copyPassword, copied: copiedPassword } = useClipboard()
 
 // TODO: add validation
@@ -10,11 +11,13 @@ const newMailbox = ref<{ name: string, password: string }>({
   password: '',
 })
 
-const emailAddressesConfirmed = ref(false)
 const isCreatingEmailAddresses = ref(false)
 const passwordBackupConfirmed = ref(false)
 
-const mailboxNamesIsValid = computed(() => {
+const passwordConfirmationInput = ref('')
+const passwordConfirmed = computed(() => passwordConfirmationInput.value === newMailbox.value.password)
+
+const mailboxNameIsValid = computed(() => {
   const emailRegex = /^[a-zA-Z0-9._-]+$/
   return newMailbox.value.name.trim() !== '' && emailRegex.test(newMailbox.value.name.trim())
 })
@@ -36,55 +39,55 @@ async function createEmailAddresses() {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2000))
     $profile.mailboxes.push(newMailbox.value.name.trim())
+    passwordBackupConfirmed.value = false
+    passwordConfirmationInput.value = ''
+    newMailbox.value = {
+      name: '',
+      password: generatePassword(),
+    }
+    go('#settings/email')
   }
   catch (error) {
     console.error('Error creating email addresses:', error)
   }
   finally {
-    emailAddressesConfirmed.value = false
     isCreatingEmailAddresses.value = false
-    passwordBackupConfirmed.value = false
-    newMailbox.value = {
-      name: '',
-      password: generatePassword(),
-    }
   }
 }
 
 onMounted(() => {
   newMailbox.value.password = generatePassword()
 })
-
-const open = ref(false)
 </script>
 
 <template>
-  <UCollapsible
-    v-model:open="open"
-    class="flex flex-col gap-2"
+  <USlideover
+    :open="showEmailNew"
+    side="left"
+    close-icon="i-heroicons-arrow-left"
+    :overlay="false"
     :ui="{
-      root: 'border-b border-gray-200',
-      content: 'flex flex-col gap-2 p-2',
+      body: '!p-0',
+    }"
+    :close="{
+      size: 'md',
+      onClick: () => {
+        go('#settings/email')
+      },
     }"
   >
-    <template #default>
-      <div class="flex items-center">
-        <UButton
-          label="Neues Postfach anlegen"
-          icon="i-heroicons-plus"
-          class="w-full rounded-none p-4"
-          variant="ghost"
-          color="neutral"
-          trailing-icon="i-heroicons-chevron-down"
-          :ui="{
-            trailingIcon: `ml-auto transition-transform ${open ? 'rotate-180' : ''}`,
-          }"
+    <template #title>
+      <h3 class="text-lg font-semibold flex items-center gap-2">
+        <UIcon
+          name="i-heroicons-envelope"
+          class="inline-block size-6 opacity-50"
         />
-      </div>
+        Neues Postfach anlegen
+      </h3>
     </template>
 
-    <template #content>
-      <div class="flex flex-col gap-2">
+    <template #body>
+      <div class="flex flex-col gap-2 p-4">
         <UButtonGroup class="w-full">
           <UInput
             v-model="newMailbox.name"
@@ -92,6 +95,9 @@ const open = ref(false)
             class="w-full"
             size="xl"
             :disabled="isCreatingEmailAddresses"
+            :ui="{
+              base: 'text-right',
+            }"
           />
           <UBadge
             :label="`@${$profile.domain}`"
@@ -106,18 +112,20 @@ const open = ref(false)
         <UFormField label="Passwort">
           <UButtonGroup class="w-full">
             <UBadge
-              :label="newMailbox.password"
-              class="w-full"
+              :label="passwordBackupConfirmed ? '*************' : newMailbox.password"
+              class="w-full py-2"
               variant="soft"
-              size="lg"
+              size="xl"
             />
             <UButton
+              v-if="!passwordBackupConfirmed"
               :icon="copiedPassword ? 'i-heroicons-check' : 'i-heroicons-clipboard'"
               :label="copiedPassword ? 'Kopiert!' : 'Kopieren'"
               variant="soft"
               @click="copiedPassword ? null : copyPassword(newMailbox.password)"
             />
             <UButton
+              v-if="!passwordBackupConfirmed"
               icon="i-heroicons-arrow-path"
               color="primary"
               variant="soft"
@@ -130,20 +138,33 @@ const open = ref(false)
           v-model="passwordBackupConfirmed"
           label="Ich habe mir das Passwort notiert."
         />
-        <USwitch
-          v-if="mailboxNamesIsValid"
-          v-model="emailAddressesConfirmed"
-          :label="`Ja, ich möchte die E-Mail-Adresse ${newMailbox.name}@${$profile.domain} anlegen.`"
-          :disabled="isCreatingEmailAddresses"
-        />
+        <UButtonGroup v-if="passwordBackupConfirmed">
+          <UInput
+            v-model="passwordConfirmationInput"
+            placeholder="Passwort zur Bestätigung eingeben"
+            class="w-full"
+            size="xl"
+            @paste.prevent
+          />
+          <UBadge
+            v-if="passwordConfirmationInput !== ''"
+            :icon="passwordConfirmed ? 'i-heroicons-check' : 'i-heroicons-x-mark'"
+            variant="soft"
+            :color="passwordConfirmed ? 'success' : 'error'"
+            size="xl"
+            :ui="{
+              base: 'px-4',
+            }"
+          />
+        </UButtonGroup>
         <UButton
-          v-if="$profile.mailboxes.length < 3"
+          v-if="mailboxNameIsValid && passwordConfirmed && passwordBackupConfirmed"
           label="E-Mail-Adresse anlegen"
-          :disabled="isCreatingEmailAddresses || !emailAddressesConfirmed || !passwordBackupConfirmed"
+          :disabled="isCreatingEmailAddresses"
           :loading="isCreatingEmailAddresses"
           @click="createEmailAddresses"
         />
       </div>
     </template>
-  </UCollapsible>
+  </USlideover>
 </template>
