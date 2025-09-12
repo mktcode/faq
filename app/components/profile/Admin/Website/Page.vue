@@ -126,18 +126,16 @@ const showAddComponent = ref(false)
 
     <template #body>
       <div class="p-4 border-b border-gray-200 flex flex-col gap-4">
-        <UFormField label="Seitentitel">
+        <UFormField label="Titel in Suchmaschinen" help="Wird z.B. auch für Lesezeichen und beim Teilen der Seite verwendet und ist auf der Website selbst nicht sichtbar.">
           <UInput
             v-model="page.title"
-            label="Titel"
             placeholder="Startseite"
             class="w-full"
           />
         </UFormField>
-        <UFormField label="Beschreibung">
+        <UFormField label="Beschreibung in Suchmaschinen" help="Wird z.B. auch beim Teilen der Seite verwendet und ist auf der Website selbst nicht sichtbar.">
           <UInput
             v-model="page.description"
-            label="Beschreibung"
             placeholder="Willkommen auf meiner Website"
             class="w-full"
           />
