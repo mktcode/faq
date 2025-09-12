@@ -143,19 +143,17 @@ const showAddComponent = ref(false)
           />
         </UFormField>
         <UFormField
-          v-if="page.id !== 0"
           label="Addresse"
         >
           <UButtonGroup class="w-full">
             <UBadge
-              label="www.meine-domain.de"
+              :label="$profile.canonicalUrl.replace(/\/$/, '').replace(/^https:\/\//, '')"
               variant="outline"
               color="neutral"
             />
             <UInput
               v-model="page.path"
               label="Seitenpfad"
-              placeholder="/"
               class="flex-1"
             />
           </UButtonGroup>
