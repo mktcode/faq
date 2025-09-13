@@ -71,10 +71,6 @@ button,
   position: absolute;
 }
 
-mark {
-  @apply bg-primary-200 text-primary-900 py-px px-1;
-}
-
 @keyframes fade-up {
   0% {
     opacity: 0;
@@ -91,5 +87,14 @@ mark {
     &.ProseMirror-selectednode {
       @apply outline-2 outline-offset-2 outline-primary-500;
     }
+  }
+}
+
+#main .prose,
+.tiptap {
+  @apply max-w-none;
+
+  mark {
+    @apply bg-primary-200 text-primary-900 py-px px-1;
   }
 }

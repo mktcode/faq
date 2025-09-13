@@ -26,6 +26,19 @@ appConfig.ui.input.defaultVariants.rounded = $profile.settings.public.design.rou
 appConfig.ui.select.defaultVariants.rounded = $profile.settings.public.design.rounded
 appConfig.ui.textarea.defaultVariants.rounded = $profile.settings.public.design.rounded
 
+const borderRadius = computed(() => {
+  switch ($profile.settings.public.design.rounded) {
+    case 'none':
+      return '0px'
+    case 'md':
+      return '0.375rem'
+    case 'xl':
+      return '0.75rem'
+    default:
+      return '0.375rem'
+  }
+})
+
 useHead({
   title: page.value.title,
   meta: [
@@ -113,3 +126,16 @@ function openAdmin(componentId: number) {
     <ProfileMainFooter />
   </FontWrapper>
 </template>
+
+<style>
+#main .prose,
+.tiptap {
+  mark {
+    border-radius: v-bind(borderRadius);
+  }
+
+  img {
+    border-radius: v-bind(borderRadius);
+  }
+}
+</style>
