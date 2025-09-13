@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FormComponentSchema, Qanda } from '~~/types/db'
+import type { FaqComponentSchema, Qanda } from '~~/types/db'
 
 const nuxtApp = useNuxtApp()
 const { $profile } = nuxtApp
@@ -18,7 +18,7 @@ const qandaAccordionItems = computed(() => {
 })
 
 defineProps<{
-  component: FormComponentSchema;
+  component: FaqComponentSchema;
 }>()
 
 defineEmits<{
