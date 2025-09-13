@@ -37,7 +37,7 @@ const { unsavedSettings } = useProfile()
       :ui="{
         base: 'flex-col md:flex-row text-sm md:text-base font-light rounded-none md:rounded-lg',
       }"
-      @click="go('#assistant')"
+      @click="go($profile.subscription.plan ? '#assistant' : '#settings/subscription')"
     />
     <UButton
       label="IT-Support"
