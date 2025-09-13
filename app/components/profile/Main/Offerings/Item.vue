@@ -13,7 +13,7 @@ defineProps<{
       {{ item.title }}
     </h2>
     <div
-      class="prose max-w-none"
+      class="prose prose-sm sm:prose lg:prose-lg xl:prose-2xl max-w-none"
       v-html="item.description"
     />
   </div>

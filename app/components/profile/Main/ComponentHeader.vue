@@ -15,7 +15,7 @@ defineProps<{
   </h2>
   <div
     v-if="component.description"
-    class="mb-6 text-gray-600"
+    class="mb-6 text-gray-600 prose prose-sm sm:prose lg:prose-lg xl:prose-2xl max-w-none"
     v-html="component.description"
   />
 </template>

@@ -1,49 +1,82 @@
 <script setup lang="ts">
-import type { Editor } from '@tiptap/vue-3'
-import { useEditor, EditorContent } from '@tiptap/vue-3'
+import { Editor, EditorContent } from '@tiptap/vue-3'
+import StarterKit from '@tiptap/starter-kit'
 import Highlight from '@tiptap/extension-highlight'
 import TextAlign from '@tiptap/extension-text-align'
-import StarterKit from '@tiptap/starter-kit'
-
-const props = defineProps<{
-  rounded?: 'none' | 'md' | 'xl'
-}>()
+import FileHandler from '@tiptap/extension-file-handler'
+import Image from '@tiptap/extension-image'
 
 const model = defineModel<string | null>()
-const { $profile } = useProfile()
-const designRounded = props.rounded || $profile.settings.public.design.rounded || 'md'
 
-const roundedClass = computed(() => {
-  if (designRounded === 'none') {
-    return 'rounded-none'
-  }
-  else if (designRounded === 'md') {
-    return 'rounded-md'
-  }
-  else if (designRounded === 'xl') {
-    return 'rounded-xl'
-  }
+const editor = ref<Editor | null>(null)
 
-  return 'rounded-md'
+onMounted(() => {
+  editor.value = new Editor({
+    editorProps: {
+      attributes: {
+        class: 'p-2 bg-gray-100 prose prose-sm @sm:prose @lg:prose-lg @xl:prose-2xl mx-auto rounded-lg focus:outline-none focus:bg-gray-50',
+      },
+    },
+    extensions: [
+      StarterKit,
+      Highlight,
+      TextAlign.configure({
+        types: ['heading', 'paragraph'],
+      }),
+      Image.configure({
+        allowBase64: true,
+      }),
+      FileHandler.configure({
+        allowedMimeTypes: ['image/png', 'image/jpeg', 'image/gif', 'image/webp'],
+        onDrop: (currentEditor, files, pos) => {
+          files.forEach(file => {
+            const fileReader = new FileReader()
+
+            fileReader.readAsDataURL(file)
+            fileReader.onload = () => {
+              currentEditor
+                .chain()
+                .insertContentAt(pos, {
+                  type: 'image',
+                  attrs: {
+                    src: fileReader.result,
+                  },
+                })
+                .focus()
+                .run()
+            }
+          })
+        },
+        onPaste: (currentEditor, files) => {
+          files.forEach(file => {
+            const fileReader = new FileReader()
+
+            fileReader.readAsDataURL(file)
+            fileReader.onload = () => {
+              currentEditor
+                .chain()
+                .insertContentAt(currentEditor.state.selection.anchor, {
+                  type: 'image',
+                  attrs: {
+                    src: fileReader.result,
+                  },
+                })
+                .focus()
+                .run()
+            }
+          })
+        },
+      }),
+    ],
+    content: model.value || '',
+    onUpdate: ({ editor }) => {
+      model.value = editor.getHTML()
+    },
+  })
 })
 
-const editor = useEditor({
-  extensions: [
-    StarterKit,
-    TextAlign.configure({
-      types: ['heading', 'paragraph'],
-    }),
-    Highlight,
-  ],
-  editorProps: {
-    attributes: {
-      class: `${roundedClass.value} p-3 bg-gray-100 border-0 prose-sm focus:outline-none max-w-full`,
-    },
-  },
-  content: model.value || 'Ihr Angebotstext...',
-  onUpdate({ editor }) {
-    model.value = editor.getHTML()
-  },
+onBeforeUnmount(() => {
+  editor.value?.destroy()
 })
 
 function click(editor: Editor) {
@@ -52,7 +85,7 @@ function click(editor: Editor) {
 </script>
 
 <template>
-  <div v-if="editor">
+  <ClientOnly>
     <div class="p-1 flex gap-1">
       <WysiwygEditorButton
         :is-active="editor.can().undo()"
@@ -194,16 +227,9 @@ function click(editor: Editor) {
       </WysiwygEditorButton>
     </div>
     <EditorContent
+      v-if="editor"
       :editor="editor"
-      class="max-h-80 overflow-auto"
+      class="@container"
     />
-  </div>
+  </ClientOnly>
 </template>
-
-<style>
-.tiptap {
-  p {
-    margin: 0;
-  }
-}
-</style>
