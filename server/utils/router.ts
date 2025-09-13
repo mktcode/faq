@@ -1,11 +1,11 @@
 import type { H3Event } from 'h3'
-import Stripe from 'stripe'
 
 interface TargetUser {
   userName: string
   published: boolean
   lastPaidAt: Date | null
   domain: string | null
+  domainIsExternal: boolean | null
   mailboxes: string[]
   plan: 'S' | 'L' | null
   stripeCheckoutSessionId: string | null
@@ -82,7 +82,7 @@ async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUse
     canonicalUrl: getCanonicalUrl(event, targetUser),
     canonicalUri: getCanonicalUri(targetUser),
     domain: targetUser.domain,
-    domainIsExternal: targetUser.domain ? true : false,
+    domainIsExternal: !!targetUser.domainIsExternal,
     mailboxes: targetUser.mailboxes,
   }
 }
@@ -94,7 +94,7 @@ async function getUserFromHost(currentHost: string): Promise<TargetUser | null> 
 
   if (isCustomDomain(currentHost)) {
     const user = await db.selectFrom('users')
-      .select(['userName', 'published', 'lastPaidAt', 'domain', 'mailboxes', 'plan', 'stripeCheckoutSessionId'])
+      .select(['userName', 'published', 'lastPaidAt', 'domain', 'domainIsExternal', 'mailboxes', 'plan', 'stripeCheckoutSessionId'])
       .where('domain', '=', currentHost)
       .executeTakeFirst() || null
 
@@ -111,7 +111,7 @@ async function getUserFromHost(currentHost: string): Promise<TargetUser | null> 
 
     const user = await db
       .selectFrom('users')
-      .select(['userName', 'published', 'lastPaidAt', 'domain', 'mailboxes', 'plan', 'stripeCheckoutSessionId'])
+      .select(['userName', 'published', 'lastPaidAt', 'domain', 'domainIsExternal', 'mailboxes', 'plan', 'stripeCheckoutSessionId'])
       .where('userName', '=', username)
       .executeTakeFirst() || null
 
