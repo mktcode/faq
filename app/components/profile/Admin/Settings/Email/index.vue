@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const { showEmailSettings, go } = useAdmin()
+
+const { data: domainInfo, refresh: refreshDomainInfo, pending: domainInfoPending } = useFetch('/api/user/domain/info')
 </script>
 
 <template>
@@ -45,7 +47,52 @@ const { showEmailSettings, go } = useAdmin()
           },
         ]"
       />
-      <ProfileAdminSettingsEmailMailboxes v-else />
+      <div
+        v-if="$profile.domain && !domainInfo?.hasMXRecords"
+        class="p-4"
+      >
+        <p
+          class="text-gray-500 mb-4"
+        >
+          Ihre Domain ist noch nicht für E-Mail-Postfächer konfiguriert. Bitte richten Sie die erforderlichen DNS-Einträge ein.
+        </p>
+        <table class="w-full text-left border-collapse mb-4">
+          <thead>
+            <tr>
+              <th>
+                Typ
+              </th>
+              <th>
+                Name
+              </th>
+              <th>
+                Wert
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                MX
+              </td>
+              <td>
+                @ (oder leer lassen)
+              </td>
+              <td>
+                mx.mailbox.org
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <UButton
+          label="DNS-Einstellungen überprüfen"
+          icon="i-heroicons-arrows-right-left"
+          class="w-full"
+          :loading="domainInfoPending"
+          @click="() => refreshDomainInfo()"
+        />
+      </div>
+      <ProfileAdminSettingsEmailMailboxes v-if="$profile.domain && domainInfo?.hasMXRecords" />
     </template>
   </USlideover>
 </template>
