@@ -35,6 +35,27 @@ function moveComponent(id: number, direction: 'up' | 'down') {
 }
 
 const showAddComponent = ref(false)
+
+const pathError = ref('')
+watch(() => page.value, (newPage) => {
+  if (!newPage) return
+
+  if (newPage.id !== 0) {
+    const duplicate = $profile.settings.public.pages.find(p => p.path === newPage?.path && p.id !== newPage?.id)
+    if (duplicate) {
+      pathError.value = `Diese Adresse ist bereits an ${duplicate.title} vergeben.`
+    }
+    else if (!newPage.path) {
+      pathError.value = 'Die Adresse darf nicht leer sein und muss mit einem Schrägstrich beginnen.'
+    }
+    else if (!/^\/[a-z0-9\-\/]*$/.test(newPage.path)) {
+      pathError.value = 'Die Adresse darf nur aus Kleinbuchstaben, Zahlen, Bindestrichen und Schrägstrichen bestehen und muss mit einem Schrägstrich beginnen.'
+    }
+    else {
+      pathError.value = ''
+    }
+  }
+}, { immediate: true, deep: true })
 </script>
 
 <template>
@@ -65,7 +86,7 @@ const showAddComponent = ref(false)
       </h3>
       <div class="flex items-center gap-2 ml-auto">
         <UButton
-          v-if="page.path !== '/'"
+          v-if="page.id !== 0"
           icon="i-heroicons-trash"
           variant="ghost"
           color="neutral"
@@ -141,7 +162,10 @@ const showAddComponent = ref(false)
           />
         </UFormField>
         <UFormField
+          v-if="page.id !== 0"
           label="Addresse"
+          :error="pathError"
+          :ui="{ error: 'text-red-600 bg-red-50 p-3 rounded-lg' }"
         >
           <UButtonGroup class="w-full">
             <UBadge

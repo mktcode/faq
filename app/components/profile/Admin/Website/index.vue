@@ -35,7 +35,7 @@ async function togglePublished() {
 function addPage() {
   const newPage = {
     id: new Date().getTime(),
-    title: 'Neue Seite',
+    title: 'Seite ' + ($profile.settings.public.pages.length + 1),
     description: 'Meine Unterseite über...',
     path: `/seite-${$profile.settings.public.pages.length + 1}`,
     components: [],
@@ -124,20 +124,25 @@ function addPage() {
         @click="go('#website/design')"
       />
 
-      <UButton
-        v-for="(page, index) in $profile.settings.public.pages.sort((a, b) => a.path.localeCompare(b.path))"
-        :key="page.path"
-        :label="page.title || `Seite ${index + 1}`"
-        :icon="page.path === '/' ? 'i-heroicons-home' : 'i-heroicons-document-text'"
-        class="w-full rounded-none p-4 border-b border-gray-200"
-        variant="ghost"
-        color="neutral"
-        trailing-icon="i-heroicons-chevron-right"
-        :ui="{
-          trailingIcon: 'ml-auto opacity-30',
-        }"
-        @click="go(`#website/page/${page.id}`)"
-      />
+      <TransitionGroup name="list">
+        <div
+          v-for="(page, index) in $profile.settings.public.pages.sort((a, b) => a.path.localeCompare(b.path))"
+          :key="page.path"
+        >
+          <UButton
+            :label="page.title || `Seite ${index + 1}`"
+            :icon="page.path === '/' ? 'i-heroicons-home' : 'i-heroicons-document-text'"
+            class="w-full rounded-none p-4 border-b border-gray-200"
+            variant="ghost"
+            color="neutral"
+            trailing-icon="i-heroicons-chevron-right"
+            :ui="{
+              trailingIcon: 'ml-auto opacity-30',
+            }"
+            @click="go(`#website/page/${page.id}`)"
+          />
+        </div>
+      </TransitionGroup>
 
       <UButton
         label="Unterseite hinzufügen"

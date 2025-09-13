@@ -364,13 +364,13 @@ export const defaultSettings = (): SettingsForm => ({
     },
     pages: [
       {
-        id: 1,
+        id: 0,
         path: '/',
         title: 'Startseite',
         description: 'Die Startseite Ihrer Website',
         components: [
           {
-            id: 1,
+            id: 0,
             key: 'header',
             title: 'Herzlich Willkommen',
             showTitle: true,
@@ -403,23 +403,6 @@ export const defaultSettings = (): SettingsForm => ({
             height: 'full',
             showShareButton: true,
             links: [],
-          },
-          {
-            id: 2,
-            key: 'offerings',
-            title: 'Angebote',
-            showTitle: true,
-            description: 'Hier können Sie Ihre Angebote mit Bild und Text präsentieren.',
-            visible: true,
-            order: 1,
-            layout: 'list',
-            items: [
-              {
-                id: 1,
-                title: 'Mein erstes Angebot',
-                description: 'Beschreibung meines ersten Angebots',
-              }
-            ],
           },
         ],
       },
