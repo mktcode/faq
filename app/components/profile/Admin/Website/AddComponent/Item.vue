@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { ComponentUnionSchema } from '~~/types/db';
+import type { AvailableComponent } from '~~/types/db';
 
 defineProps<{
-  component: ComponentUnionSchema
+  component: AvailableComponent
 }>()
 
 defineEmits<{

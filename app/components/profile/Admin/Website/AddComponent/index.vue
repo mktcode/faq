@@ -12,6 +12,7 @@ function addComponent(component: ComponentUnionSchema) {
   if (!page.value) return
 
   component.id = new Date().getTime()
+  component.order = Math.max(0, ...page.value.components.map(c => c.order)) + 1
   page.value.components.push(component)
   open.value = false
   go(`#website/page/${page.value.id}/component/${component.id}`)

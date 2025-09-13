@@ -195,7 +195,7 @@ export const settingsFormSchema = z.object({
 
 export type SettingsForm = z.infer<typeof settingsFormSchema>
 
-type AvailableComponent = {
+export type AvailableComponent = {
   key: ComponentUnionSchema['key']
   title: string
   description: string
