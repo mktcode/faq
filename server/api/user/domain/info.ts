@@ -8,5 +8,8 @@ export default defineEventHandler(async (event) => {
     .where('id', '=', user.id)
     .executeTakeFirstOrThrow()
 
-  return { domainIsActive: !!(domain && domainContactId) }
+  const hasARecord = domain ? await domainUtils.checkA(domain) : false
+  const hasMXRecords = domain ? await domainUtils.checkMx(domain) : false
+
+  return { domainIsActive: !!domainContactId, hasARecord, hasMXRecords }
 })

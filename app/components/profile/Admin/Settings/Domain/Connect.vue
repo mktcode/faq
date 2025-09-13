@@ -42,11 +42,40 @@ watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce:
     <template #body>
       <p class="text-gray-500">
         Um Ihre vorhandene Domain zu verbinden, gehen Sie zu Ihrem Domain-Anbieter und suchen eine Option wie "DNS-Einstellungen" oder "Records bearbeiten".
+        Legen Sie dort folgenden Eintrag an:
       </p>
 
+      <table class="w-full text-left border-collapse mb-4">
+        <thead>
+          <tr>
+            <th>
+              Typ
+            </th>
+            <th>
+              Name
+            </th>
+            <th>
+              Wert
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              A
+            </td>
+            <td>
+              @ (oder leer lassen)
+            </td>
+            <td>
+              {{ lbIp }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
       <p class="text-gray-500">
-        Dort legen Sie einen Eintrag vom <strong>Typ A</strong> mit dem Wert <strong>{{ lbIp }}</strong> an.
-        Wenn Sie das getan haben, geben Sie hier Ihre Domain ein.
+        Danach geben Sie Ihre Domain in das Feld unten ein, um die Einstellungen zu überprüfen. Ist alles korrekt, können Sie die Domain verbinden.
       </p>
 
       <UInput
@@ -70,6 +99,7 @@ watchDebounced(existingDomain, () => checkDns(existingDomain.value), { debounce:
 
       <UAlert
         title="Benötigen Sie Hilfe?"
+        description="Je nach Anbieter kann dieser Schritt etwas abschreckend wirken. Nennen Sie uns Ihren Domain-Anbieter und wir helfen Ihnen gerne weiter."
         variant="soft"
         :actions="[{
           label: 'Support kontaktieren',

@@ -11,7 +11,7 @@ const newMailbox = ref<{ name: string, password: string }>({
   password: '',
 })
 
-const isCreatingEmailAddresses = ref(false)
+const isCreatingEmailAddress = ref(false)
 const passwordBackupConfirmed = ref(false)
 
 const passwordConfirmationInput = ref('')
@@ -33,11 +33,15 @@ function generatePassword() {
   return password
 }
 
-async function createEmailAddresses() {
-  isCreatingEmailAddresses.value = true
+async function createEmailAddress() {
+  isCreatingEmailAddress.value = true
   try {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    await $fetch('/api/user/email/create', {
+      method: 'POST',
+      body: {
+        mailbox: newMailbox.value.name.trim(),
+      },
+    })
     $profile.mailboxes.push(newMailbox.value.name.trim())
     passwordBackupConfirmed.value = false
     passwordConfirmationInput.value = ''
@@ -48,10 +52,10 @@ async function createEmailAddresses() {
     go('#settings/email')
   }
   catch (error) {
-    console.error('Error creating email addresses:', error)
+    console.error('Error creating email address:', error)
   }
   finally {
-    isCreatingEmailAddresses.value = false
+    isCreatingEmailAddress.value = false
   }
 }
 
@@ -94,7 +98,7 @@ onMounted(() => {
             placeholder="z.B. kontakt oder info"
             class="w-full"
             size="xl"
-            :disabled="isCreatingEmailAddresses"
+            :disabled="isCreatingEmailAddress"
             :ui="{
               base: 'text-right',
             }"
@@ -160,9 +164,9 @@ onMounted(() => {
         <UButton
           v-if="mailboxNameIsValid && passwordConfirmed && passwordBackupConfirmed"
           label="E-Mail-Adresse anlegen"
-          :disabled="isCreatingEmailAddresses"
-          :loading="isCreatingEmailAddresses"
-          @click="createEmailAddresses"
+          :disabled="isCreatingEmailAddress"
+          :loading="isCreatingEmailAddress"
+          @click="createEmailAddress"
         />
       </div>
     </template>

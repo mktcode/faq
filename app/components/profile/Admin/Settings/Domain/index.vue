@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const { showDomainSettings, go } = useAdmin()
+
+const { data: domainInfo } = useFetch('/api/user/domain/info')
 </script>
 
 <template>
@@ -31,11 +33,27 @@ const { showDomainSettings, go } = useAdmin()
     <template #body>
       <div v-if="$profile.domain" class="p-4 border-b border-gray-200 flex items-center gap-4">
         <UIcon
+          v-if="domainInfo?.hasARecord"
           name="i-heroicons-check"
           class="inline-block size-6 opacity-50 text-green-600"
         />
-        <p class="text-gray-500">
+        <UIcon
+          v-else
+          name="i-heroicons-exclamation-triangle"
+          class="inline-block size-6 opacity-50 text-yellow-600"
+        />
+        <p
+          v-if="domainInfo?.hasARecord"
+          class="text-gray-500"
+        >
           Domain verbunden:<br>
+          <strong>{{ $profile.domain }}</strong>
+        </p>
+        <p
+          v-else
+          class="text-gray-500"
+        >
+          Domain wird {{ $profile.domainIsExternal ? 'verbunden' : 'registriert' }}:<br>
           <strong>{{ $profile.domain }}</strong>
         </p>
       </div>

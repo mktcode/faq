@@ -5,7 +5,6 @@ import { setTimeout as sleep } from 'node:timers/promises'
 async function checkA(domain: string) {
   const { public: { lbIp } } = useRuntimeConfig()
 
-  return true
   try {
     const addresses = await dns.resolve4(domain)
     return addresses.includes(lbIp)
@@ -15,9 +14,10 @@ async function checkA(domain: string) {
   }
 }
 
-async function checkMx(domain: string, mailhost: string) {
+async function checkMx(domain: string) {
   try {
     const mxRecords = await dns.resolveMx(domain)
+    const mailhost = `mxext.mailbox.org`
 
     const mxRecord = mxRecords.find(record => record.exchange === mailhost)
     if (mxRecord) {

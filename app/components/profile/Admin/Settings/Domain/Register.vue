@@ -112,6 +112,12 @@ async function registerDomain() {
     </template>
 
     <template #body>
+      <p class="text-gray-500">
+        Tragen Sie Ihre Wunschdomain ein oder lassen Sie sich anhand Ihrer Unternehmensdaten eine passende Domain vorschlagen.
+      </p>
+      <p class="text-gray-500">
+        Die Registrierung und Einrichtung der Domain übernehmen wir für Sie.
+      </p>
       <UFormField label="Neue .de-Domain registrieren">
         <UButtonGroup class="w-full">
           <UInput

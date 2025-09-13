@@ -3,7 +3,6 @@ import { z } from 'zod'
 const onlyDeDomainSchema = z.string().regex(/^[a-z0-9-]{1,63}\.de$/, 'Invalid domain')
 const bodySchema = z.object({
   domain: onlyDeDomainSchema,
-  mailboxes: z.array(z.string()),
 })
 
 export default defineEventHandler(async (event) => {
@@ -18,17 +17,17 @@ export default defineEventHandler(async (event) => {
   }
 
   const db = await getDatabaseConnection()
-  const { domain, mailboxes } = await readValidatedBody(event, body => bodySchema.parse(body))
+  const { domain } = await readValidatedBody(event, body => bodySchema.parse(body))
 
   await domainUtils.requireAvailability(domain)
 
   await db
     .updateTable('users')
-    .set({ domain, domainIsExternal: false, mailboxes: JSON.stringify(mailboxes) })
+    .set({ domain, domainIsExternal: false })
     .where('id', '=', me.id)
     .execute()
 
-  const supportMessage = `Domainregistrierung: ${domain}\nPostfächer:\n${mailboxes.length ? mailboxes.map(mb => `- ${mb}`).join('\n') : 'keine'}`
+  const supportMessage = `Domainregistrierung: ${domain}`
 
   await chatwoot.startConversation(me.chatwootSourceId, supportMessage)
 
