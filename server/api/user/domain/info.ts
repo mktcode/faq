@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     .executeTakeFirstOrThrow()
 
   const hasARecord = domain ? await domainUtils.checkA(domain) : false
-  const hasMXRecords = true //domain ? await domainUtils.checkMx(domain) : false
+  const hasMXRecords = domain ? await domainUtils.checkMx(domain) : false
 
   await new Promise((resolve) => setTimeout(resolve, 300)) // Simulate delay for better UX
 
