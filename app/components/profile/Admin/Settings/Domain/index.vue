@@ -58,6 +58,7 @@ const { data: domainInfo } = useFetch('/api/user/domain/info')
         </p>
       </div>
       <UButton
+        v-if="!$profile.domain"
         label="Vorhandene Domain verbinden"
         icon="i-lucide-unplug"
         class="w-full rounded-none p-4 border-b border-gray-200"
@@ -71,6 +72,7 @@ const { data: domainInfo } = useFetch('/api/user/domain/info')
       />
 
       <UButton
+        v-if="!$profile.domain"
         label="Neue Domain registrieren"
         icon="i-lucide-globe-lock"
         class="w-full rounded-none p-4 border-b border-gray-200"

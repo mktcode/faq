@@ -102,7 +102,7 @@ async function getUserFromHost(currentHost: string): Promise<TargetUser | null> 
 
     return {
       ...user,
-      mailboxes: typeof user.mailboxes === 'string' ? JSON.parse(user.mailboxes) : [],
+      mailboxes: user.mailboxes.split(',').map(m => m.trim()).filter(m => m !== ''),
     }
   }
   else if (isSubdomain(currentHost)) {
@@ -119,7 +119,7 @@ async function getUserFromHost(currentHost: string): Promise<TargetUser | null> 
 
     return {
       ...user,
-      mailboxes: typeof user.mailboxes === 'string' ? JSON.parse(user.mailboxes) : [],
+      mailboxes: user.mailboxes.split(',').map(m => m.trim()).filter(m => m !== ''),
     }
   }
 

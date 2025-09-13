@@ -15,7 +15,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('domainIsExternal', 'boolean', col => col.notNull().defaultTo(false))
     .addColumn('domainContactId', 'integer')
     .addColumn('domainCode', 'varchar(100)')
-    .addColumn('mailboxes', 'varchar(200)')
+    .addColumn('mailboxes', 'varchar(200)', col => col.notNull())
     .addColumn('stripeCustomerId', 'varchar(255)', col => col.unique())
     .addColumn('stripeCheckoutSessionId', 'varchar(255)', col => col.unique())
     .addColumn('stripeSubscriptionId', 'varchar(255)', col => col.unique())

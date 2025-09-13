@@ -54,7 +54,7 @@ const { data: domainInfo, refresh: refreshDomainInfo, pending: domainInfoPending
         <p
           class="text-gray-500 mb-4"
         >
-          Ihre Domain ist noch nicht für E-Mail-Postfächer konfiguriert. Bitte richten Sie die erforderlichen DNS-Einträge ein.
+          Ihre Domain ist noch nicht für E-Mail-Postfächer konfiguriert. Bitte richten Sie bei Ihrem Domain-Anbieter die erforderlichen DNS-Einträge ein.
         </p>
         <table class="w-full text-left border-collapse mb-4">
           <thead>
@@ -90,6 +90,18 @@ const { data: domainInfo, refresh: refreshDomainInfo, pending: domainInfoPending
           class="w-full"
           :loading="domainInfoPending"
           @click="() => refreshDomainInfo()"
+        />
+        <UAlert
+          title="Benötigen Sie Hilfe?"
+          description="Je nach Anbieter kann dieser Schritt etwas abschreckend wirken. Nennen Sie uns Ihren Domain-Anbieter und wir helfen Ihnen gerne weiter."
+          variant="soft"
+          class="mt-4"
+          :actions="[{
+            label: 'Support kontaktieren',
+            icon: 'i-lucide-headset',
+            onClick: () => go('#support'),
+            size: 'xl',
+          }]"
         />
       </div>
       <ProfileAdminSettingsEmailMailboxes v-if="$profile.domain && domainInfo?.hasMXRecords" />
