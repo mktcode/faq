@@ -208,7 +208,7 @@ export const availableComponents: AvailableComponent[] = [
     key: 'header',
     title: 'Kopfbereich',
     description: 'Hier können Sie einen Kopfbereich mit Titel, Beschreibung, Hintergrundbild oder Video einfügen.',
-    icon: 'i-heroicons-hand-raised',
+    icon: 'i-lucide-gallery-vertical-end',
     defaults: {
       id: 1,
       key: 'header',

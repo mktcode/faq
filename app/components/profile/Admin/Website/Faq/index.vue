@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { FormComponentSchema } from '~~/types/db';
+import type { FaqComponentSchema } from '~~/types/db';
 
 const { data: qanda, refresh: refreshQanda } = await useFetch('/api/user/qanda')
 
 defineProps<{
-  component: FormComponentSchema;
+  component: FaqComponentSchema;
 }>()
 
 const suggestions = ref<{

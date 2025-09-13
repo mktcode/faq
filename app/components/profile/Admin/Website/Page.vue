@@ -194,6 +194,9 @@ watch(() => page.value, (newPage) => {
             variant="ghost"
             color="neutral"
             @click="go(`#website/page/${page.id}/component/${comp.id}`)"
+            :ui="{
+              leadingIcon: comp.key === 'header' ? 'rotate-180' : '',
+            }"
           >
             <template #trailing>
               <div class="ml-auto whitespace-nowrap">

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useMediaQuery } from '@vueuse/core'
+import { availableComponents } from '~~/types/db';
 
 const { $profile } = useProfile()
 
@@ -41,8 +42,9 @@ function deleteComponent() {
     <template #header>
       <h3 class="text-lg font-semibold flex gap-2 relative">
         <UIcon
-          name="i-heroicons-paint-brush"
+          :name="availableComponents.find(c => c.key === component?.key)?.icon || 'i-heroicons-cube-transparent'"
           class="inline-block size-6 opacity-50"
+          :class="component?.key === 'header' ? 'rotate-180' : ''"
         />
         {{ component.title }}
         <div class="flex items-center gap-2 ml-auto">

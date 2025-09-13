@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { Editor } from '@tiptap/core'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Highlight from '@tiptap/extension-highlight'
@@ -72,8 +71,29 @@ const editor = useEditor({
   },
 })
 
-function click(editor: Editor) {
-  return editor.chain().focus()
+const imageInput = ref<HTMLInputElement | null>(null)
+
+function addImage() {
+  imageInput.value?.click()
+}
+
+function handleImageUpload(event: Event) {
+  const target = event.target as HTMLInputElement
+  const files = target.files
+  if (files && files.length > 0) {
+    Array.from(files).forEach(file => {
+      const reader = new FileReader()
+      reader.onload = () => {
+        if (reader.result) {
+          editor.value?.chain().focus().setImage({ src: reader.result as string }).run()
+        }
+      }
+      reader.readAsDataURL(file)
+    })
+  }
+  if (imageInput.value) {
+    imageInput.value.value = ''
+  }
 }
 </script>
 
@@ -86,44 +106,44 @@ function click(editor: Editor) {
           <WysiwygEditorButton
             icon="i-lucide-undo-2"
             :is-active="editor.can().undo()"
-            @click="click(editor).undo().run()"
+            @click="editor.chain().focus().undo().run()"
           />
           <WysiwygEditorButton
             icon="i-lucide-redo-2"
             :is-active="editor.can().redo()"
-            @click="click(editor).redo().run()"
+            @click="editor.chain().focus().redo().run()"
           />
         </UButtonGroup>
         <UButtonGroup size="md" class="ml-auto">
           <WysiwygEditorButton
             icon="i-heroicons-list-bullet"
             :is-active="editor.isActive('bulletList')"
-            @click="click(editor).toggleBulletList().run()"
+            @click="editor.chain().focus().toggleBulletList().run()"
           />
           <WysiwygEditorButton
             icon="i-heroicons-numbered-list"
             :is-active="editor.isActive('orderedList')"
-            @click="click(editor).toggleOrderedList().run()"
+            @click="editor.chain().focus().toggleOrderedList().run()"
           />
           <WysiwygEditorButton
             icon="i-heroicons-bold"
             :is-active="editor.isActive('bold')"
-            @click="click(editor).toggleBold().run()"
+            @click="editor.chain().focus().toggleBold().run()"
           />
           <WysiwygEditorButton
             icon="i-heroicons-italic"
             :is-active="editor.isActive('italic')"
-            @click="click(editor).toggleItalic().run()"
+            @click="editor.chain().focus().toggleItalic().run()"
           />
           <WysiwygEditorButton
-            icon="i-heroicons-strikethrough"
-            :is-active="editor.isActive('strike')"
-            @click="click(editor).toggleStrike().run()"
-          />
-          <WysiwygEditorButton
-            label="Highlight"
+            icon="i-lucide-highlighter"
             :is-active="editor.isActive('highlight')"
-            @click="click(editor).toggleHighlight().run()"
+            @click="editor.chain().focus().toggleHighlight().run()"
+          />
+          <WysiwygEditorButton
+            icon="i-lucide-image"
+            :is-active="editor.isActive('image')"
+            @click="addImage()"
           />
         </UButtonGroup>
       </div>
@@ -132,5 +152,14 @@ function click(editor: Editor) {
         class="@container"
       />
     </div>
+    <input
+      id="editor-image-upload"
+      ref="imageInput"
+      type="file"
+      class="hidden"
+      multiple
+      accept="image/png, image/jpeg, image/gif, image/webp"
+      @change="handleImageUpload"
+    >
   </ClientOnly>
 </template>
