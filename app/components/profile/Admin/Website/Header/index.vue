@@ -180,6 +180,42 @@ async function deleteImage(image: 'logo' | 'header') {
 
 <template>
   <div class="flex flex-col gap-4 w-full">
+    <div class="flex gap-2">
+      <UFormField
+        label="Schriftgröße Titel"
+      >
+        <UInputNumber
+          v-model="component.titleFontSize"
+          size="xl"
+        />
+      </UFormField>
+      <div class="w-28">
+        <HslPicker
+          v-model:h="component.titleColor.h"
+          v-model:s="component.titleColor.s"
+          v-model:l="component.titleColor.l"
+          label="Farbe"
+        />
+      </div>
+    </div>
+    <div class="flex gap-2">
+      <UFormField
+        label="Schriftgröße Beschreibung"
+      >
+        <UInputNumber
+          v-model="component.descriptionFontSize"
+          size="xl"
+        />
+      </UFormField>
+      <div class="w-28">
+        <HslPicker
+          v-model:h="component.descriptionColor.h"
+          v-model:s="component.descriptionColor.s"
+          v-model:l="component.descriptionColor.l"
+          label="Farbe"
+        />
+      </div>
+    </div>
     <div class="p-1 border border-gray-200 rounded-lg flex flex-col gap-2">
       <div
         class="@container group relative flex flex-col items-center justify-center w-full rounded-lg cursor-pointer transition-all overflow-hidden hover:bg-gray-100"
@@ -280,57 +316,6 @@ async function deleteImage(image: 'logo' | 'header') {
       </div>
     </div>
     <div class="flex gap-2">
-      <UFormField
-        label="Schriftgröße Titel"
-      >
-        <UInputNumber
-          v-model="component.titleFontSize"
-          size="xl"
-        />
-      </UFormField>
-      <div class="w-28">
-        <HslPicker
-          v-model:h="component.titleColor.h"
-          v-model:s="component.titleColor.s"
-          v-model:l="component.titleColor.l"
-          label="Farbe"
-        />
-      </div>
-    </div>
-    <div class="flex gap-2">
-      <UFormField
-        label="Schriftgröße Beschreibung"
-      >
-        <UInputNumber
-          v-model="component.descriptionFontSize"
-          size="xl"
-        />
-      </UFormField>
-      <div class="w-28">
-        <HslPicker
-          v-model:h="component.descriptionColor.h"
-          v-model:s="component.descriptionColor.s"
-          v-model:l="component.descriptionColor.l"
-          label="Farbe"
-        />
-      </div>
-    </div>
-    <UFormField
-      label="Variante"
-    >
-      <USelect
-        v-model="component.height"
-        :items="[
-          { label: 'Vollbild', value: 'full' },
-          { label: 'halber Bildschirm', value: 'half' },
-          { label: 'automatische Höhe', value: 'auto' },
-          { label: 'Box', value: 'boxed' },
-        ]"
-        class="w-full"
-      />
-    </UFormField>
-
-    <div class="flex gap-2">
       <HslPicker
         v-model:h="component.overlay.color.h"
         v-model:s="component.overlay.color.s"
@@ -344,6 +329,7 @@ async function deleteImage(image: 'logo' | 'header') {
         <USlider
           v-model="component.overlay.opacity"
           class="flex-1 mt-4"
+          size="xl"
         />
       </UFormField>
     </div>
@@ -385,6 +371,20 @@ async function deleteImage(image: 'logo' | 'header') {
         @click="component.links.push({ title: '', url: '', icon: 'i-lucide-link' })"
       />
     </div>
+    <UFormField
+      label="Variante"
+    >
+      <USelect
+        v-model="component.height"
+        :items="[
+          { label: 'Vollbild', value: 'full' },
+          { label: 'halber Bildschirm', value: 'half' },
+          { label: 'automatische Höhe', value: 'auto' },
+          { label: 'Box', value: 'boxed' },
+        ]"
+        class="w-full"
+      />
+    </UFormField>
     <UModal
       v-model:open="showUploadHeaderModal"
       title="Hintergrund auswählen"
