@@ -10,6 +10,10 @@ export default defineEventHandler(async (event) => {
   const { url } = await readValidatedBody(event, body => bodySchema.parse(body))
   const { s3BucketName, public: { s3Endpoint } } = useRuntimeConfig()
 
+  if (!url.startsWith(s3Endpoint)) {
+    return { success: true }
+  }
+
   const s3 = createS3Client()
   let success = false
 
