@@ -173,6 +173,7 @@ export const settingsFormSchema = z.object({
     }),
     design: z.object({
       font: z.string(),
+      fontSize: z.enum(['sm', 'md', 'lg', 'xl', '2xl']),
       color: colorSchema,
       rounded: z.string(),
     }),
@@ -355,6 +356,7 @@ export const defaultSettings = (): SettingsForm => ({
     },
     design: {
       font: 'montserrat',
+      fontSize: 'md',
       color: {
         h: 199,
         s: 100,

@@ -65,6 +65,22 @@ watch(
 
     <template #body>
       <div class="flex flex-col gap-4">
+        <UFormField
+          label="Schriftgröße"
+          class="flex-1"
+        >
+          <USelect
+            v-model="$profile.settings.public.design.fontSize"
+            class="w-full"
+            :items="[
+              { label: 'sehr klein', value: 'sm' },
+              { label: 'klein', value: 'md' },
+              { label: 'mittel', value: 'lg' },
+              { label: 'groß', value: 'xl' },
+              { label: 'sehr groß', value: '2xl' },
+            ]"
+          />
+        </UFormField>
         <div class="flex gap-2">
           <HslPicker
             v-model:h="$profile.settings.public.design.color.h"
@@ -73,7 +89,7 @@ watch(
             label="Primäre Farbe"
           />
           <UFormField
-            label="Stil"
+            label="Abrundung"
             class="flex-1"
           >
             <USelect
