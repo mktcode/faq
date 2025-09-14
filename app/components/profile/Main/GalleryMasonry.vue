@@ -11,26 +11,28 @@ defineProps<{
 </script>
 
 <template>
-  <div class="columns-2 lg:columns-3 gap-x-2">
+  <div class="grid grid-cols-2 lg:grid-cols-3 gap-2">
     <div
       v-for="(image, index) in component.items.slice(0, 7)"
       :key="index"
-      class="relative mb-2 w-full overflow-hidden break-inside-avoid cursor-pointer"
+      class="overflow-hidden w-full flex items-center justify-center cursor-pointer relative"
       :class="{
         'rounded-xl': $profile.settings.public.design.rounded === 'xl',
         'rounded-md': $profile.settings.public.design.rounded === 'md',
         'rounded-none': $profile.settings.public.design.rounded === 'none',
+        'col-span-2 row-span-2': [0, 3, 4].includes(index),
+        'row-span-2': [1, 2].includes(index),
       }"
       @click="$emit('open-modal', index)"
     >
       <NuxtImg
         :src="image.url"
-        class="w-full h-auto transition-transform duration-500 hover:scale-[1.02]"
+        class="object-cover w-full h-full hover:scale-110 transition-all duration-500"
         preload
       />
       <div
         v-if="index === 6 && component.items.length > 7"
-        class="absolute inset-0 flex items-center justify-center bg-black/30 text-white/80 text-3xl font-semibold pointer-events-none"
+        class="absolute inset-0 flex items-center justify-center bg-black/50 text-white text-5xl font-semibold pointer-events-none"
       >
         +{{ component.items.length - 7 }}
       </div>
