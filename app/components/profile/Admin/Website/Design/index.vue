@@ -116,7 +116,7 @@ watch(
         >
           <UButton
             icon="i-lucide-file-json-2"
-            label="Stylesheet bearbeiten"
+            label="Expertenmodus: Eigenes CSS"
             color="neutral"
             variant="link"
             trailing-icon="i-heroicons-chevron-down"

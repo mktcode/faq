@@ -8,14 +8,16 @@ defineProps<{
 
 <template>
   <div class="mb-8">
-    <a
-      v-if="component.showTitle"
-      id="anfrage"
-      href="#anfrage"
-      class="block text-2xl font-semibold cursor-pointer relative before:content-['#'] before:absolute before:-left-6 before:text-gray-200 before:opacity-0 before:transition-opacity hover:before:opacity-100"
-    >
-      {{ component.title || 'Anfrage' }}
-    </a>
+    <h2 class="mt-0">
+      <a
+        v-if="component.showTitle"
+        id="anfrage"
+        href="#anfrage"
+        class="block font-semibold cursor-pointer relative no-underline"
+      >
+        {{ component.title || 'Anfrage' }}
+      </a>
+    </h2>
 
     <p
       v-if="component.description"

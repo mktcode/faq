@@ -20,7 +20,16 @@ defineEmits<{
       @click="$emit('edit', componentId)"
     />
 
-    <div class="max-w-5xl mx-auto py-24 px-6">
+    <div
+      class="prose max-w-5xl mx-auto py-24 px-6 transition-all"
+      :class="{
+        'prose-sm': $profile.settings.public.design.fontSize === 'sm',
+        'prose-md': $profile.settings.public.design.fontSize === 'md',
+        'prose-lg': $profile.settings.public.design.fontSize === 'lg',
+        'prose-xl': $profile.settings.public.design.fontSize === 'xl',
+        'prose-2xl': $profile.settings.public.design.fontSize === '2xl',
+      }"
+    >
       <slot />
     </div>
   </div>

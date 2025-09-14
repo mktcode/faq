@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex items-center justify-center gap-2 mt-12 text-sm">
+  <div class="w-full flex items-center justify-center gap-2 mt-12 p-24">
     <ULink
       to="/impressum"
       class="text-gray-400"

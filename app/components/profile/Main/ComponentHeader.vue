@@ -9,13 +9,13 @@ defineProps<{
 <template>
   <h2
     v-if="component.showTitle"
-    class="text-2xl font-semibold mb-4"
+    class="font-semibold"
   >
     {{ component.title }}
   </h2>
   <div
     v-if="component.description"
-    class="mb-6 text-gray-600 prose prose-sm sm:prose lg:prose-lg xl:prose-2xl max-w-none"
+    class="mb-6 text-gray-600"
     v-html="component.description"
   />
 </template>

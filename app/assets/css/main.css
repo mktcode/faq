@@ -92,8 +92,6 @@ button,
 
 #main .prose,
 .tiptap {
-  @apply max-w-none;
-
   mark {
     @apply bg-primary-200 text-primary-900 py-px px-1;
   }
