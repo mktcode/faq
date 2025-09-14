@@ -10,6 +10,7 @@ const { saveSettings, resetSettings, isSavingSettings, unsavedSettings } = usePr
     >
       <UButton
         class="rounded-none p-4"
+        size="md"
         label="Zurücksetzen"
         icon="i-heroicons-backward"
         variant="soft"
@@ -17,6 +18,7 @@ const { saveSettings, resetSettings, isSavingSettings, unsavedSettings } = usePr
       />
       <UButton
         class="w-full rounded-none p-4"
+        size="md"
         label="Änderungen Speichern"
         icon="i-heroicons-check"
         :loading="isSavingSettings"

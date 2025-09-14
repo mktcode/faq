@@ -92,71 +92,73 @@ async function deleteDownload(index: number) {
 </script>
 
 <template>
-  <p class="text-gray-400">
-    Laden Sie hier Dateien hoch, die Sie Besuchern zum Herunterladen anbieten wollen,
-    z.B. Preislisten, Fragebögen, Zertifikate oder Ihre AGB.
-  </p>
-  <div
-    :class="`relative flex flex-col items-center justify-center w-full h-auto border-2 ${isDragging ? 'border-primary-500' : 'border-gray-300'} border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100`"
-    @dragenter="onDragEnter"
-    @dragleave="onDragLeave"
-    @dragover="onDragOver"
-    @drop="onDrop"
-  >
-    <div class="flex flex-col items-center justify-center pt-5 p-4">
-      <UIcon
-        :class="`mb-2 size-12 text-gray-200`"
-        name="i-heroicons-plus"
-      />
-      <p :class="`mb-1 text-xs text-gray-500`">
-        <span class="font-semibold">Klicken</span> oder Dateien hierhin ziehen (PDF, DOC, max. 5 MB)
-      </p>
-    </div>
-    <input
-      id="download-dropzone"
-      ref="fileInput"
-      type="file"
-      class="hidden"
-      capture
-      multiple
-      @change="handleInputChange"
-    >
-    <label
-      for="download-dropzone"
-      class="w-full h-full absolute top-0 left-0 cursor-pointer"
-    />
-  </div>
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-4">
+    <p class="text-gray-400">
+      Laden Sie hier Dateien hoch, die Sie Besuchern zum Herunterladen anbieten wollen,
+      z.B. Preislisten, Fragebögen, Zertifikate oder Ihre AGB.
+    </p>
     <div
-      v-for="(download, index) in component.items"
-      :key="index"
-      class="flex flex-col items-center justify-center w-full gap-2"
+      :class="`relative flex flex-col items-center justify-center w-full h-auto border-2 ${isDragging ? 'border-primary-500' : 'border-gray-300'} border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100`"
+      @dragenter="onDragEnter"
+      @dragleave="onDragLeave"
+      @dragover="onDragOver"
+      @drop="onDrop"
     >
-      <div class="flex gap-2 w-full">
-        <UInput
-          v-model="download.title"
-          class="flex-1"
-          placeholder="Bildtitel"
+      <div class="flex flex-col items-center justify-center pt-5 p-4">
+        <UIcon
+          :class="`mb-2 size-12 text-gray-200`"
+          name="i-heroicons-plus"
         />
-        <UButton
-          variant="soft"
-          icon="i-heroicons-arrow-down-tray"
-          :href="download.url"
-          target="_blank"
-          download
-        />
-        <UButton
-          color="error"
-          variant="soft"
-          icon="i-heroicons-trash"
-          @click="deleteDownload(index)"
+        <p :class="`mb-1 text-xs text-gray-500`">
+          <span class="font-semibold">Klicken</span> oder Dateien hierhin ziehen (PDF, DOC, max. 5 MB)
+        </p>
+      </div>
+      <input
+        id="download-dropzone"
+        ref="fileInput"
+        type="file"
+        class="hidden"
+        capture
+        multiple
+        @change="handleInputChange"
+      >
+      <label
+        for="download-dropzone"
+        class="w-full h-full absolute top-0 left-0 cursor-pointer"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <div
+        v-for="(download, index) in component.items"
+        :key="index"
+        class="flex flex-col items-center justify-center w-full gap-2"
+      >
+        <div class="flex gap-2 w-full">
+          <UInput
+            v-model="download.title"
+            class="flex-1"
+            placeholder="Bildtitel"
+          />
+          <UButton
+            variant="soft"
+            icon="i-heroicons-arrow-down-tray"
+            :href="download.url"
+            target="_blank"
+            download
+          />
+          <UButton
+            color="error"
+            variant="soft"
+            icon="i-heroicons-trash"
+            @click="deleteDownload(index)"
+          />
+        </div>
+        <UTextarea
+          v-model="download.description"
+          class="w-full"
+          placeholder="Bildbeschreibung"
         />
       </div>
-      <UTextarea
-        v-model="download.description"
-        class="w-full"
-        placeholder="Bildbeschreibung"
-      />
     </div>
   </div>
 </template>

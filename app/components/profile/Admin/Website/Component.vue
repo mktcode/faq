@@ -32,11 +32,14 @@ function deleteComponent() {
     handle-only
     :overlay="false"
     :close-threshold="0.85"
+    class="!rounded-none bg-transparent"
     :ui="{
-      content: 'shadow-2xl shadow-black min-w-sm',
-      container: 'relative max-w-md no-scrollbar',
-      handle: '!bg-gray-400',
-      header: 'h-10',
+      content: 'ring-0',
+      container: 'relative max-w-md no-scrollbar rounded-none p-0 bg-white shadow-xl shadow-black/30',
+      handle: '!w-3 !h-24 left-2 !bg-primary-500 !opacity-50 hover:!opacity-100 hover:!bg-primary-500 hover:!h-32 transition-all',
+      header: 'p-4 border-b border-gray-200',
+      body: 'p-4',
+      footer: '!p-0',
     }"
   >
     <template #header>
@@ -158,6 +161,10 @@ function deleteComponent() {
         v-else-if="component.key === 'faq'"
         v-model:component="component"
       />
+    </template>
+
+    <template #footer>
+      <ProfileAdminSaveAndReset />
     </template>
   </UDrawer>
 </template>

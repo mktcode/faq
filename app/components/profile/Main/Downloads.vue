@@ -30,12 +30,12 @@ defineEmits<{
           'rounded-xl': $profile.settings.public.design.rounded === 'xl',
         }"
       >
-        <h4 class="text-lg font-semibold">
+        <h4 class="font-semibold mt-0">
           {{ download.title }}
         </h4>
         <p
           v-if="download.description"
-          class="text-gray-500 text-sm"
+          class="text-gray-500 text-base"
         >
           {{ download.description }}
         </p>
@@ -45,6 +45,7 @@ defineEmits<{
             :href="download.url"
             target="_blank"
             icon="i-heroicons-arrow-down-tray"
+            class="no-underline"
           />
           <div class="flex items-center gap-1 text-gray-400 text-sm">
             <template v-if="download.type === 'pdf'">

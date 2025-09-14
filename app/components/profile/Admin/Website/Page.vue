@@ -73,7 +73,7 @@ watch(() => page.value, (newPage) => {
       wrapper: 'z-40',
       body: '!p-0',
       overlay: 'backdrop-blur-xs',
-      footer: 'justify-between',
+      footer: '!p-0',
     }"
   >
     <template #header>
@@ -239,6 +239,10 @@ watch(() => page.value, (newPage) => {
       <ProfileAdminWebsiteAddComponent
         v-model:open="showAddComponent"
       />
+    </template>
+
+    <template #footer>
+      <ProfileAdminSaveAndReset />
     </template>
   </USlideover>
 </template>
