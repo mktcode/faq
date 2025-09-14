@@ -111,7 +111,10 @@ function deleteComponent() {
     </template>
 
     <template #body>
-      <div class="mb-6">
+      <div
+        class="mb-6"
+        v-if="component.key !== 'menu'"
+      >
         <div class="flex items-center gap-4 mb-4">
           <UFormField
             label="Titel der Sektion"
@@ -138,6 +141,11 @@ function deleteComponent() {
 
       <ProfileAdminWebsiteHeader
         v-if="component.key === 'header'"
+        v-model:component="component"
+      />
+
+      <ProfileAdminWebsiteMenu
+        v-else-if="component.key === 'menu'"
         v-model:component="component"
       />
 

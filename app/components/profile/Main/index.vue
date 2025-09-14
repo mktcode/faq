@@ -97,6 +97,11 @@ function openAdmin(componentId: number) {
         :component="component"
         @edit="openAdmin(component.id)"
       />
+      <ProfileMainMenu
+        v-else-if="component.key === 'menu'"
+        :component="component"
+        @edit="openAdmin(component.id)"
+      />
       <ProfileMainOfferings
         v-if="component.key === 'offerings'"
         :component="component"

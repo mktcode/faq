@@ -76,6 +76,16 @@ const headerComponentSchema = componentSettingsBaseSchema.extend({
 })
 export type HeaderComponentSchema = z.infer<typeof headerComponentSchema>
 
+const menuComponentSchema = componentSettingsBaseSchema.extend({
+  key: z.literal('menu'),
+  items: z.array(z.object({
+    title: z.string(),
+    url: z.string(),
+    openInNewTab: z.boolean(),
+  })),
+})
+export type MenuComponentSchema = z.infer<typeof menuComponentSchema>
+
 const offeringsComponentSchema = componentSettingsBaseSchema.extend({
   key: z.literal('offerings'),
   layout: z.enum(['grid', 'list', 'carousel']),
@@ -134,6 +144,7 @@ export type DownloadsComponentSchema = z.infer<typeof downloadsComponentSchema>
 
 const componentUnionSchema = z.union([
   headerComponentSchema,
+  menuComponentSchema,
   offeringsComponentSchema,
   galleryComponentSchema,
   formComponentSchema,
@@ -244,6 +255,22 @@ export const availableComponents: AvailableComponent[] = [
       height: 'full',
       showShareButton: true,
       links: [],
+    },
+  },
+  {
+    key: 'menu',
+    title: 'Menü mit Logo',
+    description: 'Hier können Sie ein Menü mit Links zu anderen Seiten erstellen.',
+    icon: 'i-heroicons-bars-3',
+    defaults: {
+      id: 1,
+      key: 'menu',
+      title: 'Menü',
+      showTitle: false,
+      description: '',
+      visible: true,
+      order: 0,
+      items: [],
     },
   },
   {

@@ -30,7 +30,7 @@ function addComponent(component: ComponentUnionSchema) {
     }"
   >
     <template #body>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 max-w-7xl mx-auto">
         <ProfileAdminWebsiteAddComponentItem
           v-for="availableComponent in availableComponents"
           :key="availableComponent.title"
@@ -39,6 +39,7 @@ function addComponent(component: ComponentUnionSchema) {
         >
           <template #preview>
             <ProfileAdminWebsiteHeaderPreview v-if="availableComponent.key === 'header'" />
+            <ProfileAdminWebsiteMenuPreview v-else-if="availableComponent.key === 'menu'" />
             <ProfileAdminWebsiteOfferingPreview v-if="availableComponent.key === 'offerings'" />
             <ProfileAdminWebsiteGalleryPreview v-else-if="availableComponent.key === 'gallery'" />
             <ProfileAdminWebsiteFaqPreview v-else-if="availableComponent.key === 'faq'" />
