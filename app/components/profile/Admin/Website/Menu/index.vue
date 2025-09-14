@@ -8,26 +8,24 @@ const component = defineModel('component', {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 w-full">
-    <div
-      class="flex gap-2"
-      v-for="(item, index) in component.items"
-    >
-      <UFormField
-        label="Menüpunkt Beschriftung"
-      >
-        <UInput
-          v-model="item.title"
-          size="xl"
-        />
-      </UFormField>
-    </div>
+  <div class="flex flex-col w-full">
+    <TransitionGroup name="list">
+      <ProfileAdminWebsiteMenuItem
+        v-for="(_, index) in component.items"
+        :key="index"
+        v-model:item="component.items[index]!"
+        @delete="component.items.splice(index, 1)"
+      />
+    </TransitionGroup>
     <UButton
       label="Menüpunkt hinzufügen"
-      variant="outline"
-      size="md"
-      class="w-full"
-      @click="component.items.push({ title: '', url: '', openInNewTab: false })"
+      class="w-full rounded-none p-4 border-b border-primary-200"
+      variant="soft"
+      trailing-icon="i-heroicons-plus"
+      :ui="{
+        trailingIcon: 'ml-auto opacity-30',
+      }"
+      @click="component.items.push({ title: 'Neuer Menüpunkt', url: '/', openInNewTab: false })"
     />
   </div>
 </template>

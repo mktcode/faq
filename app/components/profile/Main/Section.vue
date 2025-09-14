@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import type { ComponentUnionSchema } from '~~/types/db';
+
 defineProps<{
-  componentId: number;
+  component: ComponentUnionSchema;
 }>()
 
 defineEmits<{
@@ -9,7 +11,10 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="w-full relative">
+  <div
+    class="w-full relative"
+    :id="component.key"
+  >
     <UButton
       v-if="$profile.isOwned"
       label="Sektion bearbeiten"
@@ -17,7 +22,7 @@ defineEmits<{
       variant="soft"
       size="xl"
       class="absolute top-8 -left-44 hover:-left-4 pl-8 transition-all rounded-full z-10"
-      @click="$emit('edit', componentId)"
+      @click="$emit('edit', component.id)"
     />
 
     <div

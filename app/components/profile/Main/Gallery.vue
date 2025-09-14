@@ -28,7 +28,7 @@ function scrollTo() {
 
 <template>
   <ProfileMainSection
-    :component-id="component.id"
+    :component="component"
     @edit="$emit('edit', $event)"
   >
     <ProfileMainComponentHeader :component="component" />
