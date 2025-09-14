@@ -190,7 +190,7 @@ watch(() => page.value, (newPage) => {
           <UButton
             :label="comp.title"
             :icon="availableComponents.find(c => c.key === comp.key)?.icon || 'i-heroicons-cube-transparent'"
-            class="w-full rounded-none p-4 border-b border-gray-200"
+            class="w-full rounded-none px-4 py-2 border-b border-gray-200"
             variant="ghost"
             color="neutral"
             @click="go(`#website/page/${page.id}/component/${comp.id}`)"
