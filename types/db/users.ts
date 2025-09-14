@@ -89,7 +89,7 @@ export type OfferingComponentSchema = z.infer<typeof offeringsComponentSchema>
 
 const galleryComponentSchema = componentSettingsBaseSchema.extend({
   key: z.literal('gallery'),
-  type: z.enum(['grid', 'masonry']),
+  type: z.enum(['grid', 'grid-with-header', 'masonry']),
   items: z.array(z.object({
     url: z.string(),
     description: z.string(),

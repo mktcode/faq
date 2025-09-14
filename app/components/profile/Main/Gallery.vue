@@ -41,6 +41,11 @@ function scrollTo() {
         @open-modal="openModal"
         :component="component"
       />
+      <ProfileMainGalleryGridWithHeader
+        v-if="component.type === 'grid-with-header'"
+        @open-modal="openModal"
+        :component="component"
+      />
       <ProfileMainGalleryMasonry
         v-if="component.type === 'masonry'"
         @open-modal="openModal"

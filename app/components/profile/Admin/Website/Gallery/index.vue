@@ -20,6 +20,10 @@ const galleryTypes = ref([
     value: 'grid',
   },
   {
+    label: 'Raster mit Kopfbild',
+    value: 'grid-with-header',
+  },
+  {
     label: 'Mauerwerk',
     value: 'masonry',
     disabled: !$profile.subscription.plan,
@@ -115,7 +119,7 @@ const linkInput = ref('')
 
 <template>
   <div class="flex flex-col gap-4">
-    <UFormField label="Darstellung">
+    <UFormField label="Variante">
       <USelect
         v-model="component.type"
         :items="galleryTypes"
