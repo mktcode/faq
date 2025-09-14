@@ -5,7 +5,6 @@ const font = computed(() => $profile.settings.public.design.font)
 
 <template>
   <FontWrapper :font="font">
-    <ProfileMainHeader />
     <div class="flex flex-col items-center justify-center gap-2 max-w-lg mx-auto py-12 px-6">
       <div class="prose-xl">
         <h1 class="text-center">
