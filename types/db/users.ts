@@ -84,7 +84,7 @@ const menuComponentSchema = componentSettingsBaseSchema.extend({
     url: z.string(),
     openInNewTab: z.boolean(),
     highlight: z.boolean().optional(),
-    position: z.enum(['left', 'center', 'right']).optional(),
+    position: z.enum(['left', 'center', 'right']),
   })),
 })
 export type MenuComponentSchema = z.infer<typeof menuComponentSchema>

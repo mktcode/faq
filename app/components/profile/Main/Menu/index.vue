@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { MenuComponentSchema } from '~~/types/db';
 
-defineProps<{
+const { component } = defineProps<{
   component: MenuComponentSchema;
 }>()
 
@@ -24,6 +24,16 @@ const size = computed(() => {
       return 'md'
   }
 })
+
+const itemsLeft = computed(() => {
+  return component.items.filter(item => item.position === 'left')
+})
+const itemsCenter = computed(() => {
+  return component.items.filter(item => item.position === 'center')
+})
+const itemsRight = computed(() => {
+  return component.items.filter(item => item.position === 'right')
+})
 </script>
 
 <template>
@@ -37,20 +47,52 @@ const size = computed(() => {
       class="absolute top-8 -left-44 hover:-left-4 pl-8 transition-all rounded-full z-10"
       @click="$emit('edit', component.id)"
     />
-    <div class="w-full flex justify-start gap-2 max-w-5xl mx-auto py-4 px-6 transition-all">
-      <UButton
-        v-for="(item, index) in component.items"
-        :key="index"
-        :label="item.title"
-        :icon="item.icon"
-        :to="item.url"
-        :target="item.openInNewTab ? '_blank' : '_self'"
-        :variant="item.highlight ? 'solid' : 'ghost'"
-        :ui="{
-          leadingIcon: 'opacity-50',
-        }"
-        :size="size"
-      />
+    <div class="w-full flex justify-between gap-2 max-w-5xl mx-auto py-4 px-6 transition-all">
+      <div>
+        <UButton
+          v-for="(item, index) in itemsLeft"
+          :key="index"
+          :label="item.title"
+          :icon="item.icon"
+          :to="item.url"
+          :target="item.openInNewTab ? '_blank' : '_self'"
+          :variant="item.highlight ? 'solid' : 'ghost'"
+          :ui="{
+            leadingIcon: 'opacity-50',
+          }"
+          :size="size"
+        />
+      </div>
+      <div>
+        <UButton
+          v-for="(item, index) in itemsCenter"
+          :key="index"
+          :label="item.title"
+          :icon="item.icon"
+          :to="item.url"
+          :target="item.openInNewTab ? '_blank' : '_self'"
+          :variant="item.highlight ? 'solid' : 'ghost'"
+          :ui="{
+            leadingIcon: 'opacity-50',
+          }"
+          :size="size"
+        />
+      </div>
+      <div>
+        <UButton
+          v-for="(item, index) in itemsRight"
+          :key="index"
+          :label="item.title"
+          :icon="item.icon"
+          :to="item.url"
+          :target="item.openInNewTab ? '_blank' : '_self'"
+          :variant="item.highlight ? 'solid' : 'ghost'"
+          :ui="{
+            leadingIcon: 'opacity-50',
+          }"
+          :size="size"
+        />
+      </div>
     </div>
   </div>
 </template>

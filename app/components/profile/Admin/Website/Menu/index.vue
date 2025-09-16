@@ -25,7 +25,12 @@ const component = defineModel('component', {
       :ui="{
         trailingIcon: 'ml-auto opacity-30',
       }"
-      @click="component.items.push({ title: 'Neuer Menüpunkt', url: '/', openInNewTab: false })"
+      @click="component.items.push({
+        title: 'Neuer Menüpunkt',
+        url: '/',
+        openInNewTab: false,
+        position: 'left',
+      })"
     />
   </div>
 </template>

@@ -86,6 +86,21 @@ watch(targetType, (newValue) => {
           />
         </UFormField>
       </div>
+      <UFormField
+        label="Ausrichtung"
+      >
+        <USelect
+          v-model="item.position"
+          :items="[
+            { label: 'Links', value: 'left' },
+            { label: 'Mitte', value: 'center' },
+            { label: 'Rechts', value: 'right' },
+          ]"
+          size="xl"
+          class="w-full"
+          label="Ausrichtung"
+        />
+      </UFormField>
       <USwitch
         v-model="item.highlight"
         label="Hervorheben"
