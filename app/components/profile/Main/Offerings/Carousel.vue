@@ -27,7 +27,7 @@ defineProps<{
     </UCarousel>
     <ProfileMainOfferingsItem
       v-else-if="component.items.length === 1"
-      :item="component.items[0]"
+      :item="component.items[0]!"
     />
   </div>
 </template>

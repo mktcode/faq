@@ -1,9 +1,8 @@
 <script setup lang="ts">
+import type { OfferingComponentSchema } from '~~/types/db';
+
 defineProps<{
-  item: {
-    title: string
-    description: string
-  }
+  item: OfferingComponentSchema['items'][number]
 }>()
 </script>
 
