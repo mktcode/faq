@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import type { OfferingComponentSchema } from '~~/types/db';
+
 const offering = defineModel('offering', {
-  type: Object as () => { title: string, description: string },
+  type: Object as () => OfferingComponentSchema['items'][number],
   required: true,
 })
 
