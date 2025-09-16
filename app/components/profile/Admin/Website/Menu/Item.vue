@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import type { MenuComponentSchema } from '~~/types/db';
+
 const { $profile } = useProfile()
 
 const item = defineModel('item', {
-  type: Object as () => { title: string; url: string; openInNewTab: boolean },
+  type: Object as () => MenuComponentSchema['items'][number],
   required: true,
 })
 
@@ -60,23 +62,34 @@ watch(targetType, (newValue) => {
     </template>
 
     <template #content>
-      <UFormField
-        label="Beschriftung"
-        :ui="{ container: 'flex gap-2' }"
-      >
-        <UInput
-          v-model="item.title"
-          size="xl"
-          class="w-full"
-        />
-        <UButton
-          icon="i-heroicons-trash"
-          variant="soft"
-          color="error"
-          size="md"
-          @click="$emit('delete')"
-        />
-      </UFormField>
+      <div class="flex gap-2">
+        <UFormField
+          label="Symbol"
+        >
+          <IconPicker v-model:icon="item.icon" />
+        </UFormField>
+        <UFormField
+          label="Beschriftung"
+          :ui="{ container: 'flex gap-2' }"
+        >
+          <UInput
+            v-model="item.title"
+            size="xl"
+            class="w-full"
+          />
+          <UButton
+            icon="i-heroicons-trash"
+            variant="soft"
+            color="error"
+            size="md"
+            @click="$emit('delete')"
+          />
+        </UFormField>
+      </div>
+      <USwitch
+        v-model="item.highlight"
+        label="Hervorheben"
+      />
       <UFormField
         label="Ziel"
         :ui="{ container: 'flex flex-col gap-2' }"

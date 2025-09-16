@@ -8,6 +8,22 @@ defineProps<{
 defineEmits<{
   edit: [componentId: number]
 }>()
+
+const { $profile } = useProfile()
+
+const size = computed(() => {
+  switch ($profile.settings.public.design.fontSize) {
+    case 'sm':
+      return 'sm'
+    case 'lg':
+      return 'lg'
+    case 'xl':
+    case '2xl':
+      return 'xl'
+    default:
+      return 'md'
+  }
+})
 </script>
 
 <template>
@@ -26,9 +42,14 @@ defineEmits<{
         v-for="(item, index) in component.items"
         :key="index"
         :label="item.title"
+        :icon="item.icon"
         :to="item.url"
         :target="item.openInNewTab ? '_blank' : '_self'"
-        variant="ghost"
+        :variant="item.highlight ? 'solid' : 'ghost'"
+        :ui="{
+          leadingIcon: 'opacity-50',
+        }"
+        :size="size"
       />
     </div>
   </div>

@@ -80,8 +80,10 @@ const menuComponentSchema = componentSettingsBaseSchema.extend({
   key: z.literal('menu'),
   items: z.array(z.object({
     title: z.string(),
+    icon: z.string().optional(),
     url: z.string(),
     openInNewTab: z.boolean(),
+    highlight: z.boolean().optional(),
   })),
 })
 export type MenuComponentSchema = z.infer<typeof menuComponentSchema>
