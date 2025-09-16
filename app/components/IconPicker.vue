@@ -13,6 +13,26 @@ const items = ref([
     value: 'none',
   },
   {
+    label: 'Haus',
+    value: 'i-lucide-home',
+    icon: 'i-lucide-home',
+  },
+  {
+    label: 'Haus 2',
+    value: 'i-heroicons-home',
+    icon: 'i-heroicons-home',
+  },
+  {
+    label: 'Megafon',
+    value: 'i-heroicons-megaphone',
+    icon: 'i-heroicons-megaphone',
+  },
+  {
+    label: 'Brief',
+    value: 'i-lucide-mail',
+    icon: 'i-lucide-mail',
+  },
+  {
     label: 'Instagram',
     value: 'i-lucide-instagram',
     icon: 'i-lucide-instagram',
