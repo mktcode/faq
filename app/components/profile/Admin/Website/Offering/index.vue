@@ -20,7 +20,7 @@ function removeItem(index: number) {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 w-full">
+  <div class="flex flex-col gap-4 p-4 w-full">
     <UFormField label="Anordnung der Inhalte">
       <USelect
         v-model="component.layout"
@@ -44,7 +44,7 @@ function removeItem(index: number) {
       <ProfileAdminWebsiteOfferingItem
         v-for="(offering, index) in component.items"
         :key="offering.id"
-        v-model:offering="component.items[index]"
+        v-model:offering="component.items[index]!"
         :index="index"
         :items-length="component.items.length"
         @change-order="changeOrder(index, $event)"
