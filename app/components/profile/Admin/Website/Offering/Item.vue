@@ -20,8 +20,11 @@ const isOpen = ref(false)
 <template>
   <UCollapsible
     v-model:open="isOpen"
-    class="flex flex-col border border-gray-200 rounded-lg bg-white"
+    class="flex flex-col border-b border-gray-200 bg-white"
     :unmount-on-hide="false"
+    :ui="{
+      content: 'flex flex-col gap-4 p-4 border-t border-gray-200',
+    }"
   >
     <UButtonGroup>
       <UButton
@@ -62,7 +65,6 @@ const isOpen = ref(false)
         v-model="offering.title"
         placeholder="Website erstellen"
         class="w-full"
-        :ui="{ base: 'rounded-none' }"
       />
       <WysiwygEditor
         v-model="offering.description"

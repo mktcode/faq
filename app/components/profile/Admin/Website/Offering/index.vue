@@ -20,7 +20,7 @@ function removeItem(index: number) {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 p-4 w-full">
+  <div class="flex flex-col gap-4 p-4 w-full border-b border-gray-200">
     <UFormField label="Anordnung der Inhalte">
       <USelect
         v-model="component.layout"
@@ -40,16 +40,16 @@ function removeItem(index: number) {
     >
       Inhalt hinzufügen
     </UButton>
-    <TransitionGroup name="list">
-      <ProfileAdminWebsiteOfferingItem
-        v-for="(offering, index) in component.items"
-        :key="offering.id"
-        v-model:offering="component.items[index]!"
-        :index="index"
-        :items-length="component.items.length"
-        @change-order="changeOrder(index, $event)"
-        @remove="removeItem(index)"
-      />
-    </TransitionGroup>
   </div>
+  <TransitionGroup name="list">
+    <ProfileAdminWebsiteOfferingItem
+      v-for="(offering, index) in component.items"
+      :key="offering.id"
+      v-model:offering="component.items[index]!"
+      :index="index"
+      :items-length="component.items.length"
+      @change-order="changeOrder(index, $event)"
+      @remove="removeItem(index)"
+    />
+  </TransitionGroup>
 </template>
