@@ -112,7 +112,7 @@ function deleteComponent() {
 
     <template #body>
       <div
-        class="mb-6"
+        class="p-4"
         v-if="component.key !== 'menu'"
       >
         <div class="flex items-center gap-4 mb-4">
