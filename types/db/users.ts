@@ -94,6 +94,7 @@ const offeringsComponentSchema = componentSettingsBaseSchema.extend({
   layout: z.enum(['grid', 'list', 'carousel']),
   items: z.array(z.object({
     id: z.number(),
+    image: z.string().optional(),
     title: z.string(),
     description: z.string(),
   })),

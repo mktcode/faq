@@ -9,11 +9,26 @@ defineProps<{
 <template>
   <div class="flex flex-col gap-y-24">
     <TransitionGroup name="list">
-      <ProfileMainOfferingsItem
+      <div
         v-for="item in component.items"
         :key="item.id"
-        :item="item"
-      />
+        class="flex flex-col md:flex-row items-start gap-4"
+      >
+        <img
+          v-if="item.image"
+          :src="item.image"
+          alt="Offering Image"
+          class="rounded-lg shrink-0 mt-0 max-w-1/3"
+        />
+        <div>
+          <h2 class="font-semibold mt-0">
+            {{ item.title }}
+          </h2>
+          <div
+            v-html="item.description"
+          />
+        </div>
+      </div>
     </TransitionGroup>
   </div>
 </template>

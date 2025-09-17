@@ -63,6 +63,20 @@ const isOpen = ref(false)
     </UButtonGroup>
 
     <template #content>
+      <Transition name="fade">
+        <img
+          v-if="offering.image"
+          :src="offering.image"
+          alt="Offering Image"
+          class="w-full h-48 object-cover rounded-lg"
+        />
+      </Transition>
+      <UButton
+        label="Hauptbild festlegen"
+        icon="i-heroicons-photo"
+        variant="soft"
+        @click="offering.image = 'https://picsum.photos/id/136/800/400'"
+      />
       <UInput
         v-model="offering.title"
         placeholder="Website erstellen"
