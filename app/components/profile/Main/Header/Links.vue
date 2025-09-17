@@ -44,7 +44,7 @@ function getStaggeredAnimationClass(index: number) {
         v-for="(link, index) in component.links"
         :key="index"
         :label="link.title"
-        :icon="link.icon === 'none' ? undefined : link.icon"
+        :icon="link.icon"
         :href="link.url"
         target="_blank"
         class="header-link shadow-sm hover:shadow-lg transition-all w-full sm:w-auto"

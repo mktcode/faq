@@ -48,7 +48,7 @@ const itemsRight = computed(() => {
       @click="$emit('edit', component.id)"
     />
     <div class="w-full flex justify-between gap-2 max-w-5xl mx-auto py-4 px-6 transition-all">
-      <div>
+      <div class="flex gap-2">
         <UButton
           v-for="(item, index) in itemsLeft"
           :key="index"
@@ -63,7 +63,7 @@ const itemsRight = computed(() => {
           :size="size"
         />
       </div>
-      <div>
+      <div class="flex gap-2">
         <UButton
           v-for="(item, index) in itemsCenter"
           :key="index"
@@ -78,7 +78,7 @@ const itemsRight = computed(() => {
           :size="size"
         />
       </div>
-      <div>
+      <div class="flex gap-2">
         <UButton
           v-for="(item, index) in itemsRight"
           :key="index"

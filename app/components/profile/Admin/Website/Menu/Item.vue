@@ -50,6 +50,7 @@ watch(targetType, (newValue) => {
       <div class="flex items-center">
         <UButton
           :label="`${item.title}`"
+          :icon="item.icon"
           class="w-full rounded-none p-4"
           variant="ghost"
           color="neutral"

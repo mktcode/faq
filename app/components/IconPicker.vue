@@ -2,15 +2,15 @@
 import type { SelectMenuItem } from '@nuxt/ui'
 
 const icon = defineModel('icon', {
-  default: 'none',
-  type: String,
+  default: undefined,
+  type: String as () => string | undefined,
 })
 
 // TODO: Add more icons
 const items = ref([
   {
     label: 'Kein Symbol',
-    value: 'none',
+    value: undefined,
   },
   {
     label: 'Haus',
@@ -138,7 +138,7 @@ const value = ref(icon.value ? items.value.find(item => item.value === icon.valu
 
 watch(value, (newValue) => {
   if (newValue) {
-    icon.value = newValue.icon || 'none'
+    icon.value = newValue.icon
   }
 }, { immediate: true })
 </script>

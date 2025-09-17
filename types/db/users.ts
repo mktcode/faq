@@ -70,7 +70,7 @@ const headerComponentSchema = componentSettingsBaseSchema.extend({
     z.object({
       title: z.string(),
       url: z.string().url(),
-      icon: z.string(),
+      icon: z.string().optional(),
     }),
   ),
 })
