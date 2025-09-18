@@ -43,13 +43,22 @@ function getStaggeredAnimationClass(index: number) {
       <UButton
         v-for="(link, index) in component.links"
         :key="index"
-        :label="link.title"
-        :icon="link.icon"
+        :icon="link.icon?.startsWith('https://') ? undefined : link.icon"
         :href="link.url"
         target="_blank"
         class="header-link shadow-sm hover:shadow-lg transition-all w-full sm:w-auto"
         :class="getStaggeredAnimationClass(index)"
-      />
+      >
+        <template #default>
+          <img
+            v-if="link.icon?.startsWith('https://')"
+            :src="link.icon"
+            alt=""
+            class="inline-block max-w-8 max-h-8 align-middle"
+          />
+          {{ link.title }}
+        </template>
+      </UButton>
     </template>
 
     <UPopover

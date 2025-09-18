@@ -179,7 +179,7 @@ async function deleteImage(image: 'logo' | 'header') {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 w-full">
+  <div class="flex flex-col gap-4 p-4 w-full">
     <div class="flex gap-2">
       <UFormField
         label="Schriftgröße Titel"
@@ -364,7 +364,7 @@ async function deleteImage(image: 'logo' | 'header') {
         />
       </div>
       <UButton
-        label="Link hinzufügen"
+        label="Button hinzufügen"
         icon="i-heroicons-plus"
         variant="soft"
         color="neutral"
