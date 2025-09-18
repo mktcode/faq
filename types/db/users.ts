@@ -80,6 +80,7 @@ const menuComponentSchema = componentSettingsBaseSchema.extend({
   key: z.literal('menu'),
   items: z.array(z.object({
     title: z.string(),
+    subtitle: z.string().optional(),
     icon: z.string().optional(),
     url: z.string(),
     openInNewTab: z.boolean(),
@@ -188,7 +189,7 @@ export const settingsFormSchema = z.object({
     }),
     design: z.object({
       font: z.string(),
-      fontSize: z.enum(['sm', 'md', 'lg', 'xl', '2xl']),
+      fontSize: z.enum(['md', 'lg', 'xl', '2xl']),
       color: colorSchema,
       rounded: z.string(),
     }),

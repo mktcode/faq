@@ -161,6 +161,12 @@ function selectIcon(item: { icon: string | undefined }) {
     title="Symbol auswählen"
   >
     <template #body>
+      <UButton
+        label="Eigenes Symbol hochladen"
+        icon="i-lucide-upload"
+        variant="soft"
+        class="mb-4 w-full"
+      />
       <UInput
         v-model="filterInput"
         placeholder="Symbole filtern..."

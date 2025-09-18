@@ -87,6 +87,13 @@ watch(targetType, (newValue) => {
           />
         </UFormField>
       </div>
+      <UFormField label="Untertitel">
+        <UInput
+          v-model="item.subtitle"
+          size="xl"
+          class="w-full"
+        />
+      </UFormField>
       <UFormField
         label="Ausrichtung"
       >

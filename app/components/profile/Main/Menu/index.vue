@@ -13,8 +13,6 @@ const { $profile } = useProfile()
 
 const size = computed(() => {
   switch ($profile.settings.public.design.fontSize) {
-    case 'sm':
-      return 'sm'
     case 'lg':
       return 'lg'
     case 'xl':
@@ -49,47 +47,26 @@ const itemsRight = computed(() => {
     />
     <div class="w-full flex justify-between gap-2 max-w-5xl mx-auto py-4 px-6 transition-all">
       <div class="flex gap-2">
-        <UButton
+        <ProfileMainMenuButton
           v-for="(item, index) in itemsLeft"
           :key="index"
-          :label="item.title"
-          :icon="item.icon"
-          :to="item.url"
-          :target="item.openInNewTab ? '_blank' : '_self'"
-          :variant="item.highlight ? 'solid' : 'ghost'"
-          :ui="{
-            leadingIcon: 'opacity-50',
-          }"
+          :item="item"
           :size="size"
         />
       </div>
       <div class="flex gap-2">
-        <UButton
+        <ProfileMainMenuButton
           v-for="(item, index) in itemsCenter"
           :key="index"
-          :label="item.title"
-          :icon="item.icon"
-          :to="item.url"
-          :target="item.openInNewTab ? '_blank' : '_self'"
-          :variant="item.highlight ? 'solid' : 'ghost'"
-          :ui="{
-            leadingIcon: 'opacity-50',
-          }"
+          :item="item"
           :size="size"
         />
       </div>
       <div class="flex gap-2">
-        <UButton
+        <ProfileMainMenuButton
           v-for="(item, index) in itemsRight"
           :key="index"
-          :label="item.title"
-          :icon="item.icon"
-          :to="item.url"
-          :target="item.openInNewTab ? '_blank' : '_self'"
-          :variant="item.highlight ? 'solid' : 'ghost'"
-          :ui="{
-            leadingIcon: 'opacity-50',
-          }"
+          :item="item"
           :size="size"
         />
       </div>

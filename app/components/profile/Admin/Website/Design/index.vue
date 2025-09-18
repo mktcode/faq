@@ -76,7 +76,6 @@ watch(
             v-model="$profile.settings.public.design.fontSize"
             class="w-full"
             :items="[
-              { label: 'sehr klein', value: 'sm' },
               { label: 'klein', value: 'md' },
               { label: 'mittel', value: 'lg' },
               { label: 'groß', value: 'xl' },
