@@ -14,6 +14,7 @@ defineEmits<{
   <div
     class="w-full relative"
     :id="component.key + '-' + component.id"
+    :class="component.key"
   >
     <UButton
       v-if="$profile.isOwned"
