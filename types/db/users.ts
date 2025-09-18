@@ -280,7 +280,7 @@ export const availableComponents: AvailableComponent[] = [
   },
   {
     key: 'offerings',
-    title: 'Liste mit Texten und Bildern',
+    title: 'Texte mit Bildern',
     description: 'Hier können Sie beliebige Texte und Bilder in einer Liste, einem Raster oder Karussell anzeigen.',
     icon: 'i-heroicons-megaphone',
     defaults: {
