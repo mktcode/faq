@@ -264,8 +264,8 @@ export const availableComponents: AvailableComponent[] = [
   },
   {
     key: 'menu',
-    title: 'Menü mit Logo',
-    description: 'Hier können Sie ein Menü mit Links zu anderen Seiten erstellen.',
+    title: 'Menü',
+    description: 'Hier können Sie ein Menü mit Links zu anderen Seiten oder bestimmten Sektionen erstellen.',
     icon: 'i-heroicons-bars-3',
     defaults: {
       id: 1,
