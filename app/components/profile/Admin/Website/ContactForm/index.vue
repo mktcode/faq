@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="w-full flex flex-col gap-4">
+  <div class="w-full flex flex-col gap-4 p-4">
     <UFormField
       label="Erfolgsmeldung"
       description="Wird angezeigt, wenn das Formular erfolgreich übermittelt wurde."

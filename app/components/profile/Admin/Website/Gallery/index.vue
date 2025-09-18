@@ -118,7 +118,7 @@ const linkInput = ref('')
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="flex flex-col gap-4 p-4">
     <UFormField label="Variante">
       <USelect
         v-model="component.type"

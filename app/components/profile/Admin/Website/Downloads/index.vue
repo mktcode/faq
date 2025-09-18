@@ -92,7 +92,7 @@ async function deleteDownload(index: number) {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="flex flex-col gap-4 p-4">
     <p class="text-gray-400">
       Laden Sie hier Dateien hoch, die Sie Besuchern zum Herunterladen anbieten wollen,
       z.B. Preislisten, Fragebögen, Zertifikate oder Ihre AGB.
