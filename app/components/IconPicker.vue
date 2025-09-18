@@ -148,10 +148,61 @@ function selectIcon(item: { icon: string | undefined }) {
   icon.value = item.icon as string | undefined
   open.value = false
 }
+
+
+const fileInput = ref<HTMLInputElement | null>(null)
+const isUploading = ref(false)
+
+const uploadFile = async (files: FileList | null) => {
+  if (!files || files.length === 0) return
+
+  isUploading.value = true
+
+  for (const file of Array.from(files)) {
+    const formData = new FormData()
+    formData.append('files', file)
+    try {
+      const { imageUrls } = await $fetch('/api/user/upload/image', {
+        method: 'POST',
+        body: formData,
+      })
+
+      const imageUrl = imageUrls[0]
+      icon.value = imageUrl
+    }
+    catch (error) {
+      console.error('Error uploading files:', error)
+    }
+  }
+  isUploading.value = false
+  open.value = false
+  if (fileInput.value) {
+    fileInput.value.value = ''
+  }
+}
+
+const handleInputChange = () => {
+  uploadFile(fileInput.value?.files || null)
+}
 </script>
 
 <template>
   <UButton
+    v-if="icon?.startsWith('https://')"
+    variant="soft"
+    @click="open = true"
+    :ui="{
+      base: 'p-0',
+    }"
+  >
+    <img
+      :src="icon"
+      alt="Eigenes Symbol"
+      class="size-10 object-contain rounded"
+    />
+  </UButton>
+  <UButton
+    v-else
     variant="soft"
     :icon="icon || 'i-lucide-circle-off'"
     @click="open = true"
@@ -161,12 +212,30 @@ function selectIcon(item: { icon: string | undefined }) {
     title="Symbol auswählen"
   >
     <template #body>
-      <UButton
-        label="Eigenes Symbol hochladen"
-        icon="i-lucide-upload"
-        variant="soft"
-        class="mb-4 w-full"
-      />
+      <div class="flex items-center gap-4">
+        <img
+          v-if="icon?.startsWith('https://')"
+          :src="icon"
+          alt="Eigenes Symbol"
+          class="size-16 object-contain rounded mb-4 mx-auto"
+        />
+        <UButton
+          label="Eigenes Symbol hochladen"
+          icon="i-lucide-upload"
+          variant="soft"
+          class="mb-4 w-full"
+          :loading="isUploading"
+          @click="fileInput?.click()"
+        />
+      </div>
+      <input
+        id="icon-upload"
+        ref="fileInput"
+        type="file"
+        class="hidden"
+        multiple
+        @change="handleInputChange"
+      >
       <UInput
         v-model="filterInput"
         placeholder="Symbole filtern..."

@@ -35,6 +35,10 @@ watch(targetType, (newValue) => {
     item.value.openInNewTab = true
   }
 })
+
+const iconIsImage = computed(() => {
+  return item.value.icon ? item.value.icon.startsWith('http') : false
+})
 </script>
 
 <template>
@@ -49,8 +53,7 @@ watch(targetType, (newValue) => {
     <template #default>
       <div class="flex items-center">
         <UButton
-          :label="`${item.title}`"
-          :icon="item.icon"
+          :icon="iconIsImage ? undefined : item.icon"
           class="w-full rounded-none p-4"
           variant="ghost"
           color="neutral"
@@ -58,7 +61,19 @@ watch(targetType, (newValue) => {
           :ui="{
             trailingIcon: `ml-auto transition-transform ${open ? 'rotate-180' : ''}`,
           }"
-        />
+        >
+          <template #default>
+            <img
+              v-if="iconIsImage"
+              :src="item.icon"
+              alt="Eigenes Symbol"
+              class="size-8 object-contain rounded"
+            />
+            <div class="flex flex-col items-start">
+              {{ item.title }}
+            </div>
+          </template>
+        </UButton>
       </div>
     </template>
 
