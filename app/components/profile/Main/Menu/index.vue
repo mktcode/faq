@@ -35,7 +35,10 @@ const itemsRight = computed(() => {
 </script>
 
 <template>
-  <div class="w-full relative">
+  <div
+    class="w-full relative"
+    :id="component.key + '-' + component.id"
+  >
     <UButton
       v-if="$profile.isOwned"
       label="Sektion bearbeiten"

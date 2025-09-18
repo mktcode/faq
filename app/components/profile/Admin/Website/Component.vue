@@ -21,6 +21,19 @@ function deleteComponent() {
   showDeleteModal.value = false
   go(`#website/page/${page.value?.id}`)
 }
+
+function scrollToComponent() {
+  if (component.value) {
+    const el = document.getElementById(component.value.key + '-' + component.value.id)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+}
+
+watch(component, () => {
+  scrollToComponent()
+})
 </script>
 
 <template>

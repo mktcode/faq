@@ -13,7 +13,7 @@ defineEmits<{
 <template>
   <div
     class="w-full relative"
-    :id="component.key"
+    :id="component.key + '-' + component.id"
   >
     <UButton
       v-if="$profile.isOwned"
@@ -28,7 +28,6 @@ defineEmits<{
     <div
       class="prose max-w-5xl mx-auto py-24 px-6 transition-all"
       :class="{
-        'prose-sm': $profile.settings.public.design.fontSize === 'sm',
         'prose-md': $profile.settings.public.design.fontSize === 'md',
         'prose-lg': $profile.settings.public.design.fontSize === 'lg',
         'prose-xl': $profile.settings.public.design.fontSize === 'xl',
