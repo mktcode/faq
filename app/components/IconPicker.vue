@@ -1,176 +1,203 @@
 <script setup lang="ts">
-import type { SelectMenuItem } from '@nuxt/ui'
-
 const icon = defineModel('icon', {
   default: undefined,
   type: String as () => string | undefined,
 })
 
-// TODO: Add more icons
 const items = ref([
   {
     label: 'Kein Symbol',
-    value: undefined,
+    icon: undefined,
   },
   {
     label: 'Haus',
-    value: 'i-lucide-home',
     icon: 'i-lucide-home',
+    searchTerms: ['start', 'home'],
   },
   {
     label: 'Haus 2',
-    value: 'i-heroicons-home',
     icon: 'i-heroicons-home',
+    searchTerms: ['start', 'home'],
   },
   {
     label: 'Megafon',
-    value: 'i-heroicons-megaphone',
     icon: 'i-heroicons-megaphone',
+    searchTerms: ['lautsprecher', 'ankündigung', 'marketing', 'news'],
   },
   {
     label: 'Brief',
-    value: 'i-lucide-mail',
     icon: 'i-lucide-mail',
+    searchTerms: ['email', 'kontakt', 'umschlag'],
   },
   {
     label: 'Instagram',
-    value: 'i-lucide-instagram',
     icon: 'i-lucide-instagram',
+    searchTerms: ['social'],
   },
   {
     label: 'Facebook',
-    value: 'i-lucide-facebook',
     icon: 'i-lucide-facebook',
+    searchTerms: ['social'],
   },
   {
     label: 'Twitter',
-    value: 'i-lucide-twitter',
     icon: 'i-lucide-twitter',
+    searchTerms: ['social'],
   },
   {
     label: 'LinkedIn',
-    value: 'i-lucide-linkedin',
     icon: 'i-lucide-linkedin',
+    searchTerms: ['social'],
   },
   {
     label: 'GitHub',
-    value: 'i-lucide-github',
     icon: 'i-lucide-github',
+    searchTerms: ['social'],
   },
   {
     label: 'YouTube',
-    value: 'i-lucide-youtube',
     icon: 'i-lucide-youtube',
+    searchTerms: ['video', 'social'],
   },
   {
     label: 'TikTok',
-    value: 'i-fa-brands-tiktok',
     icon: 'i-fa-brands-tiktok',
+    searchTerms: ['video', 'social'],
   },
   {
     label: 'Pinterest',
-    value: 'i-fa-brands-pinterest',
     icon: 'i-fa-brands-pinterest',
+    searchTerms: ['social'],
   },
   {
     label: 'Kleinanzeigen',
-    value: 'i-simple-icons-kleinanzeigen',
     icon: 'i-simple-icons-kleinanzeigen',
+    searchTerms: ['anzeigen', 'markt', 'auktion', 'verkaufen', 'shop'],
   },
   {
     label: 'Ebay',
-    value: 'i-fa-brands-ebay',
     icon: 'i-fa-brands-ebay',
+    searchTerms: ['auktion', 'verkaufen'],
   },
   {
     label: 'Etsy',
-    value: 'i-fa-brands-etsy',
     icon: 'i-fa-brands-etsy',
+    searchTerms: ['handgemacht', 'kunsthandwerk', 'shop'],
   },
   {
     label: 'Avocado',
-    value: 'i-icon-park-solid-avocado',
     icon: 'i-icon-park-solid-avocado',
+    searchTerms: ['essen', 'lebensmittel', 'gesund'],
   },
   {
     label: 'Google',
-    value: 'i-fa-brands-google',
     icon: 'i-fa-brands-google',
+    searchTerms: ['suche', 'browser'],
   },
   {
     label: 'Discord',
-    value: 'i-fa-brands-discord',
     icon: 'i-fa-brands-discord',
+    searchTerms: ['chat', 'kommunikation'],
   },
   {
     label: 'Bluesky',
-    value: 'i-simple-icons-bluesky',
     icon: 'i-simple-icons-bluesky',
+    searchTerms: ['social'],
   },
   {
     label: 'Mastodon',
-    value: 'i-fa-brands-mastodon',
     icon: 'i-fa-brands-mastodon',
+    searchTerms: ['social'],
   },
   {
     label: 'Shop',
-    value: 'i-lucide-shopping-cart',
     icon: 'i-lucide-shopping-cart',
+    searchTerms: ['einkaufen', 'warenkorb', 'laden'],
   },
   {
     label: 'Website',
-    value: 'i-lucide-globe',
     icon: 'i-lucide-globe',
+    searchTerms: ['internet', 'web', 'www'],
   },
   {
     label: 'Link',
-    value: 'i-lucide-link',
     icon: 'i-lucide-link',
+    searchTerms: ['url', 'verknüpfung', 'web'],
   },
   {
     label: 'Rakete',
-    value: 'i-lucide-rocket',
     icon: 'i-lucide-rocket',
+    searchTerms: ['start', 'neu', 'launch'],
   },
-] satisfies SelectMenuItem[])
+])
 
-const value = ref(icon.value ? items.value.find(item => item.value === icon.value) : items.value[0])
-
-watch(value, (newValue) => {
-  if (newValue) {
-    icon.value = newValue.icon
+const filterInput = ref('')
+const filteredItems = computed(() => {
+  if (!filterInput.value) {
+    return items.value
   }
-}, { immediate: true })
+  return items.value.filter(item =>
+    item.label.toLowerCase().includes(filterInput.value.toLowerCase())
+    || (item.searchTerms && item.searchTerms.some(term => term.toLowerCase().includes(filterInput.value.toLowerCase())))
+  )
+})
+
+const open = ref(false)
+
+function selectIcon(item: { icon: string | undefined }) {
+  icon.value = item.icon as string | undefined
+  open.value = false
+}
 </script>
 
 <template>
-  <USelectMenu
-    v-model="value"
-    :items="items"
-    :icon="value?.icon"
+  <UButton
     variant="soft"
-    :ui="{
-      base: 'bg-primary-200/50 text-primary-900 w-fit pr-0 hover:bg-primary-100 focus:bg-primary-100 aspect-square size-10',
-      content: 'w-fit',
-      leadingIcon: 'text-primary-600 size-5',
-    }"
+    :icon="icon || 'i-lucide-circle-off'"
+    @click="open = true"
+  />
+  <UModal
+    v-model:open="open"
+    title="Symbol auswählen"
   >
-    <template #default>
-      &nbsp;
-    </template>
-    <template #trailing>
-      <span />
-    </template>
-    <template #item-leading="{ item }">
-      <div
-        v-if="item.icon"
-        class="bg-primary-200/50 text-primary-600 hover:bg-primary-100 focus:bg-primary-100 aspect-square flex items-center justify-center p-2 rounded-lg"
+    <template #body>
+      <UInput
+        v-model="filterInput"
+        placeholder="Symbole filtern..."
+        class="mb-4 w-full"
+        clearable
+        icon="i-lucide-search"
       >
-        <UIcon
-          :name="item.icon"
-          class="size-5"
-        />
+        <template v-if="filterInput" #trailing>
+          <UButton
+            color="neutral"
+            variant="link"
+            size="sm"
+            icon="i-lucide-x"
+            aria-label="Eingabe löschen"
+            @click="filterInput = ''"
+          />
+        </template>
+      </UInput>
+      <div class="grid grid-cols-4 gap-4 max-h-96 overflow-y-auto p-2">
+        <button
+          v-for="item in filteredItems"
+          :key="item.icon"
+          @click="selectIcon(item)"
+          class="flex flex-col items-center gap-2 p-2 rounded-lg hover:bg-primary-100 focus:bg-primary-100"
+        >
+          <div
+            class="text-primary-600 aspect-square flex items-center justify-center p-2 rounded-lg"
+          >
+            <UIcon
+              :name="item.icon || 'i-lucide-circle-off'"
+              class="size-8"
+              :class="{ 'opacity-50 text-gray-300': !item.icon }"
+            />
+          </div>
+          <span class="text-sm text-center">{{ item.label }}</span>
+        </button>
       </div>
     </template>
-  </USelectMenu>
+  </UModal>
 </template>
