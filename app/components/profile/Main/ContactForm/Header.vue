@@ -19,7 +19,7 @@ defineProps<{
       </a>
     </h2>
 
-    <p
+    <div
       v-if="component.description"
       class="text-gray-500 mt-3"
       v-html="component.description"
