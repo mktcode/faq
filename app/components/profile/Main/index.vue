@@ -127,6 +127,11 @@ function openAdmin(componentId: number) {
         :component="component"
         @edit="openAdmin(component.id)"
       />
+      <ProfileMainHtml
+        v-else-if="component.key === 'html'"
+        :component="component"
+        @edit="openAdmin(component.id)"
+      />
     </template>
     <ProfileMainFooter />
   </FontWrapper>

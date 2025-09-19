@@ -147,6 +147,13 @@ const downloadsComponentSchema = componentSettingsBaseSchema.extend({
 })
 export type DownloadsComponentSchema = z.infer<typeof downloadsComponentSchema>
 
+const htmlComponentSchema = componentSettingsBaseSchema.extend({
+  key: z.literal('html'),
+  html: z.string(),
+  css: z.string(),
+})
+export type HtmlComponentSchema = z.infer<typeof htmlComponentSchema>
+
 const componentUnionSchema = z.union([
   headerComponentSchema,
   menuComponentSchema,
@@ -155,6 +162,7 @@ const componentUnionSchema = z.union([
   formComponentSchema,
   faqComponentSchema,
   downloadsComponentSchema,
+  htmlComponentSchema,
 ])
 export type ComponentUnionSchema = z.infer<typeof componentUnionSchema>
 
@@ -359,6 +367,23 @@ export const availableComponents: AvailableComponent[] = [
       visible: true,
       order: 999,
       items: [],
+    },
+  },
+  {
+    key: 'html',
+    title: 'HTML-Code',
+    description: 'Hier können Sie eigenen HTML- und CSS-Code einfügen, um Ihre Website individuell zu gestalten.',
+    icon: 'i-heroicons-code-bracket',
+    defaults: {
+      id: 1,
+      key: 'html',
+      title: 'Eigener HTML-Code',
+      showTitle: true,
+      description: 'Hier können Sie eigenen HTML- und CSS-Code einfügen, um Ihre Website individuell zu gestalten.',
+      visible: true,
+      order: 999,
+      html: '<p>Fügen Sie hier Ihren eigenen HTML-Code ein.</p>',
+      css: '/* Fügen Sie hier Ihren eigenen CSS-Code ein. */',
     },
   },
 ] as const

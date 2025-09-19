@@ -1,7 +1,3 @@
-function clampPercentage(value: number): number {
-  return Math.min(100, Math.max(0, value))
-}
-
 export default defineEventHandler(async (event) => {
   setHeader(event, 'Content-Type', 'text/css')
 
@@ -10,6 +6,11 @@ export default defineEventHandler(async (event) => {
   }
 
   const settings = await getPublicSettings(event.context.profile.username)
+  const htmlComponent = settings.pages.flatMap((p) => p.components).filter((s) => s.key === 'html')
+
+  const htmlComponentCss = htmlComponent.map((c) => {
+    return `#${c.key}-${c.id} {\n${c.css}\n}`
+  })
 
   const hslColor = toHslString(settings.design.color)
 
@@ -30,7 +31,7 @@ export default defineEventHandler(async (event) => {
   }
 }`
 
-  const css = `${colorMixBlock}\n\n${settings.css}`
+  const css = `${colorMixBlock}\n\n${settings.css}\n\n${htmlComponentCss.join('\n')}`
 
   return css
 })

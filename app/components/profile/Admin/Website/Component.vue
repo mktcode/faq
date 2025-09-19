@@ -156,12 +156,10 @@ watch(component, () => {
         v-if="component.key === 'header'"
         v-model:component="component"
       />
-
       <ProfileAdminWebsiteMenu
         v-else-if="component.key === 'menu'"
         v-model:component="component"
       />
-
       <ProfileAdminWebsiteOffering
         v-if="component.key === 'offerings'"
         v-model:component="component"
@@ -180,6 +178,10 @@ watch(component, () => {
       />
       <ProfileAdminWebsiteFaq
         v-else-if="component.key === 'faq'"
+        v-model:component="component"
+      />
+      <ProfileAdminWebsiteHtml
+        v-else-if="component.key === 'html'"
         v-model:component="component"
       />
     </template>

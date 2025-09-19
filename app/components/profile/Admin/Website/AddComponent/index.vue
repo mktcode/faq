@@ -45,6 +45,7 @@ function addComponent(component: ComponentUnionSchema) {
             <ProfileAdminWebsiteFaqPreview v-else-if="availableComponent.key === 'faq'" />
             <ProfileAdminWebsiteDownloadsPreview v-else-if="availableComponent.key === 'downloads'" />
             <ProfileAdminWebsiteContactFormPreview v-else-if="availableComponent.key === 'form'" />
+            <ProfileAdminWebsiteHtmlPreview v-else-if="availableComponent.key === 'html'" />
           </template>
         </ProfileAdminWebsiteAddComponentItem>
       </div>
