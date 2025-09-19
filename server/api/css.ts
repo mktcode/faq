@@ -6,11 +6,6 @@ export default defineEventHandler(async (event) => {
   }
 
   const settings = await getPublicSettings(event.context.profile.username)
-  const htmlComponent = settings.pages.flatMap((p) => p.components).filter((s) => s.key === 'html')
-
-  const htmlComponentCss = htmlComponent.map((c) => {
-    return `#${c.key}-${c.id} {\n${c.css}\n}`
-  })
 
   const hslColor = toHslString(settings.design.color)
 
@@ -31,7 +26,7 @@ export default defineEventHandler(async (event) => {
   }
 }`
 
-  const css = `${colorMixBlock}\n\n${settings.css}\n\n${htmlComponentCss.join('\n')}`
+  const css = `${colorMixBlock}\n\n${settings.css}}`
 
   return css
 })

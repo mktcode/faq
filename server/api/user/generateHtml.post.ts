@@ -34,6 +34,7 @@ Buttons und Links dürfen nur auf externe Links verweisen oder die Seitenpfade u
 Das CSS und etwaige CSS-Variablen werden später immer vom ID-Selektor der Sektion umschlossen, also z.B. #faq-1234 { ... }. Verwende daher selbst keine ID-Selektoren im CSS und nutze kein :root-Pseudoelement. Variablen kannst du sofort definieren und verwenden.
 Achte darauf, dass der HTML- und CSS-Code valide ist und keine Fehler enthält.
 Wird fehlerhafter HTML- oder CSS-Code vom Nutzer angeliefert, behebe diesen entsprechend der obigen Anweisungen.
+Eigene <script> oder <style> Tags im HTML sind nicht erlaubt.
 Antworte nur in dem vorgegebenen Format, bestehend aus den Feldern html, css und optional notes.`,
     input: [
       {

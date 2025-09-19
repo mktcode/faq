@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { HtmlComponentSchema } from '~~/types/db'
+
 const appConfig = useAppConfig()
 const { $profile } = useProfile()
 
@@ -18,6 +20,9 @@ const components = computed(() => {
   }
 
   return page.value.components.filter(c => c.visible).sort((a, b) => a.order - b.order)
+})
+const htmlComponents = computed(() => {
+  return components.value.filter(c => c.key === 'html') as HtmlComponentSchema[]
 })
 
 appConfig.ui.colors.primary = 'website'
@@ -67,9 +72,15 @@ useHead({
     },
     {
       rel: 'stylesheet',
-      href: `/api/css`,
+      href: `/api/css`, // TODO: move to style tag
     },
   ],
+  style: htmlComponents.value.map(component => {
+    return {
+      id: `html-component-style-${component.id}`,
+      innerHTML: `#main #${component.key}-${component.id} {\n${component.css}\n}`,
+    }
+  }),
 })
 
 function openAdmin(componentId: number) {
