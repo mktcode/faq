@@ -2,6 +2,8 @@
 import { watchDebounced } from '@vueuse/core';
 import type { HtmlComponentSchema } from '~~/types/db';
 
+const toast = useToast()
+
 const { component } = defineProps<{
   component: HtmlComponentSchema;
 }>()
@@ -20,6 +22,41 @@ watchDebounced(() => component.css, (newCss) => {
     document.head.appendChild(newStyle)
   }
 }, { debounce: 1500 })
+
+const prompt = ref('')
+const isGenerating = ref(false)
+const previousResponseId = ref<string | undefined>(undefined)
+
+async function generate() {
+  if (!prompt.value) return
+
+  isGenerating.value = true
+  try {
+    const { html, css, responseId } = await $fetch('/api/user/generateHtml', {
+      method: 'POST',
+      body: {
+        prompt: prompt.value,
+        html: component.html,
+        css: component.css,
+        responseId: previousResponseId.value,
+      },
+    })
+    previousResponseId.value = responseId
+    component.html = html
+    component.css = css
+    prompt.value = ''
+  } catch (error) {
+    toast.add({
+      title: 'Fehler',
+      icon: 'i-heroicons-exclamation-circle',
+      description: 'Die Anweisung konnte nicht verarbeitet werden. Bitte versuchen Sie es erneut.',
+      color: 'error',
+      progress: false,
+    })
+  } finally {
+    isGenerating.value = false
+  }
+}
 </script>
 
 <template>
@@ -35,6 +72,30 @@ watchDebounced(() => component.css, (newCss) => {
           class="w-full"
         />
       </UFormField>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <UFormField
+        label="KI-Anweisung"
+        description="Beschreiben Sie, was dargestellt bzw. geändert werden soll - sowohl textlich als auch optisch. Sie können auch Anweisungen für verschiedene Bildschirmgrößen geben (z.B. 'auf Mobilgeräten ist die Schrift zu groß.'). Sie können Sich auch auf andere Inhalte Ihrer Website beziehen und Dateien hochladen."
+      >
+        <UTextarea
+          v-model="prompt"
+          placeholder="Schreibe einen einleitenden Text für unsere Angebote."
+          class="w-full"
+          :rows="3"
+          :disabled="isGenerating"
+        />
+      </UFormField>
+
+      <UButton
+        :label="`${isGenerating ? 'Anweisung wird verarbeitet...' : 'Anweisung abschicken'}`"
+        icon="i-heroicons-sparkles"
+        variant="solid"
+        :loading="isGenerating"
+        :disabled="!prompt"
+        @click="generate"
+      />
     </div>
     
     <UFormField
