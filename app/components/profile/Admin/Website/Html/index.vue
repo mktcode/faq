@@ -26,13 +26,14 @@ watchDebounced(() => component.css, (newCss) => {
 const prompt = ref('')
 const isGenerating = ref(false)
 const previousResponseId = ref<string | undefined>(undefined)
+const responseNotes = ref<string | null | undefined>(undefined)
 
 async function generate() {
   if (!prompt.value) return
 
   isGenerating.value = true
   try {
-    const { html, css, responseId } = await $fetch('/api/user/generateHtml', {
+    const { html, css, responseId, notes } = await $fetch('/api/user/generateHtml', {
       method: 'POST',
       body: {
         prompt: prompt.value,
@@ -44,6 +45,7 @@ async function generate() {
     previousResponseId.value = responseId
     component.html = html
     component.css = css
+    responseNotes.value = notes
     prompt.value = ''
   } catch (error) {
     toast.add({
@@ -85,8 +87,33 @@ async function generate() {
           class="w-full"
           :rows="3"
           :disabled="isGenerating"
+          :ui="{
+            base: 'rounded-b-none',
+          }"
         />
+        <div class="flex items-center gap-2 bg-gray-100 p-2 rounded-b-xl">
+          <UButton
+            v-if="prompt && !isGenerating"
+            label="Eingabe löschen"
+            icon="i-heroicons-x-mark"
+            variant="ghost"
+            @click="prompt = ''"
+          />
+          <ProfileAdminWebsiteHtmlRecordAudio
+            class="ml-auto"
+            @transcript="(transcript: string) => prompt = [prompt, transcript].filter(Boolean).join('\n')"
+          />
+        </div>
       </UFormField>
+
+      <UAlert
+        v-if="responseNotes"
+        variant="soft"
+        icon="i-heroicons-information-circle"
+        class="whitespace-pre-wrap"
+        title="Hinweise zur Generierung"
+        :description="responseNotes"
+      />
 
       <UButton
         :label="`${isGenerating ? 'Anweisung wird verarbeitet...' : 'Anweisung abschicken'}`"
