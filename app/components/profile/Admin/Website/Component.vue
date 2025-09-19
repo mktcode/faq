@@ -124,34 +124,6 @@ watch(component, () => {
     </template>
 
     <template #body>
-      <div
-        class="p-4"
-        v-if="component.key !== 'menu'"
-      >
-        <div class="flex items-center gap-4 mb-4">
-          <UFormField
-            label="Titel der Sektion"
-            class="flex-1"
-          >
-            <UInput
-              v-model="component.title"
-              placeholder="z.B. Unsere Angebote"
-              class="w-full"
-            />
-          </UFormField>
-          <UFormField label="Sichtbar">
-            <USwitch
-              v-model="component.showTitle"
-              size="xl"
-            />
-          </UFormField>
-        </div>
-  
-        <UFormField label="Beschreibung" hint="(optional)">
-          <WysiwygEditor v-model="component.description" />
-        </UFormField>
-      </div>
-
       <ProfileAdminWebsiteHeader
         v-if="component.key === 'header'"
         v-model:component="component"

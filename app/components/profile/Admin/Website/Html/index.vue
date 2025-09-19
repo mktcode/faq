@@ -24,6 +24,19 @@ watchDebounced(() => component.css, (newCss) => {
 
 <template>
   <div class="flex flex-col gap-4 p-4">
+    <div class="flex items-center gap-4 mb-4">
+      <UFormField
+        label="Titel der Sektion"
+        class="flex-1"
+      >
+        <UInput
+          v-model="component.title"
+          placeholder="z.B. Unsere Angebote"
+          class="w-full"
+        />
+      </UFormField>
+    </div>
+    
     <UFormField
       label="HTML"
       description="Hier können Sie eigenen HTML-Code einfügen, der auf Ihrer Webseite angezeigt wird. Achten Sie darauf, dass der Code korrekt ist."

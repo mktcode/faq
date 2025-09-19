@@ -40,6 +40,29 @@ async function saveQanda() {
 </script>
 
 <template>
+  <div class="flex items-center gap-4 mb-4">
+    <UFormField
+      label="Titel der Sektion"
+      class="flex-1"
+    >
+      <UInput
+        v-model="component.title"
+        placeholder="z.B. Unsere Angebote"
+        class="w-full"
+      />
+    </UFormField>
+    <UFormField label="Sichtbar">
+      <USwitch
+        v-model="component.showTitle"
+        size="xl"
+      />
+    </UFormField>
+  </div>
+
+  <UFormField label="Beschreibung" hint="(optional)">
+    <WysiwygEditor v-model="component.description" />
+  </UFormField>
+  
   <div
     v-for="(suggestion, index) in suggestions"
     :key="index"
