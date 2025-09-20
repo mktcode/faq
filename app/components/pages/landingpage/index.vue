@@ -178,14 +178,14 @@ appConfig.ui.colors.primary = 'sky'
         <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Nur Website</span>
           <div class="flex items-end gap-1 mt-3 mb-6">
-            <span class="text-[38px] font-extrabold leading-none">17,85 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
+            <span class="text-[38px] font-extrabold leading-none">25 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> .de-Domain &amp; 1 E-Mail-Adresse inklusive
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Mehr Gestaltungsoptionen
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Zahlreiche Gestaltungsoptionen
             </li>
             <li class="flex gap-2 items-start">
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Support nach Verfügbarkeit, per E-Mail und Live-Chat
@@ -199,9 +199,9 @@ appConfig.ui.colors.primary = 'sky'
           </ul>
         </div>
         <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Website und Support</span>
+          <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Website und Betreuung</span>
           <div class="flex items-end gap-1 mt-3 mb-6">
-            <span class="text-[38px] font-extrabold leading-none">59,50 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
+            <span class="text-[38px] font-extrabold leading-none">100 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
@@ -363,6 +363,22 @@ appConfig.ui.colors.primary = 'sky'
           </div>
         </template>
       </UAccordion>
+    </section>
+
+    <section class="mx-auto w-[92vw] max-w-[1200px] py-16">
+      <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-6">
+        Über Uns
+      </h2>
+      <p class="my-4 text-slate-600 dark:text-[#b3bfd1]">
+        Wir sind ein kleines Team von Enthusiasten, die es sich zur Aufgabe gemacht haben, Solo-Selbstständigen den Einstieg in die digitale Welt zu erleichtern.
+        Mit langjähriger Erfahrung in IT, Webentwicklung und digitalem Marketing wissen wir, worauf es ankommt und worauf nicht.
+        Unser Ziel ist es, Ihnen eine unkomplizierte und kostengünstige Lösung zu bieten, damit Sie sich auf Ihr Geschäft konzentrieren können.
+      </p>
+      <p class="my-4 text-slate-600 dark:text-[#b3bfd1]">
+        Wir sind selbst ein Verbund aus Solo-Selbstständigen und kennen die Herausforderungen und Chancen, die dieser Weg mit sich bringt.
+        Daher legen wir großen Wert auf persönliche Betreuung und maßgeschneiderte Lösungen, die wirklich zu Ihnen passen.
+        Wir freuen uns darauf, Sie auf Ihrem Weg in die Selbstständigkeit zu begleiten.
+      </p>
     </section>
 
     <PagesLandingpageFooter />
