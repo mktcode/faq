@@ -8,6 +8,9 @@ const { component } = defineProps<{
   component: HtmlComponentSchema;
 }>()
 
+const showHtml = ref(false)
+const showCss = ref(false)
+
 watchDebounced(() => component.css, (newCss) => {
   // add or update a stylesheet to the document head with the css for this component
   const updatedCss = `#main #${component.key}-${component.id} {\n${newCss}\n}`
@@ -62,90 +65,147 @@ async function generate() {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 p-4">
-    <div class="flex items-center gap-4 mb-4">
-      <UFormField
-        label="Titel der Sektion"
-        class="flex-1"
-      >
-        <UInput
-          v-model="component.title"
-          placeholder="z.B. Unsere Angebote"
-          class="w-full"
+  <div class="flex flex-col">
+    <div class="flex flex-col gap-4 p-4 border-b border-gray-200">
+      <div class="flex items-center gap-4 mb-4">
+        <UFormField
+          label="Titel der Sektion"
+          class="flex-1"
+        >
+          <UInput
+            v-model="component.title"
+            placeholder="z.B. Unsere Angebote"
+            class="w-full"
+          />
+        </UFormField>
+      </div>
+  
+      <div class="flex flex-col gap-2">
+        <UFormField
+          label="KI-Anweisung"
+          description="Beschreiben Sie, was in dieser Sektion dargestellt bzw. geändert werden soll - sowohl textlich als auch optisch. Sie können auch Anweisungen für verschiedene Bildschirmgrößen geben (z.B. 'auf Mobilgeräten ist die Schrift zu groß.'). Sie können Sich auch auf andere Inhalte Ihrer Website beziehen und Dateien hochladen."
+        >
+          <UTextarea
+            v-model="prompt"
+            placeholder="Schreibe einen einleitenden Text für unsere Angebote."
+            class="w-full"
+            :rows="3"
+            :disabled="isGenerating"
+            :ui="{
+              base: 'rounded-b-none',
+            }"
+          />
+          <div class="flex items-center gap-2 bg-gray-100 p-2 rounded-b-xl">
+            <UButton
+              v-if="prompt && !isGenerating"
+              label="Eingabe löschen"
+              icon="i-heroicons-x-mark"
+              variant="ghost"
+              @click="prompt = ''"
+            />
+            <ProfileAdminWebsiteHtmlRecordAudio
+              class="ml-auto"
+              @transcript="(transcript: string) => prompt = [prompt, transcript].filter(Boolean).join('\n')"
+            />
+          </div>
+        </UFormField>
+  
+        <UAlert
+          v-if="responseNotes"
+          variant="soft"
+          icon="i-heroicons-information-circle"
+          class="whitespace-pre-wrap"
+          title="Hinweise zur Generierung"
+          :description="responseNotes"
         />
-      </UFormField>
+  
+        <UButton
+          :label="`${isGenerating ? 'Anweisung wird verarbeitet...' : 'Anweisung abschicken'}`"
+          icon="i-heroicons-sparkles"
+          variant="solid"
+          :loading="isGenerating"
+          :disabled="!prompt"
+          @click="generate"
+        />
+      </div>
     </div>
 
-    <div class="flex flex-col gap-2">
-      <UFormField
-        label="KI-Anweisung"
-        description="Beschreiben Sie, was dargestellt bzw. geändert werden soll - sowohl textlich als auch optisch. Sie können auch Anweisungen für verschiedene Bildschirmgrößen geben (z.B. 'auf Mobilgeräten ist die Schrift zu groß.'). Sie können Sich auch auf andere Inhalte Ihrer Website beziehen und Dateien hochladen."
-      >
-        <UTextarea
-          v-model="prompt"
-          placeholder="Schreibe einen einleitenden Text für unsere Angebote."
-          class="w-full"
-          :rows="3"
-          :disabled="isGenerating"
-          :ui="{
-            base: 'rounded-b-none',
-          }"
-        />
-        <div class="flex items-center gap-2 bg-gray-100 p-2 rounded-b-xl">
+    <UCollapsible
+      v-model:open="showHtml"
+      class="flex flex-col gap-2"
+      :ui="{
+        root: 'border-b border-gray-200 !gap-0',
+        content: 'flex flex-col gap-4 p-4 border-t border-gray-200',
+      }"
+    >
+      <template #default>
+        <div class="flex items-center">
           <UButton
-            v-if="prompt && !isGenerating"
-            label="Eingabe löschen"
-            icon="i-heroicons-x-mark"
+            icon="i-heroicons-code-bracket"
+            label="HTML-Code bearbeiten"
+            class="w-full rounded-none p-4"
             variant="ghost"
-            @click="prompt = ''"
-          />
-          <ProfileAdminWebsiteHtmlRecordAudio
-            class="ml-auto"
-            @transcript="(transcript: string) => prompt = [prompt, transcript].filter(Boolean).join('\n')"
+            color="neutral"
+            trailing-icon="i-heroicons-chevron-down"
+            :ui="{
+              trailingIcon: `ml-auto transition-transform ${showHtml ? 'rotate-180' : ''}`,
+            }"
           />
         </div>
-      </UFormField>
+      </template>
 
-      <UAlert
-        v-if="responseNotes"
-        variant="soft"
-        icon="i-heroicons-information-circle"
-        class="whitespace-pre-wrap"
-        title="Hinweise zur Generierung"
-        :description="responseNotes"
-      />
+      <template #content>
+        <UFormField
+          label="HTML"
+          description="Hier können Sie eigenen HTML-Code einfügen, der auf Ihrer Webseite angezeigt wird. Achten Sie darauf, dass der Code korrekt ist."
+        >
+          <UTextarea
+            v-model="component.html"
+            placeholder="<div>Dein HTML-Code hier</div>"
+            class="w-full"
+            :rows="6"
+          />
+        </UFormField>
+      </template>
+    </UCollapsible>
 
-      <UButton
-        :label="`${isGenerating ? 'Anweisung wird verarbeitet...' : 'Anweisung abschicken'}`"
-        icon="i-heroicons-sparkles"
-        variant="solid"
-        :loading="isGenerating"
-        :disabled="!prompt"
-        @click="generate"
-      />
-    </div>
-    
-    <UFormField
-      label="HTML"
-      description="Hier können Sie eigenen HTML-Code einfügen, der auf Ihrer Webseite angezeigt wird. Achten Sie darauf, dass der Code korrekt ist."
+    <UCollapsible
+      v-model:open="showCss"
+      class="flex flex-col gap-2"
+      :ui="{
+        root: 'border-b border-gray-200 !gap-0',
+        content: 'flex flex-col gap-4 p-4 border-t border-gray-200',
+      }"
     >
-      <UTextarea
-        v-model="component.html"
-        placeholder="<div>Dein HTML-Code hier</div>"
-        class="w-full"
-        :rows="6"
-      />
-    </UFormField>
-    <UFormField
-      label="CSS"
-      description="Hier können Sie eigenes CSS hinzufügen, um das Aussehen dieser Sektion anzupassen. Achten Sie darauf, dass der Code korrekt ist."
-    >
-      <UTextarea
-        v-model="component.css"
-        placeholder=".meine-klasse { color: red; }"
-        class="w-full font-mono"
-        :rows="6"
-      />
-    </UFormField>
+      <template #default>
+        <div class="flex items-center">
+          <UButton
+            icon="i-heroicons-code-bracket"
+            label="CSS-Code bearbeiten"
+            class="w-full rounded-none p-4"
+            variant="ghost"
+            color="neutral"
+            trailing-icon="i-heroicons-chevron-down"
+            :ui="{
+              trailingIcon: `ml-auto transition-transform ${showCss ? 'rotate-180' : ''}`,
+            }"
+          />
+        </div>
+      </template>
+
+      <template #content>
+        <UFormField
+          label="CSS"
+          description="Hier können Sie eigenes CSS hinzufügen, um das Aussehen dieser Sektion anzupassen. Achten Sie darauf, dass der Code korrekt ist."
+        >
+          <UTextarea
+            v-model="component.css"
+            placeholder=".meine-klasse { color: red; }"
+            class="w-full font-mono"
+            :rows="6"
+          />
+        </UFormField>
+      </template>
+    </UCollapsible>
   </div>
 </template>
