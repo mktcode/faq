@@ -13,7 +13,7 @@ const showDrawerTip = useLocalStorage('showDrawerTip', true)
       >
         <div class="p-4 m-4 text-center text-sm text-gray-500 shadow-md bg-white rounded-lg max-w-sm h-min">
           <div>
-            Ziehen Sie das Panel an dem grauen Balken nach links, um Ihre Änderungen zu sehen.
+            Ziehen Sie das Panel an dem Balken nach links, um Ihre Änderungen zu sehen.
           </div>
           <UButton
             label="Alles klar!"
