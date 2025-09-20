@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import type { UploadedFile } from '~~/server/utils/s3';
 
+const toast = useToast()
+
 const open = ref(false)
 
-defineProps<{
+const { file } = defineProps<{
   file: UploadedFile
+}>()
+
+const emit = defineEmits<{
+  refresh: []
 }>()
 
 function fileKeyToLabel(key: string) {
@@ -15,6 +21,34 @@ function fileKeyToLabel(key: string) {
   return {
     path: parts.slice(0, -1).map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('/'),
     name: parts[parts.length - 1],
+  }
+}
+
+const deletingFile = ref(false)
+
+async function deleteFile() {
+  if (deletingFile.value) return
+  deletingFile.value = true
+
+  try {
+    await $fetch('/api/user/upload/delete', {
+      method: 'POST',
+      body: {
+        url: file.url,
+      },
+    })
+    open.value = false
+    emit('refresh')
+  } catch (error) {
+    toast.add({
+      title: 'Fehler',
+      icon: 'i-heroicons-exclamation-circle',
+      description: 'Die Datei konnte nicht gelöscht werden. Bitte versuche es später erneut.',
+      color: 'error',
+      progress: false,
+    })
+  } finally {
+    deletingFile.value = false
   }
 }
 </script>
@@ -69,6 +103,16 @@ function fileKeyToLabel(key: string) {
           :href="file.url"
           target="_blank"
           rel="noopener noreferrer"
+          download
+        />
+        <UButton
+          label="Löschen"
+          icon="i-heroicons-trash"
+          class="w-full"
+          variant="soft"
+          color="error"
+          :loading="deletingFile"
+          @click="deleteFile"
         />
       </div>
     </template>

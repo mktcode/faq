@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { showWebsiteFiles, go } = useAdmin()
 
-const { data: files } = await useFetch('/api/user/upload/list', {
+const { data: files, refresh: refreshFiles } = await useFetch('/api/user/upload/list', {
   method: 'GET',
 })
 
@@ -74,11 +74,14 @@ const storageUsedPercent = computed(() => {
         }"
       />
 
-      <ProfileAdminWebsiteFilesFile
-        v-for="file in files"
-        :key="file.name"
-        :file="file"
-      />
+      <TransitionGroup name="fade">
+        <ProfileAdminWebsiteFilesFile
+          v-for="file in files"
+          :key="file.name"
+          :file="file"
+          @refresh="refreshFiles"
+        />
+      </TransitionGroup>
     </template>
 
     <template #footer>
