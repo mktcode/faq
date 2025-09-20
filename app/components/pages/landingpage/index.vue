@@ -143,22 +143,22 @@ appConfig.ui.colors.primary = 'sky'
               name="i-heroicons-computer-desktop"
               class="text-sky-600 size-6"
             />
-            Professionelle Website
+            Website, Domain und E-Mail
           </h3>
           <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
-            Technisch sauber und wirklich einfach zu bedienen. Beinhaltet alles, was einen guten ersten und zweiten Eindruck ausmacht, auch in Suchmaschinen &amp; Social Media.
+            Einfach zu bedienen und technisch sauber: Ihr professioneller Auftritt, inkl. Wunsch-Domain, E-Mail-Postfächer, sowie Impressum und Datenschutzerklärung.
           </p>
         </div>
         <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <h3 class="flex items-center gap-2 mb-3 text-[1.05rem]">
             <UIcon
-              name="i-lucide-at-sign"
+              name="i-lucide-book-open-check"
               class="text-sky-600 size-6"
             />
-            Domain und E-Mail
+            Redaktionelle Inhalte
           </h3>
           <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
-            Registrieren Sie Ihre Wunsch-Domain und legen Sie bis zu 3 professionelle E-Mail-Adressen an. Beim Einrichten Ihres E-Mail-Programms helfen wir gerne persönlich.
+            Wir helfen bei der Formulierung und laufenden Optimierung Ihrer Inhalte und Werbebotschaften, online wie offline, und Sie sparen sich viel Zeit.
           </p>
         </div>
         <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
@@ -170,49 +170,13 @@ appConfig.ui.colors.primary = 'sky'
             IT-Support
           </h3>
           <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
-            Wir stehen Ihnen persönlich zur Seite und unterstützen Sie bei technischen Fragen,
-            per Live-Chat, am Telefon und per Fernwartung, direkt auf Ihrem Bildschirm.
+            Bei allgemeinen technischen Problemen oder Fragen stehen wir Ihnen per E-Mail, Live-Chat oder Telefon und Fernwartung persönlich zur Seite.
           </p>
         </div>
       </div>
       <div class="grid md:grid-cols-2 grid-cols-1 gap-[18px] mt-[18px]">
-        <div class="md:col-span-2 border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <span class="inline-block px-2 py-[.25rem] rounded-full text-[.8rem] bg-white border border-black/15 text-slate-600 dark:bg-white/10 dark:border-white/15 dark:text-[#b3bfd1]">Starter</span>
-          <div class="flex items-end gap-1 mt-3 mb-3">
-            <span class="text-[38px] font-extrabold leading-none">Kostenlos</span>
-          </div>
-          <p class="text-slate-600 dark:text-[#b3bfd1] mb-6">
-            Unsere Website-App ist kostenlos und deckt das Nötigste ab – nur eine Domain müssen Sie selber mitbringen.
-            Für mehr Funktionen, Gestaltungsmöglichkeiten und regelmäßigen IT-Support bieten wir zwei Premium-Pakete an.
-            Zwischen allen drei Varianten können Sie jederzeit wechseln.
-          </p>
-          <div class="grid md:grid-cols-2 grid-cols-1 gap-4">
-            <ul class="list-none p-0 m-0 grid gap-2">
-              <li class="flex gap-2 items-start">
-                <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Standard-Website, visuell ansprechend
-              </li>
-              <li class="flex gap-2 items-start">
-                <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Kontaktformular, Impressum &amp; Datenschutzerklärung
-              </li>
-              <li class="flex gap-2 items-start">
-                <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Suchmaschinen-Basics &amp; Mobil-Optimierung
-              </li>
-            </ul>
-            <ul class="list-none p-0 m-0 grid gap-2">
-              <li class="flex gap-2 items-start">
-                <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Keine Cookie-Einwilligung nötig
-              </li>
-              <li class="flex gap-2 items-start">
-                <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Leicht zu bedienen und sofort online
-              </li>
-              <li class="flex gap-2 items-start">
-                <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Nutzbar mit eigener Domain und E-Mail-Adresse
-              </li>
-            </ul>
-          </div>
-        </div>
         <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Premium</span>
+          <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Nur Website</span>
           <div class="flex items-end gap-1 mt-3 mb-6">
             <span class="text-[38px] font-extrabold leading-none">17,85 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
           </div>
@@ -224,7 +188,7 @@ appConfig.ui.colors.primary = 'sky'
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Mehr Gestaltungsoptionen
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> IT-Support nach Verfügbarkeit, per E-Mail und Live-Chat
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Support nach Verfügbarkeit, per E-Mail und Live-Chat
             </li>
             <li class="flex gap-2 items-start">
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Intelligentes FAQ für bessere Anfragen
@@ -235,7 +199,7 @@ appConfig.ui.colors.primary = 'sky'
           </ul>
         </div>
         <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
-          <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Premium Plus</span>
+          <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Website und Support</span>
           <div class="flex items-end gap-1 mt-3 mb-6">
             <span class="text-[38px] font-extrabold leading-none">59,50 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
           </div>
@@ -292,7 +256,7 @@ appConfig.ui.colors.primary = 'sky'
 
     <section class="mx-auto w-[92vw] max-w-[1200px] py-16">
       <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-6">
-        Was Sie tun können
+        Was Sie schon tun können
       </h2>
       <p class="my-4 text-slate-600 dark:text-[#b3bfd1]">
         Wenn Sie gerne möglichst viel selbst in die Hand nehmen wollen, aber gar nicht wissen, wo Sie anfangen sollen, helfen Ihnen vielleicht die folgenden Tipps weiter.
@@ -327,7 +291,7 @@ appConfig.ui.colors.primary = 'sky'
         </template>
         <template #slot2>
           <div class="p-4">
-            Werden Sie gefunden. Das ist ebenfalls kostenlos und wesentlich wichtiger, als eine Website, die ansonsten ohnehin kaum jemand findet, gerade am Anfang.
+            Werden Sie auf Google gefunden. Das ist kostenlos und mindestens genauso wichtig, wie eine eigene Website.
             Legen Sie sich ein <a
               class="text-sky-500"
               href="https://accounts.google.com/signup"
@@ -336,7 +300,8 @@ appConfig.ui.colors.primary = 'sky'
               class="text-sky-500"
               href="https://www.youtube.com/results?search_query=google+unternehmensprofil+erstellen"
               target="_blank"
-            >Anleitungen auf YouTube</a> an. Ein paar Klicks und fertig. Vielleicht kommt noch ein Freischaltcode per Post, den Sie bei Google eingeben müssen. Das Wichtigste ist damit aber erstmal geschafft.
+            >Anleitungen auf YouTube</a> an oder <a class="text-sky-500" href="https://business.google.com/de/business-profile/" target="_blank">legen Sie einfach direkt los</a>. Vielleicht kommt noch ein Freischaltcode per Post, den Sie bei Google eingeben müssen. Das Wichtigste ist damit aber erstmal geschafft.
+            Nicht nur Adresse und Kontaktdaten können Sie in Ihrem Unternehmensprofil hinterlegen, sondern auch Öffnungszeiten, Dienstleistungen und Produkte, Fotos und einiges mehr.
           </div>
         </template>
         <template #slot3>
