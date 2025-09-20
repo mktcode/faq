@@ -173,6 +173,7 @@ async function handleImageUpload(event: Event) {
         class="@container"
       />
     </div>
+    <!-- TODO: Make this multi-instance-proof -->
     <input
       id="editor-image-upload"
       ref="imageInput"
