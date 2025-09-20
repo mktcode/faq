@@ -3,6 +3,11 @@ import type { MenuComponentSchema } from '~~/types/db';
 
 const { $profile } = useProfile()
 
+defineProps<{
+  isFirst: boolean
+  isLast: boolean
+}>()
+
 const item = defineModel('item', {
   type: Object as () => MenuComponentSchema['items'][number],
   required: true,
@@ -10,6 +15,7 @@ const item = defineModel('item', {
 
 defineEmits<{
   delete: []
+  changeOrder: ['up' | 'down']
 }>()
 
 const open = ref(false)
@@ -57,10 +63,6 @@ const iconIsImage = computed(() => {
           class="w-full rounded-none p-4"
           variant="ghost"
           color="neutral"
-          trailing-icon="i-heroicons-chevron-down"
-          :ui="{
-            trailingIcon: `ml-auto transition-transform ${open ? 'rotate-180' : ''}`,
-          }"
         >
           <template #default>
             <img
@@ -71,6 +73,30 @@ const iconIsImage = computed(() => {
             />
             <div class="flex flex-col items-start">
               {{ item.title }}
+            </div>
+          </template>
+
+          <template #trailing>
+            <div class="flex items-center ml-auto">
+              <UButton
+                icon="i-heroicons-arrow-up"
+                variant="ghost"
+                class="disabled:text-gray-300"
+                :disabled="isFirst"
+                @click.stop="$emit('changeOrder', 'up')"
+              />
+              <UButton
+                icon="i-heroicons-arrow-down"
+                variant="ghost"
+                class="disabled:text-gray-300"
+                :disabled="isLast"
+                @click.stop="$emit('changeOrder', 'down')"
+              />
+              <UIcon
+                name="i-heroicons-chevron-down"
+                class="transition-transform size-6 opacity-30 ml-2"
+                :class="{ 'rotate-180': open }"
+              />
             </div>
           </template>
         </UButton>

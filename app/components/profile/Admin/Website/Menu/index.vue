@@ -1,19 +1,30 @@
 <script setup lang="ts">
+import { moveArrayElement } from '@vueuse/integrations/useSortable'
 import type { MenuComponentSchema } from '~~/types/db'
 
 const component = defineModel('component', {
   type: Object as () => MenuComponentSchema,
   required: true,
 })
+
+function changeOrder(index: number, direction: 'up' | 'down') {
+  const from = index
+  const to = direction === 'up' ? index - 1 : index + 1
+
+  moveArrayElement(component.value.items, from, to)
+}
 </script>
 
 <template>
-  <div class="flex flex-col w-full">
+  <div class="flex flex-col w-full relative">
     <TransitionGroup name="list">
       <ProfileAdminWebsiteMenuItem
-        v-for="(_, index) in component.items"
-        :key="index"
+        v-for="(item, index) in component.items"
+        :key="item.title"
+        :is-first="index === 0"
+        :is-last="index === (component.items.length - 1)"
         v-model:item="component.items[index]!"
+        @change-order="changeOrder(index, $event)"
         @delete="component.items.splice(index, 1)"
       />
     </TransitionGroup>
