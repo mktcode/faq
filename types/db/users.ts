@@ -226,6 +226,7 @@ export type AvailableComponent = {
   description: string
   icon: string
   defaults: ComponentUnionSchema
+  minPlan?: 'S' | 'L'
 }
 
 export const availableComponents: AvailableComponent[] = [
@@ -385,6 +386,7 @@ export const availableComponents: AvailableComponent[] = [
       html: '<p>Fügen Sie hier Ihren eigenen HTML-Code ein.</p>',
       css: '/* Fügen Sie hier Ihren eigenen CSS-Code ein. */',
     },
+    minPlan: 'S',
   },
 ] as const
 

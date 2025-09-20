@@ -17,6 +17,11 @@ function addComponent(component: ComponentUnionSchema) {
   open.value = false
   go(`#website/page/${page.value.id}/component/${component.id}`)
 }
+
+function goToSubscription() {
+  open.value = false
+  go('#settings/subscription')
+}
 </script>
 
 <template>
@@ -36,6 +41,7 @@ function addComponent(component: ComponentUnionSchema) {
           :key="availableComponent.title"
           :component="availableComponent"
           @add="addComponent(availableComponent.defaults)"
+          @go-to-subscription="goToSubscription"
         >
           <template #preview>
             <ProfileAdminWebsiteHeaderPreview v-if="availableComponent.key === 'header'" />
