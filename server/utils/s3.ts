@@ -6,6 +6,7 @@ export const uploadedFileSchema = z.object({
   name: z.string(),
   type: z.string(),
   size: z.number(),
+  url: z.string().url(),
 })
 export const uploadedFilesSchema = z.array(uploadedFileSchema)
 export type UploadedFile = z.infer<typeof uploadedFileSchema>
@@ -49,6 +50,7 @@ export async function s3FileExists(bucket: string, fileKey: string) {
 
 export async function getUserFiles(userId: number) {
   const { s3BucketName } = useRuntimeConfig()
+  const { s3Endpoint } = useRuntimeConfig().public
 
   const s3 = createS3Client()
   const command = new ListObjectsV2Command({
@@ -59,12 +61,24 @@ export async function getUserFiles(userId: number) {
   const result = await s3.send(command)
 
   const files = (result.Contents || [])
-    .map(obj => ({
-      key: obj.Key || '',
-      name: obj.Key?.split('/').pop() || '',
-      type: obj.Key?.split('.').pop() || 'plain',
-      size: obj.Size || 0,
-    }))
+    .map(obj => {
+      if (obj.Key === undefined) {
+        return null
+      }
+
+      if (obj.Size === undefined) {
+        return null
+      }
+
+      return {
+        key: obj.Key,
+        name: obj.Key.split('/').pop() || 'unknown',
+        type: obj.Key.split('.').pop() || 'plain',
+        size: obj.Size,
+        url: `${s3Endpoint}/${s3BucketName}/${obj.Key}`,
+      }
+    })
+    .filter(Boolean) as UploadedFile[]
 
   uploadedFilesSchema.parse(files)
 

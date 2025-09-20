@@ -17,6 +17,7 @@ export default function useAdmin() {
 
   const showWebsiteSettings = computed(() => router.currentRoute.value.hash === '#website')
   const showWebsiteDesignSettings = computed(() => router.currentRoute.value.hash === '#website/design')
+  const showWebsiteFiles = computed(() => router.currentRoute.value.hash === '#website/files')
 
   const websiteSelectedPage = computed(() => {
     const match = router.currentRoute.value.hash.match(/^#website\/page\/(\d+)(?:\/component\/(\d+))?$/)
@@ -72,6 +73,7 @@ export default function useAdmin() {
     showSubscriptionVerification,
     showWebsiteSettings,
     showWebsiteDesignSettings,
+    showWebsiteFiles,
     websiteSelectedPage,
     page,
     component,
