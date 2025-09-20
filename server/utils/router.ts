@@ -79,6 +79,7 @@ async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUse
     isPublic,
     design: 'default',
     settings,
+    originalSettings: JSON.parse(JSON.stringify(settings)), // deep clone
     canonicalUrl: getCanonicalUrl(event, targetUser),
     canonicalUri: getCanonicalUri(targetUser),
     domain: targetUser.domain,

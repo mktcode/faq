@@ -13,6 +13,7 @@ declare module 'h3' {
       isPublic: boolean
       design: string
       settings: SettingsForm
+      originalSettings: SettingsForm
       canonicalUrl: string
       canonicalUri: string
       domain: string | null

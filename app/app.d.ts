@@ -10,6 +10,7 @@ type Profile = {
     paid: boolean
   }
   settings: SettingsForm
+  originalSettings: SettingsForm
   canonicalUrl: string
   domain: string | null
   domainIsExternal: boolean

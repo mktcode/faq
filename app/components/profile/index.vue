@@ -13,6 +13,7 @@ const { profile } = defineProps<{
       paid: boolean
     }
     settings: SettingsForm
+    originalSettings: SettingsForm
     canonicalUrl: string
     domain: string | null
     domainIsExternal: boolean

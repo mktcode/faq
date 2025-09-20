@@ -7,7 +7,9 @@ export const useProfile = () => {
   const unsavedSettings = useState('unsavedSettings', () => false)
 
   function resetSettings() {
-    // TODO: implement
+    console.log('Reset settings', $profile.settings.public.design.fontSize, $profile.originalSettings.public.design.fontSize)
+    $profile.settings.public = JSON.parse(JSON.stringify($profile.originalSettings.public))
+    $profile.settings.private = JSON.parse(JSON.stringify($profile.originalSettings.private))
     unsavedSettings.value = false
   }
 
@@ -52,7 +54,7 @@ export const useProfile = () => {
   }
 
   watch($profile.settings, () => {
-    unsavedSettings.value = true
+    unsavedSettings.value = JSON.stringify($profile.settings) !== JSON.stringify($profile.originalSettings)
 
     appConfig.ui.button.defaultVariants.rounded = $profile.settings.public.design.rounded
     appConfig.ui.input.defaultVariants.rounded = $profile.settings.public.design.rounded
