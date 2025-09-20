@@ -7,6 +7,7 @@ import FileHandler from '@tiptap/extension-file-handler'
 import Image from '@tiptap/extension-image'
 
 const model = defineModel<string | null>()
+const toast = useToast()
 
 const editor = useEditor({
   editorProps: {
@@ -72,24 +73,43 @@ const editor = useEditor({
 })
 
 const imageInput = ref<HTMLInputElement | null>(null)
+const isUploadingImage = ref(false)
 
 function addImage() {
   imageInput.value?.click()
 }
 
-function handleImageUpload(event: Event) {
+async function handleImageUpload(event: Event) {
   const target = event.target as HTMLInputElement
   const files = target.files
+  
   if (files && files.length > 0) {
-    Array.from(files).forEach(file => {
-      const reader = new FileReader()
-      reader.onload = () => {
-        if (reader.result) {
-          editor.value?.chain().focus().setImage({ src: reader.result as string }).run()
-        }
+    isUploadingImage.value = true
+    for (const file of Array.from(files)) {
+      const formData = new FormData()
+      formData.append('files', file)
+      try {
+        const { imageUrls } = await $fetch('/api/user/upload/image', {
+          method: 'POST',
+          body: formData,
+        })
+
+        const imageUrl = imageUrls[0]
+        if (!imageUrl) continue
+
+        editor.value?.chain().focus().setImage({ src: imageUrl }).run()
       }
-      reader.readAsDataURL(file)
-    })
+      catch (error) {
+        toast.add({
+          title: 'Fehler beim Hochladen des Bildes',
+          icon: 'i-heroicons-exclamation-circle',
+          description: 'Bitte versuche es erneut.',
+          color: 'error',
+          progress: false,
+        })
+      }
+    }
+    isUploadingImage.value = false
   }
   if (imageInput.value) {
     imageInput.value.value = ''
@@ -143,6 +163,7 @@ function handleImageUpload(event: Event) {
           <WysiwygEditorButton
             icon="i-lucide-image"
             :is-active="editor.isActive('image')"
+            :loading="isUploadingImage"
             @click="addImage()"
           />
         </UButtonGroup>
@@ -157,7 +178,6 @@ function handleImageUpload(event: Event) {
       ref="imageInput"
       type="file"
       class="hidden"
-      multiple
       accept="image/png, image/jpeg, image/gif, image/webp"
       @change="handleImageUpload"
     >

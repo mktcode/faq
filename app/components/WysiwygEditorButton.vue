@@ -7,6 +7,7 @@ defineProps<{
   icon?: string
   label?: string
   isActive: boolean
+  loading?: boolean
 }>()
 </script>
 
@@ -14,6 +15,7 @@ defineProps<{
   <UButton
     :label="label"
     :icon="icon"
+    :loading="loading"
     @click.prevent="$emit('click')"
     :variant="isActive ? 'solid' : 'soft'"
   />
