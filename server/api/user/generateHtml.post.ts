@@ -4,6 +4,7 @@ import z from "zod"
 
 const bodySchema = z.object({
   prompt: z.string().min(1, 'Die Eingabe darf nicht leer sein.'),
+  images: z.array(z.string().min(1, 'Bild-URL darf nicht leer sein.')),
   html: z.string().min(1, 'HTML darf nicht leer sein.'),
   css: z.string(),
   responseId: z.string().optional(),
@@ -11,7 +12,7 @@ const bodySchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
-  const { prompt, html, css, responseId } = await readValidatedBody(event, body => bodySchema.parse(body))
+  const { prompt, html, css, responseId, images } = await readValidatedBody(event, body => bodySchema.parse(body))
   const settings = await getPublicSettings(user.id)
 
   const { openaiApiKey } = useRuntimeConfig()
@@ -25,17 +26,20 @@ export default defineEventHandler(async (event) => {
     notes: z.string().optional().nullable(),
   });
 
+  console.log('Images', images);
+
   const response = await openai.responses.parse({
     previous_response_id: responseId,
     model: 'gpt-5',
     instructions: `Generiere HTML und CSS Code für eine Website-Sektion basierend auf der Anweisung des Benutzers. Du bekommst die globalen Website-Einstellungen als Orientierung. Die Anweisungen kommen von einem technisch wenig versierten Nutzer. Denke also genau darüber nach, was der Nutzer möchte.
 Wenn der Nutzer nach Funktionen fragt, die nicht mit HTML/CSS umgesetzt werden können, erkläre ihm dies kurz im Notizfeld. Ansonsten nutzt du das Notizfeld nur um Rückfragen zu stellen, wenn die Anweisung des Nutzer unklar ist. Deine Aktionen brauchst du nicht erklären.
 Buttons und Links dürfen nur auf externe Links verweisen oder die Seitenpfade und Sprungmarken verwenden, die sich aus den globalen Website-Einstellungen ergeben. Um direkt zu einer Sektion zu springen, verwende das Format <page-path>#<component-key>-<component-id>, als z.B. /#faq-1234 für eine FAQ-Komponente auf der Startseite.
+Du kannst die Bilder verwenden, die der Nutzer in seiner Anweisung mitgeschickt hat. Alternativ kannst du auch Platzhalter-Bilder wie z.B. https://picsum.photos/id/123/800/600 verwenden. (Die ID muss zwischen 1 und 1000 liegen.)
 Das CSS und etwaige CSS-Variablen werden später immer vom ID-Selektor der Sektion umschlossen, also z.B. #faq-1234 { ... }. Verwende daher selbst keine ID-Selektoren im CSS und nutze kein :root-Pseudoelement. Variablen kannst du sofort definieren und verwenden.
 Achte darauf, dass der HTML- und CSS-Code valide ist und keine Fehler enthält.
 Wird fehlerhafter HTML- oder CSS-Code vom Nutzer angeliefert, behebe diesen entsprechend der obigen Anweisungen.
 Eigene <script> oder <style> Tags im HTML sind nicht erlaubt.
-Antworte nur in dem vorgegebenen Format, bestehend aus den Feldern html, css und optional notes.`,
+Antworte nur in dem vorgegebenen Format, bestehend aus den Feldern html, css und notes (optional).`,
     input: [
       {
         role: 'developer',
@@ -45,12 +49,16 @@ Antworte nur in dem vorgegebenen Format, bestehend aus den Feldern html, css und
       },
       {
         role: 'user',
-        content: `<current_html>
-  ${html}
+        content: `<uploaded_images>
+${images.join('\n')}
+</uploaded_images>
+
+<current_html>
+${html}
 </current_html>
 
 <current_css>
-  ${css}
+${css}
 </current_css>
 
 ${prompt}`,

@@ -27,6 +27,7 @@ watchDebounced(() => component.css, (newCss) => {
 }, { debounce: 1500 })
 
 const prompt = ref('')
+const promptImages = ref<string[]>([])
 const isGenerating = ref(false)
 const previousResponseId = ref<string | undefined>(undefined)
 const responseNotes = ref<string | null | undefined>(undefined)
@@ -40,6 +41,7 @@ async function generate() {
       method: 'POST',
       body: {
         prompt: prompt.value,
+        images: promptImages.value,
         html: component.html,
         css: component.css,
         responseId: previousResponseId.value,
@@ -60,6 +62,47 @@ async function generate() {
     })
   } finally {
     isGenerating.value = false
+  }
+}
+
+const imageInput = ref<HTMLInputElement | null>(null)
+const isUploadingImage = ref(false)
+
+function addImage() {
+  imageInput.value?.click()
+}
+
+async function handleImageUpload(event: Event) {
+  const target = event.target as HTMLInputElement
+  const files = target.files
+  
+  if (files && files.length > 0) {
+    isUploadingImage.value = true
+    for (const file of Array.from(files)) {
+      const formData = new FormData()
+      formData.append('files', file)
+      try {
+        const { imageUrls } = await $fetch('/api/user/upload/image', {
+          method: 'POST',
+          body: formData,
+        })
+
+        promptImages.value.push(...imageUrls)
+      }
+      catch (error) {
+        toast.add({
+          title: 'Fehler beim Hochladen des Bildes',
+          icon: 'i-heroicons-exclamation-circle',
+          description: 'Bitte versuche es erneut.',
+          color: 'error',
+          progress: false,
+        })
+      }
+    }
+    isUploadingImage.value = false
+  }
+  if (imageInput.value) {
+    imageInput.value.value = ''
   }
 }
 </script>
@@ -109,6 +152,28 @@ async function generate() {
             />
           </div>
         </UFormField>
+
+        <div v-if="promptImages.length" class="flex flex-wrap gap-2">
+          <div
+            v-for="(image, index) in promptImages"
+            :key="index"
+            class="relative size-24 rounded-lg overflow-hidden border border-gray-300"
+          >
+            <img
+              :src="image"
+              :alt="`Bild ${index + 1}`"
+              class="object-cover w-full h-full"
+            />
+            <UButton
+              icon="i-heroicons-x-mark"
+              variant="ghost"
+              size="sm"
+              color="error"
+              class="absolute top-1 right-1 bg-white bg-opacity-75 rounded-full p-1 hover:bg-opacity-100 transition"
+              @click="promptImages.splice(index, 1)"
+            />
+          </div>
+        </div>
   
         <UAlert
           v-if="responseNotes"
@@ -119,6 +184,23 @@ async function generate() {
           :description="responseNotes"
         />
   
+        <UButton
+          :label="`${isUploadingImage ? 'Bilder werden hochgeladen...' : 'Bilder hochladen'}`"
+          icon="i-heroicons-photo"
+          variant="soft"
+          :loading="isUploadingImage"
+          @click="addImage()"
+        />
+        <input
+          id="prompt-image-upload"
+          ref="imageInput"
+          type="file"
+          class="hidden"
+          accept="image/png, image/jpeg, image/gif, image/webp"
+          multiple
+          @change="handleImageUpload"
+        >
+
         <UButton
           :label="`${isGenerating ? 'Anweisung wird verarbeitet...' : 'Anweisung abschicken'}`"
           icon="i-heroicons-sparkles"
