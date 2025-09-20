@@ -60,10 +60,10 @@ const { copy, copied } = useClipboard()
           Wenn Sie Unterstützung benötigen, egal ob mit Ihrer Website oder am Computer allgemein, erreichen Sie uns unter <UIcon
             name="i-lucide-message-circle-question-mark"
             class="size-5 inline-block align-text-bottom"
-          /> Hilfe.
+          /> IT-Support.
         </p>
         <UButton
-          label="Schließen"
+          label="Alles klar!"
           class="mx-auto mt-4"
           @click="close"
         />
