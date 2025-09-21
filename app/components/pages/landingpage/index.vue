@@ -82,7 +82,7 @@ appConfig.ui.colors.primary = 'sky'
           Ihr <span class="font-semibold text-sky-400 text-shadow-sky-950/20 text-shadow-md sm:text-shadow-lg">IT-Experte</span> für den Start in die Solo-Selbstständigkeit.
         </h1>
         <p class="m-0 text-[clamp(16px,2.1vw,20px)] text-white/90 dark:text-[#b3bfd1] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.1s_forwards]">
-          Wir begleiten Einzelunternehmer Schritt für Schritt – von der Starthilfe am Computer über die erste Sichtbarkeit im Netz bis zur eigenen Website mit Domain und E-Mail-Postfächern. Verständlich und mit Blick auf das, was sich wirklich für Sie lohnt.
+          Ich begleite Einzelunternehmer Schritt für Schritt – von der Starthilfe am Computer über die erste Sichtbarkeit im Netz bis zur eigenen Website mit Domain und E-Mail-Postfächern. Verständlich und mit Blick auf das, was sich wirklich für Sie lohnt.
         </p>
         <div class="flex flex-wrap gap-3 mt-2">
           <a
@@ -158,7 +158,7 @@ appConfig.ui.colors.primary = 'sky'
             Redaktionelle Inhalte
           </h3>
           <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
-            Wir helfen bei der Formulierung und laufenden Optimierung Ihrer Inhalte und Werbebotschaften, online wie offline, und Sie sparen sich viel Zeit.
+            Ich helfe bei der Formulierung und laufenden Optimierung Ihrer Inhalte und Werbebotschaften – online wie offline – und Sie sparen sich viel Zeit.
           </p>
         </div>
         <div class="rounded-[16px] p-[18px] pb-4 border bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
@@ -170,7 +170,7 @@ appConfig.ui.colors.primary = 'sky'
             IT-Support
           </h3>
           <p class="text-slate-600 dark:text-[#b3bfd1] m-0">
-            Bei allgemeinen technischen Problemen oder Fragen stehen wir Ihnen per E-Mail, Live-Chat oder Telefon und Fernwartung persönlich zur Seite.
+            Bei allgemeinen technischen Problemen oder Fragen stehe ich Ihnen per E-Mail, Live-Chat oder Telefon und Fernwartung persönlich zur Seite.
           </p>
         </div>
       </div>
@@ -178,7 +178,7 @@ appConfig.ui.colors.primary = 'sky'
         <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Nur Website</span>
           <div class="flex items-end gap-1 mt-3 mb-6">
-            <span class="text-[38px] font-extrabold leading-none">25 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
+            <span class="text-[38px] font-extrabold leading-none">17,85 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
@@ -201,14 +201,14 @@ appConfig.ui.colors.primary = 'sky'
         <div class="border rounded-[16px] p-[22px] bg-white border-black/10 dark:bg-[#0f162e] dark:border-white/10">
           <span class="inline-block px-2 py-[.25rem] rounded-full bg-sky-500/10 border border-sky-500/15 text-[.8rem] text-sky-500">Website und Betreuung</span>
           <div class="flex items-end gap-1 mt-3 mb-6">
-            <span class="text-[38px] font-extrabold leading-none">100 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
+            <span class="text-[38px] font-extrabold leading-none">59,50 €</span> <span class="text-slate-500 dark:text-[#b3bfd1]">/ Monat inkl. USt.</span>
           </div>
           <ul class="list-none p-0 m-0 mt-3 grid gap-2">
             <li class="flex gap-2 items-start">
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> .de-Domain &amp; 3 E-Mail-Adressen inklusive
             </li>
             <li class="flex gap-2 items-start">
-              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Individuelle Anpassungen durch uns
+              <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> Individuelle Anpassungen durch mich
             </li>
             <li class="flex gap-2 items-start">
               <span class="w-[18px] h-[18px] rounded-[6px] bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300 flex items-center justify-center mt-[2px] text-[13px] shrink-0">✓</span> mindestens 1 Std. IT-Support per Telefon und Fernwartung
@@ -227,7 +227,7 @@ appConfig.ui.colors.primary = 'sky'
           </div>
           <p class="text-slate-600 dark:text-[#b3bfd1] mb-3">
             In welcher Branche arbeiten Sie? Wer ist Ihre Zielgruppe und was bieten Sie an? Was macht Sie besonders?
-            Erzählen Sie in Stichpunkten oder ganz natürlich per Sprachaufnahme von Ihrem Unternehmen. Seien Sie so ausführlich, wie Sie möchten. Wir bekommen dadurch einen ersten Eindruck und Ihre Website wird gleich mit passenden Inhalten gefüllt.
+            Erzählen Sie in Stichpunkten oder ganz natürlich per Sprachaufnahme von Ihrem Unternehmen. Seien Sie so ausführlich, wie Sie möchten. Ich bekomme dadurch einen ersten Eindruck und Ihre Website wird gleich mit passenden Inhalten gefüllt.
           </p>
           <textarea
             v-model="companyContext"
@@ -260,7 +260,7 @@ appConfig.ui.colors.primary = 'sky'
       </h2>
       <p class="my-4 text-slate-600 dark:text-[#b3bfd1]">
         Wenn Sie gerne möglichst viel selbst in die Hand nehmen wollen, aber gar nicht wissen, wo Sie anfangen sollen, helfen Ihnen vielleicht die folgenden Tipps weiter.
-        Vieles können Sie auch ohne große Vorkenntnisse und ohne Geld auszugeben umsetzen. Wenn Sie Fragen haben oder bei dem ein oder anderen Punkt Unterstützung brauchen, melden Sie sich gerne bei uns.
+        Vieles können Sie auch ohne große Vorkenntnisse und ohne Geld auszugeben umsetzen. Wenn Sie Fragen haben oder bei dem ein oder anderen Punkt Unterstützung brauchen, melden Sie sich gerne bei mir.
       </p>
       <UAccordion
         v-model="acc1active"
@@ -343,7 +343,7 @@ appConfig.ui.colors.primary = 'sky'
           <div class="p-4">
             Haben Sie schon eine Lösung für Ihre Buchhaltung? Rechnungen schreiben, Belege erfassen, Umsatzsteuervoranmeldung an das Finanzamt übermitteln? Das geht mit Lexware Office ganz einfach.
             Mit dem <strong>Geschäftskonto von Lexware</strong> erhalten Sie zudem eine Visa Business Kreditkarte und Ihre Umsätze werden automatisch in der Buchhaltung erfasst.
-            Wir nutzen Lexware Office selbst und sind sehr zufrieden. Bei der Einrichtung helfen wir Ihnen gerne.
+            Ich nutze Lexware Office selbst und bin sehr zufrieden. Bei der Einrichtung helfe ich Ihnen gerne.
           </div>
           <div class="flex flex-col sm:flex-row items-center justify-end p-4 pt-0">
             <a
@@ -367,17 +367,17 @@ appConfig.ui.colors.primary = 'sky'
 
     <section class="mx-auto w-[92vw] max-w-[1200px] py-16">
       <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-6">
-        Über Uns
+        Über mich
       </h2>
       <p class="my-4 text-slate-600 dark:text-[#b3bfd1]">
-        Wir sind ein kleines Team von Enthusiasten, die es sich zur Aufgabe gemacht haben, Solo-Selbstständigen den Einstieg in die digitale Welt zu erleichtern.
-        Mit langjähriger Erfahrung in IT, Webentwicklung und digitalem Marketing wissen wir, worauf es ankommt und worauf nicht.
-        Unser Ziel ist es, Ihnen eine unkomplizierte und kostengünstige Lösung zu bieten, damit Sie sich auf Ihr Geschäft konzentrieren können.
+        Ich habe es mir zur Aufgabe gemacht, Solo-Selbstständigen den Einstieg in die digitale Welt zu erleichtern.
+        Mit langjähriger Erfahrung in IT, Webentwicklung und digitalem Marketing weiß ich, worauf es ankommt und worauf nicht.
+        Mein Ziel ist es, Ihnen eine unkomplizierte und kostengünstige Lösung zu bieten, damit Sie sich auf Ihr Geschäft konzentrieren können.
       </p>
       <p class="my-4 text-slate-600 dark:text-[#b3bfd1]">
-        Wir sind selbst ein Verbund aus Solo-Selbstständigen und kennen die Herausforderungen und Chancen, die dieser Weg mit sich bringt.
-        Daher legen wir großen Wert auf persönliche Betreuung und maßgeschneiderte Lösungen, die wirklich zu Ihnen passen.
-        Wir freuen uns darauf, Sie auf Ihrem Weg in die Selbstständigkeit zu begleiten.
+        Als Solo-Selbstständiger kenne ich die Herausforderungen und Chancen, die dieser Weg mit sich bringt.
+        Daher lege ich großen Wert auf persönliche Betreuung und maßgeschneiderte Lösungen, die wirklich zu Ihnen passen.
+        Ich freue mich darauf, Sie auf Ihrem Weg in die Selbstständigkeit zu begleiten.
       </p>
     </section>
 
