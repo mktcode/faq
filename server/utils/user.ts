@@ -170,44 +170,65 @@ export async function prefillSettings(settings: SettingsForm): Promise<SettingsF
   })
 
   const prefillSchema = z.object({
-    primary_color: colorSchema,
     title: z.string(),
-    title_text_color: colorSchema,
     tagline: z.string(),
+    primary_color: colorSchema,
+    title_text_color: colorSchema,
     tagline_text_color: colorSchema,
     header_background_color: colorSchema,
     offerings: z.array(z.object({
       title: z.string(),
       description: z.string(),
     })),
+    faqs: z.array(z.object({
+      question: z.string(),
+      answer: z.string(),
+    })),
   })
 
   const response = await openai.responses.parse({
-    model: 'gpt-5-mini',
-    instructions: `You’ll receive only minimal information about the company.
-Your task is to **guess suitable design preferences and content** from the limited company information and propose:
-1. A modern website header configuration.
-2. A coherent color scheme defined in the given output structure.
-3. A suitable tagline for the company.
-4. Up to three marketing texts for the company's offerings on their website.
+    model: 'gpt-5',
+    instructions: `Deine Aufgabe ist es, **passende Design-Einstellungen und Inhalte** für eine einfache Website vorzuschlagen.
+Du erhältst dazu nur ein ausgefülltes Registrierungsformular mit den wichtigsten Informationen über das Unternehmen.
+Die Beschreibung des Unternehmens kann dabei unterschiedlich ausführlich sein - von der reinen Branche bis hin zu einer detaillierten Beschreibung der angebotenen Leistungen. Das obliegt dem Nutzer.
+Ziel ist es in jedem Fall ein stimmiges Design und passende Texte zu generieren, die der Nutzer dann bei Bedarf noch anpassen kann.
 
-* Use HSL notation for all colors.
-* Define a coherent color scheme with the background image in mind.
-* The tagline must be a short, professional slogan under the company name.
-  - It must not include product details, prices, promotions, or specific offers.
-  - Instead, it must reflect the company’s mission and values concisely.
-  - The text color must have good contrast with the background image and overlay.
-* The marketing texts must be concise (no more than 100 words each) and focus on the key benefits of the offerings.
-  - If no information is provided, write at least one generic marketing text suitable for a small business in the given industry.
-  - You may use simple HTML markup without any attributes. Allowed tags are <p>, <strong>, <em>, <u>, <mark>, <ul>, <ol>, and <li>.
-* All written text must be in German.`,
+Die initiale Website besteht aus einem Header (fullscreen), einer einfachen Angebotsübersicht und einem FAQ-Bereich.
+
+Gehe wie folgt vor:
+
+1. Überlege dir eine passende Kombination aus Titel und Slogan für den Header.
+- Der Titel kann der Name des Unternehmens sein oder eine kurze, prägnante Überschrift der angebotenen Leistungen / des Produkts.
+- Der Slogan muss ein kurzer, professioneller Spruch unter diesem Titel sein.
+  - Er darf keine Produktdetails, Preise, Aktionen oder spezifische Angebote enthalten.
+  - Er soll die Mission und Werte des Unternehmens prägnant widerspiegeln.
+
+2. Bestimme ein passendes Farbschema für die Website.
+- Wähle eine Primärfarbe, die zur Art des Unternehmens passt.
+- Bestimme eine Hintergrundfarbe für den Header, die gut mit der Primärfarbe harmoniert.
+- Wähle passend dazu Textfarben für den Titel und den Slogan im Header.
+- Achte auf ausreichend Kontrast und Lesbarkeit.
+- Verwende für alle Farben die HSL-Notation.
+
+3. Formuliere bis zu drei prägnante Marketingtexte für die Angebotsübersicht.
+- Konzentriere dich auf die wichtigsten Vorteile der Angebote.
+- Falls keine weiteren Details über das Unternehmen angegeben sind, schreibe mindestens einen allgemeinen Marketingtext, der zu einem kleinen Unternehmen in der genannten Branche passt.
+- Du darfst einfache HTML-Markup-Tags ohne Attribute verwenden. Erlaubt sind <p>, <strong>, <em>, <u>, <mark>, <ul>, <ol> und <li>.
+- Die Überschriften der Texte sollten so kurz und prägnant wie möglich sein.
+- Jeder Text sollte maximal 100 Wörter umfassen.
+
+4. Formuliere bis zu drei häufig gestellte Fragen (FAQ) mit Antworten.
+- Die Fragen sollten allgemeiner Natur sein und sich auf die Branche beziehen.
+- Falls keine weiteren Details über das Unternehmen angegeben sind, formuliere mindestens eine allgemeine Frage, die zu einem kleinen Unternehmen in der genannten Branche passt.
+- Jede Antwort sollte maximal 50 Wörter umfassen.
+`,
     input: [
       {
         role: 'user',
-        content: `Company Name: ${settings.public.company.name}
-Small Business: ${settings.public.company.isSmallBusiness ? 'Yes' : 'No'}
-City: ${settings.public.company.city}
-About: ${settings.private.assistant.context}`,
+        content: `Firmenname: ${settings.public.company.name}
+Kleinunternehmen: ${settings.public.company.isSmallBusiness ? 'Ja' : 'Nein'}
+Stadt: ${settings.public.company.city}
+Über: ${settings.private.assistant.context}`,
       },
     ],
     text: {
@@ -218,8 +239,11 @@ About: ${settings.private.assistant.context}`,
   const prefill = response.output_parsed
 
   if (prefill) {
+    const titleFontSize = 24
+    const descriptionFontSize = 8
+
     settings.public.design.color = prefill.primary_color
-    settings.public.pages[0].components.push(
+    settings.public.pages[0].components = [
       {
         id: new Date().getTime() + 1,
         key: 'header',
@@ -238,17 +262,17 @@ About: ${settings.private.assistant.context}`,
         visible: true,
         order: 1,
         showShareButton: true,
-        descriptionFontSize: 8,
-        titleFontSize: 24,
+        descriptionFontSize,
+        titleFontSize,
         links: [],
         video: '',
       },
       {
         id: new Date().getTime(),
         key: 'offerings',
-        title: 'Unsere Leistungen',
+        title: 'Angebot',
         showTitle: true,
-        description: 'Entdecken Sie unsere vielfältigen Angebote, die speziell auf Ihre Bedürfnisse zugeschnitten sind.',
+        description: '',
         visible: true,
         order: 2,
         layout: 'list',
@@ -258,7 +282,33 @@ About: ${settings.private.assistant.context}`,
           description: offering.description,
         })),
       },
-    )
+      {
+        id: new Date().getTime() + 2,
+        key: 'form',
+        title: 'Kontakt',
+        description: '',
+        showTitle: true,
+        visible: true,
+        order: 3,
+        successMessage: 'Ihre Nachricht wurde erfolgreich gesendet.',
+        errorMessage: 'Beim Senden Ihrer Nachricht ist ein Fehler aufgetreten.',
+        fields: [],
+      },
+      {
+        id: new Date().getTime() + 3,
+        key: 'faq',
+        title: 'Häufig gestellte Fragen',
+        description: '',
+        showTitle: true,
+        visible: true,
+        order: 4,
+        items: prefill.faqs.map((faq, index) => ({
+          id: index + 1,
+          question: faq.question,
+          answer: faq.answer,
+        })),
+      }
+    ]
   }
 
   return settings

@@ -133,6 +133,11 @@ export type FormComponentSchema = z.infer<typeof formComponentSchema>
 
 const faqComponentSchema = componentSettingsBaseSchema.extend({
   key: z.literal('faq'),
+  items: z.array(z.object({
+    id: z.number(),
+    question: z.string(),
+    answer: z.string(),
+  })),
 })
 export type FaqComponentSchema = z.infer<typeof faqComponentSchema>
 
@@ -352,6 +357,7 @@ export const availableComponents: AvailableComponent[] = [
       description: 'Hier können Sie häufig gestellte Fragen beantworten, um Ihren Kunden zu helfen.',
       visible: true,
       order: 999,
+      items: [],
     },
   },
   {
