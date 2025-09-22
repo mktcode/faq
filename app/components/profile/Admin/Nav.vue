@@ -45,7 +45,7 @@ watch(liveChatData, (newValue) => {
         size="xl"
       />
     </UButton>
-    <UButton
+    <!-- <UButton
       icon="i-lucide-bot"
       variant="ghost"
       label="Assistent"
@@ -53,7 +53,7 @@ watch(liveChatData, (newValue) => {
         base: 'flex-col md:flex-row text-sm md:text-base font-light rounded-none md:rounded-lg',
       }"
       @click="go($profile.subscription.plan ? '#assistant' : '#settings/subscription')"
-    />
+    /> -->
     <UButton
       icon="i-lucide-message-circle-question-mark"
       variant="ghost"
