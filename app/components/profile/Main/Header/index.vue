@@ -16,13 +16,8 @@ defineEmits<{
     :id="component.key + '-' + component.id"
     :class="component.key"
   >
-    <UButton
+    <ProfileMainEditSectionButton
       v-if="$profile.isOwned"
-      label="Sektion bearbeiten"
-      trailing-icon="i-heroicons-pencil"
-      variant="soft"
-      size="xl"
-      class="absolute top-8 -left-44 hover:-left-4 pl-8 transition-all rounded-full z-10"
       @click="$emit('edit', component.id)"
     />
     <ProfileMainHeaderFullscreen v-if="component.height === 'full'" :component="component" />

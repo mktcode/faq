@@ -40,13 +40,8 @@ const itemsRight = computed(() => {
     :id="component.key + '-' + component.id"
     :class="component.key"
   >
-    <UButton
+    <ProfileMainEditSectionButton
       v-if="$profile.isOwned"
-      label="Sektion bearbeiten"
-      trailing-icon="i-heroicons-pencil"
-      variant="soft"
-      size="xl"
-      class="absolute top-8 -left-44 hover:-left-4 pl-8 transition-all rounded-full z-10"
       @click="$emit('edit', component.id)"
     />
     <div class="w-full flex justify-between gap-2 max-w-5xl mx-auto py-4 px-6 transition-all">
