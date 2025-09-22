@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const conversation = await chatwoot.getConversation(id, me.chatwootSourceId)
+  await chatwoot.updateLastSeenAt(me.chatwootSourceId, id)
 
   return { conversation }
 })

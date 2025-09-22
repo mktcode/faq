@@ -8,6 +8,10 @@ const { conversation } = defineProps<{
   conversation: WootConversation
 }>()
 
+const hasUnreadMessagesInThisConversation = computed(() => {
+  return conversation.contact_last_seen_at < Math.max(...conversation.messages.map(msg => msg.created_at))
+})
+
 const latestMessage = computed(() => {
   return conversation.messages[conversation.messages.length - 1]
 })
@@ -37,6 +41,11 @@ function renderDate(date: string | number | undefined) {
     @click="selectConversation(conversation.id)"
   >
     <template #default>
+      <UChip
+        v-if="hasUnreadMessagesInThisConversation"
+        class="animate-ping mr-2"
+        size="xl"
+      />
       <div
         v-if="latestMessage"
         class="truncate text-left"

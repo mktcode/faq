@@ -1,6 +1,21 @@
 <script setup lang="ts">
 const { go } = useAdmin()
 const { unsavedSettings } = useProfile()
+
+const { hasUnreadMessages } = useUnreadMessages()
+const { data: liveChatData, refresh: refreshLiveChatData } = await useFetch('/api/user/livechat/list-conversations')
+
+const refreshLiveChatDataInterval = ref<NodeJS.Timeout | null>(null)
+
+onMounted(() => {
+  refreshLiveChatDataInterval.value = setInterval(refreshLiveChatData, 30_000)
+})
+
+watch(liveChatData, (newValue) => {
+  if (newValue) {
+    hasUnreadMessages.value = newValue.hasUnreadMessages
+  }
+}, { immediate: true })
 </script>
 
 <template>
@@ -40,14 +55,20 @@ const { unsavedSettings } = useProfile()
       @click="go($profile.subscription.plan ? '#assistant' : '#settings/subscription')"
     />
     <UButton
-      label="IT-Support"
       icon="i-lucide-message-circle-question-mark"
       variant="ghost"
       class="ml-auto"
       :ui="{
-        base: 'flex-col md:flex-row text-sm md:text-base font-light rounded-none md:rounded-lg',
+        base: 'flex-col md:flex-row text-sm md:text-base font-light rounded-none md:rounded-lg relative',
       }"
       @click="go('#support')"
-    />
+    >
+      IT-Support
+      <UChip
+        v-if="liveChatData?.hasUnreadMessages"
+        class="absolute top-5 md:left-6 animate-ping"
+        size="xl"
+      />
+    </UButton>
   </div>
 </template>

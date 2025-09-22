@@ -8,7 +8,8 @@ export type WootConversation = {
       userId: number
       subscription: 'S' | 'L' | null
     }
-  }
+  },
+  contact_last_seen_at: number
 }
 
 export type WootMessage = {

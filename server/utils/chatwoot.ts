@@ -40,6 +40,14 @@ async function listConversations(sourceId: string) {
   return await $fetch<WootConversation[]>(`${apiUrl}/public/api/v1/inboxes/${chatwootInboxId}/contacts/${sourceId}/conversations`)
 }
 
+async function updateLastSeenAt(sourceId: string, conversationId: string) {
+  const { chatwootInboxId } = useRuntimeConfig()
+
+  await $fetch(`${apiUrl}/public/api/v1/inboxes/${chatwootInboxId}/contacts/${sourceId}/conversations/${conversationId}/update_last_seen`, {
+    method: 'POST',
+  })
+}
+
 async function startConversation(sourceId: string, message: string) {
   const { chatwootInboxId } = useRuntimeConfig()
 
@@ -91,6 +99,7 @@ async function addMessage(conversationId: string, sourceId: string, message: str
 export const chatwoot = {
   createContact,
   listConversations,
+  updateLastSeenAt,
   startConversation,
   deleteConversation,
   getConversation,

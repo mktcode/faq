@@ -7,5 +7,7 @@ export default defineEventHandler(async (event) => {
 
   const conversations = await chatwoot.listConversations(me.chatwootSourceId)
 
-  return { conversations }
+  const hasUnreadMessages = conversations.some(conv => conv.contact_last_seen_at < Math.max(...conv.messages.map(msg => msg.created_at)))
+
+  return { conversations, hasUnreadMessages }
 })

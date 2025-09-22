@@ -18,6 +18,7 @@ export default defineEventHandler(async (event) => {
   }
 
   await chatwoot.addMessage(id, me.chatwootSourceId, message)
+  await chatwoot.updateLastSeenAt(me.chatwootSourceId, id)
 
   return { success: true }
 })

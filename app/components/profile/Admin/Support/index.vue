@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const { showSupport, go } = useAdmin()
 const router = useRouter()
+
+const { hasUnreadMessages } = useUnreadMessages()
 </script>
 
 <template>
@@ -85,7 +87,6 @@ const router = useRouter()
       />
 
       <UButton
-        label="Live-Chat"
         icon="i-lucide-messages-square"
         class="w-full rounded-none p-4 border-b border-gray-200"
         variant="ghost"
@@ -95,7 +96,14 @@ const router = useRouter()
           trailingIcon: 'ml-auto opacity-30',
         }"
         @click="router.push({ hash: '#support/livechat' })"
-      />
+      >
+        Live-Chat
+        <UChip
+          v-if="hasUnreadMessages"
+          class="animate-ping ml-2"
+          size="xl"
+        />
+      </UButton>
 
       <UButton
         label="Unterstützen Sie uns"
