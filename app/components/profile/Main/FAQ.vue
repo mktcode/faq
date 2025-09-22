@@ -1,29 +1,21 @@
 <script setup lang="ts">
-import type { FaqComponentSchema, Qanda } from '~~/types/db'
+import type { FaqComponentSchema } from '~~/types/db'
 
-const nuxtApp = useNuxtApp()
-const { $profile } = nuxtApp
-
-const { data: qanda } = await useFetch<Qanda[]>(`/api/qanda`, {
-  query: {
-    username: $profile.username,
-  },
-})
-
-const qandaAccordionItems = computed(() => {
-  return qanda.value?.map(item => ({
-    label: item.question,
-    content: item.answer,
-  })) || []
-})
-
-defineProps<{
+const { component } = defineProps<{
   component: FaqComponentSchema;
 }>()
+
 
 defineEmits<{
   edit: [componentId: number]
 }>()
+
+const qandaAccordionItems = computed(() => {
+  return component.items?.map(item => ({
+    label: item.question,
+    content: item.answer,
+  })) || []
+})
 </script>
 
 <template>
