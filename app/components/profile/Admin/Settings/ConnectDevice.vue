@@ -120,11 +120,12 @@ onBeforeUnmount(() => {
         <div
           v-for="device in devices"
           :key="device.credentialId"
-          class="text-lg text-neutral-500 border-b border-neutral-200 p-4 flex gap-2 items-center"
+          class="border-b border-neutral-200 p-4 flex gap-2 items-center"
         >
-          <div class="flex flex-col gap-1 flex-1">
-            <span class="text-xs">Erste Anmeldung:</span>
-            <span class="text-sm font-semibold">
+          <div class="flex flex-col flex-1">
+            {{ device.credentialNickname }}
+            <div class="text-sm text-neutral-400">
+              Erste Anmeldung:
               {{ new Date(device.createdAt).toLocaleDateString('de-DE', {
                 year: 'numeric',
                 month: '2-digit',
@@ -132,7 +133,7 @@ onBeforeUnmount(() => {
                 hour: '2-digit',
                 minute: '2-digit',
               }) }}
-            </span>
+            </div>
           </div>
           <UBadge
             v-if="device.credentialId.endsWith('k')"

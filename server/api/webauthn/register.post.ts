@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { UAParser } from 'ua-parser-js'
 import { settingsFormSchema } from '~~/types/db'
 
 export default defineWebAuthnRegisterEventHandler({
@@ -26,6 +27,9 @@ export default defineWebAuthnRegisterEventHandler({
     }).parse(userBody)
   },
   async onSuccess(event, { credential, user }) {
+    const { browser, device, os } = UAParser(event.node.req.headers['user-agent'])
+    const credentialNickname = [browser.name, device.vendor, device.model || device.type, os.name].filter(Boolean).join('-')
+
     const db = await getDatabaseConnection()
     const username = makeUsername(user.userName)
     const existingUser = await db
@@ -48,6 +52,7 @@ export default defineWebAuthnRegisterEventHandler({
           .values({
             userId: existingUser.id,
             credentialId: credential.id,
+            credentialNickname,
             publicKey: credential.publicKey,
             backedUp: false,
             counter: credential.counter,
@@ -107,6 +112,7 @@ export default defineWebAuthnRegisterEventHandler({
         .values({
           userId: newUser.id,
           credentialId: credential.id,
+          credentialNickname,
           publicKey: credential.publicKey,
           backedUp: false,
           counter: credential.counter,

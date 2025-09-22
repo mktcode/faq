@@ -4,6 +4,7 @@ export interface WebauthnCredentialsTable {
   id: Generated<number>
   userId: number
   credentialId: string
+  credentialNickname: string
   publicKey: string
   counter: number
   backedUp: boolean

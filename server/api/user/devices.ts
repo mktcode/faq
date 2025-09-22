@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
 
   const devices = await db
   .selectFrom('webauthnCredentials')
-  .select(['credentialId', 'createdAt'])
+  .select(['credentialId', 'credentialNickname', 'createdAt'])
   .where('userId', '=', user.id)
   .execute()
 
