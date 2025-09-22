@@ -113,6 +113,15 @@ export default defineWebAuthnRegisterEventHandler({
           transports: credential.transports ? JSON.stringify(credential.transports) : null,
         })
         .execute()
+      
+      const { mailFrom } = useRuntimeConfig()
+      const textForAdminNotification = `Ein neuer Nutzer hat sich registriert.\n\nNutzername: ${newUser.userName}\n\nÜber:\n${user.settings.private.assistant.context}`
+      sendEmail({
+        to: mailFrom,
+        subject: `Neue Registrierung - ${newUser.userName}`,
+        text: textForAdminNotification,
+        html: textForAdminNotification.replace(/\n/g, '<br>'),
+      })
     } else {
       throw createError({ statusCode: 400, message: 'Invalid registration attempt' })
     }
