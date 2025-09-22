@@ -197,6 +197,7 @@ async function createBooking() {
           class="mt-4"
         />
         <UButton
+          v-if="$profile.subscription.plan"
           trailing-icon="i-heroicons-check"
           class="mt-4"
           block
@@ -219,6 +220,14 @@ async function createBooking() {
             </div>
           </div>
         </UButton>
+        <UButton
+          v-else
+          label="Premium buchen"
+          trailing-icon="i-heroicons-rocket-launch"
+          class="mt-4"
+          block
+          @click="go('#settings/subscription')"
+        />
       </div>
     </template>
   </USlideover>

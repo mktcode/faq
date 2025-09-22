@@ -43,7 +43,7 @@ const { hasUnreadMessages } = useUnreadMessages()
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="$profile.subscription.plan ? go('#support/book') : go('#settings/subscription')"
+        @click="go('#support/book')"
       >
         <template #trailing>
           <div class="ml-auto flex items-center gap-2">
