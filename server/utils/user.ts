@@ -239,7 +239,7 @@ Stadt: ${settings.public.company.city}
   const prefill = response.output_parsed
 
   if (prefill) {
-    const titleFontSize = 24
+    const titleFontSize = 16
     const descriptionFontSize = 8
 
     settings.public.design.color = prefill.primary_color
