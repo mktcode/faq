@@ -421,7 +421,7 @@ export const defaultSettings = (): SettingsForm => ({
     },
     design: {
       font: 'montserrat',
-      fontSize: 'md',
+      fontSize: 'lg',
       color: {
         h: 199,
         s: 100,
