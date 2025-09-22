@@ -77,7 +77,11 @@ export default defineWebAuthnRegisterEventHandler({
       }
     }
     else if (user.settings && !existingUser) {
-      if (user.settings.private.assistant.context && user.target === 'website') {
+      if (
+        process.env.DISABLE_PREFILL !== 'true' &&
+        user.settings.private.assistant.context &&
+        user.target === 'website'
+      ) {
         user.settings = await prefillSettings(user.settings)
       }
 
