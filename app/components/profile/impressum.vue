@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { $profile } = useProfile()
+const { $profile, showLegalDataWarning } = useProfile()
 
 const appConfig = useAppConfig()
 appConfig.ui.colors.primary = 'website'
@@ -69,39 +69,61 @@ useHead({
     :class="$profile.isOwned ? 'pb-[56px] md:pb-0 md:pt-[56px]' : ''"
   >
     <div class="max-w-3xl mx-auto py-12 px-6 prose-sm sm:prose-lg">
+      <h2 class="!mb-0">
+        {{ $profile.settings.public.company.name }}
+      </h2>
       <ULink to="/" class="flex items-center gap-2">
         <UIcon
           name="i-heroicons-arrow-left"
         />
         zur Website
       </ULink>
-      <h1>
+      <h1 class="text-2xl !mt-8">
         Impressum
       </h1>
 
-      <p>
-        <strong>{{ $profile.settings.public.company.name || 'Dein Unternehmensname' }}</strong><br>
-        {{ $profile.settings.public.company.street || 'Deine Straße und Hausnummer' }}<br>
-        {{ $profile.settings.public.company.zip || 'Deine Postleitzahl' }} {{ $profile.settings.public.company.city || 'Deine Stadt' }}<br>
-        <br>
-        <strong>Telefon:</strong> {{ $profile.settings.public.company.phone || 'Deine Telefonnummer' }}<br>
-        <strong>E-Mail:</strong> <a :href="`mailto:${$profile.settings.public.company.email || 'kontakt@beispiel.de'}`">
-          {{ $profile.settings.public.company.email || 'kontakt@beispiel.de' }}
-        </a>
-      </p>
-
-      <p
-        v-if="$profile.settings.public.company.taxId"
-        class="mt-2"
+      <UAlert
+        v-if="showLegalDataWarning"
+        variant="soft"
+        title="Unternehmensdaten vervollständigen"
+        icon="i-heroicons-exclamation-triangle"
+        :actions="[{
+          label: 'Daten vervollständigen',
+          icon: 'i-heroicons-building-office-2',
+          size: 'lg',
+          to: '/#settings/company',
+        }]"
       >
-        Umsatzsteuer-ID: {{ $profile.settings.public.company.taxId }}
-      </p>
-      <p
-        v-else
-        class="text-gray-500 text-sm"
-      >
-        Nach § 19 UStG wird keine Umsatzsteuer berechnet.
-      </p>
+        <template #description>
+          Damit Ihre Webseite den gesetzlichen Anforderungen entspricht, fehlen noch einige wichtige Angaben zu Ihrem Unternehmen.
+          Bitte ergänzen Sie diese Informationen.
+        </template>
+      </UAlert>
+      <template v-else>
+        <p>
+          <strong>{{ $profile.settings.public.company.name }}</strong><br>
+          {{ $profile.settings.public.company.street }}<br>
+          {{ $profile.settings.public.company.zip }} {{ $profile.settings.public.company.city }}<br>
+          <br>
+          <strong>Telefon:</strong> {{ $profile.settings.public.company.phone }}<br>
+          <strong>E-Mail:</strong> <a :href="`mailto:${$profile.settings.public.company.email}`">
+            {{ $profile.settings.public.company.email }}
+          </a>
+        </p>
+  
+        <p
+          v-if="$profile.settings.public.company.taxId"
+          class="mt-2"
+        >
+          Umsatzsteuer-ID: {{ $profile.settings.public.company.taxId }}
+        </p>
+        <p
+          v-else
+          class="text-gray-500 text-sm"
+        >
+          Nach § 19 UStG wird keine Umsatzsteuer berechnet.
+        </p>
+      </template>
 
       <div class="w-full flex items-center justify-center gap-2 mt-12 text-sm">
         <ULink

@@ -6,6 +6,12 @@ export const useProfile = () => {
   const isSavingSettings = ref(false)
   const unsavedSettings = useState('unsavedSettings', () => false)
 
+  const showLegalDataWarning = computed(() => {
+    return !$profile.settings.public.company.name ||
+      !$profile.settings.public.company.street ||
+      !$profile.settings.public.company.phone
+  })
+
   function resetSettings() {
     console.log('Reset settings', $profile.settings.public.design.fontSize, $profile.originalSettings.public.design.fontSize)
     $profile.settings.public = JSON.parse(JSON.stringify($profile.originalSettings.public))
@@ -64,6 +70,7 @@ export const useProfile = () => {
 
   return {
     $profile,
+    showLegalDataWarning,
     isSavingSettings,
     resetSettings,
     saveSettings,

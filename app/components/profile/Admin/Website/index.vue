@@ -1,13 +1,9 @@
 <script setup lang="ts">
 const toast = useToast()
 
-const { $profile } = useProfile()
+const { $profile, showLegalDataWarning } = useProfile()
 
 const { showWebsiteSettings, go } = useAdmin()
-
-const showLegalDataWarning = computed(() => {
-  return !$profile.settings.public.company.name || !$profile.settings.public.company.street || !$profile.settings.public.company.phone
-})
 
 async function togglePublished() {
   const { published } = await $fetch('/api/user/togglePublished', { method: 'POST' })
