@@ -44,7 +44,7 @@ const itemsRight = computed(() => {
       v-if="$profile.isOwned"
       @click="$emit('edit', component.id)"
     />
-    <div class="w-full flex justify-between gap-2 max-w-5xl mx-auto py-4 px-6 transition-all">
+    <div class="hidden md:flex w-full justify-between gap-2 max-w-5xl mx-auto py-4 px-6 transition-all">
       <div class="flex gap-2">
         <ProfileMainMenuButton
           v-for="(item, index) in itemsLeft"
@@ -69,6 +69,30 @@ const itemsRight = computed(() => {
           :size="size"
         />
       </div>
+    </div>
+    <div class="md:hidden flex w-full justify-end max-w-5xl mx-auto py-4 px-6 transition-all">
+      <UPopover
+        :ui="{
+          content: 'flex flex-col gap-1 p-2 min-w-64',
+        }"
+      >
+        <template #default>
+          <UButton
+            label="Menü"
+            icon="i-heroicons-bars-3"
+            variant="ghost"
+          />
+        </template>
+  
+        <template #content>
+          <ProfileMainMenuButton
+            v-for="(item, index) in [...itemsLeft, ...itemsCenter, ...itemsRight]"
+            :key="index"
+            :item="item"
+            :size="size"
+          />
+        </template>
+      </UPopover>
     </div>
   </div>
 </template>
