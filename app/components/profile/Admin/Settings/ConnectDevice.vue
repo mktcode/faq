@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { user } = useUserSession()
 const toast = useToast()
 
 const refreshInterval = ref<NodeJS.Timeout | null>(null)
@@ -96,6 +97,27 @@ function stopCountdown() {
   }
 }
 
+async function abortConnectDevice() {
+  try {
+    await $fetch('/api/user/connect/abort', {
+      method: 'POST',
+    })
+    await refreshCurrentOtp()
+    stopCountdown()
+    secondsLeft.value = 0
+    oneTimePassword.value = generateOneTimePassword()
+  } catch (error) {
+    console.error('Error aborting connect device:', error)
+    toast.add({
+      title: 'Fehler',
+      icon: 'i-heroicons-x-circle',
+      description: 'Das Verknüpfen des Geräts konnte nicht abgebrochen werden.',
+      color: 'error',
+      progress: false,
+    })
+  }
+}
+
 onMounted(() => {
   if (currentOtp.value?.secondsLeft) {
     startCountdown()
@@ -154,7 +176,7 @@ onBeforeUnmount(() => {
       >
         Um sich auf einem anderen Gerät anzumelden, müssen Sie dieses zunächst über ein Einmal-Passwort verknüpfen. Klicken Sie dazu auf "Gerät verknüpfen", um ein neues Einmal-Passwort zu generieren. Melden Sie sich anschließend innerhalb der nächsten 15 Minuten auf dem neuen Gerät mit Ihrem Benutzernamen und dem Einmal-Passwort an.
       </DismissableAlert>
-      <div class="mb-4">
+      <div>
         <div
           v-for="device in devices"
           :key="device.credentialId"
@@ -163,7 +185,7 @@ onBeforeUnmount(() => {
           <div class="flex flex-col flex-1">
             {{ device.credentialNickname }}
             <div class="text-sm text-neutral-400">
-              Erste Anmeldung:
+              Verknüpft am
               {{ new Date(device.createdAt).toLocaleDateString('de-DE', {
                 year: 'numeric',
                 month: '2-digit',
@@ -174,7 +196,7 @@ onBeforeUnmount(() => {
             </div>
           </div>
           <UBadge
-            v-if="device.credentialId.endsWith('k')"
+            v-if="device.credentialId === user?.credentialId"
             color="neutral"
             variant="soft"
             class="whitespace-nowrap"
@@ -192,20 +214,21 @@ onBeforeUnmount(() => {
           />
         </div>
       </div>
-      <div class="flex flex-col gap-2 p-4">
+      <div class="flex flex-col">
         <UButtonGroup v-if="currentOtp?.otp">
           <UBadge
             :label="oneTimePassword"
             variant="soft"
             color="neutral"
             size="xl"
-            class="flex-1 font-mono text-2xl p-4 justify-center"
+            class="flex-1 font-mono text-2xl p-4 justify-center rounded-none"
           />
           <UBadge
             :label="countdownLabel"
             variant="soft"
             color="neutral"
             size="xl"
+            class="rounded-none"
           />
         </UButtonGroup>
         <UAlert
@@ -214,17 +237,24 @@ onBeforeUnmount(() => {
           title="Gerät verknüpfen"
           :description="`Melden Sie sich nun innerhalb der nächsten 15 Minuten auf dem neuen Gerät mit Ihrem Benutzernamen '${$profile.username}' und dem Einmalpasswort an.`"
           variant="soft"
+          class="rounded-none"
           :ui="{
             icon: 'animate-spin',
           }"
+          :actions="[
+            {
+              label: 'Abbrechen',
+              onClick: abortConnectDevice,
+            },
+          ]"
         />
         <UButton
           v-if="!currentOtp?.otp"
-          label="Gerät verknüpfen"
+          label="Neues Gerät verknüpfen"
           icon="i-lucide-unplug"
           variant="solid"
           color="primary"
-          class="w-full"
+          class="w-full rounded-none p-4"
           :loading="isSettingOneTimePassword"
           :ui="{
             base: 'justify-center',

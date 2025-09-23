@@ -90,7 +90,6 @@ export default defineWebAuthnAuthenticateEventHandler({
       .selectFrom('webauthnCredentials')
       .innerJoin('users', 'users.id', 'webauthnCredentials.userId')
       .select([
-        'webauthnCredentials.id as credentialId',
         'webauthnCredentials.userId',
         'users.id',
         'users.name',
@@ -116,6 +115,7 @@ export default defineWebAuthnAuthenticateEventHandler({
     await setUserSession(event, {
       user: {
         id: userCredential.id,
+        credentialId: credential.id,
         name: userCredential.name,
         userName: userCredential.userName,
         email: userCredential.email,

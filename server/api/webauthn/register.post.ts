@@ -72,6 +72,7 @@ export default defineWebAuthnRegisterEventHandler({
         await setUserSession(event, {
           user: {
             id: existingUser.id,
+            credentialId: credential.id,
             name: existingUser.name,
             userName: username,
             email: existingUser.email,
@@ -99,6 +100,7 @@ export default defineWebAuthnRegisterEventHandler({
       await setUserSession(event, {
         user: {
           id: newUser.id,
+          credentialId: credential.id,
           name: newUser.name,
           userName: username,
           email: newUser.email,
