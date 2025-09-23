@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { HtmlComponentSchema } from '~~/types/db'
 
-const appConfig = useAppConfig()
 const { $profile } = useProfile()
 
 const { path } = usePath()
@@ -25,6 +24,7 @@ const htmlComponents = computed(() => {
   return components.value.filter(c => c.key === 'html') as HtmlComponentSchema[]
 })
 
+const appConfig = useAppConfig()
 appConfig.ui.colors.primary = 'website'
 appConfig.ui.button.defaultVariants.rounded = $profile.settings.public.design.rounded
 appConfig.ui.input.defaultVariants.rounded = $profile.settings.public.design.rounded
@@ -102,14 +102,13 @@ useHead({
         id: `html-component-style-${component.id}`,
         innerHTML: `#main #${component.key}-${component.id} {\n${component.css}\n}`,
       }
-    }
-  )],
+    }),
+  ],
 })
 
 function openAdmin(componentId: number) {
   navigateTo(`#website/page/${page.value?.id}/component/${componentId}`)
 }
-
 </script>
 
 <template>
