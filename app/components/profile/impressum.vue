@@ -27,7 +27,7 @@ const colorCss = `@supports (color: color-mix(in oklch, white 50%, black 50%)) {
 }`
 
 useHead({
-  title: $profile.settings.public.company.name + ' - Datenschutzerklärung',
+  title: $profile.settings.public.company.name + ' - Impressum',
   meta: [
     { name: 'robots', content: $profile.isPublic ? 'index, follow' : 'noindex, nofollow' },
     { name: 'theme-color', content: toHslString($profile.settings.public.design.color) },
