@@ -32,8 +32,8 @@ const { showSupportPayment, go } = useAdmin()
 
     <template #body>
       <p class="mb-4">
-        Wenn Sie unsere Arbeit und unseren Support schätzen, freuen wir uns über Ihre finanzielle Unterstützung. Jeder Beitrag
-        hilft uns, unsere Dienste zu verbessern und weiterhin persönlichen Support anzubieten, auch für kleinere Budgets.
+        Wenn Sie meine Arbeit und meinen Support schätzen, freue ich mich über Ihre finanzielle Unterstützung. Jeder Beitrag
+        hilft mir, meine Dienste zu verbessern und weiterhin persönlichen Support anzubieten, auch für kleinere Budgets.
       </p>
       <div class="flex flex-col gap-2">
         <UButton

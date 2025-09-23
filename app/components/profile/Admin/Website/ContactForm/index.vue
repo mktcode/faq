@@ -15,7 +15,7 @@ defineProps<{
       >
         <UInput
           v-model="component.title"
-          placeholder="z.B. Unsere Angebote"
+          placeholder="z.B. Kontakt"
           class="w-full"
         />
       </UFormField>

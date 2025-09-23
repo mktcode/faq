@@ -117,7 +117,7 @@ async function handleImageUpload(event: Event) {
         >
           <UInput
             v-model="component.title"
-            placeholder="z.B. Unsere Angebote"
+            placeholder="z.B. Mein Angebot"
             class="w-full"
           />
         </UFormField>
@@ -130,7 +130,7 @@ async function handleImageUpload(event: Event) {
         >
           <UTextarea
             v-model="prompt"
-            placeholder="Schreibe einen einleitenden Text für unsere Angebote."
+            placeholder="Schreibe einen einleitenden Text für meine Angebote."
             class="w-full"
             :rows="3"
             :disabled="isGenerating"

@@ -28,7 +28,7 @@ function removeItem(index: number) {
       >
         <UInput
           v-model="component.title"
-          placeholder="z.B. Unsere Angebote"
+          placeholder="z.B. Mein Angebot"
           class="w-full"
         />
       </UFormField>

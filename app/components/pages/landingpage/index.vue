@@ -32,7 +32,7 @@ const acc1items = ref<AccordionItem[]>([
     slot: 'slot5',
   },
   {
-    label: 'Unsere Buchhaltungsempfehlung: Lexware Office',
+    label: 'Meine Buchhaltungsempfehlung: Lexware Office',
     slot: 'slot6',
   },
 ])
@@ -227,7 +227,8 @@ appConfig.ui.colors.primary = 'sky'
           </div>
           <p class="text-slate-600 dark:text-[#b3bfd1] mb-3">
             In welcher Branche arbeiten Sie? Wer ist Ihre Zielgruppe und was bieten Sie an? Was macht Sie besonders?
-            Erzählen Sie in Stichpunkten oder ganz natürlich per Sprachaufnahme von Ihrem Unternehmen. Seien Sie so ausführlich, wie Sie möchten. Ich bekomme dadurch einen ersten Eindruck und Ihre Website wird gleich mit passenden Inhalten gefüllt.
+            Erzählen Sie in Stichpunkten oder ganz natürlich per Sprachaufnahme von Ihrem Unternehmen.
+            Ich bekomme dadurch einen ersten Eindruck und Ihre Website wird gleich mit passenden Inhalten gefüllt.
           </p>
           <textarea
             v-model="companyContext"

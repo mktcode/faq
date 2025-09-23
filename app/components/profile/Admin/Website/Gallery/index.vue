@@ -126,7 +126,7 @@ const linkInput = ref('')
       >
         <UInput
           v-model="component.title"
-          placeholder="z.B. Unsere Angebote"
+          placeholder="z.B. Bildergalerie"
           class="w-full"
         />
       </UFormField>

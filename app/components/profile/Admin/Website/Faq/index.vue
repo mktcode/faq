@@ -47,7 +47,7 @@ async function saveQanda() {
     >
       <UInput
         v-model="component.title"
-        placeholder="z.B. Unsere Angebote"
+        placeholder="z.B. Häufig gestellte Fragen"
         class="w-full"
       />
     </UFormField>

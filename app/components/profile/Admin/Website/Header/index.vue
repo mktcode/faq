@@ -187,7 +187,7 @@ async function deleteImage(image: 'logo' | 'header') {
       >
         <UInput
           v-model="component.title"
-          placeholder="z.B. Unsere Angebote"
+          placeholder="z.B. ihr Unternehmensname"
           class="w-full"
         />
       </UFormField>

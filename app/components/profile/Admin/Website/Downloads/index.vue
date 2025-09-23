@@ -100,7 +100,7 @@ async function deleteDownload(index: number) {
       >
         <UInput
           v-model="component.title"
-          placeholder="z.B. Unsere Angebote"
+          placeholder="z.B. Downloads"
           class="w-full"
         />
       </UFormField>
