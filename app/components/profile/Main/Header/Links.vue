@@ -6,7 +6,8 @@ defineProps<{
   component: HeaderComponentSchema;
 }>()
 
-const $profile = useNuxtApp().$profile
+const { $profile } = useProfile()
+const { go } = useAdmin()
 
 const { copy, copied } = useClipboard()
 const { copy: copyForInstagram, copied: copiedForInstagram } = useClipboard()
@@ -66,7 +67,7 @@ function getStaggeredAnimationClass(index: number) {
       class="mb-auto"
     >
       <UButton
-        label="Teilen"
+        label="Website Teilen"
         icon="i-heroicons-share"
         :class="getStaggeredAnimationClass(component.links ? component.links.length : 0)"
         class="header-link shadow-sm hover:shadow-lg transition-all w-full sm:w-auto"
@@ -75,17 +76,32 @@ function getStaggeredAnimationClass(index: number) {
       <template #content>
         <div class="m-4 inline-flex flex-col gap-4 max-w-xs">
           <template v-if="$profile.isOwned && !$profile.isPublic">
-            <UAlert class="max-w-sm">
+            <UAlert
+              class="max-w-sm"
+              variant="soft"
+              :actions="[
+                {
+                  label: 'Website',
+                  variant: 'soft',
+                  size: 'lg',
+                  icon: 'i-lucide-monitor-smartphone',
+                  onClick: () => go('#website'),
+                },
+                {
+                  label: 'Unternehmensdaten',
+                  variant: 'soft',
+                  size: 'lg',
+                  icon: 'i-heroicons-building-office-2',
+                  onClick: () => go('#settings/company'),
+                },
+              ]"
+            >
               <template #description>
-                Ihre Website ist noch nicht veröffentlicht. Das können Sie in der
+                Ihre Website ist noch nicht veröffentlicht. Das können Sie unter
                 <UIcon
-                  name="i-heroicons-bars-3"
+                  name="i-lucide-monitor-smartphone"
                   class="inline-block size-5 align-middle"
-                /> Administration unter
-                <UIcon
-                  name="i-heroicons-cog-6-tooth"
-                  class="inline-block size-5 align-middle"
-                /> Einstellungen ändern.
+                /> <strong>Website</strong> ändern. Zuvor müssen Sie Ihre Unternehmensdaten vollständig ausfüllen.
               </template>
             </UAlert>
           </template>

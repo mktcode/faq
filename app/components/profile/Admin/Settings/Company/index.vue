@@ -31,7 +31,7 @@ const { saveSettings } = useProfile()
     </template>
 
     <template #body>
-      <div class="flex flex-col gap-4 p-6">
+      <div class="flex flex-col gap-4 p-4">
         <div class="flex gap-4">
           <UFormField label="Vorname">
             <UInput
@@ -143,14 +143,15 @@ const { saveSettings } = useProfile()
             </UButtonGroup>
           </UFormField>
         </Transition>
-        <UButton
-          label="Einstellungen speichern"
-          variant="solid"
-          color="primary"
-          class="mt-4"
-          @click="saveSettings"
-        />
       </div>
+      <UButton
+        label="Unternehmensdaten speichern"
+        icon="i-heroicons-check"
+        variant="solid"
+        color="primary"
+        class="mt-4 w-full rounded-none p-4"
+        @click="saveSettings"
+      />
     </template>
   </USlideover>
 </template>
