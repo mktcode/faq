@@ -17,8 +17,9 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 COPY --from=builder /app/.output ./
-COPY --from=builder /app/db/migrate.ts ./server/migrate.ts
-COPY --from=builder /app/db/migrations ./server/migrations
+COPY --from=builder /app/server/db/migrate.ts ./server/migrate.ts
+COPY --from=builder /app/server/db/down.ts ./server/down.ts
+COPY --from=builder /app/server/db/migrations ./server/migrations
 
 ENV NODE_ENV=production
 ENV PORT=80

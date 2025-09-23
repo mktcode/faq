@@ -39,6 +39,7 @@ aliases:
   shell: app exec --interactive --reuse "bash"
   logs: app logs -f
   migrate: app exec --primary 'npx tsx server/migrate.ts'
+  migrate:down: app exec --primary 'npx tsx server/down.ts'
   db: accessory exec db --interactive --reuse "bash"
 builder:
   arch:
@@ -60,6 +61,6 @@ accessories:
       secret:
         - MYSQL_ROOT_PASSWORD
     files:
-      - db/init.sql:/docker-entrypoint-initdb.d/setup.sql
+      - server/db/init.sql:/docker-entrypoint-initdb.d/setup.sql
     directories:
       - data:/var/lib/mysql
