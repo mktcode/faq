@@ -42,7 +42,7 @@ const supportPhone = '+49 123 4567890'
 
     <template #body>
       <p class="mb-4">
-        Wenn Sie uns telefonisch oder per E-Mail kontaktieren, geben Sie bitte Ihre Support-ID an.
+        Wenn Sie mich telefonisch oder per E-Mail kontaktieren, geben Sie bitte Ihre Support-ID an.
       </p>
       <div
         v-if="user"

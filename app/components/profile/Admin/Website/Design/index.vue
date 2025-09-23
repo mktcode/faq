@@ -128,7 +128,7 @@ watch(
               <div class="ml-auto flex items-center gap-2">
                 <UBadge
                   v-if="!$profile.subscription.plan"
-                  label="Premium"
+                  label="Paket S"
                   variant="outline"
                 />
                 <UIcon

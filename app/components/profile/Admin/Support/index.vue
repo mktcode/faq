@@ -23,13 +23,16 @@ const { hasUnreadMessages } = useUnreadMessages()
     }"
   >
     <template #title>
-      <h3 class="text-lg font-semibold flex items-center gap-2">
+      <div class="text-lg font-semibold flex items-center gap-2">
         <UIcon
           name="i-lucide-message-circle-question-mark"
           class="inline-block size-6 opacity-50"
         />
         IT-Support
-      </h3>
+      </div>
+      <div class="mt-1 ml-auto font-normal text-sm text-gray-500">
+        Mo - Fr, 9 - 18:00 Uhr
+      </div>
     </template>
 
     <template #body>
@@ -43,13 +46,13 @@ const { hasUnreadMessages } = useUnreadMessages()
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="go('#support/book')"
+        @click="$profile.subscription.plan ? go('#support/book') : go('#settings/subscription')"
       >
         <template #trailing>
           <div class="ml-auto flex items-center gap-2">
             <UBadge
               v-if="!$profile.subscription.plan"
-              label="Premium"
+              label="Paket L"
               variant="outline"
             />
             <UIcon
