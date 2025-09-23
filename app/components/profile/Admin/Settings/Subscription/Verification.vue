@@ -134,12 +134,14 @@ const formFilled = computed(() => {
           class="w-full"
         />
       </UFormField>
-      <UAlert
-        icon="i-heroicons-envelope"
-        title="E-Mail-Adresse für das Abonnement"
-        variant="soft"
-        description="Geben Sie bitte eine bereits vorhandene E-Mail-Adresse an, z.B. @gmail.com oder @web.de. Wir senden Ihnen eine Bestätigungs-E-Mail zu, in der Sie einen Button 'Abonnement abschließen' finden. Darüber gelangen Sie zu unserem Zahlungsdienstleister Stripe und können Ihre Zahlungsinformationen hinterlegen und das Abonnement abschließen. Ihre monatliche Rechnung erhalten Sie an diese E-Mail-Adresse."
-      />
+      <div> <!-- NOTE: div prevents alert from flex-shrinking -->
+        <UAlert
+          icon="i-heroicons-envelope"
+          title="E-Mail-Adresse für das Abonnement"
+          variant="soft"
+          description="Geben Sie bitte eine bereits vorhandene E-Mail-Adresse an, z.B. @gmail.com oder @web.de. Wir senden Ihnen eine Bestätigungs-E-Mail zu, in der Sie einen Button 'Abonnement abschließen' finden. Darüber gelangen Sie zu unserem Zahlungsdienstleister Stripe und können Ihre Zahlungsinformationen hinterlegen und das Abonnement abschließen. Ihre monatliche Rechnung erhalten Sie an diese E-Mail-Adresse."
+        />
+      </div>
       <UInput
         v-model="emailToVerify"
         label="E-Mail-Adresse"
@@ -147,16 +149,16 @@ const formFilled = computed(() => {
         placeholder="Ihre E-Mail-Adresse"
         class="w-full"
       />
-      <!-- TODO: Height needs to be fixed on mobile -->
-      <UAlert
-        v-if="showEmailVerificationHint"
-        icon="i-lucide-loader-circle"
-        title="Öffnen Sie Ihr E-Mail-Postfach"
-        description="Sie haben eine E-Mail erhalten, um Ihr Abonnement zu bestätigen. Lassen Sie dieses Fenster geöffnet und kehren Sie nach der Zahlung zurück."
-        :ui="{
-          icon: 'animate-spin',
-        }"
-      />
+      <div v-if="showEmailVerificationHint">
+        <UAlert
+          icon="i-lucide-loader-circle"
+          title="Öffnen Sie Ihr E-Mail-Postfach"
+          description="Sie haben eine E-Mail erhalten, um Ihr Abonnement zu bestätigen. Lassen Sie dieses Fenster geöffnet und kehren Sie nach der Zahlung zurück."
+          :ui="{
+            icon: 'animate-spin',
+          }"
+        />
+      </div>
       <UButton
         v-if="formFilled"
         :label="showEmailVerificationHint ? `Bestätigungs-E-Mail erneut senden${cooldown > 0 ? ` (${cooldown})` : ''}` : `Bestätigungs-E-Mail senden`"
@@ -165,13 +167,14 @@ const formFilled = computed(() => {
         :disabled="isStartingVerification || cooldown > 0"
         @click="startVerification"
       />
-      <UAlert
-        v-else
-        icon="i-lucide-alert-triangle"
-        title="Bitte füllen Sie alle Felder aus."
-        variant="soft"
-        description="Für ein Abonnement benötigen wir Ihre Unternehmensdaten und eine E-Mail-Adresse."
-      />
+      <div v-else>
+        <UAlert
+          icon="i-lucide-alert-triangle"
+          title="Bitte füllen Sie alle Felder aus."
+          variant="soft"
+          description="Für ein Abonnement benötigen wir Ihre Unternehmensdaten und eine E-Mail-Adresse."
+        />
+      </div>
     </template>
   </USlideover>
 </template>
