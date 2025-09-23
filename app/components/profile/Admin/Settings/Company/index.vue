@@ -32,7 +32,7 @@ const { saveSettings } = useProfile()
 
     <template #body>
       <div class="flex flex-col gap-4 p-6">
-        <div class="flex flex-col sm:flex-row gap-4">
+        <div class="flex gap-4">
           <UFormField label="Vorname">
             <UInput
               v-model="$profile.settings.public.company.firstname"
@@ -63,7 +63,7 @@ const { saveSettings } = useProfile()
             class="w-full"
           />
         </UFormField>
-        <div class="flex flex-col sm:flex-row gap-4">
+        <div class="flex gap-4">
           <UFormField
             label="PLZ"
             class="w-32"
