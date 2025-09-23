@@ -1,6 +1,8 @@
 import type { Kysely } from 'kysely'
 import { sql } from 'kysely'
 
+// TODO: re-enable typescript properly (broke after Nuxt 4 upgrade)
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function up(db: Kysely<any>): Promise<void> {
   await db.schema
