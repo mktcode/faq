@@ -77,7 +77,7 @@ appConfig.ui.colors.primary = 'sky'
         class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,.36),rgba(0,0,0,.36)),radial-gradient(100%_80%_at_20%_20%,rgba(14,165,233,.52),rgba(255,255,255,.2)_75%),linear-gradient(180deg,rgba(2,132,199,.12),rgba(2,132,199,.22))] dark:bg-[radial-gradient(100%_80%_at_20%_20%,rgba(14,165,233,.45),rgba(11,16,32,.85)_55%),linear-gradient(180deg,rgba(11,16,32,.2),rgba(11,16,32,.25))]"
         aria-hidden="true"
       />
-      <div class="relative z-[1] p-[clamp(28px,5vw,64px)] pb-0 grid gap-[22px] max-w-[900px] text-white dark:text-[#e7ecf4]">
+      <div class="relative z-[1] p-[clamp(28px,5vw,64px)] grid gap-[22px] max-w-[900px] text-white dark:text-[#e7ecf4]">
         <h1 class="m-0 text-[clamp(28px,4vw,52px)] leading-[1.1] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_forwards]">
           Ihr <span class="font-semibold text-sky-400 text-shadow-sky-950/20 text-shadow-md sm:text-shadow-lg">IT-Experte</span> für den Start in die Solo-Selbstständigkeit.
         </h1>
@@ -105,29 +105,6 @@ appConfig.ui.colors.primary = 'sky'
             />
             IT-Support
           </a>
-        </div>
-      </div>
-      <div class="flex md:flex-row flex-col gap-x-[24px] mt-[26px] relative z-[1] p-[clamp(28px,5vw,64px)] pt-0">
-        <div class="inline-flex items-center gap-2 py-1 rounded-[12px] font-semibold tracking-[.2px] text-white dark:border-white/10 dark:text-[#e7ecf4] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.6s_forwards]">
-          <UIcon
-            name="i-heroicons-hand-thumb-up"
-            size="20"
-          />
-          <strong>Einfach zu bedienen</strong>
-        </div>
-        <div class="inline-flex items-center gap-2 py-1 rounded-[12px] font-semibold tracking-[.2px] text-white dark:border-white/10 dark:text-[#e7ecf4] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.7s_forwards]">
-          <UIcon
-            name="i-heroicons-rocket-launch"
-            size="20"
-          />
-          <strong>Sofort online</strong>
-        </div>
-        <div class="inline-flex items-center gap-2 py-1 rounded-[12px] font-semibold tracking-[.2px] text-white dark:border-white/10 dark:text-[#e7ecf4] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.8s_forwards]">
-          <UIcon
-            name="i-heroicons-sparkles"
-            size="20"
-          />
-          <strong>Modernes Design</strong>
         </div>
       </div>
     </div>
