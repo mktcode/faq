@@ -79,6 +79,7 @@ export type HeaderComponentSchema = z.infer<typeof headerComponentSchema>
 const menuComponentSchema = componentSettingsBaseSchema.extend({
   key: z.literal('menu'),
   items: z.array(z.object({
+    id: z.number(),
     title: z.string(),
     subtitle: z.string().optional(),
     icon: z.string().optional(),
@@ -289,7 +290,15 @@ export const availableComponents: AvailableComponent[] = [
       description: '',
       visible: true,
       order: 0,
-      items: [],
+      items: [
+        {
+          id: 1,
+          title: 'Startseite',
+          url: '/',
+          openInNewTab: false,
+          position: 'left',
+        },
+      ],
     },
   },
   {

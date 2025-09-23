@@ -20,7 +20,7 @@ function changeOrder(index: number, direction: 'up' | 'down') {
     <TransitionGroup name="list">
       <ProfileAdminWebsiteMenuItem
         v-for="(item, index) in component.items"
-        :key="item.title"
+        :key="item.id"
         :is-first="index === 0"
         :is-last="index === (component.items.length - 1)"
         v-model:item="component.items[index]!"
@@ -37,6 +37,7 @@ function changeOrder(index: number, direction: 'up' | 'down') {
         trailingIcon: 'ml-auto opacity-30',
       }"
       @click="component.items.push({
+        id: Date.now(),
         title: 'Neuer Menüpunkt',
         url: '/',
         openInNewTab: false,
