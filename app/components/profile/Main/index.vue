@@ -44,6 +44,24 @@ const borderRadius = computed(() => {
   }
 })
 
+const hslColor = toHslString($profile.settings.public.design.color)
+const colorCss = `@supports (color: color-mix(in oklch, white 50%, black 50%)) {
+  :root {
+    --color-website-50:  color-mix(in oklch, white 94%, ${hslColor} 6%);
+    --color-website-100: color-mix(in oklch, white 88%, ${hslColor} 12%);
+    --color-website-200: color-mix(in oklch, white 78%, ${hslColor} 22%);
+    --color-website-300: color-mix(in oklch, white 62%, ${hslColor} 38%);
+    --color-website-400: color-mix(in oklch, white 46%, ${hslColor} 54%);
+    --color-website-500: ${hslColor};
+    --color-website-600: color-mix(in oklch, black 7%,  ${hslColor} 93%);
+    --color-website-700: color-mix(in oklch, black 16%, ${hslColor} 84%);
+    --color-website-800: color-mix(in oklch, black 30%, ${hslColor} 70%);
+    --color-website-900: color-mix(in oklch, black 46%, ${hslColor} 54%);
+    --color-website-950: color-mix(in oklch, black 60%, ${hslColor} 40%);
+    --color-website: ${hslColor};
+  }
+}`
+
 useHead({
   title: page.value.title,
   meta: [
@@ -70,17 +88,22 @@ useHead({
       type: 'image/png',
       href: $profile.settings.public.meta.favicon || '',
     },
-    {
-      rel: 'stylesheet',
-      href: `/api/css`, // TODO: move to style tag
-    },
   ],
-  style: htmlComponents.value.map(component => {
-    return {
-      id: `html-component-style-${component.id}`,
-      innerHTML: `#main #${component.key}-${component.id} {\n${component.css}\n}`,
+  style: [
+    {
+      innerHTML: colorCss,
+    },
+    {
+      id: 'custom-style',
+      innerHTML: $profile.settings.public.css,
+    },
+    ...htmlComponents.value.map(component => {
+      return {
+        id: `html-component-style-${component.id}`,
+        innerHTML: `#main #${component.key}-${component.id} {\n${component.css}\n}`,
+      }
     }
-  }),
+  )],
 })
 
 function openAdmin(componentId: number) {
