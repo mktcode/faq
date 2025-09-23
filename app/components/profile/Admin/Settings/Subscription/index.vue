@@ -31,7 +31,7 @@ const { data: stripeCheckoutSession } = await useFetch('/api/user/activeCheckout
     </template>
 
     <template #body>
-      <ProfileAdminSettingsSubscriptionCheckoutPending v-if="stripeCheckoutSession" :url="stripeCheckoutSession.url" />
+      <ProfileAdminSettingsSubscriptionCheckoutPending v-if="stripeCheckoutSession && stripeCheckoutSession.url" :url="stripeCheckoutSession.url" />
       <ProfileAdminSettingsSubscriptionSubscribed v-else-if="$profile.subscription.plan" />
       <ProfileAdminSettingsSubscriptionUnsubscribed v-else />
     </template>
