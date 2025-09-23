@@ -9,11 +9,11 @@ const { $profile } = useProfile()
 const maxStorage = computed(() => {
   switch ($profile.subscription.plan) {
     case 'S':
-      return 50 * 1024 * 1024 // 50 MB
+      return 50 * 1024 * 1024
     case 'L':
-      return 200 * 1024 * 1024 // 100 MB
+      return 250 * 1024 * 1024
     default:
-      return 10 * 1024 * 1024 // 10 MB
+      return 10 * 1024 * 1024
   }
 })
 
