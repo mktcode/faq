@@ -47,7 +47,7 @@ function getStaggeredAnimationClass(index: number) {
         :icon="link.icon?.startsWith('https://') ? undefined : link.icon"
         :href="link.url"
         target="_blank"
-        class="header-link shadow-sm hover:shadow-lg transition-all w-full sm:w-auto"
+        class="shadow-sm hover:shadow-lg transition-all w-full sm:w-auto"
         :class="getStaggeredAnimationClass(index)"
       >
         <template #default>
@@ -70,7 +70,7 @@ function getStaggeredAnimationClass(index: number) {
         label="Website Teilen"
         icon="i-heroicons-share"
         :class="getStaggeredAnimationClass(component.links ? component.links.length : 0)"
-        class="header-link shadow-sm hover:shadow-lg transition-all w-full sm:w-auto"
+        class="shadow-sm hover:shadow-lg transition-all w-full sm:w-auto"
       />
 
       <template #content>
