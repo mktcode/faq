@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const toast = useToast()
+
 const refreshInterval = ref<NodeJS.Timeout | null>(null)
 const countdownInterval = ref<NodeJS.Timeout | null>(null)
 
@@ -14,6 +16,42 @@ const { showConnectDevice, go } = useAdmin()
 
 const { data: devices, refresh: refreshDevices } = await useFetch('/api/user/devices')
 const { data: currentOtp, refresh: refreshCurrentOtp } = await useFetch('/api/user/connect/otp')
+
+const deletingDeviceIds = ref<string[]>([])
+async function deleteDevice(credentialId: string) {
+  deletingDeviceIds.value.push(credentialId)
+
+  try {
+    await $fetch('/api/user/devices/delete', {
+      method: 'POST',
+      body: {
+        credentialId
+      }
+    })
+
+    await refreshDevices()
+
+    toast.add({
+      title: 'Gerät entfernt',
+      icon: 'i-heroicons-check-circle',
+      description: 'Das Gerät wurde erfolgreich entfernt.',
+      color: 'success',
+      progress: false,
+    })
+  } catch (error) {
+    console.error('Error deleting device:', error)
+    toast.add({
+      title: 'Fehler',
+      icon: 'i-heroicons-x-circle',
+      description: 'Das Gerät konnte nicht entfernt werden.',
+      color: 'error',
+      progress: false,
+    })
+  }
+  finally {
+    deletingDeviceIds.value = deletingDeviceIds.value.filter(id => id !== credentialId)
+  }
+}
 
 const oneTimePassword = ref(currentOtp.value?.otp || generateOneTimePassword())
 const secondsLeft = ref(currentOtp.value?.secondsLeft || 0)
@@ -149,6 +187,8 @@ onBeforeUnmount(() => {
             icon="i-heroicons-trash"
             variant="soft"
             color="error"
+            :loading="deletingDeviceIds.includes(device.credentialId)"
+            @click="deleteDevice(device.credentialId)"
           />
         </div>
       </div>
