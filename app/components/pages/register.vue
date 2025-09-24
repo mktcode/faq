@@ -184,9 +184,11 @@ function onFocusNameInput() {
             }"
           />
           <div class="flex justify-end bg-gray-100 p-1 rounded-lg rounded-t-none">
-            <RegisterRecordAudio
-              @transcript="(transcript: string) => settings.private.assistant.context = (settings.private.assistant.context || '') + transcript"
-            />
+            <ClientOnly>
+              <RegisterRecordAudio
+                @transcript="(transcript: string) => settings.private.assistant.context = (settings.private.assistant.context || '') + transcript"
+              />
+            </ClientOnly>
           </div>
         </UFormField>
         <USwitch

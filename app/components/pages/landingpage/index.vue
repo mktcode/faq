@@ -196,10 +196,12 @@ appConfig.ui.colors.primary = 'sky'
             class="w-full resize-none h-[200px] ring-gray-200 dark:ring-gray-800 ring-2 focus:ring-sky-500 dark:focus:ring-sky-600 focus:ring-3 outline-0 rounded-[12px] p-4 bg-gray-100 dark:bg-[#0b1020] text-slate-900 dark:text-[#e7ecf4] transition-all"
           />
           <div class="flex flex-col sm:flex-row justify-between gap-4 mt-4">
-            <LandingpageRecordAudio
-              v-model:is-running="isRecordingAudio"
-              @transcript="(text: string) => companyContext = (companyContext || '') + text"
-            />
+            <ClientOnly>
+              <LandingpageRecordAudio
+                v-model:is-running="isRecordingAudio"
+                @transcript="(text: string) => companyContext = (companyContext || '') + text"
+              />
+            </ClientOnly>
             <a
               v-if="!isRecordingAudio"
               class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-sky-500/80 hover:bg-sky-500 text-white transition duration-200"
