@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const randomHash = Math.random().toString(36).substring(7)
-  const audioFilename = `/tmp/transcription-solohost-customerRequest-${randomHash}.ogg`
+  const audioFilename = `/tmp/solohost-transcription-${randomHash}.ogg`
 
   const data = audioChunks[0]?.data
   

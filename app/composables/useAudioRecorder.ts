@@ -91,7 +91,7 @@ export default function useAudioRecorder(maxBars: number = 20) {
             const audioFormData = new FormData()
             audioFormData.append('data', audioBlob)
 
-            transcript.value = await $fetch<string>('/api/customerRequests/transcribe', {
+            transcript.value = await $fetch<string>('/api/transcribe', {
               method: 'POST',
               body: audioFormData,
             })
