@@ -51,6 +51,7 @@ export default defineNuxtConfig({
         // Devnote: Set .de to .local for preview mode
         domain: process.env.NODE_ENV === 'production' ? 'solohost.de' : 'solohost.local',
         sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 7, // 7 days
       },
     },
     public: {
