@@ -78,7 +78,7 @@ appConfig.ui.colors.primary = 'sky'
         aria-hidden="true"
       />
       <div class="relative z-[1] p-[clamp(28px,5vw,64px)] grid gap-[22px] max-w-[900px] text-white dark:text-[#e7ecf4]">
-        <h1 class="m-0 text-[clamp(28px,4vw,52px)] leading-[1.1] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_forwards]">
+        <h1 class="m-0 text-[clamp(28px,4vw,52px)] leading-[1.1] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_forwards] font-bold">
           Ihr <span class="font-semibold text-sky-400 text-shadow-sky-950/20 text-shadow-md sm:text-shadow-lg">IT-Experte</span> für den Start in die Solo-Selbstständigkeit.
         </h1>
         <p class="m-0 text-[clamp(16px,2.1vw,20px)] text-white/90 dark:text-[#b3bfd1] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.1s_forwards]">
@@ -110,7 +110,7 @@ appConfig.ui.colors.primary = 'sky'
     </div>
 
     <section class="mx-auto w-[92vw] max-w-[1200px] pb-16 pt-24">
-      <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-6">
+      <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-6 font-bold">
         Was Sie bekommen
       </h2>
       <div class="grid md:grid-cols-3 grid-cols-1 gap-[18px]">
@@ -219,7 +219,7 @@ appConfig.ui.colors.primary = 'sky'
     </section>
 
     <section class="mx-auto w-[92vw] max-w-[1200px] py-16">
-      <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-6">
+      <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-6 font-bold">
         Was Sie schon tun können
       </h2>
       <p class="my-4 text-slate-600 dark:text-[#b3bfd1]">
@@ -330,7 +330,7 @@ appConfig.ui.colors.primary = 'sky'
     </section>
 
     <section class="mx-auto w-[92vw] max-w-[1200px] py-16">
-      <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-6">
+      <h2 class="text-[clamp(22px,3vw,34px)] leading-[1.2] mb-6 font-bold">
         Über mich
       </h2>
       <p class="my-4 text-slate-600 dark:text-[#b3bfd1]">
