@@ -193,7 +193,7 @@ appConfig.ui.colors.primary = 'sky'
           </p>
           <textarea
             v-model="companyContext"
-            class="w-full resize-none h-[200px] ring-sky-600 focus:ring-3 outline-0 rounded-[12px] p-4 bg-gray-100 dark:bg-[#0b1020] text-slate-900 dark:text-[#e7ecf4]"
+            class="w-full resize-none h-[200px] ring-sky-200 dark:ring-sky-900 ring-2 focus:ring-sky-600 focus:ring-3 outline-0 rounded-[12px] p-4 bg-gray-100 dark:bg-[#0b1020] text-slate-900 dark:text-[#e7ecf4] transition-all"
           />
           <div class="flex flex-col sm:flex-row justify-between gap-4 mt-4">
             <LandingpageRecordAudio
