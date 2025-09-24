@@ -14,8 +14,7 @@ const isRunning = defineModel('isRunning', {
   default: false,
 })
 
-const { hasAgreedToTranscriptions } = useUserAgreements()
-const showTranscriptionAgreementModal = ref(false)
+const { hasAgreedToTranscriptions, showTranscriptionAgreementModal } = useUserAgreements()
 
 const { transcript, volumeHistory, isRecordingAudio, isTranscribingAudio, startRecordingAudio, stopRecordingAudio } = useAudioRecorder(75)
 
@@ -121,29 +120,6 @@ watch(transcript, (newTranscript) => {
       class="rounded-xl gap-3"
       @click="startRecordingAudio"
     />
-    <UModal
-      v-model:open="showTranscriptionAgreementModal"
-      title="Datenschutzhinweis für Audioaufnahmen"
-    >
-      <template #body>
-        Für die Transkription Ihrer Sprachaufnahme wird diese an den KI-Dienst OpenAI (USA) übermittelt.
-        Dazu erfordert es Ihre Zustimmung. Wenn Sie nicht damit einverstanden sind, nutzen Sie bitte ganz normal die Tastatur.
-        Weitere Informationen finden Sie in der <a href="/datenschutz" class="text-sky-500 hover:underline" target="_blank">Datenschutzerklärung</a>.
-      </template>
-
-      <template #footer>
-        <div class="flex justify-end gap-2">
-          <UButton
-            label="Abbrechen"
-            variant="soft"
-            @click="showTranscriptionAgreementModal = false"
-          />
-          <UButton
-            label="Zustimmen und Aufnahme starten"
-            @click="() => { hasAgreedToTranscriptions = true; showTranscriptionAgreementModal = false; startRecordingAudio(); }"
-          />
-        </div>
-      </template>
-    </UModal>
+    <TranscriptionAgreement @agreed="startRecordingAudio" />
   </div>
 </template>

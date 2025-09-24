@@ -9,6 +9,7 @@ const emit = defineEmits<{
   transcript: [transcript: string]
 }>()
 
+const { hasAgreedToTranscriptions, showTranscriptionAgreementModal } = useUserAgreements()
 const { transcript, volumeHistory, isRecordingAudio, isTranscribingAudio, startRecordingAudio, stopRecordingAudio } = useAudioRecorder()
 
 const maxRecordingTime = 30
@@ -81,12 +82,21 @@ watch(transcript, (newTranscript) => {
       disabled
     />
     <UButton
-      v-if="!isRecordingAudio && !isTranscribingAudio"
+      v-if="!hasAgreedToTranscriptions"
+      label="Aufnahme starten"
+      icon="i-heroicons-microphone"
+      variant="soft"
+      :disabled="disabled"
+      @click="showTranscriptionAgreementModal = true"
+    />
+    <UButton
+      v-else-if="!isRecordingAudio && !isTranscribingAudio"
       label="Aufnahme starten"
       icon="i-heroicons-microphone"
       variant="soft"
       :disabled="disabled"
       @click="startRecordingAudio"
     />
+    <TranscriptionAgreement @agreed="startRecordingAudio" />
   </div>
 </template>
