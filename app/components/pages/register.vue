@@ -103,14 +103,14 @@ function onFocusNameInput() {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center gap-12 max-w-xl mx-auto p-6">
+  <div class="flex flex-col items-center justify-center gap-12 max-w-lg mx-auto p-6">
     <SolohostLogo class="max-w-[150px] mb-12" />
     <div>
       <h1 class="text-5xl font-bold text-center mb-20">
         Alles klar!<br />Legen wir los.
       </h1>
       <form
-        class="w-full max-w-xl flex flex-col gap-4"
+        class="w-full flex flex-col gap-4"
         @submit.prevent="signUp"
       >
         <Transition name="fade">
