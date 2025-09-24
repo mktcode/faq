@@ -22,6 +22,7 @@ const userNameAvailable = ref(true)
 const checkingUserNameAvailability = ref(false)
 const isRegistering = ref(false)
 const targetITSupport = ref(false)
+const privacyPolicyAccepted = ref(false)
 
 const settings = ref(defaultSettings())
 if (typeof route.query.context === 'string') {
@@ -192,62 +193,72 @@ function onFocusNameInput() {
           v-model="settings.public.company.isSmallBusiness"
           label="Ich nutze die Kleinunternehmer-Regelung."
         />
-        <div>
-          <UFormField
-            label="Benutzername"
-            :error="userNameAvailable ? '' : 'Dieser Benutzername ist bereits vergeben.'"
-            class="flex-1"
-            :help="usernameHelp"
-            :ui="{
-              error: 'text-error-800 bg-error-50 border-error-200 px-4 py-2 rounded-lg',
-            }"
-          >
-            <div class="flex">
-              <UInput
-                :value="userName"
-                maxlength="25"
-                size="xxl"
-                class="w-full"
-                :ui="{
-                  base: 'rounded-r-none',
-                }"
-                @input="sanitizeUserName($event.target.value)"
-              >
-                <template #trailing>
-                  <div
-                    id="character-count"
-                    class="text-xs text-muted tabular-nums mr-3"
-                    aria-live="polite"
-                    role="status"
-                  >
-                    {{ userName.length }}/{{ 25 }}
-                  </div>
-                </template>
-              </UInput>
-              <div class="text-lg text-gray-600 border border-gray-100 rounded-lg rounded-l-none border-l-0 flex items-center justify-center px-4">
-                .solohost.de
-              </div>
+        <UFormField
+          label="Benutzername"
+          :error="userNameAvailable ? '' : 'Dieser Benutzername ist bereits vergeben.'"
+          class="flex-1"
+          :help="usernameHelp"
+          :ui="{
+            error: 'text-error-800 bg-error-50 border-error-200 px-4 py-2 rounded-lg',
+          }"
+        >
+          <div class="flex">
+            <UInput
+              :value="userName"
+              maxlength="25"
+              size="xxl"
+              class="w-full"
+              :ui="{
+                base: 'rounded-r-none',
+              }"
+              @input="sanitizeUserName($event.target.value)"
+            >
+              <template #trailing>
+                <div
+                  id="character-count"
+                  class="text-xs text-muted tabular-nums mr-3"
+                  aria-live="polite"
+                  role="status"
+                >
+                  {{ userName.length }}/{{ 25 }}
+                </div>
+              </template>
+            </UInput>
+            <div class="text-lg text-gray-600 border border-gray-100 rounded-lg rounded-l-none border-l-0 flex items-center justify-center px-4">
+              .solohost.de
             </div>
-          </UFormField>
-        </div>
-        <div class="flex gap-2">
-          <UButton
-            to="/"
-            label="Zurück"
-            variant="soft"
-            icon="i-heroicons-arrow-left"
-          />
+          </div>
+        </UFormField>
+        <USwitch
+          v-model="privacyPolicyAccepted"
+        >
+          <template #label>
+            Ich habe die
+            <NuxtLink
+              to="/datenschutz"
+              class="text-sky-600 underline"
+              target="_blank"
+            >Datenschutzerklärung</NuxtLink> gelesen und akzeptiere sie.
+          </template>
+        </USwitch>
+        <div class="flex flex-col gap-2">
           <UButton
             type="submit"
-            class="ml-auto"
             label="Zugang erstellen"
             icon="i-heroicons-key"
             size="xl"
-            :disabled="isRegistering || !userNameAvailable || !settings.public.company.name || !settings.public.company.firstname || !settings.public.company.lastname || userName.length < 3 || settings.private.assistant.context.length < 10"
+            :disabled="isRegistering || !userNameAvailable || !settings.public.company.name || !settings.public.company.firstname || !settings.public.company.lastname || userName.length < 3 || settings.private.assistant.context.length < 10 || !privacyPolicyAccepted"
             :loading="isRegistering"
             :ui="{
               leadingIcon: 'text-primary-300',
             }"
+          />
+
+          <UButton
+            to="/"
+            label="Zurück zur Startseite"
+            icon="i-heroicons-arrow-left"
+            variant="soft"
           />
         </div>
       </form>
