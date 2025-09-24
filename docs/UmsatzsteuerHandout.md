@@ -3,7 +3,7 @@
 In der Beratung taucht häufig die Frage auf, wie sich die Kleinunternehmerregelung (§ 19 UStG) im Vergleich zur regulären Umsatzsteuerpflicht auswirkt.  
 Gerade für Selbstständige ist es wichtig, zu verstehen, wie sich Umsatzsteuer auf Einnahmen, Ausgaben und den Gewinn auswirkt – und welchen Unterschied dies für ihre Kunden macht.  
 
-Das folgende Beispiel zeigt den Unterschied **Schritt für Schritt** anhand einer einfachen Rechnung.
+Das folgende Beispiel zeigt den Unterschied **Schritt für Schritt** anhand einer einfachen Rechnung. Sowohl als Kleinunternehmer als auch als Regelunternehmer soll eine Einnahme von 100 € (netto) erzielt werden.
 
 ---
 
