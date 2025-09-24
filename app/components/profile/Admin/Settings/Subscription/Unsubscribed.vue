@@ -6,24 +6,6 @@ function selectSubscription(plan: 'S' | 'L') {
   selectedSubscription.value = plan
   go('#settings/subscription/verification')
 }
-
-const features = {
-  'S': [
-    '.de-Domain und 3 E-Mail-Postfächer',
-    '50 MB Speicher für Dateien und Bilder',
-    'mehr Designoptionen',
-    'IT-Support nach Verfügbarkeit',
-    'monatlich kündbar',
-  ],
-  'L': [
-    'alles aus Paket S',
-    '250 MB Speicher für Dateien und Bilder',
-    'Terminwahl für IT-Support per Telefon und Fernwartung',
-    'Websiteänderungen per Spracheingabe',
-    'Shop-Sektion und Onlinezahlungen',
-    'monatlich kündbar oder zurück auf Paket S',
-  ],
-}
 </script>
 
 <template>
@@ -44,7 +26,7 @@ const features = {
     </div>
     <div class="text-gray-600 flex flex-col">
       <div
-        v-for="feature in features.S" :key="feature"
+        v-for="feature in solohost.features.S" :key="feature"
         class="flex items-center gap-2 p-2 border-t border-gray-200 text-sm"
       >
         <UIcon
@@ -80,7 +62,7 @@ const features = {
     </div>
     <div class="text-gray-600 flex flex-col">
       <div
-        v-for="feature in features.L" :key="feature"
+        v-for="feature in solohost.features.L" :key="feature"
         class="flex items-center gap-2 p-2 border-t border-gray-200 text-sm"
       >
         <UIcon
