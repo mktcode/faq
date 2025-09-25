@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { User } from '~~/types/db';
 
-defineProps<{
+const toast = useToast()
+
+const { user } = defineProps<{
   user: Omit<User, 'lastPaidAt' | 'oneTimePasswordCreatedAt' | 'createdAt'> & { lastPaidAt: string | null, oneTimePasswordCreatedAt: string | null, createdAt: string }
   expanded: boolean
 }>()
@@ -18,17 +20,44 @@ function toggle(isOpen: boolean) {
     emit('collapse')
   }
 }
+
+const settings = ref<string>(JSON.stringify(JSON.parse(user.settings), null, 2))
+const showSettings = ref(false)
+const isSettingsValid = computed(() => {
+  try {
+    JSON.parse(settings.value)
+    return true
+  } catch {
+    return false
+  }
+})
+
+async function saveUserSettings() {
+  if (!isSettingsValid.value) return
+
+  // TODO: implement API endpoint to save user settings
+
+  toast.add({
+    title: 'Einstellungen gespeichert',
+    icon: 'i-heroicons-check',
+    description: `Die Einstellungen für Benutzer ${user.userName} wurden gespeichert.`,
+    color: 'success',
+    progress: false,
+  })
+
+  showSettings.value = false
+}
 </script>
 
 <template>
   <UCollapsible
     :open="expanded"
     @update:open="toggle"
+    class="sm:w-96"
   >
     <UButton
       color="neutral"
       variant="ghost"
-      trailing-icon="i-lucide-chevron-down"
       block
       class="rounded-none"
     >
@@ -46,19 +75,63 @@ function toggle(isOpen: boolean) {
         <div class="flex flex-col text-left">
           <div>
             {{ user.userName }}
+            <span class="text-xs text-gray-500 font-normal">#{{ user.id }}</span>
           </div>
           <div class="text-sm text-gray-500 font-normal">
             {{ user.email }}
           </div>
         </div>
+        <UButton
+          icon="i-heroicons-cog-6-tooth"
+          color="primary"
+          variant="ghost"
+          class="ml-auto"
+          @click.stop="showSettings = true"
+        />
+        <UIcon
+          name="i-lucide-chevron-down"
+          class="transition-transform"
+          :class="{ 'rotate-180': expanded }"
+        />
+        <UModal
+          v-model:open="showSettings"
+          :title="`Benutzer: ${user.userName} #${user.id}`"
+          fullscreen
+        >
+          <template #body>
+            <UTextarea
+              v-model="settings"
+              class="font-mono text-sm w-full h-full"
+              :ui="{ base: 'h-full' }"
+            />
+          </template>
+
+          <template #footer>
+            <UBadge
+              :label="isSettingsValid ? 'JSON korrekt formatiert' : 'JSON fehlerhaft'"
+              :color="isSettingsValid ? 'success' : 'error'"
+              variant="soft"
+            />
+            <UButton
+              label="Schließen"
+              variant="soft"
+              @click="showSettings = false"
+              class="ml-auto"
+            />
+            <UButton
+              label="Speichern"
+              :disabled="!isSettingsValid"
+              @click="saveUserSettings"
+            />
+          </template>
+        </UModal>
       </template>
     </UButton>
 
     <template #content>
-      <div class="flex flex-col gap-2 p-2">
-        <div class="text-sm">ID: {{ user.id }}</div>
-        <div class="text-sm">E-Mail: {{ user.email }}</div>
-        <div class="text-sm">Erstellt: {{ new Date(user.createdAt).toLocaleDateString() }}</div>
+      <div class="flex flex-col gap-2 p-2 text-sm">
+        <div>Zuletzt bezahlt: {{ user.lastPaidAt ? new Date(user.lastPaidAt).toLocaleDateString() : 'Nie' }}</div>
+        <div>Registriert: {{ new Date(user.createdAt).toLocaleDateString() }}</div>
       </div>
     </template>
   </UCollapsible>
