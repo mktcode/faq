@@ -26,20 +26,25 @@ const { isSupportAvailable } = useSupportAvailability()
               color="neutral"
               class="font-normal md:px-4 md:py-2 md:text-base"
               size="md"
+              :ui="{
+                base: 'flex flex-col gap-0 items-end',
+              }"
             >
               <template #default>
-                <UChip
-                  :color="isSupportAvailable ? 'success' : 'neutral'"
-                  size="xl"
-                  class="mx-2"
-                  :class="{ 'opacity-20': !isSupportAvailable }"
-                />
-                {{ isSupportAvailable ? 'verfügbar' : 'nicht verfügbar' }}
+                <div class="flex items-center gap-2">
+                  <UChip
+                    :color="isSupportAvailable ? 'success' : 'neutral'"
+                    size="xl"
+                    class="mx-2"
+                    :class="{ 'opacity-20': !isSupportAvailable }"
+                  />
+                  {{ isSupportAvailable ? 'verfügbar' : 'im Gespräch' }}
+                </div>
               </template>
             </UButton>
           </div>
           <UButton
-            :label="user ? 'zu Ihrer Website' : 'Anmelden'"
+            label="Anmelden"
             trailing-icon="i-lucide-arrow-right"
             :href="user ? `https://${user.userName}.${appHost}` : '/login'"
             variant="ghost"

@@ -3,6 +3,7 @@ const { showSupport, go } = useAdmin()
 const router = useRouter()
 
 const { hasUnreadMessages } = useUnreadMessages()
+const { isSupportAvailable } = useSupportAvailability()
 </script>
 
 <template>
@@ -113,6 +114,20 @@ const { hasUnreadMessages } = useUnreadMessages()
       <ProfileAdminSupportBook />
       <ProfileAdminSupportLiveChat />
       <ProfileAdminSupportPayment />
+    </template>
+
+    <template #footer>
+      <div class="ml-auto flex flex-col items-end">
+        <div class="flex items-center gap-2">
+          <UChip
+            :color="isSupportAvailable ? 'success' : 'neutral'"
+            size="xl"
+            class="mx-2"
+            :class="{ 'opacity-20': !isSupportAvailable }"
+          />
+          {{ isSupportAvailable ? 'verfügbar' : 'im Gespräch' }}
+        </div>
+      </div>
     </template>
   </USlideover>
 </template>
