@@ -10,54 +10,42 @@ const { colorMode, toggleColorMode } = useColorMode()
       <div class="flex items-center justify-between">
         <SolohostLogo />
         <div class="flex-col sm:flex-row flex items-end gap-2">
-          <button
-            type="button"
-            class="opacity-50 hover:opacity-100 inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-3 rounded-[12px] font-semibold tracking-[.2px] text-slate-900 transition duration-200 dark:text-[#e7ecf4]"
-            aria-label="Farbschema wechseln"
-            :title="colorMode === 'dark' ? 'Tagmodus' : 'Nachtmodus'"
-            @click="toggleColorMode"
-          >
-            <UIcon
-              v-if="colorMode === 'dark'"
-              name="i-heroicons-sun"
-              size="20"
+          <div class="flex items-center gap-2">
+            <UButton
+              :icon="colorMode === 'dark' ? 'i-heroicons-sun' : 'i-heroicons-moon'"
+              variant="ghost"
+              color="neutral"
+              class="font-normal md:px-4 md:py-2 md:text-base"
+              size="md"
+              @click="toggleColorMode"
             />
-            <UIcon
-              v-else
-              name="i-heroicons-moon"
-              size="20"
-            />
-          </button>
-          <a
-            class="hidden sm:inline-flex whitespace-nowrap items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-slate-900/10 bg-white/10 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
+            <UButton
+              variant="ghost"
+              color="neutral"
+              class="font-normal md:px-4 md:py-2 md:text-base"
+              size="md"
+            >
+              <template #default>
+                <UChip
+                  color="success"
+                  size="xl"
+                  class="mx-2"
+                />
+                verfügbar
+              </template>
+            </UButton>
+          </div>
+          <UButton
+            :label="user ? 'zu Ihrer Website' : 'Anmelden'"
+            trailing-icon="i-lucide-arrow-right"
             :href="user ? `https://${user.userName}.${appHost}` : '/login'"
-            aria-label="Anmelden"
-          >
-            <span>
-              {{ user ? 'zu Ihrer Website' : 'Anmelden' }}
-            </span>
-            <UIcon
-              name="i-lucide-arrow-right"
-              size="20"
-              class="ml-auto opacity-50"
-            />
-          </a>
+            variant="ghost"
+            color="neutral"
+            class="font-normal md:px-4 md:py-2 md:text-base"
+            size="md"
+          />
         </div>
       </div>
-      <a
-        class="sm:hidden w-full mt-6 whitespace-nowrap inline-flex items-center gap-2 px-4 py-2 rounded-[12px] font-semibold tracking-[.2px] border border-slate-900/10 bg-white/10 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-gray-100 dark:hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4]"
-        :href="user ? `https://${user.userName}.${appHost}` : '/login'"
-        aria-label="Anmelden"
-      >
-        <span>
-          {{ user ? 'zur Ihrer Website' : 'Anmelden' }}
-        </span>
-        <UIcon
-          name="i-lucide-arrow-right"
-          size="20"
-          class="ml-auto opacity-50"
-        />
-      </a>
     </div>
   </header>
 </template>
