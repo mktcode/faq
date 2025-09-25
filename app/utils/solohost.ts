@@ -2,7 +2,7 @@ const features = {
   'S': [
     '.de-Domain und 3 E-Mail-Postfächer',
     '50 MB Speicher für Dateien und Bilder',
-    'mehr Designoptionen',
+    'Website-Editor mit allen Funktionen',
     'IT-Support nach Verfügbarkeit',
     'monatlich kündbar',
   ],
