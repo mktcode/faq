@@ -54,11 +54,11 @@ appConfig.ui.colors.primary = 'sky'
     <PagesLandingpageHeader />
 
     <div class="bg-sky-100 dark:bg-sky-950 text-slate-900 dark:text-[#e7ecf4]">
-      <div class="w-[92vw] max-w-[1200px] mx-auto py-24 grid gap-[22px] dark:text-[#e7ecf4]">
+      <div class="w-[92vw] max-w-[1200px] mx-auto py-[clamp(24px,5vw,64px)] grid gap-[22px] dark:text-[#e7ecf4]">
         <h1 class="m-0 text-[clamp(28px,4vw,52px)] leading-[1.1] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_forwards] font-bold max-w-3xl">
           Ihr <span class="font-semibold text-sky-500 text-shadow-sky-950/20 text-shadow-md">IT-Experte</span> für den Start in die Solo-Selbstständigkeit.
         </h1>
-        <p class="m-0 text-[clamp(16px,2.1vw,20px)] dark:text-[#b3bfd1] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.1s_forwards] max-w-4xl">
+        <p class="m-0 text-[clamp(16px,2.1vw,20px)] text-sky-900 dark:text-[#b3bfd1] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.1s_forwards] max-w-4xl">
           Ich begleite Einzelunternehmer Schritt für Schritt – von der Starthilfe am Computer über die erste Sichtbarkeit im Netz bis zur eigenen Website mit Domain und E-Mail-Postfächern. Verständlich und mit Blick auf das, was sich wirklich für Sie lohnt.
         </p>
         <div class="flex flex-wrap gap-3 mt-2">
@@ -73,7 +73,7 @@ appConfig.ui.colors.primary = 'sky'
             Website erstellen
           </a>
           <a
-            class="w-full sm:w-auto inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-sky-500/20 bg-sky-500/10 text-sky-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.6s_forwards]"
+            class="w-full sm:w-auto inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] border border-sky-500/20 bg-sky-500/10 text-sky-900 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition duration-200 hover:bg-sky-500/20 dark:border-white/10 dark:bg-white/5 dark:text-[#e7ecf4] opacity-0 motion-safe:animate-[fade-up_0.5s_ease-in-out_0.6s_forwards]"
             :href="user ? `https://${user.userName}.${appHost}#support` : '/register?target=it-support'"
           >
             <UIcon
