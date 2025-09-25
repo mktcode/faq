@@ -108,19 +108,6 @@ const { hasUnreadMessages } = useUnreadMessages()
         />
       </UButton>
 
-      <UButton
-        label="Unterstützen Sie uns"
-        icon="i-lucide-heart"
-        class="w-full rounded-none p-4 border-b border-gray-200"
-        variant="ghost"
-        color="neutral"
-        trailing-icon="i-heroicons-chevron-right"
-        :ui="{
-          trailingIcon: 'ml-auto opacity-30',
-        }"
-        @click="router.push({ hash: '#support/payment' })"
-      />
-
       <ProfileAdminSupportPhoneMail />
       <ProfileAdminSupportRemote />
       <ProfileAdminSupportBook />
