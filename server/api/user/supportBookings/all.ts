@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
   await requireUserSession(event)
 
-  return await supportBookingsUtils.list()
+  return await supportBookingsUtils.all()
 })

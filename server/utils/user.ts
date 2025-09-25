@@ -103,6 +103,20 @@ export async function requireMe(event: H3Event) {
   return user
 }
 
+export async function requireAdmin(event: H3Event) {
+  const user = await requireMe(event)
+
+  if (user.id !== 1) {
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Forbidden',
+      message: 'You do not have permission to access this resource.',
+    })
+  }
+
+  return user
+}
+
 export function getValidatedSettings(settings: string | Record<string, unknown>): SettingsForm {
   const validatedSettings = settingsFormSchema.parse(typeof settings === 'string' ? JSON.parse(settings) : settings)
 

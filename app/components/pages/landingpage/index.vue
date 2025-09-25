@@ -4,6 +4,7 @@ import type { AccordionItem } from '@nuxt/ui'
 const appConfig = useAppConfig()
 const { public: { appHost } } = useRuntimeConfig()
 const { user } = useUserSession()
+const { isSolohostAdmin } = useSolohostAdmin()
 
 const companyContext = ref('')
 const isRecordingAudio = ref(false)
@@ -51,6 +52,7 @@ appConfig.ui.colors.primary = 'sky'
 
 <template>
   <PagesLandingpageColorMode class="font-poppins text-[16px]/[1.6] bg-slate-50 text-slate-900 dark:bg-[#0b1020] dark:text-[#e7ecf4]">
+    <PagesLandingpageSolohostAdminPanel v-if="isSolohostAdmin" />
     <PagesLandingpageHeader />
 
     <div class="bg-sky-100 dark:bg-sky-950 text-slate-900 dark:text-[#e7ecf4]">
