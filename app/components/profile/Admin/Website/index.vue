@@ -2,7 +2,7 @@
 const toast = useToast()
 
 const { $profile, showLegalDataWarning } = useProfile()
-
+const { hasAgreedToBetaTerms, showBetaTermsModal } = useUserAgreements()
 const { showWebsiteSettings, go } = useAdmin()
 
 async function togglePublished() {
@@ -40,6 +40,11 @@ function addPage() {
   $profile.settings.public.pages.push(newPage)
 }
 
+watch(() => showWebsiteSettings.value, (newVal) => {
+  if (newVal && !hasAgreedToBetaTerms.value) {
+    showBetaTermsModal.value = true
+  }
+}, { immediate: true })
 </script>
 
 <template>
@@ -78,6 +83,7 @@ function addPage() {
     </template>
 
     <template #body>
+      <ProfileAdminBetaTermsAgreement />
       <UAlert
         v-if="showLegalDataWarning"
         variant="soft"
