@@ -317,7 +317,7 @@ appConfig.ui.colors.primary = 'sky'
       </p>
       <p class="my-4 text-slate-600 dark:text-[#b3bfd1]">
         Als Solo-Selbstständiger kenne ich die Herausforderungen und Chancen, die dieser Weg mit sich bringt.
-        Daher lege ich großen Wert auf persönliche Betreuung und maßgeschneiderte Lösungen, die wirklich zu Ihnen passen.
+        Daher lege ich großen Wert auf persönliche Betreuung und einfache Lösungen, die wirklich zu Ihnen passen.
         Ich freue mich darauf, Sie auf Ihrem Weg in die Selbstständigkeit zu begleiten.
       </p>
       <div class="flex justify-end">
