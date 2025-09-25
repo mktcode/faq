@@ -320,6 +320,15 @@ appConfig.ui.colors.primary = 'sky'
         Daher lege ich großen Wert auf persönliche Betreuung und maßgeschneiderte Lösungen, die wirklich zu Ihnen passen.
         Ich freue mich darauf, Sie auf Ihrem Weg in die Selbstständigkeit zu begleiten.
       </p>
+      <div class="flex justify-end">
+        <UButton
+          to="https://markus-kottlaender.de"
+          target="_blank"
+          label="Website"
+          variant="ghost"
+          trailing-icon="i-heroicons-arrow-top-right-on-square"
+        />
+      </div>
     </section>
 
     <PagesLandingpageFooter />
