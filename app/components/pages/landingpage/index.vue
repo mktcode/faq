@@ -184,7 +184,7 @@ appConfig.ui.colors.primary = 'sky'
               class="inline-flex items-center gap-2 px-5 py-3 rounded-[12px] font-semibold tracking-[.2px] bg-sky-500/80 hover:bg-sky-500 text-white transition duration-200"
               :href="user ? `https://${user.userName}.${appHost}` : `/register?context=${encodeURIComponent(companyContext)}`"
             >
-              Kostenlos registrieren
+              Kostenlos testen
               <UIcon
                 name="i-heroicons-arrow-right"
                 class="ml-auto"
