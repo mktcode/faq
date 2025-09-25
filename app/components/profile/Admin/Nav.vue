@@ -63,7 +63,7 @@ watch(liveChatData, (newValue) => {
       }"
       @click="go('#support')"
     >
-      IT-Support
+      Support
       <UChip
         v-if="liveChatData?.hasUnreadMessages"
         class="absolute top-5 md:left-6 animate-ping"

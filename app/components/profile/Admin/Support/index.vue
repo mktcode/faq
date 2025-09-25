@@ -28,7 +28,7 @@ const { hasUnreadMessages } = useUnreadMessages()
           name="i-lucide-message-circle-question-mark"
           class="inline-block size-6 opacity-50"
         />
-        IT-Support
+        Support
       </div>
       <div class="mt-1 ml-auto font-normal text-sm text-gray-500">
         Mo - Fr, 9 - 18:00 Uhr
