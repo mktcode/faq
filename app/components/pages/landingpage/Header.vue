@@ -2,6 +2,8 @@
 const { public: { appHost } } = useRuntimeConfig()
 const { user } = useUserSession()
 const { colorMode, toggleColorMode } = useColorMode()
+
+const { isSupportAvailable } = useSupportAvailability()
 </script>
 
 <template>
@@ -27,11 +29,12 @@ const { colorMode, toggleColorMode } = useColorMode()
             >
               <template #default>
                 <UChip
-                  color="success"
+                  :color="isSupportAvailable ? 'success' : 'neutral'"
                   size="xl"
                   class="mx-2"
+                  :class="{ 'opacity-20': !isSupportAvailable }"
                 />
-                verfügbar
+                {{ isSupportAvailable ? 'verfügbar' : 'nicht verfügbar' }}
               </template>
             </UButton>
           </div>
