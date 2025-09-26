@@ -32,15 +32,13 @@ export const useProfile = () => {
       color: 'primary',
       progress: false,
     })
+    await updateProfile()
     isSavingSettings.value = false
     unsavedSettings.value = false
   }
 
   async function updateProfile() {
     isUpdatingProfile.value = true
-
-    // wait 1 sec (This is not debugging, this is intentional for UX)
-    await new Promise(resolve => setTimeout(resolve, 1000))
 
     const { profile } = await $fetch('/api/user/profile')
 
@@ -52,6 +50,7 @@ export const useProfile = () => {
       $profile.isPublic = profile.isPublic
       $profile.mailboxes = profile.mailboxes
       $profile.settings = profile.settings
+      $profile.originalSettings = profile.originalSettings
       $profile.subscription = profile.subscription
       $profile.username = profile.username
     }
