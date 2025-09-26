@@ -42,7 +42,7 @@ const supportPhone = '+49 123 4567890'
 
     <template #body>
       <p class="mb-4">
-        Wenn Sie mich telefonisch oder per E-Mail kontaktieren, geben Sie bitte Ihre Support-ID an.
+        Wenn Sie mich telefonisch oder per E-Mail kontaktieren, geben Sie bitte Ihren Benutzernamen an.
       </p>
       <div
         v-if="user"
@@ -50,13 +50,13 @@ const supportPhone = '+49 123 4567890'
       >
         <div>
           <div class="text-sm text-gray-500">
-            Support-ID:
+            Benutzername:
           </div>
-          {{ user.id }}
+          {{ user.userName }}
         </div>
         <UButton
           variant="soft"
-          @click="copySupportId(user.id.toString())"
+          @click="copySupportId(user.userName)"
         >
           {{ copiedSupportId ? 'Kopiert!' : 'Kopieren' }}
         </UButton>
