@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import type { User } from '~~/types/db';
+import type { SettingsForm, User } from '~~/types/db';
 
 const toast = useToast()
 
 const { user } = defineProps<{
-  user: Omit<User, 'lastPaidAt' | 'oneTimePasswordCreatedAt' | 'createdAt'> & { lastPaidAt: string | null, oneTimePasswordCreatedAt: string | null, createdAt: string }
+  user: Omit<User, 'lastPaidAt' | 'oneTimePasswordCreatedAt' | 'createdAt' | 'settings'> & {
+    lastPaidAt: string | null,
+    oneTimePasswordCreatedAt: string | null,
+    createdAt: string,
+    settings: SettingsForm
+  }
   expanded: boolean
 }>()
 
@@ -20,12 +25,12 @@ function toggle(isOpen: boolean) {
     emit('collapse')
   }
 }
-console.log('##### USER SETTINGS #####', user.settings)
-const settings = ref<string>(JSON.stringify(JSON.parse(user.settings), null, 2))
+
+const settingsInput = ref<string>(JSON.stringify(user.settings, null, 2))
 const showSettings = ref(false)
-const isSettingsValid = computed(() => {
+const isSettingsInputValid = computed(() => {
   try {
-    JSON.parse(settings.value)
+    JSON.parse(settingsInput.value)
     return true
   } catch {
     return false
@@ -33,7 +38,7 @@ const isSettingsValid = computed(() => {
 })
 
 async function saveUserSettings() {
-  if (!isSettingsValid.value) return
+  if (!isSettingsInputValid.value) return
 
   // TODO: implement API endpoint to save user settings
 
@@ -100,7 +105,7 @@ async function saveUserSettings() {
         >
           <template #body>
             <UTextarea
-              v-model="settings"
+              v-model="settingsInput"
               class="font-mono text-sm w-full h-full"
               :ui="{ base: 'h-full' }"
             />
@@ -108,8 +113,8 @@ async function saveUserSettings() {
 
           <template #footer>
             <UBadge
-              :label="isSettingsValid ? 'JSON korrekt formatiert' : 'JSON fehlerhaft'"
-              :color="isSettingsValid ? 'success' : 'error'"
+              :label="isSettingsInputValid ? 'JSON korrekt formatiert' : 'JSON fehlerhaft'"
+              :color="isSettingsInputValid ? 'success' : 'error'"
               variant="soft"
             />
             <UButton
@@ -120,7 +125,7 @@ async function saveUserSettings() {
             />
             <UButton
               label="Speichern"
-              :disabled="!isSettingsValid"
+              :disabled="!isSettingsInputValid"
               @click="saveUserSettings"
             />
           </template>

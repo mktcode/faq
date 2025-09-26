@@ -8,5 +8,8 @@ export default defineEventHandler(async (event) => {
     .where('id', '!=', 1)
     .execute()
 
-  return users
+  return users.map((user) => ({
+    ...user,
+    settings: getValidatedSettings(user.settings),
+  }))
 })
