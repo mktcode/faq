@@ -13,7 +13,6 @@ export const useProfile = () => {
   })
 
   function resetSettings() {
-    console.log('Reset settings', $profile.settings.public.design.fontSize, $profile.originalSettings.public.design.fontSize)
     $profile.settings.public = JSON.parse(JSON.stringify($profile.originalSettings.public))
     $profile.settings.private = JSON.parse(JSON.stringify($profile.originalSettings.private))
     unsavedSettings.value = false
