@@ -20,7 +20,7 @@ function toggle(isOpen: boolean) {
     emit('collapse')
   }
 }
-
+console.log('##### USER SETTINGS #####', user.settings)
 const settings = ref<string>(JSON.stringify(JSON.parse(user.settings), null, 2))
 const showSettings = ref(false)
 const isSettingsValid = computed(() => {
