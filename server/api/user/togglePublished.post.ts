@@ -22,9 +22,5 @@ export default defineEventHandler(async (event) => {
     .where('id', '=', user.id)
     .execute()
 
-  if (isPublished && !import.meta.dev) {
-    await $fetch(`https://www.google.com/ping?sitemap=${event.context.profile.canonicalUrl}/sitemap.xml`)
-  }
-
   return { success: true, published: isPublished }
 })
