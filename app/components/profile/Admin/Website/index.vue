@@ -35,6 +35,7 @@ function addPage() {
     description: 'Meine Unterseite über...',
     path: `/seite-${$profile.settings.public.pages.length + 1}`,
     components: [],
+    lastMod: new Date().toISOString(),
   }
 
   $profile.settings.public.pages.push(newPage)

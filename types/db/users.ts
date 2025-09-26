@@ -200,6 +200,7 @@ export const settingsFormSchema = z.object({
       taxId: z.string(),
       taxIdType: z.enum(['ustid', 'wid']),
       isSmallBusiness: z.boolean(),
+      lastMod: z.string(),
     }),
     design: z.object({
       font: z.string(),
@@ -213,6 +214,7 @@ export const settingsFormSchema = z.object({
       title: z.string(),
       description: z.string(),
       components: z.array(componentUnionSchema),
+      lastMod: z.string(),
     })),
   }),
   private: z.object({
@@ -425,6 +427,7 @@ export const defaultSettings = (): SettingsForm => ({
       taxId: '',
       taxIdType: 'ustid',
       isSmallBusiness: true,
+      lastMod: new Date().toISOString(),
     },
     design: {
       font: 'montserrat',
@@ -479,6 +482,7 @@ export const defaultSettings = (): SettingsForm => ({
             links: [],
           },
         ],
+        lastMod: new Date().toISOString(),
       },
     ],
   },

@@ -29,6 +29,12 @@ export async function createUser({
 }) {
   const db = await getDatabaseConnection()
 
+  settings.public.company.lastMod = new Date().toISOString()
+  settings.public.pages = settings.public.pages.map(page => ({
+    ...page,
+    lastMod: new Date().toISOString(),
+  }))
+
   const insertResult = await db
     .insertInto('users')
     .values({
