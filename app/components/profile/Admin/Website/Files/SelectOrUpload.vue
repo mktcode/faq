@@ -61,7 +61,7 @@ const handleInputChange = () => {
 </script>
 
 <template>
-  <div @click.stop="show = true">
+  <div @click.stop="show = true" class="inline">
     <slot />
   </div>
   <UModal
