@@ -75,14 +75,16 @@ watch(
         >
           <div class="flex gap-4 mb-2">
             <img
-              :src="'/favicon.png'"
+              :src="$profile.settings.public.meta.favicon || '/favicon.png'"
               alt="Website Icon"
-              class="size-10 object-cover rounded"
+              class="size-10 rounded"
             />
-            <UButton
-              icon="i-heroicons-photo"
-              label="Icon ändern"
-            />
+            <ProfileAdminWebsiteFilesSelectOrUpload v-model="$profile.settings.public.meta.favicon">
+              <UButton
+                icon="i-heroicons-photo"
+                label="Icon ändern"
+              />
+            </ProfileAdminWebsiteFilesSelectOrUpload>
           </div>
         </UFormField>
         <UFormField
