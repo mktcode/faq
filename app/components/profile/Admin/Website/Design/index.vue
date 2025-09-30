@@ -69,45 +69,6 @@ watch(
     <template #body>
       <div class="flex flex-col gap-4">
         <UFormField
-          label="Website-Icon"
-          description="Das Icon wird in Suchergebnissen, in der Titelleiste des Browsers, in Lesezeichen und beim Teilen der Website angezeigt. Es sollte quadratisch sein und wird in etwa in der hier angezeigten Größe dargestellt."
-          class="flex-1"
-        >
-          <div class="flex gap-2 mb-2">
-            <img
-              :src="$profile.settings.public.meta.favicon || '/favicon.png'"
-              alt="Website Icon"
-              class="size-10 rounded"
-            />
-            <ProfileAdminWebsiteFilesSelectOrUpload v-model="$profile.settings.public.meta.favicon">
-              <UButton
-                icon="i-heroicons-photo"
-                label="Icon ändern"
-              />
-            </ProfileAdminWebsiteFilesSelectOrUpload>
-          </div>
-        </UFormField>
-        <UFormField
-          label="Teilen-Bild"
-          description="Das Bild wird verwendet, wenn Ihre Website in sozialen Netzwerken oder per Messenger geteilt wird. Es sollte mindestens 1200x630 Pixel groß sein (Seitenverhältnis 1.91:1)."
-          class="flex-1"
-        >
-          <div class="flex flex-col gap-2 mb-2">
-            <img
-              :src="$profile.settings.public.meta.ogimage || '/ogimage.png'"
-              alt="Teilen-Bild"
-              class="w-full rounded"
-            />
-            <ProfileAdminWebsiteFilesSelectOrUpload v-model="$profile.settings.public.meta.ogimage">
-              <UButton
-                icon="i-heroicons-photo"
-                label="Bild ändern"
-                block
-              />
-            </ProfileAdminWebsiteFilesSelectOrUpload>
-          </div>
-        </UFormField>
-        <UFormField
           label="Schriftgröße"
           class="flex-1"
         >
@@ -194,6 +155,45 @@ watch(
             />
           </template>
         </UCollapsible>
+        <UFormField
+          label="Website-Icon"
+          description="Das Icon wird in Suchergebnissen, in der Titelleiste des Browsers, in Lesezeichen und beim Teilen der Website angezeigt. Es sollte quadratisch sein und wird in etwa in der hier angezeigten Größe dargestellt."
+          class="flex-1"
+        >
+          <div class="flex gap-2 mb-2">
+            <img
+              :src="$profile.settings.public.meta.favicon || '/favicon.png'"
+              alt="Website Icon"
+              class="size-10 rounded"
+            />
+            <ProfileAdminWebsiteFilesSelectOrUpload v-model="$profile.settings.public.meta.favicon">
+              <UButton
+                icon="i-heroicons-photo"
+                label="Icon ändern"
+              />
+            </ProfileAdminWebsiteFilesSelectOrUpload>
+          </div>
+        </UFormField>
+        <UFormField
+          label="Teilen-Bild"
+          description="Das Bild wird verwendet, wenn Ihre Website in sozialen Netzwerken oder per Messenger geteilt wird. Es sollte mindestens 1200x630 Pixel groß sein (Seitenverhältnis 1.91:1)."
+          class="flex-1"
+        >
+          <div class="flex flex-col gap-2 mb-2">
+            <img
+              :src="$profile.settings.public.meta.ogimage || '/ogimage.png'"
+              alt="Teilen-Bild"
+              class="w-full rounded"
+            />
+            <ProfileAdminWebsiteFilesSelectOrUpload v-model="$profile.settings.public.meta.ogimage">
+              <UButton
+                icon="i-heroicons-photo"
+                label="Bild ändern"
+                block
+              />
+            </ProfileAdminWebsiteFilesSelectOrUpload>
+          </div>
+        </UFormField>
       </div>
     </template>
 
