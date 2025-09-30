@@ -69,6 +69,23 @@ watch(
     <template #body>
       <div class="flex flex-col gap-4">
         <UFormField
+          label="Website-Icon"
+          description="Das Icon wird in Suchergebnissen, in der Titelleiste des Browsers, in Lesezeichen und beim Teilen der Website angezeigt. Es wird in etwa in der hier angezeigten Größe dargestellt."
+          class="flex-1"
+        >
+          <div class="flex gap-4 mb-2">
+            <img
+              :src="'/favicon.png'"
+              alt="Website Icon"
+              class="size-10 object-cover rounded"
+            />
+            <UButton
+              icon="i-heroicons-photo"
+              label="Icon ändern"
+            />
+          </div>
+        </UFormField>
+        <UFormField
           label="Schriftgröße"
           class="flex-1"
         >
