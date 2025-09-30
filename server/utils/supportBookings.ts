@@ -11,7 +11,7 @@ async function next() {
 
   return await db
     .selectFrom('supportBookings')
-    .innerJoin('users', 'supportBookings.userId', 'users.id')
+    .leftJoin('users', 'supportBookings.userId', 'users.id')
     .select(['supportBookings.id as id', 'userId', 'userName', 'date', 'notes'])
     .where(sql<boolean>`date > NOW()`)
     .orderBy('date', 'asc')

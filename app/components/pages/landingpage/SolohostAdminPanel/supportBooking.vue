@@ -82,7 +82,13 @@ async function saveSupportDateTime() {
         <h3 class="font-bold mb-2">Nächste Termine</h3>
         <div v-for="booking in nextSupportBookings" :key="booking.id" class="flex flex-col">
           <div class="font-semibold">{{ new Date(booking.date).toLocaleString('de-DE', { dateStyle: 'medium', timeStyle: 'short' }) }}</div>
-          <div class="text-sm text-gray-500">{{ booking.userName }} (#{{ booking.userId }})</div>
+          <div
+            v-if="booking.userId"
+            class="text-sm text-gray-500"
+          >
+            {{ booking.userName }} (#{{ booking.userId }})
+          </div>
+          <div v-else class="text-sm text-gray-500">Kein Benutzer</div>
           <div class="text-sm text-gray-500">{{ booking.notes }}</div>
         </div>
         <p v-if="!nextSupportBookings || nextSupportBookings.length === 0">Keine nächsten Termine.</p>
