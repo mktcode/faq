@@ -86,7 +86,7 @@ useHead({
     {
       rel: 'icon',
       type: 'image/png',
-      href: $profile.settings.public.meta.favicon || '',
+      href: '/favicon.png',
     },
   ],
   style: [
