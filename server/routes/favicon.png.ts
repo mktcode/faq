@@ -1,6 +1,8 @@
 import sharp from "sharp"
 import { join } from "node:path"
 
+const FAVICON_SIZE = 512
+
 async function getBufferFromUrl(url: string): Promise<Buffer | null> {
   try {
     const arrayBuffer = await $fetch<Buffer>(url, { responseType: "arrayBuffer" })
@@ -10,11 +12,37 @@ async function getBufferFromUrl(url: string): Promise<Buffer | null> {
   }
 }
 
+async function getDefaultBuffer(companyName: string, color: { h: number; s: number; l: number }): Promise<Buffer> {
+  const primaryColorHsl = toHslString(color)
+  const firstLetter = companyName.trim()[0].toUpperCase()
+
+  const svg = `
+    <svg width="${FAVICON_SIZE}" height="${FAVICON_SIZE}" viewBox="0 0 ${FAVICON_SIZE} ${FAVICON_SIZE}" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="${primaryColorHsl}" />
+      <text
+        x="50%"
+        y="50%"
+        text-anchor="middle"
+        font-size="${FAVICON_SIZE * 0.6}"
+        font-family="system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif"
+        font-weight="700"
+        fill="#ffffff"
+        dy=".35em"
+      >${firstLetter}</text>
+    </svg>
+  `
+
+  const buffer = await sharp(Buffer.from(svg))
+    .png()
+    .toBuffer()
+
+  return buffer
+}
+
 export default defineEventHandler(async (event) => {
   event.node.res.setHeader("Content-Type", "image/png")
 
   const $profile = event.context.profile
-  const size = 512
   let buffer: Buffer | null = null
 
   if ($profile) {
@@ -25,38 +53,16 @@ export default defineEventHandler(async (event) => {
     if (buffer) {
       return buffer
     } else {
-      const companyName = $profile.settings.public.company.name
-      const primaryColor = $profile.settings.public.design.color
-      const primaryColorHsl = toHslString(primaryColor)
-      const firstLetter = companyName.trim()[0].toUpperCase()
-    
-      const svg = `
-        <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
-          <rect width="100%" height="100%" fill="${primaryColorHsl}" />
-          <text
-            x="50%"
-            y="50%"
-            text-anchor="middle"
-            font-size="${size * 0.6}"
-            font-family="system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif"
-            font-weight="700"
-            fill="#ffffff"
-            dy=".35em"
-          >${firstLetter}</text>
-        </svg>
-      `
-    
-      const buffer = await sharp(Buffer.from(svg))
-        .png()
-        .toBuffer()
-
-      return buffer
+      return getDefaultBuffer(
+        $profile.settings.public.company.name,
+        $profile.settings.public.design.color,
+      )
     }
   } else {
     const src = join(process.cwd(), "app", "assets", "img", "favicon.png")
 
     const buffer = await sharp(src)
-      .resize(size, size, { fit: "cover" })
+      .resize(FAVICON_SIZE, FAVICON_SIZE, { fit: "cover" })
       .png()
       .toBuffer()
 
