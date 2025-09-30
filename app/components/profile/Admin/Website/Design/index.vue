@@ -38,7 +38,7 @@ watch(
     class="!rounded-none bg-transparent"
     :ui="{
       content: 'ring-0',
-      container: 'relative no-scrollbar rounded-none p-0 bg-white [box-shadow:0_0_18px_rgba(0,0,0,0.2)]',
+      container: 'max-w-md relative no-scrollbar rounded-none p-0 bg-white [box-shadow:0_0_18px_rgba(0,0,0,0.2)]',
       handle: '!w-24 !h-3 sm:!w-3 sm:!h-24 hover:!w-32 hover:sm:!h-32 hover:sm:!w-3 bottom-2 sm:bottom-0 sm:left-2 !bg-primary-500 !opacity-50 hover:!opacity-100 hover:!bg-primary-500 transition-all',
       header: 'p-4 border-b border-gray-200',
       body: 'p-4',
