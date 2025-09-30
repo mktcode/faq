@@ -4,8 +4,6 @@ import { join } from "node:path"
 const OGIMAGE_WIDTH = 1200
 const OGIMAGE_HEIGHT = 630
 
-// Rough average glyph width factor (width ~= fontSize * factor) for bold uppercase/latin mix.
-// Tweakable if visual output needs refinement.
 const AVG_CHAR_WIDTH_FACTOR = 0.55
 
 function escapeXml(text: string): string {
@@ -36,7 +34,7 @@ function calculateSecondaryFontSize(text: string, primaryFontSize: number): numb
   const maxUsableWidth = OGIMAGE_WIDTH * 0.8 // a bit more padding for the URL
   const effectiveChars = Math.max(text.trim().length, 1)
   const sizeByWidth = maxUsableWidth / (effectiveChars * (AVG_CHAR_WIDTH_FACTOR * 0.9))
-  // Target secondary to be smaller relative to primary
+  
   let ideal = Math.min(sizeByWidth, primaryFontSize * 0.35)
   ideal = Math.max(28, Math.min(ideal, 96))
   return Math.round(ideal)
@@ -58,24 +56,21 @@ async function getDefaultBuffer(
 ): Promise<Buffer> {
   const primaryColorHsl = toHslString(color)
   const text = escapeXml(companyName || "")
-  const fontSize = calculateFontSize(text)
+  const originalFontSize = calculateFontSize(text)
   const rawUrl = canonicaleUri || ""
   const cleanedUrl = escapeXml(
     rawUrl
       .replace(/^https?:\/\//, "")
       .replace(/\/$/, "")
   )
-  const urlFontSize = calculateSecondaryFontSize(cleanedUrl, fontSize)
-  const marginBetween = urlFontSize ? Math.round(fontSize * 0.18) : 0
-
-  // Compute baselines so that the two-line block is vertically centered.
-  // We approximate baseline distance using full font size for primary and secondary.
+  const urlFontSize = calculateSecondaryFontSize(cleanedUrl, originalFontSize)
+  const fontSize = Math.max(70, Math.round(originalFontSize * 0.9))
+  const marginBetween = urlFontSize ? Math.round(Math.max(urlFontSize * 0.5, fontSize * 0.25, 40)) : 0
   const totalBlockHeight = fontSize + (urlFontSize ? marginBetween + urlFontSize : 0)
-  // Position first baseline so that block center aligns with image center.
-  const y1 = (OGIMAGE_HEIGHT - totalBlockHeight) / 2 + fontSize * 0.8 // baseline approximation at 0.8 of fontSize
-  const y2 = urlFontSize ? y1 + marginBetween + urlFontSize * 0.8 : undefined
+  const blockTop = (OGIMAGE_HEIGHT - totalBlockHeight) / 2
+  const y1 = blockTop + fontSize // baseline for first line
+  const y2 = urlFontSize ? y1 + marginBetween + urlFontSize : undefined
 
-  // Use dominant baseline middle for exact vertical centering across browsers/renderers.
   const svg = `
     <svg width="${OGIMAGE_WIDTH}" height="${OGIMAGE_HEIGHT}" viewBox="0 0 ${OGIMAGE_WIDTH} ${OGIMAGE_HEIGHT}" xmlns="http://www.w3.org/2000/svg">
       <rect width="100%" height="100%" fill="${primaryColorHsl}" />
