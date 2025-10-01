@@ -2,7 +2,7 @@ import sharp from "sharp"
 
 const OGIMAGE_WIDTH = 1200
 const OGIMAGE_HEIGHT = 630
-
+const SYSTEM_FONT_FAMILY = "Roboto"
 const AVG_CHAR_WIDTH_FACTOR = 0.55
 
 function escapeXml(text: string): string {
@@ -78,11 +78,11 @@ async function getDefaultBuffer(
         y="${y1.toFixed(2)}"
         text-anchor="middle"
         font-size="${fontSize}"
-        font-family="system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif"
+        font-family="${SYSTEM_FONT_FAMILY}"
         font-weight="700"
         fill="#ffffff"
       >${text}</text>
-      ${urlFontSize ? `<text x="50%" y="${y2?.toFixed(2)}" text-anchor="middle" font-size="${urlFontSize}" font-family="system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif" font-weight="500" fill="#ffffff" opacity="0.9">${cleanedUrl}</text>` : ''}
+      ${urlFontSize ? `<text x="50%" y="${y2?.toFixed(2)}" text-anchor="middle" font-size="${urlFontSize}" font-family="${SYSTEM_FONT_FAMILY}" font-weight="500" fill="#ffffff" opacity="0.9">${cleanedUrl}</text>` : ''}
     </svg>
   `
 
