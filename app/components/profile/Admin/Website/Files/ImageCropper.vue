@@ -13,9 +13,18 @@ const display = reactive({ w: 0, h: 0, scale: 1 }) // rendered size + scale fact
 const offset = reactive({ x: 0, y: 0 }) // image top/left offset inside container (due to object-contain centering)
 const crop = reactive<CropRect>({ x: 0, y: 0, w: 0, h: 0 })
 const dragging = reactive<{ mode: null | 'move' | 'nw' | 'ne' | 'sw' | 'se' | 'n' | 's' | 'w' | 'e'; ox: number; oy: number; start: CropRect | null }>({ mode: null, ox: 0, oy: 0, start: null })
-const aspect = ref<'frei' | '1:1' | '4:3' | '3:4' | '16:9' | '9:16'>('frei')
+type AspectValue = 'free' | '1:1' | '4:3' | '3:4' | '16:9' | '9:16'
+const aspect = ref<AspectValue>('free')
 
-const aspectOptions: Array<typeof aspect.value> = ['frei', '1:1', '4:3', '3:4', '16:9', '9:16']
+// Provide German labels while keeping internal value english ('free').
+const aspectOptions: Array<{ label: string; value: AspectValue }> = [
+  { label: 'Frei', value: 'free' },
+  { label: '1:1', value: '1:1' },
+  { label: '4:3', value: '4:3' },
+  { label: '3:4', value: '3:4' },
+  { label: '16:9', value: '16:9' },
+  { label: '9:16', value: '9:16' },
+]
 
 // Derived natural coordinates
 const cropNatural = computed(() => {
@@ -182,11 +191,11 @@ function confirm() {
       <div class="flex flex-wrap gap-2 pb-4 items-center justify-center">
         <UButton
           v-for="opt in aspectOptions"
-          :key="opt"
-          :label="opt"
-          :color="aspect===opt ? 'primary' : 'neutral'"
-          :variant="aspect===opt ? 'solid' : 'soft'"
-          @click="aspect = opt"
+          :key="opt.value"
+          :label="opt.label"
+          :color="aspect===opt.value ? 'primary' : 'neutral'"
+          :variant="aspect===opt.value ? 'solid' : 'soft'"
+          @click="aspect = opt.value"
         />
   <span v-if="cropPercent">Crop (%): X {{ cropPercent.xPct.toFixed(2) }} • Y {{ cropPercent.yPct.toFixed(2) }} • W {{ cropPercent.wPct.toFixed(2) }} • H {{ cropPercent.hPct.toFixed(2) }}</span>
   <span v-if="cropNatural" class="text-xs text-neutral-400">(px: {{ cropNatural.x }}, {{ cropNatural.y }}, {{ cropNatural.w }}×{{ cropNatural.h }})</span>

@@ -8,9 +8,9 @@ export interface Size { w: number; h: number }
  * Parse an aspect string like "16:9" or "4:3"; returns ratio (w / h) or null for free.
  */
 export function parseAspect(aspect: string): number | null {
-  // Support both English 'free' and German 'frei' plus allow empty string
+  // Accept only value keyword 'free' (empty string also treated as free). No language-specific synonyms here.
   const normalized = aspect.trim().toLowerCase()
-  if (normalized === 'free' || normalized === 'frei' || normalized === '' ) return null
+  if (normalized === 'free' || normalized === '') return null
   const [w, h] = normalized.split(':').map(Number)
   return w && h ? w / h : null
 }
