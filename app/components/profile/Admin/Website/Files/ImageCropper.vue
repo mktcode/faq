@@ -6,9 +6,11 @@ const showImageCropper = useState('showImageCropper', () => false)
 
 const imgRef = ref<HTMLImageElement | null>(null)
 const overlayRef = ref<HTMLDivElement | null>(null)
+const containerRef = ref<HTMLDivElement | null>(null) // wrapper that defines the available area
 
 const natural = reactive({ w: 0, h: 0 }) // intrinsic image size
 const display = reactive({ w: 0, h: 0, scale: 1 }) // rendered size + scale factor
+const offset = reactive({ x: 0, y: 0 }) // image top/left offset inside container (due to object-contain centering)
 const crop = reactive<CropRect>({ x: 0, y: 0, w: 0, h: 0 })
 const dragging = reactive<{ mode: null | 'move' | 'nw' | 'ne' | 'sw' | 'se' | 'n' | 's' | 'w' | 'e'; ox: number; oy: number; start: CropRect | null }>({ mode: null, ox: 0, oy: 0, start: null })
 const aspect = ref<'frei' | '1:1' | '4:3' | '3:4' | '16:9' | '9:16'>('frei')
@@ -32,6 +34,13 @@ function measure() {
   display.w = img.clientWidth
   display.h = img.clientHeight
   display.scale = natural.w ? display.w / natural.w : 1
+  // Determine actual offset of the rendered image inside the container (object-contain centering)
+  const containerRect = containerRef.value?.getBoundingClientRect()
+  const imgRect = img.getBoundingClientRect()
+  if (containerRect) {
+    offset.x = imgRect.left - containerRect.left
+    offset.y = imgRect.top - containerRect.top
+  }
   if (!crop.w || !crop.h) initDefaultCrop()
 }
 
@@ -140,7 +149,7 @@ function confirm() {
           @click="aspect = opt"
         />
       </div>
-      <div class="relative w-full flex-1 grow">
+      <div ref="containerRef" class="relative w-full flex-1 grow">
         <div class="absolute inset-0 flex items-center justify-center">
           <img
             ref="imgRef"
@@ -156,7 +165,7 @@ function confirm() {
           ref="overlayRef"
           class="absolute z-10 border-2 border-white/90 shadow-[0_0_0_9999px_rgba(0,0,0,0.45)] group"
           style="touch-action:none;"
-          :style="{ left: crop.x + 'px', top: crop.y + 'px', width: crop.w + 'px', height: crop.h + 'px', cursor: dragging.mode ? 'grabbing' : 'move' }"
+          :style="{ left: offset.x + crop.x + 'px', top: offset.y + crop.y + 'px', width: crop.w + 'px', height: crop.h + 'px', cursor: dragging.mode ? 'grabbing' : 'move' }"
           @pointerdown="(e) => startDrag(e,'move')"
         >
           <template v-for="h in ['nw','n','ne','e','se','s','sw','w']" :key="h">
