@@ -30,10 +30,9 @@ function select(index: number) {
     v-model:open="open"
     fullscreen
     :ui="{
-      body: 'mbody overflow-hidden',
+      body: 'overflow-hidden',
       header: 'flex gap-4 items-center justify-between p-4',
     }"
-    @after:enter=""
   >
     <template #header>
       <h2 class="text-lg font-semibold">
