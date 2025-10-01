@@ -2,6 +2,17 @@ import sharp from "sharp"
 
 const FAVICON_SIZE = 512
 
+// Cache for embedded font
+let ROBOTO_WOFF2_BASE64: string | null = null
+
+async function getRobotoFontBase64(): Promise<string | null> {
+  if (ROBOTO_WOFF2_BASE64) return ROBOTO_WOFF2_BASE64
+  const raw = await useStorage('assets:server').getItemRaw('fonts/roboto.woff2')
+  if (!raw) return null
+  ROBOTO_WOFF2_BASE64 = Buffer.from(raw).toString('base64')
+  return ROBOTO_WOFF2_BASE64
+}
+
 async function getBufferFromUrl(url: string): Promise<Buffer | null> {
   try {
     const arrayBuffer = await $fetch<Buffer>(url, { responseType: "arrayBuffer" })
@@ -15,16 +26,33 @@ async function getDefaultBuffer(companyName: string, color: { h: number; s: numb
   const primaryColorHsl = toHslString(color)
   const firstLetter = companyName.trim()[0].toUpperCase()
 
+  const fontBase64 = await getRobotoFontBase64()
+  const fontFaceBlock = fontBase64
+    ? `
+    <style>
+      @font-face {
+        font-family: 'FaviconRoboto';
+        src: url(data:font/woff2;base64,${fontBase64}) format('woff2');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+      }
+      text {
+        font-family: 'FaviconRoboto';
+        font-weight:700;
+      }
+    </style>`
+    : ""
+
   const svg = `
     <svg width="${FAVICON_SIZE}" height="${FAVICON_SIZE}" viewBox="0 0 ${FAVICON_SIZE} ${FAVICON_SIZE}" xmlns="http://www.w3.org/2000/svg">
+      ${fontFaceBlock}
       <rect width="100%" height="100%" fill="${primaryColorHsl}" />
       <text
         x="50%"
         y="50%"
         text-anchor="middle"
         font-size="${FAVICON_SIZE * 0.6}"
-        font-family="system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif"
-        font-weight="700"
         fill="#ffffff"
         dy=".35em"
       >${firstLetter}</text>
