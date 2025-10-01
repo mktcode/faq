@@ -9,6 +9,8 @@ const showImageCropper = useState('showImageCropper', () => false)
 // Refs & reactive state
 const imgRef = ref<HTMLImageElement | null>(null)
 const containerRef = ref<HTMLDivElement | null>(null)
+// The cropping overlay itself (frame) so we can always capture pointer events on a stable element
+const overlayRef = ref<HTMLDivElement | null>(null)
 
 const natural = reactive({ w: 0, h: 0 }) // intrinsic image size
 const display = reactive({ w: 0, h: 0, scale: 1 }) // rendered size + scale factor
@@ -40,29 +42,14 @@ function measure() {
   if (!crop.w || !crop.h) initDefaultCrop()
 }
 
+// Utilities extracted to app/utils/imageCropper.ts (auto-imported via Nuxt auto-import for utils)
+// Functions: parseAspect, computeDefaultCrop, clampCrop, enforceAspect
 function initDefaultCrop() {
-  if (!display.w || !display.h) return
-  const pad = 0.1 * Math.min(display.w, display.h)
-  let targetW = display.w - pad * 2
-  let targetH = display.h - pad * 2
-  const ar = parseAspect(aspect.value)
-  if (ar) {
-    if (targetW / targetH > ar) targetW = targetH * ar
-    else targetH = targetW / ar
-  }
-  crop.w = Math.round(targetW)
-  crop.h = Math.round(targetH)
-  crop.x = Math.round((display.w - crop.w) / 2)
-  crop.y = Math.round((display.h - crop.h) / 2)
+  const next = computeDefaultCrop(display, aspect.value)
+  Object.assign(crop, next)
 }
-
-function parseAspect(a: string) { if (a === 'free') return null; const [w, h] = a.split(':').map(Number); return w && h ? w / h : null }
-
 function clamp() {
-  crop.x = Math.min(Math.max(0, crop.x), display.w - crop.w)
-  crop.y = Math.min(Math.max(0, crop.y), display.h - crop.h)
-  crop.w = Math.max(10, Math.min(crop.w, display.w))
-  crop.h = Math.max(10, Math.min(crop.h, display.h))
+  Object.assign(crop, clampCrop(crop, display))
 }
 
 function startDrag(e: PointerEvent, mode: typeof dragging.mode) {
@@ -72,7 +59,13 @@ function startDrag(e: PointerEvent, mode: typeof dragging.mode) {
   dragging.ox = e.clientX
   dragging.oy = e.clientY
   dragging.start = { ...crop }
-  ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
+  // Always capture on the overlay frame (larger target) to avoid losing events when pointer leaves a small handle.
+  const captureEl = overlayRef.value || (e.currentTarget as HTMLElement)
+  try { captureEl.setPointerCapture(e.pointerId) } catch {}
+  // Fallback: add window listeners if pointer capture is not supported (older browsers / edge cases)
+  window.addEventListener('pointermove', moveDrag)
+  window.addEventListener('pointerup', endDrag)
+  window.addEventListener('pointercancel', endDrag)
 }
 
 function moveDrag(e: PointerEvent) {
@@ -88,14 +81,10 @@ function moveDrag(e: PointerEvent) {
     if (dragging.mode.includes('e')) { crop.w = w + dx }
     if (dragging.mode.includes('n')) { crop.y = y + dy; crop.h = h - dy }
     if (dragging.mode.includes('s')) { crop.h = h + dy }
-    const ar = parseAspect(aspect.value)
-    if (ar) {
-      // Enforce aspect by adjusting height based on width (prioritise user axis of change)
-      if (['n','s'].some(d => dragging.mode?.includes(d)) && !['e','w'].some(d => dragging.mode?.includes(d))) {
-        crop.w = Math.round(crop.h * ar)
-      } else {
-        crop.h = Math.round(crop.w / ar)
-      }
+    // Aspect ratio enforcement delegated to utility
+    if (parseAspect(aspect.value)) {
+      const priorityAxis = (['n','s'].some(d => dragging.mode?.includes(d)) && !['e','w'].some(d => dragging.mode?.includes(d))) ? 'h' : 'w'
+      Object.assign(crop, enforceAspect(crop, aspect.value, priorityAxis))
     }
   }
   clamp()
@@ -103,10 +92,14 @@ function moveDrag(e: PointerEvent) {
 
 function endDrag(e: PointerEvent) {
   if (dragging.mode) {
-    try { (e.target as HTMLElement).releasePointerCapture(e.pointerId) } catch {}
+    try { (overlayRef.value || (e.target as HTMLElement)).releasePointerCapture(e.pointerId) } catch {}
   }
   dragging.mode = null
   dragging.start = null
+  // Cleanup global listeners (in case we added them as fallback)
+  window.removeEventListener('pointermove', moveDrag)
+  window.removeEventListener('pointerup', endDrag)
+  window.removeEventListener('pointercancel', endDrag)
   clamp()
 }
 
@@ -190,7 +183,8 @@ function confirm() {
                 />
                 <div
                   v-if="crop.w && crop.h"
-                  class="absolute border-2 border-white/90 shadow-[0_0_0_9999px_rgba(0,0,0,0.45)] group"
+                  ref="overlayRef"
+                  class="absolute border-2 border-white/90 shadow-[0_0_0_9999px_rgba(0,0,0,0.45)] group touch-none"
                   :style="{ left: crop.x + 'px', top: crop.y + 'px', width: crop.w + 'px', height: crop.h + 'px', cursor: dragging.mode ? 'grabbing' : 'move' }"
                   @pointerdown="(e) => startDrag(e,'move')"
                   @pointermove="moveDrag"
@@ -201,16 +195,16 @@ function confirm() {
                     <span
                       :data-handle="h"
                       @pointerdown.stop="(e) => startDrag(e, h as any)"
-                      class="absolute bg-white border border-neutral-400 size-4 -translate-x-1/2 -translate-y-1/2 rounded cursor-pointer shadow-sm"
+                      class="absolute bg-white border border-neutral-400 size-4 -translate-x-1/2 -translate-y-1/2 rounded shadow-sm flex items-center justify-center after:content-[''] after:absolute after:-inset-1"
                       :class="{
-                        'left-0 top-0': h==='nw',
-                        'left-1/2 top-0': h==='n',
-                        'left-full top-0': h==='ne',
-                        'left-full top-1/2': h==='e',
-                        'left-full top-full': h==='se',
-                        'left-1/2 top-full': h==='s',
-                        'left-0 top-full': h==='sw',
-                        'left-0 top-1/2': h==='w',
+                        'left-0 top-0 cursor-nwse-resize': h==='nw',
+                        'left-1/2 top-0 cursor-ns-resize': h==='n',
+                        'left-full top-0 cursor-nesw-resize': h==='ne',
+                        'left-full top-1/2 cursor-ew-resize': h==='e',
+                        'left-full top-full cursor-nwse-resize': h==='se',
+                        'left-1/2 top-full cursor-ns-resize': h==='s',
+                        'left-0 top-full cursor-nesw-resize': h==='sw',
+                        'left-0 top-1/2 cursor-ew-resize': h==='w',
                       }"
                     />
                   </template>
