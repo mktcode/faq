@@ -103,7 +103,25 @@ function onImgLoad() {
   if (!el) return
   natural.w = el.naturalWidth
   natural.h = el.naturalHeight
-  nextTick(() => measure())
+  nextTick(() => {
+    measure()
+    ensureMeasured()
+  })
+}
+
+// Sometimes the image layout is not final on the first onload/nextTick (fonts, modal transition, etc.).
+// Re-measure for a few frames until width/height stabilize.
+function ensureMeasured(maxFrames = 10) {
+  let lastW = display.w, lastH = display.h, frames = 0
+  const step = () => {
+    measure()
+    frames++
+    const stable = display.w === lastW && display.h === lastH && display.w > 0 && display.h > 0
+    if (stable || frames >= maxFrames) return
+    lastW = display.w; lastH = display.h
+    requestAnimationFrame(step)
+  }
+  requestAnimationFrame(step)
 }
 
 watch(aspect, () => {
@@ -119,6 +137,14 @@ watch(() => props.imageUrl, () => {
 
 onMounted(() => {
   window.addEventListener('resize', measure)
+  // When modal is opened later, re-measure (in case image already cached and load fired earlier)
+  watch(showImageCropper, (open) => { if (open) nextTick(() => ensureMeasured()) })
+
+  // Observe size changes more granularly than window resize
+  const ro = new ResizeObserver(() => measure())
+  if (containerRef.value) ro.observe(containerRef.value)
+  if (imgRef.value) ro.observe(imgRef.value)
+  onBeforeUnmount(() => ro.disconnect())
 })
 onBeforeUnmount(() => window.removeEventListener('resize', measure))
 
@@ -137,6 +163,7 @@ function confirm() {
     :ui="{
       body: 'flex flex-col',
     }"
+    @after:enter="ensureMeasured()"
   >
     <template #body>
       <div class="flex flex-wrap gap-2 pb-4 items-center justify-center">
