@@ -170,10 +170,32 @@ onMounted(() => {
 })
 onBeforeUnmount(() => window.removeEventListener('resize', measure))
 
-function confirm() {
-  if (!cropNatural.value || !props.imageUrl || !cropPercent.value) return
-  emit('confirm', { ...cropNatural.value, ...cropPercent.value, url: props.imageUrl })
-  showImageCropper.value = false
+const isUploading = ref(false)
+async function confirm() {
+  if (!cropPercent.value) return
+  if (isUploading.value) return
+
+  isUploading.value = true
+
+  try {
+    const { imageUrl } = await $fetch<{ imageUrl: string }>('/api/user/upload/crop', {
+      method: 'POST',
+      body: {
+        imageUrl: props.imageUrl,
+        coordinates: {
+          x: cropPercent.value.xPct,
+          y: cropPercent.value.yPct,
+          w: cropPercent.value.wPct,
+          h: cropPercent.value.hPct,
+        }
+      },
+    })
+    console.log('Uploaded cropped image:', imageUrl)
+  } catch (error) {
+    console.error('Error uploading cropped image:', error)
+  } finally {
+    isUploading.value = false
+  }
 }
 </script>
 
@@ -197,8 +219,6 @@ function confirm() {
           :variant="aspect===opt.value ? 'solid' : 'soft'"
           @click="aspect = opt.value"
         />
-  <span v-if="cropPercent">Crop (%): X {{ cropPercent.xPct.toFixed(2) }} • Y {{ cropPercent.yPct.toFixed(2) }} • W {{ cropPercent.wPct.toFixed(2) }} • H {{ cropPercent.hPct.toFixed(2) }}</span>
-  <span v-if="cropNatural" class="text-xs text-neutral-400">(px: {{ cropNatural.x }}, {{ cropNatural.y }}, {{ cropNatural.w }}×{{ cropNatural.h }})</span>
       </div>
       <div ref="containerRef" class="relative w-full flex-1 grow">
         <div class="absolute inset-0 flex items-center justify-center">
@@ -243,6 +263,13 @@ function confirm() {
             </template>
           </div>
         </div>
+      </div>
+    </template>
+
+    <template #footer>
+      <div class="flex justify-end gap-2">
+        <UButton label="Abbrechen" color="neutral" @click="showImageCropper = false" />
+        <UButton label="Zuschneiden & Speichern" color="primary" :disabled="isUploading" :loading="isUploading" @click="confirm" />
       </div>
     </template>
   </UModal>

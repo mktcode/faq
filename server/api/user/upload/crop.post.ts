@@ -2,30 +2,30 @@ import sharp from 'sharp'
 import z from 'zod'
 import { PutObjectCommand } from '@aws-sdk/client-s3'
 
-// Body schema: coordinates are percentages (0-100) or (0-1). We accept both.
+// Body schema: coordinates are percentages (0-100) floating point numbers.
 const bodySchema = z.object({
-  url: z.string().url(),
+  imageUrl: z.string().url(),
   coordinates: z.object({
-    x: z.number().min(0),
-    y: z.number().min(0),
-    w: z.number().min(0.0001),
-    h: z.number().min(0.0001),
+    x: z.number().min(0).max(100),
+    y: z.number().min(0).max(100),
+    w: z.number().min(0.0001).max(100),
+    h: z.number().min(0.0001).max(100),
   }),
 })
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
-  const { url, coordinates } = await readValidatedBody(event, body => bodySchema.parse(body))
+  const { imageUrl, coordinates } = await readValidatedBody(event, body => bodySchema.parse(body))
 
   const { s3BucketName, public: { s3Endpoint } } = useRuntimeConfig()
   const expectedPrefix = `${s3Endpoint}/${s3BucketName}/`
 
-  if (!url.startsWith(expectedPrefix)) {
+  if (!imageUrl.startsWith(expectedPrefix)) {
     return { success: false, message: 'Invalid image URL' }
   }
 
   // Extract key after bucket base
-  const key = url.substring(expectedPrefix.length)
+  const key = imageUrl.substring(expectedPrefix.length)
 
   // Ownership enforcement: key must start with user's id folder
   if (!key.startsWith(`${user.id}/`)) {
@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
   // Fetch original object via HTTP (public URL)
   let originalBuffer: Buffer
   try {
-    const res = await fetch(url)
+    const res = await fetch(imageUrl)
     if (!res.ok) {
       return { success: false, message: 'Image not found' }
     }
@@ -54,13 +54,11 @@ export default defineEventHandler(async (event) => {
     return { success: false, message: 'Could not read image dimensions' }
   }
 
-  // Determine if percentages are 0-1 or 0-100. If any value > 1, treat entire set as 0-100.
-  const scale = (coordinates.x > 1 || coordinates.y > 1 || coordinates.w > 1 || coordinates.h > 1) ? 100 : 1
-
-  const xPerc = coordinates.x / scale
-  const yPerc = coordinates.y / scale
-  const wPerc = coordinates.w / scale
-  const hPerc = coordinates.h / scale
+  // Normalize percentages (0-100) to [0,1]
+  const xPerc = coordinates.x / 100
+  const yPerc = coordinates.y / 100
+  const wPerc = coordinates.w / 100
+  const hPerc = coordinates.h / 100
 
   // Clamp to [0,1]
   const clamp = (v: number) => Math.min(1, Math.max(0, v))
