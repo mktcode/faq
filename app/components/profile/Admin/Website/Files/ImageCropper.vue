@@ -186,32 +186,38 @@ function confirm() {
             draggable="false"
           />
         </div>
-        
+        <!-- Clipping wrapper sized to actual rendered image area -->
         <div
-          v-if="crop.w && crop.h"
-          ref="overlayRef"
-          class="absolute z-10 border-2 border-white/90 shadow-[0_0_0_9999px_rgba(0,0,0,0.45)] group"
-          style="touch-action:none;"
-          :style="{ left: offset.x + crop.x + 'px', top: offset.y + crop.y + 'px', width: crop.w + 'px', height: crop.h + 'px', cursor: dragging.mode ? 'grabbing' : 'move' }"
-          @pointerdown="(e) => startDrag(e,'move')"
+          v-if="natural.w"
+          class="absolute pointer-events-none overflow-hidden"
+          :style="{ left: offset.x + 'px', top: offset.y + 'px', width: display.w + 'px', height: display.h + 'px' }"
         >
-          <template v-for="h in ['nw','n','ne','e','se','s','sw','w']" :key="h">
-            <span
-              :data-handle="h"
-              @pointerdown.stop="(e) => startDrag(e, h as any)"
-              class="absolute bg-white border border-neutral-400 size-4 -translate-x-1/2 -translate-y-1/2 rounded shadow-sm flex items-center justify-center after:content-[''] after:absolute after:-inset-1"
-              :class="{
-                'left-0 top-0 cursor-nwse-resize': h==='nw',
-                'left-1/2 top-0 cursor-ns-resize': h==='n',
-                'left-full top-0 cursor-nesw-resize': h==='ne',
-                'left-full top-1/2 cursor-ew-resize': h==='e',
-                'left-full top-full cursor-nwse-resize': h==='se',
-                'left-1/2 top-full cursor-ns-resize': h==='s',
-                'left-0 top-full cursor-nesw-resize': h==='sw',
-                'left-0 top-1/2 cursor-ew-resize': h==='w',
-              }"
-            />
-          </template>
+          <div
+            v-if="crop.w && crop.h"
+            ref="overlayRef"
+            class="absolute z-10 border-2 border-white/90 shadow-[0_0_0_9999px_rgba(0,0,0,0.45)] group pointer-events-auto"
+            style="touch-action:none;"
+            :style="{ left: crop.x + 'px', top: crop.y + 'px', width: crop.w + 'px', height: crop.h + 'px', cursor: dragging.mode ? 'grabbing' : 'move' }"
+            @pointerdown="(e) => startDrag(e,'move')"
+          >
+            <template v-for="h in ['nw','n','ne','e','se','s','sw','w']" :key="h">
+              <span
+                :data-handle="h"
+                @pointerdown.stop="(e) => startDrag(e, h as any)"
+                class="absolute bg-white border border-neutral-400 size-4 -translate-x-1/2 -translate-y-1/2 rounded shadow-sm flex items-center justify-center after:content-[''] after:absolute after:-inset-1"
+                :class="{
+                  'left-0 top-0 cursor-nwse-resize': h==='nw',
+                  'left-1/2 top-0 cursor-ns-resize': h==='n',
+                  'left-full top-0 cursor-nesw-resize': h==='ne',
+                  'left-full top-1/2 cursor-ew-resize': h==='e',
+                  'left-full top-full cursor-nwse-resize': h==='se',
+                  'left-1/2 top-full cursor-ns-resize': h==='s',
+                  'left-0 top-full cursor-nesw-resize': h==='sw',
+                  'left-0 top-1/2 cursor-ew-resize': h==='w',
+                }"
+              />
+            </template>
+          </div>
         </div>
       </div>
     </template>
