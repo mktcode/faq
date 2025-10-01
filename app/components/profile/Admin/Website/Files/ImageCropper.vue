@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{ imageUrl?: string }>()
-const emit = defineEmits<{ (e: 'confirm', crop: { x: number; y: number; w: number; h: number; url: string }): void }>()
+const emit = defineEmits<{ (e: 'confirm', crop: { x: number; y: number; w: number; h: number; url: string; xPct: number; yPct: number; wPct: number; hPct: number }): void }>()
 
 const showImageCropper = useState('showImageCropper', () => false)
 
@@ -25,6 +25,19 @@ const cropNatural = computed(() => {
     y: Math.round(crop.y / display.scale),
     w: Math.round(crop.w / display.scale),
     h: Math.round(crop.h / display.scale),
+  }
+})
+
+// Percent values (relative to full image dimensions in natural resolution).
+// Using natural ensures backend cropping independent of rendered size.
+const cropPercent = computed(() => {
+  if (!cropNatural.value || !natural.w || !natural.h) return null
+  const { x, y, w, h } = cropNatural.value
+  return {
+    xPct: +(x / natural.w * 100),
+    yPct: +(y / natural.h * 100),
+    wPct: +(w / natural.w * 100),
+    hPct: +(h / natural.h * 100),
   }
 })
 
@@ -149,8 +162,8 @@ onMounted(() => {
 onBeforeUnmount(() => window.removeEventListener('resize', measure))
 
 function confirm() {
-  if (!cropNatural.value || !props.imageUrl) return
-  emit('confirm', { ...cropNatural.value, url: props.imageUrl })
+  if (!cropNatural.value || !props.imageUrl || !cropPercent.value) return
+  emit('confirm', { ...cropNatural.value, ...cropPercent.value, url: props.imageUrl })
   showImageCropper.value = false
 }
 </script>
@@ -175,6 +188,8 @@ function confirm() {
           :variant="aspect===opt ? 'solid' : 'soft'"
           @click="aspect = opt"
         />
+  <span v-if="cropPercent">Crop (%): X {{ cropPercent.xPct.toFixed(2) }} • Y {{ cropPercent.yPct.toFixed(2) }} • W {{ cropPercent.wPct.toFixed(2) }} • H {{ cropPercent.hPct.toFixed(2) }}</span>
+  <span v-if="cropNatural" class="text-xs text-neutral-400">(px: {{ cropNatural.x }}, {{ cropNatural.y }}, {{ cropNatural.w }}×{{ cropNatural.h }})</span>
       </div>
       <div ref="containerRef" class="relative w-full flex-1 grow">
         <div class="absolute inset-0 flex items-center justify-center">
