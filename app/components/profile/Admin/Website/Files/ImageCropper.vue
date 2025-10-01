@@ -59,17 +59,17 @@ function startDrag(e: PointerEvent, mode: typeof dragging.mode) {
   dragging.ox = e.clientX
   dragging.oy = e.clientY
   dragging.start = { ...crop }
-  // Always capture on the overlay frame (larger target) to avoid losing events when pointer leaves a small handle.
-  const captureEl = overlayRef.value || (e.currentTarget as HTMLElement)
-  try { captureEl.setPointerCapture(e.pointerId) } catch {}
-  // Fallback: add window listeners if pointer capture is not supported (older browsers / edge cases)
-  window.addEventListener('pointermove', moveDrag)
-  window.addEventListener('pointerup', endDrag)
-  window.addEventListener('pointercancel', endDrag)
+  // Attach global listeners once per drag cycle
+  window.addEventListener('pointermove', moveDrag, { passive: false })
+  window.addEventListener('pointerup', endDrag, { once: true })
+  window.addEventListener('pointercancel', endDrag, { once: true })
+  // Debug instrumentation (can be removed later)
+  if (import.meta.dev) console.debug('[crop] startDrag', mode, { x: crop.x, y: crop.y, w: crop.w, h: crop.h })
 }
 
 function moveDrag(e: PointerEvent) {
   if (!dragging.mode || !dragging.start) return
+  e.preventDefault()
   const dx = e.clientX - dragging.ox
   const dy = e.clientY - dragging.oy
   let { x, y, w, h } = dragging.start
@@ -81,22 +81,21 @@ function moveDrag(e: PointerEvent) {
     if (dragging.mode.includes('e')) { crop.w = w + dx }
     if (dragging.mode.includes('n')) { crop.y = y + dy; crop.h = h - dy }
     if (dragging.mode.includes('s')) { crop.h = h + dy }
-    // Aspect ratio enforcement delegated to utility
     if (parseAspect(aspect.value)) {
       const priorityAxis = (['n','s'].some(d => dragging.mode?.includes(d)) && !['e','w'].some(d => dragging.mode?.includes(d))) ? 'h' : 'w'
       Object.assign(crop, enforceAspect(crop, aspect.value, priorityAxis))
     }
   }
   clamp()
+  if (import.meta.dev && (Math.abs(dx) > 0 || Math.abs(dy) > 0)) {
+    console.debug('[crop] moveDrag', dragging.mode, { x: crop.x, y: crop.y, w: crop.w, h: crop.h })
+  }
 }
 
 function endDrag(e: PointerEvent) {
-  if (dragging.mode) {
-    try { (overlayRef.value || (e.target as HTMLElement)).releasePointerCapture(e.pointerId) } catch {}
-  }
+  if (dragging.mode && import.meta.dev) console.debug('[crop] endDrag', dragging.mode)
   dragging.mode = null
   dragging.start = null
-  // Cleanup global listeners (in case we added them as fallback)
   window.removeEventListener('pointermove', moveDrag)
   window.removeEventListener('pointerup', endDrag)
   window.removeEventListener('pointercancel', endDrag)
@@ -173,23 +172,18 @@ function confirm() {
                 <img
                   ref="imgRef"
                   :src="props.imageUrl"
-                  class="max-w-full block rounded-lg"
+                  class="max-w-full block rounded-lg select-none"
                   draggable="false"
                   @load="onImgLoad"
                   @error="loading=false"
-                  @pointermove="moveDrag"
-                  @pointerup="endDrag"
-                  @pointercancel="endDrag"
                 />
                 <div
                   v-if="crop.w && crop.h"
                   ref="overlayRef"
-                  class="absolute border-2 border-white/90 shadow-[0_0_0_9999px_rgba(0,0,0,0.45)] group touch-none"
+                  class="absolute z-10 border-2 border-white/90 shadow-[0_0_0_9999px_rgba(0,0,0,0.45)] group"
+                  style="touch-action:none;"
                   :style="{ left: crop.x + 'px', top: crop.y + 'px', width: crop.w + 'px', height: crop.h + 'px', cursor: dragging.mode ? 'grabbing' : 'move' }"
                   @pointerdown="(e) => startDrag(e,'move')"
-                  @pointermove="moveDrag"
-                  @pointerup="endDrag"
-                  @pointercancel="endDrag"
                 >
                   <template v-for="h in ['nw','n','ne','e','se','s','sw','w']" :key="h">
                     <span
