@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, onBeforeUnmount, watch, watchEffect, nextTick } from 'vue'
-
 type Rect = { x: number; y: number; w: number; h: number }
 
+const showImageCropper = useState('showImageCropper', () => false)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const dndRef = ref<HTMLDivElement | null>(null)
 const image = ref<HTMLImageElement | null>(null)
@@ -313,67 +312,73 @@ onMounted(() => {
 
 
 <template>
-  <div class="min-h-screen bg-neutral-100 text-neutral-900 p-4 sm:p-6">
-    <div class="max-w-5xl mx-auto">
-      <div class="grid gap-4 sm:gap-6 md:grid-cols-3">
-        <div class="md:col-span-2">
-          <div ref="dndRef" class="border-2 border-dashed border-neutral-300 rounded-2xl p-4 sm:p-6 flex flex-col items-center justify-center gap-3 bg-white shadow-sm">
-            <template v-if="!image">
-              <p class="text-center text-neutral-600">Lege ein Bild hier ab oder wähle es aus.</p>
-              <label class="inline-flex items-center gap-2 px-4 py-2 rounded-xl shadow-sm bg-neutral-900 text-white cursor-pointer active:scale-[.99]">
-                <input type="file" accept="image/*" class="hidden" @change="onFileChange" />
-                Datei wählen
-              </label>
-            </template>
-            <div v-else class="w-full overflow-auto">
-              <canvas
-                ref="canvasRef"
-                class="touch-none rounded-xl bg-neutral-200 w-full h-auto"
-                @pointerdown="onPointerDown"
-                @pointermove="onPointerMove"
-                @pointerup="onPointerUp"
-              />
+  <UModal
+    title="Bild zuschneiden"
+    v-model:open="showImageCropper"
+    fullscreen
+  >
+    <template #body>
+      <div class="max-w-5xl mx-auto">
+        <div class="grid gap-4 sm:gap-6 md:grid-cols-3">
+          <div class="md:col-span-2">
+            <div ref="dndRef" class="border-2 border-dashed border-neutral-300 rounded-2xl p-4 sm:p-6 flex flex-col items-center justify-center gap-3 bg-white shadow-sm">
+              <template v-if="!image">
+                <p class="text-center text-neutral-600">Lege ein Bild hier ab oder wähle es aus.</p>
+                <label class="inline-flex items-center gap-2 px-4 py-2 rounded-xl shadow-sm bg-neutral-900 text-white cursor-pointer active:scale-[.99]">
+                  <input type="file" accept="image/*" class="hidden" @change="onFileChange" />
+                  Datei wählen
+                </label>
+              </template>
+              <div v-else class="w-full overflow-auto">
+                <canvas
+                  ref="canvasRef"
+                  class="touch-none rounded-xl bg-neutral-200 w-full h-auto"
+                  @pointerdown="onPointerDown"
+                  @pointermove="onPointerMove"
+                  @pointerup="onPointerUp"
+                />
+              </div>
             </div>
           </div>
+  
+          <aside class="md:col-span-1">
+            <div class="bg-white rounded-2xl shadow-sm p-4 sm:p-5 space-y-4">
+              <div class="space-y-2">
+                <label class="block text-sm font-medium">Seitenverhältnis</label>
+                <div class="flex gap-2 flex-wrap">
+                  <button
+                    v-for="opt in aspectOptions"
+                    :key="opt"
+                    @click="aspect = opt"
+                    class="px-3 py-1.5 rounded-xl border"
+                    :class="aspect === opt ? 'bg-neutral-900 text-white' : 'bg-white'"
+                  >
+                    {{ opt }}
+                  </button>
+                </div>
+                <p class="text-xs text-neutral-500">Beim Ändern wird der aktuelle Zuschnitt neu initialisiert.</p>
+              </div>
+  
+              <div class="space-y-2">
+                <label class="block text-sm font-medium">Preview</label>
+                <div class="border rounded-xl overflow-hidden bg-neutral-50 flex items-center justify-center min-h-40">
+                  <img v-if="previewURL" :src="previewURL" alt="Cropped Preview" class="max-w-full" />
+                  <p v-else class="text-xs text-neutral-500 p-4">Noch kein Bild</p>
+                </div>
+                <p class="text-xs text-neutral-500">Die Vorschau aktualisiert sich live.</p>
+              </div>
+  
+              <div class="text-xs text-neutral-500">
+                <ul class="list-disc ml-4 space-y-1">
+                  <li>Verschieben: innerhalb des Rahmens ziehen</li>
+                  <li>Größe ändern: Ecken oder Kanten ziehen</li>
+                  <li>Touch: ein Finger genügt (große Handles)</li>
+                </ul>
+              </div>
+            </div>
+          </aside>
         </div>
-
-        <aside class="md:col-span-1">
-          <div class="bg-white rounded-2xl shadow-sm p-4 sm:p-5 space-y-4">
-            <div class="space-y-2">
-              <label class="block text-sm font-medium">Seitenverhältnis</label>
-              <div class="flex gap-2 flex-wrap">
-                <button
-                  v-for="opt in aspectOptions"
-                  :key="opt"
-                  @click="aspect = opt"
-                  class="px-3 py-1.5 rounded-xl border"
-                  :class="aspect === opt ? 'bg-neutral-900 text-white' : 'bg-white'"
-                >
-                  {{ opt }}
-                </button>
-              </div>
-              <p class="text-xs text-neutral-500">Beim Ändern wird der aktuelle Zuschnitt neu initialisiert.</p>
-            </div>
-
-            <div class="space-y-2">
-              <label class="block text-sm font-medium">Preview</label>
-              <div class="border rounded-xl overflow-hidden bg-neutral-50 flex items-center justify-center min-h-40">
-                <img v-if="previewURL" :src="previewURL" alt="Cropped Preview" class="max-w-full" />
-                <p v-else class="text-xs text-neutral-500 p-4">Noch kein Bild</p>
-              </div>
-              <p class="text-xs text-neutral-500">Die Vorschau aktualisiert sich live.</p>
-            </div>
-
-            <div class="text-xs text-neutral-500">
-              <ul class="list-disc ml-4 space-y-1">
-                <li>Verschieben: innerhalb des Rahmens ziehen</li>
-                <li>Größe ändern: Ecken oder Kanten ziehen</li>
-                <li>Touch: ein Finger genügt (große Handles)</li>
-              </ul>
-            </div>
-          </div>
-        </aside>
       </div>
-    </div>
-  </div>
+    </template>
+  </UModal>
 </template>

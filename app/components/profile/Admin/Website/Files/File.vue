@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { UploadedFile } from '~~/server/utils/s3';
 
+const showImageCropper = useState('showImageCropper', () => false)
+
 const toast = useToast()
 
 const open = ref(false)
@@ -104,6 +106,14 @@ async function deleteFile() {
           target="_blank"
           rel="noopener noreferrer"
           download
+        />
+        <UButton
+          v-if="['png', 'jpg', 'jpeg', 'gif', 'webp'].includes(file.type)"
+          label="Bild zuschneiden"
+          icon="i-heroicons-scissors"
+          class="w-full"
+          variant="soft"
+          @click="showImageCropper = true"
         />
         <UButton
           label="Löschen"
