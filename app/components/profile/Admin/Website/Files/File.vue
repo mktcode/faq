@@ -2,6 +2,7 @@
 import type { UploadedFile } from '~~/server/utils/s3';
 
 const showImageCropper = useState('showImageCropper', () => false)
+const showDeleteModal = ref(false)
 
 const toast = useToast()
 
@@ -128,9 +129,32 @@ async function deleteFile() {
           class="w-full"
           variant="soft"
           color="error"
-          :loading="deletingFile"
-          @click="deleteFile"
+          @click="showDeleteModal = true"
         />
+        <UModal
+          v-model:open="showDeleteModal"
+          title="Datei löschen"
+        >
+          <template #body>
+            <p>Möchtest du die Datei wirklich löschen? Dieser Vorgang kann nicht rückgängig gemacht werden.</p>
+          </template>
+
+          <template #footer>
+            <UButton
+              label="Abbrechen"
+              variant="ghost"
+              color="neutral"
+              @click="showDeleteModal = false"
+            />
+            <UButton
+              label="Löschen"
+              variant="solid"
+              color="error"
+              :loading="deletingFile"
+              @click="deleteFile"
+            />
+          </template>
+        </UModal>
       </div>
     </template>
   </UCollapsible>
