@@ -1,5 +1,4 @@
 import sharp from "sharp"
-import { join } from "node:path"
 
 const FAVICON_SIZE = 512
 
@@ -59,13 +58,8 @@ export default defineEventHandler(async (event) => {
       )
     }
   } else {
-    const src = join(process.cwd(), "app", "assets", "img", "favicon.png")
+    const src = await useStorage('assets:server').getItemRaw('img/favicon.png')
 
-    const buffer = await sharp(src)
-      .resize(FAVICON_SIZE, FAVICON_SIZE, { fit: "cover" })
-      .png()
-      .toBuffer()
-
-    return buffer
+    return src
   }
 })

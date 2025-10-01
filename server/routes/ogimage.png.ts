@@ -1,5 +1,4 @@
 import sharp from "sharp"
-import { join } from "node:path"
 
 const OGIMAGE_WIDTH = 1200
 const OGIMAGE_HEIGHT = 630
@@ -115,13 +114,8 @@ export default defineEventHandler(async (event) => {
       )
     }
   } else {
-    const src = join(process.cwd(), "app", "assets", "img", "ogimage.png")
+    const src = await useStorage('assets:server').getItemRaw('img/ogimage.png')
 
-    const buffer = await sharp(src)
-      .resize(OGIMAGE_WIDTH, OGIMAGE_HEIGHT, { fit: "cover" })
-      .png()
-      .toBuffer()
-
-    return buffer
+    return src
   }
 })
