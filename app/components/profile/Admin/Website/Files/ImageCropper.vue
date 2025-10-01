@@ -1,6 +1,9 @@
 <script setup lang="ts">
 const props = defineProps<{ imageUrl?: string }>()
-const emit = defineEmits<{ (e: 'confirm', crop: { x: number; y: number; w: number; h: number; url: string; xPct: number; yPct: number; wPct: number; hPct: number }): void }>()
+
+const emit = defineEmits<{
+  refresh: []
+}>()
 
 const showImageCropper = useState('showImageCropper', () => false)
 
@@ -172,6 +175,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', measure))
 
 const isUploading = ref(false)
 const asCopy = ref(false)
+
 async function confirm() {
   if (!cropPercent.value) return
   if (isUploading.value) return
@@ -179,7 +183,7 @@ async function confirm() {
   isUploading.value = true
 
   try {
-    const { imageUrl } = await $fetch<{ imageUrl: string }>('/api/user/upload/crop', {
+    await $fetch<{ imageUrl: string }>('/api/user/upload/crop', {
       method: 'POST',
       body: {
         asCopy: asCopy.value,
@@ -192,7 +196,8 @@ async function confirm() {
         }
       },
     })
-    console.log('Uploaded cropped image:', imageUrl)
+    emit('refresh')
+    showImageCropper.value = false
   } catch (error) {
     console.error('Error uploading cropped image:', error)
   } finally {

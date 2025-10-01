@@ -92,7 +92,7 @@ async function deleteFile() {
     <template #content>
       <div class="p-4 flex flex-col gap-2">
         <img
-          :src="file.url"
+          :src="file.url + '?t=' + Date.now()"
           alt="Vorschaubild"
           class="w-full max-h-96 object-contain bg-gray-50 rounded-lg border border-gray-200 p-1"
         />
@@ -119,6 +119,7 @@ async function deleteFile() {
           <ProfileAdminWebsiteFilesImageCropper
             v-if="['png', 'jpg', 'jpeg', 'gif', 'webp'].includes(file.type)"
             :image-url="file.url"
+            @refresh="$emit('refresh')"
           />
         </ClientOnly>
         <UButton

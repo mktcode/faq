@@ -77,7 +77,7 @@ const storageUsedPercent = computed(() => {
       <TransitionGroup name="fade">
         <ProfileAdminWebsiteFilesFile
           v-for="file in files"
-          :key="file.name"
+          :key="file.name + file.size"
           :file="file"
           @refresh="refreshFiles"
         />
