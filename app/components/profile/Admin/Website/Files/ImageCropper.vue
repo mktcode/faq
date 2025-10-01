@@ -17,7 +17,6 @@ const display = reactive({ w: 0, h: 0, scale: 1 }) // rendered size + scale fact
 const crop = reactive<CropRect>({ x: 0, y: 0, w: 0, h: 0 })
 const dragging = reactive<{ mode: null | 'move' | 'nw' | 'ne' | 'sw' | 'se' | 'n' | 's' | 'w' | 'e'; ox: number; oy: number; start: CropRect | null }>({ mode: null, ox: 0, oy: 0, start: null })
 const aspect = ref<'free' | '1:1' | '4:3' | '16:9'>('free')
-const previewScale = ref(0.5)
 const loading = ref(true)
 
 const aspectOptions: Array<typeof aspect.value> = ['free', '1:1', '4:3', '16:9']
@@ -126,12 +125,20 @@ onMounted(() => {
 })
 onBeforeUnmount(() => window.removeEventListener('resize', measure))
 
+// Preview styles
+// Previous implementation positioned a scaled image absolutely with negative offsets.
+// That compounded rounding and missed the image height, causing drift vs the on-canvas crop.
+// New approach:
+// 1. Preview container dimensions = crop.w/h * preview scale.
+// 2. Inside we render the image at the *display* size (the size used for cropping) without scaling.
+// 3. We shift the visible portion using object-position (no need for manual negative left/top) and then
+//    apply a single CSS scale() to the whole image so both offsets and dimensions scale uniformly.
+// Benefits: fewer rounding errors, no need to maintain duplicate width/height calculations, matches crop exactly.
 const previewStyle = computed<import('vue').CSSProperties>(() => {
   if (!crop.w || !crop.h) return {}
-  const scale = previewScale.value
   return {
-    width: `${Math.round(crop.w * scale)}px`,
-    height: `${Math.round(crop.h * scale)}px`,
+    width: `${crop.w}px`,
+    height: `${crop.h}px`,
     position: 'relative',
     overflow: 'hidden',
     border: '1px solid #e5e7eb',
@@ -142,12 +149,14 @@ const previewStyle = computed<import('vue').CSSProperties>(() => {
 
 const previewImgStyle = computed<import('vue').CSSProperties>(() => {
   if (!crop.w || !crop.h) return {}
-  const scale = previewScale.value
   return {
-    position: 'absolute',
-    left: `${-crop.x * scale}px`,
-    top: `${-crop.y * scale}px`,
-    width: `${display.w * scale}px`,
+    width: `${display.w}px`,
+    height: `${display.h}px`,
+    maxWidth: 'none',
+    maxHeight: 'none',
+    objectFit: 'none',
+    objectPosition: `${-crop.x}px ${-crop.y}px`,
+    display: 'block',
     userSelect: 'none',
     pointerEvents: 'none',
   }
@@ -229,13 +238,11 @@ function confirm() {
             <div class="space-y-2">
               <label class="text-sm font-medium">Vorschau</label>
               <div :style="previewStyle">
-                <img v-if="crop.w" :src="props.imageUrl" :style="previewImgStyle" alt="Preview" />
+                <!-- Use cropNatural to ensure we only render when natural dimensions are derivable -->
+                <img v-if="cropNatural" :src="props.imageUrl" :style="previewImgStyle" alt="Preview" />
                 <p v-else class="text-xs p-4 text-neutral-500">Noch kein Zuschnitt</p>
               </div>
-              <div class="flex items-center gap-2 mt-2">
-                <label class="text-xs text-neutral-500">Skalierung</label>
-                <input type="range" min="0.25" max="1" step="0.05" v-model.number="previewScale" />
-              </div>
+              <!-- Scaling slider removed: preview now always 1:1 with current crop rectangle -->
             </div>
 
             <div class="text-xs text-neutral-600 space-y-1">
