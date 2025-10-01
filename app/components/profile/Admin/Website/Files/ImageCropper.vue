@@ -1,6 +1,9 @@
 <script setup lang="ts">
 type Rect = { x: number; y: number; w: number; h: number }
 
+// New prop: optional image URL that, when provided, will be loaded into the cropper
+const props = defineProps<{ imageUrl?: string }>()
+
 const showImageCropper = useState('showImageCropper', () => false)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const dndRef = ref<HTMLDivElement | null>(null)
@@ -106,6 +109,28 @@ const loadImageFromFile = (file: File) => new Promise<HTMLImageElement>((resolve
   reader.onerror = (e) => reject(e)
   reader.readAsDataURL(file)
 })
+
+// Load an image from a URL (used when imageUrl prop is provided)
+const loadImageFromURL = (url: string) => new Promise<HTMLImageElement>((resolve, reject) => {
+  if (!url) return reject(new Error('Empty URL'))
+  const img = new Image()
+  // Set crossOrigin to allow canvas export if server sends proper CORS headers
+  img.crossOrigin = 'anonymous'
+  img.onload = () => resolve(img)
+  img.onerror = (e) => reject(e)
+  img.src = url
+})
+
+// Watch for prop changes to imageUrl and load the image (initial + updates)
+watch(() => props.imageUrl, async (val) => {
+  if (!val) return
+  try {
+    const img = await loadImageFromURL(val)
+    image.value = img
+  } catch (e) {
+    console.warn('Failed to load image from URL', val, e)
+  }
+}, { immediate: true })
 
 const initializeSceneForImage = (img: HTMLImageElement, cvs: HTMLCanvasElement | null) => {
   if (!cvs || !cvs.parentElement) return

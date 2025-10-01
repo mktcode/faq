@@ -74,6 +74,7 @@ export default defineNuxtConfig({
           'connect-src \'self\' https://api.stripe.com https://chat.markus-kottlaender.de',
           'frame-src \'self\' https://*.js.stripe.com https://js.stripe.com https://hooks.stripe.com https://chat.markus-kottlaender.de',
           'script-src \'self\' \'unsafe-inline\' https://*.js.stripe.com https://js.stripe.com https://chat.markus-kottlaender.de',
+          'img-src \'self\' data: blob: https://fsn1.your-objectstorage.com',
         ].join('; '),
       },
     },

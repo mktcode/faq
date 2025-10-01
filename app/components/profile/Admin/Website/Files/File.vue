@@ -115,6 +115,10 @@ async function deleteFile() {
           variant="soft"
           @click="showImageCropper = true"
         />
+        <ProfileAdminWebsiteFilesImageCropper
+          v-if="['png', 'jpg', 'jpeg', 'gif', 'webp'].includes(file.type)"
+          :image-url="file.url"
+        />
         <UButton
           label="Löschen"
           icon="i-heroicons-trash"

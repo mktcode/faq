@@ -82,8 +82,6 @@ const storageUsedPercent = computed(() => {
           @refresh="refreshFiles"
         />
       </TransitionGroup>
-
-      <ProfileAdminWebsiteFilesImageCropper />
     </template>
 
     <template #footer>
