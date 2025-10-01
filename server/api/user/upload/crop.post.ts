@@ -4,6 +4,9 @@ import { PutObjectCommand } from '@aws-sdk/client-s3'
 
 // Body schema: coordinates are percentages (0-100) floating point numbers.
 const bodySchema = z.object({
+  // When true we keep the original file and create a new cropped copy with a `_crop_` suffix.
+  // When false (or omitted) we overwrite the original object keeping the same key / filename.
+  asCopy: z.boolean().optional().default(false),
   imageUrl: z.string().url(),
   coordinates: z.object({
     x: z.number().min(0).max(100),
@@ -15,7 +18,7 @@ const bodySchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
-  const { imageUrl, coordinates } = await readValidatedBody(event, body => bodySchema.parse(body))
+  const { imageUrl, coordinates, asCopy } = await readValidatedBody(event, body => bodySchema.parse(body))
 
   const { s3BucketName, public: { s3Endpoint } } = useRuntimeConfig()
   const expectedPrefix = `${s3Endpoint}/${s3BucketName}/`
@@ -89,30 +92,57 @@ export default defineEventHandler(async (event) => {
     cropped = cropped.resize(maxSize, maxSize, { fit: 'inside' })
   }
 
-  // Produce webp (obtain buffer and also determine final dimensions for naming)
-  const withMeta = await cropped.toFormat('webp')
-  const outputBuffer = await withMeta.toBuffer()
-  const finalMeta = await sharp(outputBuffer).metadata()
-  const finalW = finalMeta.width || 0
-  const finalH = finalMeta.height || 0
+  // Decide output format & key based on asCopy flag.
+  // If asCopy: create a new webp copy with suffix. Otherwise overwrite the original key using original format.
+  const originalExtMatch = key.match(/\.([^./]+)$/)
+  const originalExt = (originalExtMatch?.[1] || '').toLowerCase()
 
-  // Derive new key: replace extension with _crop_<width>x<height>.webp
-  const withoutExt = key.replace(/\.[^./]+$/, '') // remove last extension
-  const croppedKey = `${withoutExt}_crop_${finalW}x${finalH}.webp`
+  const guessContentType = (ext: string): string | undefined => {
+    switch (ext) {
+      case 'jpg':
+      case 'jpeg': return 'image/jpeg'
+      case 'png': return 'image/png'
+      case 'webp': return 'image/webp'
+      case 'avif': return 'image/avif'
+      case 'gif': return 'image/gif'
+      default: return undefined
+    }
+  }
+
+  let uploadKey: string
+  let outputBuffer: Buffer
+  let contentType: string | undefined
+
+  if (asCopy) {
+    // Produce a webp copy with size info in filename
+    const withMeta = await cropped.toFormat('webp')
+    outputBuffer = await withMeta.toBuffer()
+    const finalMeta = await sharp(outputBuffer).metadata()
+    const finalW = finalMeta.width || 0
+    const finalH = finalMeta.height || 0
+    const withoutExt = key.replace(/\.[^./]+$/, '')
+    uploadKey = `${withoutExt}_crop_${finalW}x${finalH}.webp`
+    contentType = 'image/webp'
+  } else {
+    // Overwrite original; keep its key & format (do not force webp conversion)
+    outputBuffer = await cropped.toBuffer()
+    uploadKey = key
+    contentType = guessContentType(originalExt)
+  }
 
   try {
     await s3.send(new PutObjectCommand({
       Bucket: s3BucketName,
-      Key: croppedKey,
+      Key: uploadKey,
       Body: outputBuffer,
-      ContentType: 'image/webp',
-      Metadata: { source: key },
+      ...(contentType ? { ContentType: contentType } : {}),
+      Metadata: { source: key, cropped: 'true', mode: asCopy ? 'copy' : 'overwrite' },
     }))
   } catch (err) {
     console.error('Crop: error uploading cropped image', err)
     return { success: false, message: 'Failed to upload cropped image' }
   }
 
-  const croppedImageUrl = `${s3Endpoint}/${s3BucketName}/${croppedKey}`
-  return { success: true, imageUrl: croppedImageUrl }
+  const finalUrl = `${s3Endpoint}/${s3BucketName}/${uploadKey}`
+  return { success: true, imageUrl: finalUrl, overwritten: !asCopy }
 })

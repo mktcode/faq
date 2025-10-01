@@ -171,6 +171,7 @@ onMounted(() => {
 onBeforeUnmount(() => window.removeEventListener('resize', measure))
 
 const isUploading = ref(false)
+const asCopy = ref(false)
 async function confirm() {
   if (!cropPercent.value) return
   if (isUploading.value) return
@@ -181,6 +182,7 @@ async function confirm() {
     const { imageUrl } = await $fetch<{ imageUrl: string }>('/api/user/upload/crop', {
       method: 'POST',
       body: {
+        asCopy: asCopy.value,
         imageUrl: props.imageUrl,
         coordinates: {
           x: cropPercent.value.xPct,
@@ -269,7 +271,14 @@ async function confirm() {
     <template #footer>
       <div class="flex justify-end gap-2">
         <UButton label="Abbrechen" color="neutral" @click="showImageCropper = false" />
-        <UButton label="Zuschneiden & Speichern" color="primary" :disabled="isUploading" :loading="isUploading" @click="confirm" />
+        <UButton label="Zuschneiden" color="primary" :disabled="isUploading" :loading="isUploading" @click="confirm" />
+        <USwitch
+          v-model="asCopy"
+          label="Original behalten"
+          :disabled="isUploading"
+          :loading="isUploading"
+          class="self-center"
+        />
       </div>
     </template>
   </UModal>
