@@ -1,75 +1,8 @@
-<template>
-  <div class="min-h-screen bg-neutral-100 text-neutral-900 p-4 sm:p-6">
-    <div class="max-w-5xl mx-auto">
-      <div class="grid gap-4 sm:gap-6 md:grid-cols-3">
-        <div class="md:col-span-2">
-          <div ref="dndRef" class="border-2 border-dashed border-neutral-300 rounded-2xl p-4 sm:p-6 flex flex-col items-center justify-center gap-3 bg-white shadow-sm">
-            <template v-if="!image">
-              <p class="text-center text-neutral-600">Lege ein Bild hier ab oder wähle es aus.</p>
-              <label class="inline-flex items-center gap-2 px-4 py-2 rounded-xl shadow-sm bg-neutral-900 text-white cursor-pointer active:scale-[.99]">
-                <input type="file" accept="image/*" class="hidden" @change="onFileChange" />
-                Datei wählen
-              </label>
-            </template>
-            <div v-else class="w-full overflow-auto">
-              <canvas
-                ref="canvasRef"
-                class="touch-none rounded-xl bg-neutral-200 w-full h-auto"
-                @pointerdown="onPointerDown"
-                @pointermove="onPointerMove"
-                @pointerup="onPointerUp"
-              />
-            </div>
-          </div>
-        </div>
-
-        <aside class="md:col-span-1">
-          <div class="bg-white rounded-2xl shadow-sm p-4 sm:p-5 space-y-4">
-            <div class="space-y-2">
-              <label class="block text-sm font-medium">Seitenverhältnis</label>
-              <div class="flex gap-2 flex-wrap">
-                <button
-                  v-for="opt in aspectOptions"
-                  :key="opt"
-                  @click="aspect = opt"
-                  class="px-3 py-1.5 rounded-xl border"
-                  :class="aspect === opt ? 'bg-neutral-900 text-white' : 'bg-white'"
-                >
-                  {{ opt }}
-                </button>
-              </div>
-              <p class="text-xs text-neutral-500">Beim Ändern wird der aktuelle Zuschnitt neu initialisiert.</p>
-            </div>
-
-            <div class="space-y-2">
-              <label class="block text-sm font-medium">Preview</label>
-              <div class="border rounded-xl overflow-hidden bg-neutral-50 flex items-center justify-center min-h-40">
-                <img v-if="previewURL" :src="previewURL" alt="Cropped Preview" class="max-w-full" />
-                <p v-else class="text-xs text-neutral-500 p-4">Noch kein Bild</p>
-              </div>
-              <p class="text-xs text-neutral-500">Die Vorschau aktualisiert sich live.</p>
-            </div>
-
-            <div class="text-xs text-neutral-500">
-              <ul class="list-disc ml-4 space-y-1">
-                <li>Verschieben: innerhalb des Rahmens ziehen</li>
-                <li>Größe ändern: Ecken oder Kanten ziehen</li>
-                <li>Touch: ein Finger genügt (große Handles)</li>
-              </ul>
-            </div>
-          </div>
-        </aside>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref, reactive, onMounted, onBeforeUnmount, watch, watchEffect, nextTick } from 'vue'
 
 type Rect = { x: number; y: number; w: number; h: number }
 
-// Refs & State
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const dndRef = ref<HTMLDivElement | null>(null)
 const image = ref<HTMLImageElement | null>(null)
@@ -84,7 +17,6 @@ let parentRO: ResizeObserver | null = null
 
 const aspectOptions: Array<'free' | '1:1' | '4:3' | '16:9'> = ['free', '1:1', '4:3', '16:9']
 
-// Helpers (framework-agnostic)
 const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v))
 
 const parseAspect = (mode: string) => {
@@ -164,7 +96,6 @@ const adjustCrop = (crop0: Rect, mode: string, dx: number, dy: number, bounds: R
   return { x, y, w: x2 - x, h: y2 - y }
 }
 
-// Image loading (CSP-safe)
 const loadImageFromFile = (file: File) => new Promise<HTMLImageElement>((resolve, reject) => {
   const reader = new FileReader()
   reader.onload = () => {
@@ -177,7 +108,6 @@ const loadImageFromFile = (file: File) => new Promise<HTMLImageElement>((resolve
   reader.readAsDataURL(file)
 })
 
-// Canvas initialization (guard against null canvas)
 const initializeSceneForImage = (img: HTMLImageElement, cvs: HTMLCanvasElement | null) => {
   if (!cvs || !cvs.parentElement) return
   const cssW = Math.min(800, Math.max(320, cvs.parentElement.clientWidth - 32))
@@ -203,13 +133,11 @@ const initializeSceneForImage = (img: HTMLImageElement, cvs: HTMLCanvasElement |
   Object.assign(crop, cropRect)
 }
 
-// Defer init until canvas is mounted
 watch([image, dpi, aspect], () => {
   if (!image.value) return
   requestAnimationFrame(() => initializeSceneForImage(image.value!, canvasRef.value))
 })
 
-// Follow container size
 onMounted(() => {
   const cvs = canvasRef.value
   const parent = cvs?.parentElement
@@ -221,7 +149,6 @@ onMounted(() => {
 
 onBeforeUnmount(() => { if (parentRO) parentRO.disconnect() })
 
-// Drawing
 const drawScene = () => {
   const cvs = canvasRef.value
   const ctx = cvs?.getContext('2d')
@@ -256,7 +183,6 @@ const drawScene = () => {
 
 watchEffect(() => { drawScene() })
 
-// Pointer interactions
 const toCanvasCoords = (evt: PointerEvent | any) => {
   const cvs = canvasRef.value
   if (!cvs) return { x: 0, y: 0 }
@@ -291,7 +217,6 @@ const onPointerUp = (evt: PointerEvent | any) => {
   drag.mode = null; drag.ox = 0; drag.oy = 0; drag.start = null
 }
 
-// Preview generation
 const computeCropSourceRect = () => {
   const scaleX = imgNatural.w / view.w; const scaleY = imgNatural.h / view.h
   const sx = (crop.x - view.x) * scaleX; const sy = (crop.y - view.y) * scaleY
@@ -321,7 +246,6 @@ watch([image, () => crop.x, () => crop.y, () => crop.w, () => crop.h, () => view
   })
 })
 
-// Drag & Drop + File input
 const onFileChange = async (e: Event) => {
   const input = e.target as HTMLInputElement
   const file = input.files?.[0]
@@ -349,14 +273,12 @@ onMounted(() => {
   })
 })
 
-// DPR changes
 onMounted(() => {
   const onChange = () => (dpi.value = window.devicePixelRatio || 1)
   window.addEventListener('resize', onChange)
   onBeforeUnmount(() => window.removeEventListener('resize', onChange))
 })
 
-// Self-tests (console.assert)
 onMounted(() => {
   const approx = (a: number, b: number, eps = 1e-6) => Math.abs(a - b) < eps
   try {
@@ -388,3 +310,70 @@ onMounted(() => {
   }
 })
 </script>
+
+
+<template>
+  <div class="min-h-screen bg-neutral-100 text-neutral-900 p-4 sm:p-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="grid gap-4 sm:gap-6 md:grid-cols-3">
+        <div class="md:col-span-2">
+          <div ref="dndRef" class="border-2 border-dashed border-neutral-300 rounded-2xl p-4 sm:p-6 flex flex-col items-center justify-center gap-3 bg-white shadow-sm">
+            <template v-if="!image">
+              <p class="text-center text-neutral-600">Lege ein Bild hier ab oder wähle es aus.</p>
+              <label class="inline-flex items-center gap-2 px-4 py-2 rounded-xl shadow-sm bg-neutral-900 text-white cursor-pointer active:scale-[.99]">
+                <input type="file" accept="image/*" class="hidden" @change="onFileChange" />
+                Datei wählen
+              </label>
+            </template>
+            <div v-else class="w-full overflow-auto">
+              <canvas
+                ref="canvasRef"
+                class="touch-none rounded-xl bg-neutral-200 w-full h-auto"
+                @pointerdown="onPointerDown"
+                @pointermove="onPointerMove"
+                @pointerup="onPointerUp"
+              />
+            </div>
+          </div>
+        </div>
+
+        <aside class="md:col-span-1">
+          <div class="bg-white rounded-2xl shadow-sm p-4 sm:p-5 space-y-4">
+            <div class="space-y-2">
+              <label class="block text-sm font-medium">Seitenverhältnis</label>
+              <div class="flex gap-2 flex-wrap">
+                <button
+                  v-for="opt in aspectOptions"
+                  :key="opt"
+                  @click="aspect = opt"
+                  class="px-3 py-1.5 rounded-xl border"
+                  :class="aspect === opt ? 'bg-neutral-900 text-white' : 'bg-white'"
+                >
+                  {{ opt }}
+                </button>
+              </div>
+              <p class="text-xs text-neutral-500">Beim Ändern wird der aktuelle Zuschnitt neu initialisiert.</p>
+            </div>
+
+            <div class="space-y-2">
+              <label class="block text-sm font-medium">Preview</label>
+              <div class="border rounded-xl overflow-hidden bg-neutral-50 flex items-center justify-center min-h-40">
+                <img v-if="previewURL" :src="previewURL" alt="Cropped Preview" class="max-w-full" />
+                <p v-else class="text-xs text-neutral-500 p-4">Noch kein Bild</p>
+              </div>
+              <p class="text-xs text-neutral-500">Die Vorschau aktualisiert sich live.</p>
+            </div>
+
+            <div class="text-xs text-neutral-500">
+              <ul class="list-disc ml-4 space-y-1">
+                <li>Verschieben: innerhalb des Rahmens ziehen</li>
+                <li>Größe ändern: Ecken oder Kanten ziehen</li>
+                <li>Touch: ein Finger genügt (große Handles)</li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</template>
