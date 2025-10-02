@@ -1,3 +1,6 @@
+# userfiles dev
+.userfiles
+
 # Nuxt dev/build outputs
 .output
 .data
