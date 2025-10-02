@@ -1,4 +1,3 @@
-import { PutObjectCommand } from '@aws-sdk/client-s3'
 import type { DownloadsComponentSchema } from '~~/types/db'
 
 export default defineEventHandler(async (event) => {
@@ -14,30 +13,28 @@ export default defineEventHandler(async (event) => {
 
   const { s3BucketName, public: { s3Endpoint } } = useRuntimeConfig()
 
-  const s3 = createS3Client()
-
   for (const file of files) {
     const fileName = file.filename || Math.random().toString(36).substring(7)
     const sanitizedFilename = fileName.replace(/[^a-z0-9.]/gi, '_')
     const filePath = `${user.id}/downloads/${sanitizedFilename}`
     const contentType = file.type || 'application/octet-stream'
 
-    const command = new PutObjectCommand({
-      Bucket: s3BucketName,
-      Key: filePath,
-      Body: file.data,
-      ContentType: contentType,
-      Metadata: {
-        filename: fileName,
-      },
+    const url = `${s3Endpoint}/${s3BucketName}/${filePath}`
+
+    await useStorage('userfiles').setItemRaw(filePath, Buffer.from(file.data))
+    await useStorage('userfiles').setMeta(filePath, {
+      key: filePath,
+      filename: sanitizedFilename,
+      type: 'file',
+      size: file.data.length,
+      lastModified: new Date().toISOString(),
     })
-    await s3.send(command)
 
     uploadedFiles.push({
       title: fileName,
       description: '',
       type: contentType,
-      url: `${s3Endpoint}/${s3BucketName}/${filePath}`,
+      url,
     })
   }
 

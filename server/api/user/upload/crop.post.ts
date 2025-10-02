@@ -1,6 +1,5 @@
 import sharp from 'sharp'
 import z from 'zod'
-import { PutObjectCommand } from '@aws-sdk/client-s3'
 
 // Body schema: coordinates are percentages (0-100) floating point numbers.
 const bodySchema = z.object({
@@ -34,8 +33,6 @@ export default defineEventHandler(async (event) => {
   if (!key.startsWith(`${user.id}/`)) {
     return { success: false, message: 'Not allowed to modify this image' }
   }
-
-  const s3 = createS3Client()
 
   // Fetch original object via HTTP (public URL)
   let originalBuffer: Buffer
@@ -131,13 +128,16 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    await s3.send(new PutObjectCommand({
-      Bucket: s3BucketName,
-      Key: uploadKey,
-      Body: outputBuffer,
-      ...(contentType ? { ContentType: contentType } : {}),
-      Metadata: { source: key, cropped: 'true', mode: asCopy ? 'copy' : 'overwrite' },
-    }))
+    const url = `${s3Endpoint}/${s3BucketName}/${uploadKey}`
+    await useStorage('userfiles').setItemRaw(uploadKey, outputBuffer)
+    await useStorage('userfiles').setMeta(uploadKey, {
+      key: uploadKey,
+      filename: uploadKey.split('/').pop() || uploadKey,
+      type: 'image',
+      size: outputBuffer.length,
+      lastModified: new Date().toISOString(),
+      url,
+    })
   } catch (err) {
     console.error('Crop: error uploading cropped image', err)
     return { success: false, message: 'Failed to upload cropped image' }

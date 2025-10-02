@@ -123,7 +123,7 @@ const handleInputChange = () => {
       <TransitionGroup name="fade">
         <ProfileAdminWebsiteFilesFile
           v-for="file in files"
-          :key="file.name + file.size"
+          :key="file.filename + file.size"
           :file="file"
           @refresh="refreshFiles"
         />

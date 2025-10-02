@@ -1,5 +1,4 @@
 import sharp from 'sharp'
-import { PutObjectCommand } from '@aws-sdk/client-s3'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
@@ -13,8 +12,6 @@ export default defineEventHandler(async (event) => {
   }
 
   const { s3BucketName, public: { s3Endpoint } } = useRuntimeConfig()
-
-  const s3 = createS3Client()
 
   for (const file of files) {
     const isImage = file.type?.startsWith('image')
@@ -46,19 +43,20 @@ export default defineEventHandler(async (event) => {
 
     // replace current extension in filepath with webp
     const webpFilePath = filePath.replace(/\.[^/.]+$/, '.webp')
+    const webpFilename = sanitizedFilename.replace(/\.[^/.]+$/, '.webp')
+    const url = `${s3Endpoint}/${s3BucketName}/${webpFilePath}`
 
-    const command = new PutObjectCommand({
-      Bucket: s3BucketName,
-      Key: webpFilePath,
-      Body: Buffer.from(await image.toFormat('webp').toBuffer()),
-      ContentType: 'image/webp',
-      Metadata: {
-        filename: fileName,
-      },
+    await useStorage('userfiles').setItemRaw(webpFilePath, Buffer.from(await image.toFormat('webp').toBuffer()))
+    await useStorage('userfiles').setMeta(webpFilePath, {
+      key: webpFilePath,
+      filename: webpFilename,
+      type: 'image',
+      size: metadata.size,
+      lastModified: new Date().toISOString(),
+      url,
     })
-    await s3.send(command)
 
-    imageUrls.push(`${s3Endpoint}/${s3BucketName}/${webpFilePath}`)
+    imageUrls.push(url)
   }
 
   return { success: true, imageUrls }

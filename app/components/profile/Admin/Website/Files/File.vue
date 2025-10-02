@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { UploadedFile } from '~~/server/utils/s3';
+import type { FileMeta } from '~~/types/files'
 
 const showImageCropper = useState('showImageCropper', () => false)
 const showDeleteModal = ref(false)
@@ -9,7 +9,7 @@ const toast = useToast()
 const open = ref(false)
 
 const { file } = defineProps<{
-  file: UploadedFile
+  file: FileMeta
 }>()
 
 const emit = defineEmits<{
@@ -71,7 +71,7 @@ async function deleteFile() {
       }"
     >
       <template #default>
-        <template v-if="['png', 'jpg', 'jpeg', 'gif', 'webp'].includes(file.type)">
+        <template v-if="file.type === 'image'">
           <img
             :src="file.url"
             alt="Vorschaubild"
@@ -109,7 +109,7 @@ async function deleteFile() {
           download
         />
         <UButton
-          v-if="['png', 'jpg', 'jpeg', 'gif', 'webp'].includes(file.type)"
+          v-if="file.type === 'image'"
           label="Bild zuschneiden"
           icon="i-heroicons-scissors"
           class="w-full"
@@ -118,7 +118,7 @@ async function deleteFile() {
         />
         <ClientOnly>
           <ProfileAdminWebsiteFilesImageCropper
-            v-if="['png', 'jpg', 'jpeg', 'gif', 'webp'].includes(file.type)"
+            v-if="file.type === 'image'"
             :image-url="file.url"
             @refresh="$emit('refresh')"
           />

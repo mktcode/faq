@@ -19,8 +19,6 @@ export default defineEventHandler(async (event) => {
 
   const { s3BucketName, public: { s3Endpoint } } = useRuntimeConfig()
 
-  const s3 = createS3Client()
-
   const isVideoMp4 = file.type?.startsWith('video/mp4')
 
   if (!isVideoMp4) {
@@ -37,16 +35,14 @@ export default defineEventHandler(async (event) => {
     return { success: false, message: 'Die Videodatei darf maximal 10 MB groß sein.', videoUrl }
   }
 
-  const command = new PutObjectCommand({
-    Bucket: s3BucketName,
-    Key: filePath,
-    Body: Buffer.from(file.data),
-    ContentType: 'video/mp4',
-    Metadata: {
-      filename: fileName,
-    },
+  await useStorage('userfiles').setItemRaw(filePath, Buffer.from(file.data))
+  await useStorage('userfiles').setMeta(filePath, {
+    key: filePath,
+    filename: sanitizedFilename,
+    type: 'video',
+    size: fileSize,
+    lastModified: new Date().toISOString(),
   })
-  await s3.send(command)
 
   videoUrl = `${s3Endpoint}/${s3BucketName}/${filePath}`
 

@@ -97,10 +97,12 @@ const uploadLogo = async (file: File | null) => {
   formData.append('files', file)
 
   try {
-    const { imageUrl } = await $fetch('/api/user/upload/logo', {
+    const { imageUrls } = await $fetch('/api/user/upload/image', {
       method: 'POST',
       body: formData,
     })
+
+    const imageUrl = imageUrls[0] || ''
 
     const randomSuffix = Math.random().toString(36).substring(2, 15)
     component.value.logo = imageUrl ? `${imageUrl}?${randomSuffix}` : ''

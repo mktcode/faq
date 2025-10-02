@@ -14,7 +14,6 @@ export default defineEventHandler(async (event) => {
     return { success: true }
   }
 
-  const s3 = createS3Client()
   let success = false
 
   const fileKey = url.replace(`${s3Endpoint}/${s3BucketName}/`, '')
@@ -23,11 +22,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const command = new DeleteObjectCommand({
-      Bucket: s3BucketName,
-      Key: fileKey,
-    })
-    await s3.send(command)
+    await useStorage('userfiles').removeItem(fileKey)
     success = true
   }
   catch (error) {
