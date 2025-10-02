@@ -7,6 +7,7 @@ export const uploadedFileSchema = z.object({
   type: z.string(),
   size: z.number(),
   url: z.string().url(),
+  lastMod: z.string().optional(),
 })
 export const uploadedFilesSchema = z.array(uploadedFileSchema)
 export type UploadedFile = z.infer<typeof uploadedFileSchema>
@@ -76,13 +77,19 @@ export async function getUserFiles(userId: number) {
         type: obj.Key.split('.').pop() || 'plain',
         size: obj.Size,
         url: `${s3Endpoint}/${s3BucketName}/${obj.Key}`,
+        lastMod: obj.LastModified ? obj.LastModified.toISOString() : undefined,
       }
     })
     .filter(Boolean) as UploadedFile[]
 
   uploadedFilesSchema.parse(files)
 
-  return files
+  return files.sort((a, b) => {
+    if (a.lastMod && b.lastMod) {
+      return new Date(b.lastMod).getTime() - new Date(a.lastMod).getTime()
+    }
+    return 0
+  })
 }
 
 export async function deleteFile(userId: number, fileKey: string) {
