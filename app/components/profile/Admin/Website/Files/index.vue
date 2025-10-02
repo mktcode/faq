@@ -24,6 +24,44 @@ const storageUsedMb = computed(() => {
 const storageUsedPercent = computed(() => {
   return maxStorage.value ? (storageUsedMb.value / (maxStorage.value / (1024 * 1024)) * 100) : 0
 })
+
+const fileInput = ref<HTMLInputElement | null>(null)
+const isUploading = ref(false)
+const uploadProgress = ref(0)
+
+const uploadFile = async (files: FileList | null) => {
+  if (!files || files.length === 0) return
+
+  isUploading.value = true
+  let uploadedFiles = 0
+
+  for (const file of Array.from(files)) {
+    const formData = new FormData()
+    formData.append('files', file)
+    try {
+      await $fetch('/api/user/upload/image', {
+        method: 'POST',
+        body: formData,
+      })
+
+      uploadedFiles++
+      uploadProgress.value = Math.round((uploadedFiles / files.length) * 100)
+    }
+    catch (error) {
+      console.error('Error uploading files:', error)
+    } finally {
+      await refreshFiles()
+    }
+  }
+  isUploading.value = false
+  if (fileInput.value) {
+    fileInput.value.value = ''
+  }
+}
+
+const handleInputChange = () => {
+  uploadFile(fileInput.value?.files || null)
+}
 </script>
 
 <template>
@@ -63,6 +101,13 @@ const storageUsedPercent = computed(() => {
     </template>
 
     <template #body>
+      <input
+        ref="fileInput"
+        type="file"
+        class="hidden"
+        multiple
+        @change="handleInputChange"
+      >
       <UButton
         label="Dateien oder Bilder hochladen"
         icon="i-lucide-file-image"
@@ -72,6 +117,7 @@ const storageUsedPercent = computed(() => {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
+        @click="fileInput?.click()"
       />
 
       <TransitionGroup name="fade">
