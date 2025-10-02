@@ -174,7 +174,7 @@ onMounted(() => {
 onBeforeUnmount(() => window.removeEventListener('resize', measure))
 
 const isUploading = ref(false)
-const asCopy = ref(false)
+const asCopy = ref(true)
 
 async function confirm() {
   if (!cropPercent.value) return
