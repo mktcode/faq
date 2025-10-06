@@ -92,7 +92,7 @@ export default defineNuxtConfig({
     devStorage: {
       userfiles: {
         driver: 'fs',
-        base: './.userfiles'
+        base: './public/.userfiles'
       }
     }
   },
