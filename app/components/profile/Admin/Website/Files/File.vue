@@ -71,13 +71,21 @@ async function deleteFile() {
       }"
     >
       <template #default>
-        <template v-if="file.type === 'image'">
-          <img
-            :src="file.url"
-            alt="Vorschaubild"
-            class="inline-block size-14 object-cover"
+        <img
+          v-if="file.type === 'image'"
+          :src="file.url"
+          alt="Kein Vorschaubild"
+          class="inline-block size-14 object-cover"
+        />
+        <div
+          v-else
+          class="size-14 shrink-0 flex items-center justify-center bg-gray-50"
+        >
+          <UIcon
+            name="i-heroicons-document"
+            class="size-8 opacity-30"
           />
-        </template>
+        </div>
 
         <div class="text-left truncate p-2">
           <div class="text-xs opacity-50 font-normal">
@@ -93,8 +101,9 @@ async function deleteFile() {
     <template #content>
       <div class="p-4 flex flex-col gap-2">
         <img
+          v-if="file.type === 'image'"
           :src="file.url + '?t=' + Date.now()"
-          alt="Vorschaubild"
+          alt="Kein Vorschaubild"
           class="w-full max-h-96 object-contain bg-gray-50 rounded-lg border border-gray-200 p-1"
         />
         <UButton

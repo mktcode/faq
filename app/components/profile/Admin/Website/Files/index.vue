@@ -1,8 +1,16 @@
 <script setup lang="ts">
 const { showWebsiteFiles, go } = useAdmin()
 
-const { data: files, refresh: refreshFiles } = await useFetch('/api/user/upload/list', {
+const { uploadFiles, isUploading, uploadProgress } = useUpload()
+const showType = ref('all')
+const sortBy = ref('newest')
+
+const { data: files, refresh: refreshFiles } = await useFetch('/api/user/upload', {
   method: 'GET',
+  query: {
+    showType,
+    sortBy,
+  },
 })
 
 const { $profile } = useProfile()
@@ -25,43 +33,17 @@ const storageUsedPercent = computed(() => {
   return maxStorage.value ? (storageUsedMb.value / (maxStorage.value / (1024 * 1024)) * 100) : 0
 })
 
-const fileInput = ref<HTMLInputElement | null>(null)
-const isUploading = ref(false)
-const uploadProgress = ref(0)
+const uploadQueue = ref<File[]>([])
 
-const uploadFile = async (files: FileList | null) => {
-  if (!files || files.length === 0) return
-
-  isUploading.value = true
-  let uploadedFiles = 0
-
-  for (const file of Array.from(files)) {
-    const formData = new FormData()
-    formData.append('files', file)
-    try {
-      await $fetch('/api/user/upload/image', {
-        method: 'POST',
-        body: formData,
-      })
-
-      uploadedFiles++
-      uploadProgress.value = Math.round((uploadedFiles / files.length) * 100)
-    }
-    catch (error) {
-      console.error('Error uploading files:', error)
-    } finally {
-      await refreshFiles()
-    }
+watch(uploadQueue, async (newFiles) => {
+  if (newFiles.length > 0) {
+    await uploadFiles(newFiles, '')
+    await refreshFiles()
+    nextTick(() => {
+      uploadQueue.value = []
+    })
   }
-  isUploading.value = false
-  if (fileInput.value) {
-    fileInput.value.value = ''
-  }
-}
-
-const handleInputChange = () => {
-  uploadFile(fileInput.value?.files || null)
-}
+})
 </script>
 
 <template>
@@ -88,7 +70,7 @@ const handleInputChange = () => {
           name="i-lucide-folder-open"
           class="inline-block size-6 opacity-50"
         />
-        Dateien und Bilder
+        Dokumente und Bilder
       </h3>
       <UButton
         icon="i-heroicons-x-mark"
@@ -98,27 +80,82 @@ const handleInputChange = () => {
         class="ml-auto"
         @click="go('#website')"
       />
+      <Transition name="fade">
+        <UProgress
+          v-if="isUploading"
+          v-model="uploadProgress"
+          class="absolute bottom-0 left-0 right-0"
+          :ui="{
+            base: 'rounded-none',
+            indicator: 'rounded-none'
+          }"
+        />
+      </Transition>
     </template>
 
     <template #body>
-      <input
-        ref="fileInput"
-        type="file"
-        class="hidden"
-        multiple
-        @change="handleInputChange"
+      <UFileUpload
+        v-slot="{ open }"
+        v-model="uploadQueue"
+        accept="image/*"
+        :multiple="true"
       >
-      <UButton
-        label="Dateien oder Bilder hochladen"
-        icon="i-lucide-file-image"
-        class="w-full rounded-none p-4 border-b border-primary-200"
-        variant="soft"
-        trailing-icon="i-heroicons-plus"
-        :ui="{
-          trailingIcon: 'ml-auto opacity-30',
-        }"
-        @click="fileInput?.click()"
-      />
+        <UButton
+          label="Bilder hochladen"
+          icon="i-lucide-image"
+          class="w-full rounded-none p-4 border-b border-primary-200"
+          variant="soft"
+          trailing-icon="i-heroicons-plus"
+          :ui="{
+            trailingIcon: 'ml-auto opacity-30',
+          }"
+          @click="open()"
+          :disabled="isUploading"
+          :loading="isUploading"
+        />
+      </UFileUpload>
+      <UFileUpload
+        v-slot="{ open }"
+        v-model="uploadQueue"
+        accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,text/plain,text/csv,application/rtf,application/vnd.oasis.opendocument.text,application/vnd.oasis.opendocument.spreadsheet,application/vnd.oasis.opendocument.presentation,application/zip,application/x-7z-compressed,application/x-rar-compressed"
+        :multiple="true"
+      >
+        <UButton
+          label="Dokumente hochladen"
+          icon="i-lucide-file-text"
+          class="w-full rounded-none p-4 border-b border-primary-200"
+          variant="soft"
+          trailing-icon="i-heroicons-plus"
+          :ui="{
+            trailingIcon: 'ml-auto opacity-30',
+          }"
+          @click="open()"
+          :disabled="isUploading"
+          :loading="isUploading"
+        />
+      </UFileUpload>
+
+      <div class="p-4 border-b border-gray-200 flex items-center gap-4">
+        <USelect
+          v-model="showType"
+          :items="[
+            { label: 'Alle anzeigen', value: 'all' },
+            { label: 'Nur Bilder', value: 'images' },
+            { label: 'Nur Dokumente', value: 'documents' },
+          ]"
+          class="ml-auto flex-1"
+        />
+        <USelect
+          v-model="sortBy"
+          :items="[
+            { label: 'Neueste zuerst', value: 'newest' },
+            { label: 'Älteste zuerst', value: 'oldest' },
+            { label: 'Name A-Z', value: 'name-asc' },
+            { label: 'Name Z-A', value: 'name-desc' },
+          ]"
+          class="ml-auto flex-1"
+        />
+      </div>
 
       <TransitionGroup name="fade">
         <ProfileAdminWebsiteFilesFile
