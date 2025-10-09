@@ -16,6 +16,10 @@ export const availableFonts = ref([
     value: 'montserrat',
   },
   {
+    label: 'Fira Sans',
+    value: 'fira-sans',
+  },
+  {
     label: 'Poppins',
     value: 'poppins',
   },
