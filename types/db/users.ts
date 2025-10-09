@@ -180,7 +180,6 @@ export const colorSchema = z.object({
 
 export const settingsFormSchema = z.object({
   public: z.object({
-    css: z.string(),
     meta: z.object({
       title: z.string(),
       description: z.string(),
@@ -207,6 +206,8 @@ export const settingsFormSchema = z.object({
       fontSize: z.enum(['md', 'lg', 'xl', '2xl']),
       color: colorSchema,
       rounded: z.string(),
+      css: z.string(),
+      js: z.string(),
     }),
     pages: z.array(z.object({
       id: z.number(),
@@ -407,7 +408,6 @@ export const availableComponents: AvailableComponent[] = [
 
 export const defaultSettings = (): SettingsForm => ({
   public: {
-    css: '',
     meta: {
       title: '',
       description: '',
@@ -438,6 +438,8 @@ export const defaultSettings = (): SettingsForm => ({
         l: 48,
       },
       rounded: 'md',
+      css: '',
+      js: '',
     },
     pages: [
       {

@@ -55,7 +55,7 @@ useHead({
     },
     {
       id: 'custom-style',
-      innerHTML: $profile.settings.public.css,
+      innerHTML: $profile.settings.public.design.css,
     },
   ],
 })

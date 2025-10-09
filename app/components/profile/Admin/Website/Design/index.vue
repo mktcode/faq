@@ -143,7 +143,7 @@ watch(
 
           <template #content>
             <UTextarea
-              v-model="$profile.settings.public.css"
+              v-model="$profile.settings.public.design.css"
               placeholder="CSS hier eingeben"
               class="w-full"
               autoresize

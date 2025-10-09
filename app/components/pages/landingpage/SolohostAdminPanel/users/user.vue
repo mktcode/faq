@@ -40,15 +40,31 @@ const isSettingsInputValid = computed(() => {
 async function saveUserSettings() {
   if (!isSettingsInputValid.value) return
 
-  // TODO: implement API endpoint to save user settings
+  try {
+    await $fetch('/api/admin/users', {
+      method: 'POST',
+      body: {
+        userId: user.id,
+        settings: JSON.parse(settingsInput.value),
+      },
+    })
 
-  toast.add({
-    title: 'Einstellungen gespeichert',
-    icon: 'i-heroicons-check',
-    description: `Die Einstellungen für Benutzer ${user.userName} wurden gespeichert.`,
-    color: 'success',
-    progress: false,
-  })
+    toast.add({
+      title: 'Einstellungen gespeichert',
+      icon: 'i-heroicons-check',
+      description: `Die Einstellungen für Benutzer ${user.userName} wurden gespeichert.`,
+      color: 'success',
+      progress: false,
+    })
+  } catch (error) {
+    toast.add({
+      title: 'Fehler beim Speichern der Einstellungen',
+      icon: 'i-heroicons-x-mark',
+      description: `Die Einstellungen für Benutzer ${user.userName} konnten nicht gespeichert werden.`,
+      color: 'error',
+      progress: false,
+    })
+  }
 
   showSettings.value = false
 }

@@ -95,7 +95,7 @@ useHead({
     },
     {
       id: 'custom-style',
-      innerHTML: $profile.settings.public.css,
+      innerHTML: $profile.settings.public.design.css,
     },
     ...htmlComponents.value.map(component => {
       return {
@@ -103,6 +103,14 @@ useHead({
         innerHTML: `#main #${component.key}-${component.id} {\n${component.css}\n}`,
       }
     }),
+  ],
+  script: [
+    {
+      id: 'custom-js',
+      type: 'text/javascript',
+      innerHTML: $profile.settings.public.design.js,
+      defer: true,
+    }
   ],
 })
 
