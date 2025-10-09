@@ -6,7 +6,7 @@ const bodySchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { domain } = await readValidatedBody(event, body => bodySchema.parse(body))
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
   const db = await getDatabaseConnection()
 
   const isACorrect = await domainUtils.checkA(domain)
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   await db
     .updateTable('users')
     .set({ domain, domainIsExternal: true })
-    .where('id', '=', user.id)
+    .where('id', '=', $profile.id)
     .execute()
 
   setResponseStatus(event, 204)

@@ -14,30 +14,29 @@ const bodySchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { email, company, subscription } = await readValidatedBody(event, body => bodySchema.parse(body))
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
   const db = await getDatabaseConnection()
 
   const emailConfirmationToken = crypto.randomUUID()
 
-  const settings = await getSettings(user.id)
-  settings.public.company.name = company.name
-  settings.public.company.street = company.street
-  settings.public.company.zip = company.zip
-  settings.public.company.city = company.city
-  settings.public.company.phone = company.phone
-  settings.public.company.email = email
+  $profile.settings.public.company.name = company.name
+  $profile.settings.public.company.street = company.street
+  $profile.settings.public.company.zip = company.zip
+  $profile.settings.public.company.city = company.city
+  $profile.settings.public.company.phone = company.phone
+  $profile.settings.public.company.email = email
 
   await db
     .updateTable('users')
     .set({
       email,
       emailConfirmationToken,
-      settings: JSON.stringify(settings),
+      settings: JSON.stringify($profile.settings),
     })
-    .where('id', '=', user.id)
+    .where('id', '=', $profile.id)
     .execute()
 
-  const mailTemplate = mailTemplates.verificationEmail(user.id, emailConfirmationToken, subscription)
+  const mailTemplate = mailTemplates.verificationEmail($profile.id, emailConfirmationToken, subscription)
 
   await sendEmail({
     to: email,

@@ -7,11 +7,11 @@ const bodySchema = z.object({
 });
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
 
   const { day, time, notes } = await readValidatedBody(event, (body) => bodySchema.parse(body));
 
-  await supportBookingsUtils.create(user.id, day, time, notes)
+  await supportBookingsUtils.create($profile.id, day, time, notes)
 
   return { success: true }
 })

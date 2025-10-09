@@ -16,7 +16,7 @@ const bodySchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
   const { imageUrl, coordinates, asCopy } = await readValidatedBody(event, body => bodySchema.parse(body))
 
   const { s3BucketName, public: { s3Endpoint } } = useRuntimeConfig()
@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
   const key = imageUrl.substring(expectedPrefix.length)
 
   // Ownership enforcement: key must start with user's id folder
-  if (!key.startsWith(`${user.id}/`)) {
+  if (!key.startsWith(`${$profile.id}/`)) {
     return { success: false, message: 'Not allowed to modify this image' }
   }
 

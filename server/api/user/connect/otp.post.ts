@@ -5,7 +5,7 @@ const bodySchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
   const { otp } = await readValidatedBody(event, (body) => bodySchema.parse(body))
 
   const db = await getDatabaseConnection()
@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
       oneTimePassword: otp,
       oneTimePasswordCreatedAt: createdAt
     })
-    .where('id', '=', user.id)
+    .where('id', '=', $profile.id)
     .execute()
 
   return { success: true }

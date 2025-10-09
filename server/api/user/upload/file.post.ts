@@ -1,7 +1,7 @@
 import type { DownloadsComponentSchema } from '~~/types/db'
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
 
   const files = await readMultipartFormData(event)
 
@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
   for (const file of files) {
     const fileName = file.filename || Math.random().toString(36).substring(7)
     const sanitizedFilename = fileName.replace(/[^a-z0-9.]/gi, '_')
-    const filePath = `${user.id}/downloads/${sanitizedFilename}`
+    const filePath = `${$profile.id}/downloads/${sanitizedFilename}`
     const contentType = file.type || 'application/octet-stream'
 
     const url = `${s3Endpoint}/${s3BucketName}/${filePath}`

@@ -1,11 +1,11 @@
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
   const db = await getDatabaseConnection()
 
   const { domain, domainContactId } = await db
     .selectFrom('users')
     .select(['domain', 'domainContactId'])
-    .where('id', '=', user.id)
+    .where('id', '=', $profile.id)
     .executeTakeFirstOrThrow()
 
   const hasARecord = domain ? await domainUtils.checkA(domain) : false

@@ -1,7 +1,5 @@
-import { PutObjectCommand } from '@aws-sdk/client-s3'
-
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
 
   const files = await readMultipartFormData(event)
 
@@ -27,7 +25,7 @@ export default defineEventHandler(async (event) => {
 
   const fileName = file.filename || Math.random().toString(36).substring(7)
   const sanitizedFilename = fileName.replace(/[^a-z0-9.]/gi, '_')
-  const filePath = `${user.id}/gallery/${sanitizedFilename}`
+  const filePath = `${$profile.id}/gallery/${sanitizedFilename}`
 
   const fileSize = file.data.length
 

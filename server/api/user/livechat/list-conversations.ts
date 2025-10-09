@@ -1,4 +1,6 @@
 export default defineEventHandler(async (event) => {
+  // TODO: refactor to use:
+  // const $profile = await requireProfileWithPermission(event)
   const me = await requireMe(event)
 
   let contactSourceId = me.chatwootSourceId

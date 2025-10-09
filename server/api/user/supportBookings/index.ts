@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
 
-  return await supportBookingsUtils.listForUser(user.id)
+  return await supportBookingsUtils.listForUser($profile.id)
 })

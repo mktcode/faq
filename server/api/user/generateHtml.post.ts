@@ -11,9 +11,8 @@ const bodySchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
   const { prompt, html, css, responseId, images } = await readValidatedBody(event, body => bodySchema.parse(body))
-  const settings = await getPublicSettings(user.id)
 
   const { openaiApiKey } = useRuntimeConfig()
   const openai = new OpenAI({
@@ -44,7 +43,7 @@ Antworte nur in dem vorgegebenen Format, bestehend aus den Feldern html, css und
       {
         role: 'developer',
         content: `<global_website_settings>
-  ${JSON.stringify(settings, null, 2)}
+  ${JSON.stringify($profile.settings.public, null, 2)}
 </global_website_settings>`
       },
       {

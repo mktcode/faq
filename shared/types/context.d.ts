@@ -4,6 +4,7 @@ import Stripe from 'stripe'
 declare module 'h3' {
   interface H3EventContext {
     profile: {
+      id: number
       username: string
       subscription: {
         plan: 'S' | 'L' | null

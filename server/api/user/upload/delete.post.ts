@@ -1,4 +1,3 @@
-import { DeleteObjectCommand } from '@aws-sdk/client-s3'
 import { z } from 'zod'
 
 const bodySchema = z.object({
@@ -6,7 +5,7 @@ const bodySchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
   const { url } = await readValidatedBody(event, body => bodySchema.parse(body))
   const { s3BucketName, public: { s3Endpoint } } = useRuntimeConfig()
 
@@ -17,7 +16,7 @@ export default defineEventHandler(async (event) => {
   let success = false
 
   const fileKey = url.replace(`${s3Endpoint}/${s3BucketName}/`, '')
-  if (!fileKey.startsWith(`${user.id}/`)) {
+  if (!fileKey.startsWith(`${$profile.id}/`)) {
     throw createError({ statusCode: 403, message: 'Unauthorized file deletion' })
   }
 

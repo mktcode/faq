@@ -7,7 +7,7 @@ const inputSchema = z.object({
 }))
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
   const db = await getDatabaseConnection()
   const { customerRequestId } = await getValidatedQuery(event, body => inputSchema.parse(body))
 
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     .selectFrom('customerRequests')
     .select(['id'])
     .where('id', '=', customerRequestId)
-    .where('userId', '=', user.id)
+    .where('userId', '=', $profile.id)
     .executeTakeFirstOrThrow()
 
   return await db

@@ -8,15 +8,15 @@ const querySchema = z.object({
 
 // TODO: implement pagination (to reduce s3 requests)
 export default defineEventHandler(async (event) => {
-  const me = await requireMe(event)
+  const $profile = await requireProfileWithPermission(event)
   const { showType, sortBy } = await getValidatedQuery(event, query => querySchema.parse(query))
 
-  const keys = await useStorage('userfiles').getKeys(me.id.toString())
+  const keys = await useStorage('userfiles').getKeys($profile.id.toString())
 
   const files: FileMeta[] = []
 
   for (const key of keys) {
-    const meta = await useStorage('userfiles').getMeta(key, { userId: me.id.toString() }) as FileMeta
+    const meta = await useStorage('userfiles').getMeta(key, { userId: $profile.id.toString() }) as FileMeta
     files.push(meta)
   }
 

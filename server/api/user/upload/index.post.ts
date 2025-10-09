@@ -76,7 +76,7 @@ async function handleDocumentUpload(file: any, userId: number) {
 }
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
 
   const form = await readMultipartFormData(event)
 
@@ -93,10 +93,10 @@ export default defineEventHandler(async (event) => {
   const isImage = file.type?.startsWith('image')
 
   if (isImage) {
-    const url = await handleImageUpload(file, user.id)
+    const url = await handleImageUpload(file, $profile.id)
     return { success: true, url }
   } else {
-    const url = await handleDocumentUpload(file, user.id)
+    const url = await handleDocumentUpload(file, $profile.id)
     return { success: true, url }
   }
 })

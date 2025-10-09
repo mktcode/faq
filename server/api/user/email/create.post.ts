@@ -6,22 +6,21 @@ const bodySchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  const me = await requireMe(event)
+  const $profile = await requireProfileWithPermission(event)
 
   const db = await getDatabaseConnection()
   const { mailbox } = await readValidatedBody(event, body => bodySchema.parse(body))
-  
-  const mailboxes = me.mailboxes.split(',')
-  if (mailboxes.includes(mailbox)) {
+
+  if ($profile.mailboxes.includes(mailbox)) {
     throw createError({ statusCode: 409, statusMessage: 'Mailbox already exists.' })
   }
 
-  mailboxes.push(mailbox)
+  $profile.mailboxes.push(mailbox)
 
   await db
     .updateTable('users')
-    .set({ mailboxes: mailboxes.join(',') })
-    .where('id', '=', me.id)
+    .set({ mailboxes: $profile.mailboxes.join(',') })
+    .where('id', '=', $profile.id)
     .execute()
 
   setResponseStatus(event, 204)

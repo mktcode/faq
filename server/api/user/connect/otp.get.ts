@@ -1,12 +1,12 @@
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
 
   const db = await getDatabaseConnection()
 
   const otp = await db
     .selectFrom('users')
     .select(['oneTimePassword', 'oneTimePasswordCreatedAt'])
-    .where('id', '=', user.id)
+    .where('id', '=', $profile.id)
     .executeTakeFirstOrThrow()
 
   if (otp.oneTimePassword && otp.oneTimePasswordCreatedAt) {
@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
           oneTimePassword: null,
           oneTimePasswordCreatedAt: null
         })
-        .where('id', '=', user.id)
+        .where('id', '=', $profile.id)
         .execute()
     }
   }

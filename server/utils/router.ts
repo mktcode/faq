@@ -1,6 +1,7 @@
 import type { H3Event } from 'h3'
 
 interface TargetUser {
+  id: number
   userName: string
   published: boolean
   lastPaidAt: Date | null
@@ -71,6 +72,7 @@ async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUse
   const settings = await getSettings(targetUser.userName)
 
   event.context.profile = {
+    id: targetUser.id,
     username: targetUser.userName,
     subscription: {
       plan: targetUser.plan,
@@ -97,7 +99,7 @@ async function getUserFromHost(currentHost: string): Promise<TargetUser | null> 
 
   if (isCustomDomain(currentHost)) {
     const user = await db.selectFrom('users')
-      .select(['userName', 'published', 'lastPaidAt', 'domain', 'domainIsExternal', 'mailboxes', 'plan', 'stripeCheckoutSessionId'])
+      .select(['id', 'userName', 'published', 'lastPaidAt', 'domain', 'domainIsExternal', 'mailboxes', 'plan', 'stripeCheckoutSessionId'])
       .where('domain', '=', currentHost)
       .executeTakeFirst() || null
 
@@ -114,7 +116,7 @@ async function getUserFromHost(currentHost: string): Promise<TargetUser | null> 
 
     const user = await db
       .selectFrom('users')
-      .select(['userName', 'published', 'lastPaidAt', 'domain', 'domainIsExternal', 'mailboxes', 'plan', 'stripeCheckoutSessionId'])
+      .select(['id', 'userName', 'published', 'lastPaidAt', 'domain', 'domainIsExternal', 'mailboxes', 'plan', 'stripeCheckoutSessionId'])
       .where('userName', '=', username)
       .executeTakeFirst() || null
 

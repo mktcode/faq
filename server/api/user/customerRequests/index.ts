@@ -5,14 +5,14 @@ const querySchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
   const { status } = await getValidatedQuery(event, query => querySchema.parse(query))
   const db = await getDatabaseConnection()
 
   return await db
     .selectFrom('customerRequests')
     .selectAll()
-    .where('userId', '=', user.id)
+    .where('userId', '=', $profile.id)
     .where('status', '=', status || 'pending')
     .execute()
 })

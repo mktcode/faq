@@ -1,11 +1,11 @@
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
   const db = await getDatabaseConnection()
 
   const devices = await db
   .selectFrom('webauthnCredentials')
   .select(['credentialId', 'credentialNickname', 'createdAt'])
-  .where('userId', '=', user.id)
+  .where('userId', '=', $profile.id)
   .execute()
 
   return devices

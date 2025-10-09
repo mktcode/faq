@@ -2,14 +2,8 @@ import { settingsFormSchema } from '~~/types/db'
 import { isDeepStrictEqual } from 'node:util';
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
   const settings = await readValidatedBody(event, body => settingsFormSchema.parse(body))
-
-  if (!event.context.profile) {
-    throw createError({ statusCode: 403, statusMessage: 'Forbidden: No profile' })
-  }
-
-  const $profile = event.context.profile
 
   if (!isDeepStrictEqual($profile.settings.public.company, settings.public.company)) {
     console.log('Company info changed, updating lastMod')
@@ -34,7 +28,7 @@ export default defineEventHandler(async (event) => {
     .set({
       settings: JSON.stringify(settings),
     })
-    .where('id', '=', user.id)
+    .where('id', '=', $profile.id)
     .execute()
 
   return { success: true }

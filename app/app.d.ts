@@ -2,6 +2,7 @@ import type { SettingsForm } from '~~/types/db'
 import Stripe from 'stripe'
 
 type Profile = {
+  id: number
   username: string
   isOwned: boolean
   isAdmin: boolean

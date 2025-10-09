@@ -5,6 +5,7 @@ const path = useRoute().path
 
 const { profile } = defineProps<{
   profile: {
+    id: number
     username: string
     isOwned: boolean
     isAdmin: boolean

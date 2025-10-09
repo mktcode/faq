@@ -5,13 +5,13 @@ const bodySchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
   const db = await getDatabaseConnection()
   const { credentialId } = await readValidatedBody(event, body => bodySchema.parse(body))
 
   await db
     .deleteFrom('webauthnCredentials')
-    .where('userId', '=', user.id)
+    .where('userId', '=', $profile.id)
     .where('credentialId', '=', credentialId)
     .execute()
 

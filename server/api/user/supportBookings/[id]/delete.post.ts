@@ -7,14 +7,14 @@ const routeParamsSchema = z.object({
 }));
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
   const { id } = await getValidatedRouterParams(event, (data) => routeParamsSchema.parse(data));
   const db = await getDatabaseConnection()
 
   await db
     .deleteFrom('supportBookings')
     .where('id', '=', id)
-    .where('userId', '=', user.id)
+    .where('userId', '=', $profile.id)
     .execute()
 
   return { success: true }

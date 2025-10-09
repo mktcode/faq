@@ -123,6 +123,33 @@ export async function requireAdmin(event: H3Event) {
   return user
 }
 
+export function requireProfile(event: H3Event) {
+  if (!event.context.profile) {
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Forbidden',
+      message: 'No profile in context',
+    })
+  }
+  
+  return event.context.profile
+}
+
+export async function requireProfileWithPermission(event: H3Event) {
+  const { user } = await requireUserSession(event)
+  const profile = requireProfile(event)
+
+  if (user && (user.id === profile.id || profile.isAdmin)) {
+    return profile
+  }
+
+  throw createError({
+    statusCode: 403,
+    statusMessage: 'Forbidden',
+    message: 'You do not have permission to access this profile',
+  })
+}
+
 export function getValidatedSettings(settings: string | Record<string, unknown>): SettingsForm {
   const validatedSettings = settingsFormSchema.parse(typeof settings === 'string' ? JSON.parse(settings) : settings)
 

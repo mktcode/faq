@@ -2,7 +2,7 @@ import { sql } from 'kysely'
 import { qandaFormSchema } from '~~/types/db/qanda'
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
   const body = await readValidatedBody(event, body => qandaFormSchema.parse(body))
   const { answer, question } = body
   let { id } = body
@@ -16,14 +16,14 @@ export default defineEventHandler(async (event) => {
         answer,
       })
       .where('id', '=', id)
-      .where('userId', '=', user.id)
+      .where('userId', '=', $profile.id)
       .execute()
   }
   else {
     const insertResult = await db
       .insertInto('qanda')
       .values({
-        userId: user.id,
+        userId: $profile.id,
         question,
         answer,
       })
@@ -47,7 +47,7 @@ export default defineEventHandler(async (event) => {
     const embedding = result.data[0]?.embedding
 
     if (embedding) {
-      await sql`UPDATE qanda SET embedding = VEC_FromText(${JSON.stringify(embedding)}) WHERE id = ${id} AND userId = ${user.id}`
+      await sql`UPDATE qanda SET embedding = VEC_FromText(${JSON.stringify(embedding)}) WHERE id = ${id} AND userId = ${$profile.id}`
         .execute(db)
     }
   }
@@ -57,7 +57,7 @@ export default defineEventHandler(async (event) => {
         embedding: null,
       })
       .where('id', '=', id)
-      .where('userId', '=', user.id)
+      .where('userId', '=', $profile.id)
       .execute()
   }
 

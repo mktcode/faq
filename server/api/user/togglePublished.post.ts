@@ -1,15 +1,11 @@
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const $profile = await requireProfileWithPermission(event)
   const db = await getDatabaseConnection()
-
-  if (!event.context.profile) {
-    throw createError({ statusCode: 400, statusMessage: 'Profile context not set.' })
-  }
 
   const existingUser = await db
     .selectFrom('users')
     .select(['published'])
-    .where('id', '=', user.id)
+    .where('id', '=', $profile.id)
     .executeTakeFirstOrThrow()
 
   const isPublished = !existingUser.published
@@ -19,7 +15,7 @@ export default defineEventHandler(async (event) => {
     .set({
       published: isPublished,
     })
-    .where('id', '=', user.id)
+    .where('id', '=', $profile.id)
     .execute()
 
   return { success: true, published: isPublished }
