@@ -19,7 +19,7 @@ watch(liveChatData, (newValue) => {
 </script>
 
 <template>
-  <div class="fixed w-full bottom-0 md:bottom-auto md:top-0 z-20 bg-white/90 saturate-150 backdrop-blur-lg md:p-2 flex md:gap-1 shadow-[0_0_15px_rgba(0,0,0,0.2)]">
+  <div class="fixed w-full bottom-0 md:bottom-auto md:top-0 z-50 bg-white/90 saturate-150 backdrop-blur-lg md:p-2 flex md:gap-1 shadow-[0_0_15px_rgba(0,0,0,0.2)]">
     <UButton
       icon="i-heroicons-cog-6-tooth"
       variant="ghost"
