@@ -10,6 +10,7 @@ declare module 'h3' {
         paid: boolean
       }
       isOwned: boolean
+      isAdmin: boolean
       isPublic: boolean
       design: string
       settings: SettingsForm

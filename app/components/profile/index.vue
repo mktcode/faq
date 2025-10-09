@@ -7,6 +7,7 @@ const { profile } = defineProps<{
   profile: {
     username: string
     isOwned: boolean
+    isAdmin: boolean
     isPublic: boolean
     subscription: {
       plan: 'S' | 'L' | null
@@ -27,7 +28,7 @@ nuxtApp.provide('profile', profile)
 
 <template>
   <ClientOnly>
-    <ProfileAdmin v-if="$profile.isOwned" />
+    <ProfileAdmin v-if="$profile.isOwned || $profile.isAdmin" />
   </ClientOnly>
   <ProfileMain v-if="$profile.settings.public.pages.map(page => page.path).includes(path)" />
   <ProfileImpressum v-else-if="path === '/impressum'" />

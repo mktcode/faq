@@ -17,7 +17,7 @@ defineEmits<{
     :class="component.key"
   >
     <ProfileMainEditSectionButton
-      v-if="$profile.isOwned"
+      v-if="$profile.isOwned || $profile.isAdmin"
       @click="$emit('edit', component.id)"
     />
     <ProfileMainHeaderFullscreen v-if="component.height === 'full'" :component="component" />

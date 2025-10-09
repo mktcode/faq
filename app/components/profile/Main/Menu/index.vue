@@ -41,7 +41,7 @@ const itemsRight = computed(() => {
     :class="component.key"
   >
     <ProfileMainEditSectionButton
-      v-if="$profile.isOwned"
+      v-if="$profile.isOwned || $profile.isAdmin"
       @click="$emit('edit', component.id)"
     />
     <div class="hidden md:flex w-full justify-between gap-2 max-w-5xl mx-auto py-4 px-6 transition-all">

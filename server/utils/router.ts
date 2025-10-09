@@ -61,8 +61,9 @@ async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUse
   const { user: loggedInUser } = await getUserSession(event)
   const isOwned = loggedInUser ? loggedInUser.userName === targetUser.userName : false
   const isPublic = targetUser.published
+  const isAdmin = loggedInUser?.id === 1
 
-  if (!isPublic && !isOwned) {
+  if (!isPublic && !isOwned && !isAdmin) {
     await redirectToRoot(event)
     return
   }
@@ -76,6 +77,7 @@ async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUse
       paid: checkLastPayment(targetUser.lastPaidAt),
     },
     isOwned,
+    isAdmin,
     isPublic,
     design: 'default',
     settings,

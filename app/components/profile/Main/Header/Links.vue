@@ -75,7 +75,7 @@ function getStaggeredAnimationClass(index: number) {
 
       <template #content>
         <div class="m-4 inline-flex flex-col gap-4 max-w-xs">
-          <template v-if="$profile.isOwned && !$profile.isPublic">
+          <template v-if="($profile.isOwned || $profile.isAdmin) && !$profile.isPublic">
             <UAlert
               class="max-w-sm"
               variant="soft"

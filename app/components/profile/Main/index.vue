@@ -116,7 +116,7 @@ function openAdmin(componentId: number) {
     id="main"
     :font="$profile.settings.public.design.font"
     class="relative"
-    :class="$profile.isOwned ? 'pb-[56px] md:pb-0 md:pt-[56px]' : ''"
+    :class="$profile.isOwned || $profile.isAdmin ? 'pb-[56px] md:pb-0 md:pt-[56px]' : ''"
   >
     <ClientOnly>
       <ProfileMainReLogin />

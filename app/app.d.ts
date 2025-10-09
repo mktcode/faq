@@ -4,6 +4,7 @@ import Stripe from 'stripe'
 type Profile = {
   username: string
   isOwned: boolean
+  isAdmin: boolean
   isPublic: boolean
   subscription: {
     plan: 'S' | 'L' | null

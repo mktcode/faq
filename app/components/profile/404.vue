@@ -66,7 +66,7 @@ useHead({
     id="main"
     :font="$profile.settings.public.design.font"
     class="relative"
-    :class="$profile.isOwned ? 'pb-[56px] md:pb-0 md:pt-[56px]' : ''"
+    :class="$profile.isOwned || $profile.isAdmin ? 'pb-[56px] md:pb-0 md:pt-[56px]' : ''"
   >
     <div class="max-w-3xl mx-auto py-12 px-6 prose-sm sm:prose-lg">
       <h2 class="!mb-0">

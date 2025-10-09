@@ -47,6 +47,7 @@ export const useProfile = () => {
       $profile.domain = profile.domain
       $profile.domainIsExternal = profile.domainIsExternal
       $profile.isOwned = profile.isOwned
+      $profile.isAdmin = profile.isAdmin
       $profile.isPublic = profile.isPublic
       $profile.mailboxes = profile.mailboxes
       $profile.settings = profile.settings

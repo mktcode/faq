@@ -9,6 +9,7 @@ const { fetch: fetchUserSession } = useUserSession()
 async function signOut() {
   go('')
   $profile.isOwned = false
+  $profile.isAdmin = false
   $profile.subscription.plan = null
   $profile.subscription.paid = false
   $profile.mailboxes = []
