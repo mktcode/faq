@@ -4,8 +4,9 @@ import type * as Monaco from 'monaco-editor'
 
 const content = defineModel<string>('content')
 
-const { language = 'html' } = defineProps<{
+const { language = 'html', fullscreen = false } = defineProps<{
   language?: string
+  fullscreen?: boolean
 }>()
 
 const el = ref<HTMLDivElement | null>(null)
@@ -36,11 +37,27 @@ watch(content, (v) => {
   if (editor && v !== editor.getValue()) editor.setValue(v ?? '')
 })
 
+// React to fullscreen toggle: lock scroll and relayout editor
+watch(() => fullscreen, async (v) => {
+  if (process.client) {
+    document.documentElement.style.overflow = v ? 'hidden' : ''
+  }
+  await nextTick()
+  editor?.layout()
+}, { immediate: true })
+
 onBeforeUnmount(() => {
   editor?.dispose()
+  // Ensure scroll is reset if unmounting while in fullscreen
+  if (process.client) {
+    document.documentElement.style.overflow = ''
+  }
 })
 </script>
 
 <template>
-  <div ref="el" style="width:100%;height:400px;"></div>
+  <div
+    ref="el"
+    :class="fullscreen ? 'fixed inset-0 z-50 w-screen h-screen' : 'w-full h-[400px]'"
+  ></div>
 </template>

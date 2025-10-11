@@ -11,6 +11,8 @@ const { component } = defineProps<{
 
 const showHtml = ref(false)
 const showCss = ref(false)
+const htmlEditorFullscreen = ref(false)
+const cssEditorFullscreen = ref(false)
 
 watchDebounced(() => component.css, (newCss) => {
   // add or update a stylesheet to the document head with the css for this component
@@ -257,6 +259,7 @@ watch(uploadQueue, async (newFiles) => {
             <CodeEditor
               v-model:content="component.html"
               language="html"
+              :fullscreen="htmlEditorFullscreen"
               class="w-full h-96"
             />
           </ClientOnly>
@@ -299,6 +302,7 @@ watch(uploadQueue, async (newFiles) => {
             <CodeEditor
               v-model:content="component.css"
               language="css"
+              :fullscreen="cssEditorFullscreen"
               class="w-full h-96"
             />
           </ClientOnly>
