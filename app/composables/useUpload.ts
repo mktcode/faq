@@ -9,21 +9,28 @@ export default function useUpload() {
     formData.append('file', file)
     formData.append('path', path)
 
-    await $fetch('/api/user/upload', {
+    const { url } = await $fetch('/api/user/upload', {
       method: 'POST',
       body: formData,
     })
+
+    if (!url) {
+      throw new Error('Upload fehlgeschlagen')
+    }
+
+    return url
   }
 
   async function uploadFiles(files: File[], path: string) {
-    if (files.length === 0) return
-
     isUploading.value = true
     let uploadedFiles = 0
+
+    const urls = []
   
     for (const file of Array.from(files)) {
       try {
-        await uploadFile(file, path)
+        const url = await uploadFile(file, path)
+        urls.push(url)
 
         toast.add({
           title: 'Datei erfolgreich hochgeladen',
@@ -46,7 +53,11 @@ export default function useUpload() {
       
       uploadProgress.value = Math.round((uploadedFiles / files.length) * 100)
     }
+    
     isUploading.value = false
+    uploadProgress.value = 0
+
+    return { urls }
   }
 
   return {

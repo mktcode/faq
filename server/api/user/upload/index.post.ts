@@ -81,13 +81,13 @@ export default defineEventHandler(async (event) => {
   const form = await readMultipartFormData(event)
 
   if (!form) {
-    return { success: false, message: 'Keine Formulardaten gefunden' }
+    return { success: false, message: 'Keine Formulardaten gefunden', url: null }
   }
 
   const file = form.find(f => f.name === 'file')
   
   if (!file || !file.data) {
-    return { success: false, message: 'Keine Datei gefunden' }
+    return { success: false, message: 'Keine Datei gefunden', url: null}
   }
 
   const isImage = file.type?.startsWith('image')
