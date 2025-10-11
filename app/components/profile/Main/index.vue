@@ -4,6 +4,7 @@ import type { HtmlComponentSchema } from '~~/types/db'
 const { $profile } = useProfile()
 
 const { path } = usePath()
+const { hideNav } = useAdmin()
 
 const page = computed(() => {
   return $profile.settings.public.pages.find(page => page.path === path.value)
@@ -123,8 +124,8 @@ function openAdmin(componentId: number) {
   <FontWrapper
     id="main"
     :font="$profile.settings.public.design.font"
-    class="relative"
-    :class="$profile.isOwned || $profile.isAdmin ? 'pb-[56px] md:pb-0 md:pt-[56px]' : ''"
+    class="relative transition-all"
+    :class="($profile.isOwned || $profile.isAdmin) && !hideNav ? 'pb-[56px] md:pb-0 md:pt-[56px]' : ''"
   >
     <ClientOnly>
       <ProfileMainReLogin />

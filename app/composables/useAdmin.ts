@@ -3,6 +3,8 @@ export default function useAdmin() {
   const { path } = usePath()
   const { $profile } = useProfile()
 
+  const hideNav = useState('admin-hide-nav', () => false)
+
   const showMainSettings = computed(() => router.currentRoute.value.hash.startsWith('#settings'))
   const showCompanySettings = computed(() => router.currentRoute.value.hash === '#settings/company')
   const showDomainSettings = computed(() => router.currentRoute.value.hash.startsWith('#settings/domain'))
@@ -62,6 +64,7 @@ export default function useAdmin() {
   }
 
   return {
+    hideNav,
     showMainSettings,
     showCompanySettings,
     showDomainSettings,
