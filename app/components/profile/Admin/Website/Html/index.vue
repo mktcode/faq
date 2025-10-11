@@ -227,7 +227,7 @@ watch(uploadQueue, async (newFiles) => {
       class="flex flex-col gap-2"
       :ui="{
         root: 'border-b border-gray-200 !gap-0',
-        content: 'flex flex-col gap-4 p-4 border-t border-gray-200',
+        content: 'flex flex-col gap-4 border-t border-gray-200',
       }"
     >
       <template #default>
@@ -248,15 +248,18 @@ watch(uploadQueue, async (newFiles) => {
 
       <template #content>
         <UFormField
-          label="HTML"
           description="Hier können Sie eigenen HTML-Code einfügen, der auf Ihrer Webseite angezeigt wird. Achten Sie darauf, dass der Code korrekt ist."
+          :ui="{
+            wrapper: 'p-4'
+          }"
         >
-          <UTextarea
-            v-model="component.html"
-            placeholder="<div>Dein HTML-Code hier</div>"
-            class="w-full"
-            :rows="6"
-          />
+          <ClientOnly>
+            <CodeEditor
+              v-model:content="component.html"
+              language="html"
+              class="w-full h-96"
+            />
+          </ClientOnly>
         </UFormField>
       </template>
     </UCollapsible>
@@ -266,7 +269,7 @@ watch(uploadQueue, async (newFiles) => {
       class="flex flex-col gap-2"
       :ui="{
         root: 'border-b border-gray-200 !gap-0',
-        content: 'flex flex-col gap-4 p-4 border-t border-gray-200',
+        content: 'flex flex-col gap-4 border-t border-gray-200',
       }"
     >
       <template #default>
@@ -287,15 +290,18 @@ watch(uploadQueue, async (newFiles) => {
 
       <template #content>
         <UFormField
-          label="CSS"
           description="Hier können Sie eigenes CSS hinzufügen, um das Aussehen dieser Sektion anzupassen. Achten Sie darauf, dass der Code korrekt ist."
+          :ui="{
+            wrapper: 'p-4'
+          }"
         >
-          <UTextarea
-            v-model="component.css"
-            placeholder=".meine-klasse { color: red; }"
-            class="w-full font-mono"
-            :rows="6"
-          />
+          <ClientOnly>
+            <CodeEditor
+              v-model:content="component.css"
+              language="css"
+              class="w-full h-96"
+            />
+          </ClientOnly>
         </UFormField>
       </template>
     </UCollapsible>

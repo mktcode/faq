@@ -142,17 +142,13 @@ watch(
           </UButton>
 
           <template #content>
-            <UTextarea
-              v-model="$profile.settings.public.design.css"
-              placeholder="CSS hier eingeben"
-              class="w-full"
-              autoresize
-              :rows="2"
-              :maxrows="15"
-              :ui="{
-                base: 'text-sm rounded-t-none',
-              }"
-            />
+            <ClientOnly>
+              <CodeEditor
+                v-model:content="$profile.settings.public.design.css"
+                language="css"
+                class="w-full h-96"
+              />
+            </ClientOnly>
           </template>
         </UCollapsible>
         <UFormField
