@@ -3,6 +3,7 @@ import { watchDebounced } from '@vueuse/core';
 import type { HtmlComponentSchema } from '~~/types/db';
 
 const toast = useToast()
+const { uploadFiles, isUploading, uploadProgress } = useUpload()
 
 const { component } = defineProps<{
   component: HtmlComponentSchema;
@@ -31,11 +32,27 @@ const promptImages = ref<string[]>([])
 const isGenerating = ref(false)
 const previousResponseId = ref<string | undefined>(undefined)
 const responseNotes = ref<string | null | undefined>(undefined)
+const generationProgress = ref(0)
+
+function randomProgressStep() {
+  if (!isGenerating.value) return
+  
+  const progress = Math.floor(Math.random() * 5) + 1
+  generationProgress.value = Math.min(100, generationProgress.value + progress)
+  const interval = setTimeout(() => {
+    if (generationProgress.value < 100) {
+      randomProgressStep()
+    }
+  }, Math.floor(Math.random() * 12000) + 3000)
+  return interval
+}
 
 async function generate() {
   if (!prompt.value) return
 
   isGenerating.value = true
+  const interval = randomProgressStep()
+
   try {
     const { html, css, responseId, notes } = await $fetch('/api/user/generateHtml', {
       method: 'POST',
@@ -62,49 +79,26 @@ async function generate() {
     })
   } finally {
     isGenerating.value = false
+
+    generationProgress.value = 100
+    clearInterval(interval)
+    setTimeout(() => {
+      generationProgress.value = 0
+    }, 500)
   }
 }
 
-const imageInput = ref<HTMLInputElement | null>(null)
-const isUploadingImage = ref(false)
+const uploadQueue = ref<File[]>([])
 
-function addImage() {
-  imageInput.value?.click()
-}
-
-async function handleImageUpload(event: Event) {
-  const target = event.target as HTMLInputElement
-  const files = target.files
-  
-  if (files && files.length > 0) {
-    isUploadingImage.value = true
-    for (const file of Array.from(files)) {
-      const formData = new FormData()
-      formData.append('files', file)
-      try {
-        const { imageUrls } = await $fetch('/api/user/upload/image', {
-          method: 'POST',
-          body: formData,
-        })
-
-        promptImages.value.push(...imageUrls)
-      }
-      catch (error) {
-        toast.add({
-          title: 'Fehler beim Hochladen des Bildes',
-          icon: 'i-heroicons-exclamation-circle',
-          description: 'Bitte versuche es erneut.',
-          color: 'error',
-          progress: false,
-        })
-      }
-    }
-    isUploadingImage.value = false
+watch(uploadQueue, async (newFiles) => {
+  if (newFiles.length > 0) {
+    const { urls } = await uploadFiles(newFiles, '')
+    promptImages.value.push(...urls)
+    nextTick(() => {
+      uploadQueue.value = []
+    })
   }
-  if (imageInput.value) {
-    imageInput.value.value = ''
-  }
-}
+})
 </script>
 
 <template>
@@ -183,23 +177,33 @@ async function handleImageUpload(event: Event) {
           title="Hinweise zur Generierung"
           :description="responseNotes"
         />
-  
-        <UButton
-          :label="`${isUploadingImage ? 'Bilder werden hochgeladen...' : 'Bilder hochladen'}`"
-          icon="i-heroicons-photo"
-          variant="soft"
-          :loading="isUploadingImage"
-          @click="addImage()"
-        />
-        <input
-          id="prompt-image-upload"
-          ref="imageInput"
-          type="file"
-          class="hidden"
-          accept="image/png, image/jpeg, image/gif, image/webp"
-          multiple
-          @change="handleImageUpload"
+
+        <UFileUpload
+          v-slot="{ open }"
+          v-model="uploadQueue"
+          accept="image/*"
+          :multiple="true"
         >
+          <UButton
+            :label="`${isUploading ? 'Bilder werden hochgeladen...' : 'Bilder hochladen'}`"
+            icon="i-lucide-image"
+            variant="soft"
+            trailing-icon="i-heroicons-arrow-up-tray"
+            :ui="{
+              trailingIcon: 'ml-auto opacity-30',
+            }"
+            @click="open()"
+            :disabled="isUploading"
+            :loading="isUploading"
+          />
+        </UFileUpload>
+
+        <Transition name="fade">
+          <UProgress
+            v-if="isUploading"
+            v-model="uploadProgress"
+          />
+        </Transition>
 
         <UButton
           :label="`${isGenerating ? 'Anweisung wird verarbeitet...' : 'Anweisung abschicken'}`"
@@ -208,6 +212,12 @@ async function handleImageUpload(event: Event) {
           :loading="isGenerating"
           :disabled="!prompt"
           @click="generate"
+        />
+        <UProgress
+          v-if="isGenerating || generationProgress > 0"
+          :model-value="generationProgress"
+          color="primary"
+          class="w-full"
         />
       </div>
     </div>
