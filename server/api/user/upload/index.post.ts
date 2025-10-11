@@ -7,12 +7,12 @@ function getFilename(filename: string) {
   return sanitizedFilename
 }
 
-function getFileUrl(filePath: string, fileName: string) {
+function getFileUrl(key: string) {
   const { s3BucketName, public: { appHost, s3Endpoint } } = useRuntimeConfig()
 
   return import.meta.dev
-    ? `https://${appHost}/.userfiles/${filePath}/${fileName}`
-    : `${s3Endpoint}/${s3BucketName}/${filePath}/${fileName}`
+    ? `https://${appHost}/.userfiles/${key}`
+    : `${s3Endpoint}/${s3BucketName}/${key}`
 }
 
 async function handleImageUpload(file: any, userId: number) {
@@ -28,8 +28,8 @@ async function handleImageUpload(file: any, userId: number) {
   }
 
   const webpFilename = fileName.replace(/\.[^/.]+$/, '.webp')
-  const url = getFileUrl(filePath, fileName)
   const key = `${filePath}/${webpFilename}`
+  const url = getFileUrl(key)
   const buffer = Buffer.from(await image.toFormat('webp').toBuffer())
 
   await useStorage('userfiles').setItemRaw(key, buffer)
@@ -48,8 +48,8 @@ async function handleImageUpload(file: any, userId: number) {
 async function handleDocumentUpload(file: any, userId: number) {
   const fileName = getFilename(file.filename)
   const filePath = `${userId}`
-  const url = getFileUrl(filePath, fileName)
   const key = `${filePath}/${fileName}`
+  const url = getFileUrl(key)
 
   const maxSize = 20 * 1024 * 1024 // 20MB
   const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain', 'text/csv', 'application/rtf', 'application/vnd.oasis.opendocument.text', 'application/vnd.oasis.opendocument.spreadsheet', 'application/vnd.oasis.opendocument.presentation', 'application/zip', 'application/x-7z-compressed', 'application/x-rar-compressed']
