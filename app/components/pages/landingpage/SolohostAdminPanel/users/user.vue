@@ -2,6 +2,7 @@
 import type { SettingsForm, User } from '~~/types/db';
 
 const toast = useToast()
+const { public: { appHost } } = useRuntimeConfig()
 
 const { user } = defineProps<{
   user: Omit<User, 'lastPaidAt' | 'oneTimePasswordCreatedAt' | 'createdAt' | 'settings'> & {
@@ -103,10 +104,17 @@ async function saveUserSettings() {
           </div>
         </div>
         <UButton
-          icon="i-heroicons-cog-6-tooth"
+          icon="i-heroicons-globe-alt"
           color="primary"
           variant="ghost"
           class="ml-auto"
+          target="_blank"
+          :to="`https://${user.userName}.${appHost}`"
+        />
+        <UButton
+          icon="i-heroicons-cog-6-tooth"
+          color="primary"
+          variant="ghost"
           @click.stop="showSettings = true"
         />
         <UIcon
