@@ -9,7 +9,7 @@ const url = defineModel<string | null>({
   default: null,
 })
 
-const { data: files, refresh: refreshFiles } = await useFetch('/api/user/upload/list', {
+const { data: files, refresh: refreshFiles } = await useFetch('/api/user/upload', {
   method: 'GET',
 })
 
@@ -100,11 +100,11 @@ const handleInputChange = () => {
       >
         <img
           :src="file.url"
-          :alt="file.name"
+          :alt="file.filename"
           class="w-full h-24 object-cover group-hover:scale-110 z-0 relative transition-transform duration-300"
         />
         <div class="text-xs p-1 text-center truncate bg-white z-10 relative">
-          {{ file.name }}
+          {{ file.filename }}
         </div>
       </div>
     </template>
