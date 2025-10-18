@@ -13,7 +13,7 @@ export default defineNitroPlugin(() => {
     secretAccessKey: useRuntimeConfig().s3SecretKey,
     endpoint: useRuntimeConfig().public.s3Endpoint,
     region: 'eu-central',
-    bucket: useRuntimeConfig().s3Bucket,
+    bucket: useRuntimeConfig().s3BucketName,
   })
 
   storage.mount('userfiles', import.meta.dev ? fs : s3)
