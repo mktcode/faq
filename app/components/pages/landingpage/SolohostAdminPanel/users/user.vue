@@ -179,13 +179,18 @@ async function switchPlan(newPlan: 'S' | 'L' | null) {
           v-model:open="showSettings"
           :title="`Benutzer: ${user.userName} #${user.id}`"
           fullscreen
+          :ui="{
+            body: '!p-0'
+          }"
         >
           <template #body>
-            <UTextarea
-              v-model="settingsInput"
-              class="font-mono text-sm w-full h-full"
-              :ui="{ base: 'h-full' }"
-            />
+            <ClientOnly>
+              <CodeEditor
+                v-model:content="settingsInput"
+                language="json"
+                class="w-full h-full"
+              />
+            </ClientOnly>
           </template>
 
           <template #footer>
