@@ -12,7 +12,7 @@ export default defineNitroPlugin(() => {
     accessKeyId: useRuntimeConfig().s3AccessKey,
     secretAccessKey: useRuntimeConfig().s3SecretKey,
     endpoint: useRuntimeConfig().public.s3Endpoint,
-    region: useRuntimeConfig().s3Region,
+    region: 'eu-central',
     bucket: useRuntimeConfig().s3Bucket,
   })
 
