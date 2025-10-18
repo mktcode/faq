@@ -9,8 +9,6 @@ export default defineEventHandler(async (event) => {
   await requireAdmin(event)
 
   const { userId, plan } = await readValidatedBody(event, body => bodySchema.parse(body))
-
-  console.log('Switching plan for user', userId, 'to', plan)
   
   const db = await getDatabaseConnection()
   await db
