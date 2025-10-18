@@ -78,24 +78,6 @@ export default defineNuxtConfig({
       },
     },
   },
-  nitro: {
-    storage: {
-      userfiles: {
-        driver: 's3',
-        accessKeyId: process.env.S3_ACCESS_KEY || process.env.NUXT_S3_ACCESS_KEY,
-        secretAccessKey: process.env.S3_SECRET_KEY || process.env.NUXT_S3_SECRET_KEY,
-        endpoint: process.env.S3_ENDPOINT || process.env.NUXT_PUBLIC_S3_ENDPOINT,
-        region: 'eu-central',
-        bucket: process.env.S3_BUCKET_NAME || process.env.NUXT_S3_BUCKET_NAME,
-      }
-    },
-    devStorage: {
-      userfiles: {
-        driver: 'fs',
-        base: './public/.userfiles'
-      }
-    }
-  },
   devServer: {
     host: 'solohost.local',
     https: {

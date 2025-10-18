@@ -6,7 +6,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "nuxt prepare && vue-tsc -b --noEmit",
-    "build": "nuxt build --dotenv .env.prod",
+    "build": "nuxt build",
     "dev": "nuxt dev --host --dotenv .env.local",
     "preview": "NITRO_HOST=solohost.local NITRO_SSL_CERT=\"$(cat .localcert/solohost.local+1.pem)\" NITRO_SSL_KEY=\"$(cat .localcert/solohost.local+1-key.pem)\" node .output/server/index.mjs",
     "postinstall": "nuxt prepare",
