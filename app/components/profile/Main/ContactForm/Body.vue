@@ -1,18 +1,14 @@
 <script setup lang="ts">
-import { watchDebounced } from '@vueuse/core'
-import type { SimilarQuestion } from '~~/server/api/qanda/similarQuestions.post'
 import type { FormComponentSchema } from '~~/types/db';
 
 const nuxtApp = useNuxtApp()
 const { $profile } = nuxtApp
 
-defineProps<{
+const { component } = defineProps<{
   component: FormComponentSchema;
 }>()
 
 const message = ref('')
-const messageLongEnough = computed(() => message.value.trim().length >= 5)
-const messageEmbedding = ref<number[] | null>(null)
 const name = ref('')
 const phone = ref('')
 const email = ref('')
@@ -20,7 +16,6 @@ const extraFields = ref<Record<string, string | string[]>>({})
 const isSavingRequest = ref(false)
 const savedRequestSuccess = ref(false)
 const savedRequestFailure = ref(false)
-const similarQuestions = ref<SimilarQuestion[]>([])
 
 async function saveCustomerRequest() {
   if (isSavingRequest.value) return
@@ -31,12 +26,11 @@ async function saveCustomerRequest() {
     await $fetch('/api/customerRequests', {
       method: 'POST',
       body: {
-        username: $profile.username,
-        message: message.value,
-        embedding: messageEmbedding.value,
+        contactFormComponentId: component.id,
         name: name.value,
-        phone: phone.value || undefined,
         email: email.value || undefined,
+        phone: phone.value || undefined,
+        message: message.value,
         extraFields: extraFields.value,
       },
     })
@@ -57,44 +51,21 @@ async function saveCustomerRequest() {
   }
 }
 
-async function getEmbedding() {
-  if (!messageLongEnough.value || !$profile.subscription.plan) {
-    return
-  }
+const disabled = computed(() => {
+  const minimumRequiredFieldsFilled = name.value && (phone.value || email.value)
 
-  const embedding = await $fetch('/api/qanda/embedding', {
-    query: {
-      message: message.value,
-      username: $profile.username, // TODO: not really safe, needs origin based verification in backend
-    },
+  const requiredExtraFieldsFilled = component.fields.every((field) => {
+    if (field.required) {
+      const value = extraFields.value[field.label]
+      if (field.type === 'checkbox') {
+        return Boolean(value)
+      }
+      return value !== undefined && value !== ''
+    }
+    return true
   })
 
-  messageEmbedding.value = embedding
-
-  await getSimilarQuestions()
-}
-
-async function getSimilarQuestions() {
-  if (messageEmbedding.value && messageEmbedding.value.length > 0) {
-    const response = await $fetch('/api/qanda/similarQuestions', {
-      method: 'POST',
-      body: {
-        username: $profile.username,
-        embedding: messageEmbedding.value,
-      },
-    })
-
-    similarQuestions.value = response
-  }
-}
-
-watchDebounced(message, getEmbedding, { debounce: 2000 })
-
-const disabled = computed(() => {
-  return isSavingRequest.value
-    || !name.value
-    || (!phone.value && !email.value)
-    || (!!$profile.subscription.plan && !messageEmbedding.value)
+  return !isSavingRequest.value && minimumRequiredFieldsFilled && requiredExtraFieldsFilled && message.value.trim().length >= 5 ? false : true
 })
 </script>
 
@@ -135,23 +106,6 @@ const disabled = computed(() => {
         @transcript="(text: string) => { message = text }"
       />
     </div>
-    <TransitionGroup name="fade">
-      <div
-        v-for="question in similarQuestions"
-        :key="question.id"
-        class="w-full flex flex-col text-gray-800 mt-2 border border-gray-200 p-4"
-        :class="{
-          'rounded-none': $profile.settings.public.design.rounded === 'none',
-          'rounded-md': $profile.settings.public.design.rounded === 'md',
-          'rounded-xl': $profile.settings.public.design.rounded === 'xl',
-        }"
-      >
-        <div class="text-sm text-sky-900/60 mb-2">
-          {{ question.question }}
-        </div>
-        <div v-html="question.answer" />
-      </div>
-    </TransitionGroup>
     <div class="flex flex-col gap-2 mt-2 w-full">
       <UFormField label="Name">
         <UInput

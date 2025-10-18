@@ -1,23 +1,48 @@
-import { sql } from 'kysely'
 import { z } from 'zod'
-import type { SettingsForm } from '~~/types/db'
+import { FormComponentSchema } from '~~/types/db'
 
 const inputSchema = z.object({
-  username: z.string().min(1, 'Username is required'),
+  contactFormComponentId: z.number(),
   name: z.string().min(1, 'Name is required'),
   email: z.string().email('Invalid email address').optional(),
   phone: z.string().optional(),
   message: z.string().min(1, 'Message is required'),
-  embedding: z.array(z.number()).length(1536).nullable(),
+  extraFields: z.record(z.any()),
 })
 
 export default defineEventHandler(async (event) => {
-  const { username, name, email, phone, message, embedding } = await readValidatedBody(event, body => inputSchema.parse(body))
+  const { contactFormComponentId, name, email, phone, message, extraFields } = await readValidatedBody(event, body => inputSchema.parse(body))
+  const $profile = requireProfile(event)
+  const contactFormComponent = $profile.settings.public.pages.map(page => page.components).flat().find(c => c.key === 'form' && c.id === contactFormComponentId) as FormComponentSchema
+
+  if (!contactFormComponent) {
+    throw createError({ statusCode: 400, message: 'Kontaktformular-Komponente nicht gefunden' })
+  }
+
+  for (const field of contactFormComponent.fields) {
+    if (field.required) {
+      const value = extraFields[field.label]
+      if (field.type === 'checkbox') {
+        if (value !== true) {
+          throw createError({ statusCode: 400, message: `Feld "${field.label}" ist erforderlich` })
+        }
+      } else {
+        if (!value || (typeof value === 'string' && value.trim() === '')) {
+          throw createError({ statusCode: 400, message: `Feld "${field.label}" ist erforderlich` })
+        }
+      }
+    }
+  }
+
+  const extraFieldsText = Object.entries(extraFields).map(([key, value]) => {
+    return `${key}: ${value}`
+  }).join('\n')
+
   const db = await getDatabaseConnection()
 
   const user = await db.selectFrom('users')
     .select(['id', 'email', 'settings'])
-    .where('userName', '=', username)
+    .where('userName', '=', $profile.username)
     .executeTakeFirstOrThrow()
 
   const settings = await getPublicSettings(user.id)
@@ -41,30 +66,25 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 500, message: 'Failed to create customer request' })
   }
 
-  console.log(embedding)
+  const messageText = `Sie haben eine neue Anfrage erhalten.\n\nName: ${name}\n\nTelefon: ${phone}\n\nE-Mail: ${email}\n\nNachricht: ${message}\n\n${extraFieldsText}`
+  const messageHtml = messageText.replace(/\n/g, '<br/>')
 
-  if (embedding) {
-    await sql`INSERT INTO messages (customerRequestId, body, embedding, isCustomer) VALUES (${customerRequestId}, ${message}, VEC_FromText(${JSON.stringify(embedding)}), true)`
-      .execute(db)
-  }
-  else {
-    await db.insertInto('messages')
-      .values({
-        customerRequestId,
-        body: message,
-        isCustomer: true,
-      })
-      .execute()
-  }
-
+  await db.insertInto('messages')
+    .values({
+      customerRequestId,
+      body: messageText,
+      isCustomer: true,
+    })
+    .execute()
+  
   const toEmail = settings.company.email || user.email
 
   if (toEmail) {
     await sendEmail({
       to: toEmail,
       subject: `Neue Anfrage über Ihre Website`,
-      text: `Sie haben eine neue Anfrage von ${name} erhalten.\n\nNachricht: ${message}\n\n`,
-      html: `<p>Sie haben eine neue Anfrage von <strong>${name}</strong> erhalten.</p><p><strong>Nachricht:</strong><br/>${message.replace(/\n/g, '<br/>')}</p>`,
+      text: messageText,
+      html: messageHtml,
       replyTo: email || undefined,
     })
   }

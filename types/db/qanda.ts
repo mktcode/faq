@@ -5,7 +5,6 @@ export interface QandaTable {
   id: Generated<number>
   userId: number
   question: string
-  embedding: number[] | null
   answer: string
   createdAt: ColumnType<string, undefined, undefined>
 }

@@ -4,7 +4,6 @@ export interface MessagesTable {
   id: Generated<number>
   customerRequestId: number
   body: string
-  embedding: number[] | null
   isCustomer: boolean
   createdAt: ColumnType<Date, string | undefined, never>
 }
