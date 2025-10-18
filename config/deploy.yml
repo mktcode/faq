@@ -37,7 +37,7 @@ env:
     - NUXT_CHATWOOT_API_KEY
 aliases:
   shell: app exec --interactive --reuse "bash"
-  logs: app logs -f
+  logs: app logs -f -n300
   migrate: app exec --primary 'npx tsx server/migrate.ts'
   migrate-down: app exec --primary 'npx tsx server/down.ts'
   db: accessory exec db --interactive --reuse "bash"
