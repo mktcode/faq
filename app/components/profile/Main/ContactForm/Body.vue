@@ -73,7 +73,7 @@ const disabled = computed(() => {
 </script>
 
 <template>
-  <div class="">
+  <div class="not-prose">
     <UTextarea
       v-model="message"
       placeholder="Ihr Anliegen oder Ihre Fragen"
@@ -168,22 +168,22 @@ const disabled = computed(() => {
         <UFormField
           v-else-if="field.type === 'date'"
           :label="field.label"
+          :description="field.help || ''"
         >
           <UInput
             v-model="extraFields[field.label] as string"
             type="date"
-            :placeholder="field.help || ''"
             class="w-full"
           />
         </UFormField>
         <UFormField
           v-else-if="field.type === 'datetime'"
           :label="field.label"
+          :description="field.help || ''"
         >
           <UInput
             v-model="extraFields[field.label] as string"
             type="datetime-local"
-            :placeholder="field.help || ''"
             class="w-full"
           />
         </UFormField>
