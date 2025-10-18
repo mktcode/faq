@@ -17,6 +17,7 @@ const { user } = defineProps<{
 const emit = defineEmits<{
   expand: [void]
   collapse: [void]
+  updateUsers: [void]
 }>()
 
 function toggle(isOpen: boolean) {
@@ -69,6 +70,36 @@ async function saveUserSettings() {
 
   showSettings.value = false
 }
+
+async function switchPlan(newPlan: 'S' | 'L' | null) {
+  try {
+    await $fetch('/api/admin/users/switchPlan', {
+      method: 'POST',
+      body: {
+        userId: user.id,
+        plan: newPlan,
+      },
+    })
+
+    emit('updateUsers')
+
+    toast.add({
+      title: 'Plan geändert',
+      icon: 'i-heroicons-check',
+      description: `Der Plan für Benutzer ${user.userName} wurde auf ${newPlan || 'free'} gesetzt.`,
+      color: 'success',
+      progress: false,
+    })
+  } catch (error) {
+    toast.add({
+      title: 'Fehler beim Ändern des Plans',
+      icon: 'i-heroicons-x-mark',
+      description: `Der Plan für Benutzer ${user.userName} konnte nicht geändert werden.`,
+      color: 'error',
+      progress: false,
+    })
+  }
+}
 </script>
 
 <template>
@@ -84,16 +115,6 @@ async function saveUserSettings() {
       class="rounded-none"
     >
       <template #default>
-        <div
-          class="size-10 rounded flex items-center justify-center"
-          :class="{
-            'bg-gray-200 text-xs text-gray-400': user.plan === null,
-            'bg-sky-500 text-sky-100': user.plan === 'S',
-            'bg-indigo-500 text-indigo-100': user.plan === 'L',
-          }"
-        >
-          {{ user.plan || 'free' }}
-        </div>
         <div class="flex flex-col text-left">
           <div>
             {{ user.userName }}
@@ -103,11 +124,43 @@ async function saveUserSettings() {
             {{ user.email }}
           </div>
         </div>
+        <UPopover class="ml-auto">
+          <UButton
+            :label="user.plan || 'free'"
+            color="primary"
+            variant="ghost"
+            class="ml-auto"
+            target="_blank"
+            @click.stop
+          />
+
+          <template #content>
+            <div class="flex flex-col gap-2 p-2">
+              <UButton
+                label="Wechsel zu Plan S"
+                variant="ghost"
+                :disabled="user.plan === 'S'"
+                @click="switchPlan('S')"
+              />
+              <UButton
+                label="Wechsel zu Plan L"
+                variant="ghost"
+                :disabled="user.plan === 'L'"
+                @click="switchPlan('L')"
+              />
+              <UButton
+                label="Wechsel zu kostenlosem Plan"
+                variant="ghost"
+                :disabled="!user.plan"
+                @click="switchPlan(null)"
+              />
+            </div>
+          </template>
+        </UPopover>
         <UButton
           icon="i-heroicons-globe-alt"
           color="primary"
           variant="ghost"
-          class="ml-auto"
           target="_blank"
           :to="`https://${user.userName}.${appHost}`"
         />

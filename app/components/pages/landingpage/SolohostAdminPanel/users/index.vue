@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data: users } = await useFetch('/api/admin/users/all')
+const { data: users, refresh } = await useFetch('/api/admin/users/all')
 
 const userExpandedId = ref<number | null>(null)
 </script>
@@ -23,6 +23,7 @@ const userExpandedId = ref<number | null>(null)
         :key="user.id"
         :user="user"
         :expanded="userExpandedId === user.id"
+        @update-users="() => refresh()"
         @expand="userExpandedId = user.id"
         @collapse="userExpandedId = null"
       />
