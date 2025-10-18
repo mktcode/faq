@@ -2,8 +2,6 @@
 const { public: { appHost } } = useRuntimeConfig()
 const { user } = useUserSession()
 const { colorMode, toggleColorMode } = useColorMode()
-
-const { isSupportAvailable } = useSupportAvailability()
 </script>
 
 <template>
@@ -21,27 +19,6 @@ const { isSupportAvailable } = useSupportAvailability()
               size="md"
               @click="toggleColorMode"
             />
-            <UButton
-              variant="ghost"
-              color="neutral"
-              class="font-normal md:px-4 md:py-2 md:text-base"
-              size="md"
-              :ui="{
-                base: 'flex flex-col gap-0 items-end',
-              }"
-            >
-              <template #default>
-                <div class="flex items-center gap-2">
-                  <UChip
-                    :color="isSupportAvailable ? 'success' : 'neutral'"
-                    size="xl"
-                    class="mx-2"
-                    :class="{ 'opacity-20': !isSupportAvailable }"
-                  />
-                  {{ isSupportAvailable ? 'verfügbar' : 'im Gespräch' }}
-                </div>
-              </template>
-            </UButton>
           </div>
           <UButton
             label="Anmelden"
