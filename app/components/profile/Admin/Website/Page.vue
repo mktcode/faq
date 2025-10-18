@@ -63,12 +63,6 @@ watch(() => page.value, (newPage) => {
     v-if="page"
     :open="!!(page && !component)"
     side="left"
-    :close="{
-      size: 'md',
-      onClick: () => {
-        go('')
-      },
-    }"
     :ui="{
       wrapper: 'z-40',
       body: '!p-0',
@@ -99,6 +93,14 @@ watch(() => page.value, (newPage) => {
           color="neutral"
           size="md"
           @click="go('#website')"
+        />
+        <UButton
+          icon="i-heroicons-x-mark"
+          variant="ghost"
+          color="neutral"
+          size="md"
+          class="ml-auto"
+          @click="go('')"
         />
       </div>
       <UModal

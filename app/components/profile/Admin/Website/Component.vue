@@ -78,6 +78,14 @@ watch(component, () => {
             size="md"
             @click="go(`#website/page/${page.id}`)"
           />
+          <UButton
+            icon="i-heroicons-x-mark"
+            variant="ghost"
+            color="neutral"
+            size="md"
+            class="ml-auto"
+            @click="go('')"
+          />
         </div>
       </h3>
       <UModal

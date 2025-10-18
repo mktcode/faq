@@ -52,12 +52,6 @@ watch(() => showWebsiteSettings.value, (newVal) => {
   <USlideover
     :open="showWebsiteSettings"
     side="left"
-    :close="{
-      size: 'md',
-      onClick: () => {
-        go('')
-      },
-    }"
     :ui="{
       wrapper: 'z-40',
       body: '!p-0 border-none',

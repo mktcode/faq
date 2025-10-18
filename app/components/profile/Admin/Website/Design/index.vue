@@ -31,7 +31,6 @@ watch(
   <UDrawer
     :open="showWebsiteDesignSettings"
     :direction="isDesktop ? 'left' : 'bottom'"
-    close-icon="i-heroicons-arrow-left"
     handle-only
     :overlay="false"
     :close-threshold="0.85"
@@ -44,7 +43,6 @@ watch(
       body: 'p-4',
       footer: '!p-0',
     }"
-    @close="() => go('#website')"
   >
     <template #header>
       <ProfileMainDrawerTip />
@@ -61,6 +59,14 @@ watch(
             color="neutral"
             size="md"
             @click="go('#website')"
+          />
+          <UButton
+            icon="i-heroicons-x-mark"
+            variant="ghost"
+            color="neutral"
+            size="md"
+            class="ml-auto"
+            @click="go('')"
           />
         </div>
       </h3>

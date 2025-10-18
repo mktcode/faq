@@ -50,12 +50,6 @@ watch(uploadQueue, async (newFiles) => {
   <USlideover
     :open="showWebsiteFiles"
     side="left"
-    :close="{
-      size: 'md',
-      onClick: () => {
-        go('#website')
-      },
-    }"
     :ui="{
       wrapper: 'z-40',
       body: '!p-0 border-none',
@@ -73,12 +67,19 @@ watch(uploadQueue, async (newFiles) => {
         Dokumente und Bilder
       </h3>
       <UButton
-        icon="i-heroicons-x-mark"
+        icon="i-heroicons-arrow-left"
         variant="ghost"
         color="neutral"
         size="md"
         class="ml-auto"
         @click="go('#website')"
+      />
+      <UButton
+        icon="i-heroicons-x-mark"
+        variant="ghost"
+        color="neutral"
+        size="md"
+        @click="go('')"
       />
       <Transition name="fade">
         <UProgress
