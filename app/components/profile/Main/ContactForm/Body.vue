@@ -12,7 +12,7 @@ const message = ref('')
 const name = ref('')
 const phone = ref('')
 const email = ref('')
-const extraFields = ref<Record<string, string | string[]>>({})
+const extraFields = ref<Record<string, any>>({})
 const isSavingRequest = ref(false)
 const savedRequestSuccess = ref(false)
 const savedRequestFailure = ref(false)
@@ -52,13 +52,16 @@ async function saveCustomerRequest() {
 }
 
 const disabled = computed(() => {
-  const minimumRequiredFieldsFilled = name.value && (phone.value || email.value)
+  const minimumRequiredFieldsFilled = name.value && (email.value || phone.value)
 
   const requiredExtraFieldsFilled = component.fields.every((field) => {
     if (field.required) {
       const value = extraFields.value[field.label]
       if (field.type === 'checkbox') {
         return Boolean(value)
+      }
+      if (field.type === 'select') {
+        return Array.isArray(value) ? value.length > 0 : value !== undefined && value !== ''
       }
       return value !== undefined && value !== ''
     }
@@ -212,6 +215,7 @@ const disabled = computed(() => {
           :label="field.label"
         >
           <UCheckbox
+            v-model="extraFields[field.label]"
             :label="field.help || ''"
             class="w-full"
           />
