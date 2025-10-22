@@ -77,6 +77,7 @@ async function generate() {
         images: promptImages.value,
         html: component.html,
         css: component.css,
+        js: component.js,
         responseId: previousResponseId.value,
       },
     })
