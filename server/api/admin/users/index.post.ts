@@ -11,7 +11,15 @@ export default defineEventHandler(async (event) => {
   await requireAdmin(event)
 
   const { userId, settings } = await readValidatedBody(event, body => bodySchema.parse(body))
-  const currentSettings = await getSettings(userId)
+
+  const db = await getDatabaseConnection()
+  const user = await db
+    .selectFrom('users')
+    .select('settings')
+    .where('id', '=', userId)
+    .executeTakeFirstOrThrow()
+
+  const currentSettings = getUnvalidatedSettings(user.settings)
 
   if (!isDeepStrictEqual(currentSettings.public.company, settings.public.company)) {
     settings.public.company.lastMod = new Date().toISOString()
@@ -28,7 +36,6 @@ export default defineEventHandler(async (event) => {
     return newPage
   })
   
-  const db = await getDatabaseConnection()
   await db
     .updateTable('users')
     .set({

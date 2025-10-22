@@ -10,6 +10,6 @@ export default defineEventHandler(async (event) => {
 
   return users.map((user) => ({
     ...user,
-    settings: getValidatedSettings(user.settings),
+    settings: typeof user.settings === 'string' ? JSON.parse(user.settings) : user.settings,
   }))
 })
