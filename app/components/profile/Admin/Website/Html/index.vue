@@ -15,8 +15,8 @@ const showJs = ref(false)
 
 watchDebounced(() => component.css, (newCss) => {
   // add or update a stylesheet to the document head with the css for this component
-  const updatedCss = `#main #${component.slug} {\n${newCss}\n}`
-  const styleTagId = `html-component-style-${component.slug}`
+  const updatedCss = `#main #section-${component.id} {\n${newCss}\n}`
+  const styleTagId = `section-${component.id}-styles`
   const style = document.getElementById(styleTagId) as HTMLStyleElement | null
   if (style) {
     style.innerHTML = updatedCss
@@ -30,7 +30,7 @@ watchDebounced(() => component.css, (newCss) => {
 
 watchDebounced(() => component.js, (newJs) => {
   // add or replace a script tag in the document body with the js for this component
-  const scriptTagId = `html-component-script-${component.slug}`
+  const scriptTagId = `section-${component.id}-script`
   const oldScript = document.getElementById(scriptTagId) as HTMLScriptElement | null
   
   const newScript = document.createElement('script')

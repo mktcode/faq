@@ -100,8 +100,8 @@ useHead({
     },
     ...htmlComponents.value.map(component => {
       return {
-        id: `html-component-style-${component.id}`,
-        innerHTML: `#main #${component.slug} {\n${component.css}\n}`,
+        id: `section-${component.id}-styles`,
+        innerHTML: `#main #section-${component.id} {\n${component.css}\n}`,
       }
     }),
   ],

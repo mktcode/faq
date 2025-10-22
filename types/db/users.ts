@@ -31,7 +31,6 @@ export type UserUpdate = Updateable<UsersTable>
 const componentSettingsBaseSchema = z.object({
   id: z.number(),
   key: z.string(),
-  slug: z.string(),
   title: z.string(),
   description: z.string(),
   visible: z.boolean(),
@@ -147,7 +146,6 @@ export const defaultSettings = (): SettingsForm => ({
           {
             id: 0,
             key: 'html',
-            slug: 'willkommen',
             title: 'Herzlich Willkommen',
             description: 'Auf Ihrer neuen Website von Solohost.de',
             visible: true,

@@ -37,7 +37,7 @@ function resetHtml() {
 <template>
   <div
     class="w-full relative"
-    :id="component.slug"
+    :id="`section-${component.id}`"
     :class="component.key"
   >
     <ProfileMainEditSectionButton

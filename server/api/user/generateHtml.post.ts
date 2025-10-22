@@ -76,7 +76,6 @@ ${JSON.stringify({
     sections: page.components.map(component => ({
       title: component.title,
       description: component.description,
-      slug: component.key, // TODO: use correct slug field
     })),
   })),
 }, null, 2)}
