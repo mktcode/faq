@@ -41,13 +41,14 @@ function addComponent() {
   const component: HtmlComponentSchema = {
     id: 0,
     key: 'html',
+    slug: 'neue-sektion-' + new Date().getTime(),
     title: 'Neue Sektion',
     description: '',
     visible: true,
     order: 0,
     html: '<p>Neuer Inhalt</p>',
     css: '',
-    // js: '',
+    js: '',
   }
 
   component.id = new Date().getTime()
