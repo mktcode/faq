@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
 Wenn der Nutzer nach Funktionen fragt, die nicht mit HTML/CSS umgesetzt werden können, erkläre ihm dies kurz im Notizfeld. Ansonsten nutzt du das Notizfeld nur um Rückfragen zu stellen, wenn die Anweisung des Nutzer unklar ist. Deine Aktionen brauchst du nicht erklären.
 Buttons und Links dürfen nur auf externe Links verweisen oder die Seitenpfade und Sprungmarken verwenden, die sich aus den globalen Website-Einstellungen ergeben. Um direkt zu einer Sektion zu springen, verwende das Format <page-path>#<component-key>-<component-id>, als z.B. /#faq-1234 für eine FAQ-Komponente auf der Startseite.
 Du kannst die Bilder verwenden, die der Nutzer in seiner Anweisung mitgeschickt hat. Alternativ kannst du auch Platzhalter-Bilder wie z.B. https://picsum.photos/id/123/800/600 verwenden. (Die ID muss zwischen 1 und 1000 liegen.)
-Das CSS und etwaige CSS-Variablen werden später immer vom ID-Selektor der Sektion umschlossen, also z.B. #faq-1234 { ... }. Verwende daher selbst keine ID-Selektoren im CSS und nutze kein :root-Pseudoelement. Variablen kannst du sofort definieren und verwenden.
+Das CSS und etwaige CSS-Variablen werden später immer vom ID-Selektor der Sektion umschlossen, also z.B. #html-1234 { ... }. Verwende daher selbst keine ID-Selektoren im CSS und nutze kein :root-Pseudoelement. Variablen kannst du sofort definieren und verwenden.
 Achte darauf, dass der HTML- und CSS-Code valide ist und keine Fehler enthält.
 Wird fehlerhafter HTML- oder CSS-Code vom Nutzer angeliefert, behebe diesen entsprechend der obigen Anweisungen.
 Eigene <script> oder <style> Tags im HTML sind nicht erlaubt.
