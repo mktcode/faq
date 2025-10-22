@@ -32,126 +32,11 @@ const componentSettingsBaseSchema = z.object({
   id: z.number(),
   key: z.string(),
   title: z.string(),
-  showTitle: z.boolean(),
   description: z.string(),
   visible: z.boolean(),
   order: z.number(),
 })
 export type ComponentSettingsBaseSchema = z.infer<typeof componentSettingsBaseSchema>
-
-const headerComponentSchema = componentSettingsBaseSchema.extend({
-  key: z.literal('header'),
-  titleFontSize: z.number(),
-  titleColor: z.object({
-    h: z.number(),
-    s: z.number(),
-    l: z.number(),
-  }),
-  descriptionFontSize: z.number(),
-  descriptionColor: z.object({
-    h: z.number(),
-    s: z.number(),
-    l: z.number(),
-  }),
-  video: z.string(),
-  image: z.string(),
-  logo: z.string(),
-  overlay: z.object({
-    color: z.object({
-      h: z.number(),
-      s: z.number(),
-      l: z.number(),
-    }),
-    opacity: z.number().min(0).max(100),
-  }),
-  height: z.enum(['auto', 'half', 'full', 'boxed']),
-  showShareButton: z.boolean(),
-  links: z.array(
-    z.object({
-      title: z.string(),
-      url: z.string().url(),
-      icon: z.string().optional(),
-    }),
-  ),
-})
-export type HeaderComponentSchema = z.infer<typeof headerComponentSchema>
-
-const menuComponentSchema = componentSettingsBaseSchema.extend({
-  key: z.literal('menu'),
-  items: z.array(z.object({
-    id: z.number(),
-    title: z.string(),
-    subtitle: z.string().optional(),
-    icon: z.string().optional(),
-    url: z.string(),
-    openInNewTab: z.boolean(),
-    highlight: z.boolean().optional(),
-    position: z.enum(['left', 'center', 'right']),
-  })),
-})
-export type MenuComponentSchema = z.infer<typeof menuComponentSchema>
-
-const offeringsComponentSchema = componentSettingsBaseSchema.extend({
-  key: z.literal('offerings'),
-  layout: z.enum(['grid', 'list', 'carousel']),
-  items: z.array(z.object({
-    id: z.number(),
-    image: z.string().optional(),
-    title: z.string(),
-    description: z.string(),
-  })),
-})
-export type OfferingComponentSchema = z.infer<typeof offeringsComponentSchema>
-
-const galleryComponentSchema = componentSettingsBaseSchema.extend({
-  key: z.literal('gallery'),
-  type: z.enum(['grid', 'grid-with-header', 'masonry']),
-  items: z.array(z.object({
-    url: z.string(),
-    description: z.string(),
-    title: z.string(),
-  })),
-})
-export type GalleryComponentSchema = z.infer<typeof galleryComponentSchema>
-
-const formComponentSchema = componentSettingsBaseSchema.extend({
-  key: z.literal('form'),
-  successMessage: z.string(),
-  errorMessage: z.string(),
-  fields: z.array(z.object({
-    label: z.string(),
-    help: z.string(),
-    name: z.string(),
-    type: z.enum(['text', 'email', 'tel', 'date', 'datetime', 'textarea', 'select', 'checkbox']),
-    required: z.boolean(),
-    options: z.array(z.object({
-      label: z.string(),
-    })),
-    multiple: z.boolean(),
-  })),
-})
-export type FormComponentSchema = z.infer<typeof formComponentSchema>
-
-const faqComponentSchema = componentSettingsBaseSchema.extend({
-  key: z.literal('faq'),
-  items: z.array(z.object({
-    id: z.number(),
-    question: z.string(),
-    answer: z.string(),
-  })),
-})
-export type FaqComponentSchema = z.infer<typeof faqComponentSchema>
-
-const downloadsComponentSchema = componentSettingsBaseSchema.extend({
-  key: z.literal('downloads'),
-  items: z.array(z.object({
-    title: z.string(),
-    description: z.string(),
-    url: z.string().url(),
-    type: z.string(),
-  })),
-})
-export type DownloadsComponentSchema = z.infer<typeof downloadsComponentSchema>
 
 const htmlComponentSchema = componentSettingsBaseSchema.extend({
   key: z.literal('html'),
@@ -159,18 +44,6 @@ const htmlComponentSchema = componentSettingsBaseSchema.extend({
   css: z.string(),
 })
 export type HtmlComponentSchema = z.infer<typeof htmlComponentSchema>
-
-const componentUnionSchema = z.union([
-  headerComponentSchema,
-  menuComponentSchema,
-  offeringsComponentSchema,
-  galleryComponentSchema,
-  formComponentSchema,
-  faqComponentSchema,
-  downloadsComponentSchema,
-  htmlComponentSchema,
-])
-export type ComponentUnionSchema = z.infer<typeof componentUnionSchema>
 
 export const colorSchema = z.object({
   h: z.number(),
@@ -214,7 +87,7 @@ export const settingsFormSchema = z.object({
       path: z.string(),
       title: z.string(),
       description: z.string(),
-      components: z.array(componentUnionSchema),
+      components: z.array(htmlComponentSchema),
       lastMod: z.string(),
     })),
   }),
@@ -226,185 +99,6 @@ export const settingsFormSchema = z.object({
 })
 
 export type SettingsForm = z.infer<typeof settingsFormSchema>
-
-export type AvailableComponent = {
-  key: ComponentUnionSchema['key']
-  title: string
-  description: string
-  icon: string
-  defaults: ComponentUnionSchema
-  minPlan?: 'S' | 'L'
-}
-
-export const availableComponents: AvailableComponent[] = [
-  {
-    key: 'header',
-    title: 'Kopfbereich',
-    description: 'Hier können Sie einen Kopfbereich mit Titel, Beschreibung, Hintergrundbild oder Video einfügen.',
-    icon: 'i-lucide-gallery-vertical-end',
-    defaults: {
-      id: 1,
-      key: 'header',
-      title: 'Herzlich Willkommen',
-      showTitle: false,
-      description: 'Auf Ihrer neuen Website von Solohost.de',
-      visible: true,
-      order: 999,
-      titleFontSize: 12,
-      titleColor: {
-        h: 0,
-        s: 0,
-        l: 0,
-      },
-      descriptionFontSize: 8,
-      descriptionColor: {
-        h: 0,
-        s: 0,
-        l: 0,
-      },
-      video: '',
-      image: '',
-      logo: '',
-      overlay: {
-        color: {
-          h: 0,
-          s: 0,
-          l: 0,
-        },
-        opacity: 4,
-      },
-      height: 'full',
-      showShareButton: true,
-      links: [],
-    },
-  },
-  {
-    key: 'menu',
-    title: 'Menü',
-    description: 'Hier können Sie ein Menü mit Links zu anderen Seiten oder bestimmten Sektionen erstellen.',
-    icon: 'i-heroicons-bars-3',
-    defaults: {
-      id: 1,
-      key: 'menu',
-      title: 'Menü',
-      showTitle: false,
-      description: '',
-      visible: true,
-      order: 0,
-      items: [
-        {
-          id: 1,
-          title: 'Startseite',
-          url: '/',
-          openInNewTab: false,
-          position: 'left',
-        },
-      ],
-    },
-  },
-  {
-    key: 'offerings',
-    title: 'Texte mit Bildern',
-    description: 'Hier können Sie beliebige Texte und Bilder in einer Liste, einem Raster oder Karussell anzeigen.',
-    icon: 'i-heroicons-megaphone',
-    defaults: {
-      id: 1,
-      key: 'offerings',
-      title: 'Angebote',
-      showTitle: true,
-      description: 'Unsere Angebote für Sie im Überblick',
-      visible: true,
-      order: 999,
-      layout: 'list',
-      items: [],
-    },
-  },
-  {
-    key: 'gallery',
-    title: 'Galerie',
-    description: 'Hier können Sie Bilder und Videos hochladen, um Ihre Produkte oder Dienstleistungen zu präsentieren.',
-    icon: 'i-heroicons-photo',
-    defaults: {
-      id: 1,
-      key: 'gallery',
-      title: 'Galerie',
-      showTitle: true,
-      description: 'Hier können Sie Bilder und Videos hochladen, um Ihre Produkte oder Dienstleistungen zu präsentieren.',
-      visible: true,
-      order: 999,
-      type: 'grid',
-      items: [],
-    },
-  },
-  {
-    key: 'form',
-    title: 'Kontaktformular',
-    description: 'Hier können Sie ein Kontaktformular einfügen, damit Interessenten Sie direkt kontaktieren können.',
-    icon: 'i-heroicons-envelope',
-    defaults: {
-      id: 1,
-      key: 'form',
-      title: 'Kontaktformular',
-      showTitle: true,
-      description: 'Hier können Sie ein Kontaktformular einfügen, damit Interessenten Sie direkt kontaktieren können.',
-      visible: true,
-      order: 999,
-      successMessage: 'Vielen Dank für Ihre Nachricht! Wir werden uns so schnell wie möglich bei Ihnen melden.',
-      errorMessage: 'Beim Senden Ihrer Nachricht ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal.',
-      fields: [],
-    },
-  },
-  {
-    key: 'faq',
-    title: 'Häufig gestellte Fragen',
-    description: 'Hier können Sie häufig gestellte Fragen beantworten, um Ihren Kunden zu helfen.',
-    icon: 'i-heroicons-question-mark-circle',
-    defaults: {
-      id: 1,
-      key: 'faq',
-      title: 'Häufig gestellte Fragen',
-      showTitle: true,
-      description: 'Hier können Sie häufig gestellte Fragen beantworten, um Ihren Kunden zu helfen.',
-      visible: true,
-      order: 999,
-      items: [],
-    },
-  },
-  {
-    key: 'downloads',
-    title: 'Downloads',
-    description: 'Hier können Sie Dateien zum Download anbieten, z.B. Broschüren oder Preislisten.',
-    icon: 'i-heroicons-arrow-down-tray',
-    defaults: {
-      id: 1,
-      key: 'downloads',
-      title: 'Downloads',
-      showTitle: true,
-      description: 'Hier können Sie Dateien zum Download anbieten, z.B. Broschüren oder Preislisten.',
-      visible: true,
-      order: 999,
-      items: [],
-    },
-  },
-  {
-    key: 'html',
-    title: 'Individuell mit KI',
-    description: 'Beschreiben Sie, was Sie möchten, und lassen Sie unsere KI einen Vorschlag generieren. Gerne nehmen wir im Anschluss noch etwas Feintuning vor.',
-    icon: 'i-heroicons-code-bracket',
-    defaults: {
-      id: 1,
-      key: 'html',
-      title: 'Individuell mit KI',
-      showTitle: true,
-      description: 'Hier können Sie individuellen HTML- und CSS-Code einfügen oder per Spracheingabe generieren.',
-      visible: true,
-      order: 999,
-      html: '<p>Fügen Sie hier Ihren eigenen HTML-Code ein.</p>',
-      css: '/* Fügen Sie hier Ihren eigenen CSS-Code ein. */',
-    },
-    minPlan: 'S',
-  },
-] as const
 
 export const defaultSettings = (): SettingsForm => ({
   public: {
@@ -450,38 +144,13 @@ export const defaultSettings = (): SettingsForm => ({
         components: [
           {
             id: 0,
-            key: 'header',
+            key: 'html',
             title: 'Herzlich Willkommen',
-            showTitle: true,
             description: 'Auf Ihrer neuen Website von Solohost.de',
             visible: true,
             order: 1,
-            titleFontSize: 12,
-            titleColor: {
-              h: 0,
-              s: 0,
-              l: 0,
-            },
-            descriptionFontSize: 8,
-            descriptionColor: {
-              h: 0,
-              s: 0,
-              l: 0,
-            },
-            video: '',
-            image: '',
-            logo: '',
-            overlay: {
-              color: {
-                h: 0,
-                s: 0,
-                l: 0,
-              },
-              opacity: 4,
-            },
-            height: 'full',
-            showShareButton: true,
-            links: [],
+            html: '<p>Dies ist Ihre neue Website, die Sie ganz einfach selbst bearbeiten können. Melden Sie sich dazu im Solohost-Kundenbereich an und klicken Sie auf "Website bearbeiten".</p>',
+            css: '',
           },
         ],
         lastMod: new Date().toISOString(),

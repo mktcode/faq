@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { availableComponents } from '~~/types/db';
+import type { HtmlComponentSchema } from '~~/types/db'
+
 const { page, component, go } = useAdmin()
 
 const { $profile } = useProfile()
@@ -34,7 +35,26 @@ function moveComponent(id: number, direction: 'up' | 'down') {
   neighbour.order = temp
 }
 
-const showAddComponent = ref(false)
+function addComponent() {
+  if (!page.value) return
+
+  const component: HtmlComponentSchema = {
+    id: 0,
+    key: 'html',
+    title: 'Neue Sektion',
+    description: '',
+    visible: true,
+    order: 0,
+    html: '<p>Neuer Inhalt</p>',
+    css: '',
+    // js: '',
+  }
+
+  component.id = new Date().getTime()
+  component.order = Math.max(0, ...page.value.components.map(c => c.order)) + 1
+  page.value.components.push(component)
+  go(`#website/page/${page.value.id}/component/${component.id}`)
+}
 
 const pathError = ref('')
 watch(() => page.value, (newPage) => {
@@ -191,14 +211,11 @@ watch(() => page.value, (newPage) => {
         >
           <UButton
             :label="comp.title"
-            :icon="availableComponents.find(c => c.key === comp.key)?.icon || 'i-heroicons-cube-transparent'"
+            icon="i-heroicons-cube-transparent"
             class="w-full rounded-none px-4 py-2 border-b border-gray-200"
             variant="ghost"
             color="neutral"
             @click="go(`#website/page/${page.id}/component/${comp.id}`)"
-            :ui="{
-              leadingIcon: comp.key === 'header' ? 'rotate-180' : '',
-            }"
           >
             <template #trailing>
               <div class="ml-auto whitespace-nowrap">
@@ -235,11 +252,7 @@ watch(() => page.value, (newPage) => {
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="showAddComponent = true"
-      />
-
-      <ProfileAdminWebsiteAddComponent
-        v-model:open="showAddComponent"
+        @click="addComponent"
       />
     </template>
 

@@ -134,43 +134,8 @@ function openAdmin(componentId: number) {
       v-for="component in components"
       :key="component.id"
     >
-      <ProfileMainHeader
-        v-if="component.key === 'header'"
-        :component="component"
-        @edit="openAdmin(component.id)"
-      />
-      <ProfileMainMenu
-        v-else-if="component.key === 'menu'"
-        :component="component"
-        @edit="openAdmin(component.id)"
-      />
-      <ProfileMainOfferings
-        v-if="component.key === 'offerings'"
-        :component="component"
-        @edit="openAdmin(component.id)"
-      />
-      <ProfileMainGallery
-        v-else-if="component.key === 'gallery'"
-        :component="component"
-        @edit="openAdmin(component.id)"
-      />
-      <ProfileMainDownloads
-        v-else-if="component.key === 'downloads'"
-        :component="component"
-        @edit="openAdmin(component.id)"
-      />
-      <ProfileMainContactForm
-        v-else-if="component.key === 'form'"
-        :component="component"
-        @edit="openAdmin(component.id)"
-      />
-      <ProfileMainFAQ
-        v-else-if="component.key === 'faq'"
-        :component="component"
-        @edit="openAdmin(component.id)"
-      />
       <ProfileMainHtml
-        v-else-if="component.key === 'html'"
+        v-if="component.key === 'html'"
         :component="component"
         @edit="openAdmin(component.id)"
       />

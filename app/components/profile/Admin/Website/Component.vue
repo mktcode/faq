@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useMediaQuery } from '@vueuse/core'
-import { availableComponents } from '~~/types/db';
 
 const { $profile } = useProfile()
 
@@ -58,9 +57,8 @@ watch(component, () => {
     <template #header>
       <h3 class="text-lg font-semibold flex gap-2 relative">
         <UIcon
-          :name="availableComponents.find(c => c.key === component?.key)?.icon || 'i-heroicons-cube-transparent'"
+          name="i-heroicons-cube-transparent"
           class="inline-block size-6 opacity-50"
-          :class="component?.key === 'header' ? 'rotate-180' : ''"
         />
         {{ component.title }}
         <div class="flex items-center gap-2 ml-auto">
@@ -132,36 +130,8 @@ watch(component, () => {
     </template>
 
     <template #body>
-      <ProfileAdminWebsiteHeader
-        v-if="component.key === 'header'"
-        v-model:component="component"
-      />
-      <ProfileAdminWebsiteMenu
-        v-else-if="component.key === 'menu'"
-        v-model:component="component"
-      />
-      <ProfileAdminWebsiteOffering
-        v-if="component.key === 'offerings'"
-        v-model:component="component"
-      />
-      <ProfileAdminWebsiteGallery
-        v-else-if="component.key === 'gallery'"
-        v-model:component="component"
-      />
-      <ProfileAdminWebsiteDownloads
-        v-else-if="component.key === 'downloads'"
-        v-model:component="component"
-      />
-      <ProfileAdminWebsiteContactForm
-        v-else-if="component.key === 'form'"
-        v-model:component="component"
-      />
-      <ProfileAdminWebsiteFaq
-        v-else-if="component.key === 'faq'"
-        v-model:component="component"
-      />
       <ProfileAdminWebsiteHtml
-        v-else-if="component.key === 'html'"
+        v-if="component.key === 'html'"
         v-model:component="component"
       />
     </template>
