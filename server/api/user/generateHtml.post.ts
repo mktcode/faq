@@ -25,11 +25,9 @@ export default defineEventHandler(async (event) => {
     notes: z.string().optional().nullable(),
   });
 
-  console.log('Images', images);
-
   const response = await openai.responses.parse({
     previous_response_id: responseId,
-    model: 'gpt-5',
+    model: 'gpt-5-mini',
     instructions: `Generiere HTML und CSS Code für eine Website-Sektion basierend auf der Anweisung des Benutzers. Du bekommst die globalen Website-Einstellungen als Orientierung. Die Anweisungen kommen von einem technisch wenig versierten Nutzer. Denke also genau darüber nach, was der Nutzer möchte.
 Wenn der Nutzer nach Funktionen fragt, die nicht mit HTML/CSS umgesetzt werden können, erkläre ihm dies kurz im Notizfeld. Ansonsten nutzt du das Notizfeld nur um Rückfragen zu stellen, wenn die Anweisung des Nutzer unklar ist. Deine Aktionen brauchst du nicht erklären.
 Buttons und Links dürfen nur auf externe Links verweisen oder die Seitenpfade und Sprungmarken verwenden, die sich aus den globalen Website-Einstellungen ergeben. Um direkt zu einer Sektion zu springen, verwende das Format <page-path>#<component-key>-<component-id>, als z.B. /#faq-1234 für eine FAQ-Komponente auf der Startseite.
