@@ -109,7 +109,7 @@ useHead({
     {
       id: 'alpinejs',
       src: '/alpine-3.15.0.min.js',
-      defer: true,
+      defer: false,
     },
     {
       id: 'custom-js',
@@ -119,7 +119,7 @@ useHead({
     },
     ...htmlComponents.value.map(component => {
       return {
-        id: `html-component-script-${component.id}`,
+        id: `section-${component.id}-script`,
         type: 'text/javascript',
         innerHTML: `document.addEventListener("DOMContentLoaded", (event) => {\n${component.js}\n});`,
         defer: true,

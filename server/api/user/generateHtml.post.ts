@@ -53,9 +53,9 @@ Auslassungen und Platzhalter sind nicht erlaubt, außer es wird explizit vom Nut
 
   const response = await openai.responses.parse({
     previous_response_id: responseId,
-    model: 'gpt-5-mini',
+    model: 'gpt-5',
     reasoning: {
-      effort: 'high',
+      effort: 'medium',
     },
     text: {
       format: zodTextFormat(outputSchema, "event"),
