@@ -151,24 +151,15 @@ export async function requireProfileWithPermission(event: H3Event) {
 }
 
 export function getValidatedSettings(settings: string | Record<string, unknown>): SettingsForm {
-  const validatedSettings = settingsFormSchema.parse(typeof settings === 'string' ? JSON.parse(settings) : settings)
-
-  // sanitize html content
-  // TODO: make this more comprehensive and maybe move to saving instead of serving
-  validatedSettings.public.pages = validatedSettings.public.pages.map(page => ({
-    ...page,
-    components: page.components.map(component => {
-      if (component.key === 'offerings') {
-        component.items = component.items.map(offer => ({
-          ...offer,
-          description: sanitizeHtml(offer.description),
-        }))
-      }
-      return component
-    }),
-  }))
+  const validatedSettings = settingsFormSchema.parse(getUnvalidatedSettings(settings))
 
   return validatedSettings
+}
+
+export function getUnvalidatedSettings(settings: string | Record<string, unknown>): SettingsForm {
+  const parsedSettings = typeof settings === 'string' ? JSON.parse(settings) : settings
+
+  return parsedSettings as SettingsForm
 }
 
 export async function getSettings(userIdOrName: number | string) {
@@ -293,68 +284,28 @@ Stadt: ${settings.public.company.city}
     settings.public.pages[0].components = [
       {
         id: new Date().getTime() + 1,
-        key: 'header',
+        key: 'html',
         title: prefill.title,
-        titleColor: prefill.title_text_color,
         description: prefill.tagline,
-        descriptionColor: prefill.tagline_text_color,
-        image: '',
-        logo: '',
-        overlay: {
-          color: prefill.header_background_color,
-          opacity: 100,
-        },
-        showTitle: true,
-        height: 'auto',
         visible: true,
         order: 1,
-        showShareButton: true,
-        descriptionFontSize,
-        titleFontSize,
-        links: [],
-        video: '',
+        html: `<h1>${sanitizeHtml(prefill.title)}</h1>
+<p>${sanitizeHtml(prefill.tagline)}</p>
+        `,
+        css: `
+          h1 {
+            color: hsl(${prefill.title_text_color.h}, ${prefill.title_text_color.s}%, ${prefill.title_text_color.l}%);
+            font-size: ${titleFontSize}pt;
+          }
+          p {
+            color: hsl(${prefill.tagline_text_color.h}, ${prefill.tagline_text_color.s}%, ${prefill.tagline_text_color.l}%);
+            font-size: ${descriptionFontSize}pt;
+          }
+          .header {
+            background-color: hsl(${prefill.header_background_color.h}, ${prefill.header_background_color.s}%, ${prefill.header_background_color.l}%);
+          }
+        `,
       },
-      {
-        id: new Date().getTime(),
-        key: 'offerings',
-        title: 'Angebot',
-        showTitle: true,
-        description: '',
-        visible: true,
-        order: 2,
-        layout: 'list',
-        items: prefill.offerings.map((offering, index) => ({
-          id: index + 1,
-          title: offering.title,
-          description: offering.description,
-        })),
-      },
-      {
-        id: new Date().getTime() + 2,
-        key: 'form',
-        title: 'Kontakt',
-        description: '',
-        showTitle: true,
-        visible: true,
-        order: 3,
-        successMessage: 'Ihre Nachricht wurde erfolgreich gesendet.',
-        errorMessage: 'Beim Senden Ihrer Nachricht ist ein Fehler aufgetreten.',
-        fields: [],
-      },
-      {
-        id: new Date().getTime() + 3,
-        key: 'faq',
-        title: 'Häufig gestellte Fragen',
-        description: '',
-        showTitle: true,
-        visible: true,
-        order: 4,
-        items: prefill.faqs.map((faq, index) => ({
-          id: index + 1,
-          question: faq.question,
-          answer: faq.answer,
-        })),
-      }
     ]
   }
 
