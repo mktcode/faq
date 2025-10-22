@@ -1,63 +1,46 @@
 <script setup lang="ts">
-const toast = useToast()
 const show = ref(false)
-const fileInput = ref<HTMLInputElement | null>(null)
-const isUploading = ref(false)
+
+const { uploadFiles, isUploading, uploadProgress } = useUpload()
 
 const url = defineModel<string | null>({
   type: [String, null],
   default: null,
 })
 
+const emit = defineEmits<{
+  url: [url: string]
+}>()
+
 const { data: files, refresh: refreshFiles } = await useFetch('/api/user/upload', {
   method: 'GET',
+  query: {
+    showType: 'images',
+    sortBy: 'newest',
+  },
 })
 
 function selectImage(selectedUrl: string) {
   url.value = selectedUrl
+  emit('url', selectedUrl)
   show.value = false
 }
 
-const uploadFile = async (files: FileList | null) => {
-  if (!files || files.length === 0) return
+const uploadQueue = ref<File[]>([])
 
-  isUploading.value = true
-
-  for (const file of Array.from(files)) {
-    const formData = new FormData()
-    formData.append('files', file)
-    try {
-      const { imageUrls } = await $fetch('/api/user/upload/image', {
-        method: 'POST',
-        body: formData,
-      })
-
-      if (imageUrls[0]) {
-        url.value = imageUrls[0]
-      }
-
-      show.value = false
-      await refreshFiles()
+watch(uploadQueue, async (newFiles) => {
+  if (newFiles.length > 0) {
+    for await (const uploadedUrl of uploadFiles(newFiles, '')) {
+      url.value = uploadedUrl
+      emit('url', uploadedUrl)
     }
-    catch (error) {
-      toast.add({
-        title: 'Fehler',
-        icon: 'i-heroicons-x-circle',
-        color: 'error',
-        description: 'Fehler beim Hochladen der Datei.',
-        progress: false,
-      })
-    }
-  }
-  isUploading.value = false
-  if (fileInput.value) {
-    fileInput.value.value = ''
-  }
-}
 
-const handleInputChange = () => {
-  uploadFile(fileInput.value?.files || null)
-}
+    await refreshFiles()
+    nextTick(() => {
+      uploadQueue.value = []
+    })
+  }
+})
 </script>
 
 <template>
@@ -73,20 +56,31 @@ const handleInputChange = () => {
     }"
   >
     <template #body>
-      <input
-        ref="fileInput"
-        type="file"
-        class="hidden"
-        multiple
-        @change="handleInputChange"
+      <UFileUpload
+        v-slot="{ open }"
+        v-model="uploadQueue"
+        accept="image/*"
+        :multiple="true"
+        class="col-span-2 sm:col-span-4 w-full"
       >
-      <UButton
-        icon="i-heroicons-arrow-up-on-square"
-        label="Datei hochladen"
-        class="col-span-2 sm:col-span-4 rounded-none p-4"  
-        @click="fileInput?.click()"
-        :loading="isUploading"
-        :disabled="isUploading"
+        <UButton
+          :label="`${isUploading ? 'Bilder werden hochgeladen...' : 'Bilder hochladen'}`"
+          icon="i-lucide-image"
+          variant="soft"
+          trailing-icon="i-heroicons-arrow-up-tray"
+          :ui="{
+            trailingIcon: 'ml-auto opacity-30',
+          }"
+          class="rounded-none p-4"
+          @click="open()"
+          :disabled="isUploading"
+          :loading="isUploading"
+        />
+      </UFileUpload>
+      <UProgress
+        v-if="isUploading"
+        :model-value="uploadProgress"
+        class="w-full col-span-2 sm:col-span-4 rounded-none"
       />
       <div
         v-for="file in files"

@@ -21,16 +21,14 @@ export default function useUpload() {
     return url
   }
 
-  async function uploadFiles(files: File[], path: string) {
+  async function* uploadFiles(files: File[], path: string) {
     isUploading.value = true
     let uploadedFiles = 0
-
-    const urls = []
   
     for (const file of Array.from(files)) {
       try {
         const url = await uploadFile(file, path)
-        urls.push(url)
+        yield url
 
         toast.add({
           title: 'Datei erfolgreich hochgeladen',
@@ -56,8 +54,6 @@ export default function useUpload() {
     
     isUploading.value = false
     uploadProgress.value = 0
-
-    return { urls }
   }
 
   return {

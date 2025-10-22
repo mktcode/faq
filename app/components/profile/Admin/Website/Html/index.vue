@@ -3,7 +3,6 @@ import { watchDebounced } from '@vueuse/core';
 import type { HtmlComponentSchema } from '~~/types/db';
 
 const toast = useToast()
-const { uploadFiles, isUploading, uploadProgress } = useUpload()
 
 const { component } = defineProps<{
   component: HtmlComponentSchema;
@@ -111,18 +110,6 @@ async function generate() {
     }, 500)
   }
 }
-
-const uploadQueue = ref<File[]>([])
-
-watch(uploadQueue, async (newFiles) => {
-  if (newFiles.length > 0) {
-    const { urls } = await uploadFiles(newFiles, '')
-    promptImages.value.push(...urls)
-    nextTick(() => {
-      uploadQueue.value = []
-    })
-  }
-})
 </script>
 
 <template>
@@ -202,32 +189,18 @@ watch(uploadQueue, async (newFiles) => {
           :description="responseNotes"
         />
 
-        <UFileUpload
-          v-slot="{ open }"
-          v-model="uploadQueue"
-          accept="image/*"
-          :multiple="true"
-        >
+        <ProfileAdminWebsiteFilesSelectOrUpload @url="promptImages.push($event)">
           <UButton
-            :label="`${isUploading ? 'Bilder werden hochgeladen...' : 'Bilder hochladen'}`"
+            label="Bilder auswählen"
             icon="i-lucide-image"
             variant="soft"
             trailing-icon="i-heroicons-arrow-up-tray"
+            class="w-full"
             :ui="{
               trailingIcon: 'ml-auto opacity-30',
             }"
-            @click="open()"
-            :disabled="isUploading"
-            :loading="isUploading"
           />
-        </UFileUpload>
-
-        <Transition name="fade">
-          <UProgress
-            v-if="isUploading"
-            v-model="uploadProgress"
-          />
-        </Transition>
+        </ProfileAdminWebsiteFilesSelectOrUpload>
 
         <UButton
           :label="`${isGenerating ? 'Anweisung wird verarbeitet...' : 'Anweisung abschicken'}`"
