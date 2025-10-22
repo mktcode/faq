@@ -31,6 +31,7 @@ export type UserUpdate = Updateable<UsersTable>
 const componentSettingsBaseSchema = z.object({
   id: z.number(),
   key: z.string(),
+  slug: z.string(),
   title: z.string(),
   description: z.string(),
   visible: z.boolean(),
@@ -42,6 +43,7 @@ const htmlComponentSchema = componentSettingsBaseSchema.extend({
   key: z.literal('html'),
   html: z.string(),
   css: z.string(),
+  js: z.string(),
 })
 export type HtmlComponentSchema = z.infer<typeof htmlComponentSchema>
 
@@ -145,12 +147,14 @@ export const defaultSettings = (): SettingsForm => ({
           {
             id: 0,
             key: 'html',
+            slug: 'willkommen',
             title: 'Herzlich Willkommen',
             description: 'Auf Ihrer neuen Website von Solohost.de',
             visible: true,
             order: 1,
             html: '<p>Dies ist Ihre neue Website, die Sie ganz einfach selbst bearbeiten können. Melden Sie sich dazu im Solohost-Kundenbereich an und klicken Sie auf "Website bearbeiten".</p>',
             css: '',
+            js: '',
           },
         ],
         lastMod: new Date().toISOString(),

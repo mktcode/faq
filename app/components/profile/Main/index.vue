@@ -116,7 +116,15 @@ useHead({
       type: 'text/javascript',
       innerHTML: $profile.settings.public.design.js,
       defer: true,
-    }
+    },
+    ...htmlComponents.value.map(component => {
+      return {
+        id: `html-component-script-${component.id}`,
+        type: 'text/javascript',
+        innerHTML: `document.addEventListener("DOMContentLoaded", (event) => {\n${component.js}\n});`,
+        defer: true,
+      }
+    }),
   ],
 })
 

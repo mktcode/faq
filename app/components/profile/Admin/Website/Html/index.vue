@@ -11,11 +11,12 @@ const { component } = defineProps<{
 
 const showHtml = ref(false)
 const showCss = ref(false)
+const showJs = ref(false)
 
 watchDebounced(() => component.css, (newCss) => {
   // add or update a stylesheet to the document head with the css for this component
-  const updatedCss = `#main #${component.key}-${component.id} {\n${newCss}\n}`
-  const styleTagId = `html-component-style-${component.id}`
+  const updatedCss = `#main #${component.slug} {\n${newCss}\n}`
+  const styleTagId = `html-component-style-${component.slug}`
   const style = document.getElementById(styleTagId) as HTMLStyleElement | null
   if (style) {
     style.innerHTML = updatedCss
@@ -24,6 +25,20 @@ watchDebounced(() => component.css, (newCss) => {
     newStyle.id = styleTagId
     newStyle.innerHTML = updatedCss
     document.head.appendChild(newStyle)
+  }
+}, { debounce: 1500 })
+
+watchDebounced(() => component.js, (newJs) => {
+  // add or replace a script tag in the document body with the js for this component
+  const scriptTagId = `html-component-script-${component.slug}`
+  const script = document.getElementById(scriptTagId) as HTMLScriptElement | null
+  if (script) {
+    script.innerHTML = newJs
+  } else {
+    const newScript = document.createElement('script')
+    newScript.id = scriptTagId
+    newScript.innerHTML = newJs
+    document.body.appendChild(newScript)
   }
 }, { debounce: 1500 })
 
@@ -54,7 +69,7 @@ async function generate() {
   const interval = randomProgressStep()
 
   try {
-    const { html, css, responseId, notes } = await $fetch('/api/user/generateHtml', {
+    const { html, css, js, responseId, notes } = await $fetch('/api/user/generateHtml', {
       method: 'POST',
       body: {
         prompt: prompt.value,
@@ -65,8 +80,15 @@ async function generate() {
       },
     })
     previousResponseId.value = responseId
-    component.html = html
-    component.css = css
+    if (html) {
+      component.html = html
+    }
+    if (css) {
+      component.css = css
+    }
+    if (js) {
+      component.js = js
+    }
     responseNotes.value = notes
     prompt.value = ''
   } catch (error) {
@@ -299,6 +321,47 @@ watch(uploadQueue, async (newFiles) => {
             <CodeEditor
               v-model:content="component.css"
               language="css"
+              class="w-full h-96"
+            />
+          </ClientOnly>
+        </UFormField>
+      </template>
+    </UCollapsible>
+
+    <UCollapsible
+      v-model:open="showJs"
+      class="flex flex-col gap-2"
+      :ui="{
+        root: 'border-b border-gray-200 !gap-0',
+        content: 'flex flex-col gap-4 border-t border-gray-200',
+      }"
+    >
+      <template #default>
+        <div class="flex items-center">
+          <UButton
+            icon="i-heroicons-code-bracket"
+            label="JavaScript-Code bearbeiten"
+            class="w-full rounded-none p-4"
+            variant="ghost"
+            color="neutral"
+            trailing-icon="i-heroicons-chevron-down"
+            :ui="{
+              trailingIcon: `ml-auto transition-transform ${showJs ? 'rotate-180' : ''}`,
+            }"
+          />
+        </div>
+      </template>
+      <template #content>
+        <UFormField
+          description="Hier können Sie eigenes JavaScript hinzufügen, um das Verhalten dieser Sektion anzupassen. Achten Sie darauf, dass der Code korrekt ist."
+          :ui="{
+            wrapper: 'p-4'
+          }"
+        >
+          <ClientOnly>
+            <CodeEditor
+              v-model:content="component.js"
+              language="javascript"
               class="w-full h-96"
             />
           </ClientOnly>
