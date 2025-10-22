@@ -107,6 +107,11 @@ useHead({
   ],
   script: [
     {
+      id: 'alpinejs',
+      src: '/alpine-3.15.0.min.js',
+      defer: true,
+    },
+    {
       id: 'custom-js',
       type: 'text/javascript',
       innerHTML: $profile.settings.public.design.js,
