@@ -31,13 +31,15 @@ watchDebounced(() => component.css, (newCss) => {
 watchDebounced(() => component.js, (newJs) => {
   // add or replace a script tag in the document body with the js for this component
   const scriptTagId = `html-component-script-${component.slug}`
-  const script = document.getElementById(scriptTagId) as HTMLScriptElement | null
-  if (script) {
-    script.innerHTML = newJs
+  const oldScript = document.getElementById(scriptTagId) as HTMLScriptElement | null
+  
+  const newScript = document.createElement('script')
+  newScript.id = scriptTagId
+  newScript.textContent = newJs
+  
+  if (oldScript) {
+    oldScript.parentNode?.replaceChild(newScript, oldScript)
   } else {
-    const newScript = document.createElement('script')
-    newScript.id = scriptTagId
-    newScript.innerHTML = newJs
     document.body.appendChild(newScript)
   }
 }, { debounce: 1500 })
