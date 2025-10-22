@@ -159,25 +159,25 @@ async function generate() {
         </UFormField>
 
         <div v-if="promptImages.length" class="flex flex-wrap gap-2">
-          <div
-            v-for="(image, index) in promptImages"
-            :key="index"
-            class="relative size-24 rounded-lg overflow-hidden border border-gray-300"
-          >
-            <img
-              :src="image"
-              :alt="`Bild ${index + 1}`"
-              class="object-cover w-full h-full"
-            />
-            <UButton
-              icon="i-heroicons-x-mark"
-              variant="ghost"
-              size="sm"
-              color="error"
-              class="absolute top-1 right-1 bg-white bg-opacity-75 rounded-full p-1 hover:bg-opacity-100 transition"
-              @click="promptImages.splice(index, 1)"
-            />
-          </div>
+          <TransitionGroup name="list">
+            <div
+              v-for="(image, index) in promptImages"
+              :key="index"
+              class="relative size-24 rounded-lg overflow-hidden border border-gray-300"
+            >
+              <img
+                :src="image"
+                :alt="`Bild ${index + 1}`"
+                class="object-cover w-full h-full"
+              />
+              <UButton
+                icon="i-heroicons-x-mark"
+                size="sm"
+                class="absolute top-1 right-1 rounded-full"
+                @click="promptImages.splice(index, 1)"
+              />
+            </div>
+          </TransitionGroup>
         </div>
   
         <UAlert
