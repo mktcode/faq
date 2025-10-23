@@ -14,11 +14,29 @@ export default defineEventHandler(async (event) => {
 
   const db = await getDatabaseConnection()
 
+  const latestOtherVersion = await db
+    .selectFrom('settingsHistory')
+    .select('id')
+    .where('userId', '=', $profile.id)
+    .where('id', '!=', versionId)
+    .orderBy('createdAt', 'desc')
+    .executeTakeFirst()
+  
+  if (!latestOtherVersion) {
+    throw createError({ statusCode: 400, statusMessage: 'Cannot delete last version', message: 'You cannot delete your last settings version. Please create a new version before deleting this one.' })
+  }
+
   await db
     .deleteFrom('settingsHistory')
     .where('userId', '=', $profile.id)
     .where('id', '=', versionId)
     .execute()
+
+  await setUserSession(event, {
+    user: {
+      editSettingsId: latestOtherVersion.id,
+    },
+  })
 
   return { success: true }
 })
