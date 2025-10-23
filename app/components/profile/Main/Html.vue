@@ -3,8 +3,8 @@ import type { HtmlComponentSchema } from '~~/types/db';
 
 const content = ref<HTMLElement | null>(null)
 
-const { saveSettings, isSavingSettings } = useProfile()
-const { hideNav, contentChanges } = useAdmin()
+const { contentChanges, saveSettings, isSavingSettings } = useProfile()
+const { hideNav } = useAdmin()
 
 const { component } = defineProps<{
   component: HtmlComponentSchema;

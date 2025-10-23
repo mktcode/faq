@@ -4,7 +4,6 @@ export default function useAdmin() {
   const { $profile } = useProfile()
 
   const hideNav = useState('admin-hide-nav', () => true)
-  const contentChanges = useState<Record<number, string>>('admin-content-changes', () => ({}))
 
   const showMainSettings = computed(() => router.currentRoute.value.hash.startsWith('#settings'))
   const showCompanySettings = computed(() => router.currentRoute.value.hash === '#settings/company')
@@ -66,7 +65,6 @@ export default function useAdmin() {
 
   return {
     hideNav,
-    contentChanges,
     showMainSettings,
     showCompanySettings,
     showDomainSettings,

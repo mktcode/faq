@@ -5,6 +5,7 @@ export const useProfile = () => {
   const isUpdatingProfile = ref(false)
   const isSavingSettings = ref(false)
   const unsavedSettings = useState('unsavedSettings', () => false)
+  const contentChanges = useState<Record<number, string>>('admin-content-changes', () => ({}))
 
   const showLegalDataWarning = computed(() => {
     return !$profile.settings.public.company.name ||
@@ -70,6 +71,7 @@ export const useProfile = () => {
 
   return {
     $profile,
+    contentChanges,
     showLegalDataWarning,
     isSavingSettings,
     resetSettings,
