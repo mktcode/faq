@@ -64,14 +64,14 @@ async function editVersion() {
         icon="i-lucide-rocket"
         label="veröffentlichen"
         variant="soft"
-        size="md"
+        size="sm"
         @click="showPublishModal = true"
       />
       <UBadge
         v-else
         label="öffentliche Version"
         variant="outline"
-        color="success"
+        color="neutral"
         size="md"
       />
     </div>
