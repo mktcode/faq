@@ -10,6 +10,7 @@ interface TargetUser {
   mailboxes: string[]
   plan: 'S' | 'L' | null
   stripeCheckoutSessionId: string | null
+  settings: number
 }
 
 function getCurrentHost(event: H3Event): string {
@@ -82,6 +83,7 @@ async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUse
     isAdmin,
     isPublic,
     design: 'default',
+    settingsId: targetUser.settings,
     settings,
     originalSettings: JSON.parse(JSON.stringify(settings)), // deep clone
     canonicalUrl: getCanonicalUrl(event, targetUser),
@@ -99,7 +101,7 @@ async function getUserFromHost(currentHost: string): Promise<TargetUser | null> 
 
   if (isCustomDomain(currentHost)) {
     const user = await db.selectFrom('users')
-      .select(['id', 'userName', 'published', 'lastPaidAt', 'domain', 'domainIsExternal', 'mailboxes', 'plan', 'stripeCheckoutSessionId'])
+      .select(['id', 'userName', 'published', 'lastPaidAt', 'domain', 'domainIsExternal', 'mailboxes', 'plan', 'stripeCheckoutSessionId', 'settings'])
       .where('domain', '=', currentHost)
       .executeTakeFirst() || null
 
@@ -116,7 +118,7 @@ async function getUserFromHost(currentHost: string): Promise<TargetUser | null> 
 
     const user = await db
       .selectFrom('users')
-      .select(['id', 'userName', 'published', 'lastPaidAt', 'domain', 'domainIsExternal', 'mailboxes', 'plan', 'stripeCheckoutSessionId'])
+      .select(['id', 'userName', 'published', 'lastPaidAt', 'domain', 'domainIsExternal', 'mailboxes', 'plan', 'stripeCheckoutSessionId', 'settings'])
       .where('userName', '=', username)
       .executeTakeFirst() || null
 

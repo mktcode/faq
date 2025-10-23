@@ -67,6 +67,7 @@ watch(() => showWebsiteSettings.value, (newVal) => {
         />
         Website
       </h3>
+      <ProfileAdminWebsiteVersionSwitcher />
       <UButton
         icon="i-heroicons-x-mark"
         variant="ghost"

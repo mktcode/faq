@@ -14,6 +14,7 @@ const { profile } = defineProps<{
       plan: 'S' | 'L' | null
       paid: boolean
     }
+    settingsId: number
     settings: SettingsForm
     originalSettings: SettingsForm
     canonicalUrl: string

@@ -14,6 +14,7 @@ declare module 'h3' {
       isAdmin: boolean
       isPublic: boolean
       design: string
+      settingsId: number
       settings: SettingsForm
       originalSettings: SettingsForm
       canonicalUrl: string

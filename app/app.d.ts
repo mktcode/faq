@@ -11,6 +11,7 @@ type Profile = {
     plan: 'S' | 'L' | null
     paid: boolean
   }
+  settingsId: number
   settings: SettingsForm
   originalSettings: SettingsForm
   canonicalUrl: string
