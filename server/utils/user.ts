@@ -54,15 +54,9 @@ export async function createUser({
 
   const newUserId = Number(insertResult.insertId.toString())
 
-  const newUser = await db
-    .selectFrom('users')
-    .selectAll()
-    .where('id', '=', newUserId)
-    .executeTakeFirstOrThrow()
-
   const historyInsert = await db
     .insertInto('settingsHistory')
-    .values({ userId: newUser.id, settings: JSON.stringify(settings) })
+    .values({ userId: newUserId, settings: JSON.stringify(settings) })
     .executeTakeFirstOrThrow()
 
   if (!historyInsert.insertId) {
@@ -74,10 +68,16 @@ export async function createUser({
   await db
     .updateTable('users')
     .set({ settings: settingsVersionId })
-    .where('id', '=', newUser.id)
+    .where('id', '=', newUserId)
     .execute()
 
-  await chatwoot.createContact(newUser.id, newUser.userName)
+  const newUser = await db
+    .selectFrom('users')
+    .selectAll()
+    .where('id', '=', newUserId)
+    .executeTakeFirstOrThrow()
+  
+  await chatwoot.createContact(newUserId, newUser.userName)
 
   return newUser
 }

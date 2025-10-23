@@ -78,6 +78,7 @@ export default defineWebAuthnRegisterEventHandler({
             email: existingUser.email,
             picture: '',
             emailConfirmationToken: existingUser.emailConfirmationToken,
+            editSettingsId: existingUser.settings,
           },
         })
       }
@@ -106,6 +107,7 @@ export default defineWebAuthnRegisterEventHandler({
           email: newUser.email,
           picture: '',
           emailConfirmationToken: newUser.emailConfirmationToken,
+          editSettingsId: newUser.settings,
         },
       })
 

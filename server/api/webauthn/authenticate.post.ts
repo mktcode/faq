@@ -96,6 +96,7 @@ export default defineWebAuthnAuthenticateEventHandler({
         'users.userName',
         'users.email',
         'users.emailConfirmationToken',
+        'users.settings',
       ])
       .where('webauthnCredentials.credentialId', '=', credential.id)
       .executeTakeFirst()
@@ -120,6 +121,7 @@ export default defineWebAuthnAuthenticateEventHandler({
         userName: userCredential.userName,
         email: userCredential.email,
         emailConfirmationToken: userCredential.emailConfirmationToken,
+        editSettingsId: userCredential.settings,
       },
     })
   },

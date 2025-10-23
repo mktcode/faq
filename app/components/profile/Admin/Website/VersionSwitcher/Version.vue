@@ -7,9 +7,12 @@ const { version } = defineProps<{
   }
 }>()
 
-const showDeleteModal = ref(false)
+const { user } = useUserSession()
 
-const emit = defineEmits(['copy', 'delete', 'published'])
+const showDeleteModal = ref(false)
+const showPublishModal = ref(false)
+
+const emit = defineEmits(['refresh'])
 
 async function copyVersion() {
   await $fetch('/api/user/settings/versions/copy', {
@@ -17,7 +20,7 @@ async function copyVersion() {
     body: { versionId: version.id },
   })
 
-  emit('copy')
+  emit('refresh')
 }
   
 async function deleteVersion() {
@@ -26,7 +29,8 @@ async function deleteVersion() {
     body: { versionId: version.id },
   })
 
-  emit('delete')
+  showDeleteModal.value = false
+  emit('refresh')
 }
 
 async function publishVersion() {
@@ -35,7 +39,17 @@ async function publishVersion() {
     body: { versionId: version.id },
   })
 
-  emit('published')
+  showPublishModal.value = false
+  emit('refresh')
+}
+
+async function editVersion() {
+  await $fetch('/api/user/settings/versions/edit', {
+    method: 'POST',
+    body: { versionId: version.id },
+  })
+
+  emit('refresh')
 }
 </script>
 
@@ -45,11 +59,20 @@ async function publishVersion() {
       <div class="text-sm font-medium">
         {{ new Date(version.createdAt).toLocaleString('de-DE', { dateStyle: 'medium', timeStyle: 'short' }) }}
       </div>
-      <USwitch
-        label="öffentlich"
-        :model-value="$profile.settingsId === version.id"
-        :disabled="$profile.settingsId === version.id"
-        @update:model-value="publishVersion"
+      <UButton
+        v-if="$profile.settingsId !== version.id"
+        icon="i-lucide-rocket"
+        label="veröffentlichen"
+        variant="soft"
+        size="md"
+        @click="showPublishModal = true"
+      />
+      <UBadge
+        v-else
+        label="öffentliche Version"
+        variant="outline"
+        color="success"
+        size="md"
       />
     </div>
 
@@ -66,11 +89,12 @@ async function publishVersion() {
           @click="copyVersion"
         />
         <UButton
-          v-if="$profile.settingsId !== version.id"
+          v-if="version.id !== user?.editSettingsId"
           icon="i-lucide-pencil"
           label="bearbeiten"
           variant="soft"
           size="md"
+          @click="editVersion"
         />
         <UBadge
           v-else
@@ -110,6 +134,30 @@ async function publishVersion() {
           variant="solid"
           color="error"
           @click="deleteVersion"
+        />
+      </template>
+    </UModal>
+
+    <UModal
+      v-model:open="showPublishModal"
+      title="Version veröffentlichen"
+    >
+      <template #body>
+        <p>Möchtest du diese Version der Website wirklich veröffentlichen? Sie wird dann für alle Besucher sichtbar sein.</p>
+      </template>
+
+      <template #footer>
+        <UButton
+          label="Abbrechen"
+          variant="ghost"
+          color="neutral"
+          @click="showPublishModal = false"
+        />
+        <UButton
+          label="Veröffentlichen"
+          variant="solid"
+          color="primary"
+          @click="publishVersion"
         />
       </template>
     </UModal>
