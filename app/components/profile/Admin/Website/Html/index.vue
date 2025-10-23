@@ -70,7 +70,7 @@ async function generate() {
   const interval = randomProgressStep()
 
   try {
-    const { html, css, js, responseId, notes } = await $fetch('/api/user/generateHtml', {
+    const { html, css, js, responseId, notes } = await $fetch('/api/user/assistant/updateSection', {
       method: 'POST',
       body: {
         prompt: prompt.value,
