@@ -95,8 +95,8 @@ useHead({
       innerHTML: colorCss,
     },
     {
-      id: 'custom-style',
-      innerHTML: $profile.settings.public.design.css,
+      id: 'custom-styles',
+      innerHTML: `#main {\n${$profile.settings.public.design.css}\n}`,
     },
     ...htmlComponents.value.map(component => {
       return {
@@ -143,17 +143,19 @@ function openAdmin(componentId: number) {
     <ClientOnly>
       <ProfileMainReLogin />
     </ClientOnly>
-    <template
-      v-for="component in components"
-      :key="component.id"
-    >
-      <ProfileMainHtml
-        v-if="component.key === 'html'"
-        :component="component"
-        @edit="openAdmin(component.id)"
-      />
-    </template>
-    <ProfileMainFooter />
+    <div id="page" class="min-h-screen">
+      <template
+        v-for="component in components"
+        :key="component.id"
+      >
+        <ProfileMainHtml
+          v-if="component.key === 'html'"
+          :component="component"
+          @edit="openAdmin(component.id)"
+        />
+      </template>
+      <ProfileMainFooter />
+    </div>
   </FontWrapper>
 </template>
 
