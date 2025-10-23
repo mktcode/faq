@@ -1,5 +1,11 @@
 <script setup lang="ts">
 const { data: versions, refresh: refreshVersions } = await useFetch('/api/user/settings/versions')
+const { updateProfile } = useProfile()
+
+async function refresh() {
+  refreshVersions()
+  updateProfile()
+}
 </script>
 
 <template>
@@ -26,8 +32,9 @@ const { data: versions, refresh: refreshVersions } = await useFetch('/api/user/s
           v-for="version in versions"
           :key="version.id"
           :version="version"
-          @copy="refreshVersions()"
-          @delete="refreshVersions()"
+          @copy="refresh"
+          @delete="refresh"
+          @published="refresh"
         />
       </div>
     </template>

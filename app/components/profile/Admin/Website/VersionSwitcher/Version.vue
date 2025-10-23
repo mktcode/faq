@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{
+const { version } = defineProps<{
   version: {
     id: number
     createdAt: string
@@ -9,24 +9,33 @@ defineProps<{
 
 const showDeleteModal = ref(false)
 
-const emit = defineEmits(['copy', 'delete'])
+const emit = defineEmits(['copy', 'delete', 'published'])
 
-async function copyVersion(versionId: number) {
+async function copyVersion() {
   await $fetch('/api/user/settings/versions/copy', {
     method: 'POST',
-    body: { versionId },
+    body: { versionId: version.id },
   })
 
   emit('copy')
 }
-
-async function deleteVersion(versionId: number) {
+  
+async function deleteVersion() {
   await $fetch('/api/user/settings/versions/delete', {
     method: 'POST',
-    body: { versionId },
+    body: { versionId: version.id },
   })
 
   emit('delete')
+}
+
+async function publishVersion() {
+  await $fetch('/api/user/settings/versions/publish', {
+    method: 'POST',
+    body: { versionId: version.id },
+  })
+
+  emit('published')
 }
 </script>
 
@@ -38,8 +47,9 @@ async function deleteVersion(versionId: number) {
       </div>
       <USwitch
         label="öffentlich"
-        :model-value="version.id === $profile.settingsId"
-        :disabled="version.id === $profile.settingsId"
+        :model-value="$profile.settingsId === version.id"
+        :disabled="$profile.settingsId === version.id"
+        @update:model-value="publishVersion"
       />
     </div>
 
@@ -53,10 +63,10 @@ async function deleteVersion(versionId: number) {
           label="kopieren"
           variant="soft"
           size="md"
-          @click="copyVersion(version.id)"
+          @click="copyVersion"
         />
         <UButton
-          v-if="version.id !== $profile.settingsId"
+          v-if="$profile.settingsId !== version.id"
           icon="i-lucide-pencil"
           label="bearbeiten"
           variant="soft"
@@ -70,7 +80,7 @@ async function deleteVersion(versionId: number) {
           size="md"
         />
         <UButton
-          v-if="version.id !== $profile.settingsId"
+          v-if="$profile.settingsId !== version.id"
           icon="i-heroicons-trash"
           label="löschen"
           variant="soft"
@@ -99,7 +109,7 @@ async function deleteVersion(versionId: number) {
           label="Löschen"
           variant="solid"
           color="error"
-          @click="deleteVersion(version.id)"
+          @click="deleteVersion"
         />
       </template>
     </UModal>

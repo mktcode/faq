@@ -50,6 +50,7 @@ export const useProfile = () => {
       $profile.isAdmin = profile.isAdmin
       $profile.isPublic = profile.isPublic
       $profile.mailboxes = profile.mailboxes
+      $profile.settingsId = profile.settingsId
       $profile.settings = profile.settings
       $profile.originalSettings = profile.originalSettings
       $profile.subscription = profile.subscription
