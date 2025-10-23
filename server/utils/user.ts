@@ -43,7 +43,7 @@ export async function createUser({
       published: false,
       domain: null,
       domainIsExternal: false,
-      settings: JSON.stringify(settings),
+      settings: 0,
       mailboxes: '',
     })
     .executeTakeFirstOrThrow()
@@ -59,6 +59,23 @@ export async function createUser({
     .selectAll()
     .where('id', '=', newUserId)
     .executeTakeFirstOrThrow()
+
+  const historyInsert = await db
+    .insertInto('settingsHistory')
+    .values({ userId: newUser.id, settings: JSON.stringify(settings) })
+    .executeTakeFirstOrThrow()
+
+  if (!historyInsert.insertId) {
+    throw new Error('Failed to insert initial settings history')
+  }
+
+  const settingsVersionId = Number(historyInsert.insertId.toString())
+
+  await db
+    .updateTable('users')
+    .set({ settings: settingsVersionId })
+    .where('id', '=', newUser.id)
+    .execute()
 
   await chatwoot.createContact(newUser.id, newUser.userName)
 
@@ -174,7 +191,12 @@ export async function getSettings(userIdOrName: number | string) {
       .where('id', '=', userIdOrName)
       .executeTakeFirstOrThrow()
 
-    settings = getValidatedSettings(user.settings)
+    const history = await db
+      .selectFrom('settingsHistory')
+      .select('settings')
+      .where('id', '=', user.settings)
+      .executeTakeFirstOrThrow()
+    settings = getValidatedSettings(history.settings)
   }
   else {
     const user = await db
@@ -183,7 +205,12 @@ export async function getSettings(userIdOrName: number | string) {
       .where('userName', '=', userIdOrName)
       .executeTakeFirstOrThrow()
 
-    settings = getValidatedSettings(user.settings)
+    const history = await db
+      .selectFrom('settingsHistory')
+      .select('settings')
+      .where('id', '=', user.settings)
+      .executeTakeFirstOrThrow()
+    settings = getValidatedSettings(history.settings)
   }
 
   return settings

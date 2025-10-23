@@ -23,12 +23,16 @@ export default defineEventHandler(async (event) => {
   })
   
   const db = await getDatabaseConnection()
-  await db
-    .updateTable('users')
-    .set({
-      settings: JSON.stringify(settings),
-    })
+  const current = await db
+    .selectFrom('users')
+    .select('settings')
     .where('id', '=', $profile.id)
+    .executeTakeFirstOrThrow()
+
+  await db
+    .updateTable('settingsHistory')
+    .set({ settings: JSON.stringify(settings) })
+    .where('id', '=', current.settings)
     .execute()
 
   return { success: true }

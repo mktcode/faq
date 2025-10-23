@@ -19,7 +19,12 @@ export default defineEventHandler(async (event) => {
     .where('id', '=', userId)
     .executeTakeFirstOrThrow()
 
-  const currentSettings = getUnvalidatedSettings(user.settings)
+  const history = await db
+    .selectFrom('settingsHistory')
+    .select('settings')
+    .where('id', '=', user.settings)
+    .executeTakeFirstOrThrow()
+  const currentSettings = getUnvalidatedSettings(history.settings)
 
   if (!isDeepStrictEqual(currentSettings.public.company, settings.public.company)) {
     settings.public.company.lastMod = new Date().toISOString()
@@ -36,13 +41,17 @@ export default defineEventHandler(async (event) => {
     return newPage
   })
   
-  await db
-    .updateTable('users')
-    .set({
-      settings: JSON.stringify(settings),
-    })
+  const current = await db
+    .selectFrom('users')
+    .select('settings')
     .where('id', '=', userId)
-    .execute()
+    .executeTakeFirstOrThrow()
+
+    await db
+      .updateTable('settingsHistory')
+      .set({ settings: JSON.stringify(settings) })
+      .where('id', '=', current.settings)
+      .execute()
 
   return { success: true }
 })

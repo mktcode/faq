@@ -31,9 +31,19 @@ export default defineEventHandler(async (event) => {
     .set({
       email,
       emailConfirmationToken,
-      settings: JSON.stringify($profile.settings),
     })
     .where('id', '=', $profile.id)
+    .execute()
+  const current = await db
+    .selectFrom('users')
+    .select('settings')
+    .where('id', '=', $profile.id)
+    .executeTakeFirstOrThrow()
+
+  await db
+    .updateTable('settingsHistory')
+    .set({ settings: JSON.stringify($profile.settings) })
+    .where('id', '=', current.settings)
     .execute()
 
   const mailTemplate = mailTemplates.verificationEmail($profile.id, emailConfirmationToken, subscription)

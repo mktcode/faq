@@ -19,7 +19,7 @@ export interface UsersTable {
   plan: 'S' | 'L' | null
   chatwootSourceId: string | null
   lastPaidAt: ColumnType<Date | null, Date | null, Date | null>
-  settings: string
+  settings: number
   oneTimePassword: string | null
   oneTimePasswordCreatedAt: ColumnType<Date | null, Date | null, Date | null>
   createdAt: ColumnType<Date, undefined, undefined>
