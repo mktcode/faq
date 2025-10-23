@@ -118,7 +118,7 @@ async function generate() {
     <div class="flex flex-col gap-4 p-4 border-b border-gray-200">
       <div class="flex items-center gap-4 mb-4">
         <UFormField
-          label="Titel der Sektion"
+          label="Name der Sektion"
           class="flex-1"
         >
           <UInput
