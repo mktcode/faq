@@ -16,6 +16,7 @@ export const useProfile = () => {
   function resetSettings() {
     $profile.settings.public = JSON.parse(JSON.stringify($profile.originalSettings.public))
     $profile.settings.private = JSON.parse(JSON.stringify($profile.originalSettings.private))
+    contentChanges.value = {}
     unsavedSettings.value = false
   }
 

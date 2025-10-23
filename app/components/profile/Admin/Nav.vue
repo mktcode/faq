@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { go, hideNav } = useAdmin()
-const { unsavedSettings } = useProfile()
+const { unsavedSettings, contentChanges, $profile } = useProfile()
 
 const { hasUnreadMessages } = useUnreadMessages()
 const { data: liveChatData, refresh: refreshLiveChatData } = await useFetch('/api/user/livechat/list-conversations')
@@ -16,6 +16,23 @@ watch(liveChatData, (newValue) => {
     hasUnreadMessages.value = newValue.hasUnreadMessages
   }
 }, { immediate: true })
+
+function openWebsitePanel() {
+  if (contentChanges.value && Object.keys(contentChanges.value).length > 0) {
+    for (const [key, value] of Object.entries(contentChanges.value)) {
+      if (value) {
+        $profile.settings.public.pages.forEach((page) => {
+          page.components.forEach((component) => {
+            if (component.id === Number(key)) {
+              component.html = value as string
+            }
+          })
+        })
+      }
+    }
+  }
+  go('#website')
+}
 </script>
 
 <template>
@@ -56,7 +73,7 @@ watch(liveChatData, (newValue) => {
       :ui="{
         base: 'flex-col md:flex-row text-sm md:text-base font-light rounded-none md:rounded-lg relative',
       }"
-      @click="go('#website')"
+      @click="openWebsitePanel"
     >
       Website
       <UChip
