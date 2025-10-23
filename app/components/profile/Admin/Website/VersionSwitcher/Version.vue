@@ -8,9 +8,11 @@ const { version } = defineProps<{
 }>()
 
 const { user } = useUserSession()
+const { unsavedSettings, saveSettings, resetSettings } = useProfile()
 
 const showDeleteModal = ref(false)
 const showPublishModal = ref(false)
+const showEditModal = ref(false)
 
 const emit = defineEmits(['refresh'])
 
@@ -49,6 +51,7 @@ async function editVersion() {
     body: { versionId: version.id },
   })
 
+  showEditModal.value = false
   emit('refresh')
 }
 </script>
@@ -94,7 +97,13 @@ async function editVersion() {
           label="bearbeiten"
           variant="soft"
           size="md"
-          @click="editVersion"
+          @click="() => {
+            if (unsavedSettings) {
+              showEditModal = true
+            } else {
+              editVersion()
+            }
+          }"
         />
         <UBadge
           v-else
@@ -158,6 +167,39 @@ async function editVersion() {
           variant="solid"
           color="primary"
           @click="publishVersion"
+        />
+      </template>
+    </UModal>
+
+    <UModal
+      v-model:open="showEditModal"
+      title="Ungespeicherte Änderungen"
+    >
+      <template #body>
+        <p>Du hast ungespeicherte Änderungen in deiner aktuellen Bearbeitung. Möchtest du diese verwerfen oder speichern bevor du eine andere Version bearbeitest?</p>
+      </template>
+
+      <template #footer>
+        <UButton
+          label="Abbrechen"
+          variant="ghost"
+          color="neutral"
+          @click="showEditModal = false"
+        />
+        <UButton
+          label="Änderungen verwerfen"
+          variant="solid"
+          color="error"
+          @click="() => {
+            resetSettings()
+            editVersion()
+          }"
+        />
+        <UButton
+          label="Änderungen speichern"
+          variant="solid"
+          color="primary"
+          @click="saveSettings().then(editVersion)"
         />
       </template>
     </UModal>

@@ -56,7 +56,7 @@ watch(() => showWebsiteSettings.value, (newVal) => {
       wrapper: 'z-40',
       body: '!p-0 border-none',
       overlay: 'backdrop-blur-xs',
-      footer: '!p-0',
+      footer: '!p-0 flex flex-col gap-0',
     }"
   >
     <template #header>
