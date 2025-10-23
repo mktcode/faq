@@ -52,7 +52,7 @@ function resetHtml() {
           icon="i-heroicons-check"
           variant="soft"
           size="xl"
-          class="px-4 transition-all rounded-r-full z-50 absolute top-12 -left-2 hover:left-0"
+          class="px-4 transition-all rounded-r-full z-50 absolute top-14 -left-2 hover:left-0"
           :class="hideNav ? '-translate-x-full' : 'translate-x-0'"
           :loading="isSavingSettings"
           @click="saveContentChanges"
@@ -61,7 +61,7 @@ function resetHtml() {
           icon="i-heroicons-x-mark"
           variant="soft"
           size="xl"
-          class="px-4 transition-all rounded-r-full z-50 absolute top-20 -left-2 hover:left-0"
+          class="px-4 transition-all rounded-r-full z-50 absolute top-26 -left-2 hover:left-0"
           :class="hideNav ? '-translate-x-full' : 'translate-x-0'"
           @click="resetHtml"
         />
