@@ -305,6 +305,7 @@ Stadt: ${settings.public.company.city}
             background-color: hsl(${prefill.header_background_color.h}, ${prefill.header_background_color.s}%, ${prefill.header_background_color.l}%);
           }
         `,
+        js: '',
       },
     ]
   }
