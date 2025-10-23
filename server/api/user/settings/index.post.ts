@@ -2,6 +2,7 @@ import { settingsFormSchema } from '~~/types/db'
 import { isDeepStrictEqual } from 'node:util';
 
 export default defineEventHandler(async (event) => {
+  const { user } = await requireUserSession(event)
   const $profile = await requireProfileWithPermission(event)
   const settings = await readValidatedBody(event, body => settingsFormSchema.parse(body))
 
@@ -23,16 +24,18 @@ export default defineEventHandler(async (event) => {
   })
   
   const db = await getDatabaseConnection()
-  const current = await db
-    .selectFrom('users')
-    .select('settings')
-    .where('id', '=', $profile.id)
+
+  await db
+    .selectFrom('settingsHistory')
+    .select('id')
+    .where('userId', '=', $profile.id)
+    .where('id', '=', user.editSettingsId)
     .executeTakeFirstOrThrow()
 
   await db
     .updateTable('settingsHistory')
     .set({ settings: JSON.stringify(settings) })
-    .where('id', '=', current.settings)
+    .where('id', '=', user.editSettingsId)
     .execute()
 
   return { success: true }

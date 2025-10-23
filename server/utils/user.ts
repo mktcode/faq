@@ -4,6 +4,7 @@ import type { H3Event } from 'h3'
 import { colorSchema, settingsFormSchema, type SettingsForm } from '~~/types/db'
 import z from 'zod'
 import sanitizeHtml from 'sanitize-html'
+import { version } from 'os'
 
 export function makeUsername(name: string): string {
   // TODO: check for uniqueness in the database
@@ -179,7 +180,7 @@ export function getUnvalidatedSettings(settings: string | Record<string, unknown
   return parsedSettings as SettingsForm
 }
 
-export async function getSettings(userIdOrName: number | string) {
+export async function getSettings(userIdOrName: number | string, versionId?: number) {
   const db = await getDatabaseConnection()
 
   let settings: SettingsForm | null = null
@@ -187,43 +188,47 @@ export async function getSettings(userIdOrName: number | string) {
   if (typeof userIdOrName === 'number') {
     const user = await db
       .selectFrom('users')
-      .select('settings')
+      .select(['id', 'settings'])
       .where('id', '=', userIdOrName)
       .executeTakeFirstOrThrow()
 
-    const history = await db
+    const version = await db
       .selectFrom('settingsHistory')
       .select('settings')
-      .where('id', '=', user.settings)
+      .where('userId', '=', user.id)
+      .where('id', '=', versionId || user.settings)
       .executeTakeFirstOrThrow()
-    settings = getValidatedSettings(history.settings)
+
+    settings = getValidatedSettings(version.settings)
   }
   else {
     const user = await db
       .selectFrom('users')
-      .select('settings')
+      .select(['id', 'settings'])
       .where('userName', '=', userIdOrName)
       .executeTakeFirstOrThrow()
 
     const history = await db
       .selectFrom('settingsHistory')
       .select('settings')
-      .where('id', '=', user.settings)
+      .where('userId', '=', user.id)
+      .where('id', '=', versionId || user.settings)
       .executeTakeFirstOrThrow()
+
     settings = getValidatedSettings(history.settings)
   }
 
   return settings
 }
 
-export async function getPublicSettings(userNameOrId: number | string) {
-  const settings = await getSettings(userNameOrId)
+export async function getPublicSettings(userNameOrId: number | string, versionId?: number) {
+  const settings = await getSettings(userNameOrId, versionId)
 
   return settings.public
 }
 
-export async function getPrivateSettings(userNameOrId: number | string) {
-  const settings = await getSettings(userNameOrId)
+export async function getPrivateSettings(userNameOrId: number | string, versionId?: number) {
+  const settings = await getSettings(userNameOrId, versionId)
 
   return settings.private
 }

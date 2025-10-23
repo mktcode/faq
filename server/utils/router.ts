@@ -70,7 +70,10 @@ async function setProfileContextOrRedirect(event: H3Event, targetUser: TargetUse
     return
   }
 
-  const settings = await getSettings(targetUser.userName)
+  const settings = await getSettings(
+    targetUser.userName,
+    isAdmin || isOwned ? loggedInUser?.editSettingsId : undefined
+  )
 
   event.context.profile = {
     id: targetUser.id,
