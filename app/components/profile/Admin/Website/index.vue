@@ -57,25 +57,29 @@ watch(() => showWebsiteSettings.value, (newVal) => {
       body: '!p-0 border-none',
       overlay: 'backdrop-blur-xs',
       footer: '!p-0 flex flex-col gap-0',
+      header: '!p-0 flex-col gap-0',
     }"
   >
     <template #header>
-      <h3 class="text-lg font-semibold flex items-center gap-2">
-        <UIcon
-          name="i-lucide-monitor-smartphone"
-          class="inline-block size-6 opacity-50"
+      <div class="flex items-center justify-between gap-4 p-4 w-full">
+        <h3 class="text-lg font-semibold flex items-center gap-2">
+          <UIcon
+            name="i-lucide-monitor-smartphone"
+            class="inline-block size-6 opacity-50"
+          />
+          Website
+        </h3>
+        <ProfileAdminWebsiteVersionSwitcher />
+        <UButton
+          icon="i-heroicons-x-mark"
+          variant="ghost"
+          color="neutral"
+          size="md"
+          class="ml-auto"
+          @click="go('')"
         />
-        Website
-      </h3>
-      <ProfileAdminWebsiteVersionSwitcher />
-      <UButton
-        icon="i-heroicons-x-mark"
-        variant="ghost"
-        color="neutral"
-        size="md"
-        class="ml-auto"
-        @click="go('')"
-      />
+      </div>
+      <ProfileAdminSaveAndReset />
     </template>
 
     <template #body>
@@ -170,7 +174,6 @@ watch(() => showWebsiteSettings.value, (newVal) => {
 
     <template #footer>
       <ProfileAdminWebsiteAssistant />
-      <ProfileAdminSaveAndReset />
     </template>
   </USlideover>
 </template>
