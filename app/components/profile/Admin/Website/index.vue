@@ -168,6 +168,7 @@ watch(() => showWebsiteSettings.value, (newVal) => {
     </template>
 
     <template #footer>
+      <ProfileAdminWebsiteAssistant />
       <ProfileAdminSaveAndReset />
     </template>
   </USlideover>
