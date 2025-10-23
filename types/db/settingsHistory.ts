@@ -4,6 +4,7 @@ export interface SettingsHistoryTable {
   id: Generated<number>
   userId: number
   settings: string
+  note: string | null
   createdAt: ColumnType<Date, string | undefined, never>
 }
 
