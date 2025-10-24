@@ -8,11 +8,6 @@ export default defineEventHandler((event) => {
       { id: 2, name: 'Product B', price: 49.99 },
       { id: 3, name: 'Product C', price: 19.99 },
     ],
-    faqs: [
-      { question: 'What is Product A?', answer: 'Product A is a great product that helps you achieve X.' },
-      { question: 'How to use Product B?', answer: 'To use Product B, simply follow these steps...' },
-      { question: 'Where can I buy Product C?', answer: 'You can buy Product C from our online store or authorized retailers.' },
-    ],
   }
 
   const partials = [
@@ -49,12 +44,6 @@ export default defineEventHandler((event) => {
       html: `<h2>Contact Us</h2><p>If you have any questions, feel free to reach out!</p>`,
       css: `h2 { color: #cc0000; } p { font-style: italic; }`,
       js: `console.log('Contact section loaded');`,
-    },
-    {
-      name: 'FAQs',
-      html: `<h2>Frequently Asked Questions</h2>{{#each data.faqs}}<div x-data="{ open: false }"><button @click="open = !open">Toggle Answer</button><p x-show="open" x-transition>{{this.answer}}</p></div>{{/each}}`,
-      css: `h2 { color: #009900; } li { margin-bottom: 10px; }`,
-      js: `console.log('FAQs section loaded');`,
     },
   ]
 
