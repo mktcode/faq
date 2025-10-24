@@ -1,7 +1,29 @@
-# Ausführlich
+🧩 Inhalt & Texte
 
-Ich bin Fachberaterin für holistische Gesundheit und ich biete Gruppenkurse an, einmal eine Fahrberatung und eine Ernährungsberatung und einen Handarbeitskurs der etwas anderen Art beziehungsweise einen Handarbeitstreff, bei dem es hauptsächlich um Achtsamkeit geht, wie in meinem gesamten Angebot.\\nMein Slogan ist Achtsamkeit, die im Alltag Wurzeln schlägt.
+"Ändere die Überschrift auf der Startseite zu ‚Willkommen bei meinem Friseursalon‘ und mach den Text darunter etwas freundlicher."
 
-# Nur Branche
+"Schreibe den Text auf meiner Über-uns-Seite um, sodass er moderner und persönlicher klingt."
 
-Handwerker, Dachdecker
+🖼️ Bilder & Medien
+
+"Tausche die Bilder in der Galerie gegen neue Fotos von meinem Café aus — ich lade sie gleich hoch."
+
+"Füge auf der Startseite ein großes Titelbild mit einem Sonnenuntergang ein."
+
+🎨 Design & Layout
+
+"Mach das Design eleganter – dunklere Farben, klare Linien und moderne Schriftarten."
+
+"Ändere den Hintergrund der Seite zu einem hellen Pastellton und mach die Buttons runder."
+
+📄 Struktur & Seiten
+
+"Lege eine neue Unterseite ‚Leistungen‘ an und liste dort meine drei Hauptangebote mit kurzen Beschreibungen auf."
+
+"Erstelle eine Kontaktseite mit einem Formular, meiner Telefonnummer und einem Google-Maps-Ausschnitt."
+
+⚙️ Funktion & Struktur
+
+"Setze auf jeder Seite unten einen Button, der zu meiner Terminbuchung führt."
+
+"Mach meine Website für Handys besser lesbar – aktuell ist alles zu groß und unübersichtlich."
