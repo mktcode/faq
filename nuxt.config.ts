@@ -75,7 +75,7 @@ export default defineNuxtConfig({
           'frame-src \'self\' https://*.js.stripe.com https://js.stripe.com https://hooks.stripe.com https://chat.markus-kottlaender.de',
           // TODO: https://cdn.jsdelivr.net really safe?
           // TODO: remove unsafe-eval and use proper CSP for Alpine.js
-          'script-src \'self\' \'unsafe-inline\' \'unsafe-eval\' https://*.js.stripe.com https://js.stripe.com https://chat.markus-kottlaender.de https://cdn.jsdelivr.net',
+          'script-src \'self\' \'unsafe-inline\' \'unsafe-eval\' https://*.js.stripe.com https://js.stripe.com https://chat.markus-kottlaender.de https://cdn.jsdelivr.net https://unpkg.com',
         ].join('; '),
       },
     },

@@ -38,6 +38,7 @@
     "@vueuse/core": "^13.0.0",
     "aws4fetch": "^1.0.20",
     "eslint": "^9.34.0",
+    "handlebars": "^4.7.8",
     "imapflow": "^1.0.184",
     "js-domainrobot-sdk": "^2.1.17",
     "kysely": "^0.27.6",
