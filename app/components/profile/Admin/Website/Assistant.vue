@@ -57,32 +57,10 @@ async function generate() {
     }, 500)
   }
 }
-
-const todos = ref([
-  { title: 'Seite anlegen', done: true },
-  { title: 'Sektion anlegen', done: false },
-  { title: 'Sektion bearbeiten', done: false },
-  { title: 'Design anpassen', done: false },
-])
 </script>
 
 <template>
   <div class="flex flex-col border-t border-gray-200">
-    <div class="bg-gray-50 border-b border-gray-200 p-3 text-sm">
-      <div v-for="todo in todos" :key="todo.title" class="flex items-center gap-2 px-3 py-1">
-        <UCheckbox
-          v-if="todo.done"
-          :model-value="true"
-          :disabled="true"
-        />
-        <UIcon
-          v-else
-          name="i-lucide-loader-circle"
-          class="text-gray-400 size-4 animate-spin"
-        />
-        <span :class="todo.done ? 'line-through text-gray-500' : ''">{{ todo.title }}</span>
-      </div>
-    </div>
     <UFormField
       label="KI-Anweisung"
       description="Beschreiben Sie die gewünschten Inhalte und das Layout bzw. die Änderungen, die Sie vornehmen möchten."
