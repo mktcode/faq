@@ -45,7 +45,7 @@ Zum Beispiel:
 </div>
 \`\`\`
 `
-  const response = await test.getOpenAIResponse(instructions, [
+  const response = await websiteUtils.getOpenAIResponse(instructions, [
     { role: 'user', content: plan },
     { role: 'user', content: css },
     { role: 'user', content: store },

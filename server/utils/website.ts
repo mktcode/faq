@@ -41,6 +41,6 @@ async function getOpenAIResponse<TOutputSchema extends z.ZodTypeAny>(
   }
 }
 
-export const test = {
+export const websiteUtils = {
   getOpenAIResponse,
 }

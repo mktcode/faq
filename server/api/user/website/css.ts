@@ -18,7 +18,7 @@ Definiere CSS-Variablen (:root) für Farben, Schriftarten und andere wiederverwe
 Erstelle dann allgemeine CSS-Klassen für häufig verwendete Elemente wie Überschriften, Absätze, Buttons und Layout-Komponenten (z.B. Container, Grid-Systeme).
   `
 
-  const response = await test.getOpenAIResponse(instructions, [
+  const response = await websiteUtils.getOpenAIResponse(instructions, [
     {
       role: 'user',
       content: plan,

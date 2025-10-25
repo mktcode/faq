@@ -21,9 +21,12 @@ Ist ein FAQ geplant, sollte der Store die FAQ-Einträge enthalten.
 Halte den Store so einfach und klein wie möglich, um die Wartbarkeit und Performance zu gewährleisten.
 
 Nutze sinnvolle Beispieldaten oder generische Platzhalterwerte für den initialen Store.
+
+YAML-Formatierung ist erforderlich.
+Strings MÜSSEN in Anführungszeichen gesetzt werden.
   `
 
-  const response = await test.getOpenAIResponse(instructions, [
+  const response = await websiteUtils.getOpenAIResponse(instructions, [
     {
       role: 'user',
       content: plan,

@@ -40,7 +40,7 @@ Beispiel:
 Beginne mit den innersten Partials und arbeite dich zu den äußeren Partials vor (z.B. button -> product-card -> product-list -> header).
   `
 
-  const response = await test.getOpenAIResponse(instructions, [
+  const response = await websiteUtils.getOpenAIResponse(instructions, [
     { role: 'user', content: plan },
     { role: 'user', content: css },
     { role: 'user', content: store }

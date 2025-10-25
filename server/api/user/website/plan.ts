@@ -82,7 +82,7 @@ Antworte nur mit dem fertigen Plan in Markdown. Gehe nicht auf die Anweisungen e
 Der Plan ist ein Vorschlag und wird vom Kunden weiter angepasst.
   `
 
-  const response = await test.getOpenAIResponse(instructions, [
+  const response = await websiteUtils.getOpenAIResponse(instructions, [
     {
       role: 'user',
       content: prompt,
