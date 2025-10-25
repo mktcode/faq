@@ -20,6 +20,9 @@ export default function useAdmin() {
   const showWebsiteSettings = computed(() => router.currentRoute.value.hash === '#website')
   const showWebsiteDesignSettings = computed(() => router.currentRoute.value.hash === '#website/design')
   const showWebsiteFiles = computed(() => router.currentRoute.value.hash === '#website/files')
+  const showWebsiteTemplates = computed(() => router.currentRoute.value.hash === '#website/templates')
+  const showWebsiteStore = computed(() => router.currentRoute.value.hash === '#website/store')
+  const showWebsitePages = computed(() => router.currentRoute.value.hash === '#website/pages')
 
   const websiteSelectedPage = computed(() => {
     const match = router.currentRoute.value.hash.match(/^#website\/page\/(\d+)(?:\/component\/(\d+))?$/)
@@ -75,8 +78,11 @@ export default function useAdmin() {
     showSubscriptionSettings,
     showSubscriptionVerification,
     showWebsiteSettings,
+    showWebsiteTemplates,
     showWebsiteDesignSettings,
     showWebsiteFiles,
+    showWebsiteStore,
+    showWebsitePages,
     websiteSelectedPage,
     page,
     component,

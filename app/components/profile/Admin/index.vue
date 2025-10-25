@@ -10,6 +10,9 @@ const subscriptionSuccess = !!route.query.subscriptionSuccess
   <ProfileAdminWebsiteDesign />
   <ProfileAdminWebsiteFiles />
   <ProfileAdminWebsitePage />
+  <ProfileAdminWebsiteTemplates />
+  <ProfileAdminWebsiteStore />
+  <ProfileAdminWebsitePages />
   <ProfileAdminWebsiteComponent />
   <ProfileAdminAssistant />
   <ProfileAdminSupport />

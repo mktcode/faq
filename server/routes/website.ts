@@ -1,64 +1,44 @@
 import Handlebars from "handlebars";
+import { parse } from 'yaml'
 
-export default defineEventHandler((event) => {
-  const data = {
-    title: 'FAQ Website',
-    products: [
-      { id: 1, name: 'Product A', price: 29.99 },
-      { id: 2, name: 'Product B', price: 49.99 },
-      { id: 3, name: 'Product C', price: 19.99 },
-    ],
-  }
+export default defineEventHandler(async (event) => {
+  const $profile = await requireProfileWithPermission(event)
+  const db = await getDatabaseConnection()
 
-  const partials = [
-    {
-      name: 'product-card',
-      html: `<div class="product-card">
-        <h3>{{this.name}}</h3>
-        <p>Price: {{this.price}}</p>
-      </div>`,
-      css: `.product-card { border: 1px solid #ccc; padding: 16px; margin: 16px 0; }`,
-      js: `console.log('Product Card loaded');`,
-    }
-  ]
+  const website = await db.selectFrom('websites')
+    .selectAll()
+    .where('userId', '=', $profile.id)
+    .limit(1)
+    .executeTakeFirstOrThrow()
+
+  const partials = await db.selectFrom('websitePartials')
+    .selectAll()
+    .where('websiteId', '=', website.id)
+    .execute()
+
+  const page = await db.selectFrom('websitePages')
+    .selectAll()
+    .where('websiteId', '=', website.id)
+    .executeTakeFirstOrThrow()
+
+  const data = parse(website.store || '{}')
 
   partials.forEach(partial => {
-    Handlebars.registerPartial(partial.name, partial.html)
+    Handlebars.registerPartial(partial.name, partial.template)
   })
 
-  const sections = [
-    {
-      name: 'Welcome',
-      html: `<h1>Welcome {{data.title}}</h1><p>Find answers to common questions about our products.</p>`,
-      css: `h1 { color: #007acc; } p { font-size: 16px; }`,
-      js: `console.log('Welcome section loaded');`,
-    },
-    {
-      name: 'Products',
-      html: `<h2>Our Products</h2>{{#each data.products}}{{>product-card product=.}}{{/each}}`,
-      css: `h2 { color: #ff6600; } ul { list-style-type: square; }`,
-      js: `console.log('Products section loaded');`,
-    },
-    {
-      name: 'Contact',
-      html: `<h2>Contact Us</h2><p>If you have any questions, feel free to reach out!</p>`,
-      css: `h2 { color: #cc0000; } p { font-style: italic; }`,
-      js: `console.log('Contact section loaded');`,
-    },
-  ]
+  const globalCss = website.css || ''
+  const globalJs = ''
 
-  const globalCss = `body { font-family: Arial, sans-serif; background-color: #f9f9f9; color: #333; } h1 { color: #007acc; }`
-  const globalJs = `console.log('FAQ Website Loaded');`
+  const htmlHead = `<head>
+  <meta charset="UTF-8">
+  <style>${globalCss}</style>
+  <script src="//unpkg.com/alpinejs" defer></script>
+  <script>${globalJs}</script>
+</head>`
 
-  const htmlHead = `<head><style>${globalCss}</style><script src="//unpkg.com/alpinejs" defer></script><script>${globalJs}</script></head>`
-
-  const htmlBody = `<body>${sections.map(section => `
-    <section>
-      ${Handlebars.compile(section.html)({ data })}
-      <style>${section.css}</style>
-      <script>${section.js}</script>
-    </section>
-  `).join('')}</body>`
+  const pageTemplate = Handlebars.compile(page.template)
+  const htmlBody = `<body>${pageTemplate(data)}</body>`
 
   const html = `<!DOCTYPE html><html>${htmlHead}${htmlBody}</html>`
 

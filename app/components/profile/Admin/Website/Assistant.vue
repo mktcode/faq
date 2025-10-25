@@ -5,8 +5,11 @@ const prompt = ref('')
 const promptImages = ref<string[]>([])
 const isGenerating = ref(false)
 const previousResponseId = ref<string | undefined>(undefined)
-const responseNotes = ref<string | null | undefined>(undefined)
 const generationProgress = ref(0)
+
+const { data: website } = await useFetch('/api/user/website/getWebsite')
+
+const plan = ref<string | null>(website.value?.plan || null)
 
 function randomProgressStep() {
   if (!isGenerating.value) return
@@ -21,23 +24,22 @@ function randomProgressStep() {
   return interval
 }
 
-async function generate() {
+async function generatePlan() {
   if (!prompt.value) return
 
   isGenerating.value = true
   const interval = randomProgressStep()
 
   try {
-    const { responseId, notes } = await $fetch('/api/user/assistant/updateWebsite', {
+    const response = await $fetch('/api/user/website/plan', {
       method: 'POST',
       body: {
         prompt: prompt.value,
-        images: promptImages.value,
         responseId: previousResponseId.value,
       },
     })
-    previousResponseId.value = responseId
-    responseNotes.value = notes
+    previousResponseId.value = response.responseId
+    plan.value = response.output.plan
     prompt.value = ''
   } catch (error) {
     toast.add({
@@ -115,15 +117,6 @@ async function generate() {
       </TransitionGroup>
     </div>
 
-    <UAlert
-      v-if="responseNotes"
-      variant="soft"
-      icon="i-heroicons-information-circle"
-      class="whitespace-pre-wrap rounded-none"
-      title="Hinweise zur Generierung"
-      :description="responseNotes"
-    />
-
     <ProfileAdminWebsiteFilesSelectOrUpload @url="promptImages.push($event)">
       <UButton
         label="Bilder auswählen"
@@ -144,7 +137,7 @@ async function generate() {
       class="rounded-none p-4"
       :loading="isGenerating"
       :disabled="!prompt"
-      @click="generate"
+      @click="generatePlan"
     />
     <UProgress
       v-if="isGenerating || generationProgress > 0"

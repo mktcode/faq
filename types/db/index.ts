@@ -5,6 +5,9 @@ import type { QandaTable } from './qanda'
 import type { CustomerRequestsTable } from './customerRequests'
 import type { MessagesTable } from './messages'
 import type { SupportBookingsTable } from './supportBookings'
+import type { WebsitesTable } from './websites'
+import type { WebsitePagesTable } from './websitePages'
+import type { WebsitePartialsTable } from './websitePartials'
 
 export * from './users'
 export * from './settingsHistory'
@@ -13,6 +16,9 @@ export * from './qanda'
 export * from './customerRequests'
 export * from './messages'
 export * from './supportBookings'
+export * from './websites'
+export * from './websitePages'
+export * from './websitePartials'
 
 export interface Database {
   users: UsersTable
@@ -22,4 +28,7 @@ export interface Database {
   customerRequests: CustomerRequestsTable
   messages: MessagesTable
   supportBookings: SupportBookingsTable
+  websites: WebsitesTable
+  websitePages: WebsitePagesTable
+  websitePartials: WebsitePartialsTable
 }

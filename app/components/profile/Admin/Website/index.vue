@@ -114,6 +114,19 @@ watch(() => showWebsiteSettings.value, (newVal) => {
       </div>
 
       <UButton
+        label="Planung"
+        icon="i-lucide-notebook-pen"
+        class="w-full rounded-none p-4 border-b border-gray-200"
+        variant="ghost"
+        color="neutral"
+        trailing-icon="i-heroicons-chevron-right"
+        :ui="{
+          trailingIcon: 'ml-auto opacity-30',
+        }"
+        @click="go('#website/plan')"
+      />
+
+      <UButton
         label="Design"
         icon="i-heroicons-paint-brush"
         class="w-full rounded-none p-4 border-b border-gray-200"
@@ -139,36 +152,43 @@ watch(() => showWebsiteSettings.value, (newVal) => {
         @click="go('#website/files')"
       />
 
-      <TransitionGroup name="list">
-        <div
-          v-for="(page, index) in $profile.settings.public.pages.sort((a, b) => a.path.localeCompare(b.path))"
-          :key="page.path"
-        >
-          <UButton
-            :label="page.title || `Seite ${index + 1}`"
-            :icon="page.path === '/' ? 'i-heroicons-home' : 'i-heroicons-document-text'"
-            class="w-full rounded-none p-4 border-b border-gray-200"
-            variant="ghost"
-            color="neutral"
-            trailing-icon="i-heroicons-chevron-right"
-            :ui="{
-              trailingIcon: 'ml-auto opacity-30',
-            }"
-            @click="go(`#website/page/${page.id}`)"
-          />
-        </div>
-      </TransitionGroup>
-
       <UButton
-        label="Unterseite hinzufügen"
+        label="Seiten"
         icon="i-heroicons-document-text"
-        class="w-full rounded-none p-4 border-b border-primary-200"
-        variant="soft"
-        trailing-icon="i-heroicons-plus"
+        class="w-full rounded-none p-4 border-b border-gray-200"
+        variant="ghost"
+        color="neutral"
+        trailing-icon="i-heroicons-chevron-right"
         :ui="{
           trailingIcon: 'ml-auto opacity-30',
         }"
-        @click="addPage()"
+        @click="go('#website/pages')"
+      />
+
+      <UButton
+        label="Vorlagen"
+        icon="i-lucide-layout-template"
+        class="w-full rounded-none p-4 border-b border-gray-200"
+        variant="ghost"
+        color="neutral"
+        trailing-icon="i-heroicons-chevron-right"
+        :ui="{
+          trailingIcon: 'ml-auto opacity-30',
+        }"
+        @click="go('#website/templates')"
+      />
+
+      <UButton
+        label="Datenbank"
+        icon="i-lucide-database"
+        class="w-full rounded-none p-4 border-b border-gray-200"
+        variant="ghost"
+        color="neutral"
+        trailing-icon="i-heroicons-chevron-right"
+        :ui="{
+          trailingIcon: 'ml-auto opacity-30',
+        }"
+        @click="go('#website/store')"
       />
     </template>
 
