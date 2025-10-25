@@ -27,3 +27,7 @@
 "Setze auf jeder Seite unten einen Button, der zu meiner Terminbuchung führt."
 
 "Mach meine Website für Handys besser lesbar – aktuell ist alles zu groß und unübersichtlich."
+
+Ganze Website Erstellung
+
+"Ich brauche eine Website für mein Gesundheitscoaching. Ich biete Ernährungsberatung, Yoga-Kurse, Farb- und Stilberatung, und Achtsamkeitstraining an. Ich komme aus Osnabrück. Name: Fayo Coaching - Beate Kopeike - Fachberaterin für ganzheitliche Gesundheit."
