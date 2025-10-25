@@ -28,19 +28,6 @@ async function togglePublished() {
   }
 }
 
-function addPage() {
-  const newPage = {
-    id: new Date().getTime(),
-    title: 'Seite ' + ($profile.settings.public.pages.length + 1),
-    description: 'Meine Unterseite über...',
-    path: `/seite-${$profile.settings.public.pages.length + 1}`,
-    components: [],
-    lastMod: new Date().toISOString(),
-  }
-
-  $profile.settings.public.pages.push(newPage)
-}
-
 watch(() => showWebsiteSettings.value, (newVal) => {
   if (newVal && !hasAgreedToBetaTerms.value) {
     showBetaTermsModal.value = true
@@ -193,7 +180,7 @@ watch(() => showWebsiteSettings.value, (newVal) => {
     </template>
 
     <template #footer>
-      <ProfileAdminWebsiteAssistant />
+      <ProfileAdminWebsiteAgentPlanner />
     </template>
   </USlideover>
 </template>
